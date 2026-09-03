@@ -1,0 +1,8 @@
+{
+  "name": "Remix: Sayam Mukherjee — Interactive AI Portfolio",
+  "description": "A high-fidelity, living digital ecosystem and AI-powered portfolio showcasing the skills, projects, and learning journey of Sayam Mukherjee.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

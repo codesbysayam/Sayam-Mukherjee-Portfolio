@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Remix: Sayam Mukherjee — Interactive AI Portfolio</title>
+    <meta name="description" content="A high-fidelity, living digital ecosystem and AI-powered portfolio showcasing the skills, projects, and learning journey of Sayam Mukherjee." />
+    <meta property="og:title" content="Remix: Sayam Mukherjee — Interactive AI Portfolio" />
+    <meta property="og:description" content="A high-fidelity, living digital ecosystem and AI-powered portfolio showcasing the skills, projects, and learning journey of Sayam Mukherjee." />
+    <script>
+      (function() {
+        try {
+          var isMobile = window.matchMedia("(pointer: coarse)").matches;
+          var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+          var mode = (reducedMotion || isMobile) ? "reduced" : "full";
+          document.documentElement.dataset.performance = mode;
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
