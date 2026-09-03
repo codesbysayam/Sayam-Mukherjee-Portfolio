@@ -3,8 +3,18 @@ import { motion, AnimatePresence } from "motion/react";
 import { 
   GraduationCap, Award, MapPin, Calendar, Heart, Shield, Compass, 
   Sparkles, CheckCircle2, AlertTriangle, BookOpen, Camera, Play, 
-  Smile, Flame, Quote, Volume2, User, HelpCircle, Layers, Target, Eye, Cpu
+  Smile, Flame, Quote, Volume2, User, HelpCircle, Layers, Target, Eye, Cpu,
+  Trophy, Medal, Video, Briefcase, Youtube, Code, Building2, TrendingUp, Star, Rocket
 } from "lucide-react";
+
+interface JourneyMilestone {
+  period: string;
+  title: string;
+  description: string;
+  category: string;
+  icon: React.ComponentType<{ className?: string }>;
+  status?: "past" | "present" | "future";
+}
 
 function AboutSectionComponent() {
   const [activeTab, setActiveTab] = useState<"about" | "timeline" | "education">("about");
@@ -57,20 +67,128 @@ function AboutSectionComponent() {
     "Curious", "Ambitious", "Self-driven", "Patient", "Creative", "Disciplined", "Growth-focused"
   ];
 
-  // Timeline events
-  const timelineEvents = [
-    { year: "2011", title: "Started School Journey", desc: "Aditya Birla Vani Bharati. Began foundations of rigorous logical thinking, science projects, and sports.", icon: BookOpen, type: "school" },
-    { year: "2021", title: "Reached Top 15 in Toycathon", desc: "National gaming/innovation competition. Designed intelligent board game concepts bridging education and culture.", icon: Award, type: "achievement" },
-    { year: "2023", title: "Completed Class X Board", desc: "Scored high distinction, focusing deeply on Information Technology, Computer Science basics, and science labs.", icon: CheckCircle2, type: "school" },
-    { year: "2025", title: "Completed Class XII Board", desc: "Advanced studies in Physics, Chemistry, Mathematics, and Computer Science.", icon: CheckCircle2, type: "school" },
-    { year: "2025", title: "Joined KIIT University", desc: "B.Tech in Computer Science Engineering, specializing in Artificial Intelligence and Machine Learning. Discovered deep learning.", icon: GraduationCap, type: "university" },
-    { year: "2025", title: "Started Freelance Design Agency", desc: "Partnered with 25+ global digital review and tutorial creators. Specialized in high-CTR click patterns and media layout graphics.", icon: Heart, type: "freelance" },
-    { year: "2025", title: "Pioneered Obsidian Optics", desc: "Began compiling the Edge CV monitoring system and PyTorch deep neural network trackers.", icon: Flame, type: "project" },
-    { year: "2025", title: "Started Building Production Projects", desc: "Built Daily Decipher (summarization node), BullRun Analytics (news sentiment engine), and visual canvas editors.", icon: Compass, type: "project" },
-    { year: "2026", title: "Technex IIT BHU", desc: "Participated and ranked in national level algorithm and deep learning developer tracks.", icon: Award, type: "achievement" },
-    { year: "2026", title: "National Level Hackathons", desc: "Collaborated in high-intensity 36-hour hackathons, deploying live full-stack telemetry dashboards.", icon: Sparkles, type: "achievement" },
-    { year: "Present", title: "Disciplined Skill Synthesis", desc: "Deepening knowledge in AI models, React, Advanced DSA (Dynamic Programming, Graphs), and System Architecture designs.", icon: Flame, type: "present" },
-    { year: "Future", title: "The Roadmap Ahead", desc: "Excelling as a Software Engineer & AI Engineer, building high-impact startups, and contributing to open-source models.", icon: Target, type: "future" }
+  // Engineering Journey Timeline Data (Strictly Chronological & Exact)
+  const engineeringJourney: JourneyMilestone[] = [
+    {
+      period: "2011",
+      title: "Started Schooling",
+      description: "Began my formal schooling journey.",
+      category: "Education",
+      icon: BookOpen,
+      status: "past"
+    },
+    {
+      period: "2013",
+      title: "Started Playing Table Tennis",
+      description: "Started playing table tennis and developed a long-term passion for the sport.",
+      category: "Sports",
+      icon: Trophy,
+      status: "past"
+    },
+    {
+      period: "2019",
+      title: "Represented District in Table Tennis",
+      description: "Represented my district in table tennis at the district level.",
+      category: "Sports",
+      icon: Medal,
+      status: "past"
+    },
+    {
+      period: "2021",
+      title: "Reached Finals in Toycathon — Top 15",
+      description: "Reached the finals and secured a Top 15 position in Toycathon, a national-level innovation event.",
+      category: "Competition",
+      icon: Award,
+      status: "past"
+    },
+    {
+      period: "2021–2023",
+      title: "Content Creator — Technical AZ",
+      description: "Worked as a content creator on my own YouTube channel, Technical AZ, which grew to 2.06K+ subscribers.",
+      category: "Content Creation",
+      icon: Video,
+      status: "past"
+    },
+    {
+      period: "2021–2023",
+      title: "Ran My Own Social Media Agency & Marketing Panel",
+      description: "Ran my own social media agency and marketing panel, working on social media growth, digital marketing, and client-focused services.",
+      category: "Entrepreneurship",
+      icon: Briefcase,
+      status: "past"
+    },
+    {
+      period: "2023",
+      title: "Scored 92.6% in Class 10 Boards",
+      description: "Achieved 92.6% in the CBSE Class 10 Board Examinations.",
+      category: "Academics",
+      icon: GraduationCap,
+      status: "past"
+    },
+    {
+      period: "2023–2026",
+      title: "Content Creator — Daily Decipher",
+      description: "Worked as a content creator on my own YouTube channel, Daily Decipher, which grew to 10K+ subscribers.",
+      category: "Content Creation",
+      icon: Youtube,
+      status: "past"
+    },
+    {
+      period: "2025",
+      title: "Scored 86.2% in Class 12 Boards",
+      description: "Achieved 86.2% in the CBSE Class 12 Board Examinations.",
+      category: "Academics",
+      icon: GraduationCap,
+      status: "past"
+    },
+    {
+      period: "2025",
+      title: "Started Building Small Projects",
+      description: "Began building small software and web projects to strengthen my development and problem-solving skills.",
+      category: "Development",
+      icon: Code,
+      status: "past"
+    },
+    {
+      period: "2025",
+      title: "Joined Techno Main Salt Lake (TMSL)",
+      description: "Joined Techno Main Salt Lake (TMSL) to pursue a B.Tech in Computer Science Engineering.",
+      category: "University",
+      icon: Building2,
+      status: "past"
+    },
+    {
+      period: "2026",
+      title: "Technex'26 — IIT BHU Finalist",
+      description: "Participated in IIT BHU Techfest (Technex'26) and stood as a finalist in 5 out of 6 competitions.",
+      category: "Competition",
+      icon: Star,
+      status: "past"
+    },
+    {
+      period: "2026",
+      title: "Built Multiple Technical Projects",
+      description: "Built an Interactive Portfolio, a YOLOv8-based Edge CV Motion Tracker, OPERON for a competition, and an enhanced MAUSAM webpage based on IMD government data for SIH 2026.",
+      category: "Projects",
+      icon: Rocket,
+      status: "past"
+    },
+    {
+      period: "Present",
+      title: "Disciplined Skill Synthesis",
+      description: "Continuously deepening my knowledge in AI models, React, Advanced DSA including Dynamic Programming and Graphs, and System Architecture.",
+      category: "Current Focus",
+      icon: Cpu,
+      status: "present"
+    },
+    {
+      period: "Future",
+      title: "The Roadmap Ahead",
+      description: "Excelling as a Software Engineer and AI Engineer, building high-impact startups, and contributing to open-source projects.",
+      category: "The Horizon",
+      icon: Target,
+      status: "future"
+    }
   ];
 
   return (
@@ -96,7 +214,7 @@ function AboutSectionComponent() {
         </div>
         <div className="lg:col-span-6 lg:pt-8 text-zinc-400 text-sm leading-relaxed space-y-4">
           <p>
-            Operating at the intersection of quantitative computation and creative aesthetic engineering. As an undergraduate student at <strong className="text-white">KIIT University</strong>, I devote my hours to decoding neural net layers, designing modular full-stack interfaces, and compiling high-efficiency software architectures.
+            Operating at the intersection of quantitative computation and creative aesthetic engineering. As an undergraduate student at <strong className="text-white">Techno Main Salt Lake (TMSL), Kolkata</strong>, I devote my hours to decoding neural net layers, designing modular full-stack interfaces, and compiling high-efficiency software architectures.
           </p>
           
           {/* Custom Aesthetic Tab Switching */}
@@ -315,47 +433,139 @@ function AboutSectionComponent() {
               <div className="text-center space-y-2">
                 <span className="text-xs text-purple-400 font-mono uppercase tracking-widest block font-bold">The Chronicles</span>
                 <h3 className="text-3xl font-bold text-white font-display">Engineering Journey</h3>
-                <p className="text-xs text-zinc-400 max-w-md mx-auto">
-                  A timeline documenting my academic progression, competitive milestones, and freelance design agency highlights.
+                <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
+                  A chronological chronicle documenting my academic progression, competitive milestones, content ventures, and software engineering projects.
                 </p>
               </div>
 
               {/* Storytelling Timeline structure */}
-              <div className="relative border-l border-zinc-900 ml-4 md:ml-32 pl-6 md:pl-12 space-y-10 py-4">
-                {timelineEvents.map((ev, idx) => {
+              <div className="relative border-l border-zinc-900 ml-4 md:ml-36 pl-6 md:pl-10 space-y-8 py-4">
+                {engineeringJourney.map((ev, idx) => {
                   const Icon = ev.icon;
+                  const isPresent = ev.status === "present";
+                  const isFuture = ev.status === "future";
+
                   return (
                     <motion.div 
                       key={idx}
-                      initial={{ opacity: 0, x: -10 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: idx * 0.04 }}
+                      initial={{ opacity: 0, y: 14 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-20px" }}
+                      transition={{ duration: 0.35, delay: Math.min(idx * 0.03, 0.3) }}
                       className="relative group"
                     >
-                      {/* Floating year column on large devices */}
-                      <span className="hidden md:block absolute -left-44 top-1.5 text-right w-24 font-mono font-bold text-zinc-500 group-hover:text-purple-400 transition-colors">
-                        {ev.year}
+                      {/* Floating year column on desktop screens */}
+                      <div className="hidden md:flex flex-col items-end absolute -left-[180px] top-3 w-32 pr-4 text-right select-none">
+                        <span className={`font-mono font-bold text-xs tracking-tight transition-colors ${
+                          isPresent
+                            ? "text-emerald-400"
+                            : isFuture
+                            ? "text-cyan-400"
+                            : "text-zinc-400 group-hover:text-purple-400"
+                        }`}>
+                          {ev.period}
+                        </span>
+                        {isPresent && (
+                          <span className="inline-flex items-center gap-1 text-[9px] font-mono text-emerald-400 uppercase tracking-wider mt-0.5 font-semibold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
+                            Active
+                          </span>
+                        )}
+                        {isFuture && (
+                          <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-wider mt-0.5 font-semibold">
+                            Horizon
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Timeline dot node badge */}
+                      <span className={`absolute -left-[31px] md:-left-[47px] top-3.5 w-3.5 h-3.5 rounded-full flex items-center justify-center transition-all duration-300 ${
+                        isPresent
+                          ? "bg-emerald-950 border-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"
+                          : isFuture
+                          ? "bg-cyan-950 border-2 border-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+                          : "bg-zinc-950 border-2 border-zinc-800 group-hover:border-purple-500 group-hover:shadow-[0_0_8px_rgba(168,85,247,0.5)]"
+                      }`}>
+                        <span className={`w-1.5 h-1.5 rounded-full transition-colors ${
+                          isPresent
+                            ? "bg-emerald-400 animate-pulse"
+                            : isFuture
+                            ? "bg-cyan-400"
+                            : "bg-zinc-700 group-hover:bg-purple-400"
+                        }`} />
                       </span>
 
-                      {/* Timeline dot badge */}
-                      <span className="absolute -left-[31px] md:-left-[55px] top-1.5 w-4 h-4 rounded-full bg-zinc-950 border-2 border-zinc-800 flex items-center justify-center group-hover:border-purple-500 transition-all duration-300">
-                        <span className="w-1.5 h-1.5 rounded-full bg-zinc-700 group-hover:bg-purple-500 transition-colors" />
-                      </span>
-
-                      <div className="glass-card p-5 rounded-2xl hover:border-zinc-800 transition-all duration-300">
-                        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-900 pb-2.5 mb-2.5">
-                          <div className="flex items-center gap-2.5">
-                            <div className="w-7 h-7 rounded-lg bg-zinc-900 flex items-center justify-center text-zinc-400 border border-zinc-850">
-                              <Icon className="w-3.5 h-3.5" />
-                            </div>
-                            <h4 className="text-sm font-bold text-zinc-100 group-hover:text-white transition-colors">{ev.title}</h4>
-                          </div>
-                          <span className="text-[10px] font-mono text-zinc-500 bg-zinc-900 px-2.5 py-0.5 border border-zinc-850 rounded-full capitalize">
-                            {ev.type}
+                      {/* Card container */}
+                      <div className={`p-4 sm:p-5 rounded-2xl transition-all duration-300 relative overflow-hidden ${
+                        isPresent
+                          ? "bg-gradient-to-br from-purple-950/25 via-zinc-950/80 to-zinc-950 border border-purple-500/40 shadow-[0_0_25px_rgba(168,85,247,0.12),inset_0_1px_1px_rgba(255,255,255,0.06)] hover:border-purple-500/70"
+                          : isFuture
+                          ? "bg-gradient-to-br from-cyan-950/25 via-zinc-950/80 to-zinc-950 border border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.12),inset_0_1px_1px_rgba(255,255,255,0.06)] hover:border-cyan-500/70"
+                          : "glass-card hover:border-zinc-800 hover:bg-zinc-900/40"
+                      }`}>
+                        {/* Mobile Year & Category Header */}
+                        <div className="flex md:hidden items-center justify-between gap-2 border-b border-zinc-900 pb-2 mb-3">
+                          <span className={`text-xs font-mono font-bold tracking-tight ${
+                            isPresent
+                              ? "text-emerald-400"
+                              : isFuture
+                              ? "text-cyan-400"
+                              : "text-purple-400"
+                          }`}>
+                            {ev.period}
+                          </span>
+                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
+                            isPresent
+                              ? "bg-purple-500/15 text-purple-300 border-purple-500/30"
+                              : isFuture
+                              ? "bg-cyan-500/15 text-cyan-300 border-cyan-500/30"
+                              : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                          }`}>
+                            {ev.category}
                           </span>
                         </div>
-                        <p className="text-xs text-zinc-400 leading-relaxed">{ev.desc}</p>
+
+                        {/* Card Content */}
+                        <div className="flex items-start gap-3 sm:gap-3.5">
+                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border transition-all duration-300 ${
+                            isPresent
+                              ? "bg-purple-950/50 border-purple-500/40 text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.25)]"
+                              : isFuture
+                              ? "bg-cyan-950/50 border-cyan-500/40 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.25)]"
+                              : "bg-zinc-900/90 border-zinc-800 text-zinc-400 group-hover:text-purple-400 group-hover:border-purple-500/40"
+                          }`}>
+                            <Icon className="w-4 h-4" />
+                          </div>
+
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-baseline justify-between gap-2">
+                              <h4 className={`text-sm sm:text-[15px] font-bold font-display tracking-tight leading-snug transition-colors ${
+                                isPresent
+                                  ? "text-purple-200"
+                                  : isFuture
+                                  ? "text-cyan-200"
+                                  : "text-zinc-100 group-hover:text-white"
+                              }`}>
+                                {ev.title}
+                              </h4>
+
+                              {/* Desktop Category Pill */}
+                              <span className={`hidden md:inline-flex items-center text-[10px] font-mono px-2.5 py-0.5 rounded-full border shrink-0 ${
+                                isPresent
+                                  ? "bg-purple-500/15 text-purple-300 border-purple-500/30"
+                                  : isFuture
+                                  ? "bg-cyan-500/15 text-cyan-300 border-cyan-500/30"
+                                  : "bg-zinc-900 text-zinc-400 border-zinc-800"
+                              }`}>
+                                {ev.category}
+                              </span>
+                            </div>
+
+                            <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed mt-1.5 font-sans">
+                              {ev.description}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </motion.div>
                   );
@@ -390,18 +600,18 @@ function AboutSectionComponent() {
                     <GraduationCap className="w-20 h-20" />
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-cyan-400 font-mono">
-                    <span>2024 - 2029 (Expected)</span>
+                    <span>2025 - Present</span>
                     <span>•</span>
-                    <span>KIIT UNIVERSITY</span>
+                    <span>TECHNO MAIN SALT LAKE (TMSL)</span>
                   </div>
                   <h3 className="text-xl font-bold text-white font-display mt-2">B.Tech in Computer Science Engineering</h3>
-                  <p className="text-xs text-purple-400 font-mono mt-0.5">Specialization: Artificial Intelligence & Machine Learning</p>
+                  <p className="text-xs text-purple-400 font-mono mt-0.5">Focus: Core CS, Foundational Algorithms & AI Systems</p>
                   
                   <div className="mt-4 space-y-2 text-xs text-zinc-400 leading-relaxed">
-                    <p>Currently deep inside semesters, building foundational expertise. Core academic curriculum centers on Data Structures, Object Oriented Systems, Discrete Mathematics, and Computer System Organization.</p>
+                    <p>Currently in 1st year B.Tech CSE. Building strong foundations in Operating Systems, Computer Architecture, Mathematics for CS, and foundational programming in C++ and Data Structures.</p>
                     <div className="flex items-center gap-2 pt-3 border-t border-zinc-900 font-mono mt-4">
-                      <span className="text-[10px] text-zinc-500 uppercase">CGPA INDEX:</span>
-                      <span className="text-xs font-bold text-white bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/30">9.06 Cumulative</span>
+                      <span className="text-[10px] text-zinc-500 uppercase">ACADEMIC STATUS:</span>
+                      <span className="text-xs font-bold text-white bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/30">1st Year Undergraduate (Started 2025)</span>
                     </div>
                   </div>
                 </div>
@@ -412,18 +622,18 @@ function AboutSectionComponent() {
                     <BookOpen className="w-20 h-20" />
                   </div>
                   <div className="flex items-center gap-2.5 text-xs text-purple-400 font-mono">
-                    <span>Secondary & High School</span>
+                    <span>CBSE Board Examinations</span>
                     <span>•</span>
                     <span>ADITYA BIRLA VANI BHARATI</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white font-display mt-2">High School Certification</h3>
-                  <p className="text-xs text-zinc-400 mt-0.5">Focus areas: Advanced Mathematics, Physics, Chemistry, Computer Sciences.</p>
+                  <h3 className="text-xl font-bold text-white font-display mt-2">Secondary & Senior Secondary</h3>
+                  <p className="text-xs text-zinc-400 mt-0.5">Rigorous coursework in Mathematics, Physics, Chemistry & Computer Science.</p>
 
                   <div className="mt-4 space-y-2 text-xs text-zinc-400 leading-relaxed">
-                    <p>Mastered robust foundations of logic proofs, inorganic chemical metrics, classical Newtonian dynamics, and procedural computer sciences using basic paradigms.</p>
+                    <p>Scored 92.6% in CBSE Class 10 Board Examinations (2023) and 86.2% in CBSE Class 12 Board Examinations (2025).</p>
                     <div className="flex items-center gap-2 pt-3 border-t border-zinc-900 font-mono mt-4">
-                      <span className="text-[10px] text-zinc-500 uppercase">Performance Status:</span>
-                      <span className="text-xs font-bold text-white bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-900/30">Science Stream Honors</span>
+                      <span className="text-[10px] text-zinc-500 uppercase">BOARD RESULTS:</span>
+                      <span className="text-xs font-bold text-white bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-900/30">Class 10: 92.6% | Class 12: 86.2%</span>
                     </div>
                   </div>
                 </div>
@@ -437,7 +647,7 @@ function AboutSectionComponent() {
                 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
                   {[
-                    { name: "Biology", desc: "Deciphing complex multicellular patterns, organic neural pathways, and evolutionary sorting algorithms." },
+                    { name: "Biology", desc: "Deciphering complex multicellular patterns, organic neural pathways, and evolutionary structures." },
                     { name: "Chemistry", desc: "Calculating thermodynamic rates, kinetic structures, electron vectors, and balance matrices." },
                     { name: "Information Technology", desc: "Assembling robust compiler sequences, linear data structures, search pathways, and data tables." }
                   ].map((item, idx) => (
@@ -451,14 +661,14 @@ function AboutSectionComponent() {
 
               {/* Certified listings */}
               <div className="p-6 glass-card rounded-3xl space-y-4">
-                <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-wider">Accreditation Registry</span>
-                <h3 className="text-lg font-bold text-white font-display">Credentials & Specialized Certificates</h3>
+                <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-wider">Verified Honors</span>
+                <h3 className="text-lg font-bold text-white font-display">Competitions & Key Achievements</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
                   {[
-                    "Stanford Machine Learning Specialization",
-                    "Meta Front-End Developer Professional",
-                    "Google Cloud Engineer Associate Scope",
-                    "KIIT Algorithmic Competitive Index"
+                    "Technex'26 IIT BHU Finalist (5/6)",
+                    "Toycathon Finals — Top 15 (National)",
+                    "Smart India Hackathon (SIH 2026)",
+                    "District Table Tennis Representative"
                   ].map((cert, idx) => (
                     <div key={idx} className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl flex items-center gap-3">
                       <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />

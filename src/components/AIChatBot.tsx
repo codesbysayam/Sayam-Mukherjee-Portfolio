@@ -17,7 +17,7 @@ export default function AIChatBot() {
     {
       id: "initial",
       role: "assistant",
-      text: "Hi there! I am Sayam's AI Representative. 🤖\n\nAsk me anything about Sayam's skills, academics, KIIT semester, freelance thumbnail work, or computer vision projects like **Obsidian Optics**!",
+      text: "Hi there! I am Sayam's AI Representative. 🤖\n\nAsk me anything about Sayam's skills, academics at Techno Main Salt Lake (TMSL), computer vision projects like **Obsidian Optics**, or his competition achievements!",
       timestamp: new Date(),
     },
   ]);

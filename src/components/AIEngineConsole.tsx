@@ -53,7 +53,7 @@ function AIEngineConsole() {
         name: "Stock Markets", 
         synergy: 96, 
         icon: "📈", 
-        scenario: "Alpha Algorithmic Traders! You'll run SMA/EMA crossover analysis on candlestick intervals and build predictive sentiment models to identify market opportunities." 
+        scenario: "Financial & Market Modeling! Exploring candlestick trends, volume indicators, and disciplined market analytics." 
       },
       { 
         name: "Django/Kotlin", 
@@ -67,22 +67,22 @@ function AIEngineConsole() {
   const quizQuestions = useMemo(() => {
     return [
       {
-        question: "What is Sayam's current verified university CGPA?",
-        options: ["8.15", "9.06", "9.45", "7.90"],
-        correct: "9.06",
-        explanation: "Sayam maintains a strong 9.06 CGPA specializing in AI and Machine Learning at KIIT University."
+        question: "Where does Sayam pursue his undergraduate B.Tech in Computer Science?",
+        options: ["IIT Bombay", "Techno Main Salt Lake (TMSL)", "BITS Pilani", "NIT Durgapur"],
+        correct: "Techno Main Salt Lake (TMSL)",
+        explanation: "Sayam is currently in his 1st year pursuing a B.Tech in Computer Science Engineering at Techno Main Salt Lake (TMSL), Kolkata."
       },
       {
-        question: "Which of these is NOT a core learning focus of Sayam?",
-        options: ["Transformers Architecture", "Dynamic Programming & Graphs", "Stock Technical Indicators", "Blockchain & Web3"],
-        correct: "Blockchain & Web3",
-        explanation: "Sayam's learning focus is dedicated to AI/ML (Transformers, DNNs), core DSA (Graphs, DP), and stock technical analysis."
+        question: "Which national innovation competition did Sayam reach the finals as a Top 15 team in 2021?",
+        options: ["Toycathon", "Smart India Hackathon", "Imagine Cup", "Flipkart GRIDs"],
+        correct: "Toycathon",
+        explanation: "In 2021, Sayam reached the finals and secured a Top 15 national position in Toycathon."
       },
       {
-        question: "What semester is Sayam currently studying in?",
-        options: ["1st Semester", "2nd Semester", "3rd Semester", "4th Semester"],
-        correct: "3rd Semester",
-        explanation: "He is currently an undergraduate student in his 3rd semester."
+        question: "What achievement did Sayam secure at IIT BHU Technex'26?",
+        options: ["Finalist in 5 out of 6 competitions", "Attended as spectator", "2nd Runner-up", "Hackathon mentor"],
+        correct: "Finalist in 5 out of 6 competitions",
+        explanation: "At IIT BHU Techfest (Technex'26), Sayam stood as a finalist across 5 out of 6 competitions."
       }
     ];
   }, []);

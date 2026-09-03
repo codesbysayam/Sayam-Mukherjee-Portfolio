@@ -22,8 +22,8 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     title: "B.Tech – CSE (AI & ML)",
     contact: {
       phone: "+91-6290921813",
-      email: "25155271@kiit.ac.in",
-      location: "School of Computer Science, KIIT University, Bhubaneswar – 751024",
+      email: "wrickbusiness@gmail.com",
+      location: "Kolkata, West Bengal, India",
       dob: "15.06.2006"
     },
     skills: ["Communication", "Teamwork", "Problem Solving", "Time Management", "Adaptability"],
@@ -33,11 +33,11 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     careerObjective: "To pursue a challenging role in a dynamic organization where I can apply my foundational knowledge in Computer Science and Artificial Intelligence & Machine Learning, enhance my technical skills, and contribute effectively while continuously learning and growing as a professional.",
     academics: [
       {
-        degree: "B.Tech - Computer Science & Engineering (AI & ML)",
+        degree: "B.Tech - Computer Science & Engineering",
         period: "2025-2029",
-        institution: "KIIT University, Bhubaneswar",
-        scoreLabel: "GPA",
-        score: "9.06"
+        institution: "Techno Main Salt Lake (TMSL), Kolkata",
+        scoreLabel: "Status",
+        score: "1st Year (Enrolled 2025)"
       },
       {
         degree: "Senior Secondary (12th - CBSE)",
@@ -297,7 +297,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               {/* DOB and details */}
               <div className="flex flex-wrap justify-center md:justify-start gap-4 text-xs text-zinc-400 pt-1">
                 <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5 text-zinc-500" /> DOB: {resumeData.contact.dob}</span>
-                <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-zinc-500" /> KIIT, Bhubaneswar</span>
+                <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-zinc-500" /> {resumeData.contact.location}</span>
               </div>
             </div>
           </div>

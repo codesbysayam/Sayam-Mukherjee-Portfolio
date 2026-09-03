@@ -234,7 +234,7 @@ export default function ContactSection() {
   const faqList = [
     {
       q: "Who is Sayam Mukherjee?",
-      a: "Sayam is an undergraduate Computer Science Engineering student specialized in AI & ML at KIIT University (CGPA 9.06) located in Kolkata, West Bengal, India. He builds production-ready full-stack websites, optimizes computer vision algorithms, and manages high-quality digital design workflows."
+      a: "Sayam is an undergraduate Computer Science Engineering student at Techno Main Salt Lake (TMSL) located in Kolkata, West Bengal, India. He builds production-ready full-stack software, explores computer vision and algorithms, and crafts high-quality digital architectures."
     },
     {
       q: "What programming languages and frameworks do you use?",
@@ -372,7 +372,7 @@ export default function ContactSection() {
               </div>
 
               {/* Edge lines */}
-              <div className="absolute top-2 left-2 text-[9px] font-mono text-zinc-700 select-none">KIIT_CSE_ML</div>
+              <div className="absolute top-2 left-2 text-[9px] font-mono text-zinc-700 select-none">TMSL_CSE_2025</div>
               <div className="absolute bottom-2 right-2 text-[9px] font-mono text-zinc-700 select-none">SYS_ACTIVE_M8</div>
             </div>
           </div>

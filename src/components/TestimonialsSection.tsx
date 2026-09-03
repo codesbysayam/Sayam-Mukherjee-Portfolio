@@ -38,7 +38,7 @@ export default function TestimonialsSection() {
           What Collaborators Say
         </h2>
         <p className="text-sm text-zinc-400 leading-relaxed">
-          Read reviews from research professors, global Youtube content creators, and professional developers.
+          Feedback and recommendations from peers, project teammates, and clients.
         </p>
       </div>
 

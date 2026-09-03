@@ -65,17 +65,17 @@ export const SAYAM_DATA = {
     'Building Beyond Code.',
     'Software With Purpose.'
   ],
-  bio: 'I am a Computer Science Engineering student specializing in Artificial Intelligence and Machine Learning, passionate about building scalable software, intelligent systems, and meaningful digital experiences. I enjoy transforming ideas into real-world products through continuous learning, disciplined execution, and creative problem-solving.',
+  bio: 'I am a 2nd Year Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar, passionate about building scalable software, intelligent systems, and meaningful digital experiences. I enjoy transforming ideas into real-world products through continuous learning, disciplined execution, and creative problem-solving.',
   stats: {
-    cgpa: '9.06',
-    university: 'KIIT University',
-    semester: '3rd',
-    location: 'Kolkata, India',
-    focus: ['AI/ML', 'Full Stack', 'DSA', 'Technical Analysis'],
-    githubCommits: 'Verified GitHub Active Node',
-    codingStreak: 'Continuous Learning',
-    projectsCompleted: 'Active Core Repository Stack',
-    happyClients: '15'
+    cgpa: '2nd Year',
+    university: 'Kalinga Institute of Industrial Technology, Bhubaneswar',
+    semester: '2nd Year',
+    location: 'Bhubaneswar, Odisha (Hometown: Hooghly, WB)',
+    focus: ['C++', 'DSA', 'Computer Vision', 'Full Stack'],
+    githubCommits: 'Live GitHub Activity',
+    codingStreak: 'Active Routine',
+    projectsCompleted: '7 Verified Projects',
+    happyClients: '10'
   },
   socials: {
     linkedin: 'https://www.linkedin.com/in/sayam-mukherjee-b96209324/',
@@ -122,23 +122,23 @@ export const SAYAM_DATA = {
     }
   ] as SkillGroup[],
   learningDashboard: {
-    currentFocus: 'Deep Neural Networks, Advanced Data Structures (Graphs & DP), and Stock Technical Analysis.',
+    currentFocus: 'Operating Systems, Computer Architecture, Mathematics for CS, C++ DSA, and Computer Vision.',
     books: [
-      { title: 'Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow', author: 'Aurélien Géron', progress: 65 },
-      { title: 'Designing Data-Intensive Applications', author: 'Martin Kleppmann', progress: 40 }
+      { title: 'Operating Systems: Three Easy Pieces', author: 'Remzi H. Arpaci-Dusseau', progress: 50 },
+      { title: 'Introduction to Algorithms (CLRS)', author: 'Cormen, Leiserson, Rivest, Stein', progress: 40 }
     ],
     items: [
-      { name: 'Recurrent Neural Networks & LSTM', progress: 85, status: 'Learning', resource: 'Stanford CS231n' },
-      { name: 'Dynamic Programming & Graph Algorithms', progress: 75, status: 'Learning', resource: 'LeetCode & Core Books' },
-      { name: 'Stock Technical Indicators & SMA/EMA Crossover strategies', progress: 90, status: 'Reviewing', resource: 'Investopedia / TradingView Academy' },
-      { name: 'Transformers Architecture (Self-Attention)', progress: 50, status: 'Learning', resource: 'Attention Is All You Need Paper' }
+      { name: 'Core Foundations: Operating Systems & Architecture', progress: 65, status: 'Learning', resource: 'University Curriculum' },
+      { name: 'Programming & DSA: Learning C++ & Foundations', progress: 50, status: 'Learning', resource: 'LeetCode & Problem Sets' },
+      { name: 'AI & Vision: Exploring OpenCV & YOLOv8', progress: 55, status: 'Learning', resource: 'Computer Vision Exploration' },
+      { name: 'Web Architecture: TypeScript & Next.js/React', progress: 70, status: 'Active', resource: 'Production Deployments' }
     ] as LearningItem[],
     leetcode: {
-      solved: 312,
-      target: 500,
-      easy: 120,
-      medium: 162,
-      hard: 30
+      solved: 0,
+      target: 100,
+      easy: 0,
+      medium: 0,
+      hard: 0
     }
   },
   experience: [
@@ -170,7 +170,7 @@ export const SAYAM_DATA = {
     }
   ] as Certification[],
   achievements: [
-    'Academic Excellence (GPA: 9.06)',
+    'B.Tech CSE (AI & ML) – Kalinga Institute of Industrial Technology, Bhubaneswar',
     '1st Position – Inter-school Table Tennis (3x)',
     'Finalist – Toycathon (Government of India)',
     'Aagaz 2.0 – Physics Wallah Workshop',

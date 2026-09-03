@@ -231,8 +231,8 @@ export const EXTENDED_DATA = {
       id: 'test-1',
       name: 'Rohan Sharma',
       role: 'Lead Visual Strategist',
-      organization: 'TechVibe YouTube Channel (450K+ Subs)',
-      content: "Sayam transformed our YouTube click-through rates. His execution speed and grasp of visual psychology are exceptional.",
+      organization: 'TechVibe Media',
+      content: "Sayam transformed our visual assets. His execution speed and grasp of design clarity are exceptional.",
       type: 'Client'
     }
   ] as TestimonialItem[],

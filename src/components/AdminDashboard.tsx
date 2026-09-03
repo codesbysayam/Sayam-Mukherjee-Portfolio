@@ -1271,7 +1271,7 @@ export default function AdminDashboard() {
                         value={editingTimeline.description?.join("\n") || ""}
                         onChange={(e) => setEditingTimeline({...editingTimeline, description: e.target.value.split("\n").filter(t => t.trim())})}
                         className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none font-mono"
-                        placeholder="Optimized YOLO inference speed by 40%&#10;Partnered with 25+ global creator clients"
+                        placeholder="Engineered computer vision tracking pipeline&#10;Built interactive full-stack client applications"
                       />
                     </div>
 

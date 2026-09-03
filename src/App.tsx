@@ -659,53 +659,52 @@ function AppContent() {
           <div className="absolute bottom-[22%] left-[5%] liquid-blob liquid-blob-3 pointer-events-none select-none" />
           <div className="absolute bottom-[38%] right-[3%] liquid-blob liquid-blob-4 pointer-events-none select-none" />
 
-          {/* Floating Liquid Glass Dock */}
-          <header className={`fixed top-4 left-1/2 -translate-x-1/2 z-45 w-[92%] max-w-5xl rounded-full transition-all duration-500 ${
-            isScrolled 
-              ? theme === "dark"
-                ? "glass-card py-2.5 px-4 shadow-[0_16px_40px_rgba(0,0,0,0.65),inset_0_1px_2px_rgba(255,255,255,0.18)] border-white/[0.08]"
-                : "glass-card py-2.5 px-4 shadow-[0_12px_32px_rgba(0,0,0,0.06),inset_0_1px_2px_rgba(255,255,255,0.92)] border-zinc-200/80"
-              : "bg-transparent py-4 border-transparent"
+          {/* Fixed / Sticky Top Header (Remains static and pinned at the top while page content scrolls) */}
+          <header className={`sticky top-0 w-full z-50 border-b transition-all duration-300 backdrop-blur-xl ${
+            theme === "dark"
+              ? isScrolled
+                ? "bg-[#050508]/95 border-zinc-800 shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
+                : "bg-[#050508]/90 border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
+              : isScrolled
+                ? "bg-white/95 border-zinc-200 shadow-md"
+                : "bg-white/90 border-zinc-200/80 shadow-sm"
           }`}>
-            <div className="w-full px-2 sm:px-4 flex items-center justify-between">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-4">
               
               {/* Logotype */}
               <button 
                 onClick={() => setActiveTab("home")}
-                className="flex items-center gap-2 relative group cursor-pointer text-left"
+                className="flex items-center gap-3 shrink-0 relative group cursor-pointer text-left focus:outline-none"
+                aria-label="Sayam Mukherjee Home"
               >
-                <div className="w-8 h-8 rounded-full overflow-hidden border border-zinc-800 bg-zinc-900 flex items-center justify-center shadow-md">
+                <div className="w-9 h-9 rounded-full overflow-hidden border border-zinc-800 bg-zinc-900 flex items-center justify-center shadow-md shrink-0 group-hover:border-purple-500/50 transition-colors">
                   <img 
                     src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
                     alt="Sayam Mukherjee" 
-                    width={32}
-                    height={32}
+                    width={36}
+                    height={36}
                     loading="eager"
                     decoding="async"
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-xs font-bold tracking-tight text-zinc-100 font-sans leading-none">Sayam Mukherjee</span>
-                  <span className="text-[9px] text-zinc-500 font-mono tracking-wider mt-0.5">UNDERGRADUATE</span>
+                  <span className={`text-sm font-bold tracking-tight font-sans leading-none transition-colors group-hover:text-purple-400 ${
+                    theme === "dark" ? "text-zinc-100" : "text-zinc-900"
+                  }`}>
+                    Sayam Mukherjee
+                  </span>
+                  <span className="text-[9px] text-zinc-500 font-mono tracking-wider mt-1 font-medium">
+                    UNDERGRADUATE • AI &amp; DEV
+                  </span>
                 </div>
               </button>
 
-              {/* Raycast Trigger Search Pill */}
-              <button 
-                onClick={() => setIsCommandMenuOpen(true)}
-                className="hidden lg:flex items-center gap-3 px-3.5 py-1.5 bg-zinc-950/60 border border-zinc-900 rounded-full text-[11px] text-zinc-500 hover:text-zinc-300 hover:border-zinc-800 hover:bg-zinc-900/40 transition-all cursor-pointer select-none"
-              >
-                <Search className="w-3.5 h-3.5" />
-                <span>Search Workspace (Ctrl+K)</span>
-                <span className="text-[9px] bg-zinc-900 border border-zinc-850 px-1.5 py-0.5 rounded font-mono uppercase">⌘K</span>
-              </button>
-
-              {/* Desktop Directory Menu (Sleek Tech Capsule Tab Group) */}
-              <nav className={`hidden md:flex items-center gap-1.5 p-1.5 rounded-full backdrop-blur-xl relative z-10 transition-all ${
+              {/* Desktop Directory Menu (Capsule Tab Group) */}
+              <nav className={`hidden lg:flex items-center gap-1 p-1 rounded-full backdrop-blur-xl shrink-0 transition-all ${
                 theme === "dark" 
-                  ? "bg-black/45 border border-white/[0.06] shadow-[0_12px_30px_rgba(0,0,0,0.5)]" 
-                  : "bg-white/70 border border-zinc-200 shadow-[0_8px_24px_rgba(0,0,0,0.05)]"
+                  ? "bg-zinc-900/70 border border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]" 
+                  : "bg-zinc-100/90 border border-zinc-200 shadow-sm"
               }`}>
                 {[
                   { id: "home", label: "Home", shortcut: "H" },
@@ -721,10 +720,10 @@ function AppContent() {
                     <button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id as any)}
-                      title={`${tab.label} (Press '${tab.shortcut}' or use arrow keys)`}
-                      className={`relative px-4 py-1.5 rounded-full text-[11px] font-semibold tracking-wide transition-all duration-300 cursor-pointer ${
+                      title={`${tab.label} (Press '${tab.shortcut}')`}
+                      className={`relative px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer whitespace-nowrap select-none ${
                         isActive 
-                          ? theme === "dark" ? "text-white font-extrabold" : "text-black font-extrabold"
+                          ? theme === "dark" ? "text-white" : "text-zinc-950"
                           : theme === "dark" ? "text-zinc-400 hover:text-zinc-100" : "text-zinc-500 hover:text-zinc-900"
                       }`}
                     >
@@ -733,10 +732,10 @@ function AppContent() {
                           layoutId="activeTabIndicator"
                           className={`absolute inset-0 rounded-full -z-10 ${
                             theme === "dark"
-                              ? "bg-white/[0.08] border border-white/[0.12] shadow-[inset_0_1px_1px_rgba(255,255,255,0.05),0_4px_12px_rgba(0,0,0,0.2)]"
-                              : "bg-zinc-100 border border-zinc-200/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_2px_8px_rgba(0,0,0,0.02)]"
+                              ? "bg-zinc-800 border border-zinc-700/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]"
+                              : "bg-white border border-zinc-200/90 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
                           }`}
-                          transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                          transition={{ type: "spring", stiffness: 420, damping: 32 }}
                         />
                       )}
                       {tab.label}
@@ -745,128 +744,141 @@ function AppContent() {
                 })}
               </nav>
 
-              {/* Action Buttons */}
-              <div className="hidden md:flex items-center gap-2.5">
-                <LiveISTClock />
+              {/* Right Action Controls */}
+              <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+                {/* Raycast Quick Search Pill */}
+                <button 
+                  onClick={() => setIsCommandMenuOpen(true)}
+                  className="hidden sm:flex items-center gap-2 px-2.5 py-1.5 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 transition-all cursor-pointer select-none"
+                  title="Search Workspace (Ctrl+K or ⌘K)"
+                >
+                  <Search className="w-3.5 h-3.5" />
+                  <span className="hidden xl:inline text-xs">Search</span>
+                  <span className="text-[10px] font-mono bg-zinc-800/80 border border-zinc-750 px-1.5 py-0.5 rounded text-zinc-400 uppercase">⌘K</span>
+                </button>
+
+                {/* Live IST Clock */}
+                <div className="hidden xl:block shrink-0">
+                  <LiveISTClock />
+                </div>
+
+                {/* Visual Theme Toggle */}
                 <button
                   onClick={toggleTheme}
-                  className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white rounded-xl transition-all cursor-pointer"
-                  title="Toggle System Visual Theme"
+                  className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white rounded-lg transition-all cursor-pointer shrink-0"
+                  title="Toggle Visual Theme"
+                  aria-label="Toggle Theme"
                 >
                   {theme === "dark" ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-400" />}
                 </button>
+
+                {/* Resume Button */}
                 <button
                   onClick={() => {
                     triggerConfetti();
                     setIsResumeModalOpen(true);
                   }}
-                  className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-semibold px-3.5 py-2 rounded-xl transition-all duration-300 flex items-center gap-1.5 cursor-pointer"
+                  className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer shrink-0"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Resume</span>
                 </button>
+
+                {/* Contact Button */}
                 <button
                   onClick={() => setActiveTab("contact")}
-                  className="bg-white hover:bg-zinc-100 text-black text-xs font-semibold px-4 py-2 rounded-xl transition-all duration-300 cursor-pointer border border-zinc-200 shadow-sm"
+                  className="px-3.5 py-1.5 bg-white hover:bg-zinc-100 text-black text-xs font-semibold rounded-lg shadow-sm transition-all duration-200 cursor-pointer shrink-0 border border-zinc-200"
                 >
                   Contact
                 </button>
-              </div>
 
-              {/* Mobile burger toggle */}
-              <button
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden p-2 bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-400 hover:text-white cursor-pointer"
-              >
-                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
+                {/* Mobile / Tablet Menu Toggle */}
+                <button
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  className="lg:hidden p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white cursor-pointer shrink-0"
+                  aria-label="Toggle navigation menu"
+                >
+                  {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                </button>
+              </div>
             </div>
+
+            {/* Mobile Expandable Drawer Menu (statically positioned under header) */}
+            <AnimatePresence>
+              {isMenuOpen && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="lg:hidden border-t border-zinc-800 bg-[#0c0c0f] py-4 px-6 shadow-2xl overflow-hidden"
+                >
+                  <div className="flex flex-col gap-2.5 text-sm font-medium text-zinc-300">
+                    {[
+                      { id: "home", label: "Home" },
+                      { id: "about", label: "About" },
+                      { id: "skills", label: "Skills" },
+                      { id: "ecosystem", label: "Ecosystem" },
+                      { id: "projects", label: "Projects" },
+                      { id: "journal", label: "Journal" },
+                      { id: "contact", label: "Contact" }
+                    ].map((tab) => (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveTab(tab.id as any);
+                          setIsMenuOpen(false);
+                        }}
+                        className={`text-left py-2 px-3 rounded-lg hover:bg-zinc-900 transition-colors flex items-center justify-between ${
+                          activeTab === tab.id ? "bg-purple-500/10 text-purple-400 font-bold border border-purple-500/20" : "text-zinc-400"
+                        }`}
+                      >
+                        <span>{tab.label}</span>
+                        {activeTab === tab.id && <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />}
+                      </button>
+                    ))}
+                    
+                    <div className="flex items-center gap-2 pt-3 border-t border-zinc-900">
+                      <button
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          setIsCommandMenuOpen(true);
+                        }}
+                        className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-300"
+                      >
+                        <Search className="w-3.5 h-3.5" />
+                        <span>Search (⌘K)</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          triggerConfetti();
+                          setIsMenuOpen(false);
+                          setIsResumeModalOpen(true);
+                        }}
+                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-zinc-900 border border-zinc-800 rounded-lg text-xs font-semibold text-zinc-300"
+                      >
+                        <FileText className="w-3.5 h-3.5" />
+                        <span>Resume</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          toggleTheme();
+                          setIsMenuOpen(false);
+                        }}
+                        className="p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300"
+                        aria-label="Toggle visual theme"
+                      >
+                        {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </header>
 
-          {/* Mobile expandable drawer menu */}
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                className="fixed top-16 left-0 right-0 bg-[#0c0c0f] z-30 border-b border-zinc-800 py-6 px-6 shadow-2xl md:hidden"
-              >
-                <div className="flex flex-col gap-4 text-sm font-medium text-zinc-400">
-                  {[
-                    { id: "home", label: "Home" },
-                    { id: "about", label: "About" },
-                    { id: "skills", label: "Skills" },
-                    { id: "ecosystem", label: "Ecosystem" },
-                    { id: "projects", label: "Projects" },
-                    { id: "journal", label: "Journal" },
-                    { id: "contact", label: "Contact" }
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => {
-                        setActiveTab(tab.id as any);
-                        setIsMenuOpen(false);
-                      }}
-                      className={`text-left py-1 hover:text-white transition-colors ${
-                        activeTab === tab.id ? "text-purple-400 font-bold" : ""
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                  
-                  <div className="flex gap-2 pt-4 border-t border-zinc-900">
-                    <button
-                      onClick={() => {
-                        setReadingMode(!readingMode);
-                        setIsMenuOpen(false);
-                      }}
-                      className={`p-2.5 border rounded-xl ${
-                        readingMode 
-                          ? "bg-orange-500/10 border-orange-500/30 text-orange-400" 
-                          : "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white"
-                      }`}
-                    >
-                      <BookOpen className="w-4 h-4" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        toggleTheme();
-                        setIsMenuOpen(false);
-                      }}
-                      className="p-2.5 bg-zinc-900 border border-zinc-800 rounded-xl text-zinc-400 hover:text-white"
-                    >
-                      {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
-                    </button>
-                    <button
-                      onClick={() => {
-                        triggerConfetti();
-                        setIsMenuOpen(false);
-                        setIsResumeModalOpen(true);
-                      }}
-                      className="flex-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 py-2.5 rounded-xl text-xs font-semibold text-center flex items-center justify-center gap-1.5 text-zinc-300 hover:text-white"
-                    >
-                      <FileText className="w-4 h-4" />
-                      <span>Resume</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        setActiveTab("contact");
-                        setIsMenuOpen(false);
-                      }}
-                      className="w-full bg-gradient-to-r from-purple-600 to-indigo-700 py-2.5 rounded-xl text-xs font-semibold text-center text-white mt-1"
-                    >
-                      Contact
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
           {/* Main Content Layout with Framer Motion tab transition routing */}
-          <main className="relative z-10 max-w-7xl mx-auto px-6 pt-28 md:pt-36 pb-12 overflow-x-clip">
+          <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-16 overflow-x-clip">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -900,23 +912,21 @@ function AppContent() {
                           className="lg:col-span-7 space-y-8 text-left"
                         >
                           
-                          {/* Floating Availability Tag */}
+                          {/* Top Badges Row */}
                           <motion.div 
                             variants={staggerItem}
-                            className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-zinc-900/60 border border-zinc-900 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]"
+                            className="flex flex-wrap items-center gap-3"
                           >
-                            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
-                            <span className="text-[10px] text-zinc-300 font-mono uppercase tracking-widest font-semibold">
-                              System Online • Ready for Collaborations
-                            </span>
-                          </motion.div>
- 
-                          {/* Dynamic rotating tagline header */}
-                          <motion.div 
-                            variants={staggerItem}
-                            className="inline-flex h-7 items-center px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full overflow-hidden select-none"
-                          >
-                            <RotatingTagline />
+                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-zinc-900/80 border border-zinc-800 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
+                              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
+                              <span className="text-[10px] text-zinc-300 font-mono uppercase tracking-wider font-semibold">
+                                System Online • Ready for Collaborations
+                              </span>
+                            </div>
+
+                            <div className="inline-flex h-7 items-center px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full overflow-hidden select-none">
+                              <RotatingTagline />
+                            </div>
                           </motion.div>
  
                           {/* Character Heading Reveal style */}
@@ -964,10 +974,10 @@ function AppContent() {
                           >
                             <div className="glass-card p-4 rounded-2xl group border border-zinc-900 flex flex-col justify-between hover:scale-[1.02] transition-all">
                               <div className="flex justify-between items-center text-zinc-500">
-                                <span className="text-[9px] uppercase font-mono tracking-widest font-semibold">KIIT CGPA</span>
+                                <span className="text-[9px] uppercase font-mono tracking-widest font-semibold">DEGREE TRACK</span>
                                 <Brain className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform duration-300" />
                               </div>
-                              <span className="text-xl sm:text-2xl font-extrabold text-white font-display mt-3 block group-hover:text-purple-400 transition-colors">{SAYAM_DATA.stats.cgpa}</span>
+                              <span className="text-xl sm:text-2xl font-extrabold text-white font-display mt-3 block group-hover:text-purple-400 transition-colors">B.Tech CSE</span>
                             </div>
                             <div className="glass-card p-4 rounded-2xl group border border-zinc-900 flex flex-col justify-between hover:scale-[1.02] transition-all">
                               <div className="flex justify-between items-center text-zinc-500">

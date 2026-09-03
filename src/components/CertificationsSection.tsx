@@ -263,17 +263,17 @@ export default function CertificationsSection() {
                 <GraduationCap className="w-8 h-8 text-cyan-400" />
                 <h4 className="text-base font-bold text-white font-display tracking-tight">Academic Profile Summary</h4>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  Consistently ranking in the top tier of my Computer Science & Engineering department through continuous practice of algorithm design.
+                  Pursuing B.Tech in Computer Science & Engineering (AI & ML) at Techno Main Salt Lake (TMSL), Kolkata, with a dedicated focus on algorithmic foundations and system design.
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                    <span className="text-[9px] text-zinc-500 block uppercase font-mono">CURRENT CGPA</span>
-                    <span className="text-xl font-bold text-white block mt-0.5 font-display">9.06</span>
+                    <span className="text-[9px] text-zinc-500 block uppercase font-mono">CURRENT STATUS</span>
+                    <span className="text-xs font-bold text-white block mt-1 font-display">1st Year Undergrad</span>
                   </div>
                   <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                    <span className="text-[9px] text-zinc-500 block uppercase font-mono">CSE COHORT</span>
-                    <span className="text-sm font-bold text-cyan-400 block mt-1.5 font-display">TOP 10%</span>
+                    <span className="text-[9px] text-zinc-500 block uppercase font-mono">INSTITUTION</span>
+                    <span className="text-xs font-bold text-cyan-400 block mt-1 font-display">TMSL, Kolkata</span>
                   </div>
                 </div>
               </div>

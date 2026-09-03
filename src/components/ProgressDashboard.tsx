@@ -13,44 +13,23 @@ export default function ProgressDashboard() {
   const [activeTrack, setActiveTrack] = useState<"coding" | "reading" | "gym" | "projects" | "blogs" | "learning">("coding");
   const [graphMetric, setGraphMetric] = useState<"hours" | "items">("hours");
 
-  // Animated counters state
-  const [codingHours, setCodingHours] = useState(480);
-  const [projectsCount, setProjectsCount] = useState(0);
-  const [certificatesCount, setCertificatesCount] = useState(0);
-  const [hackathonsCount, setHackathonsCount] = useState(0);
-  const [competitionsCount, setCompetitionsCount] = useState(0);
+  // Factual telemetry registers
+  const codingHours = "1 hr / day";
+  const projectsCount = 7; // Verified projects
+  const competitionsCount = "5/6 Finals"; // IIT BHU Technex'26
+  const hackathonsCount = "SIH 2026"; // Smart India Hackathon MAUSAM
 
   // Life Balance state (Adjusted manually!)
   const [balanceValues, setBalanceValues] = useState({
     Coding: 85,
-    Health: 75,
+    Health: 80,
     Finance: 65,
-    Learning: 90,
-    Relationships: 70,
-    Creativity: 80,
+    Learning: 92,
+    Relationships: 75,
+    Creativity: 82,
     Productivity: 88,
     Entertainment: 60
   });
-
-  useEffect(() => {
-    let p = 0;
-    let c = 0;
-    let h = 0;
-    let comp = 0;
-
-    const pInterval = setInterval(() => {
-      let done = true;
-      if (p < 14) { p++; setProjectsCount(p); done = false; }
-      if (c < 8) { c++; setCertificatesCount(c); done = false; }
-      if (h < 4) { h++; setHackathonsCount(h); done = false; }
-      if (comp < 6) { comp++; setCompetitionsCount(comp); done = false; }
-      if (done) clearInterval(pInterval);
-    }, 80);
-
-    return () => {
-      clearInterval(pInterval);
-    };
-  }, []);
 
   // Pre-seed Heatmap grids depending on track
   const getHeatmapGrid = () => {
@@ -145,18 +124,18 @@ export default function ProgressDashboard() {
               </div>
               <div className="glass-card p-4 rounded-2xl relative overflow-hidden">
                 <BookOpen className="w-4 h-4 text-cyan-400 mb-2" />
-                <span className="text-[9px] text-zinc-500 block uppercase font-mono">Daily Reading Target</span>
-                <span className="text-base font-bold text-white font-display mt-0.5 block">15 Pages / day</span>
+                <span className="text-[9px] text-zinc-500 block uppercase font-mono">Academic Study Cadence</span>
+                <span className="text-base font-bold text-white font-display mt-0.5 block">5–7h (8–9h w/e)</span>
               </div>
               <div className="glass-card p-4 rounded-2xl relative overflow-hidden">
                 <Dumbbell className="w-4 h-4 text-emerald-400 mb-2" />
-                <span className="text-[9px] text-zinc-500 block uppercase font-mono">Daily Athletic target</span>
-                <span className="text-base font-bold text-white font-display mt-0.5 block">Gym session / day</span>
+                <span className="text-[9px] text-zinc-500 block uppercase font-mono">Athletic Conditioning</span>
+                <span className="text-base font-bold text-white font-display mt-0.5 block">5 sessions / wk</span>
               </div>
               <div className="glass-card p-4 rounded-2xl relative overflow-hidden">
                 <Clock className="w-4 h-4 text-amber-500 mb-2 animate-pulse" />
-                <span className="text-[9px] text-zinc-500 block uppercase font-mono">Productive Focus</span>
-                <span className="text-base font-bold text-white font-display mt-0.5 block">9.5 Hours / day</span>
+                <span className="text-[9px] text-zinc-500 block uppercase font-mono">Core Foundations</span>
+                <span className="text-base font-bold text-white font-display mt-0.5 block">C++, DSA & OS</span>
               </div>
             </div>
           </div>
@@ -167,19 +146,19 @@ export default function ProgressDashboard() {
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <span className="text-2xl font-extrabold text-white font-display">{projectsCount}</span>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase">Repositories</p>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase">Verified Projects</p>
               </div>
               <div>
-                <span className="text-2xl font-extrabold text-white font-display">{codingHours}h+</span>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase">Code Sessions</p>
+                <span className="text-2xl font-extrabold text-white font-display">{codingHours}</span>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase">Coding Cadence</p>
               </div>
               <div>
-                <span className="text-2xl font-extrabold text-white font-display">{certificatesCount}</span>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase">Credentials</p>
+                <span className="text-2xl font-extrabold text-white font-display">{competitionsCount}</span>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase">Technex'26 Finals</p>
               </div>
               <div>
                 <span className="text-2xl font-extrabold text-white font-display">{hackathonsCount}</span>
-                <p className="text-[10px] text-zinc-500 font-mono uppercase">Hackathons</p>
+                <p className="text-[10px] text-zinc-500 font-mono uppercase">SIH Hackathon</p>
               </div>
             </div>
           </div>
