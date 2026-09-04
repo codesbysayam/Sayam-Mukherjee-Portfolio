@@ -385,3 +385,5 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
     suggestions: ["🛠 Skills", "⚡ Projects", "📩 Contact"],
   },
 ];
+
+export const intents: KnowledgeIntent[] = KNOWLEDGE_INTENTS;
