@@ -23,7 +23,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
     contact: {
       phone: "+91-6290921813",
       email: "wrickbusiness@gmail.com",
-      location: "Kolkata, West Bengal, India",
+      location: "Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)",
       dob: "15.06.2006"
     },
     skills: ["Communication", "Teamwork", "Problem Solving", "Time Management", "Adaptability"],
@@ -35,9 +35,9 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
       {
         degree: "B.Tech - Computer Science & Engineering",
         period: "2025-2029",
-        institution: "Techno Main Salt Lake (TMSL), Kolkata",
+        institution: "Kalinga Institute of Industrial Technology, Bhubaneswar",
         scoreLabel: "Status",
-        score: "1st Year (Enrolled 2025)"
+        score: "2nd Year, 3rd Semester"
       },
       {
         degree: "Senior Secondary (12th - CBSE)",

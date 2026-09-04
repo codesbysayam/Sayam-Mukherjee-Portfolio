@@ -58,7 +58,7 @@ export const VERIFIED_GITHUB_FALLBACK: GitHubStatsData = {
   username: "codesbysayam",
   name: "Sayam Mukherjee",
   avatarUrl: "https://avatars.githubusercontent.com/u/85777731?v=4",
-  bio: "👨‍💻 B.Tech CSE student at Techno Main Salt Lake (TMSL) | Exploring Python, Machine Learning, and Web Development | Building projects and learning by doing",
+  bio: "👨‍💻 2nd Year (3rd Sem) B.Tech CSE student at Kalinga Institute of Industrial Technology, Bhubaneswar | Exploring Python, Machine Learning, and Web Development | Building projects and learning by doing",
   publicRepos: 3,
   followers: 0,
   following: 0,

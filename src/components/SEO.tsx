@@ -14,8 +14,8 @@ interface SEOProps {
 
 export const SEO: React.FC<SEOProps> = ({
   title = "Sayam Mukherjee - AI & ML Developer Portfolio Node",
-  description = "Portfolio of Sayam Mukherjee, Computer Science student at Techno Main Salt Lake (TMSL). AI Developer, Full Stack Engineer, Content Creator, and Freelancer.",
-  keywords = "Sayam Mukherjee, AI Student, Machine Learning Engineer, Techno Main Salt Lake, TMSL, Full Stack Developer, Kolkata Developer",
+  description = "Portfolio of Sayam Mukherjee, 2nd Year (3rd Semester) Computer Science student at Kalinga Institute of Industrial Technology, Bhubaneswar. AI Developer, Full Stack Engineer, and Software Builder.",
+  keywords = "Sayam Mukherjee, AI Student, Machine Learning Engineer, Kalinga Institute of Industrial Technology, Bhubaneswar, KIIT, Full Stack Developer, Hooghly",
   canonicalUrl = "https://sayammukherjee.com",
   imageUrl = "https://picsum.photos/seed/sayam-portfolio/1200/630",
   type = "website",
@@ -87,7 +87,7 @@ export const SEO: React.FC<SEOProps> = ({
       "jobTitle": "AI & ML Specialist Student & Full Stack Web Engineer",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
-        "name": "Techno Main Salt Lake (TMSL)"
+        "name": "Kalinga Institute of Industrial Technology, Bhubaneswar"
       },
       "url": canonicalUrl,
       "image": imageUrl,

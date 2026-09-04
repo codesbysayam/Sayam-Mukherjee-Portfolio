@@ -65,12 +65,12 @@ export const SAYAM_DATA = {
     'Building Beyond Code.',
     'Software With Purpose.'
   ],
-  bio: 'I am a 2nd Year Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar, passionate about building scalable software, intelligent systems, and meaningful digital experiences. I enjoy transforming ideas into real-world products through continuous learning, disciplined execution, and creative problem-solving.',
+  bio: 'I am a 2nd Year (3rd Semester) Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar (hometown: Hooghly, West Bengal), passionate about building scalable software, intelligent systems, and meaningful digital experiences. I enjoy transforming ideas into real-world products through continuous learning, disciplined execution, and creative problem-solving.',
   stats: {
-    cgpa: '2nd Year',
+    cgpa: '2nd Year (3rd Semester)',
     university: 'Kalinga Institute of Industrial Technology, Bhubaneswar',
-    semester: '2nd Year',
-    location: 'Bhubaneswar, Odisha (Hometown: Hooghly, WB)',
+    semester: '2nd Year, 3rd Semester',
+    location: 'Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)',
     focus: ['C++', 'DSA', 'Computer Vision', 'Full Stack'],
     githubCommits: 'Live GitHub Activity',
     codingStreak: 'Active Routine',

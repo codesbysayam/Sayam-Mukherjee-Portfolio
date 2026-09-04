@@ -59,7 +59,7 @@ export const CURRENT_FOCUS_LIST: LearningFocusItem[] = [
 
 export const NOW_PAGE_DATA: NowPageData = {
   primaryFocus: "Foundational CS, C++ DSA, and project architecture",
-  semesterPhase: "2nd Year • B.Tech CSE at Kalinga Institute of Industrial Technology, Bhubaneswar",
+  semesterPhase: "2nd Year, 3rd Semester • B.Tech CSE at Kalinga Institute of Industrial Technology, Bhubaneswar",
   projectsInProgress: [
     {
       name: "Fitness OS Pro",
@@ -123,7 +123,7 @@ export const LEARNING_ROADMAP = [
 ];
 
 export const VERIFIED_LEARNING_NOW = {
-  currentStatus: "2nd Year Undergraduate",
+  currentStatus: "2nd Year Undergraduate (3rd Semester)",
   college: "Kalinga Institute of Industrial Technology, Bhubaneswar",
   location: "Bhubaneswar, Odisha",
   hometown: "Hooghly, West Bengal",
@@ -173,7 +173,7 @@ export const VERIFIED_ROADMAP_MILESTONES = [
     timeline: "Year 2 (2026 - 2027)",
     status: "Active",
     title: "Advanced DSA & Systems Depth",
-    description: "2nd Year B.Tech CSE at Kalinga Institute of Industrial Technology, Bhubaneswar. Advanced algorithmic mastery on LeetCode, systems programming, and computer vision project architecture."
+    description: "2nd Year (3rd Semester) B.Tech CSE at Kalinga Institute of Industrial Technology, Bhubaneswar. Advanced algorithmic mastery on LeetCode, systems programming, and computer vision project architecture."
   },
   {
     timeline: "Year 3 (2027 - 2028)",

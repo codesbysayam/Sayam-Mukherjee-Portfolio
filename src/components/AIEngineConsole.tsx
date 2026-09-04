@@ -68,9 +68,9 @@ function AIEngineConsole() {
     return [
       {
         question: "Where does Sayam pursue his undergraduate B.Tech in Computer Science?",
-        options: ["IIT Bombay", "Techno Main Salt Lake (TMSL)", "BITS Pilani", "NIT Durgapur"],
-        correct: "Techno Main Salt Lake (TMSL)",
-        explanation: "Sayam is currently in his 1st year pursuing a B.Tech in Computer Science Engineering at Techno Main Salt Lake (TMSL), Kolkata."
+        options: ["IIT Bombay", "Kalinga Institute of Industrial Technology, Bhubaneswar", "BITS Pilani", "NIT Durgapur"],
+        correct: "Kalinga Institute of Industrial Technology, Bhubaneswar",
+        explanation: "Sayam is currently in his 2nd year (3rd semester) pursuing a B.Tech in Computer Science Engineering at Kalinga Institute of Industrial Technology, Bhubaneswar."
       },
       {
         question: "Which national innovation competition did Sayam reach the finals as a Top 15 team in 2021?",

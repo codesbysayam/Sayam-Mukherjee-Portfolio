@@ -150,12 +150,12 @@ function AboutSectionComponent() {
       status: "past"
     },
     {
-      period: "2025",
-      title: "Joined Techno Main Salt Lake (TMSL)",
-      description: "Joined Techno Main Salt Lake (TMSL) to pursue a B.Tech in Computer Science Engineering.",
+      period: "2025 - Present",
+      title: "Pursuing B.Tech CSE at KIIT, Bhubaneswar",
+      description: "Enrolled in B.Tech Computer Science Engineering at Kalinga Institute of Industrial Technology, Bhubaneswar.",
       category: "University",
       icon: Building2,
-      status: "past"
+      status: "present"
     },
     {
       period: "2026",
@@ -214,7 +214,7 @@ function AboutSectionComponent() {
         </div>
         <div className="lg:col-span-6 lg:pt-8 text-zinc-400 text-sm leading-relaxed space-y-4">
           <p>
-            Operating at the intersection of quantitative computation and creative aesthetic engineering. As an undergraduate student at <strong className="text-white">Techno Main Salt Lake (TMSL), Kolkata</strong>, I devote my hours to decoding neural net layers, designing modular full-stack interfaces, and compiling high-efficiency software architectures.
+            Operating at the intersection of quantitative computation and creative aesthetic engineering. As a 2nd Year (3rd Semester) undergraduate student at <strong className="text-white">Kalinga Institute of Industrial Technology, Bhubaneswar</strong> (originally from Hooghly, West Bengal), I devote my hours to decoding neural net layers, designing modular full-stack interfaces, and compiling high-efficiency software architectures.
           </p>
           
           {/* Custom Aesthetic Tab Switching */}
@@ -602,16 +602,16 @@ function AboutSectionComponent() {
                   <div className="flex items-center gap-2.5 text-xs text-cyan-400 font-mono">
                     <span>2025 - Present</span>
                     <span>•</span>
-                    <span>TECHNO MAIN SALT LAKE (TMSL)</span>
+                    <span>KALINGA INSTITUTE OF INDUSTRIAL TECHNOLOGY, BHUBANESWAR</span>
                   </div>
                   <h3 className="text-xl font-bold text-white font-display mt-2">B.Tech in Computer Science Engineering</h3>
                   <p className="text-xs text-purple-400 font-mono mt-0.5">Focus: Core CS, Foundational Algorithms & AI Systems</p>
                   
                   <div className="mt-4 space-y-2 text-xs text-zinc-400 leading-relaxed">
-                    <p>Currently in 1st year B.Tech CSE. Building strong foundations in Operating Systems, Computer Architecture, Mathematics for CS, and foundational programming in C++ and Data Structures.</p>
+                    <p>Currently in 2nd year (3rd semester) B.Tech CSE at Kalinga Institute of Industrial Technology, Bhubaneswar. Advancing in Data Structures & Algorithms, Systems Architecture, and practical AI implementations.</p>
                     <div className="flex items-center gap-2 pt-3 border-t border-zinc-900 font-mono mt-4">
                       <span className="text-[10px] text-zinc-500 uppercase">ACADEMIC STATUS:</span>
-                      <span className="text-xs font-bold text-white bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/30">1st Year Undergraduate (Started 2025)</span>
+                      <span className="text-xs font-bold text-white bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/30">2nd Year, 3rd Semester (Undergraduate)</span>
                     </div>
                   </div>
                 </div>

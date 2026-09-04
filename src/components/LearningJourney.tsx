@@ -142,16 +142,16 @@ export const EXACT_TIMELINE_DATA: TimelineMilestone[] = [
     metricsTag: "Practical Development"
   },
   {
-    id: "milestone-2025-tmsl",
+    id: "milestone-2025-kiit",
     period: "2025",
     yearNumber: 2025,
-    title: "Joined Techno Main Salt Lake (TMSL)",
-    description: "Joined Techno Main Salt Lake (TMSL) to pursue a B.Tech in Computer Science Engineering.",
+    title: "Pursuing B.Tech CSE at KIIT, Bhubaneswar",
+    description: "Enrolled in B.Tech Computer Science Engineering at Kalinga Institute of Industrial Technology, Bhubaneswar.",
     category: "University",
     categoryLabel: "Higher Education",
     icon: Building2,
     keyHighlights: ["Enrolled in B.Tech Computer Science Engineering", "Rigorous study in systems, architecture, and mathematics for CS"],
-    metricsTag: "B.Tech CSE (TMSL)"
+    metricsTag: "B.Tech CSE (KIIT)"
   },
   {
     id: "milestone-2026-technex",
@@ -186,8 +186,8 @@ export const EXACT_TIMELINE_DATA: TimelineMilestone[] = [
     id: "milestone-present",
     period: "Present",
     yearNumber: 2026,
-    title: "1st Year B.Tech CSE & Disciplined Skill Building",
-    description: "Continuously learning and building. Daily routine: 1 hour coding, 5–7 hours study (8–9 hours weekends), 5 gym sessions/week. Foundations in C++, DSA, Computer Vision, and full-stack web applications.",
+    title: "2nd Year (3rd Sem) B.Tech CSE & Disciplined Skill Building",
+    description: "Continuously learning and building. Currently in 2nd Year (3rd Semester) at Kalinga Institute of Industrial Technology, Bhubaneswar. Daily routine: 1 hour coding, 5–7 hours study (8–9 hours weekends), 5 gym sessions/week. Foundations in C++, DSA, Computer Vision, and full-stack web applications.",
     category: "Current Focus",
     categoryLabel: "Active Cadence",
     icon: Cpu,
@@ -262,7 +262,7 @@ function LearningJourneyComponent() {
             Engineering & Academic Journey
           </h2>
           <p className="text-xs sm:text-sm text-zinc-400 mt-2 max-w-2xl leading-relaxed">
-            A strictly verified, unembellished chronological timeline from early schooling, district table tennis, and national Toycathon finals to CBSE board distinctions, YouTube creation, TMSL B.Tech, IIT BHU Technex'26, and verified software builds.
+            A strictly verified, unembellished chronological timeline from early schooling, district table tennis, and national Toycathon finals to CBSE board distinctions, YouTube creation, KIIT B.Tech, IIT BHU Technex'26, and verified software builds.
           </p>
         </div>
 

@@ -998,7 +998,7 @@ function AppContent() {
                                 <span className="text-[9px] uppercase font-mono tracking-widest font-semibold">LOCATION</span>
                                 <MapPin className="w-4 h-4 text-pink-400 group-hover:scale-110 transition-transform duration-300" />
                               </div>
-                              <span className="text-xs sm:text-sm font-extrabold text-zinc-200 font-mono mt-3 block leading-tight group-hover:text-pink-400 transition-colors truncate">KOLKATA, IN</span>
+                              <span className="text-xs sm:text-sm font-extrabold text-zinc-200 font-mono mt-3 block leading-tight group-hover:text-pink-400 transition-colors truncate" title="Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)">BHUBANESWAR, IN</span>
                             </div>
                           </motion.div>
  

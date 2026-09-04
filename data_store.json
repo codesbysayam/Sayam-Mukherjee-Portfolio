@@ -396,10 +396,10 @@
     }
   },
   "stats": {
-    "cgpa": "9.06",
-    "university": "KIIT University",
-    "semester": "3rd",
-    "location": "Kolkata, India",
+    "cgpa": "2nd Year (3rd Semester)",
+    "university": "Kalinga Institute of Industrial Technology, Bhubaneswar",
+    "semester": "2nd Year, 3rd Semester",
+    "location": "Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)",
     "focus": [
       "AI/ML",
       "Full Stack",
@@ -2692,6 +2692,42 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 123
+    },
+    {
+      "id": "visit_1788530757444_315s",
+      "timestamp": "2026-09-04T14:05:57.444Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 123
+    },
+    {
+      "id": "visit_1788530757447_h20s",
+      "timestamp": "2026-09-04T14:05:57.447Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 126
+    },
+    {
+      "id": "visit_1788530757448_xh30",
+      "timestamp": "2026-09-04T14:05:57.448Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 91
+    },
+    {
+      "id": "visit_1788530757449_fpwd",
+      "timestamp": "2026-09-04T14:05:57.449Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 137
     }
   ]
 }

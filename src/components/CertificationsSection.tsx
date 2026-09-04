@@ -263,17 +263,17 @@ export default function CertificationsSection() {
                 <GraduationCap className="w-8 h-8 text-cyan-400" />
                 <h4 className="text-base font-bold text-white font-display tracking-tight">Academic Profile Summary</h4>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  Pursuing B.Tech in Computer Science & Engineering (AI & ML) at Techno Main Salt Lake (TMSL), Kolkata, with a dedicated focus on algorithmic foundations and system design.
+                  Pursuing B.Tech in Computer Science & Engineering (AI & ML) at Kalinga Institute of Industrial Technology, Bhubaneswar, with a dedicated focus on algorithmic foundations and system design.
                 </p>
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
                     <span className="text-[9px] text-zinc-500 block uppercase font-mono">CURRENT STATUS</span>
-                    <span className="text-xs font-bold text-white block mt-1 font-display">1st Year Undergrad</span>
+                    <span className="text-xs font-bold text-white block mt-1 font-display">2nd Year, 3rd Sem</span>
                   </div>
                   <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
                     <span className="text-[9px] text-zinc-500 block uppercase font-mono">INSTITUTION</span>
-                    <span className="text-xs font-bold text-cyan-400 block mt-1 font-display">TMSL, Kolkata</span>
+                    <span className="text-xs font-bold text-cyan-400 block mt-1 font-display">KIIT, Bhubaneswar</span>
                   </div>
                 </div>
               </div>

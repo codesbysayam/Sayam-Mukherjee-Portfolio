@@ -212,7 +212,7 @@ export default function ContactSection() {
       lastName: "(Scheduled Interview)",
       email: scheduleEmail,
       company: "Google Calendar Automated Node",
-      country: "Kolkata, IN",
+      country: "Bhubaneswar, IN",
       phone: "000-000-0000",
       subject: `🗓️ Interview Scheduled: ${selectedDate} at ${selectedTime}`,
       message: `Automatic Calendar Booking confirmation requested for ${scheduleName} (${scheduleEmail}) on date ${selectedDate} at ${selectedTime}. Please join the Meet coordinate.`,
@@ -234,7 +234,7 @@ export default function ContactSection() {
   const faqList = [
     {
       q: "Who is Sayam Mukherjee?",
-      a: "Sayam is an undergraduate Computer Science Engineering student at Techno Main Salt Lake (TMSL) located in Kolkata, West Bengal, India. He builds production-ready full-stack software, explores computer vision and algorithms, and crafts high-quality digital architectures."
+      a: "Sayam is a 2nd Year (3rd Semester) undergraduate Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar (hometown: Hooghly, West Bengal). He builds production-ready full-stack software, explores computer vision and algorithms, and crafts high-quality digital architectures."
     },
     {
       q: "What programming languages and frameworks do you use?",
@@ -288,7 +288,7 @@ export default function ContactSection() {
               </div>
               <div>
                 <h3 className="text-base font-bold text-white font-display">Sayam Mukherjee</h3>
-                <p className="text-xs text-zinc-500 font-mono mt-0.5">Kolkata, West Bengal, India</p>
+                <p className="text-xs text-zinc-500 font-mono mt-0.5">Bhubaneswar, Odisha (Hometown: Hooghly, WB)</p>
               </div>
             </div>
 
@@ -367,12 +367,12 @@ export default function ContactSection() {
                 <div className="w-9 h-9 bg-purple-500/10 border border-purple-500/30 rounded-full flex items-center justify-center mx-auto text-purple-400">
                   <MapPin className="w-4 h-4 animate-bounce" />
                 </div>
-                <p className="text-sm font-bold text-white font-display">Kolkata, WB, India</p>
-                <p className="text-[10px] text-zinc-500 font-mono">Approximate sector coordinates: 22.5726° N, 88.3639° E</p>
+                <p className="text-sm font-bold text-white font-display">Bhubaneswar, Odisha</p>
+                <p className="text-[10px] text-zinc-500 font-mono">KIIT University | Hometown: Hooghly, West Bengal</p>
               </div>
 
               {/* Edge lines */}
-              <div className="absolute top-2 left-2 text-[9px] font-mono text-zinc-700 select-none">TMSL_CSE_2025</div>
+              <div className="absolute top-2 left-2 text-[9px] font-mono text-zinc-700 select-none">KIIT_CSE_YEAR2</div>
               <div className="absolute bottom-2 right-2 text-[9px] font-mono text-zinc-700 select-none">SYS_ACTIVE_M8</div>
             </div>
           </div>

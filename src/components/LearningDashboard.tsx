@@ -85,7 +85,7 @@ function LearningDashboardComponent() {
                 <div className="space-y-1">
                   <h3 className="text-lg font-bold text-white font-display flex items-center gap-2">
                     <GraduationCap className="w-5 h-5 text-purple-400" />
-                    <span>Current Focus: B.Tech CSE (Year 1)</span>
+                    <span>Current Focus: B.Tech CSE (Year 2, 3rd Semester)</span>
                   </h3>
                   <p className="text-xs text-zinc-400 leading-normal">
                     Inspired by Derek Sivers' public /now page. Clear, honest snapshot of my active academic commitments and daily priorities.
@@ -104,6 +104,10 @@ function LearningDashboardComponent() {
                   <div className="flex justify-between border-b border-zinc-900 pb-2.5">
                     <span className="text-zinc-500 font-mono">Location:</span>
                     <span className="text-zinc-300">{VERIFIED_LEARNING_NOW.location}</span>
+                  </div>
+                  <div className="flex justify-between border-b border-zinc-900 pb-2.5">
+                    <span className="text-zinc-500 font-mono">Hometown:</span>
+                    <span className="text-zinc-300">{VERIFIED_LEARNING_NOW.hometown}</span>
                   </div>
                   <div className="flex justify-between border-b border-zinc-900 pb-2.5">
                     <span className="text-zinc-500 font-mono">Daily Coding:</span>
@@ -289,7 +293,7 @@ function LearningDashboardComponent() {
               <div className="space-y-1">
                 <h3 className="text-lg font-bold text-white font-display">Academic & Professional Trajectory</h3>
                 <p className="text-xs text-zinc-400">
-                  Four-year milestones from 1st year B.Tech foundations through graduation and production systems engineering.
+                  Four-year trajectory across B.Tech CSE coursework, systems depth, and production engineering.
                 </p>
               </div>
 

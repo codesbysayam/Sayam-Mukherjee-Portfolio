@@ -1566,7 +1566,7 @@ export default function AdminDashboard() {
                           <span className="text-[10px] text-zinc-500 font-mono">• {msg.email}</span>
                         </div>
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-zinc-500 font-mono">
-                          <span>📍 Loc: {msg.country || "Kolkata, IN"}</span>
+                          <span>📍 Loc: {msg.country || "Bhubaneswar, IN"}</span>
                           <span>🏢 Org: {msg.company || "Independent"}</span>
                           <span>💰 Budget: {msg.budget || "None"}</span>
                           <span>🗓️ Timeline: {msg.timeline || "None"}</span>
