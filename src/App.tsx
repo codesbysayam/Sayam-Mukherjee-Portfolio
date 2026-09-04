@@ -21,9 +21,10 @@ import SEO from "./components/SEO";
 import { PortfolioProvider, usePortfolio } from "./context/PortfolioContext";
 import CustomCursor from "./components/CustomCursor";
 import ScrollProgressBar from "./components/ScrollProgressBar";
+import Toast from "./components/Toast";
 
 // Code-split heavy interactive components to keep initial bundle ultra-light and fast
-const AIChatBot = lazy(() => import("./components/AIChatBot"));
+const AIChatBot = lazy(() => import("./components/AssistantChat"));
 const LearningDashboard = lazy(() => import("./components/LearningDashboard"));
 const ProjectsShowcase = lazy(() => import("./components/ProjectsShowcase"));
 const BlogsSection = lazy(() => import("./components/BlogsSection"));
@@ -233,6 +234,13 @@ function AppContent() {
   const [isCommandMenuOpen, setIsCommandMenuOpen] = useState(false);
   const [readingMode, setReadingMode] = useState(false);
   const [isCommandPaletteHintsVisible, setIsCommandPaletteHintsVisible] = useState(false);
+
+  // Listen for global open-resume-modal event (e.g. triggered from chatbot)
+  useEffect(() => {
+    const handleOpenResume = () => setIsResumeModalOpen(true);
+    window.addEventListener("open-resume-modal", handleOpenResume);
+    return () => window.removeEventListener("open-resume-modal", handleOpenResume);
+  }, []);
 
   // Magnetic Parallax effect motion values for Hero section
   const heroX = useMotionValue(0);
@@ -636,11 +644,11 @@ function AppContent() {
 
       {loadingComplete && (
         <div className={`min-h-screen relative font-sans selection:bg-purple-500/30 selection:text-cyan-200 transition-all duration-700 ${
-          theme === "dark" ? "bg-[#05050a] text-white" : "bg-[#f7f7fa] text-zinc-900"
+          theme === "dark" ? "bg-[#05050a] text-white" : "bg-[#f8f9fc] text-[#17151f]"
         } ${readingMode ? "sepia-[.4] contrast-90 brightness-95" : ""}`}>
           
           {/* Ambient Background Grid and Floating Nodes */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-zinc-950 via-[#030303] to-[#030303] tech-grid-bg pointer-events-none z-0" />
+          <div className="absolute inset-0 page-background-grid tech-grid-bg pointer-events-none z-0" />
           
           {/* Hardware-accelerated Scroll Progress Bar and Fluid Cursor */}
           <ScrollProgressBar />
@@ -1088,7 +1096,9 @@ function AppContent() {
                                 scale: 1.15,
                                 willChange: "transform"
                               }}
-                              className="w-full h-full object-cover filter brightness-[0.85] group-hover:brightness-100 transition-all duration-500 rounded-3xl"
+                              className={`w-full h-full object-cover transition-all duration-500 rounded-3xl ${
+                                theme === "dark" ? "filter brightness-[0.9] group-hover:brightness-100" : "filter brightness-100 contrast-[1.02]"
+                              }`}
                               referrerPolicy="no-referrer"
                             />
 
@@ -1293,6 +1303,9 @@ function AppContent() {
               />
             )}
           </Suspense>
+
+          {/* Reusable Global Toast Notifications */}
+          <Toast />
 
           {/* Command Palette Hints (appearing when holding Cmd/Ctrl) */}
           <AnimatePresence>

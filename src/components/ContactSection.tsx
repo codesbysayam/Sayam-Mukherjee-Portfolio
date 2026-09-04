@@ -5,9 +5,10 @@ import {
   Send, MapPin, Mail, Calendar, CheckCircle2, AlertCircle, 
   Github, Linkedin, Instagram, Youtube, BookOpen, Clock, 
   FileText, ArrowRight, User, Globe, Phone, DollarSign, 
-  Paperclip, Trash2, ChevronDown, Award
+  Paperclip, Trash2, ChevronDown, Award, Copy, Check
 } from "lucide-react";
 import { usePortfolio } from "../context/PortfolioContext";
+import { showToast } from "./Toast";
 
 export default function ContactSection() {
   const { submitContactForm, portfolioData } = usePortfolio();
@@ -34,6 +35,33 @@ export default function ContactSection() {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formLoading, setFormLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  // Copy email state
+  const [copiedEmail, setCopiedEmail] = useState<string | null>(null);
+
+  const handleCopyEmail = (emailToCopy: string, label: string) => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(emailToCopy);
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = emailToCopy;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+      }
+      setCopiedEmail(emailToCopy);
+      showToast(`Copied ${label} (${emailToCopy}) to clipboard!`, "success");
+      setTimeout(() => {
+        setCopiedEmail(null);
+      }, 2200);
+    } catch (err) {
+      console.error("Failed to copy:", err);
+    }
+  };
 
   // Scheduler calendar state
   const [selectedDate, setSelectedDate] = useState<string>("");
@@ -292,19 +320,62 @@ export default function ContactSection() {
               </div>
             </div>
 
-            <div className="space-y-2 text-xs text-zinc-400 leading-relaxed">
-              <p>
-                <strong>Primary Email:</strong>{" "}
-                <a href="mailto:sayammukherjee1506@gmail.com" className="text-purple-400 hover:text-cyan-300 transition-colors font-mono">
-                  sayammukherjee1506@gmail.com
-                </a>
-              </p>
-              <p>
-                <strong>Business Email:</strong>{" "}
-                <a href="mailto:wrickbusiness@gmail.com" className="text-cyan-400 hover:text-purple-300 transition-colors font-mono font-medium">
-                  wrickbusiness@gmail.com
-                </a>
-              </p>
+            <div className="space-y-2.5 text-xs leading-relaxed">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-850 gap-2">
+                <div className="min-w-0">
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-zinc-500 block">Primary Email</span>
+                  <a href="mailto:sayammukherjee1506@gmail.com" className="text-purple-400 hover:text-cyan-300 transition-colors font-mono font-medium truncate block">
+                    sayammukherjee1506@gmail.com
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleCopyEmail("sayammukherjee1506@gmail.com", "Primary Email")}
+                  className="liquid-glass-btn flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-semibold tracking-wider uppercase text-zinc-300 hover:text-white cursor-pointer shrink-0 transition-all"
+                  title="Copy Primary Email"
+                  aria-label="Copy primary email to clipboard"
+                >
+                  {copiedEmail === "sayammukherjee1506@gmail.com" ? (
+                    <>
+                      <Check className="w-3 h-3 text-emerald-400" />
+                      <span className="text-emerald-400 font-bold">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3 text-zinc-400" />
+                      <span>Copy Email</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between p-2.5 rounded-xl bg-zinc-950/60 border border-zinc-850 gap-2">
+                <div className="min-w-0">
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-zinc-500 block">Business Email</span>
+                  <a href="mailto:wrickbusiness@gmail.com" className="text-cyan-400 hover:text-purple-300 transition-colors font-mono font-medium truncate block">
+                    wrickbusiness@gmail.com
+                  </a>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleCopyEmail("wrickbusiness@gmail.com", "Business Email")}
+                  className="liquid-glass-btn flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg text-[10px] font-mono font-semibold tracking-wider uppercase text-zinc-300 hover:text-white cursor-pointer shrink-0 transition-all"
+                  title="Copy Business Email"
+                  aria-label="Copy business email to clipboard"
+                >
+                  {copiedEmail === "wrickbusiness@gmail.com" ? (
+                    <>
+                      <Check className="w-3 h-3 text-emerald-400" />
+                      <span className="text-emerald-400 font-bold">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3 text-zinc-400" />
+                      <span>Copy Email</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
 
             {/* Availability Matrix */}

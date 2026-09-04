@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import { motion, AnimatePresence } from "motion/react";
 import { Code2, GitFork, Sparkles, Layers, Info } from "lucide-react";
 import { fetchGitHubStats, GitHubLanguageShare } from "../services/github";
+import { usePortfolio } from "../context/PortfolioContext";
 
 export interface LanguageDatum {
   name: string;
@@ -21,6 +22,8 @@ function LanguageRingChartComponent({
   className = "",
   showLegend = true
 }: LanguageRingChartProps) {
+  const { theme } = usePortfolio();
+  const isDark = theme === "dark";
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -163,8 +166,11 @@ function LanguageRingChartComponent({
     g.append("circle")
       .attr("r", (radius + innerRadius) / 2)
       .attr("fill", "none")
-      .attr("stroke", "rgba(255, 255, 255, 0.03)")
+      .attr("stroke", isDark ? "rgba(255, 255, 255, 0.03)" : "rgba(20, 20, 35, 0.05)")
       .attr("stroke-width", radius - innerRadius);
+
+    const segmentStroke = isDark ? "#09090b" : "#ffffff";
+    const segmentHoverStroke = isDark ? "#ffffff" : "#4338ca";
 
     const pathGroup = g.selectAll<SVGPathElement, d3.PieArcDatum<LanguageDatum>>(".arc-path")
       .data(pie(languagesData))
@@ -172,8 +178,8 @@ function LanguageRingChartComponent({
       .append("path")
       .attr("class", "arc-path cursor-pointer")
       .attr("fill", d => d.data.color)
-      .attr("stroke", "#09090b")
-      .attr("stroke-width", "1.5")
+      .attr("stroke", segmentStroke)
+      .attr("stroke-width", "2")
       .attr("d", arc as any);
 
     pathGroup
@@ -182,7 +188,7 @@ function LanguageRingChartComponent({
           .transition()
           .duration(150)
           .attr("d", arcHover as any)
-          .attr("stroke", "#ffffff");
+          .attr("stroke", segmentHoverStroke);
         setHoveredLang(d.data);
       })
       .on("mouseleave", function(_, d) {
@@ -190,14 +196,14 @@ function LanguageRingChartComponent({
           .transition()
           .duration(150)
           .attr("d", arc as any)
-          .attr("stroke", "#09090b");
+          .attr("stroke", segmentStroke);
         setHoveredLang(null);
       })
       .on("click", function(_, d) {
         setSelectedLang(d.data);
       });
 
-  }, [languagesData]);
+  }, [languagesData, isDark]);
 
   const activeDisplay = hoveredLang || selectedLang || languagesData[0];
 

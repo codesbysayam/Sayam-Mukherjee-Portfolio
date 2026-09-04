@@ -6,6 +6,7 @@ import {
   Info, BarChart3, Clock, Zap, Layers, ArrowUpRight, ShieldCheck
 } from "lucide-react";
 import { fetchGitHubStats, GitHubStatsData, VERIFIED_GITHUB_FALLBACK } from "../services/github";
+import { usePortfolio } from "../context/PortfolioContext";
 
 export interface GitHubActivityHeatmapProps {
   username?: string;
@@ -18,6 +19,8 @@ export function GitHubActivityHeatmapComponent({
   className = "",
   showFrequencyAnalytics
 }: GitHubActivityHeatmapProps) {
+  const { theme } = usePortfolio();
+  const isDark = theme === "dark";
   const svgRef = useRef<SVGSVGElement | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -105,19 +108,23 @@ export function GitHubActivityHeatmapComponent({
       .attr("x", 22)
       .attr("y", d => 20 + d.row * (cellSize + cellGap) + cellSize - 2)
       .attr("text-anchor", "end")
-      .attr("fill", "#71717a")
+      .attr("fill", isDark ? "#71717a" : "#64748b")
       .attr("font-size", "8.5px")
       .attr("font-family", "ui-monospace, monospace")
       .text(d => d.label);
 
     // Render cells
     const colorScale = (level: number, count: number) => {
-      if (count === 0) return "#18181b"; // zinc-900
-      if (level === 1 || count <= 2) return "#065f46"; // emerald-800
-      if (level === 2 || count <= 5) return "#059669"; // emerald-600
-      if (level === 3 || count <= 8) return "#10b981"; // emerald-500
-      return "#34d399"; // emerald-400
+      if (count === 0) return isDark ? "#18181b" : "#e2e8f0"; // zinc-900 in dark, refined slate in light
+      if (level === 1 || count <= 2) return isDark ? "#065f46" : "#86efac"; // emerald-800 or fresh green
+      if (level === 2 || count <= 5) return isDark ? "#059669" : "#4ade80"; // emerald-600
+      if (level === 3 || count <= 8) return isDark ? "#10b981" : "#22c55e"; // emerald-500
+      return isDark ? "#34d399" : "#16a34a"; // emerald-400 or dark vibrant green in light
     };
+
+    const emptyStroke = isDark ? "rgba(255, 255, 255, 0.04)" : "rgba(20, 20, 35, 0.08)";
+    const filledStroke = isDark ? "rgba(16, 185, 129, 0.3)" : "rgba(22, 163, 74, 0.25)";
+    const hoverStroke = isDark ? "#ffffff" : "#0f172a";
 
     calendarDays.forEach((day, index) => {
       const col = Math.floor(index / 7);
@@ -131,26 +138,26 @@ export function GitHubActivityHeatmapComponent({
         .attr("rx", cornerRadius)
         .attr("ry", cornerRadius)
         .attr("fill", colorScale(day.level, day.count))
-        .attr("stroke", day.count > 0 ? "rgba(16, 185, 129, 0.3)" : "rgba(255, 255, 255, 0.04)")
+        .attr("stroke", day.count > 0 ? filledStroke : emptyStroke)
         .attr("stroke-width", "0.75")
         .attr("class", "cursor-pointer transition-all duration-150");
 
       rect.on("mouseenter", function() {
         d3.select(this)
-          .attr("stroke", "#ffffff")
+          .attr("stroke", hoverStroke)
           .attr("stroke-width", "1.5");
         setHoveredDay(day);
       });
 
       rect.on("mouseleave", function() {
         d3.select(this)
-          .attr("stroke", day.count > 0 ? "rgba(16, 185, 129, 0.3)" : "rgba(255, 255, 255, 0.04)")
+          .attr("stroke", day.count > 0 ? filledStroke : emptyStroke)
           .attr("stroke-width", "0.75");
         setHoveredDay(null);
       });
     });
 
-  }, [calendarDays]);
+  }, [calendarDays, isDark]);
 
   return (
     <div 

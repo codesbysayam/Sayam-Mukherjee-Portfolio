@@ -136,10 +136,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setIsAdmin(true);
     }
 
-    const savedTheme = localStorage.getItem("sayam_theme") as "dark" | "light";
+    const savedTheme = (localStorage.getItem("sayam_theme") || localStorage.getItem("theme")) as "dark" | "light" | null;
     if (savedTheme) {
       setTheme(savedTheme);
       applyTheme(savedTheme);
+    } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+      setTheme("light");
+      applyTheme("light");
     } else {
       applyTheme("dark");
     }
@@ -148,11 +151,14 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   // Set visual theme on document element
   const applyTheme = (t: "dark" | "light") => {
     const root = document.documentElement;
+    root.setAttribute("data-theme", t);
     if (t === "light") {
       root.classList.add("light");
+      root.classList.remove("dark");
       root.style.colorScheme = "light";
     } else {
       root.classList.remove("light");
+      root.classList.add("dark");
       root.style.colorScheme = "dark";
     }
   };
@@ -161,6 +167,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     const nextTheme = theme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
     localStorage.setItem("sayam_theme", nextTheme);
+    localStorage.setItem("theme", nextTheme);
     applyTheme(nextTheme);
   };
 

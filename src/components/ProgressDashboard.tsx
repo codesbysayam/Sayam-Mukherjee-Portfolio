@@ -8,8 +8,11 @@ import {
   Flame, Cpu, Award, Trophy, Dumbbell, Code, BookOpen, Clock, 
   CheckCircle2, Compass, Layers, Heart, TrendingUp, ShieldCheck 
 } from "lucide-react";
+import { usePortfolio } from "../context/PortfolioContext";
 
 export default function ProgressDashboard() {
+  const { theme } = usePortfolio();
+  const isDark = theme === "dark";
   const [activeTrack, setActiveTrack] = useState<"coding" | "reading" | "gym" | "projects" | "blogs" | "learning">("coding");
   const [graphMetric, setGraphMetric] = useState<"hours" | "items">("hours");
 
@@ -197,20 +200,38 @@ export default function ProgressDashboard() {
             <ResponsiveContainer width="100%" height="100%">
               {graphMetric === "hours" ? (
                 <LineChart data={monthlyGraphData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                  <CartesianGrid stroke="#18181b" strokeDasharray="3 3" />
-                  <XAxis dataKey="month" tick={{ fill: '#52525b', fontSize: 10, fontFamily: 'monospace' }} />
-                  <YAxis tick={{ fill: '#52525b', fontSize: 10, fontFamily: 'monospace' }} />
-                  <Tooltip contentStyle={{ backgroundColor: '#09090b', borderColor: '#27272a', borderRadius: '12px' }} />
+                  <CartesianGrid stroke={isDark ? "#18181b" : "rgba(20, 20, 35, 0.08)"} strokeDasharray="3 3" />
+                  <XAxis dataKey="month" tick={{ fill: isDark ? '#71717a' : '#64748b', fontSize: 10, fontFamily: 'monospace' }} />
+                  <YAxis tick={{ fill: isDark ? '#71717a' : '#64748b', fontSize: 10, fontFamily: 'monospace' }} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: isDark ? '#09090b' : 'rgba(255, 255, 255, 0.96)', 
+                      borderColor: isDark ? '#27272a' : 'rgba(20, 20, 35, 0.12)', 
+                      borderRadius: '12px',
+                      color: isDark ? '#ffffff' : '#17151f',
+                      boxShadow: isDark ? '0 8px 30px rgba(0,0,0,0.5)' : '0 8px 24px rgba(30,25,60,0.08)'
+                    }} 
+                    itemStyle={{ color: isDark ? '#e4e4e7' : '#1e1b2e' }}
+                  />
                   <Legend wrapperStyle={{ fontSize: '10px', fontFamily: 'monospace', paddingTop: '10px' }} />
                   <Line type="monotone" dataKey="studyHours" name="Study Hours" stroke="#8b5cf6" strokeWidth={2.5} dot={{ r: 3 }} activeDot={{ r: 5 }} />
                   <Line type="monotone" dataKey="codingHours" name="Coding Hours" stroke="#06b6d4" strokeWidth={2.5} dot={{ r: 3 }} activeDot={{ r: 5 }} />
                 </LineChart>
               ) : (
                 <BarChart data={monthlyGraphData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                  <CartesianGrid stroke="#18181b" strokeDasharray="3 3" />
-                  <XAxis dataKey="month" tick={{ fill: '#52525b', fontSize: 10, fontFamily: 'monospace' }} />
-                  <YAxis tick={{ fill: '#52525b', fontSize: 10, fontFamily: 'monospace' }} />
-                  <Tooltip contentStyle={{ backgroundColor: '#09090b', borderColor: '#27272a', borderRadius: '12px' }} />
+                  <CartesianGrid stroke={isDark ? "#18181b" : "rgba(20, 20, 35, 0.08)"} strokeDasharray="3 3" />
+                  <XAxis dataKey="month" tick={{ fill: isDark ? '#71717a' : '#64748b', fontSize: 10, fontFamily: 'monospace' }} />
+                  <YAxis tick={{ fill: isDark ? '#71717a' : '#64748b', fontSize: 10, fontFamily: 'monospace' }} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: isDark ? '#09090b' : 'rgba(255, 255, 255, 0.96)', 
+                      borderColor: isDark ? '#27272a' : 'rgba(20, 20, 35, 0.12)', 
+                      borderRadius: '12px',
+                      color: isDark ? '#ffffff' : '#17151f',
+                      boxShadow: isDark ? '0 8px 30px rgba(0,0,0,0.5)' : '0 8px 24px rgba(30,25,60,0.08)'
+                    }} 
+                    itemStyle={{ color: isDark ? '#e4e4e7' : '#1e1b2e' }}
+                  />
                   <Legend wrapperStyle={{ fontSize: '10px', fontFamily: 'monospace', paddingTop: '10px' }} />
                   <Bar dataKey="projects" name="Projects" fill="#a855f7" radius={[4, 4, 0, 0]} />
                   <Bar dataKey="certificates" name="Credentials" fill="#22d3ee" radius={[4, 4, 0, 0]} />
