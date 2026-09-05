@@ -274,21 +274,50 @@ app.post("/api/portfolio-data/update", (req, res) => {
 
 // 4. Contact submissions
 app.post("/api/contact", (req, res) => {
-  const { firstName, lastName, email, company, country, phone, subject, message, budget, timeline, attachmentName, attachmentData } = req.body;
+  const { 
+    firstName, 
+    lastName, 
+    name, 
+    email, 
+    company, 
+    organization, 
+    country, 
+    phone, 
+    subject, 
+    message, 
+    topic, 
+    budget, 
+    timeline, 
+    attachmentName, 
+    attachmentData 
+  } = req.body;
   
-  if (!firstName || !email || !message) {
-    return res.status(400).json({ error: "Missing required contact parameters" });
+  let resolvedFirstName = firstName;
+  let resolvedLastName = lastName || "";
+  if (!resolvedFirstName && name) {
+    const parts = name.trim().split(/\s+/);
+    resolvedFirstName = parts[0] || "";
+    resolvedLastName = parts.slice(1).join(" ") || "";
   }
+
+  if (!resolvedFirstName || !email || !message) {
+    return res.status(400).json({ error: "Missing required contact parameters (name/firstName, email, message)" });
+  }
+
+  const resolvedSubject = subject || (topic ? `Portfolio Contact — ${topic} — ${resolvedFirstName} ${resolvedLastName}`.trim() : "No Subject Specified");
+  const resolvedCompany = company || organization || "";
 
   const newMessage = {
     id: `msg_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
-    firstName,
-    lastName: lastName || "",
+    firstName: resolvedFirstName,
+    lastName: resolvedLastName,
+    name: name || `${resolvedFirstName} ${resolvedLastName}`.trim(),
     email,
-    company: company || "",
+    company: resolvedCompany,
     country: country || "",
     phone: phone || "",
-    subject: subject || "No Subject Specified",
+    subject: resolvedSubject,
+    topic: topic || "General",
     message,
     budget: budget || "",
     timeline: timeline || "",
@@ -301,9 +330,8 @@ app.post("/api/contact", (req, res) => {
   dbState.messages.unshift(newMessage);
   saveDatabase();
 
-  // Simulated email delivery notifications in logger
-  console.log(`[Email Hub] Sending automated contact confirmation to: ${email}`);
-  console.log(`[Email Hub] Notifying Admin (wrickbusiness@gmail.com) of new transmission from: ${firstName}`);
+  // Automated contact notification logging
+  console.log(`[Email Hub] Recorded contact message from ${resolvedFirstName} (${email}) — Subject: ${resolvedSubject}`);
 
   res.json({ success: true, message: newMessage });
 });

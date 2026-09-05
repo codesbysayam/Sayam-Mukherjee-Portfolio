@@ -128,53 +128,7 @@
       ]
     }
   ],
-  "blogs": [
-    {
-      "id": "obsidian-optics-architecture",
-      "title": "The Architecture of Obsidian Optics: Real-time YOLOv8 Deployments",
-      "excerpt": "How to deploy custom YOLOv8 object tracking models to edge microcontrollers with minimal latency and high frame rates.",
-      "date": "May 14, 2025",
-      "readTime": "6 min read",
-      "category": "Computer Vision",
-      "tags": [
-        "YOLOv8",
-        "PyTorch",
-        "Edge AI",
-        "OpenCV"
-      ],
-      "content": "### The Computer Vision Challenge\n\nWhen building Obsidian Optics, my goal was clear: track objects in real-time on standard, low-powered computational chips. Standard YOLO pipelines are computationally intensive, causing frame rate drops on non-GPU instances. \n\n#### Optimizations Applied:\n1. **FP16 Quantization**: Reduced model parameters from 32-bit floats to 16-bit half-precision floats, boosting inference speed by ~40% with a negligible <0.8% drop in mean Average Precision (mAP).\n2. **Region-of-Interest (ROI) Masking**: Instead of feeding the whole 1080p frame into the CNN, the pipeline dynamically clips regions where motion is detected, running CNN inference only on localized boxes.\n3. **DeepSORT Association**: Avoided continuous model re-evaluation by using Kalman Filters for frame-to-frame tracking, saving precious CPU clock cycles.\n\nThe resulting engine maintains **30+ FPS** even when tracking multiple dynamic actors inside restricted perimeter zones!"
-    },
-    {
-      "id": "market-sentiment-engine",
-      "title": "Deciphering Market Sentiment: Building a News Sentiment Engine",
-      "excerpt": "Exploring how standard NLP models like FinBERT can predict asset movement trends when combined with real-time stock social metrics.",
-      "date": "Mar 28, 2025",
-      "readTime": "8 min read",
-      "category": "Financial ML",
-      "tags": [
-        "FinBERT",
-        "Sentiment Analysis",
-        "Stock Market",
-        "Python"
-      ],
-      "content": "### The Intersection of Sentiment and Assets\n\nCan words predict trends? In stock markets, public fear and enthusiasm play a huge role in price discovery. For BullRun Analytics, I set out to construct a pipeline that quantifies the \"mood\" of Wall Street.\n\n#### The Core Technical Pipeline:\n- **Scraper**: A lightweight Node.js cron utility fetches market headlines from Yahoo Finance and feeds from trading communities.\n- **FinBERT Pipeline**: While generic NLP models classify financial words like \"debt\" or \"bear\" as neutral/negative, FinBERT is pre-trained on financial context, realizing that \"bearish consolidation\" denotes a highly structured market state.\n- **Sentiment Index Calculation**: I calculate a rolling 6-hour average sentiment score:\n  $$\\text{Sentiment Index} = \\frac{\\text{Positive} - \\text{Negative}}{\\text{Total Headlines} + 1}$$\n- **Correlation Overlay**: Integrating this index on top of real charts revealed that rapid sentiment drops precede actual volume breakdowns by approximately 35 minutes on mid-cap tech tickers.\n\nBuilding this dashboard opened my eyes to how deeply mathematical models can illuminate human irrationality in high-velocity trading."
-    },
-    {
-      "id": "survival-guide-3rd-sem",
-      "title": "3rd Semester CS Survival Guide: Balancing DSA, ML, and Web Dev",
-      "excerpt": "An honest look at how I manage college lectures, competitive coding streaks, deep learning studies, and client freelancing.",
-      "date": "Jan 10, 2025",
-      "readTime": "5 min read",
-      "category": "Student Life",
-      "tags": [
-        "Syllabus",
-        "Learning",
-        "Productivity",
-        "KIIT"
-      ],
-      "content": "### The College Conundrum\n\nThird semester in Computer Science is notoriously intense. You are introduced to core concepts like Object Oriented Programming, Database Systems, and Discrete Math, while simultaneously feeling the heat of competitive coding and the rush of AI developments.\n\n#### My 3-Bucket System:\n- **Bucket A (The GPA Guard)**: Dedicate 2 hours of focused studying to college subjects every evening. This keeps the CGPA safe at **9.06** and prevents exam stress.\n- **Bucket B (The Craft Core)**: Maintain the LeetCode streak (now at 142 days) by solving at least 1-2 medium problems first thing in the morning.\n- **Bucket C (The Creative Income)**: Dedicate weekends to client freelance work and building side projects like Daily Decipher.\n\n*Advice to peers*: Do not try to master everything in one day. Consistent, incremental gains are infinitely more powerful than random weekend marathons."
-    }
-  ],
+  "blogs": [],
   "certifications": [
     {
       "name": "Machine Learning Specialization",
@@ -420,7 +374,63 @@
     "fiverr": "https://www.fiverr.com/",
     "email": "wrickbusiness@gmail.com"
   },
-  "messages": [],
+  "messages": [
+    {
+      "id": "msg_1788637659323_5jkf",
+      "firstName": "Wrick",
+      "lastName": "Mukherjee",
+      "name": "Wrick Mukherjee",
+      "email": "sayammukherjee1506@gmail.com",
+      "company": "uni",
+      "country": "",
+      "phone": "",
+      "subject": "Portfolio Contact — Freelance — Wrick Mukherjee",
+      "topic": "Freelance",
+      "message": "sdfgvyhujuoikjogiy",
+      "budget": "",
+      "timeline": "",
+      "attachmentName": null,
+      "attachmentData": null,
+      "timestamp": "2026-09-05T19:47:39.324Z",
+      "status": "unread"
+    },
+    {
+      "id": "msg_1788637401639_ip2w",
+      "firstName": "Alex",
+      "lastName": "Rivers",
+      "name": "Alex Rivers",
+      "email": "alex@example.com",
+      "company": "Tech Innovations",
+      "country": "",
+      "phone": "",
+      "subject": "Portfolio Contact — Internship — Alex Rivers",
+      "topic": "Internship",
+      "message": "Hi Sayam, I would love to discuss an AI internship opportunity with you.",
+      "budget": "",
+      "timeline": "",
+      "attachmentName": null,
+      "attachmentData": null,
+      "timestamp": "2026-09-05T19:43:21.639Z",
+      "status": "unread"
+    },
+    {
+      "id": "msg_1788636752557_xwls",
+      "firstName": "Wrick",
+      "lastName": "",
+      "email": "sayammukherjee1506@gmail.com",
+      "company": "KIIT",
+      "country": "N/A",
+      "phone": "N/A",
+      "subject": "Portfolio Contact — Internship",
+      "message": "I am interested",
+      "budget": "N/A",
+      "timeline": "Internship",
+      "attachmentName": null,
+      "attachmentData": null,
+      "timestamp": "2026-09-05T19:32:32.557Z",
+      "status": "unread"
+    }
+  ],
   "subscribers": [],
   "testimonials": [
     {
@@ -2728,6 +2738,357 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 137
+    },
+    {
+      "id": "visit_1788636145667_eekd",
+      "timestamp": "2026-09-05T19:22:25.667Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 90
+    },
+    {
+      "id": "visit_1788636145727_3f8p",
+      "timestamp": "2026-09-05T19:22:25.727Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 53
+    },
+    {
+      "id": "visit_1788636145729_fgg0",
+      "timestamp": "2026-09-05T19:22:25.729Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 121
+    },
+    {
+      "id": "visit_1788636145731_lgeb",
+      "timestamp": "2026-09-05T19:22:25.731Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 49
+    },
+    {
+      "id": "visit_1788636157093_g5ey",
+      "timestamp": "2026-09-05T19:22:37.093Z",
+      "page": "ABOUT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 88
+    },
+    {
+      "id": "visit_1788636171967_emzm",
+      "timestamp": "2026-09-05T19:22:51.967Z",
+      "page": "SKILLS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 59
+    },
+    {
+      "id": "visit_1788636200995_syj7",
+      "timestamp": "2026-09-05T19:23:20.995Z",
+      "page": "ECOSYSTEM Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 114
+    },
+    {
+      "id": "visit_1788636217823_nknv",
+      "timestamp": "2026-09-05T19:23:37.823Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 144
+    },
+    {
+      "id": "visit_1788636226193_v7tn",
+      "timestamp": "2026-09-05T19:23:46.193Z",
+      "page": "JOURNAL Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 142
+    },
+    {
+      "id": "visit_1788636230452_p2ac",
+      "timestamp": "2026-09-05T19:23:50.452Z",
+      "page": "CONTACT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 111
+    },
+    {
+      "id": "visit_1788636254478_9zs6",
+      "timestamp": "2026-09-05T19:24:14.478Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 124
+    },
+    {
+      "id": "visit_1788636254543_8b89",
+      "timestamp": "2026-09-05T19:24:14.543Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 103
+    },
+    {
+      "id": "visit_1788636254547_ul6w",
+      "timestamp": "2026-09-05T19:24:14.547Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 91
+    },
+    {
+      "id": "visit_1788636254561_yo4e",
+      "timestamp": "2026-09-05T19:24:14.561Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 147
+    },
+    {
+      "id": "visit_1788636295830_36py",
+      "timestamp": "2026-09-05T19:24:55.830Z",
+      "page": "CONTACT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 46
+    },
+    {
+      "id": "visit_1788636546452_7hei",
+      "timestamp": "2026-09-05T19:29:06.452Z",
+      "page": "JOURNAL Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 126
+    },
+    {
+      "id": "visit_1788636686121_0kkj",
+      "timestamp": "2026-09-05T19:31:26.121Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 111
+    },
+    {
+      "id": "visit_1788636686178_rxck",
+      "timestamp": "2026-09-05T19:31:26.178Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 75
+    },
+    {
+      "id": "visit_1788636686189_osx1",
+      "timestamp": "2026-09-05T19:31:26.189Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 44
+    },
+    {
+      "id": "visit_1788636686190_9kap",
+      "timestamp": "2026-09-05T19:31:26.190Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 39
+    },
+    {
+      "id": "visit_1788636715414_ip3l",
+      "timestamp": "2026-09-05T19:31:55.414Z",
+      "page": "CONTACT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 121
+    },
+    {
+      "id": "visit_1788636781975_dge9",
+      "timestamp": "2026-09-05T19:33:01.975Z",
+      "page": "JOURNAL Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 86
+    },
+    {
+      "id": "visit_1788636806885_o8hp",
+      "timestamp": "2026-09-05T19:33:26.885Z",
+      "page": "CONTACT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 130
+    },
+    {
+      "id": "visit_1788636996904_nve5",
+      "timestamp": "2026-09-05T19:36:36.904Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 30
+    },
+    {
+      "id": "visit_1788636996943_quwl",
+      "timestamp": "2026-09-05T19:36:36.943Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 109
+    },
+    {
+      "id": "visit_1788636996953_q8pm",
+      "timestamp": "2026-09-05T19:36:36.953Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 137
+    },
+    {
+      "id": "visit_1788636996956_37jk",
+      "timestamp": "2026-09-05T19:36:36.956Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 79
+    },
+    {
+      "id": "visit_1788637078742_k5rk",
+      "timestamp": "2026-09-05T19:37:58.742Z",
+      "page": "JOURNAL Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 50
+    },
+    {
+      "id": "visit_1788637086351_0akm",
+      "timestamp": "2026-09-05T19:38:06.351Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 58
+    },
+    {
+      "id": "visit_1788637236998_rvyi",
+      "timestamp": "2026-09-05T19:40:36.998Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 79
+    },
+    {
+      "id": "visit_1788637237001_b1xd",
+      "timestamp": "2026-09-05T19:40:37.001Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 142
+    },
+    {
+      "id": "visit_1788637237003_kxjm",
+      "timestamp": "2026-09-05T19:40:37.003Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 45
+    },
+    {
+      "id": "visit_1788637237006_q7ox",
+      "timestamp": "2026-09-05T19:40:37.006Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 147
+    },
+    {
+      "id": "visit_1788637242224_cudw",
+      "timestamp": "2026-09-05T19:40:42.224Z",
+      "page": "CONTACT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 77
+    },
+    {
+      "id": "visit_1788637445826_shcr",
+      "timestamp": "2026-09-05T19:44:05.826Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 72
+    },
+    {
+      "id": "visit_1788637445829_e04u",
+      "timestamp": "2026-09-05T19:44:05.829Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 77
+    },
+    {
+      "id": "visit_1788637445923_szjc",
+      "timestamp": "2026-09-05T19:44:05.923Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 59
+    },
+    {
+      "id": "visit_1788637445925_kgbx",
+      "timestamp": "2026-09-05T19:44:05.925Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 41
+    },
+    {
+      "id": "visit_1788637484151_jidq",
+      "timestamp": "2026-09-05T19:44:44.151Z",
+      "page": "CONTACT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 62
     }
   ]
 }

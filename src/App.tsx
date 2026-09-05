@@ -13,7 +13,8 @@ import Loader from "./components/Loader";
 import AboutSection from "./components/AboutSection";
 import SkillsSection from "./components/SkillsSection";
 import ExperienceSection from "./components/ExperienceSection";
-import AIEngineConsole from "./components/AIEngineConsole";
+import HeroSection from "./components/HeroSection";
+import LiveBuildFeed from "./components/LiveBuildFeed";
 import CertificationsSection from "./components/CertificationsSection";
 import CodingProfiles from "./components/CodingProfiles";
 import ContactSection from "./components/ContactSection";
@@ -131,95 +132,6 @@ function LiveISTClock() {
   );
 }
 
-// Isolated Hero Typewriter Component (prevents 20 re-renders per second on AppContent)
-function TypewriterHeroRole() {
-  const roles = [
-    "AI & ML Student",
-    "Full Stack Developer",
-    "Software Engineer",
-    "Content Creator",
-    "Stock Market Enthusiast",
-    "Future AI Engineer"
-  ];
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [typedRole, setTypedRole] = useState("AI & ML Student");
-
-  useEffect(() => {
-    let isMounted = true;
-    let currentText = roles[roleIndex];
-    let charIndex = 0;
-    let isDeleting = false;
-    let timer: any = null;
-
-    const tick = () => {
-      if (!isMounted) return;
-
-      if (!isDeleting) {
-        setTypedRole(currentText.substring(0, charIndex + 1));
-        charIndex++;
-
-        if (charIndex === currentText.length) {
-          isDeleting = true;
-          timer = setTimeout(tick, 3500); // Hold full-text for 3.5 seconds
-        } else {
-          timer = setTimeout(tick, 100);
-        }
-      } else {
-        setTypedRole(currentText.substring(0, charIndex - 1));
-        charIndex--;
-
-        if (charIndex === 0) {
-          isDeleting = false;
-          setRoleIndex((prev) => (prev + 1) % roles.length);
-          return;
-        } else {
-          timer = setTimeout(tick, 50);
-        }
-      }
-    };
-
-    timer = setTimeout(tick, 800);
-
-    return () => {
-      isMounted = false;
-      if (timer) clearTimeout(timer);
-    };
-  }, [roleIndex]);
-
-  return (
-    <span className="text-cyan-400 font-bold border-r-2 border-cyan-400 pr-1.5 animate-pulse">
-      {typedRole}
-    </span>
-  );
-}
-
-// Isolated Rotating Tagline (prevents AppContent re-renders)
-function RotatingTagline() {
-  const [index, setIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % SAYAM_DATA.taglines.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <AnimatePresence mode="wait">
-      <motion.p
-        key={index}
-        initial={{ y: 20, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: -20, opacity: 0 }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-        className="text-[10px] text-purple-400 font-mono uppercase tracking-[0.15em] font-bold"
-      >
-        {SAYAM_DATA.taglines[index]}
-      </motion.p>
-    </AnimatePresence>
-  );
-}
-
 function AppContent() {
   const { theme, toggleTheme, trackVisit } = usePortfolio();
 
@@ -242,33 +154,6 @@ function AppContent() {
     return () => window.removeEventListener("open-resume-modal", handleOpenResume);
   }, []);
 
-  // Magnetic Parallax effect motion values for Hero section
-  const heroX = useMotionValue(0);
-  const heroY = useMotionValue(0);
-  const heroRectRef = useRef<DOMRect | null>(null);
-
-  // Smooth springs to map mouse movement without jitter, giving a high-end feel
-  const springConfig = { damping: 30, stiffness: 120 };
-  const smoothX = useSpring(heroX, springConfig);
-  const smoothY = useSpring(heroY, springConfig);
-
-  // Transformations for 3D multi-layered parallax depth
-  // Foreground Profile Image Card (shifts up to 35px in direction of cursor)
-  const profileX = useTransform(smoothX, [-0.5, 0.5], [-35, 35]);
-  const profileY = useTransform(smoothY, [-0.5, 0.5], [-35, 35]);
-
-  // Midground Terminal Console Card (shifts up to 15px in direction of cursor)
-  const consoleX = useTransform(smoothX, [-0.5, 0.5], [-15, 15]);
-  const consoleY = useTransform(smoothY, [-0.5, 0.5], [-15, 15]);
-
-  // Background Stat Cards & Floating tags (shifts opposite to cursor up to 12px for parallax separation)
-  const statsX = useTransform(smoothX, [-0.5, 0.5], [12, -12]);
-  const statsY = useTransform(smoothY, [-0.5, 0.5], [12, -12]);
-
-  // Inner image holographic depth (shifts opposite to cursor up to 15px for 3D depth)
-  const innerImgX = useTransform(smoothX, [-0.5, 0.5], [15, -15]);
-  const innerImgY = useTransform(smoothY, [-0.5, 0.5], [15, -15]);
-
   // Sentinel ref for zero-CPU scroll threshold detection
   const topSentinelRef = useRef<HTMLDivElement>(null);
 
@@ -284,61 +169,6 @@ function AppContent() {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
-
-  // Premium staggered load motion variants for hero content
-  const staggerContainerLeft = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.06,
-        delayChildren: 0.05,
-      }
-    }
-  };
-
-  const staggerContainerRight = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.06,
-        delayChildren: 0.12,
-      }
-    }
-  };
-
-  const staggerItem = {
-    hidden: { opacity: 0, y: 25 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.45,
-        ease: [0.16, 1, 0.3, 1] as const
-      }
-    }
-  };
-
-  // Mouse move and leave handler for the entire Hero section container
-  const handleHeroMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!heroRectRef.current) {
-      heroRectRef.current = e.currentTarget.getBoundingClientRect();
-    }
-    const rect = heroRectRef.current;
-    if (rect.width > 0 && rect.height > 0) {
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      heroX.set(x);
-      heroY.set(y);
-    }
-  };
-
-  const handleHeroMouseLeave = () => {
-    heroRectRef.current = null;
-    heroX.set(0);
-    heroY.set(0);
-  };
 
   // Track Cmd/Ctrl key state for showing the Command Palette Hints
   useEffect(() => {
@@ -497,6 +327,18 @@ function AppContent() {
 
   // Categorical Page Router State
   const [activeTab, setActiveTab] = useState<"home" | "about" | "skills" | "ecosystem" | "projects" | "journal" | "contact">("home");
+
+  // Global tab navigation event listener
+  useEffect(() => {
+    const handleTabNavigate = (e: any) => {
+      if (e.detail && typeof e.detail === "string") {
+        setActiveTab(e.detail as any);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    };
+    window.addEventListener("portfolio-navigate-tab", handleTabNavigate);
+    return () => window.removeEventListener("portfolio-navigate-tab", handleTabNavigate);
+  }, []);
 
   // Close mobile menu on tab change
   useEffect(() => {
@@ -677,7 +519,7 @@ function AppContent() {
                 ? "bg-white/95 border-zinc-200 shadow-md"
                 : "bg-white/90 border-zinc-200/80 shadow-sm"
           }`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-4">
+            <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-4">
               
               {/* Logotype */}
               <button 
@@ -886,7 +728,7 @@ function AppContent() {
           </header>
 
           {/* Main Content Layout with Framer Motion tab transition routing */}
-          <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-16 overflow-x-clip">
+          <main className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-16 overflow-x-clip">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -897,262 +739,25 @@ function AppContent() {
                 className="w-full min-h-[60vh]"
               >
                 {activeTab === "home" && (
-                  <div className="space-y-16">
-                    {/* HERO SECTION */}
-                    <section 
-                      id="hero" 
-                      onMouseMove={handleHeroMouseMove}
-                      onMouseLeave={handleHeroMouseLeave}
-                      className="min-h-[80vh] flex flex-col justify-center relative py-12 md:py-16 px-8 md:px-12 lg:px-16 bg-zinc-950/10 dark:bg-zinc-950/35 border border-zinc-950/5 dark:border-zinc-900/30 rounded-[2.5rem] overflow-hidden backdrop-blur-[36px] shadow-2xl"
-                    >
-                      {/* Premium rotating light beam border effect */}
-                      <div className="hero-border-wrap">
-                        <div className="hero-border-spinner" />
-                      </div>
+                  <div className="space-y-12 sm:space-y-16">
+                    {/* REBUILT HERO SECTION */}
+                    <HeroSection onViewWork={() => setActiveTab("projects")} />
 
-                      <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
-                        
-                        {/* Hero content details with scroll-triggered fade and scale + staggered entry */}
-                        <motion.div 
-                          variants={staggerContainerLeft}
-                          initial="hidden"
-                          animate="visible"
-                          className="lg:col-span-7 space-y-8 text-left"
-                        >
-                          
-                          {/* Top Badges Row */}
-                          <motion.div 
-                            variants={staggerItem}
-                            className="flex flex-wrap items-center gap-3"
-                          >
-                            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-zinc-900/80 border border-zinc-800 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.05)]">
-                              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.6)]" />
-                              <span className="text-[10px] text-zinc-300 font-mono uppercase tracking-wider font-semibold">
-                                System Online • Ready for Collaborations
-                              </span>
-                            </div>
-
-                            <div className="inline-flex h-7 items-center px-3 py-1 bg-purple-500/10 border border-purple-500/20 rounded-full overflow-hidden select-none">
-                              <RotatingTagline />
-                            </div>
-                          </motion.div>
- 
-                          {/* Character Heading Reveal style */}
-                          <motion.div 
-                            variants={staggerItem}
-                            className="space-y-4"
-                          >
-                            <div className="flex items-center gap-2">
-                              <span className="h-[1px] w-6 bg-purple-500" />
-                              <p className="text-xs font-mono font-bold tracking-[0.25em] text-purple-400 uppercase">
-                                SAYAM MUKHERJEE
-                              </p>
-                            </div>
-                            <h1 
-                              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-white font-display leading-[1.1] sm:leading-[1.05]"
-                            >
-                              Designing the Next <br />
-                              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">
-                                Standard of Software
-                              </span>
-                            </h1>
-                          </motion.div>
- 
-                          {/* Animated roles typing subtitle */}
-                          <motion.h3 
-                            variants={staggerItem}
-                            className="text-base sm:text-xl md:text-2xl font-mono text-zinc-300 flex items-center gap-2 select-none"
-                          >
-                            <span className="text-zinc-500">I am a</span>
-                            <TypewriterHeroRole />
-                          </motion.h3>
- 
-                          <motion.p 
-                            variants={staggerItem}
-                            className="text-xs sm:text-sm md:text-base text-zinc-400 leading-relaxed max-w-xl"
-                          >
-                            {SAYAM_DATA.bio}
-                          </motion.p>
- 
-                          {/* Key Hero Stat Cards - REDESIGNED with opposite parallax separation */}
-                          <motion.div 
-                            variants={staggerItem}
-                            style={{ x: statsX, y: statsY, willChange: "transform" }}
-                            className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2"
-                          >
-                            <div className="glass-card p-4 rounded-2xl group border border-zinc-900 flex flex-col justify-between hover:scale-[1.02] transition-all">
-                              <div className="flex justify-between items-center text-zinc-500">
-                                <span className="text-[9px] uppercase font-mono tracking-widest font-semibold">DEGREE TRACK</span>
-                                <Brain className="w-4 h-4 text-purple-400 group-hover:scale-110 transition-transform duration-300" />
-                              </div>
-                              <span className="text-xl sm:text-2xl font-extrabold text-white font-display mt-3 block group-hover:text-purple-400 transition-colors">B.Tech CSE</span>
-                            </div>
-                            <div className="glass-card p-4 rounded-2xl group border border-zinc-900 flex flex-col justify-between hover:scale-[1.02] transition-all">
-                              <div className="flex justify-between items-center text-zinc-500">
-                                <span className="text-[9px] uppercase font-mono tracking-widest font-semibold">SEMESTER</span>
-                                <Calendar className="w-4 h-4 text-cyan-400 group-hover:scale-110 transition-transform duration-300" />
-                              </div>
-                              <span className="text-xl sm:text-2xl font-extrabold text-white font-display mt-3 block group-hover:text-cyan-400 transition-colors">{SAYAM_DATA.stats.semester}</span>
-                            </div>
-                            <div className="glass-card p-4 rounded-2xl group border border-zinc-900 flex flex-col justify-between hover:scale-[1.02] transition-all">
-                              <div className="flex justify-between items-center text-zinc-500">
-                                <span className="text-[9px] uppercase font-mono tracking-widest font-semibold">COHORTS</span>
-                                <Flame className="w-4 h-4 text-indigo-400 group-hover:scale-110 transition-transform duration-300" />
-                              </div>
-                              <span className="text-xl sm:text-2xl font-extrabold text-white font-display mt-3 block group-hover:text-indigo-400 transition-colors">{SAYAM_DATA.stats.happyClients}+</span>
-                            </div>
-                            <div className="glass-card p-4 rounded-2xl group border border-zinc-900 flex flex-col justify-between hover:scale-[1.02] transition-all">
-                              <div className="flex justify-between items-center text-zinc-500">
-                                <span className="text-[9px] uppercase font-mono tracking-widest font-semibold">LOCATION</span>
-                                <MapPin className="w-4 h-4 text-pink-400 group-hover:scale-110 transition-transform duration-300" />
-                              </div>
-                              <span className="text-xs sm:text-sm font-extrabold text-zinc-200 font-mono mt-3 block leading-tight group-hover:text-pink-400 transition-colors truncate" title="Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)">BHUBANESWAR, IN</span>
-                            </div>
-                          </motion.div>
- 
-                          {/* Interactive Call to Actions */}
-                          <motion.div 
-                            variants={staggerItem}
-                            className="flex flex-wrap gap-4 pt-4"
-                          >
-                            <button
-                              onClick={() => {
-                                triggerConfetti();
-                                setIsResumeModalOpen(true);
-                              }}
-                              className="liquid-glass-btn liquid-shimmer-sweep text-white hover:text-purple-200 text-[10px] font-mono font-bold tracking-wider uppercase px-6 py-3.5 rounded-xl transition-all duration-300 cursor-pointer"
-                            >
-                              Get Resume (PDF)
-                            </button>
-                            <button
-                              onClick={() => setActiveTab("projects")}
-                              className="liquid-glass-btn liquid-shimmer-sweep text-zinc-300 hover:text-cyan-200 text-[10px] font-mono font-bold tracking-wider uppercase px-6 py-3.5 rounded-xl transition-all duration-300 cursor-pointer"
-                            >
-                              Explore Case Studies
-                            </button>
-                            <button
-                              onClick={() => setActiveTab("contact")}
-                              className="text-zinc-400 hover:text-white hover:underline decoration-purple-500/50 underline-offset-4 text-[10px] font-mono font-bold tracking-wider uppercase px-4 py-3.5 rounded-xl transition-all duration-300 cursor-pointer"
-                            >
-                              Get in Touch →
-                            </button>
-                          </motion.div>
- 
-                          {/* Social links block */}
-                          <motion.div 
-                            variants={staggerItem}
-                            className="flex items-center gap-4 pt-6 border-t border-zinc-900 max-w-md"
-                          >
-                            <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-widest">Active Channels:</span>
-                            <div className="flex items-center gap-2.5">
-                              <a href={SAYAM_DATA.socials.github} target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-900 rounded-xl transition-colors cursor-pointer">
-                                <Github className="w-3.5 h-3.5" />
-                              </a>
-                              <a href={SAYAM_DATA.socials.linkedin} target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-900 rounded-xl transition-colors cursor-pointer">
-                                <Linkedin className="w-3.5 h-3.5" />
-                              </a>
-                              <a href={SAYAM_DATA.socials.youtube} target="_blank" rel="noopener noreferrer" className="p-2 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-900 rounded-xl transition-colors cursor-pointer">
-                                <Youtube className="w-3.5 h-3.5" />
-                              </a>
-                              <a href={`mailto:${SAYAM_DATA.socials.email}`} className="p-2 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white border border-zinc-900 rounded-xl transition-colors cursor-pointer">
-                                <Mail className="w-3.5 h-3.5" />
-                              </a>
-                            </div>
-                          </motion.div>
- 
-                        </motion.div>
-
-                        {/* Right: Immersive Live IDE / Sandbox Console & Parallax Profile Card + staggered entry */}
-                        <motion.div 
-                          variants={staggerContainerRight}
-                          initial="hidden"
-                          animate="visible"
-                          className="lg:col-span-5 flex flex-col gap-6 items-center justify-center relative"
-                        >
-                          
-                          {/* Profile Image Card with 3D Holographic Parallax Depth */}
-                          <motion.div
-                            variants={staggerItem}
-                            style={{ 
-                              x: profileX, 
-                              y: profileY,
-                              willChange: "transform"
-                            }}
-                            className="relative w-64 h-64 md:w-72 md:h-72 rounded-3xl overflow-hidden glass-card border border-zinc-900/80 shadow-2xl group cursor-pointer shrink-0 liquid-shimmer-sweep"
-                          >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/10 via-transparent to-cyan-500/10 z-10 pointer-events-none" />
-                            
-                            {/* Inner image has opposite translation to produce 3D holographic window depth */}
-                            <motion.img 
-                              src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                              alt="Sayam Mukherjee" 
-                              width={288}
-                              height={288}
-                              loading="eager"
-                              decoding="async"
-                              style={{ 
-                                x: innerImgX,
-                                y: innerImgY,
-                                scale: 1.15,
-                                willChange: "transform"
-                              }}
-                              className={`w-full h-full object-cover transition-all duration-500 rounded-3xl ${
-                                theme === "dark" ? "filter brightness-[0.9] group-hover:brightness-100" : "filter brightness-100 contrast-[1.02]"
-                              }`}
-                              referrerPolicy="no-referrer"
-                            />
-
-                            {/* Floating decorative high-tech labels */}
-                            <div className="absolute top-4 left-4 px-3 py-1 bg-zinc-950/85 backdrop-blur-md border border-zinc-850 rounded-full font-mono text-[8px] tracking-[0.2em] text-purple-400 uppercase select-none z-20 shadow-lg">
-                              SAYAM MUKHERJEE
-                            </div>
-                            <div className="absolute bottom-4 right-4 px-3 py-1 bg-zinc-950/85 backdrop-blur-md border border-zinc-850 rounded-full font-mono text-[8px] tracking-[0.2em] text-cyan-400 uppercase select-none z-20 shadow-lg flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                              SYS: ACTIVE
-                            </div>
-                          </motion.div>
-
-                          {/* Sandbox Console with subtle Parallax */}
-                          <motion.div 
-                            variants={staggerItem}
-                            style={{ 
-                              x: consoleX, 
-                              y: consoleY,
-                              willChange: "transform"
-                            }} 
-                            className="w-full max-w-md"
-                          >
-                            <AIEngineConsole />
-                          </motion.div>
-
-                        </motion.div>
-
-                      </div>
-
-                      {/* Scroll to continue indicator with smooth CSS fade */}
-                      <div 
-                        className={`absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none select-none transition-opacity duration-300 ${
-                          isScrolled ? "opacity-0" : "opacity-100"
-                        }`}
-                      >
-                        <span className="text-[9px] uppercase font-mono tracking-[0.22em] text-zinc-500 font-bold">
-                          Scroll to continue
-                        </span>
-                        <div className="w-[18px] h-[28px] border border-zinc-800 rounded-full flex justify-center p-1 bg-zinc-950/30 backdrop-blur-sm">
-                          <motion.div 
-                            animate={{ 
-                              y: [0, 8, 0],
-                            }}
-                            transition={{ 
-                              duration: 1.6, 
-                              repeat: Infinity, 
-                              ease: "easeInOut" 
-                            }}
-                            className="w-1 h-1.5 bg-purple-500 rounded-full shadow-[0_0_8px_rgba(139,92,246,0.6)]"
-                          />
+                    {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
+                    <section id="live-build-feed" className="w-full max-w-[1440px] mx-auto px-1 sm:px-4 pt-2 pb-12">
+                      <div className="mb-6 space-y-1">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 font-mono text-[10px] tracking-widest uppercase font-semibold">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          PUBLIC ECOSYSTEM
                         </div>
+                        <h2 className="text-2xl sm:text-3xl font-bold font-display text-white">
+                          Live Build Feed
+                        </h2>
+                        <p className="text-xs sm:text-sm text-zinc-400">
+                          See what I’m building and maintaining on GitHub in real-time.
+                        </p>
                       </div>
-
+                      <LiveBuildFeed />
                     </section>
                   </div>
                 )}
@@ -1207,6 +812,23 @@ function AppContent() {
                       <Reveal delay={0}>
                         <ProjectsShowcase />
                       </Reveal>
+                      <Reveal delay={0.1}>
+                        <section id="projects-github-feed" className="w-full max-w-[1440px] mx-auto pt-4">
+                          <div className="mb-6 space-y-1">
+                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-mono text-[10px] tracking-widest uppercase font-semibold">
+                              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                              LIVE REPOSITORY EXPLORER
+                            </div>
+                            <h2 className="text-2xl sm:text-3xl font-bold font-display text-white">
+                              Open Source Repositories
+                            </h2>
+                            <p className="text-xs sm:text-sm text-zinc-400">
+                              Search, filter, and inspect public codebases directly synced from GitHub.
+                            </p>
+                          </div>
+                          <LiveBuildFeed />
+                        </section>
+                      </Reveal>
                     </div>
                   )}
 
@@ -1222,7 +844,7 @@ function AppContent() {
                   )}
 
                   {activeTab === "contact" && (
-                    <div className="py-8">
+                    <div className="w-full">
                       <Reveal delay={0}>
                         <ContactSection />
                       </Reveal>
