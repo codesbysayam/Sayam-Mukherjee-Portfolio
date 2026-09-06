@@ -19,6 +19,19 @@ export default function CodingProfiles() {
   const [leetcodeData, setLeetcodeData] = useState<LeetCodeStatsData>(VERIFIED_LEETCODE_FALLBACK);
   const [codolioData, setCodolioData] = useState<CodolioProfileData>(VERIFIED_CODOLIO_DATA);
   const [loading, setLoading] = useState<boolean>(true);
+  const [refreshingGitHub, setRefreshingGitHub] = useState<boolean>(false);
+
+  const handleRefreshGitHub = async () => {
+    setRefreshingGitHub(true);
+    try {
+      const data = await fetchGitHubStats(true);
+      setGithubData(data);
+    } catch (err) {
+      console.error("Manual GitHub refresh error:", err);
+    } finally {
+      setRefreshingGitHub(false);
+    }
+  };
 
   useEffect(() => {
     let isMounted = true;
@@ -163,16 +176,25 @@ export default function CodingProfiles() {
                     <h3 className="text-base font-bold text-white font-display leading-none">
                       @{githubData.username}
                     </h3>
-                    <p className="text-[10px] text-zinc-500 font-mono mt-1">
-                      {githubData.name} • Public Repositories & Real Activity
+                    <p className="text-[10px] text-zinc-400 font-mono mt-1">
+                      {githubData.name} • {githubData.location || "Kolkata, India"} • {githubData.publicRepos || 4} Public Repositories
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-zinc-500 font-mono">
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <span className="hidden sm:inline text-[10px] text-zinc-500 font-mono">
                     Last synced: {githubData.lastSynced}
                   </span>
+                  <button
+                    onClick={handleRefreshGitHub}
+                    disabled={refreshingGitHub}
+                    className="bg-purple-950/40 hover:bg-purple-900/50 border border-purple-800/50 text-purple-300 hover:text-white text-xs font-mono font-medium px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                    title="Force refresh real-time GitHub telemetry"
+                  >
+                    <RefreshCw className={`w-3.5 h-3.5 ${refreshingGitHub ? "animate-spin" : ""}`} />
+                    <span>{refreshingGitHub ? "Syncing..." : "Sync Realtime"}</span>
+                  </button>
                   <a 
                     href="https://github.com/codesbysayam"
                     target="_blank"
@@ -186,31 +208,38 @@ export default function CodingProfiles() {
               </div>
 
               {/* Grid statistics (Real Counts) */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                <div className="bg-zinc-900/40 border border-zinc-850 p-4 rounded-xl text-center">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">COMMITS / CONTRIBS (2026)</span>
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
+                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
+                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">COMMITS / CONTRIBS</span>
                   <span className="text-xl font-bold text-emerald-400 block mt-1 font-display">
                     {githubData.totalContributionsThisYear}
                   </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">Public GitHub telemetry</span>
+                  <span className="text-[9px] text-zinc-500 font-mono">2026 telemetry</span>
                 </div>
-                <div className="bg-zinc-900/40 border border-zinc-850 p-4 rounded-xl text-center">
+                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
                   <span className="text-[9px] text-zinc-500 uppercase font-mono block">PUBLIC REPOSITORIES</span>
                   <span className="text-xl font-bold text-white block mt-1 font-display">
                     {githubData.publicRepos}
                   </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">Verified public repos</span>
+                  <span className="text-[9px] text-zinc-500 font-mono">4 verified repos</span>
                 </div>
-                <div className="bg-zinc-900/40 border border-zinc-850 p-4 rounded-xl text-center">
+                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
+                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">ACTIVE STREAK</span>
+                  <span className="text-xl font-bold text-amber-400 block mt-1 font-display">
+                    {githubData.currentStreak}d
+                  </span>
+                  <span className="text-[9px] text-zinc-500 font-mono">Best: {githubData.longestStreak}d</span>
+                </div>
+                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
                   <span className="text-[9px] text-zinc-500 uppercase font-mono block">FOLLOWERS / FOLLOWING</span>
                   <span className="text-xl font-bold text-cyan-400 block mt-1 font-display">
                     {githubData.followers} / {githubData.following}
                   </span>
                   <span className="text-[9px] text-zinc-500 font-mono">Network nodes</span>
                 </div>
-                <div className="bg-zinc-900/40 border border-zinc-850 p-4 rounded-xl text-center">
+                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center col-span-2 sm:col-span-1">
                   <span className="text-[9px] text-zinc-500 uppercase font-mono block">TOTAL STARS</span>
-                  <span className="text-xl font-bold text-yellow-400 block mt-1 font-display">
+                  <span className="text-xl font-bold text-purple-400 block mt-1 font-display">
                     {githubData.totalStars}
                   </span>
                   <span className="text-[9px] text-zinc-500 font-mono">Public stars</span>

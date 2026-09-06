@@ -745,18 +745,6 @@ function AppContent() {
 
                     {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
                     <section id="live-build-feed" className="w-full max-w-[1440px] mx-auto px-1 sm:px-4 pt-2 pb-12">
-                      <div className="mb-6 space-y-1">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 font-mono text-[10px] tracking-widest uppercase font-semibold">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          PUBLIC ECOSYSTEM
-                        </div>
-                        <h2 className="text-2xl sm:text-3xl font-bold font-display text-white">
-                          Live Build Feed
-                        </h2>
-                        <p className="text-xs sm:text-sm text-zinc-400">
-                          See what I’m building and maintaining on GitHub in real-time.
-                        </p>
-                      </div>
                       <LiveBuildFeed />
                     </section>
                   </div>
@@ -814,18 +802,6 @@ function AppContent() {
                       </Reveal>
                       <Reveal delay={0.1}>
                         <section id="projects-github-feed" className="w-full max-w-[1440px] mx-auto pt-4">
-                          <div className="mb-6 space-y-1">
-                            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 font-mono text-[10px] tracking-widest uppercase font-semibold">
-                              <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-                              LIVE REPOSITORY EXPLORER
-                            </div>
-                            <h2 className="text-2xl sm:text-3xl font-bold font-display text-white">
-                              Open Source Repositories
-                            </h2>
-                            <p className="text-xs sm:text-sm text-zinc-400">
-                              Search, filter, and inspect public codebases directly synced from GitHub.
-                            </p>
-                          </div>
                           <LiveBuildFeed />
                         </section>
                       </Reveal>

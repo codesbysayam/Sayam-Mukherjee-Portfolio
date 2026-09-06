@@ -26,7 +26,20 @@ export function GitHubActivityHeatmapComponent({
 
   const [statsData, setStatsData] = useState<GitHubStatsData>(VERIFIED_GITHUB_FALLBACK);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [hoveredDay, setHoveredDay] = useState<{ date: string; count: number; level: number } | null>(null);
+
+  const handleManualRefresh = async () => {
+    setIsRefreshing(true);
+    try {
+      const data = await fetchGitHubStats(true);
+      setStatsData(data);
+    } catch (err) {
+      console.error("Manual refresh error:", err);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   // Load real telemetry on mount
   useEffect(() => {
@@ -193,10 +206,19 @@ export function GitHubActivityHeatmapComponent({
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <span className="text-[10px] text-zinc-500 font-mono">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <span className="hidden sm:inline text-[10px] text-zinc-500 font-mono">
             Last synced: {statsData.lastSynced || "Recently"}
           </span>
+          <button
+            onClick={handleManualRefresh}
+            disabled={isRefreshing}
+            className="bg-purple-950/40 hover:bg-purple-900/50 border border-purple-800/50 text-purple-300 hover:text-white text-xs font-mono font-medium px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+            title="Force refresh real-time GitHub telemetry"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
+            <span>{isRefreshing ? "Syncing..." : "Sync"}</span>
+          </button>
           <a
             href={`https://github.com/${username}`}
             target="_blank"

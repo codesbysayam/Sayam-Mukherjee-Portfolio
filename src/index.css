@@ -1047,11 +1047,12 @@ html[data-performance="reduced"] .hero-border-spinner {
   min-width: 0;
 }
 
-.build-card {
+.build-card,
+.signal-card {
   width: 100%;
-  max-width: 390px;
-  padding: clamp(20px, 3vw, 28px);
-  border: 1px solid rgba(255, 255, 255, .1);
+  max-width: 420px;
+  padding: clamp(18px, 2.8vw, 24px);
+  border: 1px solid rgba(255, 255, 255, .09);
   border-radius: 24px;
   background: rgba(255, 255, 255, .035);
   box-shadow: 0 25px 80px rgba(0, 0, 0, .28);
@@ -1060,22 +1061,27 @@ html[data-performance="reduced"] .hero-border-spinner {
   transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
-.build-card:hover {
+.build-card:hover,
+.signal-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4), 0 0 30px rgba(168, 85, 247, 0.12);
+  border-color: rgba(168, 85, 247, 0.35);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35), 0 0 25px rgba(168, 85, 247, 0.08);
 }
 
 html.light .build-card,
-html[data-theme="light"] .build-card {
-  background: rgba(255, 255, 255, 0.85) !important;
+html.light .signal-card,
+html[data-theme="light"] .build-card,
+html[data-theme="light"] .signal-card {
+  background: rgba(255, 255, 255, 0.92) !important;
   border-color: rgba(0, 0, 0, 0.08) !important;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06) !important;
   color: #18181b !important;
 }
 
 html.light .build-card:hover,
-html[data-theme="light"] .build-card:hover {
+html.light .signal-card:hover,
+html[data-theme="light"] .build-card:hover,
+html[data-theme="light"] .signal-card:hover {
   border-color: rgba(109, 53, 217, 0.35) !important;
   box-shadow: 0 24px 70px rgba(109, 53, 217, 0.12) !important;
 }

@@ -74,6 +74,7 @@ function LanguageRingChartComponent({
     if (rawLanguages.length > 0) {
       const descriptions: Record<string, string> = {
         TypeScript: "Primary language for full-stack architecture, React frontend, and type-safe systems.",
+        "C++": "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves).",
         JavaScript: "Modern ES6+ scripting, Node.js runtime operations, and dynamic UI interactions.",
         CSS: "Tailwind CSS styling, custom animations, and responsive visual design.",
         HTML: "Semantic web structure, DOM hierarchies, and accessibility standards.",
@@ -81,6 +82,7 @@ function LanguageRingChartComponent({
       };
       const colors: Record<string, string> = {
         TypeScript: "#38bdf8",
+        "C++": "#f43f5e",
         JavaScript: "#facc15",
         CSS: "#c084fc",
         HTML: "#fb923c",
@@ -90,41 +92,27 @@ function LanguageRingChartComponent({
       return rawLanguages.map(l => ({
         name: l.name,
         percentage: l.percent,
-        color: colors[l.name] || "#94a3b8",
-        glowColor: `${colors[l.name] || "#94a3b8"}66`,
+        color: colors[l.name] || l.color || "#94a3b8",
+        glowColor: `${colors[l.name] || l.color || "#94a3b8"}66`,
         description: descriptions[l.name] || `Verified codebase share across public repositories.`
       }));
     }
 
-    // Default verified baseline
+    // Default verified baseline matching real 4 public repositories
     return [
       {
         name: "TypeScript",
-        percentage: 85,
+        percentage: 75,
         color: "#38bdf8",
         glowColor: "rgba(56, 189, 248, 0.4)",
         description: "Primary language across public repositories (Mausam, Portfolio, Operon)."
       },
       {
-        name: "JavaScript",
-        percentage: 8,
-        color: "#facc15",
-        glowColor: "rgba(250, 204, 21, 0.4)",
-        description: "Node.js runtime services, client scripts, and build configurations."
-      },
-      {
-        name: "CSS",
-        percentage: 5,
-        color: "#c084fc",
-        glowColor: "rgba(192, 132, 252, 0.4)",
-        description: "Tailwind CSS utilities, glassmorphism filters, and design tokens."
-      },
-      {
-        name: "HTML",
-        percentage: 2,
-        color: "#fb923c",
-        glowColor: "rgba(251, 146, 60, 0.4)",
-        description: "Semantic HTML templates, accessibility landmarks, and layouts."
+        name: "C++",
+        percentage: 25,
+        color: "#f43f5e",
+        glowColor: "rgba(244, 63, 94, 0.4)",
+        description: "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves)."
       }
     ];
   }, [rawLanguages]);
