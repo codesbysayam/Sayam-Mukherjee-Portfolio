@@ -34,7 +34,7 @@ export interface ProfileData {
     linkedin: string;
     youtube: string;
     instagram: string;
-    instagramSecondary: string;
+    instagramSecondary?: string;
     email: string;
   };
 }
@@ -71,9 +71,8 @@ export const PROFILE_DATA: ProfileData = {
     leetcode: "https://leetcode.com/u/codesbysayam/",
     codolio: "https://codolio.com/profile/codesbysayam",
     linkedin: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
-    youtube: "https://www.youtube.com/@ObsidianOptics_in",
+    youtube: "https://youtube.com/@technicalaz",
     instagram: "https://www.instagram.com/_.wrick._/",
-    instagramSecondary: "https://www.instagram.com/obsidianoptics.in/",
     email: "wrickbusiness@gmail.com"
   }
 };

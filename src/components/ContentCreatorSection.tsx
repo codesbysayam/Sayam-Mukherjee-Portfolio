@@ -66,7 +66,7 @@ function ContentCreatorSection() {
       {/* Brand card & Key Metrics */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
-        {/* Obsidian Optics Brand details card */}
+        {/* Content Brand details card */}
         <div className="lg:col-span-8 bg-zinc-950/40 border border-zinc-900 rounded-2xl p-6 md:p-8 flex flex-col justify-between space-y-6">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -74,13 +74,13 @@ function ContentCreatorSection() {
                 <Youtube className="w-6 h-6 text-red-500" />
               </div>
               <div>
-                <h3 className="text-xl font-bold text-white font-display tracking-tight leading-none">Obsidian Optics</h3>
-                <span className="text-[10px] text-zinc-500 font-mono tracking-wider mt-1 block">YOUTUBE EDUCATION PORTAL</span>
+                <h3 className="text-xl font-bold text-white font-display tracking-tight leading-none">CodesBySayam Media</h3>
+                <span className="text-[10px] text-zinc-500 font-mono tracking-wider mt-1 block">TECHNICAL EDUCATION & CS CONTENT</span>
               </div>
             </div>
 
             <p className="text-xs text-zinc-300 leading-relaxed max-w-2xl">
-              I established **Obsidian Optics** as an academic hub to simplify dense software topics, track market indices using sentiment analysis tools, and deliver educational content to fellow tech enthusiasts.
+              I established this academic channel as a technical hub to simplify dense software topics, explain algorithms and computer vision concepts, and share practical build guides with fellow developers.
             </p>
 
             <div className="flex flex-wrap gap-1.5 pt-2">
@@ -191,7 +191,7 @@ function ContentCreatorSection() {
                 {/* Simulated watch player hover */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-zinc-950/60 transition-opacity">
                   <button 
-                    onClick={() => alert(`Redirecting securely to Obsidian Optics YouTube node to watch: "${video.title}"`)}
+                    onClick={() => alert(`Redirecting securely to YouTube node to watch: "${video.title}"`)}
                     className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer"
                   >
                     <Play className="w-5 h-5 ml-0.5" />

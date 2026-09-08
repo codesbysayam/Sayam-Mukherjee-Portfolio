@@ -77,7 +77,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-md overflow-y-auto">
       
       {/* Printable Area - Hidden on Web Screen, Only visible during Print */}
       <div id="resume-print-root" className="hidden print:block bg-white text-black p-8 font-sans w-[210mm] min-h-[297mm] mx-auto text-[13px] leading-relaxed">
@@ -244,7 +244,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.3 }}
-        className="relative bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-4xl shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
+        className="relative bg-zinc-950 border border-zinc-800 rounded-2xl w-[min(100%,calc(100vw-2rem))] max-w-4xl shadow-2xl flex flex-col max-h-[min(90vh,calc(100dvh-2rem))] overflow-hidden"
       >
         
         {/* Header Options */}

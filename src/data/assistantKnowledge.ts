@@ -161,7 +161,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
     title: "Featured Projects",
     keywords: [
       "project", "projects", "built", "build", "portfolio", "operon",
-      "mausam", "fitness", "finance", "yolov8", "apps", "software",
+      "mausam", "sayam-solves", "sayamsolves", "yolo", "yolov8", "apps", "software",
       "work", "showcase", "creations"
     ],
     phrases: [
@@ -172,7 +172,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "show projects",
       "featured projects"
     ],
-    answer: "Featured work includes Fitness OS Pro, Finance OS Pro, OPERON, MAUSAM, an interactive portfolio and a YOLOv8 Edge Computer Vision motion-tracking project.",
+    answer: "Sayam has built 5 verified portfolio projects:\n1. OPERON — Autonomous multi-agent operations platform\n2. SayamSolves — Consistent daily LeetCode algorithmic problem solving in C++\n3. MAUSAM — Smart weather intelligence platform for SIH 2026\n4. Sayam Mukherjee — Interactive developer portfolio with live telemetry\n5. YOLO — Real-time edge computer vision & motion tracking pipeline",
     action: {
       type: "github",
       label: "Open GitHub",

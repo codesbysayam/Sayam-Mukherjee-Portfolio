@@ -62,14 +62,14 @@ export const NOW_PAGE_DATA: NowPageData = {
   semesterPhase: "2nd Year, 3rd Semester • B.Tech CSE at Kalinga Institute of Industrial Technology, Bhubaneswar",
   projectsInProgress: [
     {
-      name: "Fitness OS Pro",
-      description: "Health, workout, and nutrition tracking system designed for progressive overload and personal fitness analytics.",
+      name: "OPERON",
+      description: "Autonomous operations platform built for intelligent multi-agent workflows with human-in-the-loop governance.",
       status: "In Development"
     },
     {
-      name: "Finance OS Pro",
-      description: "Financial analytics and portfolio tracking dashboard exploring stock market trends and technical indicators.",
-      status: "In Development"
+      name: "SayamSolves",
+      description: "Daily algorithmic problem solving and LeetCode DSA consistency in C++ with structured complexity notes.",
+      status: "Active Practice"
     }
   ],
   learningGoals: [
@@ -105,7 +105,7 @@ export const LEARNING_ROADMAP = [
   {
     step: 3,
     title: "Applied Project Development",
-    detail: "Building production-quality systems like Fitness OS Pro, Finance OS Pro, and Obsidian Optics.",
+    detail: "Building production-quality systems like OPERON, MAUSAM, and YOLO edge computer vision pipelines.",
     phase: "Active"
   },
   {

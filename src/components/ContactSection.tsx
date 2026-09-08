@@ -44,7 +44,7 @@ const SOCIAL_PROFILES = [
   {
     name: "YOUTUBE",
     description: "Explore my content",
-    url: "https://www.youtube.com/@ObsidianOptics_in",
+    url: "https://youtube.com/@technicalaz",
     icon: Youtube,
     bgClass: "bg-rose-500/10 border-rose-500/20 text-rose-400",
     hoverBorder: "hover:border-rose-500/40"
@@ -52,15 +52,19 @@ const SOCIAL_PROFILES = [
 ];
 
 export default function ContactSection() {
-  // Verified primary email & social links
-  const primaryEmail = "wrickbusiness@gmail.com";
+  // Verified dual email channels & social links
+  const businessEmail = "wrickbusiness@gmail.com";
+  const contactEmail = "sayammukherjee1506@gmail.com";
+  const primaryEmail = businessEmail;
   const verifiedLinkedin = "https://www.linkedin.com/in/sayam-mukherjee-b96209324/";
   const verifiedGithub = "https://github.com/codesbysayam";
   const verifiedCodolio = "https://codolio.com/profile/codesbysayam";
 
-  // Copy email feedback state
-  const [copiedEmail, setCopiedEmail] = useState(false);
-  const copyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  // Copy email feedback states
+  const [copiedBusiness, setCopiedBusiness] = useState(false);
+  const [copiedContact, setCopiedContact] = useState(false);
+  const copyBusinessTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const copyContactTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Native share support detection
   const [canShare, setCanShare] = useState(false);
@@ -71,46 +75,68 @@ export default function ContactSection() {
     }
   }, []);
 
-  // Cleanup timeout on unmount
+  // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
-      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      if (copyBusinessTimeoutRef.current) clearTimeout(copyBusinessTimeoutRef.current);
+      if (copyContactTimeoutRef.current) clearTimeout(copyContactTimeoutRef.current);
     };
   }, []);
 
-  // Copy email handler with ~1.5s reset and mailto fallback
-  const handleCopyEmail = async (e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    try {
-      if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
-        await navigator.clipboard.writeText(primaryEmail);
-      } else {
-        const textarea = document.createElement("textarea");
-        textarea.value = primaryEmail;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textarea);
-      }
-      
-      setCopiedEmail(true);
-      showToast(`Copied ${primaryEmail} to clipboard!`, "success");
-      
-      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
-      copyTimeoutRef.current = setTimeout(() => {
-        setCopiedEmail(false);
-      }, 1500);
-    } catch {
-      // Graceful fallback to opening mail client if clipboard fails
-      window.location.href = `mailto:${primaryEmail}`;
+  const copyTextToClipboard = async (text: string) => {
+    if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(text);
+    } else {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textarea);
     }
   };
 
+  // Copy business email handler
+  const handleCopyBusiness = async (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    try {
+      await copyTextToClipboard(businessEmail);
+      setCopiedBusiness(true);
+      showToast(`Copied ${businessEmail} for business & hackathons!`, "success");
+      
+      if (copyBusinessTimeoutRef.current) clearTimeout(copyBusinessTimeoutRef.current);
+      copyBusinessTimeoutRef.current = setTimeout(() => {
+        setCopiedBusiness(false);
+      }, 1500);
+    } catch {
+      window.location.href = `mailto:${businessEmail}?subject=Business%20%2F%20Collaboration%20Inquiry`;
+    }
+  };
+
+  // Copy contact email handler
+  const handleCopyContact = async (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    try {
+      await copyTextToClipboard(contactEmail);
+      setCopiedContact(true);
+      showToast(`Copied ${contactEmail} for contact & internships!`, "success");
+      
+      if (copyContactTimeoutRef.current) clearTimeout(copyContactTimeoutRef.current);
+      copyContactTimeoutRef.current = setTimeout(() => {
+        setCopiedContact(false);
+      }, 1500);
+    } catch {
+      window.location.href = `mailto:${contactEmail}?subject=Internship%20%2F%20Contact%20Inquiry`;
+    }
+  };
+
+  const handleCopyEmail = handleCopyBusiness;
+
   // Direct quick conversation action
   const handleStartConversation = () => {
-    window.location.href = `mailto:${primaryEmail}?subject=Portfolio%20Inquiry`;
+    window.location.href = `mailto:${businessEmail}?subject=Business%20%2F%20Collaboration%20Inquiry`;
   };
 
   // Optional Web Share action
@@ -360,36 +386,85 @@ export default function ContactSection() {
             {/* Contact Cards Container */}
             <div className="space-y-2.5 pt-1">
               
-              {/* CARD 1: EMAIL */}
+              {/* CARD 1: BUSINESS & HACKATHONS EMAIL */}
               <div 
-                onClick={() => handleCopyEmail()}
+                onClick={() => handleCopyBusiness()}
                 className="contact-card-interactive group cursor-pointer p-4 rounded-2xl bg-white/[0.035] border border-white/10 hover:border-purple-500/40 hover:bg-white/[0.05] flex items-center justify-between gap-4"
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleCopyEmail(); } }}
-                aria-label={`Copy primary email: ${primaryEmail}`}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleCopyBusiness(); } }}
+                aria-label={`Copy business email: ${businessEmail}`}
               >
                 <div className="flex items-center gap-3.5 min-w-0">
                   <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block font-semibold">
-                      EMAIL
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 block font-semibold">
+                      BUSINESS & HACKATHONS
                     </span>
                     <span className="text-xs md:text-sm font-mono text-white font-medium truncate block mt-0.5 select-all">
-                      {primaryEmail}
+                      {businessEmail}
+                    </span>
+                    <span className="text-[11px] text-zinc-400 font-sans block truncate">
+                      Collaborations, hackathons & business
                     </span>
                   </div>
                 </div>
 
                 <button
                   type="button"
-                  onClick={handleCopyEmail}
+                  onClick={handleCopyBusiness}
                   className="contact-btn-hover shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.04] text-zinc-300 group-hover:text-white group-hover:border-purple-500/40 flex items-center gap-1.5 cursor-pointer"
-                  aria-label="Copy email address"
+                  aria-label="Copy business email address"
                 >
-                  {copiedEmail ? (
+                  {copiedBusiness ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400 font-semibold">Copied ✓</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3 h-3 text-zinc-400" />
+                      <span>Copy →</span>
+                    </>
+                  )}
+                </button>
+              </div>
+
+              {/* CARD 2: CONTACT & INTERNSHIPS EMAIL */}
+              <div 
+                onClick={() => handleCopyContact()}
+                className="contact-card-interactive group cursor-pointer p-4 rounded-2xl bg-white/[0.035] border border-white/10 hover:border-emerald-500/40 hover:bg-white/[0.05] flex items-center justify-between gap-4"
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleCopyContact(); } }}
+                aria-label={`Copy contact email: ${contactEmail}`}
+              >
+                <div className="flex items-center gap-3.5 min-w-0">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                    <Mail className="w-4 h-4" />
+                  </div>
+                  <div className="min-w-0">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 block font-semibold">
+                      CONTACT & INTERNSHIPS
+                    </span>
+                    <span className="text-xs md:text-sm font-mono text-white font-medium truncate block mt-0.5 select-all">
+                      {contactEmail}
+                    </span>
+                    <span className="text-[11px] text-zinc-400 font-sans block truncate">
+                      Internships, student outreach & queries
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleCopyContact}
+                  className="contact-btn-hover shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.04] text-zinc-300 group-hover:text-white group-hover:border-emerald-500/40 flex items-center gap-1.5 cursor-pointer"
+                  aria-label="Copy contact email address"
+                >
+                  {copiedContact ? (
                     <>
                       <Check className="w-3.5 h-3.5 text-emerald-400" />
                       <span className="text-emerald-400 font-semibold">Copied ✓</span>
@@ -511,47 +586,99 @@ export default function ContactSection() {
           </div>
 
           {/* ==================================================
-              PRIMARY EMAIL BLOCK
+              DUAL EMAIL BLOCKS
               ================================================== */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-3">
-            <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-zinc-400 font-semibold">
-              <Mail className="w-3.5 h-3.5 text-purple-400" />
-              <span>EMAIL</span>
+          <div className="space-y-3">
+            {/* Block 1: Business & Hackathons */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5 hover:border-purple-500/30 transition-colors">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-purple-300 font-semibold">
+                  <Mail className="w-3.5 h-3.5 text-purple-400" />
+                  <span>BUSINESS & HACKATHONS</span>
+                </div>
+                <span className="text-[10px] font-mono text-zinc-500 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                  Collaborations & Inquiries
+                </span>
+              </div>
+
+              <div className="font-mono text-sm sm:text-base text-white font-semibold select-text break-all">
+                {businessEmail}
+              </div>
+
+              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={handleCopyBusiness}
+                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.06] hover:bg-white/[0.12] text-zinc-200 hover:text-white flex items-center gap-2 cursor-pointer transition-colors"
+                  aria-label="Copy business email address"
+                >
+                  {copiedBusiness ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400">Copied ✓</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-zinc-400" />
+                      <span>Copy Email</span>
+                    </>
+                  )}
+                </button>
+
+                <a
+                  href={`mailto:${businessEmail}?subject=Business%20%2F%20Collaboration%20Inquiry`}
+                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium bg-purple-600 hover:bg-purple-500 text-white flex items-center gap-1.5 transition-colors shadow-[0_2px_12px_rgba(168,85,247,0.3)]"
+                  aria-label="Email Sayam Mukherjee for business or hackathons"
+                >
+                  <span>Business / Hackathons →</span>
+                </a>
+              </div>
             </div>
 
-            <div className="font-mono text-sm sm:text-base text-white font-semibold select-text break-all">
-              {primaryEmail}
-            </div>
+            {/* Block 2: Contact & Internships */}
+            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5 hover:border-emerald-500/30 transition-colors">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-emerald-300 font-semibold">
+                  <Mail className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>CONTACT & INTERNSHIPS</span>
+                </div>
+                <span className="text-[10px] font-mono text-zinc-500 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                  Direct & Student Outreach
+                </span>
+              </div>
 
-            <div className="flex flex-wrap items-center gap-2.5 pt-1">
-              {/* Copy Email Button */}
-              <button
-                type="button"
-                onClick={handleCopyEmail}
-                className="contact-btn-hover px-4 py-2 rounded-xl text-xs font-mono font-semibold border border-white/10 bg-white/[0.06] hover:bg-white/[0.12] text-zinc-200 hover:text-white flex items-center gap-2 cursor-pointer transition-colors"
-                aria-label="Copy email address"
-              >
-                {copiedEmail ? (
-                  <>
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-emerald-400">Copied ✓</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5 text-zinc-400" />
-                    <span>Copy Email</span>
-                  </>
-                )}
-              </button>
+              <div className="font-mono text-sm sm:text-base text-white font-semibold select-text break-all">
+                {contactEmail}
+              </div>
 
-              {/* Direct Mailto Anchor */}
-              <a
-                href={`mailto:${primaryEmail}`}
-                className="contact-btn-hover px-4 py-2 rounded-xl text-xs font-mono font-semibold bg-purple-600 hover:bg-purple-500 text-white flex items-center gap-1.5 transition-colors shadow-[0_2px_12px_rgba(168,85,247,0.3)]"
-                aria-label="Email Sayam Mukherjee directly"
-              >
-                <span>Email Me →</span>
-              </a>
+              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={handleCopyContact}
+                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.06] hover:bg-white/[0.12] text-zinc-200 hover:text-white flex items-center gap-2 cursor-pointer transition-colors"
+                  aria-label="Copy contact email address"
+                >
+                  {copiedContact ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="text-emerald-400">Copied ✓</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-zinc-400" />
+                      <span>Copy Email</span>
+                    </>
+                  )}
+                </button>
+
+                <a
+                  href={`mailto:${contactEmail}?subject=Internship%20%2F%20Contact%20Inquiry`}
+                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 transition-colors shadow-[0_2px_12px_rgba(16,185,129,0.3)]"
+                  aria-label="Email Sayam Mukherjee for internships or inquiries"
+                >
+                  <span>Internship / Direct →</span>
+                </a>
+              </div>
             </div>
           </div>
 

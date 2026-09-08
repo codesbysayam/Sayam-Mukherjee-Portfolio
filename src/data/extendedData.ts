@@ -156,7 +156,7 @@ export const EXTENDED_DATA = {
   projects: [
     {
       id: "proj-1",
-      title: "Obsidian Optics",
+      title: "YOLO Edge Computer Vision",
       description: "YOLOv8 tracking on edge devices.",
       tags: ["Python", "YOLOv8", "OpenCV"],
       category: "AI",

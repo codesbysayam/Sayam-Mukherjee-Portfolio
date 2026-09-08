@@ -16,7 +16,6 @@ import ExperienceSection from "./components/ExperienceSection";
 import HeroSection from "./components/HeroSection";
 import LiveBuildFeed from "./components/LiveBuildFeed";
 import CertificationsSection from "./components/CertificationsSection";
-import CodingProfiles from "./components/CodingProfiles";
 import ContactSection from "./components/ContactSection";
 import SEO from "./components/SEO";
 import { PortfolioProvider, usePortfolio } from "./context/PortfolioContext";
@@ -71,6 +70,13 @@ function Reveal({
       return;
     }
 
+    // Safety fallback: guaranteed visibility even in iframe / quick tab switches
+    const safetyTimer = setTimeout(() => {
+      if (el && !el.classList.contains("visible")) {
+        el.classList.add("visible");
+      }
+    }, delay * 1000 + 300);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -85,14 +91,15 @@ function Reveal({
         }
       },
       {
-        threshold: 0.08,
-        rootMargin: "0px 0px -40px 0px",
+        threshold: 0.02,
+        rootMargin: "50px 0px 50px 0px",
       }
     );
 
     observer.observe(el);
 
     return () => {
+      clearTimeout(safetyTimer);
       observer.disconnect();
     };
   }, [delay]);
@@ -519,7 +526,7 @@ function AppContent() {
                 ? "bg-white/95 border-zinc-200 shadow-md"
                 : "bg-white/90 border-zinc-200/80 shadow-sm"
           }`}>
-            <div className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-3.5 sm:py-4 flex items-center justify-between gap-4">
+            <div className="w-full flex items-center justify-between gap-4" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)", paddingBlock: "clamp(0.75rem, 1.5vw, 1rem)" }}>
               
               {/* Logotype */}
               <button 
@@ -728,7 +735,7 @@ function AppContent() {
           </header>
 
           {/* Main Content Layout with Framer Motion tab transition routing */}
-          <main className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-3 sm:pt-4 pb-16 overflow-x-clip">
+          <main className="relative z-10 w-full pt-3 sm:pt-4 pb-16 overflow-x-clip" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)" }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -744,7 +751,7 @@ function AppContent() {
                     <HeroSection onViewWork={() => setActiveTab("projects")} />
 
                     {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
-                    <section id="live-build-feed" className="w-full max-w-[1440px] mx-auto px-1 sm:px-4 pt-2 pb-12">
+                    <section id="live-build-feed" className="w-full pt-2 pb-12">
                       <LiveBuildFeed />
                     </section>
                   </div>
@@ -771,13 +778,8 @@ function AppContent() {
                   )}
 
                   {activeTab === "skills" && (
-                    <div className="space-y-16 py-8">
-                      <Reveal delay={0}>
-                        <SkillsSection />
-                      </Reveal>
-                      <Reveal delay={0.1}>
-                        <CodingProfiles />
-                      </Reveal>
+                    <div className="py-4">
+                      <SkillsSection />
                     </div>
                   )}
 
@@ -796,14 +798,9 @@ function AppContent() {
                   )}
 
                   {activeTab === "projects" && (
-                    <div className="space-y-16 py-8">
+                    <div className="py-4 sm:py-6">
                       <Reveal delay={0}>
                         <ProjectsShowcase />
-                      </Reveal>
-                      <Reveal delay={0.1}>
-                        <section id="projects-github-feed" className="w-full max-w-[1440px] mx-auto pt-4">
-                          <LiveBuildFeed />
-                        </section>
                       </Reveal>
                     </div>
                   )}
@@ -833,7 +830,7 @@ function AppContent() {
 
           {/* MASTER FOOTER */}
           <footer className="relative bg-[#070709] border-t border-zinc-900/60 z-10 py-12 text-zinc-500 text-xs mt-12 pb-24">
-            <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3vw, 3rem)" }}>
               
               <div className="flex flex-col items-center md:items-start text-center md:text-left">
                 <p className="font-bold text-white font-display tracking-tight text-sm">Sayam Mukherjee</p>

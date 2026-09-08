@@ -795,8 +795,8 @@ export default function AdminDashboard() {
                         >
                           <option value="ai_ml">Artificial Intelligence & ML</option>
                           <option value="full_stack">Full-Stack Development</option>
-                          <option value="finance">Stock Market Finance</option>
-                          <option value="design_media">Branding & Thumbnail Design</option>
+                          <option value="systems">Systems & Algorithms</option>
+                          <option value="design_media">Branding & Media</option>
                         </select>
                       </div>
                     </div>
@@ -940,7 +940,7 @@ export default function AdminDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-base font-bold text-white font-display">Manage Portfolio Blogs</h3>
-                  <p className="text-xs text-zinc-500 font-mono">Create and edit Obsidian journal markdown articles</p>
+                  <p className="text-xs text-zinc-500 font-mono">Create and edit engineering journal markdown articles</p>
                 </div>
                 <button
                   onClick={() => {

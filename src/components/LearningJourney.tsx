@@ -175,9 +175,9 @@ export const EXACT_TIMELINE_DATA: TimelineMilestone[] = [
     categoryLabel: "Engineering Deliveries",
     icon: Rocket,
     keyHighlights: [
-      "Obsidian Optics YOLOv8 real-time edge motion tracker",
-      "MAUSAM: SIH 2026 agritech and meteorological portal",
-      "OPERON: Competition systems prototype",
+      "YOLO / YOLOv8 real-time edge computer vision motion tracker",
+      "MAUSAM: SIH 2026 meteorological platform with Team Algnite",
+      "OPERON: Autonomous multi-agent operations platform",
       "Interactive Developer Portfolio with live telemetry"
     ],
     metricsTag: "Production Architecture"

@@ -288,13 +288,13 @@ function LiveBuildFeedComponent() {
       {/* ==================================================
           REPOSITORY CARDS GRID (Displays all public repos)
           ================================================== */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4 pt-4">
         {loading && repos.length === 0 ? (
           /* Skeletons */
           Array.from({ length: 3 }).map((_, idx) => (
             <div
               key={idx}
-              className="rounded-2xl p-5 bg-white/[0.02] border border-white/10 animate-pulse space-y-3"
+              className="rounded-2xl p-5 bg-white/[0.02] border border-white/10 animate-pulse space-y-3 min-w-0"
             >
               <div className="h-4 w-24 bg-white/10 rounded" />
               <div className="h-6 w-3/4 bg-white/10 rounded" />
@@ -308,9 +308,9 @@ function LiveBuildFeedComponent() {
             return (
               <div
                 key={repo.id || repo.name}
-                className="feed-card-interactive flex flex-col justify-between rounded-2xl p-5 bg-white/[0.035] border border-white/[0.08] hover:border-purple-500/30 select-text"
+                className="feed-card-interactive flex flex-col justify-between rounded-2xl p-5 bg-white/[0.035] border border-white/[0.08] hover:border-purple-500/30 select-text min-w-0 w-full"
               >
-                <div className="space-y-2.5">
+                <div className="space-y-2.5 min-w-0">
                   {/* Top Badge Row */}
                   <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
                     {isLatest ? (
@@ -331,16 +331,16 @@ function LiveBuildFeedComponent() {
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block group"
+                    className="block group min-w-0"
                   >
-                    <h4 className="text-base font-bold font-sans text-white group-hover:text-purple-300 transition-colors flex items-center justify-between gap-2">
-                      <span className="break-all">{repo.name}</span>
+                    <h4 className="text-base font-bold font-sans text-white group-hover:text-purple-300 transition-colors flex items-center justify-between gap-2 min-w-0">
+                      <span className="break-all overflow-wrap-anywhere min-w-0">{repo.name}</span>
                       <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-purple-300 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </h4>
                   </a>
 
                   {/* Description */}
-                  <p className="text-xs text-zinc-300/85 leading-relaxed line-clamp-2">
+                  <p className="text-xs text-zinc-300/85 leading-relaxed line-clamp-2 break-words">
                     {repo.description || "Public open-source repository."}
                   </p>
 

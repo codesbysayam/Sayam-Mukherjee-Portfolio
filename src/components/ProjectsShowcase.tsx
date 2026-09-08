@@ -1,334 +1,338 @@
-import { useState, useMemo, memo } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { VERIFIED_PROJECTS, VerifiedProject } from "../data/projects";
-import { 
-  ExternalLink, Github, Layers, Search, Code, Clock, 
-  Sparkles, CheckCircle2, ChevronRight, Play, Server, 
-  Database as DbIcon, ShieldCheck, ArrowRight, Eye, BookOpen, Check, X,
-  Cpu, Terminal, Activity
-} from "lucide-react";
+import { useState, useMemo, useEffect, memo } from "react";
+import { AnimatePresence } from "motion/react";
+import { PROJECTS, ProjectItem } from "../data/projects";
+import { useGithub } from "../hooks/useGithub";
+import { GitHubRepo } from "../services/github";
+import { Search, X, Filter, Sparkles, Terminal, Code2, Database } from "lucide-react";
+
+import { EngineeringSnapshot } from "./projects/EngineeringSnapshot";
+import { FeaturedProject } from "./projects/FeaturedProject";
+import { ProjectCard } from "./projects/ProjectCard";
+import { RecentBuildActivity } from "./projects/RecentBuildActivity";
+import { TechnologyLandscape } from "./projects/TechnologyLandscape";
+import { BuildEvolution } from "./projects/BuildEvolution";
+import { RepositorySignal } from "./projects/RepositorySignal";
+import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
+
+type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "SYSTEMS";
 
 function ProjectsShowcaseComponent() {
-  const [selectedFilter, setSelectedFilter] = useState<string>("all");
+  const [selectedCategory, setSelectedCategory] = useState<FilterCategory>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [activeProject, setActiveProject] = useState<VerifiedProject | null>(null);
+  const [selectedCaseStudy, setSelectedCaseStudy] = useState<ProjectItem | null>(null);
 
-  // Filter Categories aligned strictly with verified projects
-  const filters = [
-    { id: "all", label: "All Projects (7)" },
-    { id: "web", label: "Full-Stack & Web" },
-    { id: "vision", label: "AI & Computer Vision" },
-    { id: "systems", label: "Systems Architecture" },
-    { id: "hackathon", label: "SIH 2026" }
-  ];
+  // Live GitHub telemetry hook
+  const { repos, loading: githubLoading } = useGithub();
 
-  // Filtering and Searching Logic
+  // Map each project to its verified live GitHub repo if applicable
+  const repoMap = useMemo(() => {
+    const map: Record<string, GitHubRepo> = {};
+    repos.forEach((repo) => {
+      map[repo.name.toLowerCase()] = repo;
+    });
+    return map;
+  }, [repos]);
+
+  // Featured Project Candidate Determination
+  // Dynamically inspects MAUSAM and OPERON updated_at timestamps
+  const [featuredProjectId, setFeaturedProjectId] = useState<string>("mausam");
+
+  useEffect(() => {
+    const mausamRepo = repoMap["mausam"];
+    const operonRepo = repoMap["operon"];
+    if (mausamRepo && operonRepo) {
+      const mausamTime = new Date(mausamRepo.pushed_at || mausamRepo.updated_at).getTime();
+      const operonTime = new Date(operonRepo.pushed_at || operonRepo.updated_at).getTime();
+      if (operonTime > mausamTime) {
+        setFeaturedProjectId("operon");
+      } else {
+        setFeaturedProjectId("mausam");
+      }
+    }
+  }, [repoMap]);
+
+  const featuredProject = useMemo(() => {
+    return (
+      PROJECTS.find((p) => p.id === featuredProjectId) ||
+      PROJECTS.find((p) => p.id === "mausam") ||
+      PROJECTS[0]
+    );
+  }, [featuredProjectId]);
+
+  const alternativeFeaturedCandidate = useMemo(() => {
+    return featuredProject.id === "mausam" ? "OPERON" : "MAUSAM";
+  }, [featuredProject.id]);
+
+  const toggleFeaturedCandidate = () => {
+    setFeaturedProjectId((prev) => (prev === "mausam" ? "operon" : "mausam"));
+  };
+
+  // Category Filter Definitions with dynamic item counts
+  const categoryFilters: { id: FilterCategory; label: string; count: number }[] = useMemo(() => {
+    return [
+      { id: "ALL", label: "ALL", count: PROJECTS.length },
+      {
+        id: "AI / ML",
+        label: "AI / ML",
+        count: PROJECTS.filter((p) => p.categoryFilter === "AI / ML" || p.id === "yolo" || p.id === "operon").length
+      },
+      {
+        id: "FULL-STACK",
+        label: "FULL-STACK",
+        count: PROJECTS.filter((p) => p.categoryFilter === "FULL-STACK").length
+      },
+      {
+        id: "SYSTEMS",
+        label: "SYSTEMS",
+        count: PROJECTS.filter((p) => p.categoryFilter === "SYSTEMS").length
+      }
+    ];
+  }, []);
+
+  // Filter & Search Logic
   const filteredProjects = useMemo(() => {
-    return VERIFIED_PROJECTS.filter((project) => {
-      const query = searchQuery.toLowerCase().trim();
-      const projectTech = project.tech || project.techStack || [];
-      const projectFeatures = project.features || project.highlights || [];
-      const matchesSearch = query === "" || 
+    const query = searchQuery.toLowerCase().trim();
+
+    return PROJECTS.filter((project) => {
+      // Category Match
+      if (selectedCategory !== "ALL") {
+        if (selectedCategory === "AI / ML") {
+          const isAiMl = project.categoryFilter === "AI / ML" || project.id === "yolo" || project.id === "operon";
+          if (!isAiMl) return false;
+        } else if (project.categoryFilter !== selectedCategory) {
+          return false;
+        }
+      }
+
+      // Search Match
+      if (!query) return true;
+
+      return (
         project.title.toLowerCase().includes(query) ||
+        project.subtitle.toLowerCase().includes(query) ||
         project.shortDescription.toLowerCase().includes(query) ||
         project.longDescription.toLowerCase().includes(query) ||
+        project.whyItExists.toLowerCase().includes(query) ||
+        project.whatIBuilt.toLowerCase().includes(query) ||
         project.category.toLowerCase().includes(query) ||
-        projectTech.some(t => t.toLowerCase().includes(query)) ||
-        projectFeatures.some(f => f.toLowerCase().includes(query));
-
-      if (!matchesSearch) return false;
-
-      if (selectedFilter === "all") return true;
-      if (selectedFilter === "web") return project.category.includes("Web") || project.category.includes("HealthTech") || project.category.includes("FinTech");
-      if (selectedFilter === "vision") return project.category.includes("Computer Vision") || project.category.includes("AgriTech");
-      if (selectedFilter === "systems") return project.category.includes("Systems");
-      if (selectedFilter === "hackathon") return project.id === "mausam-sih";
-
-      return true;
+        project.techStack.some((t) => t.toLowerCase().includes(query)) ||
+        (project.githubRepoName && project.githubRepoName.toLowerCase().includes(query))
+      );
     });
-  }, [selectedFilter, searchQuery]);
+  }, [selectedCategory, searchQuery]);
+
+  // Remaining projects for explorer when in "ALL" mode vs filtered
+  // When in ALL mode, the grid highlights the remaining verified projects plus featured
+  const explorerProjects = useMemo(() => {
+    if (searchQuery.trim().length > 0 || selectedCategory !== "ALL") {
+      return filteredProjects;
+    }
+    // In default ALL mode, show all 5 verified projects so visitors can browse every system
+    return filteredProjects;
+  }, [filteredProjects, searchQuery, selectedCategory]);
 
   return (
-    <div className="space-y-16 font-sans relative" id="projects">
-      {/* Glow Blur Accent */}
-      <div className="absolute top-1/4 right-10 w-[350px] h-[350px] bg-indigo-500/5 rounded-full blur-[140px] pointer-events-none -z-10" />
+    <div className="w-full space-y-12 sm:space-y-16">
+      {/* 1. COMPACT HERO */}
+      <section className="space-y-5 pt-2">
+        <div className="space-y-2 max-w-3xl">
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-mono tracking-widest text-cyan-400 uppercase font-semibold">
+              ENGINEERING ARCHIVE
+            </span>
+            <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+            <span className="text-[11px] font-mono text-zinc-500">VERIFIED CODEBASE</span>
+          </div>
 
-      {/* Section Header */}
-      <div className="space-y-6">
-        <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-950/80 border border-zinc-900 rounded-full">
-          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
-          <span className="text-[10px] text-zinc-400 font-mono tracking-widest uppercase">
-            VERIFIED REPERTOIRE
-          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white font-display tracking-tight leading-[1.1]">
+            ENGINEERING PROJECTS <br />
+            <span className="text-zinc-400">&amp; SOFTWARE SYSTEMS</span>
+          </h1>
+
+          <p className="text-sm sm:text-base text-zinc-300 font-sans leading-relaxed pt-1">
+            A collection of software, AI/ML and systems work I’ve actually built, explored and maintained.
+          </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-zinc-900 pb-10">
-          <div className="space-y-3">
-            <h2 
-              style={{ fontSize: "clamp(1.8rem, 4.5vw, 4.5rem)" }} 
-              className="font-bold tracking-tight text-white font-display leading-tight"
-            >
-              Engineering Projects & <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">
-                Software Architectures
-              </span>
+        {/* Compact Engineering Snapshot Pills */}
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap pt-2">
+          <div className="px-3 py-1.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs font-mono text-zinc-200 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-cyan-400" />
+            <span className="font-bold text-white">{PROJECTS.length} PROJECTS</span>
+          </div>
+
+          <div className="px-3 py-1.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs font-mono text-zinc-300 flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+            <span>LIVE GITHUB DATA</span>
+          </div>
+
+          <div className="px-3 py-1.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs font-mono text-zinc-400 flex items-center gap-2">
+            <span>2021–PRESENT BUILD JOURNEY</span>
+          </div>
+
+          <div className="px-3 py-1.5 rounded-xl bg-zinc-900/80 border border-zinc-800 text-xs font-mono text-cyan-300/90 hidden md:flex items-center gap-2">
+            <span>AI · WEB · SYSTEMS CORE FOCUS</span>
+          </div>
+        </div>
+      </section>
+
+      {/* 2 & 3. TOP FOLD: FEATURED PROJECT + ENGINEERING SNAPSHOT */}
+      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        {/* Featured Project Editorial Block (8 cols) */}
+        <div className="lg:col-span-8 flex flex-col">
+          <FeaturedProject
+            project={featuredProject}
+            repo={repoMap[featuredProject.githubRepoName?.toLowerCase() || ""] || null}
+            onSelectCaseStudy={setSelectedCaseStudy}
+            onToggleCandidate={toggleFeaturedCandidate}
+            candidateTitle={alternativeFeaturedCandidate}
+          />
+        </div>
+
+        {/* Engineering Snapshot (4 cols) */}
+        <div className="lg:col-span-4 flex flex-col">
+          <EngineeringSnapshot />
+        </div>
+      </section>
+
+      {/* 4 & 5. PROJECT EXPLORER (SEARCH + FILTER + CARDS) */}
+      <section className="space-y-6 pt-4">
+        {/* Explorer Header & Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-850 pb-5">
+          <div className="space-y-1">
+            <h2 className="text-xl sm:text-2xl font-bold text-white font-display">
+              PROJECT EXPLORER
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-400 max-w-2xl leading-relaxed">
-              Strictly verified software projects spanning edge computer vision pipelines, full-stack productivity dashboards, hackathon solutions, and systems research.
+            <p className="text-xs font-mono text-zinc-400">
+              {PROJECTS.length} verified projects • {filteredProjects.length} matching criteria
             </p>
           </div>
 
-          {/* Real-time search input */}
-          <div className="relative w-full lg:w-80 shrink-0">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+          {/* Search Input */}
+          <div className="relative w-full sm:w-72">
+            <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
-              placeholder="Filter by stack, feature, or title..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-900 hover:border-zinc-800 focus:border-purple-500/50 rounded-2xl pl-10 pr-4 py-3 text-xs text-white placeholder-zinc-500 outline-none transition-all"
+              placeholder="Search systems, tech, algorithms..."
+              className="w-full bg-zinc-900/80 border border-zinc-800 rounded-xl pl-9 pr-8 py-2 text-xs font-mono text-white placeholder-zinc-500 focus:outline-none focus:border-cyan-500/50 transition-colors"
             />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white p-0.5 rounded cursor-pointer"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
+            )}
           </div>
         </div>
-      </div>
 
-      {/* Filter tabs */}
-      <div className="flex flex-wrap gap-1.5 p-1 bg-zinc-950 border border-zinc-900 rounded-2xl max-w-2xl">
-        {filters.map((filter) => {
-          const isSelected = selectedFilter === filter.id;
-          return (
-            <button
-              key={filter.id}
-              onClick={() => setSelectedFilter(filter.id)}
-              className={`text-xs px-4 py-2 rounded-xl transition-all duration-300 whitespace-nowrap cursor-pointer font-medium ${
-                isSelected
-                  ? "bg-zinc-900 text-white shadow-md border-zinc-800 border"
-                  : "bg-transparent text-zinc-400 hover:text-white"
-              }`}
-            >
-              {filter.label}
-            </button>
-          );
-        })}
-      </div>
-
-      {/* Grid: 7 Verified Projects */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <AnimatePresence mode="popLayout">
-          {filteredProjects.map((project) => (
-            <motion.div
-              layout
-              key={project.id}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="glass-card rounded-3xl overflow-hidden flex flex-col justify-between group h-full transition-all duration-300 relative shadow-xl border border-zinc-850 hover:border-zinc-700"
-            >
-              {/* Card Header & Badges */}
-              <div className="p-6 space-y-4 flex-1">
-                <div className="flex items-center justify-between gap-2">
-                  <span className="text-[9px] font-mono font-bold uppercase tracking-widest bg-zinc-950/80 border border-zinc-800/80 text-cyan-400 px-2.5 py-1 rounded-full">
-                    {project.category}
-                  </span>
-                  <span className={`text-[9px] font-mono px-2 py-0.5 rounded-full border ${
-                    project.status.includes("Completed")
-                      ? "bg-emerald-950/40 border-emerald-800/40 text-emerald-400"
-                      : "bg-purple-950/40 border-purple-800/40 text-purple-300"
-                  }`}>
-                    {project.status}
-                  </span>
-                </div>
-
-                <div className="space-y-2">
-                  <h3 className="text-lg font-bold text-white font-display group-hover:text-purple-300 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    {project.shortDescription}
-                  </p>
-                </div>
-
-                {/* Key Features preview */}
-                <div className="space-y-2 pt-2 border-t border-zinc-900">
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-zinc-500 block">
-                    Core Capabilities
-                  </span>
-                  <ul className="space-y-1.5">
-                    {(project.features || project.highlights || []).slice(0, 3).map((feat, idx) => (
-                      <li key={idx} className="flex items-center gap-2 text-xs text-zinc-300">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                        <span className="truncate">{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-
-              {/* Footer Tech Tags & CTA */}
-              <div className="p-6 pt-0 space-y-4">
-                <div className="flex flex-wrap gap-1">
-                  {(project.tech || project.techStack || []).map((t, idx) => (
-                    <span key={idx} className="text-[9px] bg-zinc-950 border border-zinc-900 text-zinc-400 rounded px-2 py-0.5 font-mono">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="pt-4 border-t border-zinc-900 flex items-center justify-between text-xs font-semibold">
-                  <div className="flex items-center gap-2">
-                    {project.githubUrl && (
-                      <a 
-                        href={project.githubUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-zinc-500 hover:text-white p-1 rounded transition-colors"
-                        title="View Source on GitHub"
-                      >
-                        <Github className="w-4 h-4" />
-                      </a>
-                    )}
-                    {project.liveUrl && (
-                      <a 
-                        href={project.liveUrl} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-zinc-500 hover:text-white p-1 rounded transition-colors"
-                        title="Live Demo"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                    )}
-                  </div>
-
-                  <button
-                    onClick={() => setActiveProject(project)}
-                    className="flex items-center gap-1.5 text-purple-400 group-hover:text-cyan-400 transition-colors duration-300 cursor-pointer text-xs font-mono font-bold"
-                  >
-                    <span>Inspect Specs</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {/* SPECIFICATION DETAIL MODAL */}
-      <AnimatePresence>
-        {activeProject && (
-          <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 md:p-10">
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setActiveProject(null)}
-              className="absolute inset-0 bg-zinc-950/85 backdrop-blur-md"
-            />
-
-            {/* Modal Body */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 15 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-3xl glass-card rounded-3xl overflow-hidden shadow-2xl relative z-10 max-h-[85vh] flex flex-col border border-zinc-800"
-            >
-              {/* Close Button */}
+        {/* Category Filters (Horizontally scrollable with no overflow) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+          {categoryFilters.map((cat) => {
+            const isSelected = selectedCategory === cat.id;
+            return (
               <button
-                onClick={() => setActiveProject(null)}
-                className="absolute top-5 right-5 z-20 w-8 h-8 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all shrink-0 cursor-pointer flex items-center gap-1.5 ${
+                  isSelected
+                    ? "bg-cyan-500/15 text-cyan-300 border border-cyan-500/40 shadow-sm"
+                    : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 border border-zinc-850 hover:border-zinc-750"
+                }`}
               >
-                <X className="w-4 h-4" />
+                <span>{cat.label}</span>
+                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                  isSelected ? "bg-cyan-500/20 text-cyan-200" : "bg-zinc-800 text-zinc-500"
+                }`}>
+                  {cat.count}
+                </span>
               </button>
+            );
+          })}
+        </div>
 
-              {/* Content scroll */}
-              <div className="overflow-y-auto p-6 sm:p-8 space-y-6 flex-1">
-                {/* Header */}
-                <div className="space-y-2 border-b border-zinc-900 pb-5">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] bg-purple-500/20 text-purple-300 font-mono tracking-widest uppercase border border-purple-800/40 px-3 py-1 rounded-full">
-                      {activeProject.category}
-                    </span>
-                    <span className="text-[10px] bg-zinc-900 text-zinc-400 font-mono px-2.5 py-1 rounded-full border border-zinc-800">
-                      {activeProject.status}
-                    </span>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-white font-display">
-                    {activeProject.title}
-                  </h3>
-                </div>
-
-                {/* Detailed Description */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-mono uppercase tracking-widest text-cyan-400">Architectural Summary</h4>
-                  <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans">
-                    {activeProject.longDescription}
-                  </p>
-                </div>
-
-                {/* Features */}
-                <div className="space-y-3">
-                  <h4 className="text-xs font-mono uppercase tracking-widest text-purple-400">Verified Feature Scope</h4>
-                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-zinc-300">
-                    {(activeProject.features || activeProject.highlights || []).map((feat, idx) => (
-                      <li key={idx} className="flex items-start gap-2.5 bg-zinc-950/60 p-3 rounded-xl border border-zinc-900">
-                        <Check className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                        <span>{feat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Tech Stack */}
-                <div className="space-y-2">
-                  <h4 className="text-xs font-mono uppercase tracking-widest text-zinc-400">Technology Stack</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {(activeProject.tech || activeProject.techStack || []).map((t, idx) => (
-                      <span key={idx} className="text-xs bg-zinc-900 text-zinc-200 px-3 py-1 rounded-xl border border-zinc-800 font-mono font-medium">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Action Links */}
-                {(activeProject.githubUrl || activeProject.liveUrl) && (
-                  <div className="pt-4 border-t border-zinc-900 flex items-center gap-3">
-                    {activeProject.githubUrl && (
-                      <a
-                        href={activeProject.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono font-bold text-white transition-all"
-                      >
-                        <Github className="w-4 h-4" />
-                        <span>View Repository</span>
-                      </a>
-                    )}
-                    {activeProject.liveUrl && (
-                      <a
-                        href={activeProject.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 text-xs font-mono font-bold text-cyan-300 transition-all"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span>Open Live Instance</span>
-                      </a>
-                    )}
-                  </div>
-                )}
-              </div>
-            </motion.div>
+        {/* Explorer Project Cards Grid */}
+        {explorerProjects.length === 0 ? (
+          <div className="glass-card rounded-2xl p-12 text-center border border-zinc-850 bg-zinc-950/40 space-y-4">
+            <div className="w-12 h-12 rounded-full bg-zinc-900 border border-zinc-800 mx-auto flex items-center justify-center text-zinc-500">
+              <Search className="w-5 h-5" />
+            </div>
+            <div className="space-y-1">
+              <h3 className="text-sm font-mono font-bold text-zinc-300 uppercase tracking-wider">
+                NO MATCHES
+              </h3>
+              <p className="text-xs text-zinc-500 font-sans">
+                Try another keyword or reset the category filters.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedCategory("ALL");
+              }}
+              className="px-4 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-xs font-mono text-cyan-400 border border-zinc-800 transition-colors cursor-pointer"
+            >
+              Reset Search &amp; Filters
+            </button>
           </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+            {explorerProjects.map((project) => {
+              const repo = repoMap[project.githubRepoName?.toLowerCase() || ""] || null;
+              const isLead = project.id === featuredProject.id;
+              return (
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  repo={repo}
+                  onSelectCaseStudy={setSelectedCaseStudy}
+                  isFeaturedCandidate={isLead}
+                />
+              );
+            })}
+          </div>
+        )}
+      </section>
+
+      {/* 7. RECENT BUILD ACTIVITY (LIVE GITHUB EVENTS) */}
+      <section className="pt-2">
+        <RecentBuildActivity />
+      </section>
+
+      {/* 8 & 9. TECHNOLOGY LANDSCAPE + BUILD EVOLUTION */}
+      <section className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start pt-2">
+        {/* Technology Landscape */}
+        <div>
+          <TechnologyLandscape />
+        </div>
+
+        {/* Project Lifecycle / Build Evolution */}
+        <div>
+          <BuildEvolution onSelectProject={setSelectedCaseStudy} />
+        </div>
+      </section>
+
+      {/* 10. REPOSITORY SIGNAL */}
+      <section className="pt-2">
+        <RepositorySignal />
+      </section>
+
+      {/* 11. CASE STUDY MODAL */}
+      <AnimatePresence>
+        {selectedCaseStudy && (
+          <ProjectCaseStudyModal
+            project={selectedCaseStudy}
+            repo={repoMap[selectedCaseStudy.githubRepoName?.toLowerCase() || ""] || null}
+            onClose={() => setSelectedCaseStudy(null)}
+          />
         )}
       </AnimatePresence>
     </div>
   );
 }
 
-const ProjectsShowcase = memo(ProjectsShowcaseComponent);
-export default ProjectsShowcase;
+export default memo(ProjectsShowcaseComponent);
+export const ProjectsShowcase = memo(ProjectsShowcaseComponent);

@@ -77,6 +77,123 @@ html[data-theme="light"] {
    GLOBAL BASE & SMOOTH TYPOGRAPHY
    ========================================================================== */
 
+/* ==========================================================================
+   GLOBAL RESPONSIVE FOUNDATION & BASE RESET
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: clip;
+}
+
+body {
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+img, video, svg, canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+button, input, textarea, select {
+  max-width: 100%;
+}
+
+.container {
+  width: min(100% - 2rem, 1440px);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+}
+
+section {
+  padding-block: clamp(4rem, 8vw, 9rem);
+}
+
+h1, h2, h3, p {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  font-size: clamp(2.7rem, 6vw, 7rem);
+  line-height: .95;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -.04em;
+  text-wrap: balance;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.2;
+}
+
+p {
+  font-size: clamp(.95rem, 1.1vw, 1.15rem);
+  line-height: 1.6;
+}
+
+.card, .grid > * {
+  min-width: 0;
+}
+
+.card-container {
+  container-type: inline-size;
+}
+
+@media (max-width: 900px) {
+  .container {
+    width: min(100% - 1.5rem, 720px);
+    padding-inline: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .container {
+    width: min(100% - 1.25rem, 520px);
+    padding-inline: 0.75rem;
+  }
+  section {
+    padding-block: clamp(3.5rem, 12vw, 6rem);
+  }
+}
+
+@media (max-height: 700px) {
+  section {
+    padding-block: 2.5rem;
+  }
+}
+
+@media (hover: none) {
+  .custom-cursor,
+  .cursor-glow,
+  .magnetic-effect {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1025,39 +1142,46 @@ html[data-performance="reduced"] .hero-border-spinner {
    ========================================================================== */
 
 .hero {
-  min-height: calc(100svh - 80px);
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: clamp(2rem, 4.5vw, 4rem) 0;
+  min-height: 100svh;
+  min-height: 100dvh;
+  width: min(100% - 2rem, 1440px);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+  padding-block: clamp(2.5rem, 5vw, 5rem);
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(320px, 0.85fr);
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 0.85fr);
   align-items: center;
-  gap: clamp(2.5rem, 5vw, 5rem);
+  gap: clamp(2rem, 5vw, 5rem);
 }
 
 .hero-title {
-  max-width: 1000px;
-  font-size: clamp(2.8rem, 5.6vw, 6rem);
+  max-width: 100%;
+  font-size: clamp(2.7rem, 6vw, 6.5rem);
   line-height: .95;
-  letter-spacing: -.048em;
+  letter-spacing: -.055em;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
   margin: 0;
 }
 
 .hero-grid {
   min-width: 0;
+  width: 100%;
 }
 
 .build-card,
 .signal-card {
   width: 100%;
-  max-width: 420px;
-  padding: clamp(18px, 2.8vw, 24px);
+  max-width: 440px;
+  min-width: 0;
+  padding: clamp(16px, 2.5vw, 24px);
   border: 1px solid rgba(255, 255, 255, .09);
   border-radius: 24px;
   background: rgba(255, 255, 255, .035);
   box-shadow: 0 25px 80px rgba(0, 0, 0, .28);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
+  container-type: inline-size;
   transition: border-color 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, background-color 0.25s ease;
 }
 
@@ -1086,33 +1210,49 @@ html[data-theme="light"] .signal-card:hover {
   box-shadow: 0 24px 70px rgba(109, 53, 217, 0.12) !important;
 }
 
-@media (max-width: 992px) {
+@media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
     min-height: auto;
-    padding-top: 2rem;
-    padding-bottom: 3rem;
-    gap: 3rem;
+    padding-inline: 1rem;
+    padding-block: clamp(2rem, 6vw, 3.5rem);
+    gap: 2.5rem;
   }
-  .build-card {
+  .build-card,
+  .signal-card {
     max-width: 100%;
   }
   .hero-title {
-    font-size: clamp(2.6rem, 8vw, 4.4rem);
+    font-size: clamp(2.4rem, 7.5vw, 4.2rem);
   }
 }
 
 @media (max-width: 600px) {
+  .hero {
+    padding-inline: 0.75rem;
+    padding-block: clamp(1.75rem, 5vw, 2.5rem);
+    gap: 2rem;
+  }
   .hero-title {
-    font-size: clamp(2.3rem, 10.5vw, 3.6rem);
-    line-height: .98;
+    font-size: clamp(2rem, 9.5vw, 3.2rem);
+    line-height: 1;
+  }
+}
+
+@media (max-height: 700px) {
+  .hero {
+    min-height: auto;
+    padding-block: 2.5rem;
+    gap: 1.5rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-title,
   .build-card,
-  .build-card:hover {
+  .build-card:hover,
+  .signal-card,
+  .signal-card:hover {
     transition: none !important;
     transform: none !important;
   }

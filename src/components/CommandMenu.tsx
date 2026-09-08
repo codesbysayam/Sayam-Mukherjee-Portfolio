@@ -50,7 +50,7 @@ export default function CommandMenu({
     { id: "skills", label: "Navigate to Technical Skills Matrix", category: "Navigation", icon: Cpu, action: () => onNavigate("skills") },
     { id: "ecosystem", label: "Navigate to Academic Learning & Ecosystem", category: "Navigation", icon: Server, action: () => onNavigate("ecosystem") },
     { id: "projects", label: "Navigate to Engineered Case Studies", category: "Navigation", icon: Terminal, action: () => onNavigate("projects") },
-    { id: "journal", label: "Navigate to Obsidian Notes & Journal", category: "Navigation", icon: FileText, action: () => onNavigate("journal") },
+    { id: "journal", label: "Navigate to Engineering Notes & Journal", category: "Navigation", icon: FileText, action: () => onNavigate("journal") },
     { id: "contact", label: "Navigate to Contact & Telemetry Channel", category: "Navigation", icon: Mail, action: () => onNavigate("contact") },
     { id: "resume", label: "Download Technical Resume (PDF)", category: "Utility", icon: FileText, action: () => { onOpenResume(); onTriggerConfetti(); } },
     { id: "confetti", label: "Simulate Success Event (Trigger Confetti)", category: "System", icon: Sparkles, action: () => { onTriggerConfetti(); } },
@@ -116,7 +116,7 @@ export default function CommandMenu({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh] px-4 font-sans">
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-[max(1rem,8vh)] px-3 sm:px-4 font-sans">
           {/* Backdrop Blur */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -132,7 +132,7 @@ export default function CommandMenu({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-lg bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[450px]"
+            className="relative w-[min(100%,calc(100vw-2rem))] max-w-lg bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[min(480px,calc(100dvh-2rem))]"
           >
             {/* Corner Indicators */}
             <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-zinc-800 rounded-tl-lg" />

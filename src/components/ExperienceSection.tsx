@@ -144,7 +144,7 @@ function ExperienceSectionComponent() {
 
                 {activeTab === 'Content Creation' && (
                   <div className="pt-4 flex items-center justify-between text-xs font-mono border-t border-zinc-900/60 text-zinc-500">
-                    <span>Educational Hub: Obsidian Optics</span>
+                    <span>Educational Hub: Technical Learning & AI</span>
                     <a 
                       href="#creator-showcase"
                       className="text-red-400 hover:text-red-300 transition-colors flex items-center gap-1 font-semibold"

@@ -18,6 +18,13 @@ export default function Reveal({ children, className = "", delay = 0 }: RevealPr
       return;
     }
 
+    // Safety fallback: ensure elements become visible even if IntersectionObserver fails in iframes
+    const safetyTimer = setTimeout(() => {
+      if (el && !el.classList.contains("visible")) {
+        el.classList.add("visible");
+      }
+    }, delay * 1000 + 300);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -32,14 +39,15 @@ export default function Reveal({ children, className = "", delay = 0 }: RevealPr
         }
       },
       {
-        threshold: 0.12,
-        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.02,
+        rootMargin: "50px 0px 50px 0px",
       }
     );
 
     observer.observe(el);
 
     return () => {
+      clearTimeout(safetyTimer);
       observer.disconnect();
     };
   }, [delay]);

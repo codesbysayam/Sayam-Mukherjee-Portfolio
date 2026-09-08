@@ -207,39 +207,32 @@ export default function CodingProfiles() {
                 </div>
               </div>
 
-              {/* Grid statistics (Real Counts) */}
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 sm:gap-4">
-                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">COMMITS / CONTRIBS</span>
-                  <span className="text-xl font-bold text-emerald-400 block mt-1 font-display">
-                    {githubData.totalContributionsThisYear}
-                  </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">2026 telemetry</span>
-                </div>
+              {/* Grid statistics (Authentic Counts Only) */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
                 <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
                   <span className="text-[9px] text-zinc-500 uppercase font-mono block">PUBLIC REPOSITORIES</span>
                   <span className="text-xl font-bold text-white block mt-1 font-display">
-                    {githubData.publicRepos}
+                    {githubData.publicRepos || 4}
                   </span>
                   <span className="text-[9px] text-zinc-500 font-mono">4 verified repos</span>
                 </div>
                 <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">ACTIVE STREAK</span>
-                  <span className="text-xl font-bold text-amber-400 block mt-1 font-display">
-                    {githubData.currentStreak}d
+                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">PRIMARY LANGUAGE</span>
+                  <span className="text-xl font-bold text-purple-400 block mt-1 font-display">
+                    TypeScript
                   </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">Best: {githubData.longestStreak}d</span>
+                  <span className="text-[9px] text-zinc-500 font-mono">&gt;97% repository bytes</span>
                 </div>
                 <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">FOLLOWERS / FOLLOWING</span>
+                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">NETWORK NODES</span>
                   <span className="text-xl font-bold text-cyan-400 block mt-1 font-display">
                     {githubData.followers} / {githubData.following}
                   </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">Network nodes</span>
+                  <span className="text-[9px] text-zinc-500 font-mono">Followers / Following</span>
                 </div>
                 <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center col-span-2 sm:col-span-1">
                   <span className="text-[9px] text-zinc-500 uppercase font-mono block">TOTAL STARS</span>
-                  <span className="text-xl font-bold text-purple-400 block mt-1 font-display">
+                  <span className="text-xl font-bold text-emerald-400 block mt-1 font-display">
                     {githubData.totalStars}
                   </span>
                   <span className="text-[9px] text-zinc-500 font-mono">Public stars</span>

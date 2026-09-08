@@ -9,6 +9,7 @@ import {
   CheckCircle2, Compass, Layers, Heart, TrendingUp, ShieldCheck 
 } from "lucide-react";
 import { usePortfolio } from "../context/PortfolioContext";
+import { PROJECTS } from "../data/projects";
 
 export default function ProgressDashboard() {
   const { theme } = usePortfolio();
@@ -18,7 +19,7 @@ export default function ProgressDashboard() {
 
   // Factual telemetry registers
   const codingHours = "1 hr / day";
-  const projectsCount = 7; // Verified projects
+  const projectsCount = PROJECTS.length; // Exactly 5 verified portfolio projects
   const competitionsCount = "5/6 Finals"; // IIT BHU Technex'26
   const hackathonsCount = "SIH 2026"; // Smart India Hackathon MAUSAM
 

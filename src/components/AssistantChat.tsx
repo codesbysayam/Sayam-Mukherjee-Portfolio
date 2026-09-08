@@ -322,7 +322,13 @@ export default function AssistantChat() {
   const activeSuggestions = latestAssistantMessage?.suggestions || INITIAL_WELCOME.chips.map((c) => c.label);
 
   return (
-    <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-50 font-sans">
+    <div 
+      className="fixed z-50 font-sans"
+      style={{
+        bottom: "max(0.75rem, env(safe-area-inset-bottom, 0.75rem))",
+        right: "max(0.75rem, env(safe-area-inset-right, 0.75rem))"
+      }}
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -330,7 +336,7 @@ export default function AssistantChat() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className={`w-[calc(100vw-24px)] sm:w-[410px] h-[580px] max-h-[min(640px,calc(100vh-100px))] rounded-2xl flex flex-col overflow-hidden mb-3 border shadow-2xl backdrop-blur-xl transition-colors ${
+            className={`w-[min(420px,calc(100vw-2rem))] h-[min(640px,calc(100dvh-5rem))] max-h-[calc(100dvh-2rem)] rounded-2xl flex flex-col overflow-hidden mb-3 border shadow-2xl backdrop-blur-xl transition-colors ${
               isDark
                 ? "bg-[#09090f]/95 border-purple-500/30 text-white shadow-[0_20px_60px_rgba(0,0,0,0.65)]"
                 : "bg-white/95 border-purple-300/40 text-zinc-900 shadow-[0_20px_50px_rgba(30,25,60,0.14)]"

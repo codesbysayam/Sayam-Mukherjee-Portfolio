@@ -209,11 +209,11 @@ function LanguageRingChartComponent({
         {/* Donut Ring Canvas */}
         <div className="relative shrink-0">
           <svg ref={svgRef} width={220} height={220} className="overflow-visible" />
-          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center">
-            <span className="text-xl font-bold text-white font-display">
+          <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-1">
+            <span className="text-base font-bold text-white font-display leading-tight">
               {activeDisplay?.percentage}%
             </span>
-            <span className="text-[10px] text-zinc-400 font-mono">
+            <span className="text-[9px] text-zinc-400 font-mono tracking-tight mt-0.5 truncate max-w-[90px]">
               {activeDisplay?.name}
             </span>
           </div>

@@ -74,15 +74,14 @@ export const SAYAM_DATA = {
     focus: ['C++', 'DSA', 'Computer Vision', 'Full Stack'],
     githubCommits: 'Live GitHub Activity',
     codingStreak: 'Active Routine',
-    projectsCompleted: '7 Verified Projects',
+    projectsCompleted: '5 Verified Projects',
     happyClients: '10'
   },
   socials: {
     linkedin: 'https://www.linkedin.com/in/sayam-mukherjee-b96209324/',
     github: 'https://github.com/codesbysayam',
     instagram: 'https://www.instagram.com/_.wrick._/',
-    instagramSecondary: 'https://www.instagram.com/obsidianoptics.in/',
-    youtube: 'https://www.youtube.com/@ObsidianOptics_in',
+    youtube: 'https://youtube.com/@technicalaz',
     fiverr: 'https://www.fiverr.com/',
     email: 'wrickbusiness@gmail.com'
   },

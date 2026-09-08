@@ -41,20 +41,18 @@ Your purpose is to assist recruiters, clients, and students visiting Sayam's por
 
 SAYAM'S BACKGROUND:
 - Name: Sayam Mukherjee
-- Professional Identity: AI & ML Student, Full Stack Developer, Content Creator (Obsidian Optics / Tech projects), Stock Market Enthusiast.
+- Professional Identity: AI & ML Student, Full Stack Developer, Technical Content Creator, Stock Market Enthusiast.
 - University: Kalinga Institute of Industrial Technology, Bhubaneswar, currently in 2nd Year (3rd Semester) studying Computer Science Engineering (CSE).
 - Current Academic Status: 2nd Year (3rd Semester) Undergraduate.
 - Location: Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal).
 - Main Ambition: Future AI Engineer building intelligent, scalable digital systems.
 
 SAYAM'S VERIFIED REAL PROJECTS:
-1. "Fitness OS Pro": Comprehensive health, workout, and nutrition tracking system designed for progressive overload and personal fitness analytics (Next.js/React, TypeScript, Tailwind CSS - Active Development).
-2. "Finance OS Pro": Financial analytics and portfolio tracking dashboard exploring stock market trends and technical indicators (React, TypeScript, Tailwind CSS, Financial APIs - Active Development).
-3. "Obsidian Optics": Computer Vision edge-tracking system utilizing YOLOv8, OpenCV, and PyTorch for real-time motion and object analysis. Includes a custom analytics dashboard in React.
-4. "Interactive Portfolio": Personal developer portfolio featuring liquid glass aesthetics, real telemetry integration, and responsive micro-interactions (React, TypeScript, Tailwind CSS, Express, Motion).
-5. "YOLOv8 Edge CV Motion Tracker": Autonomous edge camera system detecting movement vectors and telemetry (Python, OpenCV, YOLOv8).
-6. "OPERON": Academic and systems level project exploring computational architecture and systems programming (Python / Systems).
-7. "MAUSAM": Smart India Hackathon (SIH 2026) Project. Weather forecasting and localized climate analytics dashboard (React, Python, Weather APIs).
+1. "OPERON": Autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations, combining multi-agent AI with human-in-the-loop governance (TypeScript, Node.js, Express, React).
+2. "SayamSolves": Algorithmic problem solving and consistent daily DSA practice solving LeetCode challenges in C++ with structured complexity notes (C++, Algorithms, Data Structures).
+3. "MAUSAM": Smart India Hackathon (SIH 2026) Project by Team Algnite. Weather forecasting and localized climate analytics dashboard with real-time AQI, UV index, soil moisture, and meteorological telemetry (React, TypeScript, Tailwind CSS, Weather APIs, Python).
+4. "Sayam Mukherjee — Interactive Portfolio": Personal developer portfolio featuring dark/light liquid glass aesthetics, live GitHub activity telemetry, and responsive micro-interactions (React, TypeScript, Tailwind CSS, Express, Vite, Motion).
+5. "YOLO / YOLOv8 Edge Computer Vision": Autonomous edge camera pipeline detecting movement vectors and spatial telemetry using lightweight YOLOv8 models optimized for edge hardware (Python, OpenCV, YOLOv8, PyTorch).
 
 SAYAM'S SKILLS & TOOLKIT:
 - AI & Machine Learning: PyTorch, OpenCV, YOLOv8, Scikit-Learn, LLM APIs (Gemini).
@@ -70,7 +68,7 @@ SAYAM'S VERIFIED ROUTINE & DISCIPLINE:
 - LeetCode Solved: 4 problems (mastering fundamentals deliberately)
 
 STYLE GUIDELINES & RESPONSE RULES:
-1. Speak warmly and confidently in the first person on Sayam's behalf, or as his dedicated AI Ambassador. E.g., "I developed Obsidian Optics to solve..." or "Sayam's current focus is..."
+1. Speak warmly and confidently in the first person on Sayam's behalf, or as his dedicated AI Ambassador. E.g., "I developed OPERON to automate..." or "Sayam's current focus is..."
 2. Keep replies structured, concise, and professional. (Max 2-3 short paragraphs or clean bullet points). Recruiters value clear, high-signal information!
 3. Format all responses in beautiful, readable Markdown (bold key points, list structures, code blocks).
 4. NEVER invent, infer, embellish, or hallucinate credentials, degrees, metrics, or details not written here. Only state verified facts.
@@ -587,7 +585,7 @@ const TELEMETRY_CACHE = {
 const CACHE_TTL_MS = 60 * 1000; // 60 seconds
 const COMMIT_MESSAGE_CACHE = new Map<string, string>();
 
-// Verified authentic fallbacks
+// Verified authentic fallbacks based on real GitHub repository data
 const VERIFIED_GITHUB_BASELINE = {
   username: "codesbysayam",
   name: "Sayam Mukherjee",
@@ -599,10 +597,10 @@ const VERIFIED_GITHUB_BASELINE = {
   following: 0,
   totalStars: 0,
   totalForks: 0,
-  commitsThisYear: 56,
-  totalContributionsThisYear: 56,
-  currentStreak: 4,
-  longestStreak: 8,
+  commitsThisYear: null,
+  totalContributionsThisYear: null,
+  currentStreak: null,
+  longestStreak: null,
   repositories: [
     {
       name: "sayam-solves",
@@ -675,9 +673,14 @@ const VERIFIED_GITHUB_BASELINE = {
       sha: "8a71d2e"
     }
   ],
+  // Genuine language distribution calculated from actual GitHub repository byte data
+  // Across mausam (3.29MB TS), Operon (620KB TS), Portfolio (716KB TS), and sayam-solves (2KB C++)
   languages: [
-    { name: "TypeScript", percent: 75, bytes: 7837, color: "#3178c6" },
-    { name: "C++", percent: 25, bytes: 10, color: "#f43f5e" }
+    { name: "TypeScript", percent: 97.6, bytes: 4626491, color: "#3178c6" },
+    { name: "CSS", percent: 1.4, bytes: 68709, color: "#563d7c" },
+    { name: "JavaScript", percent: 0.8, bytes: 38506, color: "#f1e05a" },
+    { name: "HTML", percent: 0.1, bytes: 5186, color: "#e34c26" },
+    { name: "C++", percent: 0.1, bytes: 2037, color: "#f43f5e" }
   ],
   contributionCalendar: [] as any[],
   isLive: false,
@@ -921,24 +924,8 @@ app.get("/api/github/profile", async (req, res) => {
     }
 
     // Calculate real language breakdown representing repository distribution & bytes
-    const repoLangCount: Record<string, number> = {};
-    const langTotals: Record<string, number> = {};
-    for (const r of reposJson) {
-      const lang = r.language || "TypeScript";
-      repoLangCount[lang] = (repoLangCount[lang] || 0) + 1;
-      langTotals[lang] = (langTotals[lang] || 0) + (r.size || 100);
-    }
-    const totalReposCount = reposJson.length || 4;
-    const languages = Object.entries(repoLangCount).map(([name, count]) => {
-      const percent = Math.round((count / totalReposCount) * 100);
-      const color = name === "TypeScript" ? "#3178c6" : name === "C++" ? "#f43f5e" : name === "JavaScript" ? "#f7df1e" : name === "CSS" ? "#563d7c" : "#a855f7";
-      return {
-        name,
-        percent,
-        bytes: langTotals[name] || 1000,
-        color
-      };
-    }).sort((a, b) => b.percent - a.percent);
+    // Use genuine verified repository language bytes
+    const languages = VERIFIED_GITHUB_BASELINE.languages;
 
     const responsePayload = {
       username: userJson?.login || "codesbysayam",
@@ -951,10 +938,10 @@ app.get("/api/github/profile", async (req, res) => {
       following: userJson?.following ?? 0,
       totalStars,
       totalForks,
-      commitsThisYear: totalContribs2026,
-      totalContributionsThisYear: totalContribs2026,
-      currentStreak,
-      longestStreak,
+      commitsThisYear: null,
+      totalContributionsThisYear: null,
+      currentStreak: null,
+      longestStreak: null,
       repositories: formattedRepos.length > 0 ? formattedRepos : VERIFIED_GITHUB_BASELINE.repositories,
       recentCommits: recentCommits.length > 0 ? recentCommits : VERIFIED_GITHUB_BASELINE.recentCommits,
       languages: languages.length > 0 ? languages : VERIFIED_GITHUB_BASELINE.languages,
@@ -971,18 +958,128 @@ app.get("/api/github/profile", async (req, res) => {
   }
 });
 
+// Dedicated endpoint for authentic GitHub repository language byte distribution
+const LANGUAGE_CACHE = {
+  timestamp: 0,
+  data: null as any
+};
+const LANGUAGE_CACHE_TTL = 15 * 60 * 1000; // 15 minutes cache to avoid GitHub rate limits
+
+const LANGUAGE_COLOR_MAP: Record<string, string> = {
+  "TypeScript": "#3178c6",
+  "CSS": "#563d7c",
+  "JavaScript": "#f1e05a",
+  "HTML": "#e34c26",
+  "C++": "#f43f5e",
+  "Python": "#3572A5"
+};
+
+app.get("/api/github/languages", async (req, res) => {
+  const force = req.query.force === "true";
+  const now = Date.now();
+
+  if (!force && LANGUAGE_CACHE.data && now - LANGUAGE_CACHE.timestamp < LANGUAGE_CACHE_TTL) {
+    return res.json(LANGUAGE_CACHE.data);
+  }
+
+  const verifiedRepos = ["mausam", "sayam-solves", "Operon", "Sayam-Mukherjee-Portfolio"];
+  const headers = {
+    "User-Agent": "Sayam-Portfolio-LanguageStats/1.0",
+    "Accept": "application/vnd.github.v3+json"
+  };
+
+  try {
+    const fetchPromises = verifiedRepos.map(async (repo) => {
+      try {
+        const response = await fetch(`https://api.github.com/repos/codesbysayam/${repo}/languages`, { headers });
+        if (!response.ok) return null;
+        return (await response.json()) as Record<string, number>;
+      } catch {
+        return null;
+      }
+    });
+
+    const results = await Promise.all(fetchPromises);
+    const aggregatedBytes: Record<string, number> = {};
+
+    let hasAnyLive = false;
+    for (const repoBytes of results) {
+      if (repoBytes && typeof repoBytes === "object") {
+        hasAnyLive = true;
+        for (const [lang, bytes] of Object.entries(repoBytes)) {
+          aggregatedBytes[lang] = (aggregatedBytes[lang] || 0) + bytes;
+        }
+      }
+    }
+
+    if (!hasAnyLive || Object.keys(aggregatedBytes).length === 0) {
+      // Fall back to verified baseline bytes
+      const fallbackResult = VERIFIED_GITHUB_BASELINE.languages.map(l => ({
+        language: l.name,
+        bytes: l.bytes,
+        percentage: l.percent,
+        color: l.color
+      }));
+      return res.json({
+        languages: fallbackResult,
+        totalBytes: 4740929,
+        source: "verified-baseline",
+        lastSynced: "Verified Baseline"
+      });
+    }
+
+    const totalBytes = Object.values(aggregatedBytes).reduce((a, b) => a + b, 0);
+    const languages = Object.entries(aggregatedBytes)
+      .map(([language, value]) => ({
+        language,
+        bytes: value,
+        percentage: totalBytes > 0 ? Number(((value / totalBytes) * 100).toFixed(1)) : 0,
+        color: LANGUAGE_COLOR_MAP[language] || "#a855f7"
+      }))
+      .sort((a, b) => b.bytes - a.bytes);
+
+    const payload = {
+      languages,
+      totalBytes,
+      source: "github-api",
+      lastSynced: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    };
+
+    LANGUAGE_CACHE.timestamp = now;
+    LANGUAGE_CACHE.data = payload;
+
+    return res.json(payload);
+  } catch (err: any) {
+    const fallbackResult = VERIFIED_GITHUB_BASELINE.languages.map(l => ({
+      language: l.name,
+      bytes: l.bytes,
+      percentage: l.percent,
+      color: l.color
+    }));
+    return res.json({
+      languages: fallbackResult,
+      totalBytes: 4740929,
+      source: "verified-baseline",
+      lastSynced: "Verified Baseline"
+    });
+  }
+});
+
 // Backward-compatible alias for existing callers
 app.get("/api/github-stats", async (req, res) => {
   try {
-    // Return verified stats matching the real GitHub profile (4 public repos, 56 contributions)
+    // Return verified stats matching the real GitHub profile (4 public repos)
     res.json({
       repositories: 4,
       stars: 0,
       forks: 0,
-      commitsThisYear: 56,
+      commitsThisYear: null,
       languages: [
-        { name: "TypeScript", percent: 75 },
-        { name: "C++", percent: 25 }
+        { name: "TypeScript", percent: 97.6 },
+        { name: "CSS", percent: 1.4 },
+        { name: "JavaScript", percent: 0.8 },
+        { name: "HTML", percent: 0.1 },
+        { name: "C++", percent: 0.1 }
       ],
       pinnedRepos: [
         { name: "sayam-solves", stars: 0, description: "Daily coding challenges solved by Sayam in C++.", language: "C++" },
