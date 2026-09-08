@@ -14,8 +14,7 @@ import { SkillsCta } from "./skills/SkillsCta";
 import { 
   SKILLS_DATA, 
   SkillFilterKey, 
-  filterSkills, 
-  SkillItem 
+  filterSkills 
 } from "../data/skills";
 
 function SkillsSectionComponent() {
@@ -26,7 +25,11 @@ function SkillsSectionComponent() {
 
   // Filtered skills list computed instantaneously
   const filteredSkills = useMemo(() => {
-    return filterSkills(activeFilter, searchQuery);
+    try {
+      return filterSkills(activeFilter, searchQuery) || [];
+    } catch {
+      return SKILLS_DATA || [];
+    }
   }, [activeFilter, searchQuery]);
 
   const handleResetFilters = () => {
@@ -36,59 +39,70 @@ function SkillsSectionComponent() {
   };
 
   const handleOverviewSkillSelect = (skillName: string) => {
-    // Locate the skill in dataset
-    const found = SKILLS_DATA.find(
-      (s) => s.name.toLowerCase() === skillName.toLowerCase() || s.id.toLowerCase() === skillName.toLowerCase()
-    );
-    if (found) {
-      setSelectedSkillId(found.id);
-    } else {
-      setSearchQuery(skillName);
-    }
+    try {
+      const found = (SKILLS_DATA || []).find(
+        (s) => s.name.toLowerCase() === skillName.toLowerCase() || s.id.toLowerCase() === skillName.toLowerCase()
+      );
+      if (found) {
+        setSelectedSkillId(found.id);
+      } else {
+        setSearchQuery(skillName);
+      }
 
-    // Smooth scroll down to ecosystem section
-    const el = document.getElementById("skill-ecosystem-section");
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      // Smooth scroll down to ecosystem section
+      const el = document.getElementById("skill-ecosystem-section");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } catch (e) {
+      console.warn("Skill select error", e);
     }
   };
 
   const handleSelectProject = (projectId: string) => {
-    const event = new CustomEvent("portfolio-navigate-tab", {
-      detail: "projects"
-    });
-    window.dispatchEvent(event);
+    try {
+      const event = new CustomEvent("portfolio-navigate-tab", {
+        detail: "projects"
+      });
+      window.dispatchEvent(event);
+    } catch (e) {
+      console.warn("Navigation event error", e);
+    }
   };
 
   const handleNavigateToContact = () => {
-    const event = new CustomEvent("portfolio-navigate-tab", {
-      detail: "contact"
-    });
-    window.dispatchEvent(event);
+    try {
+      const event = new CustomEvent("portfolio-navigate-tab", {
+        detail: "contact"
+      });
+      window.dispatchEvent(event);
+    } catch (e) {
+      console.warn("Navigation event error", e);
+    }
   };
 
   return (
     <ErrorBoundary fallbackTitle="Skills Section Temporarily Unavailable">
-      <section id="skills" className="w-full space-y-12 sm:space-y-16 pb-12">
+      <section id="skills" className="w-full max-w-5xl mx-auto space-y-20 sm:space-y-28 lg:space-y-32 pb-24">
         {/* ========================================================
-            1. HERO (Compact, premium, evidence-backed badges)
+            01 — SKILLS (Restrained hero statement & authenticity)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Hero Unavailable">
           <SkillsHero />
         </ErrorBoundary>
 
         {/* ========================================================
-            2. SKILL OVERVIEW (6 core categories, no fake percentages)
+            02 — TECHNOLOGY STACK (6 core categories, compact cards)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Skills Overview Unavailable">
           <SkillsOverview onSelectSkill={handleOverviewSkillSelect} />
         </ErrorBoundary>
 
         {/* ========================================================
-            3. SEARCH + FILTERS (Immediate live search & chips)
+            03 — SKILL ECOSYSTEM (Interactive centerpiece)
            ======================================================== */}
-        <div id="skill-ecosystem-section" className="space-y-6 pt-2">
-          <ErrorBoundary fallbackTitle="Search & Filters Unavailable">
+        <div id="skill-ecosystem-section" className="space-y-6 pt-4">
+          <ErrorBoundary fallbackTitle="Skill Search & Filter Unavailable">
             <SkillsFilterSearch
               activeFilter={activeFilter}
               setActiveFilter={setActiveFilter}
@@ -100,9 +114,6 @@ function SkillsSectionComponent() {
             />
           </ErrorBoundary>
 
-          {/* ========================================================
-              4. INTERACTIVE SKILL ECOSYSTEM (Interactive cards & modal)
-             ======================================================== */}
           <ErrorBoundary fallbackTitle="Skill Ecosystem Unavailable">
             <SkillEcosystem
               skills={filteredSkills}
@@ -115,49 +126,49 @@ function SkillsSectionComponent() {
         </div>
 
         {/* ========================================================
-            5. SKILL → PROJECT EVIDENCE MATRIX (5 verified projects)
+            04 — PROJECT EVIDENCE (SKILL → PROJECT → EVIDENCE)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Project Evidence Matrix Unavailable">
           <SkillProjectEvidence onSelectProject={handleSelectProject} />
         </ErrorBoundary>
 
         {/* ========================================================
-            6. LIVE GITHUB LANGUAGE DISTRIBUTION (From public repo bytes)
+            05 — CODEBASE LANGUAGE DISTRIBUTION (Simple horizontal bars)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="GitHub Language Distribution Unavailable">
           <GitHubLanguageDistribution />
         </ErrorBoundary>
 
         {/* ========================================================
-            7. CURRENTLY DEVELOPING (4 active study areas, qualitative)
+            06 — CURRENTLY DEVELOPING (Editorial 2x2 grid, no fake bars)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Currently Developing Unavailable">
           <CurrentlyDeveloping />
         </ErrorBoundary>
 
         {/* ========================================================
-            8. RECENT BUILD ACTIVITY (Real commits, relative time)
+            07 — RECENT BUILD ACTIVITY (Clean public commit timeline)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Recent Build Activity Unavailable">
           <RecentBuildActivity />
         </ErrorBoundary>
 
         {/* ========================================================
-            9. CODING PROFILES (GitHub, LeetCode, Codolio, LinkedIn)
+            08 — CODING PROFILES (GitHub, LeetCode, Codolio, LinkedIn)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Coding Profiles Unavailable">
           <CodingProfilesSection />
         </ErrorBoundary>
 
         {/* ========================================================
-            10. ENGINEERING TOOLCHAIN (Ideation → Vercel deployment)
+            09 — ENGINEERING TOOLCHAIN (5-Stage Ideation → Deployment)
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Engineering Toolchain Unavailable">
           <EngineeringToolchain />
         </ErrorBoundary>
 
         {/* ========================================================
-            11. FINAL CALL TO ACTION (Collaborate & direct emails)
+            COLLABORATE — Closing Call to Action & Direct Email
            ======================================================== */}
         <ErrorBoundary fallbackTitle="Call to Action Unavailable">
           <SkillsCta

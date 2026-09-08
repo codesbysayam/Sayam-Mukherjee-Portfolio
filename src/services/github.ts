@@ -829,9 +829,9 @@ export interface PublicCommitItem {
   sha?: string;
 }
 
-export async function fetchRecentPublicCommits(): Promise<PublicCommitItem[]> {
+export async function fetchRecentPublicCommits(force = false): Promise<PublicCommitItem[]> {
   try {
-    const stats = await fetchGitHubStats();
+    const stats = await fetchGitHubStats(force);
     if (stats.recentCommits && stats.recentCommits.length > 0) {
       return stats.recentCommits.map((c) => {
         let relativeTime = "recently";

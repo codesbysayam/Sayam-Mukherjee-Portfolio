@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { 
   Mail, Copy, Check, ExternalLink, Github, 
-  FolderGit2, ArrowRight, Sparkles 
+  FolderGit2, ArrowRight
 } from "lucide-react";
 
 interface SkillsCtaProps {
@@ -42,105 +42,113 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
   };
 
   return (
-    <div className="p-6 sm:p-8 rounded-3xl bg-zinc-950/80 border border-zinc-850 relative overflow-hidden space-y-6">
-      {/* Subtle background glow */}
-      <div className="absolute -top-24 -right-24 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Main Content */}
-      <div className="space-y-3 relative z-10 max-w-2xl">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-mono">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>LET'S BUILD SOMETHING RELIABLE</span>
-        </div>
-
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-display">
-          Ready to collaborate or discuss an engineering role?
+    <div className="p-8 sm:p-10 rounded-3xl bg-zinc-950/40 border border-zinc-850 space-y-8">
+      {/* Header Statement */}
+      <div className="space-y-3 max-w-2xl">
+        <span className="text-xs font-mono font-semibold uppercase tracking-[0.14em] text-cyan-400">
+          COLLABORATE
+        </span>
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight font-display">
+          Interested in technical collaboration or engineering roles?
         </h2>
-
-        <p className="text-sm text-zinc-300 leading-relaxed font-sans">
-          I'm currently seeking software engineering internships, research fellowships, and high-impact hackathon collaborations. Reach out through the direct channels below.
+        <p className="text-sm sm:text-base text-zinc-400 leading-relaxed font-sans">
+          B.Tech CSE (AI &amp; ML) student at KIIT University available for software engineering internships, machine learning research projects, and hackathons.
         </p>
       </div>
 
-      {/* Direct Contact Channels Box */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 relative z-10">
-        {/* Business & Collaborations */}
-        <div className="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-mono text-cyan-400 uppercase font-bold tracking-wider">
-              BUSINESS &amp; COLLABORATIONS
+      {/* Direct Email Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {/* Business Email */}
+        <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-3">
+          <div className="space-y-1">
+            <span className="text-[11px] font-mono text-zinc-500 uppercase font-semibold tracking-wider">
+              PROJECTS &amp; COLLABORATION
             </span>
-            <span className="text-[10px] font-mono text-zinc-500">Hackathons / Projects</span>
+            <div className="text-sm font-mono text-zinc-200 truncate">
+              {businessEmail}
+            </div>
           </div>
 
-          <div className="flex items-center justify-between gap-2 pt-1">
+          <div className="flex items-center justify-between pt-1">
             <a
               href={`mailto:${businessEmail}`}
-              className="text-xs font-mono text-white hover:text-cyan-300 transition-colors truncate"
-              title={`Email ${businessEmail}`}
+              className="text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
             >
-              {businessEmail}
+              Compose email ↗
             </a>
 
             <button
               type="button"
               onClick={() => copyEmail(businessEmail, "business")}
-              className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-750 text-zinc-400 hover:text-white transition-colors shrink-0 cursor-pointer"
-              title="Copy business email"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-750 text-xs font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              title="Copy email"
             >
               {copiedBusiness ? (
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <>
+                  <Check className="w-3 h-3 text-emerald-400" />
+                  <span className="text-emerald-400">Copied</span>
+                </>
               ) : (
-                <Copy className="w-3.5 h-3.5" />
+                <>
+                  <Copy className="w-3 h-3" />
+                  <span>Copy</span>
+                </>
               )}
             </button>
           </div>
         </div>
 
-        {/* Contact & Internships */}
-        <div className="p-4 rounded-2xl bg-zinc-900/70 border border-zinc-800 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] font-mono text-emerald-400 uppercase font-bold tracking-wider">
-              CONTACT &amp; INTERNSHIPS
+        {/* Contact Email */}
+        <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-3">
+          <div className="space-y-1">
+            <span className="text-[11px] font-mono text-zinc-500 uppercase font-semibold tracking-wider">
+              RECRUITMENT &amp; ACADEMIC
             </span>
-            <span className="text-[10px] font-mono text-zinc-500">Recruitment &amp; Roles</span>
+            <div className="text-sm font-mono text-zinc-200 truncate">
+              {contactEmail}
+            </div>
           </div>
 
-          <div className="flex items-center justify-between gap-2 pt-1">
+          <div className="flex items-center justify-between pt-1">
             <a
               href={`mailto:${contactEmail}`}
-              className="text-xs font-mono text-white hover:text-emerald-300 transition-colors truncate"
-              title={`Email ${contactEmail}`}
+              className="text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
             >
-              {contactEmail}
+              Compose email ↗
             </a>
 
             <button
               type="button"
               onClick={() => copyEmail(contactEmail, "contact")}
-              className="p-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-750 text-zinc-400 hover:text-white transition-colors shrink-0 cursor-pointer"
-              title="Copy personal contact email"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-750 text-xs font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              title="Copy email"
             >
               {copiedContact ? (
-                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <>
+                  <Check className="w-3 h-3 text-emerald-400" />
+                  <span className="text-emerald-400">Copied</span>
+                </>
               ) : (
-                <Copy className="w-3.5 h-3.5" />
+                <>
+                  <Copy className="w-3 h-3" />
+                  <span>Copy</span>
+                </>
               )}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Action Buttons Row */}
-      <div className="flex flex-wrap items-center gap-3 pt-2 relative z-10">
+      {/* Action Buttons */}
+      <div className="flex flex-wrap items-center gap-3 pt-2">
         {onNavigateToProjects && (
           <button
+            type="button"
             onClick={onNavigateToProjects}
-            className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-zinc-950 font-bold text-xs font-mono flex items-center gap-2 transition-all cursor-pointer shadow-lg shadow-cyan-500/20"
+            className="px-5 py-2.5 rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-xs font-mono flex items-center gap-2 transition-all cursor-pointer"
           >
             <FolderGit2 className="w-4 h-4" />
-            <span>Explore Verified Projects</span>
+            <span>View Verified Projects</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         )}
@@ -149,20 +157,21 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           href="https://github.com/codesbysayam"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-zinc-700 text-zinc-200 hover:text-white font-medium text-xs font-mono flex items-center gap-2 transition-all cursor-pointer"
+          className="px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono flex items-center gap-2 transition-all"
         >
           <Github className="w-4 h-4" />
-          <span>View GitHub Codebases</span>
-          <ExternalLink className="w-3.5 h-3.5 text-zinc-500" />
+          <span>GitHub Profile</span>
+          <ExternalLink className="w-3 h-3 text-zinc-500" />
         </a>
 
         {onNavigateToContact && (
           <button
+            type="button"
             onClick={onNavigateToContact}
-            className="px-5 py-2.5 rounded-xl bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 text-zinc-300 hover:text-white font-medium text-xs font-mono flex items-center gap-2 transition-all cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 text-zinc-400 hover:text-white text-xs font-mono flex items-center gap-2 transition-all cursor-pointer"
           >
             <Mail className="w-4 h-4" />
-            <span>Open Contact Form</span>
+            <span>Contact Form</span>
           </button>
         )}
       </div>

@@ -1,6 +1,5 @@
 import React from "react";
-import { Sparkles, BookOpen, Layers, Binary, Cpu, ArrowRight } from "lucide-react";
-import { CURRENTLY_DEVELOPING, SkillStatus } from "../../data/skills";
+import { SkillStatus } from "../../data/skills";
 
 interface FocusArea {
   id: string;
@@ -19,8 +18,8 @@ const ROADMAP_ITEMS: FocusArea[] = [
     domain: "Core Computer Science",
     status: "practicing",
     statusLabel: "PRACTICING",
-    topics: ["Dynamic Programming", "Graph Traversal (BFS / DFS)", "Shortest Path Algorithms", "Disjoint Set Union (DSU)"],
-    context: "Systematic practice of complex algorithmic patterns via C++ and LeetCode, focusing on optimal recurrence relations and space-time boundaries."
+    topics: ["Dynamic Programming", "Graph Traversal (BFS/DFS)", "Shortest Paths", "Disjoint Set Union (DSU)"],
+    context: "Systematic problem solving in C++ on LeetCode, focusing on optimal recurrence relations, algorithmic invariants, and memory bounds."
   },
   {
     id: "react-arch",
@@ -29,14 +28,14 @@ const ROADMAP_ITEMS: FocusArea[] = [
     status: "building",
     statusLabel: "BUILDING",
     topics: ["Component Architecture", "State Management", "Responsive Interfaces", "Performance Optimization"],
-    context: "Architecting modular, type-safe web systems using modern React patterns, custom hooks, and zero-layout-shift UI engineering."
+    context: "Architecting modular, type-safe web systems using modern React, custom hooks, zero-layout-shift design, and strict TypeScript contracts."
   },
   {
     id: "ai-ml-depth",
     title: "AI / ML & Computer Vision",
     domain: "Artificial Intelligence",
     status: "learning",
-    statusLabel: "LEARNING / BUILDING",
+    statusLabel: "LEARNING",
     topics: ["Computer Vision Pipelines", "Model Integration", "Applied ML", "Edge Inference (YOLO)"],
     context: "Deepening mathematical foundations of convolution operations, feature maps, and real-time bounding box prediction models."
   },
@@ -66,52 +65,52 @@ function getStatusStyle(status: SkillStatus) {
 
 export function CurrentlyDeveloping() {
   return (
-    <div className="space-y-4">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-850 pb-3">
-        <div className="space-y-0.5">
-          <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono tracking-widest text-zinc-400 uppercase font-semibold">
-              TECHNICAL ROADMAP
-            </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-            <span className="text-[11px] font-mono text-zinc-500">
-              4 ACTIVE STUDY DOMAINS
-            </span>
-          </div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white font-display">
-            CURRENTLY DEVELOPING
-          </h2>
-          <p className="text-xs text-zinc-400 font-sans">
-            Active technical progression and focused study areas
-          </p>
+    <div className="space-y-8">
+      {/* Section Header */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-mono font-semibold uppercase tracking-[0.14em] text-cyan-400">
+            06 — CURRENTLY DEVELOPING
+          </span>
+          <span className="h-px w-12 bg-zinc-800" />
+          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider">
+            Active Focus
+          </span>
         </div>
-        <p className="text-xs text-zinc-400 font-mono">
-          Qualitative status · No arbitrary completion bars
+        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white font-display">
+            Active Technical Progression
+          </h2>
+          <span className="text-xs font-mono text-zinc-500">
+            Qualitative status · No fabricated progress bars
+          </span>
+        </div>
+        <p className="text-sm sm:text-base text-zinc-400 max-w-2xl font-sans">
+          Four areas of deliberate ongoing study and engineering practice. Focus is placed on mastery through code rather than arbitrary completion metrics.
         </p>
       </div>
 
-      {/* 4 Focus Area Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* 2x2 Editorial Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {ROADMAP_ITEMS.map((item) => (
           <div
             key={item.id}
-            className="p-5 rounded-2xl bg-zinc-950/60 border border-zinc-850 hover:border-zinc-750 transition-all flex flex-col justify-between space-y-4"
+            className="p-6 rounded-2xl bg-zinc-950/40 border border-zinc-850 hover:border-zinc-750 transition-all duration-200 flex flex-col justify-between space-y-5"
           >
             <div className="space-y-3">
-              {/* Title & Status */}
-              <div className="flex items-start justify-between gap-2">
+              {/* Header: Title & Status */}
+              <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="text-base font-bold text-white">
+                  <h3 className="text-lg font-bold text-white font-display">
                     {item.title}
                   </h3>
-                  <span className="text-[11px] font-mono text-zinc-400 uppercase tracking-wider block mt-0.5">
+                  <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider block mt-0.5">
                     {item.domain}
                   </span>
                 </div>
 
                 <span
-                  className={`px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold border ${getStatusStyle(
+                  className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold border ${getStatusStyle(
                     item.status
                   )}`}
                 >
@@ -120,7 +119,7 @@ export function CurrentlyDeveloping() {
               </div>
 
               {/* Context Description */}
-              <p className="text-xs text-zinc-300 leading-relaxed font-sans">
+              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans">
                 {item.context}
               </p>
             </div>
@@ -128,13 +127,13 @@ export function CurrentlyDeveloping() {
             {/* Topics Tags */}
             <div className="pt-3 border-t border-zinc-850/80 space-y-2">
               <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block">
-                Target Topics &amp; Practice Vectors:
+                FOCUSED PRACTICE VECTORS:
               </span>
               <div className="flex flex-wrap gap-1.5">
-                {item.topics.map((topic) => (
+                {(item.topics || []).map((topic) => (
                   <span
                     key={topic}
-                    className="px-2.5 py-1 rounded-lg text-xs font-mono bg-zinc-900/80 text-zinc-300 border border-zinc-800"
+                    className="px-2 py-0.5 rounded text-xs font-mono bg-zinc-900 text-zinc-400 border border-zinc-800"
                   >
                     {topic}
                   </span>
