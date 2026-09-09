@@ -5,7 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
+    "manifest": "node scripts/generate_build_manifest.js",
+    "validate:data": "python3 tools/python/portfolio_data_validator.py",
+    "build:c": "gcc -O2 tools/c/portfolio_metrics.c -o tools/c/portfolio_metrics",
+    "build": "node scripts/generate_build_manifest.js && vite build && esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "start": "node dist/server.cjs",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"

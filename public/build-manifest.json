@@ -1,0 +1,51 @@
+{
+  "appName": "Sayam Mukherjee — Engineering Portfolio & Ecosystem",
+  "version": "0.0.0",
+  "generatedAt": "2026-09-09T18:18:55.088Z",
+  "environment": "development",
+  "projectCount": 4,
+  "projects": [
+    {
+      "id": "yolo-edge-vision",
+      "title": "YOLO / Edge Computer Vision",
+      "category": "ai_ml",
+      "tagsCount": 5,
+      "hasGithub": true,
+      "hasLive": false
+    },
+    {
+      "id": "daily-decipher",
+      "title": "Daily Decipher",
+      "category": "ai_ml",
+      "tagsCount": 6,
+      "hasGithub": true,
+      "hasLive": false
+    },
+    {
+      "id": "bullrun-analytics",
+      "title": "BullRun Analytics",
+      "category": "finance",
+      "tagsCount": 6,
+      "hasGithub": true,
+      "hasLive": false
+    },
+    {
+      "id": "cognitive-canvas",
+      "title": "Cognitive Canvas",
+      "category": "design_media",
+      "tagsCount": 5,
+      "hasGithub": true,
+      "hasLive": false
+    }
+  ],
+  "systemIntegrity": "verified",
+  "languagesMonitored": [
+    "TypeScript",
+    "JavaScript",
+    "CSS",
+    "HTML",
+    "Python",
+    "C",
+    "Jupyter Notebook"
+  ]
+}

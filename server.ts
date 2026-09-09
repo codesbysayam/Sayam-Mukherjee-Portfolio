@@ -27,7 +27,7 @@ function getGeminiClient(): GoogleGenAI {
       apiKey: apiKey,
       httpOptions: {
         headers: {
-          'User-Agent': 'aistudio-build',
+          'User-Agent': 'sayam-portfolio',
         }
       }
     });

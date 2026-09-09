@@ -42,29 +42,29 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
   };
 
   return (
-    <div className="p-8 sm:p-10 rounded-3xl bg-zinc-950/40 border border-zinc-850 space-y-8">
+    <div className="p-6 sm:p-7 rounded-2xl bg-zinc-950/40 border border-zinc-850 space-y-6">
       {/* Header Statement */}
-      <div className="space-y-3 max-w-2xl">
-        <span className="text-xs font-mono font-semibold uppercase tracking-[0.14em] text-cyan-400">
+      <div className="space-y-2 max-w-2xl">
+        <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-400">
           COLLABORATE
         </span>
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white tracking-tight font-display">
+        <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight font-display">
           Interested in technical collaboration or engineering roles?
         </h2>
-        <p className="text-sm sm:text-base text-zinc-400 leading-relaxed font-sans">
+        <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
           B.Tech CSE (AI &amp; ML) student at KIIT University available for software engineering internships, machine learning research projects, and hackathons.
         </p>
       </div>
 
       {/* Direct Email Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
         {/* Business Email */}
-        <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-3">
+        <div className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-2.5">
           <div className="space-y-1">
-            <span className="text-[11px] font-mono text-zinc-500 uppercase font-semibold tracking-wider">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase font-medium tracking-wider">
               PROJECTS &amp; COLLABORATION
             </span>
-            <div className="text-sm font-mono text-zinc-200 truncate">
+            <div className="text-xs sm:text-sm font-mono text-zinc-200 truncate">
               {businessEmail}
             </div>
           </div>
@@ -72,7 +72,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           <div className="flex items-center justify-between pt-1">
             <a
               href={`mailto:${businessEmail}`}
-              className="text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
             >
               Compose email ↗
             </a>
@@ -80,7 +80,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
             <button
               type="button"
               onClick={() => copyEmail(businessEmail, "business")}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-750 text-xs font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-750 text-[11px] font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
               title="Copy email"
             >
               {copiedBusiness ? (
@@ -99,12 +99,12 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
         </div>
 
         {/* Contact Email */}
-        <div className="p-5 rounded-2xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-3">
+        <div className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-2.5">
           <div className="space-y-1">
-            <span className="text-[11px] font-mono text-zinc-500 uppercase font-semibold tracking-wider">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase font-medium tracking-wider">
               RECRUITMENT &amp; ACADEMIC
             </span>
-            <div className="text-sm font-mono text-zinc-200 truncate">
+            <div className="text-xs sm:text-sm font-mono text-zinc-200 truncate">
               {contactEmail}
             </div>
           </div>
@@ -112,7 +112,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           <div className="flex items-center justify-between pt-1">
             <a
               href={`mailto:${contactEmail}`}
-              className="text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
             >
               Compose email ↗
             </a>
@@ -120,7 +120,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
             <button
               type="button"
               onClick={() => copyEmail(contactEmail, "contact")}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-750 text-xs font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-750 text-[11px] font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
               title="Copy email"
             >
               {copiedContact ? (
@@ -140,16 +140,16 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap items-center gap-3 pt-2">
+      <div className="flex flex-wrap items-center gap-2.5 pt-1">
         {onNavigateToProjects && (
           <button
             type="button"
             onClick={onNavigateToProjects}
-            className="px-5 py-2.5 rounded-xl bg-zinc-100 hover:bg-white text-zinc-950 font-semibold text-xs font-mono flex items-center gap-2 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 font-medium text-xs font-mono flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            <FolderGit2 className="w-4 h-4" />
+            <FolderGit2 className="w-3.5 h-3.5" />
             <span>View Verified Projects</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            <ArrowRight className="w-3 h-3" />
           </button>
         )}
 
@@ -157,9 +157,9 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           href="https://github.com/codesbysayam"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-5 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono flex items-center gap-2 transition-all"
+          className="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all"
         >
-          <Github className="w-4 h-4" />
+          <Github className="w-3.5 h-3.5" />
           <span>GitHub Profile</span>
           <ExternalLink className="w-3 h-3 text-zinc-500" />
         </a>
@@ -168,9 +168,9 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           <button
             type="button"
             onClick={onNavigateToContact}
-            className="px-5 py-2.5 rounded-xl bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 text-zinc-400 hover:text-white text-xs font-mono flex items-center gap-2 transition-all cursor-pointer"
+            className="px-4 py-2 rounded-lg bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 text-zinc-400 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all cursor-pointer"
           >
-            <Mail className="w-4 h-4" />
+            <Mail className="w-3.5 h-3.5" />
             <span>Contact Form</span>
           </button>
         )}

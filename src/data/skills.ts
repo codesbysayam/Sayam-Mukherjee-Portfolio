@@ -29,6 +29,7 @@ export interface SkillItem {
   evidenceType: SkillEvidenceType;
   evidenceSummary: string;
   relatedProjects: ValidProjectId[];
+  evidenceProjects?: ValidProjectId[];
   repoEvidence?: string;
   description: string;
   relatedSkills: string[];
@@ -324,6 +325,20 @@ export const SKILLS_DATA: SkillItem[] = [
     repoEvidence: "Real-time edge camera pipeline with OpenCV and YOLO bounding box rendering.",
     description: "Visual computing algorithms including optical transformations, edge filtering, spatial zone tracking, and real-time camera inference.",
     relatedSkills: ["YOLO", "Python", "PyTorch"],
+    docsUrl: "https://opencv.org/"
+  },
+  {
+    id: "opencv",
+    name: "OpenCV",
+    category: "ai-ml",
+    status: "building",
+    evidenceType: "project",
+    evidenceSummary: "Edge camera stream decoding, frame transformation, bounding box rendering, and spatial movement tracking.",
+    relatedProjects: ["yolo"],
+    evidenceProjects: ["yolo"],
+    repoEvidence: "Real-time edge camera pipeline with OpenCV stream transformations and coordinate bounding renders.",
+    description: "Open-source computer vision library for image manipulation, matrix operations, and real-time visual streaming.",
+    relatedSkills: ["Computer Vision", "Python", "YOLO"],
     docsUrl: "https://opencv.org/"
   },
   {
@@ -683,3 +698,60 @@ export function getSkillsByCategory(cat: SkillCategory | "all"): SkillItem[] {
 export function getSkillById(id: string): SkillItem | undefined {
   return SKILLS_DATA.find((s) => s.id.toLowerCase() === id.toLowerCase());
 }
+
+export interface EngineeringStackGroup {
+  id: string;
+  category: string;
+  label: string;
+  description: string;
+  skills: string[];
+}
+
+/**
+ * Verified Engineering Stack divided into the 6 verified core categories.
+ * Strict: These are technologies and foundational tools, NOT unverified proficiency claims.
+ */
+export const ENGINEERING_STACK_CATEGORIES: EngineeringStackGroup[] = [
+  {
+    id: "languages",
+    category: "LANGUAGES",
+    label: "Languages",
+    description: "Core programming languages for algorithmic problem-solving, systems development, and full-stack software.",
+    skills: ["Python", "Java", "JavaScript", "TypeScript", "C++", "HTML", "CSS"]
+  },
+  {
+    id: "frontend",
+    category: "FRONTEND",
+    label: "Frontend",
+    description: "Component frameworks, type systems, and responsive design systems for accessible web applications.",
+    skills: ["React", "TypeScript", "Tailwind CSS", "Bootstrap"]
+  },
+  {
+    id: "backend-data",
+    category: "BACKEND & DATA",
+    label: "Backend & Data",
+    description: "Server-side runtimes, RESTful routing, document persistence, and cloud event stores.",
+    skills: ["Node.js", "Express.js", "MongoDB", "Firebase"]
+  },
+  {
+    id: "ai-ml",
+    category: "AI / MACHINE LEARNING",
+    label: "AI / Machine Learning",
+    description: "Neural models, computer vision pipelines, real-time object detection, and edge inference.",
+    skills: ["Machine Learning", "Deep Learning", "Computer Vision", "YOLO / YOLOv8", "PyTorch", "OpenCV"]
+  },
+  {
+    id: "tools",
+    category: "TOOLS",
+    label: "Tools",
+    description: "Version control, code editing environments, interface design tooling, and production deployment networks.",
+    skills: ["Git", "GitHub", "VS Code", "Figma", "Canva", "Vercel"]
+  },
+  {
+    id: "core-engineering",
+    category: "CORE ENGINEERING",
+    label: "Core Engineering",
+    description: "Foundational software principles, complexity bounds, API contract integration, and system architecture.",
+    skills: ["Data Structures & Algorithms", "API Integration", "Responsive Development", "Version Control", "System Architecture"]
+  }
+];

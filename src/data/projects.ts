@@ -10,6 +10,7 @@ export type ValidProjectId = typeof VALID_PROJECT_IDS[number];
 
 export interface ProjectItem {
   id: string;
+  name?: string;
   title: string;
   subtitle: string;
   shortDescription: string;
@@ -21,9 +22,11 @@ export interface ProjectItem {
   categoryFilter: "AI / ML" | "FULL-STACK" | "SYSTEMS";
   status: string;
   statusType: "live" | "active" | "hackathon" | "opensource";
+  technologies?: string[];
   techStack: string[];
   tech?: string[];
   tags: string[];
+  repository?: string;
   githubRepoName?: string;
   githubUrl: string;
   liveUrl?: string;
@@ -51,6 +54,7 @@ export type VerifiedProject = ProjectItem;
 export const PROJECTS: ProjectItem[] = [
   {
     id: "operon",
+    name: "OPERON",
     title: "OPERON",
     subtitle: "Autonomous Operations & Multi-Agent Workflow Engine",
     shortDescription: "Autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations.",
@@ -62,9 +66,11 @@ export const PROJECTS: ProjectItem[] = [
     categoryFilter: "SYSTEMS",
     status: "Active / In Development",
     statusType: "active",
+    technologies: ["TypeScript", "Node.js", "Express", "React", "Multi-Agent AI", "REST API", "Vercel", "Git", "GitHub"],
     techStack: ["TypeScript", "Node.js", "Express", "React", "Multi-Agent AI", "REST API"],
     tech: ["TypeScript", "Node.js", "Express", "React", "Multi-Agent AI"],
     tags: ["TypeScript", "Multi-Agent AI", "Node.js", "Express", "React", "Automation"],
+    repository: "Operon",
     githubRepoName: "Operon",
     githubUrl: "https://github.com/codesbysayam/Operon",
     liveUrl: "https://operonpro.vercel.app",
@@ -95,6 +101,7 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "sayamsolves",
+    name: "SayamSolves",
     title: "SayamSolves",
     subtitle: "Algorithmic Problem Solving & LeetCode DSA Repository",
     shortDescription: "Daily coding challenges solved by Sayam, powered by consistent DSA practice and algorithmic decomposition.",
@@ -106,9 +113,11 @@ export const PROJECTS: ProjectItem[] = [
     categoryFilter: "SYSTEMS",
     status: "Active Daily Practice",
     statusType: "active",
+    technologies: ["C++", "DSA", "Data Structures & Algorithms", "Algorithms", "Git", "GitHub"],
     techStack: ["C++", "DSA", "Algorithms", "LeetCode", "Data Structures"],
     tech: ["C++", "DSA", "Algorithms", "LeetCode"],
     tags: ["C++", "DSA", "Algorithms", "LeetCode", "Data Structures", "Competitive Programming"],
+    repository: "sayam-solves",
     githubRepoName: "sayam-solves",
     githubUrl: "https://github.com/codesbysayam/sayam-solves",
     featured: true,
@@ -137,6 +146,7 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "mausam",
+    name: "MAUSAM",
     title: "MAUSAM",
     subtitle: "Smart Weather Intelligence Platform • SIH 2026",
     shortDescription: "Smart weather intelligence platform built for SIH 2026 by Team Algnite providing real-time meteorological insights.",
@@ -148,9 +158,11 @@ export const PROJECTS: ProjectItem[] = [
     categoryFilter: "FULL-STACK",
     status: "SIH 2026 Submission",
     statusType: "hackathon",
+    technologies: ["TypeScript", "React", "Tailwind CSS", "API Integration", "Python", "Vercel", "Git", "GitHub"],
     techStack: ["TypeScript", "React", "Tailwind CSS", "Weather APIs", "Python"],
     tech: ["TypeScript", "React", "Tailwind CSS", "Weather APIs"],
     tags: ["TypeScript", "React", "Tailwind CSS", "Weather APIs", "SIH 2026", "Climate Tech"],
+    repository: "mausam",
     githubRepoName: "mausam",
     githubUrl: "https://github.com/codesbysayam/mausam",
     liveUrl: "https://mausamgovt.vercel.app",
@@ -181,20 +193,23 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "portfolio",
+    name: "Sayam Mukherjee Interactive Portfolio",
     title: "Sayam Mukherjee — Interactive Portfolio",
     subtitle: "Liquid Glass Portfolio & Real Telemetry Architecture",
     shortDescription: "Personal developer portfolio featuring liquid glass aesthetics, live GitHub activity telemetry, and responsive micro-interactions.",
     longDescription: "An interactive, high-performance developer portfolio built with React, TypeScript, Tailwind CSS, Express, and Motion. Features real-time server-proxied GitHub telemetry with in-memory caching, LeetCode profile metrics, command palette shortcuts, an eye-care reading mode, and fluid cross-device responsiveness.",
     whyItExists: "Created to present authentic, verified software systems and live GitHub telemetry in a bespoke, high-performance web experience, eliminating generic templates and mock data.",
-    whatIBuilt: "Engineered a full-stack web application with an Express caching proxy for GitHub APIs, fluid clamp() typography, dark/light liquid glass aesthetics, and modular sub-second cold loading.",
+    whatIBuilt: "Engineered a full-stack web application with an Express caching proxy for GitHub APIs, fluid clamp() typography, dark/light liquid glass aesthetics, and modular sub-second cold loads.",
     category: "Full-Stack & Web",
     categoryLabel: "Web Engineering",
     categoryFilter: "FULL-STACK",
     status: "Live Deployment",
     statusType: "live",
+    technologies: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "HTML", "CSS", "Responsive Development", "Git", "GitHub", "Vercel"],
     techStack: ["React", "TypeScript", "Tailwind CSS", "Express", "Vite", "Motion"],
     tech: ["React", "TypeScript", "Tailwind CSS", "Express", "Motion"],
     tags: ["React", "TypeScript", "Tailwind CSS", "Express", "Vite", "Motion", "Full Stack"],
+    repository: "Sayam-Mukherjee-Portfolio",
     githubRepoName: "Sayam-Mukherjee-Portfolio",
     githubUrl: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
     liveUrl: "https://sayammukherjee.in",
@@ -225,6 +240,7 @@ export const PROJECTS: ProjectItem[] = [
   },
   {
     id: "yolo",
+    name: "YOLO / Edge Computer Vision",
     title: "YOLO / YOLOv8 Edge Computer Vision",
     subtitle: "Real-Time Edge Object Detection & Motion Tracking Pipeline",
     shortDescription: "Autonomous edge computer vision pipeline detecting real-time object movement vectors and spatial telemetry.",
@@ -236,9 +252,12 @@ export const PROJECTS: ProjectItem[] = [
     categoryFilter: "AI / ML",
     status: "Open Source / Research",
     statusType: "opensource",
+    technologies: ["Python", "YOLO / YOLOv8", "OpenCV", "PyTorch", "Computer Vision", "Machine Learning", "Git", "GitHub"],
     techStack: ["Python", "YOLOv8", "OpenCV", "PyTorch", "Computer Vision"],
     tech: ["Python", "YOLOv8", "OpenCV", "PyTorch"],
     tags: ["Python", "YOLOv8", "OpenCV", "PyTorch", "Computer Vision", "Edge AI"],
+    repository: "codesbysayam",
+    githubRepoName: "codesbysayam",
     githubUrl: "https://github.com/codesbysayam",
     featured: true,
     highlights: [

@@ -11,7 +11,6 @@ import {
 import { SAYAM_DATA } from "./data";
 import Loader from "./components/Loader";
 import AboutSection from "./components/AboutSection";
-import SkillsSection from "./components/SkillsSection";
 import ExperienceSection from "./components/ExperienceSection";
 import HeroSection from "./components/HeroSection";
 import LiveBuildFeed from "./components/LiveBuildFeed";
@@ -25,16 +24,14 @@ import Toast from "./components/Toast";
 
 // Code-split heavy interactive components to keep initial bundle ultra-light and fast
 const AIChatBot = lazy(() => import("./components/AssistantChat"));
-const LearningDashboard = lazy(() => import("./components/LearningDashboard"));
+const EcosystemSection = lazy(() => import("./components/EcosystemSection"));
 const ProjectsShowcase = lazy(() => import("./components/ProjectsShowcase"));
 const BlogsSection = lazy(() => import("./components/BlogsSection"));
-const ProgressDashboard = lazy(() => import("./components/ProgressDashboard"));
 const ContentCreatorSection = lazy(() => import("./components/ContentCreatorSection"));
 const TestimonialsSection = lazy(() => import("./components/TestimonialsSection"));
 const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
 const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const CommandMenu = lazy(() => import("./components/CommandMenu"));
-const LearningJourney = lazy(() => import("./components/LearningJourney"));
 
 export default function App() {
   return (
@@ -777,23 +774,9 @@ function AppContent() {
                     </div>
                   )}
 
-                  {activeTab === "skills" && (
+                  {(activeTab === "ecosystem" || activeTab === "skills") && (
                     <div className="py-4">
-                      <SkillsSection />
-                    </div>
-                  )}
-
-                  {activeTab === "ecosystem" && (
-                    <div className="space-y-16 py-8">
-                      <Reveal delay={0}>
-                        <LearningDashboard />
-                      </Reveal>
-                      <Reveal delay={0.1}>
-                        <LearningJourney />
-                      </Reveal>
-                      <Reveal delay={0.15}>
-                        <ProgressDashboard />
-                      </Reveal>
+                      <EcosystemSection />
                     </div>
                   )}
 

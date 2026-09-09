@@ -1,22 +1,21 @@
 {
   "projects": [
     {
-      "id": "obsidian-optics",
-      "title": "Obsidian Optics",
-      "description": "A high-performance real-time edge computer vision pipeline using YOLOv8 and PyTorch for multi-object tracking and zone analytics.",
-      "longDescription": "Obsidian Optics is a deep learning computer vision system designed for intelligent video analytics. It leverages custom-trained YOLOv8 weights optimized for edge devices (Jetson Nano/Raspberry Pi) and provides multi-object tracking (DeepSORT) with real-time speed. Built with a full dashboard, it tracks entry-exit counts, custom bounding zones, and thermal density estimation inside recorded streams, displaying analytical heatmaps using D3.js and WebSockets.",
+      "id": "yolo-edge-vision",
+      "title": "YOLO / Edge Computer Vision",
+      "description": "A high-performance real-time edge computer vision pipeline using YOLOv8, PyTorch, and OpenCV for multi-object tracking and zone analytics.",
+      "longDescription": "Real-time edge computer vision pipeline engineered with YOLOv8, PyTorch, and OpenCV. Capable of high-frame-rate bounding box inference, multi-object tracking, and region-of-interest spatial analytics.",
       "tags": [
+        "Python",
         "YOLOv8",
         "PyTorch",
         "OpenCV",
-        "React",
-        "FastAPI",
-        "D3.js"
+        "Computer Vision"
       ],
       "category": "ai_ml",
-      "imageUrl": "https://picsum.photos/seed/obsidian/800/450",
+      "imageUrl": "https://picsum.photos/seed/yolo/800/450",
       "featured": true,
-      "githubUrl": "https://github.com/codesbysayam/obsidian-optics",
+      "githubUrl": "https://github.com/codesbysayam",
       "metrics": [
         {
           "label": "Inference Speed",
@@ -3089,6 +3088,321 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 62
+    },
+    {
+      "id": "visit_1788879379261_3gwk",
+      "timestamp": "2026-09-08T14:56:19.261Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 105
+    },
+    {
+      "id": "visit_1788879379264_61ng",
+      "timestamp": "2026-09-08T14:56:19.264Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 118
+    },
+    {
+      "id": "visit_1788879379271_vkma",
+      "timestamp": "2026-09-08T14:56:19.271Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 45
+    },
+    {
+      "id": "visit_1788879379275_byon",
+      "timestamp": "2026-09-08T14:56:19.275Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 146
+    },
+    {
+      "id": "visit_1788879384081_xqye",
+      "timestamp": "2026-09-08T14:56:24.081Z",
+      "page": "SKILLS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 50
+    },
+    {
+      "id": "visit_1788879510725_4av0",
+      "timestamp": "2026-09-08T14:58:30.725Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 72
+    },
+    {
+      "id": "visit_1788879510743_96fd",
+      "timestamp": "2026-09-08T14:58:30.743Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 132
+    },
+    {
+      "id": "visit_1788879510754_1pxs",
+      "timestamp": "2026-09-08T14:58:30.754Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 67
+    },
+    {
+      "id": "visit_1788879510767_to3d",
+      "timestamp": "2026-09-08T14:58:30.767Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 30
+    },
+    {
+      "id": "visit_1788880377274_fq0b",
+      "timestamp": "2026-09-08T15:12:57.274Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 80
+    },
+    {
+      "id": "visit_1788880377319_oxbb",
+      "timestamp": "2026-09-08T15:12:57.319Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 113
+    },
+    {
+      "id": "visit_1788880377348_i6mi",
+      "timestamp": "2026-09-08T15:12:57.348Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 104
+    },
+    {
+      "id": "visit_1788880377380_db26",
+      "timestamp": "2026-09-08T15:12:57.380Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 138
+    },
+    {
+      "id": "visit_1788880383560_w781",
+      "timestamp": "2026-09-08T15:13:03.560Z",
+      "page": "SKILLS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 79
+    },
+    {
+      "id": "visit_1788880960449_un2n",
+      "timestamp": "2026-09-08T15:22:40.449Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 50
+    },
+    {
+      "id": "visit_1788880960495_6p69",
+      "timestamp": "2026-09-08T15:22:40.495Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 37
+    },
+    {
+      "id": "visit_1788880960515_pfnd",
+      "timestamp": "2026-09-08T15:22:40.515Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 54
+    },
+    {
+      "id": "visit_1788880960523_c7vq",
+      "timestamp": "2026-09-08T15:22:40.523Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 146
+    },
+    {
+      "id": "visit_1788880982315_ibtm",
+      "timestamp": "2026-09-08T15:23:02.315Z",
+      "page": "SKILLS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 66
+    },
+    {
+      "id": "visit_1788880999810_j2v1",
+      "timestamp": "2026-09-08T15:23:19.810Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 68
+    },
+    {
+      "id": "visit_1788881033035_ggj7",
+      "timestamp": "2026-09-08T15:23:53.035Z",
+      "page": "ECOSYSTEM Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 139
+    },
+    {
+      "id": "visit_1788881856624_3dpy",
+      "timestamp": "2026-09-08T15:37:36.624Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 70
+    },
+    {
+      "id": "visit_1788881856650_rksh",
+      "timestamp": "2026-09-08T15:37:36.650Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 39
+    },
+    {
+      "id": "visit_1788881856652_tdws",
+      "timestamp": "2026-09-08T15:37:36.652Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 143
+    },
+    {
+      "id": "visit_1788881856656_1mz4",
+      "timestamp": "2026-09-08T15:37:36.656Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 36
+    },
+    {
+      "id": "visit_1788881882595_kafb",
+      "timestamp": "2026-09-08T15:38:02.595Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 147
+    },
+    {
+      "id": "visit_1788881882658_21qb",
+      "timestamp": "2026-09-08T15:38:02.658Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 111
+    },
+    {
+      "id": "visit_1788881882666_k1y9",
+      "timestamp": "2026-09-08T15:38:02.666Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 103
+    },
+    {
+      "id": "visit_1788881882669_9teb",
+      "timestamp": "2026-09-08T15:38:02.669Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 73
+    },
+    {
+      "id": "visit_1788881892332_s79z",
+      "timestamp": "2026-09-08T15:38:12.332Z",
+      "page": "ECOSYSTEM Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 127
+    },
+    {
+      "id": "visit_1788881907739_kt4s",
+      "timestamp": "2026-09-08T15:38:27.739Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 133
+    },
+    {
+      "id": "visit_1788881907807_ksvp",
+      "timestamp": "2026-09-08T15:38:27.807Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 94
+    },
+    {
+      "id": "visit_1788881907814_tich",
+      "timestamp": "2026-09-08T15:38:27.814Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 113
+    },
+    {
+      "id": "visit_1788881907817_hct7",
+      "timestamp": "2026-09-08T15:38:27.817Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 131
+    },
+    {
+      "id": "visit_1788881912798_nlb5",
+      "timestamp": "2026-09-08T15:38:32.798Z",
+      "page": "ECOSYSTEM Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 66
     }
   ]
 }

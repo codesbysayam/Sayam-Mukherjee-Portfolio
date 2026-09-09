@@ -4,5 +4,7 @@ dist/
 coverage/
 .DS_Store
 *.log
+tools/c/portfolio_metrics
+*.o
 .env*
 !.env.example
