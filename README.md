@@ -12,7 +12,7 @@ Bhubaneswar, India · KIIT University
   <a href="https://www.linkedin.com/in/sayam-mukherjee-b96209324/"><strong>👔 LinkedIn</strong></a> ·
   <a href="https://leetcode.com/u/codesbysayam/"><strong>🧠 LeetCode</strong></a> ·
   <a href="https://codolio.com/profile/codesbysayam"><strong>⚡ Codolio</strong></a> ·
-  <a href="https://youtube.com/@technicalaz"><strong>🎥 YouTube</strong></a>
+  <a href="https://www.youtube.com/@ObsidianOptics_in"><strong>🎥 YouTube</strong></a>
 </p>
 
 </div>
