@@ -131,5 +131,5 @@ npm run start
 - 👔 **LinkedIn:** [Sayam Mukherjee](https://www.linkedin.com/in/sayam-mukherjee-b96209324/)
 - 🧠 **LeetCode:** [@codesbysayam](https://leetcode.com/u/codesbysayam/)
 - ⚡ **Codolio:** [codesbysayam](https://codolio.com/profile/codesbysayam)
-- 🎥 **YouTube:** [@technicalaz](https://youtube.com/@technicalaz)
+- 🎥 **YouTube:** [@obsidianoptics](https://www.youtube.com/@ObsidianOptics_in)
 - 📬 **Email:** [wrickbusiness@gmail.com](mailto:wrickbusiness@gmail.com)
