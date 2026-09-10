@@ -133,26 +133,7 @@ export const EXTENDED_DATA = {
       skills: ['Git', 'Collaboration']
     }
   ] as any[],
-    certifications: [
-    {
-      id: "cert-1",
-      name: 'Machine Learning Specialization',
-      logo: 'Brain',
-      issuer: 'DeepLearning.AI',
-      date: 'Dec 2024',
-      status: 'Active',
-      skillsLearned: ['Python', 'PyTorch']
-    },
-    {
-      id: "cert-2",
-      name: 'Google Cloud Certified',
-      logo: 'Cloud',
-      issuer: 'Google',
-      date: 'Feb 2025',
-      status: 'Future',
-      skillsLearned: ['Cloud Compute', 'GCP']
-    }
-  ] as CertificationItem[],
+    certifications: [] as CertificationItem[],
   projects: [
     {
       id: "proj-1",

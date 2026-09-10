@@ -32,6 +32,8 @@ const TestimonialsSection = lazy(() => import("./components/TestimonialsSection"
 const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
 const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const CommandMenu = lazy(() => import("./components/CommandMenu"));
+const CertificatesPage = lazy(() => import("./components/certificates/CertificatesPage"));
+const CredentialsHomePreview = lazy(() => import("./components/certificates/CredentialsHomePreview"));
 
 export default function App() {
   return (
@@ -263,10 +265,56 @@ function AppContent() {
     };
   }, []);
 
-  // Quick Switch Keyboard Shortcuts ('h', 'a', 's', 'e', 'p', 'j', 'c' or Arrow keys)
+  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact";
+
+  const getInitialTab = (): TabType => {
+    if (typeof window === "undefined") return "home";
+    const path = window.location.pathname.toLowerCase();
+    if (path === "/certificates" || path === "/certificate") return "certificates";
+    if (path === "/projects" || path === "/project") return "projects";
+    if (path === "/about") return "about";
+    if (path === "/skills") return "skills";
+    if (path === "/ecosystem") return "ecosystem";
+    if (path === "/journal" || path === "/blog") return "journal";
+    if (path === "/contact") return "contact";
+
+    const hash = window.location.hash.toLowerCase().replace("#", "");
+    if (hash === "certificates" || hash === "certificate") return "certificates";
+    if (hash === "projects") return "projects";
+    if (hash === "about") return "about";
+    if (hash === "skills") return "skills";
+    if (hash === "ecosystem") return "ecosystem";
+    if (hash === "journal") return "journal";
+    if (hash === "contact") return "contact";
+
+    return "home";
+  };
+
+  // Categorical Page Router State with direct URL resolution
+  const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
+
+  const navigateToTab = (tab: TabType) => {
+    setActiveTab(tab);
+    const targetPath = tab === "home" ? "/" : `/${tab}`;
+    if (window.location.pathname !== targetPath && window.location.pathname !== "/admin") {
+      window.history.pushState(null, "", targetPath);
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  // Synchronize browser history back/forward
   useEffect(() => {
-    const tabsList: Array<"home" | "about" | "skills" | "ecosystem" | "projects" | "journal" | "contact"> = [
-      "home", "about", "skills", "ecosystem", "projects", "journal", "contact"
+    const handlePopState = () => {
+      setActiveTab(getInitialTab());
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  // Quick Switch Keyboard Shortcuts ('h', 'a', 's', 'e', 'p', 'c', 'j', 'm' or Arrow keys)
+  useEffect(() => {
+    const tabsList: TabType[] = [
+      "home", "about", "skills", "ecosystem", "projects", "certificates", "journal", "contact"
     ];
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -291,19 +339,20 @@ function AppContent() {
       const key = e.key.toLowerCase();
 
       // Navigation shortcuts map
-      const keyToTabMap: Record<string, typeof tabsList[number]> = {
+      const keyToTabMap: Record<string, TabType> = {
         h: "home",
         a: "about",
         s: "skills",
         e: "ecosystem",
         p: "projects",
+        c: "certificates",
         j: "journal",
-        c: "contact"
+        m: "contact"
       };
 
       if (keyToTabMap[key]) {
         e.preventDefault();
-        setActiveTab(keyToTabMap[key]);
+        navigateToTab(keyToTabMap[key]);
         return;
       }
 
@@ -313,14 +362,24 @@ function AppContent() {
         setActiveTab((prev) => {
           const currentIndex = tabsList.indexOf(prev);
           const nextIndex = (currentIndex + 1) % tabsList.length;
-          return tabsList[nextIndex];
+          const nextTab = tabsList[nextIndex];
+          const targetPath = nextTab === "home" ? "/" : `/${nextTab}`;
+          if (window.location.pathname !== targetPath && window.location.pathname !== "/admin") {
+            window.history.pushState(null, "", targetPath);
+          }
+          return nextTab;
         });
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
         setActiveTab((prev) => {
           const currentIndex = tabsList.indexOf(prev);
           const prevIndex = (currentIndex - 1 + tabsList.length) % tabsList.length;
-          return tabsList[prevIndex];
+          const prevTab = tabsList[prevIndex];
+          const targetPath = prevTab === "home" ? "/" : `/${prevTab}`;
+          if (window.location.pathname !== targetPath && window.location.pathname !== "/admin") {
+            window.history.pushState(null, "", targetPath);
+          }
+          return prevTab;
         });
       }
     };
@@ -329,15 +388,11 @@ function AppContent() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Categorical Page Router State
-  const [activeTab, setActiveTab] = useState<"home" | "about" | "skills" | "ecosystem" | "projects" | "journal" | "contact">("home");
-
   // Global tab navigation event listener
   useEffect(() => {
     const handleTabNavigate = (e: any) => {
       if (e.detail && typeof e.detail === "string") {
-        setActiveTab(e.detail as any);
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        navigateToTab(e.detail as TabType);
       }
     };
     window.addEventListener("portfolio-navigate-tab", handleTabNavigate);
@@ -356,8 +411,8 @@ function AppContent() {
     let touchEndX = 0;
     let touchEndY = 0;
 
-    const tabsList: Array<"home" | "about" | "skills" | "ecosystem" | "projects" | "journal" | "contact"> = [
-      "home", "about", "skills", "ecosystem", "projects", "journal", "contact"
+    const tabsList: TabType[] = [
+      "home", "about", "skills", "ecosystem", "projects", "certificates", "journal", "contact"
     ];
 
     const isInteractiveElement = (target: HTMLElement | null): boolean => {
@@ -527,7 +582,7 @@ function AppContent() {
               
               {/* Logotype */}
               <button 
-                onClick={() => setActiveTab("home")}
+                onClick={() => navigateToTab("home")}
                 className="flex items-center gap-3 shrink-0 relative group cursor-pointer text-left focus:outline-none"
                 aria-label="Sayam Mukherjee Home"
               >
@@ -566,14 +621,15 @@ function AppContent() {
                   { id: "skills", label: "Skills", shortcut: "S" },
                   { id: "ecosystem", label: "Ecosystem", shortcut: "E" },
                   { id: "projects", label: "Projects", shortcut: "P" },
+                  { id: "certificates", label: "Certificates", shortcut: "C" },
                   { id: "journal", label: "Journal", shortcut: "J" },
-                  { id: "contact", label: "Contact", shortcut: "C" }
+                  { id: "contact", label: "Contact", shortcut: "M" }
                 ].map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
                     <button
                       key={tab.id}
-                      onClick={() => setActiveTab(tab.id as any)}
+                      onClick={() => navigateToTab(tab.id as any)}
                       title={`${tab.label} (Press '${tab.shortcut}')`}
                       className={`relative px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer whitespace-nowrap select-none ${
                         isActive 
@@ -640,7 +696,7 @@ function AppContent() {
 
                 {/* Contact Button */}
                 <button
-                  onClick={() => setActiveTab("contact")}
+                  onClick={() => navigateToTab("contact")}
                   className="px-3.5 py-1.5 bg-white hover:bg-zinc-100 text-black text-xs font-semibold rounded-lg shadow-sm transition-all duration-200 cursor-pointer shrink-0 border border-zinc-200"
                 >
                   Contact
@@ -674,13 +730,14 @@ function AppContent() {
                       { id: "skills", label: "Skills" },
                       { id: "ecosystem", label: "Ecosystem" },
                       { id: "projects", label: "Projects" },
+                      { id: "certificates", label: "Certificates" },
                       { id: "journal", label: "Journal" },
                       { id: "contact", label: "Contact" }
                     ].map((tab) => (
                       <button
                         key={tab.id}
                         onClick={() => {
-                          setActiveTab(tab.id as any);
+                          navigateToTab(tab.id as any);
                           setIsMenuOpen(false);
                         }}
                         className={`text-left py-2 px-3 rounded-lg hover:bg-zinc-900 transition-colors flex items-center justify-between ${
@@ -745,12 +802,17 @@ function AppContent() {
                 {activeTab === "home" && (
                   <div className="space-y-12 sm:space-y-16">
                     {/* REBUILT HERO SECTION */}
-                    <HeroSection onViewWork={() => setActiveTab("projects")} />
+                    <HeroSection onViewWork={() => navigateToTab("projects")} />
 
                     {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
-                    <section id="live-build-feed" className="w-full pt-2 pb-12">
+                    <section id="live-build-feed" className="w-full pt-2 pb-8">
                       <LiveBuildFeed />
                     </section>
+
+                    {/* CREDENTIALS / CERTIFICATES PREVIEW SPOTLIGHT */}
+                    <Suspense fallback={null}>
+                      <CredentialsHomePreview onNavigateToCertificates={() => navigateToTab("certificates")} />
+                    </Suspense>
                   </div>
                 )}
 
@@ -769,7 +831,7 @@ function AppContent() {
                         <ExperienceSection />
                       </Reveal>
                       <Reveal delay={0.15}>
-                        <CertificationsSection />
+                        <CertificationsSection onNavigateToCertificates={() => navigateToTab("certificates")} />
                       </Reveal>
                     </div>
                   )}
@@ -784,6 +846,14 @@ function AppContent() {
                     <div className="py-4 sm:py-6">
                       <Reveal delay={0}>
                         <ProjectsShowcase />
+                      </Reveal>
+                    </div>
+                  )}
+
+                  {activeTab === "certificates" && (
+                    <div className="py-4 sm:py-6">
+                      <Reveal delay={0}>
+                        <CertificatesPage />
                       </Reveal>
                     </div>
                   )}
@@ -875,7 +945,7 @@ function AppContent() {
               <CommandMenu
                 isOpen={isCommandMenuOpen}
                 onClose={() => setIsCommandMenuOpen(false)}
-                onNavigate={(tab) => setActiveTab(tab)}
+                onNavigate={(tab) => navigateToTab(tab)}
                 onOpenResume={() => setIsResumeModalOpen(true)}
                 onTriggerConfetti={triggerConfetti}
               />
@@ -937,13 +1007,18 @@ function AppContent() {
                   </div>
 
                   <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
+                    <span className="text-zinc-400 font-medium">Certs</span>
+                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">C</kbd>
+                  </div>
+
+                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
                     <span className="text-zinc-400 font-medium">Journal</span>
                     <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">J</kbd>
                   </div>
 
                   <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
                     <span className="text-zinc-400 font-medium">Contact</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">C</kbd>
+                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">M</kbd>
                   </div>
                 </div>
 

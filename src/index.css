@@ -56,33 +56,39 @@ html[data-theme="dark"] {
 
 html.light,
 html[data-theme="light"] {
-  --page-bg: #f8f9fc;
-  --surface-primary: rgba(255, 255, 255, 0.82);
-  --surface-secondary: rgba(255, 255, 255, 0.95);
+  --page-bg: #f4f5f8;
+  --surface-primary: rgba(255, 255, 255, 0.88);
+  --surface-secondary: #ffffff;
   --surface-elevated: #ffffff;
-  --surface-inset: rgba(243, 244, 249, 0.85);
+  --surface-inset: #eef1f6;
 
-  --text-primary: #17151f;
-  --text-secondary: #4b4f5e;
-  --text-muted: #6e7282;
-  --text-faint: #9397a6;
+  --text-primary: #0f172a;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+  --text-faint: #94a3b8;
 
-  --accent-purple: #6d35d9;
+  --accent-purple: #6d28d9;
   --accent-purple-hover: #5b21b6;
-  --accent-purple-glow: rgba(109, 53, 217, 0.12);
-  --accent-cyan: #0891b2;
-  --accent-cyan-glow: rgba(8, 145, 178, 0.12);
+  --accent-purple-glow: rgba(109, 40, 217, 0.16);
+  --accent-cyan: #0284c7;
+  --accent-cyan-glow: rgba(2, 132, 199, 0.14);
   --accent-emerald: #059669;
+  --accent-amber: #b45309;
 
-  --border-subtle: rgba(20, 20, 35, 0.08);
-  --border-medium: rgba(20, 20, 35, 0.12);
-  --border-strong: rgba(20, 20, 35, 0.18);
+  --border-subtle: rgba(15, 23, 42, 0.08);
+  --border-medium: rgba(15, 23, 42, 0.14);
+  --border-strong: rgba(15, 23, 42, 0.22);
 
-  --chart-grid: rgba(20, 20, 35, 0.07);
-  --chart-axis: #737584;
-  --chart-tooltip-bg: rgba(255, 255, 255, 0.97);
-  --chart-tooltip-border: rgba(20, 20, 35, 0.12);
-  --chart-tooltip-text: #17151f;
+  --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 6px 18px -3px rgba(15, 23, 42, 0.08), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+  --shadow-lg: 0 18px 36px -8px rgba(15, 23, 42, 0.10), 0 4px 12px -2px rgba(15, 23, 42, 0.05);
+  --shadow-xl: 0 28px 60px -12px rgba(15, 23, 42, 0.14), 0 8px 24px -4px rgba(15, 23, 42, 0.07);
+
+  --chart-grid: rgba(15, 23, 42, 0.08);
+  --chart-axis: #64748b;
+  --chart-tooltip-bg: rgba(255, 255, 255, 0.98);
+  --chart-tooltip-border: rgba(15, 23, 42, 0.15);
+  --chart-tooltip-text: #0f172a;
 }
 
 /* ==========================================================================
@@ -300,33 +306,34 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
   -webkit-mask-image: radial-gradient(ellipse 65% 55% at 50% 10%, black, transparent 80%);
 }
 
-/* Light Mode Page Background: Apple-style warm off-white with subtle purple/blue ambient gradients */
+/* Light Mode Page Background: Pearl Glass dimensional canvas */
 html.light,
 html[data-theme="light"] {
-  background-color: #f7f8fc !important;
-  color: #17151f !important;
+  background-color: #f4f5f8 !important;
+  color: #0f172a !important;
 }
 
 html.light body,
 html[data-theme="light"] body {
   background-color: transparent !important;
-  color: #17151f !important;
+  color: #0f172a !important;
 }
 
 html.light .page-background-grid,
 html[data-theme="light"] .page-background-grid {
   background:
-    radial-gradient(circle at 15% 10%, rgba(124, 58, 237, 0.07), transparent 32%),
-    radial-gradient(circle at 85% 25%, rgba(14, 165, 233, 0.06), transparent 30%),
-    linear-gradient(180deg, #fbfbfe 0%, #f4f5fa 100%) !important;
+    radial-gradient(ellipse 70% 50% at 50% -5%, rgba(109, 40, 217, 0.08), transparent 70%),
+    radial-gradient(ellipse 60% 45% at 90% 20%, rgba(2, 132, 199, 0.07), transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 40%, rgba(217, 70, 239, 0.04), transparent 50%),
+    linear-gradient(180deg, #f6f7fb 0%, #edf0f7 100%) !important;
 }
 
 html.light .tech-grid-bg,
 html[data-theme="light"] .tech-grid-bg {
-  background-image: radial-gradient(rgba(20, 20, 35, 0.05) 1.2px, transparent 1.2px);
+  background-image: radial-gradient(rgba(15, 23, 42, 0.07) 1.2px, transparent 1.2px);
   background-size: 28px 28px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 10%, black, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 10%, black, transparent 85%);
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 10%, black, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 10%, black, transparent 85%);
 }
 
 /* ==========================================================================
@@ -643,71 +650,129 @@ button.bg-zinc-900:hover {
 }
 
 /* ==========================================================================
-   INDEPENDENT APPLE-STYLE LIGHT MODE SYSTEM
+   INDEPENDENT PEARL GLASS LIGHT MODE SYSTEM (Apple-Grade Dimensionality)
    ========================================================================== */
 
-/* 1. White Glass Surfaces & Hierarchy */
+/* 1. Pearl Glass Surfaces & Hierarchy */
 html.light .glass-card,
 html[data-theme="light"] .glass-card {
-  background-color: rgba(255, 255, 255, 0.82) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
   background-image: 
-    radial-gradient(at top left, rgba(109, 53, 217, 0.035), transparent 50%),
-    radial-gradient(at bottom right, rgba(8, 145, 178, 0.03), transparent 50%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.68) 100%) !important;
-  border: 1px solid rgba(20, 20, 35, 0.09) !important;
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.88) 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
   box-shadow: 
-    0 12px 35px rgba(30, 25, 60, 0.06),
-    0 2px 6px rgba(30, 25, 60, 0.02),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(20px) saturate(150%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
-  color: #17151f !important;
+    0 16px 36px -8px rgba(15, 23, 42, 0.08),
+    0 3px 8px -1px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  color: #0f172a !important;
 }
 
 html.light .glass-card:hover,
 html[data-theme="light"] .glass-card:hover {
-  border-color: rgba(109, 53, 217, 0.25) !important;
+  border-color: rgba(109, 40, 217, 0.35) !important;
   box-shadow: 
-    0 20px 48px rgba(40, 30, 80, 0.10),
-    0 4px 12px rgba(40, 30, 80, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
-  background-color: rgba(255, 255, 255, 0.92) !important;
-  transform: translateY(-2px) !important;
+    0 24px 60px -12px rgba(109, 40, 217, 0.14),
+    0 8px 20px -4px rgba(15, 23, 42, 0.08),
+    inset 0 1px 1px #ffffff !important;
+  background-color: #ffffff !important;
+  transform: translateY(-3px) !important;
 }
 
 html.light .glass-card::after,
 html[data-theme="light"] .glass-card::after {
   background: radial-gradient(
-    320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-    rgba(109, 53, 217, 0.08),
+    340px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(109, 40, 217, 0.09),
     transparent 80%
   ) !important;
 }
 
 html.light .glass,
 html[data-theme="light"] .glass {
-  background: rgba(255, 255, 255, 0.88) !important;
-  backdrop-filter: blur(20px) saturate(150%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(150%) !important;
-  border-color: rgba(20, 20, 35, 0.09) !important;
-  box-shadow: 0 8px 24px rgba(30, 25, 60, 0.05) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.08) !important;
+  color: #0f172a !important;
 }
 
-/* 2. Hero Section in Light Mode */
+/* 2. Top Sticky Navbar & Navigation Controls in Light Mode */
+html.light header,
+html.light nav,
+html[data-theme="light"] header,
+html[data-theme="light"] nav {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 8px 25px -5px rgba(15, 23, 42, 0.07), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+}
+
+/* Nav navigation tab buttons */
+html.light nav button,
+html[data-theme="light"] nav button {
+  color: #475569 !important;
+}
+
+html.light nav button:hover,
+html[data-theme="light"] nav button:hover {
+  color: #0f172a !important;
+}
+
+/* Active tab pill in Light Mode */
+html.light nav button.text-white,
+html.light nav button[data-active="true"],
+html[data-theme="light"] nav button.text-white,
+html[data-theme="light"] nav button[data-active="true"] {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+html.light nav .bg-white,
+html[data-theme="light"] nav .bg-white {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+}
+
+/* Header Action Controls in Light Mode (Search, Theme, Resume) */
+html.light header button.bg-zinc-900,
+html.light header button.bg-zinc-900\/80,
+html[data-theme="light"] header button.bg-zinc-900,
+html[data-theme="light"] header button.bg-zinc-900\/80 {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  color: #0f172a !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+}
+
+html.light header button.bg-zinc-900:hover,
+html.light header button.bg-zinc-900\/80:hover,
+html[data-theme="light"] header button.bg-zinc-900:hover,
+html[data-theme="light"] header button.bg-zinc-900\/80:hover {
+  background-color: #f8fafc !important;
+  border-color: rgba(109, 40, 217, 0.35) !important;
+  color: #6d28d9 !important;
+}
+
+/* 3. Hero Section in Light Mode */
 html.light #hero,
 html[data-theme="light"] #hero {
-  background-color: rgba(255, 255, 255, 0.75) !important;
+  background-color: rgba(255, 255, 255, 0.88) !important;
   background-image: 
-    radial-gradient(at top left, rgba(109, 53, 217, 0.04), transparent 50%),
-    radial-gradient(at bottom right, rgba(8, 145, 178, 0.035), transparent 50%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.68) 100%) !important;
-  border: 1px solid rgba(20, 20, 35, 0.09) !important;
+    radial-gradient(at top left, rgba(109, 40, 217, 0.06), transparent 50%),
+    radial-gradient(at bottom right, rgba(2, 132, 199, 0.05), transparent 50%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.90) 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
   box-shadow: 
-    0 24px 60px rgba(30, 25, 60, 0.07),
-    0 4px 12px rgba(30, 25, 60, 0.03),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(24px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+    0 24px 60px -10px rgba(15, 23, 42, 0.09),
+    0 4px 12px rgba(15, 23, 42, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+  backdrop-filter: blur(24px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
 }
 
 html.light .hero-border-spinner,
@@ -716,87 +781,190 @@ html[data-theme="light"] .hero-border-spinner {
     from 0deg,
     transparent 0deg,
     transparent 240deg,
-    rgba(109, 53, 217, 0.05) 260deg,
-    rgba(109, 53, 217, 0.35) 290deg,
-    rgba(8, 145, 178, 0.40) 325deg,
-    rgba(217, 70, 239, 0.30) 350deg,
+    rgba(109, 40, 217, 0.08) 260deg,
+    rgba(109, 40, 217, 0.45) 290deg,
+    rgba(2, 132, 199, 0.45) 325deg,
+    rgba(217, 70, 239, 0.35) 350deg,
     transparent 360deg
   ) !important;
 }
 
-/* 3. Liquid Blobs in Light Mode (Ambient luminescent glow) */
+/* 4. Right GitHub Showcase Card in Light Mode - Crisp Pearl Glass */
+html.light #hero-github-card,
+html.light .signal-card,
+html.light .build-card,
+html[data-theme="light"] #hero-github-card,
+html[data-theme="light"] .signal-card,
+html[data-theme="light"] .build-card {
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 
+    0 24px 64px -12px rgba(15, 23, 42, 0.12),
+    0 8px 24px -4px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+  color: #0f172a !important;
+}
+
+html.light #hero-github-card:hover,
+html.light .signal-card:hover,
+html.light .build-card:hover,
+html[data-theme="light"] #hero-github-card:hover,
+html[data-theme="light"] .signal-card:hover,
+html[data-theme="light"] .build-card:hover {
+  border-color: rgba(109, 40, 217, 0.35) !important;
+  box-shadow: 
+    0 32px 80px -16px rgba(109, 40, 217, 0.16),
+    0 12px 32px -4px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+/* Inner borders inside the GitHub showcase card */
+html.light #hero-github-card .border-b,
+html.light #hero-github-card .border-t,
+html.light #hero-github-card .border-x,
+html.light #hero-github-card .border-white\/\[0\.08\],
+html.light #hero-github-card .border-white\/\[0\.06\],
+html.light #hero-github-card .border-white\/15,
+html[data-theme="light"] #hero-github-card .border-b,
+html[data-theme="light"] #hero-github-card .border-t,
+html[data-theme="light"] #hero-github-card .border-x,
+html[data-theme="light"] #hero-github-card .border-white\/\[0\.08\],
+html[data-theme="light"] #hero-github-card .border-white\/\[0\.06\],
+html[data-theme="light"] #hero-github-card .border-white\/15 {
+  border-color: rgba(15, 23, 42, 0.10) !important;
+}
+
+/* Metrics strip inside the GitHub card */
+html.light #hero-github-card .bg-white\/\[0\.025\],
+html.light #hero-github-card .bg-white\/\[0\.04\],
+html[data-theme="light"] #hero-github-card .bg-white\/\[0\.025\],
+html[data-theme="light"] #hero-github-card .bg-white\/\[0\.04\] {
+  background-color: #f1f4fa !important;
+  border: 1px solid rgba(15, 23, 42, 0.09) !important;
+  color: #1e293b !important;
+}
+
+html.light #hero-github-card .bg-white\/\[0\.04\]:hover,
+html[data-theme="light"] #hero-github-card .bg-white\/\[0\.04\]:hover {
+  background-color: #e5eaf3 !important;
+}
+
+/* 5. Liquid Blobs in Light Mode (Ambient luminescent glow) */
 html.light .liquid-blob-1,
 html[data-theme="light"] .liquid-blob-1 {
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, rgba(192, 132, 252, 0.03) 50%, transparent 70%) !important;
-  opacity: 0.75 !important;
+  background: radial-gradient(circle, rgba(109, 40, 217, 0.14) 0%, rgba(192, 132, 252, 0.03) 50%, transparent 70%) !important;
+  opacity: 0.85 !important;
 }
 html.light .liquid-blob-2,
 html[data-theme="light"] .liquid-blob-2 {
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.10) 0%, rgba(56, 189, 248, 0.03) 50%, transparent 70%) !important;
-  opacity: 0.75 !important;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(56, 189, 248, 0.03) 50%, transparent 70%) !important;
+  opacity: 0.85 !important;
 }
 html.light .liquid-blob-3,
 html[data-theme="light"] .liquid-blob-3 {
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.08) 0%, rgba(244, 114, 182, 0.02) 50%, transparent 70%) !important;
-  opacity: 0.65 !important;
+  background: radial-gradient(circle, rgba(217, 70, 239, 0.09) 0%, rgba(244, 114, 182, 0.02) 50%, transparent 70%) !important;
+  opacity: 0.75 !important;
 }
 html.light .liquid-blob-4,
 html[data-theme="light"] .liquid-blob-4 {
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, rgba(52, 211, 153, 0.02) 50%, transparent 70%) !important;
-  opacity: 0.65 !important;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.09) 0%, rgba(52, 211, 153, 0.02) 50%, transparent 70%) !important;
+  opacity: 0.75 !important;
 }
 
-/* 4. Typography Hierarchy in Light Mode */
+/* 6. Typography Hierarchy & Contrast in Light Mode (WCAG AA Compliant) */
 html.light h1,
 html.light h2,
 html.light h3,
 html.light h4,
+html.light h5,
+html.light h6,
 html[data-theme="light"] h1,
 html[data-theme="light"] h2,
 html[data-theme="light"] h3,
-html[data-theme="light"] h4 {
-  color: #17151f !important;
+html[data-theme="light"] h4,
+html[data-theme="light"] h5,
+html[data-theme="light"] h6 {
+  color: #0f172a !important;
+}
+
+html.light .hero-title,
+html[data-theme="light"] .hero-title {
+  color: #0f172a !important;
 }
 
 html.light .text-white,
+html[data-theme="light"] .text-white {
+  color: #0f172a !important;
+}
+
 html.light .text-zinc-100,
 html.light .text-zinc-200,
-html[data-theme="light"] .text-white,
 html[data-theme="light"] .text-zinc-100,
 html[data-theme="light"] .text-zinc-200 {
-  color: #17151f !important;
+  color: #1e293b !important;
 }
 
 html.light .text-zinc-300,
 html[data-theme="light"] .text-zinc-300 {
-  color: #333644 !important;
+  color: #334155 !important;
 }
 
 html.light .text-zinc-400,
 html[data-theme="light"] .text-zinc-400 {
-  color: #555766 !important;
+  color: #475569 !important;
 }
 
 html.light .text-zinc-500,
 html[data-theme="light"] .text-zinc-500 {
-  color: #777989 !important;
+  color: #64748b !important;
 }
 
 html.light .text-zinc-600,
 html[data-theme="light"] .text-zinc-600 {
-  color: #9295a6 !important;
+  color: #94a3b8 !important;
 }
 
-/* Gradient Headings & Text in Light Mode (Deep rich purple to cyan) */
+/* Saturated Jewel Accents in Light Mode */
+html.light .text-purple-400,
+html.light .text-purple-300,
+html[data-theme="light"] .text-purple-400,
+html[data-theme="light"] .text-purple-300 {
+  color: #6d28d9 !important;
+}
+
+html.light .text-cyan-400,
+html.light .text-cyan-300,
+html[data-theme="light"] .text-cyan-400,
+html[data-theme="light"] .text-cyan-300 {
+  color: #0284c7 !important;
+}
+
+html.light .text-emerald-400,
+html.light .text-emerald-300,
+html[data-theme="light"] .text-emerald-400,
+html[data-theme="light"] .text-emerald-300 {
+  color: #059669 !important;
+}
+
+html.light .text-amber-400,
+html.light .text-amber-300,
+html[data-theme="light"] .text-amber-400,
+html[data-theme="light"] .text-amber-300 {
+  color: #b45309 !important;
+}
+
+/* High-Contrast Jewel Gradients for Light Mode */
+html.light .from-purple-400.via-indigo-300.to-cyan-300,
 html.light .from-purple-400.to-cyan-400,
 html.light .from-purple-400.via-fuchsia-300.to-cyan-400,
 html.light .from-purple-400.via-pink-400.to-cyan-400,
 html.light .from-purple-300.to-cyan-300,
+html[data-theme="light"] .from-purple-400.via-indigo-300.to-cyan-300,
 html[data-theme="light"] .from-purple-400.to-cyan-400,
 html[data-theme="light"] .from-purple-400.via-fuchsia-300.to-cyan-400,
 html[data-theme="light"] .from-purple-400.via-pink-400.to-cyan-400,
 html[data-theme="light"] .from-purple-300.to-cyan-300 {
-  background-image: linear-gradient(90deg, #6d35d9 0%, #c026d3 50%, #0891b2 100%) !important;
+  background-image: linear-gradient(90deg, #6d28d9 0%, #a21caf 50%, #0284c7 100%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
@@ -806,11 +974,11 @@ html.light .shimmer-text,
 html[data-theme="light"] .shimmer-text {
   background: linear-gradient(
     90deg,
-    #6d35d9 0%,
-    #d946ef 25%,
-    #0891b2 50%,
-    #d946ef 75%,
-    #6d35d9 100%
+    #6d28d9 0%,
+    #a21caf 25%,
+    #0284c7 50%,
+    #a21caf 75%,
+    #6d28d9 100%
   ) !important;
   background-size: 200% auto !important;
   -webkit-background-clip: text !important;
@@ -818,59 +986,76 @@ html[data-theme="light"] .shimmer-text {
   -webkit-text-fill-color: transparent !important;
 }
 
-/* 5. Navbar in Light Mode */
-html.light nav,
-html[data-theme="light"] nav {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border-bottom: 1px solid rgba(20, 20, 35, 0.08) !important;
-  box-shadow: 0 8px 30px rgba(30, 25, 60, 0.05) !important;
-  backdrop-filter: blur(20px) saturate(160%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(160%) !important;
+/* 7. Chips, Badges & Tags in Light Mode */
+html.light .bg-purple-950\/40,
+html.light .bg-purple-950\/30,
+html.light .bg-purple-950\/25,
+html.light .bg-purple-950\/20,
+html[data-theme="light"] .bg-purple-950\/40,
+html[data-theme="light"] .bg-purple-950\/30,
+html[data-theme="light"] .bg-purple-950\/25,
+html[data-theme="light"] .bg-purple-950\/20 {
+  background-color: rgba(109, 40, 217, 0.08) !important;
+  color: #6d28d9 !important;
+  border: 1px solid rgba(109, 40, 217, 0.22) !important;
 }
 
-/* Active Nav pill in Light Mode */
-html.light nav .bg-purple-600,
-html[data-theme="light"] nav .bg-purple-600 {
-  background-color: #17151f !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(23, 21, 31, 0.18) !important;
+html.light .bg-cyan-950\/40,
+html.light .bg-cyan-950\/30,
+html.light .bg-cyan-950\/20,
+html[data-theme="light"] .bg-cyan-950\/40,
+html[data-theme="light"] .bg-cyan-950\/30,
+html[data-theme="light"] .bg-cyan-950\/20 {
+  background-color: rgba(2, 132, 199, 0.08) !important;
+  color: #0284c7 !important;
+  border: 1px solid rgba(2, 132, 199, 0.22) !important;
 }
 
-/* 6. Buttons & Interactive Controls in Light Mode */
+html.light .bg-emerald-950\/40,
+html.light .bg-emerald-950\/30,
+html.light .bg-emerald-950\/20,
+html[data-theme="light"] .bg-emerald-950\/40,
+html[data-theme="light"] .bg-emerald-950\/30,
+html[data-theme="light"] .bg-emerald-950\/20 {
+  background-color: rgba(5, 150, 105, 0.08) !important;
+  color: #059669 !important;
+  border: 1px solid rgba(5, 150, 105, 0.24) !important;
+}
+
+html.light .bg-amber-950\/40,
+html.light .bg-amber-950\/30,
+html.light .bg-amber-950\/20,
+html[data-theme="light"] .bg-amber-950\/40,
+html[data-theme="light"] .bg-amber-950\/30,
+html[data-theme="light"] .bg-amber-950\/20 {
+  background-color: rgba(180, 83, 9, 0.08) !important;
+  color: #b45309 !important;
+  border: 1px solid rgba(180, 83, 9, 0.24) !important;
+}
+
+/* 8. Buttons & Interactive Controls in Light Mode */
 html.light .liquid-glass-btn,
 html[data-theme="light"] .liquid-glass-btn {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border: 1px solid rgba(20, 20, 35, 0.12) !important;
-  color: #17151f !important;
+  background: rgba(255, 255, 255, 0.90) !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  color: #0f172a !important;
   box-shadow: 
-    0 4px 14px rgba(30, 25, 60, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.95) !important;
+    0 4px 14px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
 html.light .liquid-glass-btn:hover,
 html[data-theme="light"] .liquid-glass-btn:hover {
   background: #ffffff !important;
-  border-color: rgba(109, 53, 217, 0.35) !important;
-  color: #6d35d9 !important;
+  border-color: rgba(109, 40, 217, 0.35) !important;
+  color: #6d28d9 !important;
   box-shadow: 
-    0 8px 22px rgba(109, 53, 217, 0.12),
+    0 8px 24px rgba(109, 40, 217, 0.14),
     inset 0 1px 0 #ffffff !important;
-  transform: translateY(-2px) scale(1.01) !important;
+  transform: translateY(-2px) !important;
 }
 
-html.light .liquid-shimmer-sweep::before,
-html[data-theme="light"] .liquid-shimmer-sweep::before {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.4) 30%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0.4) 70%,
-    transparent
-  ) !important;
-}
-
-/* Primary Button in Light Mode: Dark charcoal #17151f with white text and purple hover */
+/* Primary Button in Light Mode (Dark Charcoal #0f172a with white text & vibrant purple hover) */
 html.light button.bg-white,
 html.light button.bg-zinc-100,
 html.light .bg-white.text-black,
@@ -879,10 +1064,10 @@ html[data-theme="light"] button.bg-white,
 html[data-theme="light"] button.bg-zinc-100,
 html[data-theme="light"] .bg-white.text-black,
 html[data-theme="light"] .bg-white.text-zinc-950 {
-  background-color: #17151f !important;
+  background-color: #0f172a !important;
   color: #ffffff !important;
-  border: 1px solid #17151f !important;
-  box-shadow: 0 4px 16px rgba(23, 21, 31, 0.18) !important;
+  border: 1px solid #0f172a !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.16) !important;
 }
 
 html.light button.bg-white:hover,
@@ -893,54 +1078,74 @@ html[data-theme="light"] button.bg-white:hover,
 html[data-theme="light"] button.bg-zinc-100:hover,
 html[data-theme="light"] .bg-white.text-black:hover,
 html[data-theme="light"] .bg-white.text-zinc-950:hover {
-  background-color: #6d35d9 !important;
-  border-color: #6d35d9 !important;
+  background-color: #6d28d9 !important;
+  border-color: #6d28d9 !important;
   color: #ffffff !important;
-  box-shadow: 0 8px 25px rgba(109, 53, 217, 0.35) !important;
-  transform: translateY(-2px) scale(1.01) !important;
+  box-shadow: 0 8px 24px rgba(109, 40, 217, 0.30) !important;
+  transform: translateY(-2px) !important;
 }
 
-/* Secondary Button in Light Mode */
+/* Secondary Button in Light Mode (Crisp Pearl/White with Slate text) */
 html.light button.bg-zinc-950,
 html.light button.bg-zinc-900,
+html.light button.bg-zinc-900\/80,
+html.light button.bg-zinc-800,
 html[data-theme="light"] button.bg-zinc-950,
-html[data-theme="light"] button.bg-zinc-900 {
-  background-color: rgba(255, 255, 255, 0.85) !important;
-  border-color: rgba(20, 20, 35, 0.12) !important;
-  box-shadow: 0 2px 8px rgba(30, 25, 60, 0.04) !important;
-  color: #17151f !important;
+html[data-theme="light"] button.bg-zinc-900,
+html[data-theme="light"] button.bg-zinc-900\/80,
+html[data-theme="light"] button.bg-zinc-800 {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
+  color: #0f172a !important;
 }
 
 html.light button.bg-zinc-950:hover,
 html.light button.bg-zinc-900:hover,
+html.light button.bg-zinc-900\/80:hover,
+html.light button.bg-zinc-800:hover,
 html[data-theme="light"] button.bg-zinc-950:hover,
-html[data-theme="light"] button.bg-zinc-900:hover {
-  background-color: #ffffff !important;
-  border-color: rgba(109, 53, 217, 0.30) !important;
-  box-shadow: 0 6px 16px rgba(109, 53, 217, 0.08) !important;
-  color: #6d35d9 !important;
-  transform: translateY(-2px) scale(1.01) !important;
+html[data-theme="light"] button.bg-zinc-900:hover,
+html[data-theme="light"] button.bg-zinc-900\/80:hover,
+html[data-theme="light"] button.bg-zinc-800:hover {
+  background-color: #f8fafc !important;
+  border-color: rgba(109, 40, 217, 0.35) !important;
+  color: #6d28d9 !important;
+  box-shadow: 0 6px 16px rgba(109, 40, 217, 0.10) !important;
+  transform: translateY(-2px) !important;
 }
 
-/* 7. Inset Surfaces, Nested Boxes, Console Tabs, & Modals */
+/* 9. Inset Surfaces, Nested Boxes, Modals & Dialogs */
 html.light .bg-zinc-950,
 html.light .bg-zinc-950\/40,
 html.light .bg-zinc-950\/50,
 html.light .bg-zinc-950\/60,
+html.light .bg-zinc-950\/70,
 html.light .bg-zinc-950\/80,
 html.light .bg-zinc-950\/90,
 html.light .bg-\[\#09090B\],
+html.light .bg-\[\#09090e\],
+html.light .bg-\[\#0a0a0f\],
+html.light .bg-\[\#0a0a10\],
+html.light .bg-\[\#0b0b12\],
 html.light .bg-\[\#0c0c0f\],
+html.light .bg-\[\#0e0e16\],
 html[data-theme="light"] .bg-zinc-950,
 html[data-theme="light"] .bg-zinc-950\/40,
 html[data-theme="light"] .bg-zinc-950\/50,
 html[data-theme="light"] .bg-zinc-950\/60,
+html[data-theme="light"] .bg-zinc-950\/70,
 html[data-theme="light"] .bg-zinc-950\/80,
 html[data-theme="light"] .bg-zinc-950\/90,
 html[data-theme="light"] .bg-\[\#09090B\],
-html[data-theme="light"] .bg-\[\#0c0c0f\] {
-  background-color: rgba(244, 245, 250, 0.90) !important;
-  color: #17151f !important;
+html[data-theme="light"] .bg-\[\#09090e\],
+html[data-theme="light"] .bg-\[\#0a0a0f\],
+html[data-theme="light"] .bg-\[\#0a0a10\],
+html[data-theme="light"] .bg-\[\#0b0b12\],
+html[data-theme="light"] .bg-\[\#0c0c0f\],
+html[data-theme="light"] .bg-\[\#0e0e16\] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
 }
 
 html.light .bg-zinc-900,
@@ -948,125 +1153,92 @@ html.light .bg-zinc-900\/40,
 html.light .bg-zinc-900\/50,
 html.light .bg-zinc-900\/60,
 html.light .bg-zinc-900\/80,
+html.light .bg-zinc-900\/90,
 html[data-theme="light"] .bg-zinc-900,
 html[data-theme="light"] .bg-zinc-900\/40,
 html[data-theme="light"] .bg-zinc-900\/50,
 html[data-theme="light"] .bg-zinc-900\/60,
-html[data-theme="light"] .bg-zinc-900\/80 {
-  background-color: rgba(235, 237, 245, 0.80) !important;
+html[data-theme="light"] .bg-zinc-900\/80,
+html[data-theme="light"] .bg-zinc-900\/90 {
+  background-color: #f1f4fa !important;
+  color: #1e293b !important;
 }
 
-/* Borders in Light Mode */
+/* Structural Borders in Light Mode */
 html.light .border-zinc-900,
 html.light .border-zinc-850,
 html.light .border-zinc-800,
+html.light .border-zinc-750,
 html.light .border-zinc-700,
 html[data-theme="light"] .border-zinc-900,
 html[data-theme="light"] .border-zinc-850,
 html[data-theme="light"] .border-zinc-800,
+html[data-theme="light"] .border-zinc-750,
 html[data-theme="light"] .border-zinc-700 {
-  border-color: rgba(20, 20, 35, 0.09) !important;
+  border-color: rgba(15, 23, 42, 0.12) !important;
 }
 
-/* 8. Semantic Category Badges & Pills in Light Mode */
-html.light .bg-purple-950\/40,
-html.light .bg-purple-950\/20,
-html.light .bg-purple-950\/30,
-html[data-theme="light"] .bg-purple-950\/40,
-html[data-theme="light"] .bg-purple-950\/20,
-html[data-theme="light"] .bg-purple-950\/30 {
-  background-color: rgba(109, 53, 217, 0.08) !important;
-  color: #6830c9 !important;
-  border-color: rgba(109, 53, 217, 0.20) !important;
-}
-
-html.light .bg-cyan-950\/40,
-html.light .bg-cyan-950\/20,
-html.light .bg-cyan-950\/30,
-html[data-theme="light"] .bg-cyan-950\/40,
-html[data-theme="light"] .bg-cyan-950\/20,
-html[data-theme="light"] .bg-cyan-950\/30 {
-  background-color: rgba(8, 145, 178, 0.08) !important;
-  color: #0891b2 !important;
-  border-color: rgba(8, 145, 178, 0.20) !important;
-}
-
-html.light .bg-emerald-950\/40,
-html.light .bg-emerald-950\/20,
-html.light .bg-emerald-950\/30,
-html[data-theme="light"] .bg-emerald-950\/40,
-html[data-theme="light"] .bg-emerald-950\/20,
-html[data-theme="light"] .bg-emerald-950\/30 {
-  background-color: rgba(16, 185, 129, 0.08) !important;
-  color: #059669 !important;
-  border-color: rgba(16, 185, 129, 0.22) !important;
-}
-
-html.light .bg-amber-950\/40,
-html.light .bg-amber-950\/20,
-html.light .bg-amber-950\/30,
-html[data-theme="light"] .bg-amber-950\/40,
-html[data-theme="light"] .bg-amber-950\/20,
-html[data-theme="light"] .bg-amber-950\/30 {
-  background-color: rgba(217, 119, 6, 0.08) !important;
-  color: #b45309 !important;
-  border-color: rgba(217, 119, 6, 0.22) !important;
-}
-
-html.light .text-purple-400,
-html[data-theme="light"] .text-purple-400 {
-  color: #6830c9 !important;
-}
-
-html.light .text-cyan-400,
-html[data-theme="light"] .text-cyan-400 {
-  color: #0891b2 !important;
-}
-
-html.light .text-emerald-400,
-html[data-theme="light"] .text-emerald-400 {
-  color: #059669 !important;
-}
-
-/* 9. Form Controls, Inputs, Textareas in Light Mode */
+/* Form inputs & textareas in Light Mode */
 html.light input,
 html.light textarea,
 html.light select,
 html[data-theme="light"] input,
 html[data-theme="light"] textarea,
 html[data-theme="light"] select {
-  background-color: rgba(255, 255, 255, 0.94) !important;
-  color: #17151f !important;
-  border-color: rgba(20, 20, 35, 0.12) !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(15, 23, 42, 0.16) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.light input::placeholder,
 html.light textarea::placeholder,
 html[data-theme="light"] input::placeholder,
 html[data-theme="light"] textarea::placeholder {
-  color: #858796 !important;
+  color: #94a3b8 !important;
 }
 
 html.light input:focus,
 html.light textarea:focus,
 html[data-theme="light"] input:focus,
 html[data-theme="light"] textarea:focus {
-  border-color: rgba(109, 53, 217, 0.55) !important;
-  box-shadow: 0 0 0 3px rgba(109, 53, 217, 0.10) !important;
+  border-color: #6d28d9 !important;
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12) !important;
 }
 
-/* 10. Master Footer in Light Mode */
+/* 10. Credentials Vault in Light Mode */
+html.light #certificates-vault-page div.rounded-2xl,
+html.light #certificates-vault-page section.rounded-3xl,
+html[data-theme="light"] #certificates-vault-page div.rounded-2xl,
+html[data-theme="light"] #certificates-vault-page section.rounded-3xl {
+  background: linear-gradient(180deg, #ffffff 0%, #f4f6fc 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.09) !important;
+}
+
+html.light #certificates-vault-page h1,
+html[data-theme="light"] #certificates-vault-page h1 {
+  color: #0f172a !important;
+}
+
+html.light #vault-owner-toolbar,
+html[data-theme="light"] #vault-owner-toolbar {
+  background: rgba(109, 40, 217, 0.06) !important;
+  border: 1px solid rgba(109, 40, 217, 0.22) !important;
+}
+
+/* 11. Master Footer in Light Mode */
 html.light footer,
 html[data-theme="light"] footer {
-  background-color: #f1f2f7 !important;
-  border-color: rgba(20, 20, 35, 0.08) !important;
+  background-color: #eef1f6 !important;
+  border-color: rgba(15, 23, 42, 0.10) !important;
 }
 
-/* 11. Profile Image Clarity in Light Mode (No dark brightness filter) */
+/* 12. Profile Image Clarity in Light Mode */
 html.light img[alt*="Sayam"],
 html[data-theme="light"] img[alt*="Sayam"] {
   filter: brightness(1) contrast(1.02) saturate(1.02) !important;
-  box-shadow: 0 18px 45px rgba(20, 20, 35, 0.12) !important;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12) !important;
 }
 
 /* ==========================================================================

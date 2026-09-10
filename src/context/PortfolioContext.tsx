@@ -65,6 +65,16 @@ interface PortfolioContextType {
   // Theme state
   theme: "dark" | "light";
   toggleTheme: () => void;
+
+  // Vault Owner State & Controls
+  isVaultOwner: boolean;
+  vaultToken: string;
+  setVaultOwnerSession: (token: string) => void;
+  clearVaultOwnerSession: () => void;
+  isOwnerAccessModalOpen: boolean;
+  setIsOwnerAccessModalOpen: (open: boolean) => void;
+  isVaultAdminMenuOpen: boolean;
+  setIsVaultAdminMenuOpen: (open: boolean) => void;
   
   // Tracking
   trackVisit: (page: string) => void;
@@ -100,6 +110,30 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [simulatedOTP, setSimulatedOTP] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
+  // Vault Owner State & Controls
+  const [isVaultOwner, setIsVaultOwner] = useState(false);
+  const [vaultToken, setVaultToken] = useState("");
+  const [isOwnerAccessModalOpen, setIsOwnerAccessModalOpen] = useState(false);
+  const [isVaultAdminMenuOpen, setIsVaultAdminMenuOpen] = useState(false);
+
+  const setVaultOwnerSession = (token: string) => {
+    setIsVaultOwner(true);
+    setVaultToken(token);
+    try {
+      sessionStorage.setItem("vault_token", token);
+    } catch {}
+  };
+
+  const clearVaultOwnerSession = () => {
+    setIsVaultOwner(false);
+    setVaultToken("");
+    try {
+      sessionStorage.removeItem("vault_token");
+    } catch {}
+    // Also call server logout
+    fetch("/api/admin/logout", { method: "POST", credentials: "include" }).catch(() => {});
+  };
+
   // Load Portfolio Data & Auth State
   useEffect(() => {
     const fetchData = async () => {
@@ -128,6 +162,33 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     };
 
     fetchData();
+
+    // Check Vault session from sessionStorage and server session
+    try {
+      const savedVaultToken = sessionStorage.getItem("vault_token");
+      if (savedVaultToken) {
+        setVaultToken(savedVaultToken);
+        setIsVaultOwner(true);
+      }
+      fetch("/api/admin/session", {
+        credentials: "include",
+        headers: savedVaultToken ? { Authorization: `Bearer ${savedVaultToken}` } : {},
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.authenticated) {
+            setIsVaultOwner(true);
+            const token = data.token || savedVaultToken || "";
+            setVaultToken(token);
+            if (token) {
+              try {
+                sessionStorage.setItem("vault_token", token);
+              } catch {}
+            }
+          }
+        })
+        .catch(() => {});
+    } catch {}
 
     // Load credentials & theme preference from localStorage
     const savedToken = localStorage.getItem("sayam_admin_token");
@@ -411,6 +472,14 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
         fetchAdminAnalytics,
         theme,
         toggleTheme,
+        isVaultOwner,
+        vaultToken,
+        setVaultOwnerSession,
+        clearVaultOwnerSession,
+        isOwnerAccessModalOpen,
+        setIsOwnerAccessModalOpen,
+        isVaultAdminMenuOpen,
+        setIsVaultAdminMenuOpen,
         trackVisit,
       }}
     >

@@ -414,7 +414,7 @@ export default function AdminDashboard() {
                 </button>
                 
                 <div className="text-center pt-2">
-                  <span className="text-[10px] text-zinc-500 font-mono">Default credentials: wrickbusiness@gmail.com / sayam2026</span>
+                  <span className="text-[10px] text-zinc-500 font-mono">Authorized administrative personnel only</span>
                 </div>
               </form>
             ) : (

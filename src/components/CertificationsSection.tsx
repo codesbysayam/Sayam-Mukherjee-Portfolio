@@ -1,298 +1,154 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { EXTENDED_DATA, CertificationItem, AchievementItem } from "../data/extendedData";
+import React from "react";
+import { EXTENDED_DATA } from "../data/extendedData";
 import { 
-  Award, GraduationCap, Calendar, ShieldCheck, CheckCircle2, 
-  ExternalLink, Download, FileCheck, Trophy, Target, Sparkles, RefreshCw, Zap,
-  Brain, Cloud
+  Award, GraduationCap, Trophy, Target, Sparkles, Zap,
+  ArrowRight, CheckCircle2, ShieldCheck, ExternalLink
 } from "lucide-react";
 
-export default function CertificationsSection() {
-  const [selectedSubSection, setSelectedSubSection] = useState<'certs' | 'achievements'>('certs');
-  const [expandedCert, setExpandedCert] = useState<string | null>(null);
+interface CertificationsSectionProps {
+  onNavigateToCertificates?: () => void;
+}
 
-  // Certifications list
-  const activeCerts = EXTENDED_DATA.certifications.filter(c => c.status === 'Active');
-  const futureCerts = EXTENDED_DATA.certifications.filter(c => c.status === 'Future');
-
+export default function CertificationsSection({ onNavigateToCertificates }: CertificationsSectionProps) {
   const getAchievementIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Award': return <Award className="w-5 h-5 text-purple-400" />;
-      case 'Code': return <Trophy className="w-5 h-5 text-cyan-400" />;
-      case 'Flame': return <Zap className="w-5 h-5 text-amber-500 animate-pulse" />;
-      case 'GraduationCap': return <GraduationCap className="w-5 h-5 text-emerald-400" />;
-      case 'TrendingUp': return <Target className="w-5 h-5 text-pink-400" />;
-      default: return <Sparkles className="w-5 h-5 text-purple-400" />;
+      case 'Award': return <Award className="w-4 h-4 text-purple-400" />;
+      case 'Code': return <Trophy className="w-4 h-4 text-cyan-400" />;
+      case 'Flame': return <Zap className="w-4 h-4 text-amber-500 animate-pulse" />;
+      case 'GraduationCap': return <GraduationCap className="w-4 h-4 text-emerald-400" />;
+      case 'TrendingUp': return <Target className="w-4 h-4 text-pink-400" />;
+      default: return <Sparkles className="w-4 h-4 text-purple-400" />;
     }
   };
 
-  const getCertIcon = (logo: string) => {
-    switch (logo) {
-      case 'Brain': return <Brain className="w-5.5 h-5.5 text-purple-400" />;
-      case 'Cloud': return <Cloud className="w-5.5 h-5.5 text-cyan-400" />;
-      default: return <Award className="w-5.5 h-5.5 text-purple-400" />;
+  const handleNavigate = () => {
+    if (onNavigateToCertificates) {
+      onNavigateToCertificates();
+    } else {
+      window.dispatchEvent(new CustomEvent("portfolio-navigate-tab", { detail: "certificates" }));
     }
   };
 
   return (
     <div className="space-y-10 font-sans" id="certifications-achievements">
-      {/* Segmented Controller Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+      {/* Header with Callout to Dedicated Vault */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-850/80 pb-6">
         <div className="space-y-2">
-          <span className="text-xs text-cyan-400 font-mono uppercase tracking-widest block font-bold">
-            HONORS & CERTIFICATES
+          <span className="text-xs text-purple-400 font-mono uppercase tracking-widest block font-bold">
+            HONORS &amp; MILESTONES
           </span>
           <h2 
             style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)" }} 
             className="font-bold tracking-tight text-white font-display"
           >
-            Credentials & Achievements
+            Achievements &amp; Honours
           </h2>
           <p className="text-sm text-zinc-400 max-w-xl leading-relaxed">
-            Industry-certified engineering credentials validating theoretical depth paired with tangible competitive milestones.
+            Verified competitive records, hackathon finalist positions, and athletic achievements.
           </p>
         </div>
 
-        {/* Toggle between Certifications and Achievements */}
-        <div className="flex glass-card p-1 shrink-0 self-start md:self-end">
-          <button
-            onClick={() => setSelectedSubSection('certs')}
-            className={`text-xs px-4 py-2 rounded-lg font-medium transition-all cursor-pointer ${
-              selectedSubSection === 'certs'
-                ? "bg-zinc-900 text-white shadow"
-                : "text-zinc-400 hover:text-white"
-            }`}
-          >
-            Certifications ({EXTENDED_DATA.certifications.length})
-          </button>
-          <button
-            onClick={() => setSelectedSubSection('achievements')}
-            className={`text-xs px-4 py-2 rounded-lg font-medium transition-all cursor-pointer ${
-              selectedSubSection === 'achievements'
-                ? "bg-zinc-900 text-white shadow"
-                : "text-zinc-400 hover:text-white"
-            }`}
-          >
-            Achievements Timeline ({EXTENDED_DATA.achievements.length})
-          </button>
-        </div>
+        {/* Dedicated Vault Gateway Button */}
+        <button
+          onClick={handleNavigate}
+          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/40 hover:border-purple-500/60 text-xs font-mono font-semibold transition-all shrink-0 cursor-pointer shadow-lg shadow-purple-950/40 group"
+        >
+          <Award className="w-4 h-4 text-purple-400" />
+          <span>OPEN CERTIFICATE VAULT</span>
+          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+        </button>
       </div>
 
-      <AnimatePresence mode="wait">
-        {selectedSubSection === 'certs' ? (
-          <motion.div
-            key="certs"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35 }}
-            className="space-y-10"
-          >
-            {/* Active Credentials Grid */}
-            <div className="space-y-4">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-500 block">
-                VALIDATED LICENSES & CERTIFICATIONS
-              </h3>
+      {/* Achievements Timeline and Academic Overview Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+        {/* Left timeline layout */}
+        <div className="lg:col-span-8 space-y-8 relative">
+          <div className="absolute left-6 top-4 bottom-4 w-[1px] bg-zinc-900" />
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {activeCerts.map((cert) => {
-                  const isExpanded = expandedCert === cert.id;
-                  return (
-                    <div
-                      key={cert.id}
-                      className="glass-card rounded-2xl border border-zinc-850/60 p-6 hover:border-purple-500/30 transition-all duration-300 flex flex-col justify-between group h-full relative"
-                    >
-                      <div className="space-y-4">
-                        <div className="flex items-start justify-between">
-                          <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-850 flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform">
-                            {getCertIcon(cert.logo)}
-                          </div>
-                          <span className="text-[9px] font-mono text-cyan-400 font-bold tracking-wider bg-cyan-950/20 px-2.5 py-1 rounded-full border border-cyan-800/20">
-                            ACTIVE
-                          </span>
-                        </div>
-
-                        <div className="space-y-1.5">
-                          <h4 className="text-sm font-bold text-white group-hover:text-purple-300 transition-colors font-display tracking-tight">
-                            {cert.name}
-                          </h4>
-                          <p className="text-[11px] text-zinc-400 font-mono">{cert.issuer}</p>
-                        </div>
-                      </div>
-
-                      {/* Expandable Skills learned drawer */}
-                      <div className="mt-4 pt-4 border-t border-zinc-900 space-y-3">
-                        <div className="flex items-center justify-between text-[10px] font-mono">
-                          <span className="text-zinc-500">Issued {cert.date}</span>
-                          <button
-                            onClick={() => setExpandedCert(isExpanded ? null : cert.id)}
-                            className="text-purple-400 hover:text-white transition-colors cursor-pointer flex items-center gap-1 font-semibold"
-                          >
-                            <span>{isExpanded ? "Hide Skills" : "Show Skills"}</span>
-                            <RefreshCw className={`w-3 h-3 transition-transform ${isExpanded ? "rotate-180" : ""}`} />
-                          </button>
-                        </div>
-
-                        <AnimatePresence>
-                          {isExpanded && (
-                            <motion.div
-                              initial={{ opacity: 0, height: 0 }}
-                              animate={{ opacity: 1, height: "auto" }}
-                              exit={{ opacity: 0, height: 0 }}
-                              className="overflow-hidden"
-                            >
-                              <div className="flex flex-wrap gap-1.5 pt-2">
-                                {cert.skillsLearned.map((skill, idx) => (
-                                  <span key={idx} className="text-[9px] bg-zinc-900/60 text-zinc-400 border border-zinc-850 px-2 py-0.5 rounded font-mono">
-                                    {skill}
-                                  </span>
-                                ))}
-                              </div>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-
-                        <div className="flex gap-2.5 pt-2">
-                          {cert.credentialUrl && (
-                            <a
-                              href={cert.credentialUrl}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                alert(`Opening verification registry for ${cert.name}...`);
-                              }}
-                              className="flex-1 text-center bg-zinc-900 hover:bg-zinc-800 text-zinc-200 text-[10px] font-mono font-bold py-2 rounded-lg border border-zinc-850 hover:border-zinc-700 transition-colors"
-                            >
-                              Verify Link
-                            </a>
-                          )}
-                          <button
-                            onClick={() => alert(`Initiating secure container download of ${cert.name} PDF...`)}
-                            className="flex items-center justify-center p-2 bg-zinc-950 hover:bg-zinc-900 text-purple-400 hover:text-white rounded-lg border border-zinc-850 hover:border-purple-500/30 transition-all cursor-pointer"
-                            title="Download Certificate"
-                          >
-                            <Download className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+          {EXTENDED_DATA.achievements.map((ach) => (
+            <div key={ach.id} className="relative pl-14 group">
+              {/* Timeline node icon container */}
+              <div className="absolute left-3 top-1 w-7 h-7 rounded-full bg-zinc-950 border border-zinc-850 flex items-center justify-center group-hover:border-purple-500/40 transition-colors z-10 shadow-md">
+                {getAchievementIcon(ach.iconName)}
               </div>
-            </div>
 
-            {/* Future/Target Certifications List */}
-            <div className="space-y-4 pt-6 border-t border-zinc-900">
-              <h3 className="text-xs font-mono uppercase tracking-widest text-zinc-500 block">
-                FUTURE ENGINEERING GOALS (Q3/Q4 2026)
-              </h3>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {futureCerts.map((cert) => (
-                  <div
-                    key={cert.id}
-                    className="glass-card p-4 rounded-xl flex items-center justify-between hover:border-zinc-800 transition-all"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-850 flex items-center justify-center">
-                        {getCertIcon(cert.logo)}
-                      </div>
-                      <div>
-                        <h4 className="text-xs font-bold text-white font-display tracking-tight">{cert.name}</h4>
-                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{cert.issuer}</p>
-                      </div>
-                    </div>
-                    <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest border border-zinc-800 px-2.5 py-1 rounded-full">
-                      🎯 Targeted
+              <div className="glass-card rounded-2xl p-6 border border-zinc-850/60 hover:border-purple-500/20 transition-all duration-300 space-y-3">
+                <div className="flex flex-wrap items-start justify-between gap-2">
+                  <div>
+                    <span className="text-[10px] text-purple-400 font-mono uppercase tracking-widest block font-bold">
+                      {ach.category}
                     </span>
+                    <h4 className="text-base font-bold text-white font-display tracking-tight mt-1">
+                      {ach.title}
+                    </h4>
                   </div>
-                ))}
+                  <span className="text-[9px] font-mono bg-zinc-900 border border-zinc-850 text-zinc-400 px-2 py-0.5 rounded-md">
+                    {ach.date}
+                  </span>
+                </div>
+
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  {ach.description}
+                </p>
+
+                <div className="flex items-center gap-1.5 pt-2 text-[10px] text-zinc-500 font-mono">
+                  <span>Organized by:</span>
+                  <span className="text-zinc-300 font-bold">{ach.organization}</span>
+                </div>
               </div>
             </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            key="achievements"
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.35 }}
-            className="grid grid-cols-1 lg:grid-cols-12 gap-10"
+          ))}
+        </div>
+
+        {/* Right details stats box */}
+        <div className="lg:col-span-4 space-y-6">
+          <div className="glass-card p-6 rounded-2xl space-y-4">
+            <GraduationCap className="w-8 h-8 text-cyan-400" />
+            <h4 className="text-base font-bold text-white font-display tracking-tight">Academic Profile Summary</h4>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Pursuing B.Tech in Computer Science &amp; Engineering (AI &amp; ML) at Kalinga Institute of Industrial Technology, Bhubaneswar, with a dedicated focus on algorithmic foundations and system design.
+            </p>
+
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
+                <span className="text-[9px] text-zinc-500 block uppercase font-mono">CURRENT STATUS</span>
+                <span className="text-xs font-bold text-white block mt-1 font-display">2nd Year, 3rd Sem</span>
+              </div>
+              <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
+                <span className="text-[9px] text-zinc-500 block uppercase font-mono">INSTITUTION</span>
+                <span className="text-xs font-bold text-cyan-400 block mt-1 font-display">KIIT, Bhubaneswar</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="glass-card p-6 rounded-2xl space-y-4">
+            <Trophy className="w-8 h-8 text-pink-400" />
+            <h4 className="text-base font-bold text-white font-display tracking-tight">Sports &amp; Reflex Skills</h4>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              High-speed dynamic processing translates into gaming and athletics. Securing multiple first positions in regional Table Tennis tournaments.
+            </p>
+            <div className="flex items-center gap-2.5 bg-zinc-900/40 p-3 rounded-xl border border-zinc-850">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs font-mono text-zinc-300 font-bold">3× First Position Champion</span>
+            </div>
+          </div>
+
+          {/* Quick link card to Credential Vault */}
+          <div 
+            onClick={handleNavigate}
+            className="p-6 rounded-2xl bg-gradient-to-br from-purple-950/30 to-zinc-950 border border-purple-900/30 hover:border-purple-600/50 transition-all cursor-pointer space-y-3 group"
           >
-            {/* Left timeline layout */}
-            <div className="lg:col-span-8 space-y-8 relative">
-              <div className="absolute left-6 top-4 bottom-4 w-[1px] bg-zinc-900" />
-
-              {EXTENDED_DATA.achievements.map((ach) => (
-                <div key={ach.id} className="relative pl-14 group">
-                  {/* Timeline node icon container */}
-                  <div className="absolute left-3 top-1 w-7 h-7 rounded-full bg-zinc-950 border border-zinc-850 flex items-center justify-center group-hover:border-purple-500/40 transition-colors z-10 shadow-md">
-                    {getAchievementIcon(ach.iconName)}
-                  </div>
-
-                  <div className="glass-card rounded-2xl p-6 border border-zinc-850/60 hover:border-purple-500/20 transition-all duration-300 space-y-3">
-                    <div className="flex flex-wrap items-start justify-between gap-2">
-                      <div>
-                        <span className="text-[10px] text-purple-400 font-mono uppercase tracking-widest block font-bold">
-                          {ach.category}
-                        </span>
-                        <h4 className="text-base font-bold text-white font-display tracking-tight mt-1">
-                          {ach.title}
-                        </h4>
-                      </div>
-                      <span className="text-[9px] font-mono bg-zinc-900 border border-zinc-850 text-zinc-400 px-2 py-0.5 rounded-md">
-                        {ach.date}
-                      </span>
-                    </div>
-
-                    <p className="text-xs text-zinc-400 leading-relaxed">
-                      {ach.description}
-                    </p>
-
-                    <div className="flex items-center gap-1.5 pt-2 text-[10px] text-zinc-500 font-mono">
-                      <span>Organized by:</span>
-                      <span className="text-zinc-300 font-bold">{ach.organization}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center justify-between">
+              <Award className="w-6 h-6 text-purple-400" />
+              <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
             </div>
-
-            {/* Right details stats box */}
-            <div className="lg:col-span-4 space-y-6">
-              <div className="glass-card p-6 rounded-2xl space-y-4">
-                <GraduationCap className="w-8 h-8 text-cyan-400" />
-                <h4 className="text-base font-bold text-white font-display tracking-tight">Academic Profile Summary</h4>
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  Pursuing B.Tech in Computer Science & Engineering (AI & ML) at Kalinga Institute of Industrial Technology, Bhubaneswar, with a dedicated focus on algorithmic foundations and system design.
-                </p>
-
-                <div className="grid grid-cols-2 gap-3 pt-2">
-                  <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                    <span className="text-[9px] text-zinc-500 block uppercase font-mono">CURRENT STATUS</span>
-                    <span className="text-xs font-bold text-white block mt-1 font-display">2nd Year, 3rd Sem</span>
-                  </div>
-                  <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                    <span className="text-[9px] text-zinc-500 block uppercase font-mono">INSTITUTION</span>
-                    <span className="text-xs font-bold text-cyan-400 block mt-1 font-display">KIIT, Bhubaneswar</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="glass-card p-6 rounded-2xl space-y-4">
-                <Trophy className="w-8 h-8 text-pink-400" />
-                <h4 className="text-base font-bold text-white font-display tracking-tight">Sports & Reflex Skills</h4>
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  High-speed dynamic processing translates into gaming and athletics. Securing multiple first positions in regional Table Tennis tournaments.
-                </p>
-                <div className="flex items-center gap-2.5 bg-zinc-900/40 p-3 rounded-xl border border-zinc-850">
-                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-mono text-zinc-300 font-bold">3× First Position Champion</span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <h4 className="text-sm font-bold text-white font-display">Explore the Credential Vault</h4>
+            <p className="text-xs text-zinc-400 leading-relaxed">
+              Browse industry-verified technical certifications, filter by skill or year, and inspect credentials with the integrated viewer.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

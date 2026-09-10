@@ -152,22 +152,7 @@ export const SAYAM_DATA = {
       skills: ['Industry Experience', 'Workflow Management', 'Problem Solving', 'Team Collaboration']
     }
   ] as ExperienceItem[],
-  certifications: [
-    {
-      name: 'Microsoft Industry Engagement and Technology Exposure Program',
-      issuer: 'Microsoft',
-      date: 'N/A',
-      verificationUrl: '#',
-      image: 'https://picsum.photos/seed/cert-ms/100/100'
-    },
-    {
-      name: 'Various Certifications',
-      issuer: 'Coursera, Udemy',
-      date: 'N/A',
-      verificationUrl: '#',
-      image: 'https://picsum.photos/seed/cert-misc/100/100'
-    }
-  ] as Certification[],
+  certifications: [] as Certification[],
   achievements: [
     'B.Tech CSE (AI & ML) – Kalinga Institute of Industrial Technology, Bhubaneswar',
     '1st Position – Inter-school Table Tennis (3x)',

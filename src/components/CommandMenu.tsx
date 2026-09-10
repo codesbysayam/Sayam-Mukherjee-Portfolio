@@ -1,14 +1,15 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, Terminal, FileText, Send, Sparkles, Code, Server, AppWindow, Cpu, Mail, Globe, ArrowRight, Bookmark } from "lucide-react";
+import { Search, Terminal, FileText, Send, Sparkles, Code, Server, AppWindow, Cpu, Mail, Globe, ArrowRight, Bookmark, Award, Lock } from "lucide-react";
 import { EXTENDED_DATA } from "../data/extendedData";
 
 interface CommandMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigate: (tab: "home" | "about" | "skills" | "ecosystem" | "projects" | "journal" | "contact") => void;
+  onNavigate: (tab: "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact") => void;
   onOpenResume: () => void;
   onTriggerConfetti: () => void;
+  onOpenVault?: () => void;
 }
 
 export default function CommandMenu({
@@ -16,7 +17,8 @@ export default function CommandMenu({
   onClose,
   onNavigate,
   onOpenResume,
-  onTriggerConfetti
+  onTriggerConfetti,
+  onOpenVault
 }: CommandMenuProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -50,8 +52,10 @@ export default function CommandMenu({
     { id: "skills", label: "Navigate to Technical Skills Matrix", category: "Navigation", icon: Cpu, action: () => onNavigate("skills") },
     { id: "ecosystem", label: "Navigate to Academic Learning & Ecosystem", category: "Navigation", icon: Server, action: () => onNavigate("ecosystem") },
     { id: "projects", label: "Navigate to Engineered Case Studies", category: "Navigation", icon: Terminal, action: () => onNavigate("projects") },
+    { id: "certificates", label: "Navigate to Certificates & Achievements Vault", category: "Navigation", icon: Award, action: () => onNavigate("certificates") },
     { id: "journal", label: "Navigate to Engineering Notes & Journal", category: "Navigation", icon: FileText, action: () => onNavigate("journal") },
     { id: "contact", label: "Navigate to Contact & Telemetry Channel", category: "Navigation", icon: Mail, action: () => onNavigate("contact") },
+    { id: "vault", label: "Owner Vault Access (Passkey Unlock 🔒)", category: "Security & Admin", icon: Lock, action: () => { onClose(); if (onOpenVault) onOpenVault(); } },
     { id: "resume", label: "Download Technical Resume (PDF)", category: "Utility", icon: FileText, action: () => { onOpenResume(); onTriggerConfetti(); } },
     { id: "confetti", label: "Simulate Success Event (Trigger Confetti)", category: "System", icon: Sparkles, action: () => { onTriggerConfetti(); } },
   ];
