@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Certificate } from "../../types/certificates";
 import { usePortfolio } from "../../context/PortfolioContext";
+import ModalPortal from "../common/ModalPortal";
+import { useBodyScrollLock } from "../../hooks/useBodyScrollLock";
 import { 
   X, ZoomIn, ZoomOut, RotateCcw, Maximize2, Minimize2, 
   ExternalLink, Download, FileText, CheckCircle2, ShieldCheck, 
@@ -20,6 +22,10 @@ export default function CertificateViewerModal({ certificate, onClose }: Certifi
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [fitToScreen, setFitToScreen] = useState(true);
   const [copiedId, setCopiedId] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
+  // Lock background page scroll without layout jump
+  useBodyScrollLock(Boolean(certificate));
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -36,6 +42,7 @@ export default function CertificateViewerModal({ certificate, onClose }: Certifi
     setZoom(1);
     setFitToScreen(true);
     setCopiedId(false);
+    setImageError(false);
   }, [certificate]);
 
   if (!certificate) return null;
@@ -69,47 +76,51 @@ export default function CertificateViewerModal({ certificate, onClose }: Certifi
   };
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-8 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200"
-      onClick={onClose}
-    >
+    <ModalPortal>
       <div 
-        id="certificate-modal-container"
-        onClick={(e) => e.stopPropagation()}
-        className={`relative w-full ${
-          isFullscreen ? "h-screen max-w-none rounded-none" : "max-w-4xl max-h-[90vh] rounded-2xl"
-        } border shadow-2xl flex flex-col overflow-hidden transition-all duration-200 ${
-          isLight 
-            ? "bg-white border-slate-200 text-slate-900 shadow-[0_25px_60px_rgba(15,23,42,0.2)]" 
-            : "bg-[#0c0c14] border-zinc-800 text-white shadow-[0_25px_60px_rgba(0,0,0,0.8)]"
-        }`}
+        className="certificate-modal-overlay modal-backdrop"
+        onClick={onClose}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="certificate-modal-title"
       >
-        {/* Top Control Header Bar */}
         <div 
-          className={`flex items-center justify-between px-5 py-3.5 border-b shrink-0 ${
-            isLight ? "bg-slate-50/90 border-slate-200" : "bg-[#08080d]/90 border-zinc-800"
+          id="certificate-modal-container"
+          onClick={(e) => e.stopPropagation()}
+          className={`relative w-full ${
+            isFullscreen ? "h-screen max-w-none rounded-none" : "certificate-modal max-w-4xl"
+          } border shadow-2xl flex flex-col overflow-hidden transition-all duration-200 ${
+            isLight 
+              ? "bg-white border-slate-200 text-slate-900 shadow-[0_25px_60px_rgba(15,23,42,0.18)]" 
+              : "bg-[#0c0c14] border-zinc-800 text-white shadow-[0_25px_60px_rgba(0,0,0,0.85)]"
           }`}
         >
-          <div className="flex items-center gap-3 overflow-hidden min-w-0 pr-2">
-            <div 
-              className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
-                isLight 
-                  ? "bg-purple-50 border-purple-200 text-purple-700" 
-                  : "bg-purple-950/40 border-purple-800/50 text-purple-400"
-              }`}
-            >
-              {isPdf ? <FileText className="w-4 h-4 text-red-500" /> : <Award className="w-4 h-4" />}
+          {/* Top Control Header Bar */}
+          <div 
+            className={`flex items-center justify-between px-5 py-3.5 border-b shrink-0 ${
+              isLight ? "bg-slate-50/90 border-slate-200" : "bg-[#08080d]/90 border-zinc-800"
+            }`}
+          >
+            <div className="flex items-center gap-3 overflow-hidden min-w-0 pr-2">
+              <div 
+                className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 border ${
+                  isLight 
+                    ? "bg-purple-50 border-purple-200 text-purple-700" 
+                    : "bg-purple-950/40 border-purple-800/50 text-purple-400"
+                }`}
+              >
+                {isPdf ? <FileText className="w-4 h-4 text-red-500" /> : <Award className="w-4 h-4" />}
+              </div>
+              
+              <div className="truncate">
+                <h2 id="certificate-modal-title" className="text-sm sm:text-base font-bold truncate font-display">
+                  {certificate.title}
+                </h2>
+                <p className={`text-xs font-mono truncate ${isLight ? "text-slate-500" : "text-zinc-400"}`}>
+                  {certificate.issuer} • {certificate.issueDate}
+                </p>
+              </div>
             </div>
-            
-            <div className="truncate">
-              <h2 className="text-sm sm:text-base font-bold truncate font-display">
-                {certificate.title}
-              </h2>
-              <p className={`text-xs font-mono truncate ${isLight ? "text-slate-500" : "text-zinc-400"}`}>
-                {certificate.issuer} • {certificate.issueDate}
-              </p>
-            </div>
-          </div>
 
           {/* Header Action Tools */}
           <div className="flex items-center gap-1.5 shrink-0">
@@ -204,12 +215,13 @@ export default function CertificateViewerModal({ certificate, onClose }: Certifi
                 }`}
               />
             </div>
-          ) : fileUrl ? (
+          ) : fileUrl && !imageError ? (
             /* Image Document Viewer */
             <div className="relative overflow-auto flex items-center justify-center max-w-full max-h-full">
               <img
                 src={fileUrl}
                 alt={certificate.title}
+                onError={() => setImageError(true)}
                 style={{
                   transform: `scale(${zoom})`,
                   transformOrigin: "center center",
@@ -422,6 +434,7 @@ export default function CertificateViewerModal({ certificate, onClose }: Certifi
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </ModalPortal>
   );
 }

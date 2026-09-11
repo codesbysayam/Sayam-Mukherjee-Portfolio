@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { AlertTriangle, Trash2, X, Loader2 } from "lucide-react";
 import { Certificate } from "../../types/certificates";
 import { usePortfolio } from "../../context/PortfolioContext";
+import ModalPortal from "../common/ModalPortal";
+import { useBodyScrollLock } from "../../hooks/useBodyScrollLock";
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
@@ -22,6 +24,9 @@ export default function DeleteConfirmationModal({
   const [isDeleting, setIsDeleting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Lock background scroll
+  useBodyScrollLock(isOpen && Boolean(certificate));
+
   if (!isOpen || !certificate) return null;
 
   const handleDelete = async () => {
@@ -39,52 +44,56 @@ export default function DeleteConfirmationModal({
   };
 
   return (
-    <div
-      id="delete-confirmation-modal"
-      className="fixed inset-0 z-[130] flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in"
-      onClick={onClose}
-    >
+    <ModalPortal>
       <div
-        onClick={(e) => e.stopPropagation()}
-        className={`w-full max-w-md rounded-2xl border shadow-2xl p-6 sm:p-7 space-y-5 text-left relative overflow-hidden ${
-          isLight
-            ? "bg-white border-red-200 text-slate-900 shadow-[0_25px_60px_rgba(239,68,68,0.12)]"
-            : "bg-[#0a0a0f] border-red-950/60 text-white shadow-2xl"
-        }`}
-        style={{
-          boxShadow: isLight
-            ? "0 24px 60px rgba(15, 23, 42, 0.15), 0 0 35px rgba(239, 68, 68, 0.1)"
-            : "0 24px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(239, 68, 68, 0.12)",
-        }}
+        id="delete-confirmation-modal"
+        className="certificate-modal-overlay modal-backdrop"
+        onClick={onClose}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="delete-confirmation-title"
       >
-        {/* Top warning line */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-amber-600 to-red-600" />
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={`vault-dialog w-full rounded-2xl border shadow-2xl p-6 sm:p-7 space-y-5 text-left relative overflow-hidden ${
+            isLight
+              ? "bg-white border-red-200 text-slate-900 shadow-[0_25px_60px_rgba(239,68,68,0.12)]"
+              : "bg-[#0a0a0f] border-red-950/60 text-white shadow-2xl"
+          }`}
+          style={{
+            boxShadow: isLight
+              ? "0 24px 60px rgba(15, 23, 42, 0.15), 0 0 35px rgba(239, 68, 68, 0.1)"
+              : "0 24px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(239, 68, 68, 0.12)",
+          }}
+        >
+          {/* Top warning line */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 via-amber-600 to-red-600" />
 
-        <div className="flex items-start justify-between gap-3 pt-1">
-          <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
-            isLight ? "bg-red-50 border-red-200 text-red-600" : "bg-red-950/40 border-red-800/40 text-red-400"
-          }`}>
-            <AlertTriangle className="w-5 h-5" />
+          <div className="flex items-start justify-between gap-3 pt-1">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${
+              isLight ? "bg-red-50 border-red-200 text-red-600" : "bg-red-950/40 border-red-800/40 text-red-400"
+            }`}>
+              <AlertTriangle className="w-5 h-5" />
+            </div>
+            <button
+              onClick={onClose}
+              disabled={isDeleting}
+              className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
+                isLight ? "text-slate-400 hover:text-slate-700 hover:bg-slate-100" : "text-zinc-400 hover:text-white hover:bg-zinc-850"
+              }`}
+              aria-label="Cancel deletion"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            disabled={isDeleting}
-            className={`p-1.5 rounded-lg transition-colors cursor-pointer ${
-              isLight ? "text-slate-400 hover:text-slate-700 hover:bg-slate-100" : "text-zinc-400 hover:text-white hover:bg-zinc-850"
-            }`}
-            aria-label="Cancel deletion"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
 
-        <div className="space-y-1.5">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-red-500 font-bold">
-            CONFIRM PERMANENT REMOVAL
-          </span>
-          <h2 className={`text-lg font-bold font-display ${isLight ? "text-slate-900" : "text-white"}`}>
-            Permanently delete this credential?
-          </h2>
+          <div className="space-y-1.5">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-red-500 font-bold">
+              CONFIRM PERMANENT REMOVAL
+            </span>
+            <h2 id="delete-confirmation-title" className={`text-lg font-bold font-display ${isLight ? "text-slate-900" : "text-white"}`}>
+              Permanently delete this credential?
+            </h2>
           <p className={`text-xs leading-relaxed ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
             This action cannot be undone. The certificate record will be removed from your public registry and persistent storage.
           </p>
@@ -150,5 +159,6 @@ export default function DeleteConfirmationModal({
         </div>
       </div>
     </div>
+  </ModalPortal>
   );
 }

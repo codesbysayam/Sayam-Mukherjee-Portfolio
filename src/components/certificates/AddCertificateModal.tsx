@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Certificate, CertificateCategory, StorageStatus } from "../../types/certificates";
 import { usePortfolio } from "../../context/PortfolioContext";
+import ModalPortal from "../common/ModalPortal";
+import { useBodyScrollLock } from "../../hooks/useBodyScrollLock";
 import { 
   X, Upload, Link as LinkIcon, FileText, Check, AlertCircle, 
   ShieldAlert, Sparkles, CheckCircle2, ShieldCheck, Loader2
@@ -32,6 +34,9 @@ export default function AddCertificateModal({
 }: AddCertificateModalProps) {
   const { theme } = usePortfolio();
   const isLight = theme === "light";
+
+  // Lock background scroll
+  useBodyScrollLock(isOpen);
 
   const [formData, setFormData] = useState({
     title: "",
@@ -267,28 +272,32 @@ export default function AddCertificateModal({
     : "w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3.5 py-2 text-xs text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500";
 
   return (
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
-      onClick={onClose}
-    >
-      <div
-        onClick={(e) => e.stopPropagation()}
-        className={`relative w-full max-w-2xl my-8 rounded-2xl border shadow-2xl p-6 sm:p-8 space-y-6 ${
-          isLight
-            ? "bg-white border-slate-200 text-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.15)]"
-            : "bg-[#0b0b10] border-zinc-800 text-zinc-200 shadow-2xl"
-        }`}
+    <ModalPortal>
+      <div 
+        className="certificate-modal-overlay modal-backdrop"
+        onClick={onClose}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="add-certificate-modal-title"
       >
-        {/* Header */}
-        <div className={`flex items-start justify-between border-b pb-4 ${isLight ? "border-slate-200" : "border-zinc-850"}`}>
-          <div>
-            <span className={`text-[10px] font-mono uppercase tracking-wider font-bold ${isLight ? "text-purple-700" : "text-cyan-400"}`}>
-              VAULT ADMINISTRATION
-            </span>
-            <h2 className={`text-xl font-bold font-display mt-0.5 ${isLight ? "text-slate-900" : "text-white"}`}>
-              {editingCertificate ? "Edit Certificate Record" : "Add New Credential"}
-            </h2>
-          </div>
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={`vault-form-dialog w-full rounded-2xl border shadow-2xl p-6 sm:p-8 space-y-6 ${
+            isLight
+              ? "bg-white border-slate-200 text-slate-800 shadow-[0_25px_60px_rgba(15,23,42,0.15)]"
+              : "bg-[#0b0b10] border-zinc-800 text-zinc-200 shadow-2xl"
+          }`}
+        >
+          {/* Header */}
+          <div className={`flex items-start justify-between border-b pb-4 ${isLight ? "border-slate-200" : "border-zinc-850"}`}>
+            <div>
+              <span className={`text-[10px] font-mono uppercase tracking-wider font-bold ${isLight ? "text-purple-700" : "text-cyan-400"}`}>
+                VAULT ADMINISTRATION
+              </span>
+              <h2 id="add-certificate-modal-title" className={`text-xl font-bold font-display mt-0.5 ${isLight ? "text-slate-900" : "text-white"}`}>
+                {editingCertificate ? "Edit Certificate Record" : "Add New Credential"}
+              </h2>
+            </div>
           <button
             onClick={onClose}
             className={`p-2 rounded-lg transition-colors cursor-pointer ${
@@ -590,5 +599,6 @@ export default function AddCertificateModal({
         </form>
       </div>
     </div>
+  </ModalPortal>
   );
 }

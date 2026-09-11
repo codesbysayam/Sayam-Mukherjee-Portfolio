@@ -269,16 +269,18 @@ function AppContent() {
 
   const getInitialTab = (): TabType => {
     if (typeof window === "undefined") return "home";
-    const path = window.location.pathname.toLowerCase();
-    if (path === "/certificates" || path === "/certificate") return "certificates";
-    if (path === "/projects" || path === "/project") return "projects";
-    if (path === "/about") return "about";
-    if (path === "/skills") return "skills";
-    if (path === "/ecosystem") return "ecosystem";
-    if (path === "/journal" || path === "/blog") return "journal";
-    if (path === "/contact") return "contact";
+    const rawPath = window.location.pathname.toLowerCase();
+    const path = rawPath.replace(/\/+$/, "");
 
-    const hash = window.location.hash.toLowerCase().replace("#", "");
+    if (path === "/certificates" || path === "/certificate" || path.startsWith("/certificates/") || path.startsWith("/certificate/")) return "certificates";
+    if (path === "/projects" || path === "/project" || path.startsWith("/projects/") || path.startsWith("/project/")) return "projects";
+    if (path === "/about" || path.startsWith("/about/")) return "about";
+    if (path === "/skills" || path.startsWith("/skills/")) return "skills";
+    if (path === "/ecosystem" || path.startsWith("/ecosystem/")) return "ecosystem";
+    if (path === "/journal" || path === "/blog" || path.startsWith("/journal/") || path.startsWith("/blog/")) return "journal";
+    if (path === "/contact" || path.startsWith("/contact/")) return "contact";
+
+    const hash = window.location.hash.toLowerCase().replace("#", "").replace(/\/+$/, "");
     if (hash === "certificates" || hash === "certificate") return "certificates";
     if (hash === "projects") return "projects";
     if (hash === "about") return "about";
@@ -852,9 +854,7 @@ function AppContent() {
 
                   {activeTab === "certificates" && (
                     <div className="py-4 sm:py-6">
-                      <Reveal delay={0}>
-                        <CertificatesPage />
-                      </Reveal>
+                      <CertificatesPage />
                     </div>
                   )}
 

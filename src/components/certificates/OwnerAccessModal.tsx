@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Lock, KeyRound, Eye, EyeOff, X, AlertCircle, CheckCircle2, Loader2, ShieldCheck } from "lucide-react";
 import { usePortfolio } from "../../context/PortfolioContext";
+import ModalPortal from "../common/ModalPortal";
+import { useBodyScrollLock } from "../../hooks/useBodyScrollLock";
 
 interface OwnerAccessModalProps {
   isOpen: boolean;
@@ -22,6 +24,9 @@ export default function OwnerAccessModal({
   const [errorTitle, setErrorTitle] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
+
+  // Body scroll locking
+  useBodyScrollLock(isOpen);
 
   if (!isOpen) return null;
 
@@ -94,41 +99,45 @@ export default function OwnerAccessModal({
   };
 
   return (
-    <div
-      id="owner-access-modal"
-      className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-fade-in"
-      onClick={handleClose}
-    >
+    <ModalPortal>
       <div
-        onClick={(e) => e.stopPropagation()}
-        className={`w-full max-w-md rounded-2xl border shadow-2xl p-6 sm:p-7 space-y-5 text-left relative overflow-hidden transition-all ${
-          isLight
-            ? "bg-white border-slate-200 text-slate-900 shadow-[0_25px_60px_rgba(15,23,42,0.15)]"
-            : "bg-[#09090e] border-zinc-800/90 text-white shadow-2xl"
-        }`}
-        style={{
-          boxShadow: isLight
-            ? "0 24px 60px rgba(15, 23, 42, 0.15), 0 0 40px rgba(109, 40, 217, 0.08)"
-            : "0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(168, 85, 247, 0.08)",
-        }}
+        id="owner-access-modal"
+        className="certificate-modal-overlay modal-backdrop"
+        onClick={handleClose}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="owner-access-modal-title"
       >
-        {/* Subtle accent glow top border */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-500" />
+        <div
+          onClick={(e) => e.stopPropagation()}
+          className={`vault-dialog w-full rounded-2xl border shadow-2xl p-6 sm:p-7 space-y-5 text-left relative overflow-hidden transition-all ${
+            isLight
+              ? "bg-white border-slate-200 text-slate-900 shadow-[0_25px_60px_rgba(15,23,42,0.15)]"
+              : "bg-[#09090e] border-zinc-800/90 text-white shadow-2xl"
+          }`}
+          style={{
+            boxShadow: isLight
+              ? "0 24px 60px rgba(15, 23, 42, 0.15), 0 0 40px rgba(109, 40, 217, 0.08)"
+              : "0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(168, 85, 247, 0.08)",
+          }}
+        >
+          {/* Subtle accent glow top border */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-purple-500 via-indigo-500 to-cyan-500" />
 
-        {/* Modal Header */}
-        <div className="flex items-start justify-between gap-3 pt-1">
-          <div className="space-y-1">
-            <div className={`inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest font-bold px-2 py-0.5 rounded border ${
-              isLight
-                ? "bg-purple-50 border-purple-200 text-purple-700"
-                : "bg-purple-950/40 border-purple-800/40 text-purple-400"
-            }`}>
-              <Lock className="w-3 h-3" />
-              <span>OWNER ACCESS</span>
-            </div>
-            <h2 className={`text-xl font-bold font-display ${isLight ? "text-slate-900" : "text-white"}`}>
-              Certificate Vault
-            </h2>
+          {/* Modal Header */}
+          <div className="flex items-start justify-between gap-3 pt-1">
+            <div className="space-y-1">
+              <div className={`inline-flex items-center gap-1.5 text-[10px] font-mono uppercase tracking-widest font-bold px-2 py-0.5 rounded border ${
+                isLight
+                  ? "bg-purple-50 border-purple-200 text-purple-700"
+                  : "bg-purple-950/40 border-purple-800/40 text-purple-400"
+              }`}>
+                <Lock className="w-3.5 h-3.5" />
+                <span>OWNER ACCESS</span>
+              </div>
+              <h2 id="owner-access-modal-title" className={`text-xl font-bold font-display ${isLight ? "text-slate-900" : "text-white"}`}>
+                Certificate Vault
+              </h2>
             <p className={`text-xs leading-relaxed font-sans ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
               Enter the authorized owner passkey to unlock administrative controls, credential editing, and removal.
             </p>
@@ -274,5 +283,6 @@ export default function OwnerAccessModal({
         </form>
       </div>
     </div>
+  </ModalPortal>
   );
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Certificate, CertificateCategory, CertificateStats } from "../../types/certificates";
+import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 import { usePortfolio } from "../../context/PortfolioContext";
 import CertificateCard from "./CertificateCard";
 import CertificateViewerModal from "./CertificateViewerModal";
@@ -15,12 +16,40 @@ import {
 } from "lucide-react";
 
 export default function CertificatesPage() {
-  const { theme } = usePortfolio();
+  const { 
+    theme,
+    isVaultOwner: contextIsVaultOwner,
+    vaultToken: contextVaultToken,
+    setVaultOwnerSession,
+    clearVaultOwnerSession,
+    isOwnerAccessModalOpen: contextIsOwnerAccessModalOpen,
+    setIsOwnerAccessModalOpen: setContextIsOwnerAccessModalOpen,
+    isVaultAdminMenuOpen: contextIsVaultAdminMenuOpen,
+    setIsVaultAdminMenuOpen: setContextIsVaultAdminMenuOpen,
+  } = usePortfolio();
   const isLight = theme === "light";
 
-  const [certificates, setCertificates] = useState<Certificate[]>([]);
-  const [stats, setStats] = useState<CertificateStats>({ total: 0, technical: 0, competitions: 0, achievements: 0 });
-  const [loading, setLoading] = useState(true);
+  // Resilient Initial Data with Local Cache and Fallback
+  const [certificates, setCertificates] = useState<Certificate[]>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        const cached = localStorage.getItem("sayam_cached_certificates");
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        }
+      } catch {}
+    }
+    return INITIAL_CERTIFICATES;
+  });
+
+  const [stats, setStats] = useState<CertificateStats>(() => ({
+    total: INITIAL_CERTIFICATES.length,
+    technical: INITIAL_CERTIFICATES.filter(c => c.category === "CERTIFICATIONS").length,
+    competitions: INITIAL_CERTIFICATES.filter(c => c.category === "COMPETITIONS").length,
+    achievements: INITIAL_CERTIFICATES.filter(c => c.category === "ACHIEVEMENTS").length,
+  }));
+  const [loading, setLoading] = useState(false);
 
   // Filters State
   const [selectedCategory, setSelectedCategory] = useState<CertificateCategory>("ALL");
@@ -36,11 +65,16 @@ export default function CertificatesPage() {
   const [editingCertificate, setEditingCertificate] = useState<Certificate | null>(null);
   const [deletingCert, setDeletingCert] = useState<Certificate | null>(null);
 
-  // Owner Authentication State
-  const [isOwner, setIsOwner] = useState(false);
-  const [vaultToken, setVaultToken] = useState("");
-  const [isOwnerAccessModalOpen, setIsOwnerAccessModalOpen] = useState(false);
-  const [isAdminMenuOpen, setIsAdminMenuOpen] = useState(false);
+  // Owner Authentication State (harmonized with PortfolioContext)
+  const [localIsOwner, setLocalIsOwner] = useState(false);
+  const [localVaultToken, setLocalVaultToken] = useState("");
+  const [localIsOwnerModalOpen, setLocalIsOwnerModalOpen] = useState(false);
+  const [localIsAdminMenuOpen, setLocalIsAdminMenuOpen] = useState(false);
+
+  const isOwner = Boolean(contextIsVaultOwner || localIsOwner);
+  const vaultToken = contextVaultToken || localVaultToken || (typeof window !== "undefined" ? sessionStorage.getItem("vault_token") || "" : "");
+  const isOwnerAccessModalOpen = localIsOwnerModalOpen || Boolean(contextIsOwnerAccessModalOpen);
+  const isAdminMenuOpen = localIsAdminMenuOpen || Boolean(contextIsVaultAdminMenuOpen);
 
   // Check existing session status on mount via /api/admin/session
   useEffect(() => {
@@ -53,51 +87,60 @@ export default function CertificatesPage() {
         const res = await fetch("/api/admin/session", {
           credentials: "include",
           headers,
-        });
-        if (res.ok) {
+        }).catch(() => null);
+
+        if (res && res.ok) {
           const data = await res.json();
           if (data.authenticated) {
-            setIsOwner(true);
+            setLocalIsOwner(true);
             const activeToken = data.token || savedToken || "";
-            setVaultToken(activeToken);
+            setLocalVaultToken(activeToken);
+            setVaultOwnerSession?.(activeToken);
             if (activeToken) {
               try {
                 sessionStorage.setItem("vault_token", activeToken);
               } catch {}
             }
           } else {
-            setIsOwner(false);
-            setVaultToken("");
+            setLocalIsOwner(false);
+            setLocalVaultToken("");
+            clearVaultOwnerSession?.();
             try {
               sessionStorage.removeItem("vault_token");
             } catch {}
           }
         }
       } catch (err) {
-        console.error("Session verification error:", err);
+        console.warn("Session verification check notice:", err);
       }
     };
     checkSession();
   }, []);
 
-  // Fetch certificates and stats
+  // Fetch certificates and stats from server
   const fetchData = async () => {
-    setLoading(true);
     try {
       const [certsRes, statsRes] = await Promise.all([
-        fetch("/api/certificates"),
-        fetch("/api/certificates/stats"),
+        fetch("/api/certificates").catch(() => null),
+        fetch("/api/certificates/stats").catch(() => null),
       ]);
-      if (certsRes.ok) {
+      if (certsRes && certsRes.ok) {
         const certsData = await certsRes.json();
-        setCertificates(certsData);
+        if (Array.isArray(certsData) && certsData.length > 0) {
+          setCertificates(certsData);
+          try {
+            localStorage.setItem("sayam_cached_certificates", JSON.stringify(certsData));
+          } catch {}
+        }
       }
-      if (statsRes.ok) {
+      if (statsRes && statsRes.ok) {
         const statsData = await statsRes.json();
-        setStats(statsData);
+        if (statsData && typeof statsData.total === "number") {
+          setStats(statsData);
+        }
       }
     } catch (err) {
-      console.error("Failed to load certificates:", err);
+      console.warn("Certificates sync notice:", err);
     } finally {
       setLoading(false);
     }
@@ -220,12 +263,13 @@ export default function CertificatesPage() {
         method: "POST",
         credentials: "include",
         headers,
-      });
+      }).catch(() => null);
     } catch (err) {
       console.error("Logout request error:", err);
     } finally {
-      setIsOwner(false);
-      setVaultToken("");
+      setLocalIsOwner(false);
+      setLocalVaultToken("");
+      clearVaultOwnerSession?.();
       try {
         sessionStorage.removeItem("vault_token");
       } catch {}
@@ -261,8 +305,9 @@ export default function CertificatesPage() {
     if (res.ok) {
       await fetchData();
     } else if (res.status === 401) {
-      setIsOwner(false);
-      setVaultToken("");
+      setLocalIsOwner(false);
+      setLocalVaultToken("");
+      clearVaultOwnerSession?.();
       try {
         sessionStorage.removeItem("vault_token");
       } catch {}
@@ -291,12 +336,14 @@ export default function CertificatesPage() {
       if (res.ok) {
         await fetchData();
       } else if (res.status === 401) {
-        setIsOwner(false);
-        setVaultToken("");
+        setLocalIsOwner(false);
+        setLocalVaultToken("");
+        clearVaultOwnerSession?.();
         try {
           sessionStorage.removeItem("vault_token");
         } catch {}
-        setIsOwnerAccessModalOpen(true);
+        setLocalIsOwnerModalOpen(true);
+        setContextIsOwnerAccessModalOpen?.(true);
       }
     } catch (err) {
       console.error(err);
@@ -323,29 +370,41 @@ export default function CertificatesPage() {
             : "bg-gradient-to-b from-[#0f0f18] via-[#0a0a12] to-[#07070b] border-zinc-800/90 shadow-2xl"
         }`}
       >
-        {/* Discreet stealth lock icon in top-right corner */}
+        {/* Unmistakable Vault Access & Owner Security Lock Button */}
         <button
-          id="stealth-vault-access-lock"
+          id="vault-access-lock-button"
           onClick={() => {
             if (isOwner) {
-              setIsAdminMenuOpen(true);
+              setLocalIsAdminMenuOpen(true);
+              setContextIsVaultAdminMenuOpen?.(true);
             } else {
-              setIsOwnerAccessModalOpen(true);
+              setLocalIsOwnerModalOpen(true);
+              setContextIsOwnerAccessModalOpen?.(true);
             }
           }}
-          className={`absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-xl transition-all cursor-pointer z-20 ${
+          className={`absolute top-4 right-4 sm:top-6 sm:right-6 inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border transition-all duration-200 cursor-pointer z-20 font-mono text-xs shadow-sm select-none ${
             isOwner
               ? isLight
-                ? "bg-purple-100 text-purple-700 border border-purple-200 shadow-sm"
-                : "bg-purple-950/60 text-purple-300 border border-purple-800/60"
+                ? "bg-purple-100 hover:bg-purple-200 text-purple-900 border-purple-300 ring-2 ring-purple-400/30"
+                : "bg-purple-950/80 hover:bg-purple-900 text-purple-200 border-purple-700 ring-2 ring-purple-600/30"
               : isLight
-                ? "text-slate-400 hover:text-slate-700 hover:bg-slate-100 opacity-60 hover:opacity-100"
-                : "text-zinc-500 hover:text-zinc-300 hover:bg-white/[0.05] opacity-40 hover:opacity-100"
+                ? "bg-white/95 hover:bg-white text-slate-800 hover:text-slate-950 border-slate-300 hover:border-purple-500 shadow-sm ring-1 ring-slate-200"
+                : "bg-zinc-900/95 hover:bg-zinc-800 text-zinc-200 hover:text-white border-zinc-700 hover:border-purple-500 shadow-sm ring-1 ring-zinc-800"
           }`}
-          title={isOwner ? "Owner Session Active — Click for controls" : "Vault Access Key"}
-          aria-label="Owner Access Key"
+          title={isOwner ? "Owner Session Active — Click to open Vault Admin Menu" : "Owner Vault Lock (🔒) — Click to authenticate passkey"}
+          aria-label={isOwner ? "Owner Session Active" : "Owner Vault Lock"}
         >
-          {isOwner ? <Unlock className="w-4 h-4 text-purple-500" /> : <Lock className="w-4 h-4" />}
+          {isOwner ? (
+            <>
+              <Unlock className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+              <span className="font-bold text-[11px] tracking-wider">VAULT UNLOCKED</span>
+            </>
+          ) : (
+            <>
+              <Lock className="w-4 h-4 text-purple-600 dark:text-purple-400" />
+              <span className="font-bold text-[11px] tracking-wider">VAULT ACCESS 🔒</span>
+            </>
+          )}
         </button>
 
         {/* Ambient background accents */}
@@ -747,23 +806,30 @@ export default function CertificatesPage() {
       {/* Owner Access Passkey Authentication Modal */}
       <OwnerAccessModal
         isOpen={isOwnerAccessModalOpen}
-        onClose={() => setIsOwnerAccessModalOpen(false)}
+        onClose={() => {
+          setLocalIsOwnerModalOpen(false);
+          setContextIsOwnerAccessModalOpen?.(false);
+        }}
         onSuccess={(token) => {
-          setIsOwner(true);
-          setVaultToken(token);
+          setLocalIsOwner(true);
+          setLocalVaultToken(token);
+          setVaultOwnerSession?.(token);
         }}
       />
 
       {/* Vault Owner Admin Controls Popover / Menu */}
       <VaultAdminMenuModal
         isOpen={isAdminMenuOpen}
-        onClose={() => setIsAdminMenuOpen(false)}
+        onClose={() => {
+          setLocalIsAdminMenuOpen(false);
+          setContextIsVaultAdminMenuOpen?.(false);
+        }}
         onAddNewCertificate={() => {
           setEditingCertificate(null);
           setIsAddModalOpen(true);
         }}
         onLockVault={handleLockVault}
-        totalCertificates={stats.total}
+        totalCertificates={certificates.length || stats.total}
       />
 
       {/* In-App Delete Confirmation Modal */}

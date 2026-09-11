@@ -26,6 +26,7 @@ export default function CertificateCard({
 }: CertificateCardProps) {
   const { theme } = usePortfolio();
   const isLight = theme === "light";
+  const [imageError, setImageError] = React.useState(false);
 
   const {
     id,
@@ -185,13 +186,14 @@ export default function CertificateCard({
               : "bg-[#08080d] border-zinc-800/80 group-hover:border-zinc-700"
           }`}
         >
-          {imageUrl ? (
+          {imageUrl && !imageError ? (
             /* High-res Image Preview */
             <img
               src={imageUrl}
               alt={title}
               loading="lazy"
               referrerPolicy="no-referrer"
+              onError={() => setImageError(true)}
               className="w-full h-full object-contain p-2.5 group-hover:scale-105 transition-transform duration-300"
             />
           ) : pdfUrl ? (

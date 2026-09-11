@@ -1,6 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Space Grotesk", sans-serif;
@@ -650,19 +652,26 @@ button.bg-zinc-900:hover {
 }
 
 /* ==========================================================================
-   INDEPENDENT PEARL GLASS LIGHT MODE SYSTEM (Apple-Grade Dimensionality)
+   INDEPENDENT PEARL GLASS LIGHT MODE SYSTEM (Apple-Grade Editorial Aesthetic)
    ========================================================================== */
 
-/* 1. Pearl Glass Surfaces & Hierarchy */
+/* 1. Page Background & Canvas */
+html.light,
+html[data-theme="light"],
+html.light body,
+html[data-theme="light"] body {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+
+/* 2. Pearl Glass Surfaces & Hierarchy */
 html.light .glass-card,
 html[data-theme="light"] .glass-card {
-  background: rgba(255, 255, 255, 0.88) !important;
-  background-image: 
-    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.88) 100%) !important;
-  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  background: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
   box-shadow: 
-    0 16px 36px -8px rgba(15, 23, 42, 0.08),
-    0 3px 8px -1px rgba(15, 23, 42, 0.04),
+    0 10px 30px -6px rgba(15, 23, 42, 0.06),
+    0 2px 8px -2px rgba(15, 23, 42, 0.03),
     inset 0 1px 0 rgba(255, 255, 255, 1) !important;
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
@@ -671,42 +680,42 @@ html[data-theme="light"] .glass-card {
 
 html.light .glass-card:hover,
 html[data-theme="light"] .glass-card:hover {
-  border-color: rgba(109, 40, 217, 0.35) !important;
+  border-color: rgba(109, 40, 217, 0.30) !important;
   box-shadow: 
-    0 24px 60px -12px rgba(109, 40, 217, 0.14),
-    0 8px 20px -4px rgba(15, 23, 42, 0.08),
-    inset 0 1px 1px #ffffff !important;
+    0 20px 48px -8px rgba(109, 40, 217, 0.10),
+    0 8px 20px -4px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 #ffffff !important;
   background-color: #ffffff !important;
-  transform: translateY(-3px) !important;
+  transform: translateY(-2px) !important;
 }
 
 html.light .glass-card::after,
 html[data-theme="light"] .glass-card::after {
   background: radial-gradient(
-    340px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
-    rgba(109, 40, 217, 0.09),
+    320px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+    rgba(109, 40, 217, 0.06),
     transparent 80%
   ) !important;
 }
 
 html.light .glass,
 html[data-theme="light"] .glass {
-  background: rgba(255, 255, 255, 0.92) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
   backdrop-filter: blur(20px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border: 1px solid rgba(15, 23, 42, 0.12) !important;
-  box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.08) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 10px 30px -8px rgba(15, 23, 42, 0.06) !important;
   color: #0f172a !important;
 }
 
-/* 2. Top Sticky Navbar & Navigation Controls in Light Mode */
+/* 3. Top Sticky Navbar & Navigation Controls in Light Mode */
 html.light header,
 html.light nav,
 html[data-theme="light"] header,
 html[data-theme="light"] nav {
-  background: rgba(255, 255, 255, 0.94) !important;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.12) !important;
-  box-shadow: 0 8px 25px -5px rgba(15, 23, 42, 0.07), 0 2px 6px -1px rgba(15, 23, 42, 0.04) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08) !important;
+  box-shadow: 0 4px 20px -4px rgba(15, 23, 42, 0.04) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
 }
@@ -734,8 +743,8 @@ html[data-theme="light"] nav button[data-active="true"] {
 html.light nav .bg-white,
 html[data-theme="light"] nav .bg-white {
   background-color: #ffffff !important;
-  border: 1px solid rgba(15, 23, 42, 0.12) !important;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.08) !important;
+  border: 1px solid rgba(15, 23, 42, 0.10) !important;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06) !important;
 }
 
 /* Header Action Controls in Light Mode (Search, Theme, Resume) */
@@ -744,9 +753,9 @@ html.light header button.bg-zinc-900\/80,
 html[data-theme="light"] header button.bg-zinc-900,
 html[data-theme="light"] header button.bg-zinc-900\/80 {
   background-color: #ffffff !important;
-  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
   color: #0f172a !important;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.light header button.bg-zinc-900:hover,
@@ -758,18 +767,18 @@ html[data-theme="light"] header button.bg-zinc-900\/80:hover {
   color: #6d28d9 !important;
 }
 
-/* 3. Hero Section in Light Mode */
+/* 4. Hero Section in Light Mode */
 html.light #hero,
 html[data-theme="light"] #hero {
-  background-color: rgba(255, 255, 255, 0.88) !important;
+  background-color: #ffffff !important;
   background-image: 
-    radial-gradient(at top left, rgba(109, 40, 217, 0.06), transparent 50%),
-    radial-gradient(at bottom right, rgba(2, 132, 199, 0.05), transparent 50%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.90) 100%) !important;
-  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+    radial-gradient(at 10% 20%, rgba(109, 40, 217, 0.05), transparent 45%),
+    radial-gradient(at 90% 80%, rgba(2, 132, 199, 0.04), transparent 45%),
+    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%) !important;
+  border: 1px solid rgba(15, 23, 42, 0.08) !important;
   box-shadow: 
-    0 24px 60px -10px rgba(15, 23, 42, 0.09),
-    0 4px 12px rgba(15, 23, 42, 0.04),
+    0 20px 50px -10px rgba(15, 23, 42, 0.06),
+    0 4px 12px rgba(15, 23, 42, 0.02),
     inset 0 1px 0 rgba(255, 255, 255, 1) !important;
   backdrop-filter: blur(24px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
@@ -781,15 +790,15 @@ html[data-theme="light"] .hero-border-spinner {
     from 0deg,
     transparent 0deg,
     transparent 240deg,
-    rgba(109, 40, 217, 0.08) 260deg,
-    rgba(109, 40, 217, 0.45) 290deg,
-    rgba(2, 132, 199, 0.45) 325deg,
-    rgba(217, 70, 239, 0.35) 350deg,
+    rgba(109, 40, 217, 0.06) 260deg,
+    rgba(109, 40, 217, 0.35) 290deg,
+    rgba(2, 132, 199, 0.35) 325deg,
+    rgba(217, 70, 239, 0.25) 350deg,
     transparent 360deg
   ) !important;
 }
 
-/* 4. Right GitHub Showcase Card in Light Mode - Crisp Pearl Glass */
+/* 5. Right GitHub Showcase Card in Light Mode - Crisp Pearl Glass */
 html.light #hero-github-card,
 html.light .signal-card,
 html.light .build-card,
@@ -797,10 +806,10 @@ html[data-theme="light"] #hero-github-card,
 html[data-theme="light"] .signal-card,
 html[data-theme="light"] .build-card {
   background: #ffffff !important;
-  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  border: 1px solid rgba(15, 23, 42, 0.10) !important;
   box-shadow: 
-    0 24px 64px -12px rgba(15, 23, 42, 0.12),
-    0 8px 24px -4px rgba(15, 23, 42, 0.06),
+    0 16px 45px -10px rgba(15, 23, 42, 0.08),
+    0 4px 16px -2px rgba(15, 23, 42, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 1) !important;
   color: #0f172a !important;
 }
@@ -811,10 +820,10 @@ html.light .build-card:hover,
 html[data-theme="light"] #hero-github-card:hover,
 html[data-theme="light"] .signal-card:hover,
 html[data-theme="light"] .build-card:hover {
-  border-color: rgba(109, 40, 217, 0.35) !important;
+  border-color: rgba(109, 40, 217, 0.30) !important;
   box-shadow: 
-    0 32px 80px -16px rgba(109, 40, 217, 0.16),
-    0 12px 32px -4px rgba(15, 23, 42, 0.08),
+    0 24px 60px -12px rgba(109, 40, 217, 0.12),
+    0 8px 24px -4px rgba(15, 23, 42, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
@@ -831,7 +840,7 @@ html[data-theme="light"] #hero-github-card .border-x,
 html[data-theme="light"] #hero-github-card .border-white\/\[0\.08\],
 html[data-theme="light"] #hero-github-card .border-white\/\[0\.06\],
 html[data-theme="light"] #hero-github-card .border-white\/15 {
-  border-color: rgba(15, 23, 42, 0.10) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
 }
 
 /* Metrics strip inside the GitHub card */
@@ -839,39 +848,39 @@ html.light #hero-github-card .bg-white\/\[0\.025\],
 html.light #hero-github-card .bg-white\/\[0\.04\],
 html[data-theme="light"] #hero-github-card .bg-white\/\[0\.025\],
 html[data-theme="light"] #hero-github-card .bg-white\/\[0\.04\] {
-  background-color: #f1f4fa !important;
-  border: 1px solid rgba(15, 23, 42, 0.09) !important;
+  background-color: #f8fafc !important;
+  border: 1px solid rgba(15, 23, 42, 0.07) !important;
   color: #1e293b !important;
 }
 
 html.light #hero-github-card .bg-white\/\[0\.04\]:hover,
 html[data-theme="light"] #hero-github-card .bg-white\/\[0\.04\]:hover {
-  background-color: #e5eaf3 !important;
+  background-color: #f1f5f9 !important;
 }
 
-/* 5. Liquid Blobs in Light Mode (Ambient luminescent glow) */
+/* 6. Liquid Blobs in Light Mode (Ambient luminescent glow) */
 html.light .liquid-blob-1,
 html[data-theme="light"] .liquid-blob-1 {
-  background: radial-gradient(circle, rgba(109, 40, 217, 0.14) 0%, rgba(192, 132, 252, 0.03) 50%, transparent 70%) !important;
-  opacity: 0.85 !important;
+  background: radial-gradient(circle, rgba(109, 40, 217, 0.10) 0%, rgba(192, 132, 252, 0.02) 50%, transparent 70%) !important;
+  opacity: 0.7 !important;
 }
 html.light .liquid-blob-2,
 html[data-theme="light"] .liquid-blob-2 {
-  background: radial-gradient(circle, rgba(2, 132, 199, 0.12) 0%, rgba(56, 189, 248, 0.03) 50%, transparent 70%) !important;
-  opacity: 0.85 !important;
+  background: radial-gradient(circle, rgba(2, 132, 199, 0.09) 0%, rgba(56, 189, 248, 0.02) 50%, transparent 70%) !important;
+  opacity: 0.7 !important;
 }
 html.light .liquid-blob-3,
 html[data-theme="light"] .liquid-blob-3 {
-  background: radial-gradient(circle, rgba(217, 70, 239, 0.09) 0%, rgba(244, 114, 182, 0.02) 50%, transparent 70%) !important;
-  opacity: 0.75 !important;
+  background: radial-gradient(circle, rgba(217, 70, 239, 0.07) 0%, rgba(244, 114, 182, 0.02) 50%, transparent 70%) !important;
+  opacity: 0.65 !important;
 }
 html.light .liquid-blob-4,
 html[data-theme="light"] .liquid-blob-4 {
-  background: radial-gradient(circle, rgba(5, 150, 105, 0.09) 0%, rgba(52, 211, 153, 0.02) 50%, transparent 70%) !important;
-  opacity: 0.75 !important;
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.07) 0%, rgba(52, 211, 153, 0.02) 50%, transparent 70%) !important;
+  opacity: 0.65 !important;
 }
 
-/* 6. Typography Hierarchy & Contrast in Light Mode (WCAG AA Compliant) */
+/* 7. Typography Hierarchy & Contrast in Light Mode (WCAG AA Compliant) */
 html.light h1,
 html.light h2,
 html.light h3,
@@ -892,9 +901,87 @@ html[data-theme="light"] .hero-title {
   color: #0f172a !important;
 }
 
-html.light .text-white,
-html[data-theme="light"] .text-white {
+/* Selective text-white inversion: ONLY invert when NOT inside a dark/saturated container */
+html.light .text-white:not(
+  .bg-purple-600, .bg-purple-600 *,
+  .bg-purple-700, .bg-purple-700 *,
+  .bg-violet-600, .bg-violet-600 *,
+  .bg-violet-700, .bg-violet-700 *,
+  .bg-slate-900, .bg-slate-900 *,
+  .bg-slate-950, .bg-slate-950 *,
+  .bg-black, .bg-black *,
+  .bg-cyan-600, .bg-cyan-600 *,
+  .bg-emerald-600, .bg-emerald-600 *,
+  .bg-red-600, .bg-red-600 *,
+  button.bg-purple-600, button.bg-purple-600 *,
+  button.bg-violet-600, button.bg-violet-600 *,
+  button.bg-slate-950, button.bg-slate-950 *,
+  button.bg-slate-900, button.bg-slate-900 *,
+  button.bg-black, button.bg-black *,
+  .btn-primary, .btn-primary *
+),
+html[data-theme="light"] .text-white:not(
+  .bg-purple-600, .bg-purple-600 *,
+  .bg-purple-700, .bg-purple-700 *,
+  .bg-violet-600, .bg-violet-600 *,
+  .bg-violet-700, .bg-violet-700 *,
+  .bg-slate-900, .bg-slate-900 *,
+  .bg-slate-950, .bg-slate-950 *,
+  .bg-black, .bg-black *,
+  .bg-cyan-600, .bg-cyan-600 *,
+  .bg-emerald-600, .bg-emerald-600 *,
+  .bg-red-600, .bg-red-600 *,
+  button.bg-purple-600, button.bg-purple-600 *,
+  button.bg-violet-600, button.bg-violet-600 *,
+  button.bg-slate-950, button.bg-slate-950 *,
+  button.bg-slate-900, button.bg-slate-900 *,
+  button.bg-black, button.bg-black *,
+  .btn-primary, .btn-primary *
+) {
   color: #0f172a !important;
+}
+
+/* Explicitly guarantee crisp white text on dark/saturated buttons and badges in light mode */
+html.light .bg-purple-600,
+html.light .bg-purple-700,
+html.light .bg-violet-600,
+html.light .bg-violet-700,
+html.light .bg-slate-900,
+html.light .bg-slate-950,
+html.light .bg-black,
+html.light button.bg-purple-600,
+html.light button.bg-violet-600,
+html.light button.bg-slate-950,
+html.light button.bg-slate-900,
+html.light button.bg-black,
+html[data-theme="light"] .bg-purple-600,
+html[data-theme="light"] .bg-purple-700,
+html[data-theme="light"] .bg-violet-600,
+html[data-theme="light"] .bg-violet-700,
+html[data-theme="light"] .bg-slate-900,
+html[data-theme="light"] .bg-slate-950,
+html[data-theme="light"] .bg-black,
+html[data-theme="light"] button.bg-purple-600,
+html[data-theme="light"] button.bg-violet-600,
+html[data-theme="light"] button.bg-slate-950,
+html[data-theme="light"] button.bg-slate-900,
+html[data-theme="light"] button.bg-black {
+  color: #ffffff !important;
+}
+
+html.light .bg-purple-600 *,
+html.light .bg-violet-600 *,
+html.light .bg-slate-950 *,
+html.light button.bg-purple-600 *,
+html.light button.bg-violet-600 *,
+html.light button.bg-slate-950 *,
+html[data-theme="light"] .bg-purple-600 *,
+html[data-theme="light"] .bg-violet-600 *,
+html[data-theme="light"] .bg-slate-950 *,
+html[data-theme="light"] button.bg-purple-600 *,
+html[data-theme="light"] button.bg-violet-600 *,
+html[data-theme="light"] button.bg-slate-950 * {
+  color: #ffffff !important;
 }
 
 html.light .text-zinc-100,
@@ -986,7 +1073,7 @@ html[data-theme="light"] .shimmer-text {
   -webkit-text-fill-color: transparent !important;
 }
 
-/* 7. Chips, Badges & Tags in Light Mode */
+/* 8. Chips, Badges & Tags in Light Mode */
 html.light .bg-purple-950\/40,
 html.light .bg-purple-950\/30,
 html.light .bg-purple-950\/25,
@@ -997,7 +1084,7 @@ html[data-theme="light"] .bg-purple-950\/25,
 html[data-theme="light"] .bg-purple-950\/20 {
   background-color: rgba(109, 40, 217, 0.08) !important;
   color: #6d28d9 !important;
-  border: 1px solid rgba(109, 40, 217, 0.22) !important;
+  border: 1px solid rgba(109, 40, 217, 0.20) !important;
 }
 
 html.light .bg-cyan-950\/40,
@@ -1008,7 +1095,7 @@ html[data-theme="light"] .bg-cyan-950\/30,
 html[data-theme="light"] .bg-cyan-950\/20 {
   background-color: rgba(2, 132, 199, 0.08) !important;
   color: #0284c7 !important;
-  border: 1px solid rgba(2, 132, 199, 0.22) !important;
+  border: 1px solid rgba(2, 132, 199, 0.20) !important;
 }
 
 html.light .bg-emerald-950\/40,
@@ -1019,7 +1106,7 @@ html[data-theme="light"] .bg-emerald-950\/30,
 html[data-theme="light"] .bg-emerald-950\/20 {
   background-color: rgba(5, 150, 105, 0.08) !important;
   color: #059669 !important;
-  border: 1px solid rgba(5, 150, 105, 0.24) !important;
+  border: 1px solid rgba(5, 150, 105, 0.20) !important;
 }
 
 html.light .bg-amber-950\/40,
@@ -1030,17 +1117,17 @@ html[data-theme="light"] .bg-amber-950\/30,
 html[data-theme="light"] .bg-amber-950\/20 {
   background-color: rgba(180, 83, 9, 0.08) !important;
   color: #b45309 !important;
-  border: 1px solid rgba(180, 83, 9, 0.24) !important;
+  border: 1px solid rgba(180, 83, 9, 0.20) !important;
 }
 
-/* 8. Buttons & Interactive Controls in Light Mode */
+/* 9. Buttons & Interactive Controls in Light Mode */
 html.light .liquid-glass-btn,
 html[data-theme="light"] .liquid-glass-btn {
   background: rgba(255, 255, 255, 0.90) !important;
-  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
   color: #0f172a !important;
   box-shadow: 
-    0 4px 14px rgba(15, 23, 42, 0.06),
+    0 2px 8px rgba(15, 23, 42, 0.04),
     inset 0 1px 0 rgba(255, 255, 255, 1) !important;
 }
 
@@ -1050,117 +1137,135 @@ html[data-theme="light"] .liquid-glass-btn:hover {
   border-color: rgba(109, 40, 217, 0.35) !important;
   color: #6d28d9 !important;
   box-shadow: 
-    0 8px 24px rgba(109, 40, 217, 0.14),
+    0 6px 18px rgba(109, 40, 217, 0.12),
     inset 0 1px 0 #ffffff !important;
   transform: translateY(-2px) !important;
 }
 
-/* Primary Button in Light Mode (Dark Charcoal #0f172a with white text & vibrant purple hover) */
-html.light button.bg-white,
-html.light button.bg-zinc-100,
-html.light .bg-white.text-black,
-html.light .bg-white.text-zinc-950,
-html[data-theme="light"] button.bg-white,
-html[data-theme="light"] button.bg-zinc-100,
-html[data-theme="light"] .bg-white.text-black,
-html[data-theme="light"] .bg-white.text-zinc-950 {
+/* Primary dark action buttons (Keep high-contrast dark with white text) */
+html.light button.bg-slate-950,
+html.light button.bg-black,
+html[data-theme="light"] button.bg-slate-950,
+html[data-theme="light"] button.bg-black {
   background-color: #0f172a !important;
   color: #ffffff !important;
   border: 1px solid #0f172a !important;
-  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.16) !important;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.14) !important;
+}
+
+html.light button.bg-slate-950:hover,
+html.light button.bg-black:hover,
+html[data-theme="light"] button.bg-slate-950:hover,
+html[data-theme="light"] button.bg-black:hover {
+  background-color: #6d28d9 !important;
+  border-color: #6d28d9 !important;
+  color: #ffffff !important;
+  box-shadow: 0 6px 20px rgba(109, 40, 217, 0.25) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Secondary Pearl/White buttons */
+html.light button.bg-white,
+html.light button.bg-zinc-100,
+html.light button.bg-slate-100,
+html[data-theme="light"] button.bg-white,
+html[data-theme="light"] button.bg-zinc-100,
+html[data-theme="light"] button.bg-slate-100 {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
 }
 
 html.light button.bg-white:hover,
 html.light button.bg-zinc-100:hover,
-html.light .bg-white.text-black:hover,
-html.light .bg-white.text-zinc-950:hover,
+html.light button.bg-slate-100:hover,
 html[data-theme="light"] button.bg-white:hover,
 html[data-theme="light"] button.bg-zinc-100:hover,
-html[data-theme="light"] .bg-white.text-black:hover,
-html[data-theme="light"] .bg-white.text-zinc-950:hover {
-  background-color: #6d28d9 !important;
-  border-color: #6d28d9 !important;
-  color: #ffffff !important;
-  box-shadow: 0 8px 24px rgba(109, 40, 217, 0.30) !important;
-  transform: translateY(-2px) !important;
-}
-
-/* Secondary Button in Light Mode (Crisp Pearl/White with Slate text) */
-html.light button.bg-zinc-950,
-html.light button.bg-zinc-900,
-html.light button.bg-zinc-900\/80,
-html.light button.bg-zinc-800,
-html[data-theme="light"] button.bg-zinc-950,
-html[data-theme="light"] button.bg-zinc-900,
-html[data-theme="light"] button.bg-zinc-900\/80,
-html[data-theme="light"] button.bg-zinc-800 {
-  background-color: #ffffff !important;
-  border: 1px solid rgba(15, 23, 42, 0.14) !important;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05) !important;
-  color: #0f172a !important;
-}
-
-html.light button.bg-zinc-950:hover,
-html.light button.bg-zinc-900:hover,
-html.light button.bg-zinc-900\/80:hover,
-html.light button.bg-zinc-800:hover,
-html[data-theme="light"] button.bg-zinc-950:hover,
-html[data-theme="light"] button.bg-zinc-900:hover,
-html[data-theme="light"] button.bg-zinc-900\/80:hover,
-html[data-theme="light"] button.bg-zinc-800:hover {
+html[data-theme="light"] button.bg-slate-100:hover {
   background-color: #f8fafc !important;
   border-color: rgba(109, 40, 217, 0.35) !important;
   color: #6d28d9 !important;
-  box-shadow: 0 6px 16px rgba(109, 40, 217, 0.10) !important;
-  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.08) !important;
+  transform: translateY(-1px) !important;
 }
 
-/* 9. Inset Surfaces, Nested Boxes, Modals & Dialogs */
-html.light .bg-zinc-950,
-html.light .bg-zinc-950\/40,
-html.light .bg-zinc-950\/50,
-html.light .bg-zinc-950\/60,
-html.light .bg-zinc-950\/70,
-html.light .bg-zinc-950\/80,
-html.light .bg-zinc-950\/90,
-html.light .bg-\[\#09090B\],
-html.light .bg-\[\#09090e\],
-html.light .bg-\[\#0a0a0f\],
-html.light .bg-\[\#0a0a10\],
-html.light .bg-\[\#0b0b12\],
-html.light .bg-\[\#0c0c0f\],
-html.light .bg-\[\#0e0e16\],
-html[data-theme="light"] .bg-zinc-950,
-html[data-theme="light"] .bg-zinc-950\/40,
-html[data-theme="light"] .bg-zinc-950\/50,
-html[data-theme="light"] .bg-zinc-950\/60,
-html[data-theme="light"] .bg-zinc-950\/70,
-html[data-theme="light"] .bg-zinc-950\/80,
-html[data-theme="light"] .bg-zinc-950\/90,
-html[data-theme="light"] .bg-\[\#09090B\],
-html[data-theme="light"] .bg-\[\#09090e\],
-html[data-theme="light"] .bg-\[\#0a0a0f\],
-html[data-theme="light"] .bg-\[\#0a0a10\],
-html[data-theme="light"] .bg-\[\#0b0b12\],
-html[data-theme="light"] .bg-\[\#0c0c0f\],
-html[data-theme="light"] .bg-\[\#0e0e16\] {
+/* Dark mode fallback buttons adapt gracefully */
+html.light button.bg-zinc-950:not(.bg-purple-600, .bg-violet-600, .bg-slate-950),
+html.light button.bg-zinc-900:not(.bg-purple-600, .bg-violet-600, .bg-slate-950),
+html.light button.bg-zinc-900\/80:not(.bg-purple-600, .bg-violet-600, .bg-slate-950),
+html.light button.bg-zinc-800:not(.bg-purple-600, .bg-violet-600, .bg-slate-950),
+html[data-theme="light"] button.bg-zinc-950:not(.bg-purple-600, .bg-violet-600, .bg-slate-950),
+html[data-theme="light"] button.bg-zinc-900:not(.bg-purple-600, .bg-violet-600, .bg-slate-950),
+html[data-theme="light"] button.bg-zinc-900\/80:not(.bg-purple-600, .bg-violet-600, .bg-slate-950),
+html[data-theme="light"] button.bg-zinc-800:not(.bg-purple-600, .bg-violet-600, .bg-slate-950) {
+  background-color: #ffffff !important;
+  border: 1px solid rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04) !important;
+  color: #0f172a !important;
+}
+
+html.light button.bg-zinc-950:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover,
+html.light button.bg-zinc-900:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover,
+html.light button.bg-zinc-900\/80:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover,
+html.light button.bg-zinc-800:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover,
+html[data-theme="light"] button.bg-zinc-950:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover,
+html[data-theme="light"] button.bg-zinc-900:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover,
+html[data-theme="light"] button.bg-zinc-900\/80:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover,
+html[data-theme="light"] button.bg-zinc-800:not(.bg-purple-600, .bg-violet-600, .bg-slate-950):hover {
+  background-color: #f8fafc !important;
+  border-color: rgba(109, 40, 217, 0.35) !important;
+  color: #6d28d9 !important;
+  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.08) !important;
+  transform: translateY(-1px) !important;
+}
+
+/* 10. Inset Surfaces, Nested Boxes, Modals & Dialogs */
+html.light .bg-zinc-950:not(button),
+html.light .bg-zinc-950\/40:not(button),
+html.light .bg-zinc-950\/50:not(button),
+html.light .bg-zinc-950\/60:not(button),
+html.light .bg-zinc-950\/70:not(button),
+html.light .bg-zinc-950\/80:not(button),
+html.light .bg-zinc-950\/90:not(button),
+html.light .bg-\[\#09090B\]:not(button),
+html.light .bg-\[\#09090e\]:not(button),
+html.light .bg-\[\#0a0a0f\]:not(button),
+html.light .bg-\[\#0a0a10\]:not(button),
+html.light .bg-\[\#0b0b12\]:not(button),
+html.light .bg-\[\#0c0c0f\]:not(button),
+html.light .bg-\[\#0e0e16\]:not(button),
+html[data-theme="light"] .bg-zinc-950:not(button),
+html[data-theme="light"] .bg-zinc-950\/40:not(button),
+html[data-theme="light"] .bg-zinc-950\/50:not(button),
+html[data-theme="light"] .bg-zinc-950\/60:not(button),
+html[data-theme="light"] .bg-zinc-950\/70:not(button),
+html[data-theme="light"] .bg-zinc-950\/80:not(button),
+html[data-theme="light"] .bg-zinc-950\/90:not(button),
+html[data-theme="light"] .bg-\[\#09090B\]:not(button),
+html[data-theme="light"] .bg-\[\#09090e\]:not(button),
+html[data-theme="light"] .bg-\[\#0a0a0f\]:not(button),
+html[data-theme="light"] .bg-\[\#0a0a10\]:not(button),
+html[data-theme="light"] .bg-\[\#0b0b12\]:not(button),
+html[data-theme="light"] .bg-\[\#0c0c0f\]:not(button),
+html[data-theme="light"] .bg-\[\#0e0e16\]:not(button) {
   background-color: #ffffff !important;
   color: #0f172a !important;
 }
 
-html.light .bg-zinc-900,
-html.light .bg-zinc-900\/40,
-html.light .bg-zinc-900\/50,
-html.light .bg-zinc-900\/60,
-html.light .bg-zinc-900\/80,
-html.light .bg-zinc-900\/90,
-html[data-theme="light"] .bg-zinc-900,
-html[data-theme="light"] .bg-zinc-900\/40,
-html[data-theme="light"] .bg-zinc-900\/50,
-html[data-theme="light"] .bg-zinc-900\/60,
-html[data-theme="light"] .bg-zinc-900\/80,
-html[data-theme="light"] .bg-zinc-900\/90 {
-  background-color: #f1f4fa !important;
+html.light .bg-zinc-900:not(button),
+html.light .bg-zinc-900\/40:not(button),
+html.light .bg-zinc-900\/50:not(button),
+html.light .bg-zinc-900\/60:not(button),
+html.light .bg-zinc-900\/80:not(button),
+html.light .bg-zinc-900\/90:not(button),
+html[data-theme="light"] .bg-zinc-900:not(button),
+html[data-theme="light"] .bg-zinc-900\/40:not(button),
+html[data-theme="light"] .bg-zinc-900\/50:not(button),
+html[data-theme="light"] .bg-zinc-900\/60:not(button),
+html[data-theme="light"] .bg-zinc-900\/80:not(button),
+html[data-theme="light"] .bg-zinc-900\/90:not(button) {
+  background-color: #f1f5f9 !important;
   color: #1e293b !important;
 }
 
@@ -1175,7 +1280,7 @@ html[data-theme="light"] .border-zinc-850,
 html[data-theme="light"] .border-zinc-800,
 html[data-theme="light"] .border-zinc-750,
 html[data-theme="light"] .border-zinc-700 {
-  border-color: rgba(15, 23, 42, 0.12) !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
 }
 
 /* Form inputs & textareas in Light Mode */
@@ -1187,8 +1292,8 @@ html[data-theme="light"] textarea,
 html[data-theme="light"] select {
   background-color: #ffffff !important;
   color: #0f172a !important;
-  border: 1px solid rgba(15, 23, 42, 0.16) !important;
-  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+  border: 1px solid rgba(15, 23, 42, 0.14) !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03) !important;
 }
 
 html.light input::placeholder,
@@ -1203,19 +1308,10 @@ html.light textarea:focus,
 html[data-theme="light"] input:focus,
 html[data-theme="light"] textarea:focus {
   border-color: #6d28d9 !important;
-  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.12) !important;
+  box-shadow: 0 0 0 3px rgba(109, 40, 217, 0.10) !important;
 }
 
-/* 10. Credentials Vault in Light Mode */
-html.light #certificates-vault-page div.rounded-2xl,
-html.light #certificates-vault-page section.rounded-3xl,
-html[data-theme="light"] #certificates-vault-page div.rounded-2xl,
-html[data-theme="light"] #certificates-vault-page section.rounded-3xl {
-  background: linear-gradient(180deg, #ffffff 0%, #f4f6fc 100%) !important;
-  border: 1px solid rgba(15, 23, 42, 0.14) !important;
-  box-shadow: 0 20px 50px -12px rgba(15, 23, 42, 0.09) !important;
-}
-
+/* 11. Credentials Vault in Light Mode */
 html.light #certificates-vault-page h1,
 html[data-theme="light"] #certificates-vault-page h1 {
   color: #0f172a !important;
@@ -1223,22 +1319,22 @@ html[data-theme="light"] #certificates-vault-page h1 {
 
 html.light #vault-owner-toolbar,
 html[data-theme="light"] #vault-owner-toolbar {
-  background: rgba(109, 40, 217, 0.06) !important;
-  border: 1px solid rgba(109, 40, 217, 0.22) !important;
+  background: rgba(109, 40, 217, 0.05) !important;
+  border: 1px solid rgba(109, 40, 217, 0.20) !important;
 }
 
-/* 11. Master Footer in Light Mode */
+/* 12. Master Footer in Light Mode */
 html.light footer,
 html[data-theme="light"] footer {
-  background-color: #eef1f6 !important;
-  border-color: rgba(15, 23, 42, 0.10) !important;
+  background-color: #f1f5f9 !important;
+  border-color: rgba(15, 23, 42, 0.08) !important;
 }
 
-/* 12. Profile Image Clarity in Light Mode */
+/* 13. Profile Image Clarity in Light Mode */
 html.light img[alt*="Sayam"],
 html[data-theme="light"] img[alt*="Sayam"] {
   filter: brightness(1) contrast(1.02) saturate(1.02) !important;
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12) !important;
+  box-shadow: 0 12px 36px rgba(15, 23, 42, 0.08) !important;
 }
 
 /* ==========================================================================
@@ -1449,6 +1545,60 @@ html[data-theme="light"] .signal-card:hover {
 html, body, #root {
   max-width: 100%;
   overflow-x: hidden;
+}
+
+/* ==========================================================================
+   PRODUCTION-SAFE VIEWPORT MODAL OVERLAYS & DIALOGS
+   ========================================================================== */
+
+.certificate-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  padding:
+    max(16px, env(safe-area-inset-top))
+    max(16px, env(safe-area-inset-right))
+    max(16px, env(safe-area-inset-bottom))
+    max(16px, env(safe-area-inset-left));
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.modal-backdrop {
+  background: rgba(5, 5, 10, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+html.light .modal-backdrop,
+html[data-theme="light"] .modal-backdrop {
+  background: rgba(20, 20, 30, 0.28);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.certificate-modal {
+  width: min(1400px, 100%);
+  max-height: min(92dvh, 900px);
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 24px;
+}
+
+.vault-dialog {
+  width: min(460px, calc(100vw - 2rem));
+  max-height: min(720px, calc(100dvh - 2rem));
+  overflow-y: auto;
+  border-radius: 24px;
+}
+
+.vault-form-dialog {
+  width: min(680px, calc(100vw - 2rem));
+  max-height: min(90dvh, 800px);
+  overflow-y: auto;
+  border-radius: 24px;
 }
 
 /* Print styles for high-fidelity resume export */
