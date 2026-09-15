@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import { 
-  Network, Cpu, Layers, GitBranch, ArrowRight, ShieldCheck, 
-  Workflow, Database, Radio, CheckCircle2, CloudRain, Truck, 
-  Binary, Terminal, Users, Sparkles, ExternalLink
+  Cpu, Layers, GitBranch, ArrowRight, ShieldCheck, 
+  Database, CheckCircle2, CloudRain, Binary, Users, 
+  ExternalLink, Eye, Globe
 } from "lucide-react";
-import { usePortfolio } from "../../context/PortfolioContext";
+import { SectionHeader } from "../common/SectionHeader";
+import { Card } from "../common/Card";
 
-type BlueprintId = "operon" | "mausam" | "memory" | "routeledger";
+type BlueprintId = "operon" | "mausam" | "yolo" | "portfolio";
 
 interface SystemBlueprint {
   id: BlueprintId;
@@ -34,8 +34,8 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
     title: "Operon Multi-Agent Governance Engine",
     subtitle: "Autonomous operations with non-bypassable human checkpoints",
     category: "Autonomous Systems & AI",
-    status: "Active Architecture",
-    purpose: "Coordinates multiple specialized AI agents across organization workflows while guaranteeing that sensitive actions (payouts, data mutations, terminations) halt at strict human-in-the-loop checkpoints.",
+    status: "Active Production",
+    purpose: "Coordinates multiple specialized AI agents across organizational workflows while guaranteeing that sensitive actions (payouts, data mutations, terminations) halt at strict human-in-the-loop checkpoints.",
     nodes: [
       { name: "ERP Event / User Trigger", description: "Inbound ticket or system webhook", type: "input" },
       { name: "Agent Task Router", description: "Deconstructs goal and evaluates capabilities", type: "process" },
@@ -98,120 +98,104 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
       { label: "Target Audience", value: "Coastal / Farmers" }
     ]
   },
-  memory: {
-    id: "memory",
-    title: "Memory-in-Motion Recurrent Dynamics",
-    subtitle: "Visualizing continuous hidden-state trajectories in recurrent neural networks",
-    category: "Neural Mechanics & Simulation",
+  yolo: {
+    id: "yolo",
+    title: "YOLO Edge Vision Pipeline",
+    subtitle: "Real-time edge computer vision and spatial inference",
+    category: "Computer Vision & Edge AI",
     status: "Research Prototype",
-    purpose: "Simulates how recurrent neural networks compress sequential inputs into continuous latent trajectories, demonstrating mathematical phenomena like memory decay, interference, and phase portraits.",
+    purpose: "Implements real-time bounding box detection, polygon region-of-interest monitoring, and optimized frame inference latency for embedded camera feeds.",
     nodes: [
-      { name: "Sequential Token Ingestion", description: "Discrete character or numerical vectors", type: "input" },
-      { name: "Recurrent Transition Matrix", description: "h_t = tanh(W*x_t + U*h_{t-1})", type: "process" },
-      { name: "Eigenvalue & Stability Analyzer", description: "Monitors vanishing vs exploding gradients", type: "process" },
-      { name: "Latent Trajectory Store", description: "Rolling N-step high-dimensional history", type: "storage" },
-      { name: "Phase Portrait Canvas", description: "Interactive 2D projection with vector fields", type: "output" }
+      { name: "Video Stream Ingestion", description: "RTSP camera stream or local video frame feed", type: "input" },
+      { name: "Pre-processing & Tensor Normalization", description: "Resizing, RGB standardization, CUDA memory staging", type: "process" },
+      { name: "YOLOv8 Backbone & Head", description: "Feature extraction with anchor-free bounding box regression", type: "process" },
+      { name: "Spatial ROI Evaluation", description: "Polygon containment and crossing boundary detection", type: "decision" },
+      { name: "Inference Log Matrix", description: "Frame-by-frame coordinate and confidence scores", type: "storage" },
+      { name: "Bounding Box Canvas Render", description: "Low-latency visual tracking overlay", type: "output" }
     ],
     connections: [
-      "Token Ingestion -> Feeds discrete temporal inputs into recurrent cell",
-      "Transition Matrix -> Computes affine transformation and non-linear compression",
-      "Stability Analyzer -> Computes spectral radius to identify chaotic divergence",
-      "Trajectory Store -> Maintains continuous state coordinates across time",
-      "Phase Portrait -> Projects multi-dimensional manifolds onto interactive canvas"
+      "Stream Ingestion -> Normalizes frame rates and feeds image buffer",
+      "Pre-processing -> Converts raw pixels to optimized tensors",
+      "Backbone -> Infers class probabilities and coordinates in single pass",
+      "ROI Evaluation -> Evaluates intersections against user-defined zones",
+      "Canvas Render -> Overlays high-confidence detections at edge speeds"
     ],
     invariants: [
-      "Strict mathematical fidelity to standard Elman and gated recurrent formulations",
-      "Real-time 60fps vector field rendering in isolated browser canvas workers",
-      "Interactive parameter manipulation without page reload or backend latency"
+      "Sub-30ms per-frame inference target on accelerated edge runtimes",
+      "Non-maximum suppression thresholding to eliminate duplicate detections",
+      "Strict separation between camera feed decoding and visual inference overlays"
     ],
-    repoUrl: "https://github.com/codesbysayam/Memory-in-Motion",
-    liveUrl: "https://memory-in-motion.vercel.app",
+    repoUrl: "https://github.com/codesbysayam/yolo",
     stats: [
-      { label: "Math Formulation", value: "Recurrent State Space" },
-      { label: "Rendering", value: "60 FPS Web Canvas" },
-      { label: "Domain", value: "Deep Learning Mechanics" }
+      { label: "Core Model", value: "YOLOv8 / PyTorch" },
+      { label: "Inference Target", value: "Real-Time Embedded" },
+      { label: "Specialization", value: "Spatial ROI Monitoring" }
     ]
   },
-  routeledger: {
-    id: "routeledger",
-    title: "RouteLedger Commercial Dispatch & HOS Engine",
-    subtitle: "Turn-by-turn commercial fleet routing with federal compliance enforcement",
-    category: "Logistics & Constraint Solvers",
-    status: "Production Architecture",
-    purpose: "Solves multi-waypoint commercial trucking routes while deterministically embedding federal Hours-of-Service (FMCSR 49 CFR § 395) rest periods into the transit timeline.",
+  portfolio: {
+    id: "portfolio",
+    title: "Interactive Portfolio Ecosystem",
+    subtitle: "Full-stack client and server architecture with live GitHub sync",
+    category: "Full-Stack Web Architecture",
+    status: "Live Production",
+    purpose: "Architected around strict zero-CLS layout stability, server-side caching proxies, live GitHub API commit pipelines, and mathematical typography clamp systems.",
     nodes: [
-      { name: "Waypoint & Cargo Payload", description: "Origin, destination, and pickup windows", type: "input" },
-      { name: "Graph Routing Engine", description: "Calculates road network topology & transit times", type: "process" },
-      { name: "HOS Regulatory Solver", description: "Mandates 30-min break at 8hr, 10-hr reset at 11hr", type: "decision" },
-      { name: "Corridor Amenity Matcher", description: "Finds compliant truck stops along route", type: "process" },
-      { name: "Audit-Ready Driver Ledger", description: "Tamper-resistant digital logbook timeline", type: "output" }
+      { name: "Live GitHub GraphQL / REST API", description: "Real repo metadata, commit histories, and byte counts", type: "input" },
+      { name: "Express Proxy & Caching Layer", description: "In-memory LRU cache preventing API rate-limiting", type: "process" },
+      { name: "Theme Token State Engine", description: "CSS custom properties with light/dark runtime parity", type: "process" },
+      { name: "Route & Modal Controller", description: "Deep-linkable modal views and single-screen tabs", type: "decision" },
+      { name: "Local Storage Fallback Store", description: "Resilient cache hydration for zero-network conditions", type: "storage" },
+      { name: "Fluid Design System UI", description: "Semantic, accessible presentation with Tailwind tokens", type: "output" }
     ],
     connections: [
-      "Payload -> Parses spatial coordinates and delivery appointment windows",
-      "Graph Engine -> Computes optimal highway corridors minimizing mileage",
-      "HOS Solver -> Evaluates driving clock and identifies mandatory rest windows",
-      "Corridor Matcher -> Injects verified truck parking facilities into route stops",
-      "Driver Ledger -> Outputs compliant dispatch itinerary with zero violations"
+      "GitHub API -> Express server fetches commit logs and repo metrics",
+      "Server Proxy -> Evaluates cache age and returns sanitized payloads",
+      "Token Engine -> Synchronizes documentElement attributes and CSS variables",
+      "Route Controller -> Smoothly mounts active views with zero layout shifts",
+      "Design System -> Delivers verified engineering telemetry directly to user"
     ],
     invariants: [
-      "100% mathematical adherence to FMCSR property-carrying driving regulations",
-      "No rest stop scheduled outside verified commercial parking buffer radius",
-      "Deterministic route recalculation upon user waypoint addition"
+      "Zero fabricated metrics, fake stars, or synthetic commit counts",
+      "Zero Cumulative Layout Shift (CLS) on initial paint across all viewports",
+      "100% theme variable parity across light and dark color modes"
     ],
-    repoUrl: "https://github.com/codesbysayam/RouteLedger",
-    liveUrl: "https://routeledger.vercel.app",
+    repoUrl: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+    liveUrl: "https://sayammukherjee.in",
     stats: [
-      { label: "Compliance Standard", value: "FMCSR 49 CFR § 395" },
-      { label: "Algorithm", value: "Graph Routing + Rest Insertion" },
-      { label: "Target Sector", value: "Commercial Logistics" }
+      { label: "Frontend", value: "React 18 / Tailwind" },
+      { label: "Backend", value: "Express API Proxy" },
+      { label: "Data Integrity", value: "Live GitHub Telemetry" }
     ]
   }
 };
 
 export function EcosystemPage() {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
   const [activeBlueprint, setActiveBlueprint] = useState<BlueprintId>("operon");
-
   const blueprint = BLUEPRINTS[activeBlueprint];
 
   return (
     <div className="w-full space-y-12 sm:space-y-16 pb-12">
       {/* 1. EDITORIAL SYSTEM ARCHITECTURE HEADER */}
       <header className="space-y-4 pt-2">
-        <div className="flex items-center gap-3">
-          <span className="text-[11px] font-mono font-medium uppercase tracking-[0.16em] text-cyan-600 dark:text-cyan-400">
-            SYSTEM ARCHITECTURE · PROCESS &amp; RELATIONSHIPS
-          </span>
-          <span className="h-px w-8 bg-zinc-300 dark:bg-zinc-800" />
-          <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
-            How I Connect Ideas Into Software
-          </span>
-        </div>
-
-        <div className="space-y-2 max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white font-display leading-[1.1]">
-            ENGINEERING ECOSYSTEM <br />
-            <span className="text-zinc-500 dark:text-zinc-400">&amp; SYSTEM BLUEPRINTS</span>
-          </h1>
-          <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans pt-1">
-            Software is rarely an isolated card—it is an interconnected ecosystem of state machines, telemetry pipelines, mathematical invariants, and human-in-the-loop governance.
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="SYSTEM ARCHITECTURE · PROCESS &amp; RELATIONSHIPS"
+          title={<>ENGINEERING ECOSYSTEM <br /><span className="text-zinc-400 dark:text-zinc-500 font-normal">&amp; SYSTEM BLUEPRINTS</span></>}
+          description="Software is rarely an isolated card—it is an interconnected ecosystem of state machines, telemetry pipelines, mathematical invariants, and human-in-the-loop governance."
+        />
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-zinc-500 pt-1">
           <span className="font-semibold text-zinc-800 dark:text-zinc-200">4 Verified Architectures</span>
           <span>·</span>
           <span>End-to-End Delivery Lifecycle</span>
           <span>·</span>
-          <span className="text-cyan-600 dark:text-cyan-400">SIH 2026 Collaboration Case Study</span>
+          <span className="text-purple-700 dark:text-purple-400 font-medium">SIH 2026 Collaboration Case Study</span>
         </div>
       </header>
 
       {/* 2. THE 5-STAGE ENGINEERING DELIVERY LIFECYCLE */}
       <section className="space-y-6">
-        <div className="space-y-1.5">
-          <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+        <div className="space-y-2">
+          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
             PHASE 01 — DELIVERY LIFECYCLE
           </span>
           <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
@@ -222,12 +206,12 @@ export function EcosystemPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
           {[
             {
               step: "01",
               name: "Constraint Modeling",
-              focus: "Scope & Mathematical Invariants",
+              focus: "Scope & Invariants",
               desc: "Deconstruct the core problem into boundary conditions, rate limits, and failure modes before writing any code."
             },
             {
@@ -239,7 +223,7 @@ export function EcosystemPage() {
             {
               step: "03",
               name: "Edge Prototyping",
-              focus: "Micro-benchmarks & Isolation",
+              focus: "Micro-benchmarks",
               desc: "Validate algorithmic bottlenecks, API response latencies, and critical paths in isolated test harnesses."
             },
             {
@@ -251,31 +235,27 @@ export function EcosystemPage() {
             {
               step: "05",
               name: "Telemetry & Audit",
-              focus: "Continuous Observability",
+              focus: "Observability",
               desc: "Expose real-time health checkpoints, live GitHub commit logs, and auditable execution journals."
             }
           ].map((phase, idx) => (
             <div
               key={phase.step}
-              className={`p-4 rounded-xl border transition-all flex flex-col justify-between space-y-3 ${
-                isLight 
-                  ? "bg-white border-slate-200/90 shadow-sm hover:border-slate-300" 
-                  : "bg-zinc-950/40 border-zinc-850 hover:border-zinc-800"
-              }`}
+              className="card p-4 flex flex-col justify-between space-y-3"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400">
+                  <span className="text-xs font-mono font-bold text-purple-700 dark:text-purple-400">
                     STEP {phase.step}
                   </span>
-                  <span className="text-[10px] font-mono text-zinc-400">
+                  <span className="text-xs font-mono text-zinc-400">
                     {idx < 4 ? "→" : "✔"}
                   </span>
                 </div>
                 <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 font-display">
                   {phase.name}
                 </h3>
-                <span className="text-[11px] font-mono text-zinc-500 block">
+                <span className="text-xs font-mono text-zinc-500 block">
                   {phase.focus}
                 </span>
                 <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans pt-1">
@@ -287,10 +267,10 @@ export function EcosystemPage() {
         </div>
       </section>
 
-      {/* 3. INTERACTIVE SYSTEM BLUEPRINTS (THE 4 CORE SYSTEMS) */}
+      {/* 3. INTERACTIVE SYSTEM BLUEPRINTS (THE 4 VERIFIED SYSTEMS) */}
       <section className="space-y-6">
-        <div className="space-y-1.5">
-          <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+        <div className="space-y-2">
+          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
             PHASE 02 — ARCHITECTURAL BLUEPRINTS
           </span>
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
@@ -311,21 +291,20 @@ export function EcosystemPage() {
           {[
             { id: "operon", label: "Operon: Multi-Agent AI", icon: Cpu },
             { id: "mausam", label: "Mausam: Weather Telemetry", icon: CloudRain },
-            { id: "memory", label: "Memory-in-Motion: RNN Lab", icon: Binary },
-            { id: "routeledger", label: "RouteLedger: HOS Router", icon: Truck }
+            { id: "yolo", label: "YOLO: Edge Computer Vision", icon: Eye },
+            { id: "portfolio", label: "Portfolio: Full-Stack Architecture", icon: Globe }
           ].map((tab) => {
             const Icon = tab.icon;
             const isSelected = activeBlueprint === tab.id;
             return (
               <button
                 key={tab.id}
+                type="button"
                 onClick={() => setActiveBlueprint(tab.id as BlueprintId)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-mono flex items-center gap-2 transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-lg text-xs font-mono flex items-center gap-2 transition-all cursor-pointer ${
                   isSelected
-                    ? "bg-cyan-500 text-white font-semibold shadow-sm"
-                    : isLight
-                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
-                    : "bg-zinc-900/60 hover:bg-zinc-800 text-zinc-400 border border-zinc-800 hover:text-white"
+                    ? "btn-primary !py-2 !px-3.5"
+                    : "btn-secondary !py-2 !px-3.5"
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -336,17 +315,15 @@ export function EcosystemPage() {
         </div>
 
         {/* Active Blueprint Detail Card */}
-        <div className={`p-6 sm:p-8 rounded-2xl border transition-all space-y-8 ${
-          isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-        }`}>
+        <div className="card p-6 sm:p-8 space-y-8">
           {/* Header & Meta */}
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-6 border-b border-zinc-200 dark:border-zinc-850">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-6 border-b border-zinc-250/70 dark:border-white/[0.08]">
             <div className="space-y-2 max-w-2xl">
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 font-semibold border border-cyan-500/20">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span className="text-xs font-mono px-2.5 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border border-purple-200 dark:border-purple-800/40">
                   {blueprint.category}
                 </span>
-                <span className="text-[11px] font-mono text-zinc-500">
+                <span className="text-xs font-mono text-zinc-500">
                   {blueprint.status}
                 </span>
               </div>
@@ -358,31 +335,26 @@ export function EcosystemPage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2.5 shrink-0">
               <a
                 href={blueprint.repoUrl}
                 target="_blank"
                 rel="noreferrer"
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono border flex items-center gap-1.5 transition-colors ${
-                  isLight 
-                    ? "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-300" 
-                    : "bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-zinc-800"
-                }`}
+                className="btn btn-secondary !py-2 !px-3.5 !text-xs font-mono"
               >
                 <GitBranch className="w-3.5 h-3.5" />
                 <span>Source Code</span>
-                <ExternalLink className="w-2.5 h-2.5 opacity-60" />
+                <ExternalLink className="w-3 h-3 opacity-60" />
               </a>
               {blueprint.liveUrl && (
                 <a
                   href={blueprint.liveUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-3 py-1.5 rounded-lg text-xs font-mono bg-cyan-600 hover:bg-cyan-500 text-white flex items-center gap-1.5 transition-colors font-medium"
+                  className="btn btn-primary !py-2 !px-3.5 !text-xs font-mono"
                 >
-                  <Sparkles className="w-3.5 h-3.5" />
                   <span>Live App</span>
-                  <ExternalLink className="w-2.5 h-2.5" />
+                  <ExternalLink className="w-3 h-3" />
                 </a>
               )}
             </div>
@@ -393,11 +365,9 @@ export function EcosystemPage() {
             {blueprint.stats.map((st) => (
               <div
                 key={st.label}
-                className={`p-3 rounded-xl border ${
-                  isLight ? "bg-slate-50 border-slate-200/80" : "bg-zinc-900/40 border-zinc-850"
-                }`}
+                className="p-3.5 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-0.5"
               >
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase">
+                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wider">
                   {st.label}
                 </span>
                 <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 font-sans">
@@ -413,7 +383,7 @@ export function EcosystemPage() {
               <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
                 System Topology &amp; Discrete Processing Stages
               </h4>
-              <span className="text-[11px] font-mono text-zinc-500">
+              <span className="text-xs font-mono text-zinc-500">
                 Left-to-Right Execution Pipeline
               </span>
             </div>
@@ -421,19 +391,17 @@ export function EcosystemPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {blueprint.nodes.map((node, i) => {
                 const typeColors = {
-                  input: isLight ? "bg-sky-50 text-sky-700 border-sky-200" : "bg-sky-950/30 text-sky-400 border-sky-800/40",
-                  process: isLight ? "bg-purple-50 text-purple-700 border-purple-200" : "bg-purple-950/30 text-purple-400 border-purple-800/40",
-                  decision: isLight ? "bg-amber-50 text-amber-700 border-amber-200" : "bg-amber-950/30 text-amber-400 border-amber-800/40",
-                  storage: isLight ? "bg-emerald-50 text-emerald-700 border-emerald-200" : "bg-emerald-950/30 text-emerald-400 border-emerald-800/40",
-                  output: isLight ? "bg-rose-50 text-rose-700 border-rose-200" : "bg-rose-950/30 text-rose-400 border-rose-800/40"
+                  input: "bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800/40",
+                  process: "bg-purple-50 dark:bg-purple-950/30 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800/40",
+                  decision: "bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40",
+                  storage: "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/40",
+                  output: "bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800/40"
                 }[node.type];
 
                 return (
                   <div
                     key={node.name}
-                    className={`p-3.5 rounded-xl border flex flex-col justify-between space-y-2 ${
-                      isLight ? "bg-slate-50/70 border-slate-200/90" : "bg-zinc-900/30 border-zinc-850"
-                    }`}
+                    className="p-3.5 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] flex flex-col justify-between space-y-2"
                   >
                     <div className="space-y-1">
                       <div className="flex items-center justify-between">
@@ -462,12 +430,10 @@ export function EcosystemPage() {
             <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
               Data Flow Transitions &amp; State Handshakes
             </h4>
-            <div className={`p-4 rounded-xl border space-y-2 text-xs font-mono ${
-              isLight ? "bg-slate-50 border-slate-200 text-slate-700" : "bg-zinc-900/20 border-zinc-850 text-zinc-300"
-            }`}>
+            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2 text-xs font-mono text-zinc-700 dark:text-zinc-300">
               {blueprint.connections.map((conn, idx) => (
                 <div key={idx} className="flex items-start gap-2.5">
-                  <span className="text-cyan-500 font-bold mt-0.5">↳</span>
+                  <span className="text-purple-600 dark:text-purple-400 font-bold mt-0.5">↳</span>
                   <span className="leading-relaxed">{conn}</span>
                 </div>
               ))}
@@ -483,13 +449,9 @@ export function EcosystemPage() {
               {blueprint.invariants.map((inv, idx) => (
                 <div
                   key={idx}
-                  className={`p-3 rounded-xl border flex items-start gap-2.5 text-xs font-sans leading-relaxed ${
-                    isLight 
-                      ? "bg-emerald-50/50 border-emerald-200/80 text-emerald-900" 
-                      : "bg-emerald-950/20 border-emerald-800/30 text-emerald-300"
-                  }`}
+                  className="p-3.5 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/30 text-emerald-900 dark:text-emerald-300 flex items-start gap-2.5 text-xs font-sans leading-relaxed"
                 >
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-500 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400 mt-0.5" />
                   <span>{inv}</span>
                 </div>
               ))}
@@ -500,8 +462,8 @@ export function EcosystemPage() {
 
       {/* 4. RELATIONAL INTERCONNECT MATRIX */}
       <section className="space-y-6">
-        <div className="space-y-1.5">
-          <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+        <div className="space-y-2">
+          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
             PHASE 03 — INTERDISCIPLINARY COUPLING
           </span>
           <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
@@ -522,9 +484,9 @@ export function EcosystemPage() {
             },
             {
               domainA: "Algorithmic Foundations (C++)",
-              domainB: "Graph & Logistics Engines",
+              domainB: "State Machine Ledgers",
               relation: "Asymptotic Complexity Bounds",
-              details: "Optimal space-time recurrence relations proven in LeetCode practice are translated into commercial fleet routing solvers (RouteLedger) to prevent combinatorial explosion."
+              details: "Optimal space-time recurrence relations and graph traversals proven in algorithmic practice are embedded directly into state machine execution routines to prevent latency spikes."
             },
             {
               domainA: "Multi-Agent Systems",
@@ -536,19 +498,17 @@ export function EcosystemPage() {
               domainA: "Geospatial Telemetry",
               domainB: "Resilient Offline Caching",
               relation: "Sub-100ms Hydration",
-              details: "Multi-provider weather APIs are normalized through resilient edge workers and cached in client IndexedDB / localStorage to provide instant responsiveness in rural connectivity zones."
+              details: "Multi-provider weather APIs are normalized through resilient edge workers and cached in client storage to provide instant responsiveness even in rural connectivity zones."
             }
           ].map((item, idx) => (
             <div
               key={idx}
-              className={`p-5 rounded-2xl border space-y-3 transition-all ${
-                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-              }`}
+              className="card p-5 space-y-3"
             >
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-cyan-600 dark:text-cyan-400 font-bold">{item.domainA}</span>
+                <span className="text-purple-700 dark:text-purple-400 font-semibold">{item.domainA}</span>
                 <span className="text-zinc-400">↔</span>
-                <span className="text-purple-600 dark:text-purple-400 font-bold">{item.domainB}</span>
+                <span className="text-emerald-700 dark:text-emerald-400 font-semibold">{item.domainB}</span>
               </div>
               <h4 className="text-base font-bold font-display text-zinc-900 dark:text-white">
                 {item.relation}
@@ -563,8 +523,8 @@ export function EcosystemPage() {
 
       {/* 5. TEAM COLLABORATION CASE STUDY: SIH 2026 */}
       <section className="space-y-6">
-        <div className="space-y-1.5">
-          <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+        <div className="space-y-2">
+          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
             PHASE 04 — RAPID COLLABORATION CASE STUDY
           </span>
           <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
@@ -575,12 +535,10 @@ export function EcosystemPage() {
           </p>
         </div>
 
-        <div className={`p-6 sm:p-8 rounded-2xl border space-y-6 ${
-          isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-        }`}>
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-zinc-200 dark:border-zinc-850">
+        <div className="card p-6 sm:p-8 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-zinc-250/70 dark:border-white/[0.08]">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-600 dark:text-cyan-400">
+              <div className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 text-purple-700 dark:text-purple-300">
                 <Users className="w-5 h-5" />
               </div>
               <div>
@@ -592,15 +550,13 @@ export function EcosystemPage() {
                 </span>
               </div>
             </div>
-            <span className="text-xs font-mono px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-semibold self-start sm:self-auto">
+            <span className="text-xs font-mono px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-semibold self-start sm:self-auto">
               Verified Submission
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className={`p-4 rounded-xl border space-y-2 ${
-              isLight ? "bg-slate-50 border-slate-200" : "bg-zinc-900/30 border-zinc-850"
-            }`}>
+            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2">
               <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
                 01. Contract-First API Mocking
               </h4>
@@ -609,20 +565,16 @@ export function EcosystemPage() {
               </p>
             </div>
 
-            <div className={`p-4 rounded-xl border space-y-2 ${
-              isLight ? "bg-slate-50 border-slate-200" : "bg-zinc-900/30 border-zinc-850"
-            }`}>
+            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2">
               <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
                 02. Feature Isolation &amp; Git Hygiene
               </h4>
               <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
-                Used scoped branch naming (<span className="font-mono text-cyan-600 dark:text-cyan-400">feat/aqi-thresholds</span>, <span className="font-mono text-cyan-600 dark:text-cyan-400">feat/tide-chart</span>) and pull request peer reviews to ensure atomic commits and zero merge conflicts during deadline crunches.
+                Used scoped branch naming (<span className="font-mono text-purple-700 dark:text-purple-400">feat/aqi-thresholds</span>, <span className="font-mono text-purple-700 dark:text-purple-400">feat/tide-chart</span>) and pull request peer reviews to ensure atomic commits and zero merge conflicts during deadline crunches.
               </p>
             </div>
 
-            <div className={`p-4 rounded-xl border space-y-2 ${
-              isLight ? "bg-slate-50 border-slate-200" : "bg-zinc-900/30 border-zinc-850"
-            }`}>
+            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2">
               <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
                 03. Automated Edge CI/CD
               </h4>

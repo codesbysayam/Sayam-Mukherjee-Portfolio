@@ -37,28 +37,28 @@ function ProjectCardComponent({
     : "recently";
 
   return (
-    <article className="rounded-2xl p-5 sm:p-6 border border-zinc-200/90 dark:border-white/[0.08] hover:border-cyan-500/40 dark:hover:border-cyan-500/40 transition-all duration-300 flex flex-col justify-between group bg-white dark:bg-[#11131c]/90 relative shadow-sm hover:shadow-xl dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)]">
-      {/* Top Meta Bar: Category, Status & Featured tag if applicable */}
+    <article className="card p-5 sm:p-6 flex flex-col justify-between group transition-all duration-200">
+      {/* Top Meta Bar: Category & Status */}
       <div className="space-y-3.5 flex-1">
         <div className="flex items-center justify-between gap-2 flex-wrap">
-          <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200 dark:border-cyan-800/40 px-2.5 py-0.5 rounded-full">
-            {project.category}
+          <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 px-2.5 py-0.5 rounded-md">
+            {project.categoryLabel || project.category}
           </span>
 
           <div className="flex items-center gap-1.5">
             {isFeaturedCandidate && (
-              <span className="text-[9px] font-mono uppercase px-2 py-0.5 rounded-full bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30">
-                Featured System
+              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-700 dark:text-purple-300 border border-purple-500/20">
+                Lead System
               </span>
             )}
-            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
+            <span className={`text-[10px] font-mono px-2 py-0.5 rounded-md border font-medium ${
               project.statusType === "live"
                 ? "bg-emerald-50 dark:bg-emerald-950/40 border-emerald-300 dark:border-emerald-800/40 text-emerald-700 dark:text-emerald-400"
                 : project.statusType === "hackathon"
                 ? "bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800/40 text-amber-700 dark:text-amber-300"
                 : project.statusType === "active"
-                ? "bg-cyan-50 dark:bg-cyan-950/40 border-cyan-300 dark:border-cyan-800/40 text-cyan-700 dark:text-cyan-300"
-                : "bg-purple-50 dark:bg-purple-950/40 border-purple-300 dark:border-purple-800/40 text-purple-700 dark:text-purple-300"
+                ? "bg-purple-50 dark:bg-purple-950/40 border-purple-300 dark:border-purple-800/40 text-purple-700 dark:text-purple-300"
+                : "bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300"
             }`}>
               {project.status}
             </span>
@@ -67,53 +67,55 @@ function ProjectCardComponent({
 
         {/* Title and Subtitle */}
         <div className="space-y-1">
-          <h3 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-white font-display group-hover:text-cyan-600 dark:group-hover:text-cyan-300 transition-colors">
+          <h3 className="text-xl sm:text-2xl font-bold text-zinc-900 dark:text-white font-display group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
             {project.title}
           </h3>
           {project.subtitle && (
-            <p className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 font-medium line-clamp-1">
+            <p className="text-xs font-mono text-zinc-500 dark:text-zinc-400 font-medium">
               {project.subtitle}
             </p>
           )}
         </div>
 
-        {/* Real 2-3 Line Description */}
-        <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans line-clamp-3">
+        {/* What it actually is (1-2 clear sentences) */}
+        <p className="text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
           {project.shortDescription}
         </p>
 
-        {/* Key Architectural Highlight */}
-        {project.highlights && project.highlights.length > 0 && (
-          <div className="pt-2 border-t border-zinc-100 dark:border-white/[0.06]">
-            <div className="flex items-start gap-2 text-[11px] text-zinc-700 dark:text-zinc-300 leading-snug">
-              <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 dark:text-cyan-400 shrink-0 mt-0.5" />
-              <span>{project.highlights[0]}</span>
-            </div>
+        {/* Why it was built */}
+        {project.whyItExists && (
+          <div className="p-3 rounded-lg bg-zinc-50 dark:bg-white/[0.02] border border-zinc-200/60 dark:border-white/[0.04] space-y-1">
+            <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-semibold block">
+              Why it exists:
+            </span>
+            <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+              {project.whyItExists}
+            </p>
           </div>
         )}
       </div>
 
       {/* Card Lower Section: Tech Stack, Live Telemetry & Actions */}
-      <div className="pt-5 mt-4 border-t border-zinc-100 dark:border-white/[0.06] space-y-4">
-        {/* Tech Stack Pills */}
-        <div className="flex flex-wrap gap-1">
+      <div className="pt-4 mt-4 border-t border-zinc-200/80 dark:border-white/[0.06] space-y-3.5">
+        {/* Actual tech stack tags (clean pills, max 4-6) */}
+        <div className="flex flex-wrap gap-1.5">
           {project.techStack.slice(0, 5).map((tech, idx) => (
             <span
               key={idx}
-              className="text-[10px] font-mono px-2 py-0.5 rounded-lg bg-zinc-100 dark:bg-white/[0.04] text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-white/[0.06]"
+              className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-white/[0.04] text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-white/[0.06]"
             >
               {tech}
             </span>
           ))}
           {project.techStack.length > 5 && (
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-lg bg-zinc-100 dark:bg-white/[0.04] text-zinc-500 border border-zinc-200 dark:border-white/[0.06]">
+            <span className="text-[11px] font-mono px-1.5 py-0.5 rounded-md bg-zinc-100 dark:bg-white/[0.04] text-zinc-500 border border-zinc-200 dark:border-white/[0.06]">
               +{project.techStack.length - 5}
             </span>
           )}
         </div>
 
         {/* GitHub Telemetry Row */}
-        <div className="flex items-center justify-between text-[11px] font-mono text-zinc-500 dark:text-zinc-400 pt-1">
+        <div className="flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
           <div className="flex items-center gap-1.5">
             <span 
               className="w-2 h-2 rounded-full inline-block shrink-0" 
@@ -139,16 +141,16 @@ function ProjectCardComponent({
         </div>
 
         {/* Action Controls */}
-        <div className="pt-2 flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5 flex-wrap">
+        <div className="pt-2 flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-900/80 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-300 hover:text-black dark:hover:text-white border border-zinc-300 dark:border-zinc-800 text-[11px] font-mono transition-colors"
+              className="btn btn-secondary !py-1.5 !px-3 !text-xs"
               title="Open GitHub Repository"
             >
-              <Github className="w-3 h-3" />
+              <Github className="w-3.5 h-3.5" />
               <span>GitHub ↗</span>
             </a>
 
@@ -158,10 +160,10 @@ function ProjectCardComponent({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/30 text-[11px] font-mono font-medium transition-colors"
+                className="btn btn-secondary !py-1.5 !px-3 !text-xs !text-purple-700 dark:!text-purple-300"
                 title="Launch Live Deployment"
               >
-                <ExternalLink className="w-3 h-3" />
+                <ExternalLink className="w-3.5 h-3.5" />
                 <span>Demo ↗</span>
               </a>
             )}
@@ -169,7 +171,7 @@ function ProjectCardComponent({
 
           <button
             onClick={() => onSelectCaseStudy(project)}
-            className="inline-flex items-center gap-1 text-xs font-mono font-semibold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 cursor-pointer transition-colors p-1"
+            className="btn btn-ghost !py-1.5 !px-2.5 !text-xs text-purple-700 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300"
           >
             <span>Case Study</span>
             <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />

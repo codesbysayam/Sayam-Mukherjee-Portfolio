@@ -10,7 +10,7 @@ import { FeaturedProject } from "./projects/FeaturedProject";
 import { ProjectCard } from "./projects/ProjectCard";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
 
-type FilterCategory = "ALL" | "FULL-STACK" | "AI & SYSTEMS" | "DSA";
+type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "DSA";
 
 function ProjectsShowcaseComponent() {
   const { theme } = usePortfolio();
@@ -66,24 +66,24 @@ function ProjectsShowcaseComponent() {
     setFeaturedProjectId((prev) => (prev === "mausam" ? "operon" : "mausam"));
   };
 
-  // Category Filter Definitions with dynamic item counts
+  // Category Filter Definitions with exact prompt specification
   const categoryFilters: { id: FilterCategory; label: string; count: number }[] = useMemo(() => {
     return [
-      { id: "ALL", label: "ALL", count: PROJECTS.length },
+      { id: "ALL", label: "All", count: PROJECTS.length },
       {
-        id: "FULL-STACK",
-        label: "FULL-STACK",
-        count: PROJECTS.filter((p) => p.categoryFilter === "FULL-STACK").length
+        id: "AI / ML",
+        label: "AI / ML",
+        count: PROJECTS.filter((p) => p.id === "operon" || p.id === "yolo").length
       },
       {
-        id: "AI & SYSTEMS",
-        label: "AI & SYSTEMS",
-        count: PROJECTS.filter((p) => p.categoryFilter === "SYSTEMS" || p.categoryFilter === "AI / ML" || p.id === "operon" || p.id === "yolo" || p.id === "memory-in-motion").length
+        id: "FULL-STACK",
+        label: "Full-Stack",
+        count: PROJECTS.filter((p) => p.id === "mausam" || p.id === "portfolio" || p.id === "operon").length
       },
       {
         id: "DSA",
-        label: "DSA PRACTICE",
-        count: PROJECTS.filter((p) => p.categoryFilter === "DSA" || p.id === "sayam-solves").length
+        label: "DSA",
+        count: PROJECTS.filter((p) => p.id === "sayam-solves").length
       }
     ];
   }, []);
@@ -95,14 +95,12 @@ function ProjectsShowcaseComponent() {
     return PROJECTS.filter((project) => {
       // Category Match
       if (selectedCategory !== "ALL") {
-        if (selectedCategory === "FULL-STACK") {
-          if (project.categoryFilter !== "FULL-STACK") return false;
-        } else if (selectedCategory === "AI & SYSTEMS") {
-          const isAiSys = project.categoryFilter === "SYSTEMS" || project.categoryFilter === "AI / ML" || project.id === "operon" || project.id === "yolo" || project.id === "memory-in-motion";
-          if (!isAiSys) return false;
+        if (selectedCategory === "AI / ML") {
+          if (project.id !== "operon" && project.id !== "yolo") return false;
+        } else if (selectedCategory === "FULL-STACK") {
+          if (project.id !== "mausam" && project.id !== "portfolio" && project.id !== "operon") return false;
         } else if (selectedCategory === "DSA") {
-          const isDsa = project.categoryFilter === "DSA" || project.id === "sayam-solves";
-          if (!isDsa) return false;
+          if (project.id !== "sayam-solves") return false;
         }
       }
 
@@ -123,36 +121,29 @@ function ProjectsShowcaseComponent() {
     });
   }, [selectedCategory, searchQuery]);
 
-  // Remaining projects for explorer when in "ALL" mode vs filtered
-  // When in ALL mode, the grid highlights the remaining verified projects plus featured
-  const explorerProjects = useMemo(() => {
-    if (searchQuery.trim().length > 0 || selectedCategory !== "ALL") {
-      return filteredProjects;
-    }
-    // In default ALL mode, show all 5 verified projects so visitors can browse every system
-    return filteredProjects;
-  }, [filteredProjects, searchQuery, selectedCategory]);
-
   return (
     <div className="w-full space-y-8 sm:space-y-12">
       {/* 1. COMPACT HERO */}
       <section className="space-y-4 pt-1">
         <div className="space-y-2 max-w-3xl">
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono tracking-widest text-cyan-600 dark:text-cyan-400 uppercase font-semibold">
+            <span className="text-[11px] font-mono tracking-widest text-purple-700 dark:text-purple-400 uppercase font-semibold">
               ENGINEERING ARCHIVE
             </span>
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
+            <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
             <span className="text-[11px] font-mono text-zinc-500">VERIFIED CODEBASE</span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-zinc-900 dark:text-white font-display tracking-tight leading-[1.1]">
-            ENGINEERING PROJECTS <br />
-            <span className="text-zinc-500 dark:text-zinc-400">&amp; SOFTWARE SYSTEMS</span>
+          <h1 
+            className="font-extrabold text-zinc-900 dark:text-white font-display tracking-tight leading-[1.08]"
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
+          >
+            Engineering Projects <br />
+            <span className="text-zinc-500 dark:text-zinc-400">&amp; Software Systems</span>
           </h1>
 
           <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 font-sans leading-relaxed pt-0.5">
-            A collection of software, AI/ML and systems work I’ve actually built, explored and maintained.
+            A collection of software, AI/ML, full-stack architectures, and algorithmic systems I have actually built, explored, and maintained.
           </p>
         </div>
 
@@ -165,64 +156,52 @@ function ProjectsShowcaseComponent() {
             Live GitHub Data
           </span>
           <span>·</span>
-          <span>2021–Present</span>
+          <span>2024–Present</span>
           <span className="hidden sm:inline">·</span>
-          <span className="hidden sm:inline text-cyan-600 dark:text-cyan-400 font-medium">AI · Web · Systems</span>
+          <span className="hidden sm:inline text-purple-700 dark:text-purple-400 font-medium">AI · Full-Stack · Systems · DSA</span>
         </div>
       </section>
 
-      {/* 2. FEATURED PROJECT (Full-Width Editorial Card) */}
-      <section className="w-full">
-        <FeaturedProject
-          project={featuredProject}
-          repo={repoMap[featuredProject.githubRepoName?.toLowerCase() || ""] || null}
-          onSelectCaseStudy={setSelectedCaseStudy}
-          onToggleCandidate={toggleFeaturedCandidate}
-          candidateTitle={alternativeFeaturedCandidate}
-        />
-      </section>
+      {/* 2. FEATURED PROJECT (Shown primarily in ALL mode when not searching) */}
+      {selectedCategory === "ALL" && !searchQuery.trim() && (
+        <section className="w-full">
+          <FeaturedProject
+            project={featuredProject}
+            repo={repoMap[featuredProject.githubRepoName?.toLowerCase() || ""] || null}
+            onSelectCaseStudy={setSelectedCaseStudy}
+            onToggleCandidate={toggleFeaturedCandidate}
+            candidateTitle={alternativeFeaturedCandidate}
+          />
+        </section>
+      )}
 
-      {/* 4 & 5. PROJECT EXPLORER (SEARCH + FILTER + CARDS) */}
-      <section className="space-y-6 pt-4">
+      {/* 3. PROJECT EXPLORER (SEARCH + FILTER + CARDS) */}
+      <section className="space-y-6 pt-2">
         {/* Explorer Header & Controls */}
-        <div className={`flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-5 transition-colors ${
-          isLight ? "border-slate-200" : "border-white/[0.08]"
-        }`}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200/80 dark:border-white/[0.08] pb-5">
           <div className="space-y-1">
-            <h2 className={`text-xl sm:text-2xl font-bold font-display ${
-              isLight ? "text-slate-900" : "text-white"
-            }`}>
-              PROJECT EXPLORER
+            <h2 className="text-xl sm:text-2xl font-bold font-display text-zinc-900 dark:text-white">
+              {selectedCategory === "ALL" ? "PROJECT EXPLORER" : `${selectedCategory} SYSTEMS`}
             </h2>
-            <p className={`text-xs font-mono ${
-              isLight ? "text-slate-500" : "text-zinc-400"
-            }`}>
-              {PROJECTS.length} verified projects • {filteredProjects.length} matching criteria
+            <p className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
+              Showing {filteredProjects.length} of {PROJECTS.length} verified projects
             </p>
           </div>
 
           {/* Search Input */}
           <div className="relative w-full sm:w-72">
-            <Search className={`w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 ${
-              isLight ? "text-slate-400" : "text-zinc-500"
-            }`} />
+            <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-zinc-400" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search systems, tech, algorithms..."
-              className={`w-full rounded-xl pl-9 pr-8 py-2 text-xs font-mono transition-colors focus:outline-none ${
-                isLight
-                  ? "bg-white border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-cyan-500 shadow-sm"
-                  : "bg-zinc-900/80 border border-zinc-800 text-white placeholder-zinc-500 focus:border-cyan-500/50"
-              }`}
+              className="w-full rounded-xl pl-9 pr-8 py-2 text-xs font-mono bg-white dark:bg-zinc-900/80 border border-zinc-300 dark:border-zinc-800 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:border-purple-500 shadow-xs"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className={`absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 rounded cursor-pointer ${
-                  isLight ? "text-slate-400 hover:text-slate-700" : "text-zinc-500 hover:text-white"
-                }`}
+                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 rounded text-zinc-400 hover:text-zinc-700 dark:hover:text-white cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -230,29 +209,24 @@ function ProjectsShowcaseComponent() {
           </div>
         </div>
 
-        {/* Category Filters (Horizontally scrollable with no overflow) */}
+        {/* Category Filters (Horizontally scrollable with unified buttons) */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
           {categoryFilters.map((cat) => {
             const isSelected = selectedCategory === cat.id;
             return (
               <button
                 key={cat.id}
+                type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium transition-all shrink-0 cursor-pointer flex items-center gap-1.5 border ${
-                  isSelected
-                    ? isLight
-                      ? "bg-cyan-50 text-cyan-800 border-cyan-300 shadow-sm"
-                      : "bg-cyan-500/15 text-cyan-300 border-cyan-500/40 shadow-sm"
-                    : isLight
-                    ? "bg-slate-50 text-slate-600 hover:text-slate-900 border-slate-200 hover:border-slate-300"
-                    : "bg-zinc-900/60 text-zinc-400 hover:text-zinc-200 border-zinc-850 hover:border-zinc-750"
+                className={`btn !py-1.5 !px-3.5 !text-xs ${
+                  isSelected ? "btn-primary" : "btn-secondary"
                 }`}
               >
                 <span>{cat.label}</span>
                 <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
                   isSelected 
-                    ? isLight ? "bg-cyan-100 text-cyan-900" : "bg-cyan-500/20 text-cyan-200"
-                    : isLight ? "bg-slate-200 text-slate-600" : "bg-zinc-800 text-zinc-500"
+                    ? "bg-white/20 text-white" 
+                    : "bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
                 }`}>
                   {cat.count}
                 </span>
@@ -262,22 +236,16 @@ function ProjectsShowcaseComponent() {
         </div>
 
         {/* Explorer Project Cards Grid */}
-        {explorerProjects.length === 0 ? (
-          <div className={`glass-card rounded-2xl p-12 text-center border space-y-4 ${
-            isLight ? "border-slate-200 bg-white/70" : "border-zinc-850 bg-zinc-950/40"
-          }`}>
-            <div className={`w-12 h-12 rounded-full mx-auto flex items-center justify-center border ${
-              isLight ? "bg-slate-100 border-slate-200 text-slate-400" : "bg-zinc-900 border-zinc-800 text-zinc-500"
-            }`}>
+        {filteredProjects.length === 0 ? (
+          <div className="card p-12 text-center space-y-4">
+            <div className="w-12 h-12 rounded-full mx-auto flex items-center justify-center border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 text-zinc-400">
               <Search className="w-5 h-5" />
             </div>
             <div className="space-y-1">
-              <h3 className={`text-sm font-mono font-bold uppercase tracking-wider ${
-                isLight ? "text-slate-800" : "text-zinc-300"
-              }`}>
-                NO MATCHES
+              <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
+                NO MATCHES FOUND
               </h3>
-              <p className={`text-xs font-sans ${isLight ? "text-slate-500" : "text-zinc-500"}`}>
+              <p className="text-xs font-sans text-zinc-500">
                 Try another keyword or reset the category filters.
               </p>
             </div>
@@ -286,18 +254,14 @@ function ProjectsShowcaseComponent() {
                 setSearchQuery("");
                 setSelectedCategory("ALL");
               }}
-              className={`px-4 py-2 rounded-xl text-xs font-mono border transition-colors cursor-pointer ${
-                isLight
-                  ? "bg-white hover:bg-slate-50 text-cyan-700 border-slate-300 shadow-sm"
-                  : "bg-zinc-900 hover:bg-zinc-800 text-cyan-400 border-zinc-800"
-              }`}
+              className="btn btn-secondary !py-2 !px-4 !text-xs mx-auto"
             >
               Reset Search &amp; Filters
             </button>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
-            {explorerProjects.map((project) => {
+            {filteredProjects.map((project) => {
               const repo = repoMap[project.githubRepoName?.toLowerCase() || ""] || null;
               const isLead = project.id === featuredProject.id;
               return (

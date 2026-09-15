@@ -126,17 +126,17 @@ function FeaturedProjectComponent({
           <div className="pt-2 flex items-center gap-2.5 flex-wrap">
             <button
               onClick={() => onSelectCaseStudy(project)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-100 text-xs font-mono font-semibold transition-all cursor-pointer shadow-md"
+              className="btn btn-primary"
             >
               <span>View Case Study</span>
-              <ArrowRight className="w-3.5 h-3.5 text-cyan-400 dark:text-cyan-600" />
+              <ArrowRight className="w-3.5 h-3.5" />
             </button>
 
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-zinc-100 dark:bg-zinc-900/80 hover:bg-zinc-200 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 hover:text-black dark:hover:text-white border border-zinc-300 dark:border-zinc-800 text-xs font-mono transition-colors"
+              className="btn btn-secondary"
               title="Open Repository on GitHub"
             >
               <Github className="w-3.5 h-3.5" />
@@ -148,7 +148,7 @@ function FeaturedProjectComponent({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 hover:text-cyan-800 dark:hover:text-cyan-200 border border-cyan-500/30 hover:border-cyan-500/50 text-xs font-mono font-semibold transition-colors"
+                className="btn btn-secondary"
                 title="Launch Live Deployment"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -161,7 +161,7 @@ function FeaturedProjectComponent({
         {/* RIGHT COLUMN: Real Repository Telemetry & Verified Solution (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
           {/* Engineering Solution Card */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/40 dark:bg-[#121520]/90 border border-zinc-200 dark:border-white/[0.08] space-y-2 shadow-inner">
+          <div className="card p-4 sm:p-5 space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
@@ -175,10 +175,10 @@ function FeaturedProjectComponent({
           </div>
 
           {/* GitHub Telemetry Panel */}
-          <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/40 dark:bg-[#121520]/90 border border-zinc-200 dark:border-white/[0.08] space-y-3">
+          <div className="card p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between border-b border-zinc-200 dark:border-white/[0.06] pb-2.5">
               <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 font-semibold">
-                REPOSITORY TELEMETRY
+                REPOSITORY METRICS
               </span>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -230,8 +230,8 @@ function FeaturedProjectComponent({
             </div>
 
             <div className="text-[11px] font-mono text-zinc-500 flex items-center justify-between pt-1">
-              <span>Repo: {project.githubRepoName || "anuragpathak99"}</span>
-              <span className="text-cyan-400">Public MIT</span>
+              <span>Repo: {project.githubRepoName || "codesbysayam"}</span>
+              <span className="text-purple-600 dark:text-purple-400">Public Codebase</span>
             </div>
           </div>
         </div>

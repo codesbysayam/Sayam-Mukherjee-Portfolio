@@ -172,8 +172,8 @@ function AboutSectionComponent() {
     },
     {
       period: "2026",
-      title: "Engineered Flagship Systems (Operon, Mausam, RouteLedger)",
-      description: "Built the Operon multi-agent engine, Mausam meteorological platform for SIH 2026, RouteLedger HOS compliance router, and Memory-in-Motion neural laboratory.",
+      title: "Engineered Flagship Systems (Operon, Mausam, SayamSolves)",
+      description: "Built the Operon multi-agent engine, Mausam meteorological platform for SIH 2026, SayamSolves algorithmic practice archive, and real-time computer vision workflows.",
       category: "Projects",
       icon: Rocket,
       status: "present"
@@ -193,22 +193,25 @@ function AboutSectionComponent() {
       {/* 1. EDITORIAL HEADER */}
       <header className="space-y-4 pt-2">
         <div className="flex items-center gap-3">
-          <span className="text-[11px] font-mono font-medium uppercase tracking-[0.16em] text-cyan-600 dark:text-cyan-400">
+          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-purple-700 dark:text-purple-400">
             BIOGRAPHY &amp; HUMAN CORE · ABOUT SAYAM
           </span>
-          <span className="h-px w-8 bg-zinc-300 dark:bg-zinc-800" />
-          <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
-            Who I Am, How I Think, What Drives Me
+          <span className="h-px w-8 bg-zinc-300 dark:border-white/[0.08]" />
+          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
+            Engineering Identity, Values &amp; Story
           </span>
         </div>
 
         <div className="space-y-2 max-w-3xl">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white font-display leading-[1.1]">
-            SAYAM MUKHERJEE <br />
-            <span className="text-zinc-500 dark:text-zinc-400">ENGINEER, BUILDER &amp; ATHLETE</span>
+          <h1 
+            className="font-extrabold tracking-tight text-zinc-900 dark:text-white font-display leading-[1.08]"
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
+          >
+            Sayam Mukherjee <br />
+            <span className="text-zinc-500 dark:text-zinc-400">Engineer, Builder &amp; Athlete</span>
           </h1>
           <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans pt-1">
-            Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ total community reach, district table tennis athlete, and full-stack software engineer.
+            Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ total community reach, district table tennis athlete, and software engineer.
           </p>
         </div>
 
@@ -224,13 +227,10 @@ function AboutSectionComponent() {
             return (
               <button
                 key={tab.id}
+                type="button"
                 onClick={() => setActiveTab(tab.id as any)}
-                className={`px-4 py-2 rounded-xl text-xs font-mono flex items-center gap-2 transition-all cursor-pointer ${
-                  isSelected
-                    ? "bg-cyan-500 text-white font-semibold shadow-sm"
-                    : isLight
-                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
-                    : "bg-zinc-900/60 hover:bg-zinc-800 text-zinc-400 border border-zinc-800 hover:text-white"
+                className={`btn !py-2 !px-4 !text-xs ${
+                  isSelected ? "btn-primary" : "btn-secondary"
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -250,17 +250,15 @@ function AboutSectionComponent() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
-            className="space-y-12"
+            transition={{ duration: 0.2 }}
+            className="space-y-10"
           >
             {/* Biography & Profile Hero Card */}
-            <div className={`p-6 sm:p-8 rounded-2xl border ${
-              isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-            }`}>
+            <div className="card p-6 sm:p-8">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                 {/* Photo & Essential Badges */}
                 <div className="lg:col-span-4 space-y-4">
-                  <div className="aspect-square w-full rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 relative bg-zinc-100 dark:bg-zinc-900">
+                  <div className="aspect-square w-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 relative bg-zinc-100 dark:bg-zinc-900">
                     <img 
                       src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
                       alt="Sayam Mukherjee" 
@@ -268,9 +266,7 @@ function AboutSectionComponent() {
                     />
                   </div>
 
-                  <div className={`p-4 rounded-xl border space-y-2 text-xs font-mono ${
-                    isLight ? "bg-slate-50 border-slate-200 text-slate-600" : "bg-zinc-900/40 border-zinc-850 text-zinc-400"
-                  }`}>
+                  <div className="p-4 rounded-xl border border-zinc-200/80 dark:border-white/[0.06] bg-zinc-50/70 dark:bg-white/[0.02] space-y-2 text-xs font-mono text-zinc-600 dark:text-zinc-400">
                     <div className="flex justify-between">
                       <span>Location:</span>
                       <span className="font-semibold text-zinc-900 dark:text-zinc-200">Hooghly / Bhubaneswar, India</span>
@@ -292,7 +288,7 @@ function AboutSectionComponent() {
 
                 {/* Narrative Text */}
                 <div className="lg:col-span-8 space-y-4">
-                  <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 font-semibold">
+                  <span className="text-xs font-mono uppercase tracking-wider text-purple-700 dark:text-purple-400 font-semibold">
                     PERSONAL STORY &amp; MOTIVATION
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-bold font-display text-zinc-900 dark:text-white">
@@ -307,16 +303,14 @@ function AboutSectionComponent() {
                       At age 16, I founded my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which has now reached an organic audience of over 10,000 learners. Running these channels and operating an independent digital marketing agency taught me how real users consume information: they value clarity, speed, and genuine utility above buzzwords.
                     </p>
                     <p>
-                      In software engineering, I apply this same philosophy. I don’t build toy applications or decorative cards; I build end-to-end operational systems like <strong>Operon</strong> (a multi-agent AI engine with non-bypassable human governance), <strong>Mausam</strong> (an IMD-grounded climate platform for SIH 2026), and <strong>RouteLedger</strong> (a graph-routing engine enforcing federal trucker rest mandates).
+                      In software engineering, I apply this same philosophy. I build end-to-end operational systems like <strong>Operon</strong> (a multi-agent AI engine with non-bypassable human governance), <strong>Mausam</strong> (an IMD-grounded climate platform for SIH 2026), and <strong>SayamSolves</strong> (a verified competitive programming archive).
                     </p>
                   </div>
 
                   {/* Quote Banner */}
-                  <div className={`mt-4 p-4 rounded-xl border flex items-start gap-3 ${
-                    isLight ? "bg-slate-50 border-slate-200 text-slate-700" : "bg-zinc-900/30 border-zinc-850 text-zinc-300"
-                  }`}>
-                    <Quote className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
-                    <p className="text-xs sm:text-sm italic font-sans leading-relaxed">
+                  <div className="mt-4 p-4 rounded-xl border border-zinc-200/80 dark:border-white/[0.06] bg-zinc-50/70 dark:bg-white/[0.02] flex items-start gap-3">
+                    <Quote className="w-5 h-5 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" />
+                    <p className="text-xs sm:text-sm italic font-sans leading-relaxed text-zinc-700 dark:text-zinc-300">
                       "I believe great engineering is not about writing the maximum amount of code, but about constructing reliable boundaries where systems fail gracefully and users feel empowered."
                     </p>
                   </div>
@@ -327,7 +321,7 @@ function AboutSectionComponent() {
             {/* Operating Values & Principles */}
             <div className="space-y-4">
               <div className="space-y-1">
-                <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
                   CORE PRINCIPLES
                 </span>
                 <h3 className="text-xl font-bold font-display text-zinc-900 dark:text-white">
@@ -336,16 +330,14 @@ function AboutSectionComponent() {
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                {values.map((v, i) => {
+                {values.map((v) => {
                   const Icon = v.icon;
                   return (
                     <div
                       key={v.name}
-                      className={`p-4 rounded-xl border space-y-2 ${
-                        isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
-                      }`}
+                      className="card p-4 space-y-2"
                     >
-                      <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
+                      <div className="flex items-center gap-2 text-purple-700 dark:text-purple-400">
                         <Icon className="w-4 h-4" />
                         <h4 className="text-sm font-bold font-display text-zinc-900 dark:text-zinc-100">
                           {v.name}
@@ -363,11 +355,9 @@ function AboutSectionComponent() {
             {/* Strengths & Honest Areas of Improvement */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Strengths */}
-              <div className={`p-6 rounded-2xl border space-y-4 ${
-                isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
-              }`}>
+              <div className="card p-6 space-y-4">
                 <div className="space-y-1">
-                  <span className="text-[11px] font-mono font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                  <span className="text-xs font-mono font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
                     PROVEN CAPACITIES
                   </span>
                   <h3 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
@@ -379,7 +369,7 @@ function AboutSectionComponent() {
                   {strengths.map((s, idx) => (
                     <div key={idx} className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                         <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 font-sans">
                           {s.title}
                         </h4>
@@ -393,11 +383,9 @@ function AboutSectionComponent() {
               </div>
 
               {/* Areas for Growth */}
-              <div className={`p-6 rounded-2xl border space-y-4 ${
-                isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
-              }`}>
+              <div className="card p-6 space-y-4">
                 <div className="space-y-1">
-                  <span className="text-[11px] font-mono font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                  <span className="text-xs font-mono font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">
                     SELF-REFLECTION
                   </span>
                   <h3 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
@@ -412,7 +400,7 @@ function AboutSectionComponent() {
                         <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 font-sans">
                           {imp.title}
                         </h4>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
                           {imp.area}
                         </span>
                       </div>
@@ -428,7 +416,7 @@ function AboutSectionComponent() {
             {/* Beyond the Screen / Extracurriculars */}
             <div className="space-y-4">
               <div className="space-y-1">
-                <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
                   LIFE BEYOND THE SCREEN
                 </span>
                 <h3 className="text-xl font-bold font-display text-zinc-900 dark:text-white">
@@ -442,11 +430,9 @@ function AboutSectionComponent() {
                   return (
                     <div
                       key={idx}
-                      className={`p-4 rounded-xl border space-y-2 ${
-                        isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
-                      }`}
+                      className="card p-4 space-y-2"
                     >
-                      <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                      <Icon className="w-5 h-5 text-purple-700 dark:text-purple-400" />
                       <h4 className="text-sm font-bold font-display text-zinc-900 dark:text-zinc-100">
                         {e.name}
                       </h4>
@@ -468,11 +454,11 @@ function AboutSectionComponent() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="space-y-8"
           >
             <div className="space-y-1">
-              <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+              <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
                 LIVED CHRONOLOGY
               </span>
               <h3 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
@@ -483,9 +469,7 @@ function AboutSectionComponent() {
               </p>
             </div>
 
-            <div className={`relative border-l ml-3 sm:ml-6 pl-6 sm:pl-8 space-y-8 py-2 ${
-              isLight ? "border-slate-300" : "border-zinc-800"
-            }`}>
+            <div className="relative border-l ml-3 sm:ml-6 pl-6 sm:pl-8 space-y-8 py-2 border-zinc-250/70 dark:border-white/[0.08]">
               {engineeringJourney.map((item, idx) => {
                 const Icon = item.icon;
                 const isCurrent = item.status === "present";
@@ -498,32 +482,28 @@ function AboutSectionComponent() {
                       isCurrent
                         ? "bg-emerald-500 border-emerald-300 ring-4 ring-emerald-500/20"
                         : isFuture
-                        ? "bg-cyan-500 border-cyan-300"
-                        : isLight
-                        ? "bg-white border-slate-400 group-hover:border-cyan-500"
-                        : "bg-zinc-900 border-zinc-700 group-hover:border-cyan-400"
+                        ? "bg-purple-600 border-purple-300"
+                        : "bg-zinc-200 dark:bg-zinc-800 border-zinc-400 dark:border-zinc-600 group-hover:border-purple-500"
                     }`} />
 
-                    <div className={`p-4 sm:p-5 rounded-xl border transition-all ${
-                      isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-                    }`}>
+                    <div className="card p-4 sm:p-5 transition-all">
                       <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5">
                         <div className="flex items-center gap-2">
                           <span className={`text-xs font-mono font-bold ${
                             isCurrent 
-                              ? "text-emerald-600 dark:text-emerald-400" 
+                              ? "text-emerald-700 dark:text-emerald-400" 
                               : isFuture
-                              ? "text-cyan-600 dark:text-cyan-400"
+                              ? "text-purple-700 dark:text-purple-400"
                               : "text-zinc-500"
                           }`}>
                             {item.period}
                           </span>
-                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-white/[0.04] text-zinc-600 dark:text-zinc-400 border border-zinc-250/70 dark:border-white/[0.06]">
                             {item.category}
                           </span>
                         </div>
                         {isCurrent && (
-                          <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                          <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                             ACTIVE PHASE
                           </span>
@@ -551,11 +531,11 @@ function AboutSectionComponent() {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             className="space-y-8"
           >
             <div className="space-y-1">
-              <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+              <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
                 ACADEMIC CREDENTIALS
               </span>
               <h3 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
@@ -565,12 +545,10 @@ function AboutSectionComponent() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* KIIT University */}
-              <div className={`p-6 rounded-2xl border space-y-3 ${
-                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-              }`}>
-                <div className="flex items-center justify-between text-xs font-mono text-cyan-600 dark:text-cyan-400 font-semibold">
+              <div className="card p-6 space-y-3">
+                <div className="flex items-center justify-between text-xs font-mono text-purple-700 dark:text-purple-400 font-semibold">
                   <span>2025 – PRESENT</span>
-                  <span className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">UNDERGRADUATE</span>
+                  <span className="px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40">UNDERGRADUATE</span>
                 </div>
                 <h4 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
                   B.Tech in Computer Science Engineering
@@ -584,12 +562,10 @@ function AboutSectionComponent() {
               </div>
 
               {/* High School / CBSE */}
-              <div className={`p-6 rounded-2xl border space-y-3 ${
-                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-              }`}>
-                <div className="flex items-center justify-between text-xs font-mono text-cyan-600 dark:text-cyan-400 font-semibold">
+              <div className="card p-6 space-y-3">
+                <div className="flex items-center justify-between text-xs font-mono text-purple-700 dark:text-purple-400 font-semibold">
                   <span>CBSE BOARD EXAMINATIONS</span>
-                  <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">TOP HONORS</span>
+                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">TOP HONORS</span>
                 </div>
                 <h4 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
                   Aditya Birla Vani Bharati
@@ -598,11 +574,11 @@ function AboutSectionComponent() {
                   Secondary &amp; Senior Secondary Education
                 </p>
                 <div className="pt-2 space-y-1.5 text-xs font-mono">
-                  <div className="flex justify-between p-2 rounded bg-zinc-100 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06]">
                     <span>Class 10 CBSE Board (2023):</span>
                     <span className="font-bold text-zinc-900 dark:text-zinc-100">92.6%</span>
                   </div>
-                  <div className="flex justify-between p-2 rounded bg-zinc-100 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+                  <div className="flex justify-between p-2.5 rounded-lg bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06]">
                     <span>Class 12 CBSE Board (2025):</span>
                     <span className="font-bold text-zinc-900 dark:text-zinc-100">86.2%</span>
                   </div>
@@ -612,7 +588,7 @@ function AboutSectionComponent() {
 
             {/* Key Honors */}
             <div className="space-y-3">
-              <h4 className="text-sm font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
                 Verified Honors &amp; Competitions
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -624,11 +600,9 @@ function AboutSectionComponent() {
                 ].map((h, i) => (
                   <div
                     key={i}
-                    className={`p-4 rounded-xl border space-y-1 ${
-                      isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
-                    }`}
+                    className="card p-4 space-y-1"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     <h5 className="text-xs font-bold font-sans text-zinc-900 dark:text-zinc-100 pt-1">
                       {h.title}
                     </h5>

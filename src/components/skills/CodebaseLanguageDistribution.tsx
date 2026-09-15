@@ -27,14 +27,14 @@ const LANGUAGE_ROLES: LanguageRole[] = [
     language: "TypeScript",
     role: "System architecture, full-stack microservices, and React application state",
     category: "Primary Stack",
-    sourcePath: "operon, mausam, routeledger, portfolio",
+    sourcePath: "operon, mausam, portfolio",
     icon: Layers
   },
   {
     language: "Python",
-    role: "Edge computer vision, recurrent hidden-state simulation, and data pipelines",
+    role: "Edge computer vision, deep learning inference, and data pipelines",
     category: "AI & Systems",
-    sourcePath: "yolo, memory-in-motion, tools/*",
+    sourcePath: "yolo, tools/*",
     icon: ShieldCheck
   },
   {
@@ -110,13 +110,13 @@ export function CodebaseLanguageDistribution() {
   return (
     <section id="language-distribution" className="space-y-5">
       {/* Section Header */}
-      <div className="space-y-1.5">
+      <div className="space-y-2">
         <div className="flex items-center gap-3">
-          <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-600 dark:text-cyan-400">
-            01 — GITHUB REPOSITORY LANGUAGE DISTRIBUTION
+          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-purple-700 dark:text-purple-400">
+            GITHUB REPOSITORY LANGUAGE DISTRIBUTION
           </span>
-          <span className="h-px w-8 bg-zinc-300 dark:bg-zinc-800" />
-          <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
+          <span className="h-px w-8 bg-zinc-300 dark:border-white/[0.08]" />
+          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
             Aggregated Multi-Repo Byte Distribution
           </span>
         </div>
@@ -125,20 +125,18 @@ export function CodebaseLanguageDistribution() {
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">
             Repository Byte Distribution
           </h2>
-          <span className="text-[11px] font-mono text-zinc-500">
+          <span className="text-xs font-mono text-zinc-500">
             {sourceType}
           </span>
         </div>
 
         <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans leading-relaxed">
-          Aggregated bytes calculated directly from Sayam&apos;s verified public repositories on GitHub (<span className="font-mono text-zinc-700 dark:text-zinc-300">mausam</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">operon</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">routeledger</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">memory-in-motion</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">sayam-solves</span>, and portfolio).
+          Aggregated bytes calculated directly from Sayam&apos;s verified public repositories on GitHub (<span className="font-mono text-zinc-700 dark:text-zinc-300">mausam</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">operon</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">sayam-solves</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">yolo</span>, and portfolio).
         </p>
       </div>
 
       {/* Main Container */}
-      <div className={`p-5 sm:p-6 rounded-2xl border transition-colors space-y-6 ${
-        isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
-      }`}>
+      <div className="card p-5 sm:p-6 space-y-6">
         {/* Dynamic Proportional Distribution Bar */}
         <div className="space-y-2.5">
           <div className="flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">

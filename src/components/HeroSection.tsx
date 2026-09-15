@@ -117,13 +117,14 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
             </div>
 
             {/* Main Editorial Headline */}
-            <h1 className={`hero-title font-extrabold tracking-tight font-display ${
-              isLight ? "text-slate-900" : "text-white"
-            }`}>
+            <h1 
+              className="font-extrabold tracking-tight font-display text-zinc-900 dark:text-white leading-[1.05]"
+              style={{ fontSize: "clamp(3rem, 6vw, 6.5rem)" }}
+            >
               Designing the Next{" "}
               <span className={
                 isLight
-                  ? "text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-indigo-600 to-sky-600 font-extrabold"
+                  ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-indigo-600 to-cyan-700"
                   : "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-300"
               }>
                 Standard of Software
@@ -131,123 +132,89 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
             </h1>
 
             {/* Role Subtitle */}
-            <p className={`text-base sm:text-lg md:text-xl font-mono mt-3.5 sm:mt-4 font-semibold tracking-tight ${
-              isLight ? "text-slate-800" : "text-zinc-200"
-            }`}>
+            <p 
+              className="font-mono mt-4 font-semibold tracking-tight text-zinc-800 dark:text-zinc-200"
+              style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.35rem)" }}
+            >
               I am a Future AI Engineer.
             </p>
 
-            {/* Genuine Student Background */}
-            <p className={`text-xs sm:text-sm leading-relaxed max-w-xl mt-2.5 ${
-              isLight ? "text-slate-700 font-normal" : "text-zinc-400"
-            }`}>
-              2nd Year (3rd Sem) B.Tech CSE (AI &amp; ML) student at KIIT Bhubaneswar. Building intelligent web systems, machine learning applications, and purposeful software.
+            {/* 2-Sentence Summary of Actual Focus */}
+            <p className="text-sm sm:text-base leading-relaxed max-w-xl mt-3 text-zinc-600 dark:text-zinc-400 font-normal">
+              Engineering intelligent systems, full-stack architectures, algorithms, and machine learning models. 
+              Currently in 2nd Year (3rd Sem) B.Tech CSE at KIIT University, building purposeful software with verified GitHub codebases.
             </p>
 
-            {/* Direct Calls to Action */}
-            <div className="flex flex-wrap items-center gap-3 pt-5 sm:pt-6">
+            {/* Two Actions Only: Primary & Secondary */}
+            <div className="flex flex-wrap items-center gap-3.5 pt-6 sm:pt-7">
               <button
                 type="button"
                 onClick={onViewWork}
-                className={`px-5 sm:px-6 py-3 rounded-xl font-mono text-xs sm:text-sm font-bold tracking-wide transition-all cursor-pointer hover:scale-[1.02] active:scale-[0.98] ${
-                  isLight
-                    ? "bg-slate-950 text-white hover:bg-violet-700 shadow-md hover:shadow-violet-600/20"
-                    : "bg-white text-zinc-950 hover:bg-zinc-100 shadow-lg hover:shadow-xl"
-                }`}
+                className="btn btn-primary"
               >
-                View My Work
+                <span>View my work</span>
+                <ArrowUpRight className="w-4 h-4" />
               </button>
               <a
                 href="https://github.com/codesbysayam"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`inline-flex items-center gap-2 px-4.5 sm:px-5 py-3 rounded-xl font-mono text-xs sm:text-sm font-semibold transition-all cursor-pointer border ${
-                  isLight
-                    ? "bg-white hover:bg-slate-50 text-slate-800 border-slate-300 hover:border-violet-400 shadow-xs"
-                    : "bg-white/[0.04] hover:bg-white/[0.08] text-white border-white/10 hover:border-white/20"
-                }`}
+                className="btn btn-secondary"
               >
-                <span>GitHub</span>
-                <span className={isLight ? "text-slate-500" : "text-zinc-400"}>↗</span>
+                <Github className="w-4 h-4" />
+                <span>GitHub ↗</span>
               </a>
             </div>
           </div>
 
           {/* ==================================================
-              RIGHT COLUMN: COMPACT SUPPORTING GITHUB PANEL
+              RIGHT COLUMN: CLEAN GITHUB PULSE CARD
               ================================================== */}
           <div className="flex flex-col items-start lg:items-end w-full">
             <div 
               id="hero-github-card"
-              className={`signal-card build-card w-full max-w-[440px] rounded-2xl p-4 sm:p-5 backdrop-blur-2xl transition-all duration-300 group flex flex-col justify-between select-text ${
-                isLight
-                  ? "bg-white border border-slate-200/90 shadow-[0_16px_40px_-12px_rgba(15,23,42,0.1)] hover:border-violet-400/60"
-                  : "bg-zinc-950/75 border border-white/[0.1] shadow-xl hover:border-purple-500/30"
-              }`}
+              className="card w-full max-w-[440px] p-5 sm:p-6 transition-all duration-300 flex flex-col justify-between select-text shadow-lg"
             >
-              {/* Top Bar: Live Status & Re-sync */}
-              <div className={`flex items-center justify-between gap-2 pb-3 border-b text-[11px] ${
-                isLight ? "border-slate-100" : "border-white/[0.08]"
-              }`}>
-                <div className="flex items-center gap-2 min-w-0">
-                  <span className="relative flex h-2 w-2 shrink-0">
-                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
-                      isLight ? "bg-emerald-500" : "bg-emerald-400"
-                    }`} />
-                    <span className={`relative inline-flex rounded-full h-2 w-2 ${
-                      isLight ? "bg-emerald-600" : "bg-emerald-500"
-                    }`} />
+              {/* Top Bar: Live Status, Verified Tag & Re-sync */}
+              <div className="flex items-center justify-between gap-2 pb-4 border-b border-zinc-200/80 dark:border-white/[0.08]">
+                <div className="flex items-center gap-2">
+                  <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
                   </span>
-                  <span className={`font-mono font-bold tracking-wider text-[10px] uppercase shrink-0 px-2 py-0.5 rounded-md border ${
-                    isLight
-                      ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                      : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-                  }`}>
-                    LIVE SYNCED
-                  </span>
-                  <span className={`font-mono text-[10px] truncate ${
-                    isLight ? "text-slate-600" : "text-zinc-500"
-                  }`}>
-                    · {formatSyncAge(syncedAt)}
+                  <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
+                    Verified GitHub
                   </span>
                 </div>
 
-                <div className="flex items-center gap-1.5 shrink-0">
+                <div className="flex items-center gap-2">
+                  <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+                    {formatSyncAge(syncedAt)}
+                  </span>
                   <button
                     type="button"
                     onClick={() => refresh()}
                     disabled={loading}
-                    title="Force re-sync live GitHub telemetry"
-                    className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full border transition-colors cursor-pointer text-[10px] font-mono disabled:opacity-40 ${
-                      isLight
-                        ? "bg-slate-100/80 hover:bg-slate-200/80 border-slate-200 text-slate-700 hover:text-slate-900"
-                        : "bg-white/[0.04] hover:bg-white/[0.09] border-white/[0.08] hover:border-white/20 text-zinc-400 hover:text-white"
-                    }`}
+                    title="Refresh live GitHub data"
+                    className="btn btn-ghost !p-1.5 !min-h-0 text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                     aria-label="Refresh live GitHub data"
                   >
-                    <RotateCw className={`w-2.5 h-2.5 ${loading ? "animate-spin text-purple-400" : ""}`} />
-                    <span>Sync</span>
+                    <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-purple-400" : ""}`} />
                   </button>
                 </div>
               </div>
 
               {/* Profile Identity Bar */}
-              <div className={`flex items-center justify-between gap-3 pt-3 pb-3 border-b ${
-                isLight ? "border-slate-100" : "border-white/[0.08]"
-              }`}>
+              <div className="flex items-center justify-between gap-3 py-4 border-b border-zinc-200/80 dark:border-white/[0.08]">
                 <a
                   href={user?.html_url || "https://github.com/codesbysayam"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2.5 min-w-0 group/profile flex-1"
+                  className="flex items-center gap-3 min-w-0 group/profile flex-1"
                   title="View Sayam's GitHub Profile"
                 >
                   <div className="relative shrink-0">
-                    <div className={`w-9 h-9 rounded-full overflow-hidden border transition-colors shadow-inner ${
-                      isLight
-                        ? "border-slate-200 bg-slate-100 group-hover/profile:border-violet-500/50"
-                        : "border-white/15 bg-zinc-900 group-hover/profile:border-purple-400/50"
-                    }`}>
+                    <div className="w-11 h-11 rounded-full overflow-hidden border border-zinc-200 dark:border-white/15 bg-zinc-100 dark:bg-zinc-900 shadow-sm">
                       <img
                         src={user?.avatar_url || "https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"}
                         onError={(e) => {
@@ -255,37 +222,23 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                         }}
                         referrerPolicy="no-referrer"
                         alt={user?.name || "Sayam Mukherjee"}
-                        width={36}
-                        height={36}
+                        width={44}
+                        height={44}
                         className="w-full h-full object-cover"
                         loading="lazy"
                       />
                     </div>
-                    <span className={`absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-emerald-500 border-2 rounded-full ${
-                      isLight ? "border-white" : "border-zinc-950"
-                    }`} />
                   </div>
 
                   <div className="flex flex-col min-w-0">
-                    <div className="flex items-center gap-1.5 leading-tight">
-                      <span className={`text-xs sm:text-sm font-bold transition-colors whitespace-nowrap ${
-                        isLight ? "text-slate-900 group-hover/profile:text-violet-700" : "text-white group-hover/profile:text-purple-300"
-                      }`}>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-sm font-bold text-zinc-900 dark:text-white group-hover/profile:text-purple-600 dark:group-hover/profile:text-purple-400 transition-colors truncate">
                         {user?.name || "Sayam Mukherjee"}
                       </span>
-                      <Github className={`w-3 h-3 shrink-0 ${isLight ? "text-slate-500" : "text-zinc-400"}`} />
                     </div>
-                    <div className={`flex flex-wrap items-center gap-x-1.5 text-[10px] mt-0.5 ${
-                      isLight ? "text-slate-600" : "text-zinc-400"
-                    }`}>
-                      <span className={`font-semibold ${isLight ? "text-violet-700" : "text-purple-300/90"}`}>
-                        @{user?.login || "codesbysayam"}
-                      </span>
-                      <span className={isLight ? "text-slate-400" : "text-zinc-600"}>·</span>
-                      <span className={isLight ? "text-slate-700" : "text-zinc-400"}>
-                        {user?.location || "Kolkata, India"}
-                      </span>
-                    </div>
+                    <span className="text-xs font-mono font-medium text-purple-700 dark:text-purple-400">
+                      @{user?.login || "codesbysayam"}
+                    </span>
                   </div>
                 </a>
 
@@ -293,209 +246,97 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                   href={user?.html_url || "https://github.com/codesbysayam"}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`shrink-0 p-1.5 rounded-lg border transition-colors ${
-                    isLight
-                      ? "bg-slate-100/80 hover:bg-slate-200/80 border-slate-200 text-slate-700 hover:text-slate-950"
-                      : "bg-white/[0.04] hover:bg-white/[0.08] border-white/[0.08] text-zinc-400 hover:text-white"
-                  }`}
+                  className="btn btn-ghost !p-2 !min-h-0 text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                   title="Open GitHub Profile"
+                  aria-label="Open GitHub Profile"
                 >
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  <ArrowUpRight className="w-4 h-4" />
                 </a>
               </div>
 
-              {/* Currently Building Showcase */}
-              <div className="py-2.5 space-y-2">
-                <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <span className={`inline-flex items-center gap-1.5 text-[9px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md border ${
-                    isLight
-                      ? "text-violet-800 bg-violet-50 border-violet-200"
-                      : "text-purple-400 bg-purple-950/40 border-purple-800/40"
-                  }`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${isLight ? "bg-violet-600" : "bg-purple-400"}`} />
-                    CURRENTLY BUILDING
-                  </span>
-                  <span className={`text-[10px] font-sans ${isLight ? "text-slate-600 font-medium" : "text-zinc-500"}`}>
-                    Updated {formatRelativeTime(latestRepo?.updated_at)}
-                  </span>
+              {/* 3 Real GitHub Metrics */}
+              <div className="grid grid-cols-3 gap-2 py-3.5 border-b border-zinc-200/80 dark:border-white/[0.08] text-center">
+                <div className="space-y-0.5">
+                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
+                    {user ? user.public_repos : repos.length || 5}
+                  </div>
+                  <div className="text-[11px] font-sans text-zinc-500 dark:text-zinc-400 font-medium">
+                    Repositories
+                  </div>
                 </div>
 
-                <a
-                  href={latestRepo?.html_url || "https://github.com/codesbysayam"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group/repo block"
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className={`text-[13px] font-bold transition-colors tracking-normal leading-snug break-words ${
-                      isLight ? "text-slate-900 group-hover/repo:text-violet-700" : "text-white group-hover/repo:text-purple-300"
-                    }`}>
-                      {latestRepo ? latestRepo.name : (loading ? "Fetching repositories..." : "Public Repositories")}
-                    </h3>
-                    <ArrowUpRight className={`w-3.5 h-3.5 transition-transform shrink-0 mt-0.5 group-hover/repo:translate-x-0.5 group-hover/repo:-translate-y-0.5 ${
-                      isLight ? "text-slate-500 group-hover/repo:text-violet-700" : "text-zinc-400 group-hover/repo:text-purple-300"
-                    }`} />
+                <div className="space-y-0.5 border-x border-zinc-200/80 dark:border-white/[0.08]">
+                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
+                    {stats?.totalStars ?? 0}
                   </div>
-                </a>
+                  <div className="text-[11px] font-sans text-zinc-500 dark:text-zinc-400 font-medium">
+                    Stars Earned
+                  </div>
+                </div>
 
-                <p className={`text-[11px] leading-relaxed line-clamp-2 break-words ${
-                  isLight ? "text-slate-700 font-normal" : "text-zinc-300/90"
-                }`}>
-                  {latestRepo?.description ||
-                    (loading
-                      ? "Connecting to GitHub public repository feed..."
-                      : "Public open-source repository by Sayam Mukherjee.")}
-                </p>
-
-                {/* Language & Metrics Row */}
-                <div className="flex flex-wrap items-center gap-2 pt-0.5 text-xs font-sans">
-                  {latestRepo?.language && (
-                    <span className={`inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md border text-[10px] font-semibold ${
-                      isLight
-                        ? "bg-slate-100 border-slate-200 text-slate-800"
-                        : "bg-white/[0.04] border-white/[0.08] text-zinc-200"
-                    }`}>
-                      <span
-                        className="w-2 h-2 rounded-full shrink-0"
-                        style={{ backgroundColor: getLanguageColor(latestRepo.language) }}
-                      />
-                      <span>{latestRepo.language}</span>
-                    </span>
-                  )}
-
-                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[10px] ${
-                    isLight
-                      ? "bg-slate-100 border-slate-200 text-slate-800 font-medium"
-                      : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
-                  }`}>
-                    <Star className={`w-2.5 h-2.5 shrink-0 ${isLight ? "text-amber-500 fill-amber-500" : "text-amber-400"}`} />
-                    <span>{latestRepo?.stargazers_count ?? 0}</span>
-                  </span>
-
-                  <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md border text-[10px] ${
-                    isLight
-                      ? "bg-slate-100 border-slate-200 text-slate-700"
-                      : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
-                  }`}>
-                    <GitFork className={`w-2.5 h-2.5 shrink-0 ${isLight ? "text-slate-500" : "text-zinc-400"}`} />
-                    <span>{latestRepo?.forks_count ?? 0}</span>
-                  </span>
+                <div className="space-y-0.5">
+                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
+                    {user?.followers ?? 0}
+                  </div>
+                  <div className="text-[11px] font-sans text-zinc-500 dark:text-zinc-400 font-medium">
+                    Followers
+                  </div>
                 </div>
               </div>
 
-              {/* Latest Verified Commit Box */}
-              <div
-                id="hero-latest-commit-box"
-                className={`rounded-xl border p-2 font-mono text-[11px] space-y-1 my-1 transition-colors ${
-                  isLight
-                    ? "bg-slate-900 text-slate-100 border-slate-800 shadow-xs"
-                    : "bg-[#0b0d14] text-zinc-200 border-white/[0.08]"
-                }`}
-              >
-                <div className="flex items-center justify-between text-[9px] text-zinc-400 border-b border-white/[0.08] pb-1">
-                  <div className="flex items-center gap-1.5">
-                    <Terminal className="w-3 h-3 text-cyan-400" />
-                    <span className="text-zinc-300 font-bold">git log -1</span>
-                    <span>·</span>
-                    <span className="text-cyan-300 font-semibold">{latestCommitInfo.repoName}</span>
-                  </div>
-                  <span className="text-zinc-400">{latestCommitInfo.time}</span>
+              {/* Latest Real Push / Commit Signal */}
+              <div className="pt-3.5 space-y-2">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-mono text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                    <GitCommit className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
+                    LATEST COMMIT
+                  </span>
+                  <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+                    {latestCommitInfo.time}
+                  </span>
                 </div>
+
                 <a
                   href={latestCommitInfo.commitUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block hover:text-cyan-300 transition-colors line-clamp-1 leading-relaxed text-[10px]"
-                  title={latestCommitInfo.message}
+                  className="block p-2.5 rounded-lg bg-zinc-100 dark:bg-white/[0.04] border border-zinc-200/60 dark:border-white/[0.06] hover:border-purple-400 dark:hover:border-purple-500/40 transition-colors group/commit"
                 >
-                  <span className="text-emerald-400 font-bold mr-1.5">$</span>
-                  <span className="text-zinc-200">{latestCommitInfo.message}</span>
+                  <div className="flex items-center gap-1.5 text-[11px] font-mono text-purple-700 dark:text-purple-300 font-semibold mb-1">
+                    <span>{latestCommitInfo.repoName}</span>
+                    <span className="text-zinc-400">/</span>
+                    <span className="text-zinc-500 dark:text-zinc-400">{latestCommitInfo.branch}</span>
+                    <span className="text-zinc-400">@</span>
+                    <span className="text-cyan-600 dark:text-cyan-400">{latestCommitInfo.sha}</span>
+                  </div>
+                  <p className="text-xs text-zinc-700 dark:text-zinc-300 font-mono line-clamp-1 group-hover/commit:text-purple-600 dark:group-hover/commit:text-purple-300 transition-colors">
+                    {latestCommitInfo.message}
+                  </p>
                 </a>
               </div>
 
-              {/* Compact Metrics Strip */}
-              <div className={`grid grid-cols-3 gap-1.5 py-2 px-2.5 rounded-xl border text-center my-1 ${
-                isLight
-                  ? "bg-slate-50/90 border-slate-200/90 text-slate-800"
-                  : "bg-white/[0.025] border-white/[0.06]"
-              }`}>
-                <div className="space-y-0.5 min-w-0">
-                  <div className={`text-xs sm:text-sm font-bold font-mono leading-none ${
-                    isLight ? "text-slate-900" : "text-white"
-                  }`}>
-                    {user ? user.public_repos : repos.length || 4}
-                  </div>
-                  <div className={`text-[8px] font-sans tracking-wider uppercase font-semibold truncate ${
-                    isLight ? "text-slate-600" : "text-zinc-400"
-                  }`}>
-                    Public Repos
-                  </div>
-                </div>
-
-                <div className={`space-y-0.5 border-x min-w-0 ${
-                  isLight ? "border-slate-200" : "border-white/[0.08]"
-                }`}>
-                  <div className={`text-xs sm:text-sm font-bold font-mono leading-none truncate ${
-                    isLight ? "text-violet-700" : "text-purple-300"
-                  }`}>
-                    TypeScript
-                  </div>
-                  <div className={`text-[8px] font-sans tracking-wider uppercase font-semibold truncate ${
-                    isLight ? "text-slate-600" : "text-zinc-400"
-                  }`}>
-                    Primary Lang
-                  </div>
-                </div>
-
-                <div className="space-y-0.5 min-w-0">
-                  <div className={`text-xs sm:text-sm font-bold font-mono leading-none ${
-                    isLight ? "text-emerald-700" : "text-emerald-400"
-                  }`}>
-                    Verified
-                  </div>
-                  <div className={`text-[8px] font-sans tracking-wider uppercase font-semibold truncate ${
-                    isLight ? "text-slate-600" : "text-zinc-400"
-                  }`}>
-                    GitHub Feed
-                  </div>
-                </div>
-              </div>
-
-              {/* Bottom Actions Bar */}
-              <div className={`pt-2 mt-1 border-t flex items-center justify-between text-[11px] font-sans ${
-                isLight ? "border-slate-100" : "border-white/[0.08]"
-              }`}>
+              {/* Card Footer Link */}
+              <div className="pt-4 mt-2 border-t border-zinc-200/80 dark:border-white/[0.08] flex items-center justify-between text-xs">
                 <a
                   href="#live-build-feed"
                   onClick={(e) => {
                     e.preventDefault();
                     document.getElementById("live-build-feed")?.scrollIntoView({ behavior: "smooth" });
                   }}
-                  className={`font-semibold transition-colors flex items-center gap-1 cursor-pointer ${
-                    isLight ? "text-violet-700 hover:text-violet-900" : "text-purple-400 hover:text-purple-300"
-                  }`}
+                  className="font-semibold text-purple-700 dark:text-purple-400 hover:underline flex items-center gap-1 cursor-pointer"
                 >
-                  <span>Explore all repos</span>
+                  <span>Explore all verified repositories</span>
                   <span>↓</span>
                 </a>
-
                 <a
                   href="https://github.com/codesbysayam"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`transition-colors flex items-center gap-1 group/link font-medium ${
-                    isLight ? "text-slate-600 hover:text-slate-900" : "text-zinc-400 hover:text-white"
-                  }`}
+                  className="font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
                 >
-                  <span>Profile</span>
-                  <span className={`group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform ${
-                    isLight ? "text-violet-600" : "text-purple-400"
-                  }`}>
-                    ↗
-                  </span>
+                  github.com/codesbysayam ↗
                 </a>
               </div>
-
             </div>
           </div>
         </div>

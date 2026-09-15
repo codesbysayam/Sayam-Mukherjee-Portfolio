@@ -190,36 +190,20 @@ export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
     topics: ["backend", "business-automation", "express", "multi-agent-ai", "nodejs", "reactjs"]
   },
   {
-    id: 1362000001,
-    name: "Memory-in-Motion",
-    full_name: "codesbysayam/Memory-in-Motion",
-    html_url: "https://github.com/codesbysayam/Memory-in-Motion",
-    description: "Interactive mechanistic laboratory exploring recurrent memory, hidden-state dynamics, and the compression vs interference trade-off.",
-    language: "TypeScript",
+    id: 1362000003,
+    name: "yolo",
+    full_name: "codesbysayam/yolo",
+    html_url: "https://github.com/codesbysayam/yolo",
+    description: "Real-time edge computer vision object detection pipeline and tracking experimentation.",
+    language: "Python",
     stargazers_count: 0,
     forks_count: 0,
-    updated_at: "2026-09-14T00:00:00Z",
-    pushed_at: "2026-09-14T00:00:00Z",
-    created_at: "2026-09-10T00:00:00Z",
+    updated_at: "2026-08-20T12:00:00Z",
+    pushed_at: "2026-08-20T12:00:00Z",
+    created_at: "2026-08-15T12:00:00Z",
     fork: false,
     homepage: "",
-    topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
-  },
-  {
-    id: 1362000002,
-    name: "RouteLedger",
-    full_name: "codesbysayam/RouteLedger",
-    html_url: "https://github.com/codesbysayam/RouteLedger",
-    description: "Commercial Driver Route & Hours-of-Service Planner.",
-    language: "TypeScript",
-    stargazers_count: 0,
-    forks_count: 0,
-    updated_at: "2026-09-14T00:00:00Z",
-    pushed_at: "2026-09-14T00:00:00Z",
-    created_at: "2026-09-12T00:00:00Z",
-    fork: false,
-    homepage: "",
-    topics: ["route-planning", "logistics", "hours-of-service", "typescript", "react"]
+    topics: ["computer-vision", "yolo", "python", "edge-ai"]
   }
 ];
 
@@ -873,26 +857,15 @@ export const VERIFIED_GITHUB_FALLBACK: GitHubStatsData = {
       topics: ["backend", "business-automation", "express", "multi-agent-ai", "nodejs", "reactjs"]
     },
     {
-      name: "Memory-in-Motion",
-      fullName: "codesbysayam/Memory-in-Motion",
-      description: "Interactive mechanistic laboratory exploring recurrent memory, hidden-state dynamics, and the compression vs interference trade-off.",
+      name: "yolo",
+      fullName: "codesbysayam/yolo",
+      description: "Real-time edge computer vision object detection pipeline and tracking experimentation.",
       stars: 0,
       forks: 0,
-      language: "TypeScript",
-      url: "https://github.com/codesbysayam/Memory-in-Motion",
-      updatedAt: "2026-09-14T00:00:00Z",
-      topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
-    },
-    {
-      name: "RouteLedger",
-      fullName: "codesbysayam/RouteLedger",
-      description: "Commercial Driver Route & Hours-of-Service Planner.",
-      stars: 0,
-      forks: 0,
-      language: "TypeScript",
-      url: "https://github.com/codesbysayam/RouteLedger",
-      updatedAt: "2026-09-14T00:00:00Z",
-      topics: ["route-planning", "logistics", "hours-of-service", "typescript", "react"]
+      language: "Python",
+      url: "https://github.com/codesbysayam/yolo",
+      updatedAt: "2026-08-20T12:00:00Z",
+      topics: ["computer-vision", "yolo", "python", "edge-ai"]
     }
   ],
   recentCommits: [

@@ -20,46 +20,55 @@ html[data-theme="dark"] {
      EDITORIAL DESIGN SYSTEM TOKENS (Dark Mode Default)
      ======================================================================== */
 
-  /* Global Surface Architecture (Section 09) */
-  --bg: #07080c;
-  --surface: #0d1017;
-  --surface-raised: #12151e;
-  --surface-soft: #171a24;
+  --bg: #07070a;
+  --surface: #101116;
+  --surface-2: #15161c;
+  --surface-3: #1b1c23;
 
-  /* Typographic Contrast Hierarchy */
-  --text: #f5f6f8;
-  --text-secondary: #b3b6c0;
-  --text-muted: #777b88;
+  --text: #f5f5f7;
+  --text-secondary: #a7a7b0;
+  --text-muted: #73737d;
   --text-faint: #525666;
 
-  /* Semantic Accent Palette (Section 10 - Purposeful & Restrained) */
-  --purple: #8b5cf6;  /* AI / ML / experimentation */
-  --purple-bright: #a78bfa;
-  --cyan: #22d3ee;    /* systems / engineering / live data */
-  --blue: #60a5fa;    /* web / infrastructure */
-  --green: #34d399;   /* live / verified / available */
-  --amber: #fbbf24;   /* achievement / competition / milestone */
-
-  /* Restrained Border Hierarchy (Section 14) */
-  --border: rgba(255, 255, 255, 0.08);
-  --border-strong: rgba(255, 255, 255, 0.13);
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.14);
   --border-subtle: rgba(255, 255, 255, 0.05);
 
-  /* Elevation Shadows (Section 15 - Non-neon, authentic elevation) */
+  --accent: #a855f7;
+  --accent-2: #22d3ee;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --container: 1440px;
+
+  /* Aliases & Semantic Accent Palette */
+  --purple: var(--accent);
+  --purple-bright: #c084fc;
+  --cyan: var(--accent-2);
+  --blue: #60a5fa;
+  --green: var(--success);
+  --amber: var(--warning);
+
+  --surface-raised: var(--surface-2);
+  --surface-soft: var(--surface-3);
+
   --shadow: 0 18px 50px rgba(0, 0, 0, 0.20);
   --shadow-elevated: 0 24px 60px rgba(0, 0, 0, 0.32);
-
-  /* Mathematical Spacing System (Section 06) */
-  --space-1: 0.35rem;
-  --space-2: 0.6rem;
-  --space-3: 0.9rem;
-  --space-4: 1.25rem;
-  --space-5: 1.75rem;
-  --space-6: 2.5rem;
-  --space-7: 3.5rem;
-  --space-8: 5rem;
-  --space-9: 7rem;
-  --space-10: 9rem;
 
   /* Backward Compatibility Mappings */
   --bg-0: var(--bg);
@@ -67,7 +76,6 @@ html[data-theme="dark"] {
   --bg-2: var(--surface-raised);
   --surface-0: var(--surface);
   --surface-1: var(--surface-raised);
-  --surface-2: var(--surface-soft);
 
   --page-bg: var(--bg);
   --surface-primary: var(--surface);
@@ -82,7 +90,7 @@ html[data-theme="dark"] {
   --text-primary: var(--text);
 
   --accent-purple: var(--purple);
-  --accent-purple-glow: rgba(139, 92, 246, 0.10);
+  --accent-purple-glow: rgba(168, 85, 247, 0.10);
   --accent-cyan: var(--cyan);
   --accent-cyan-glow: rgba(34, 211, 238, 0.10);
   --accent-emerald: var(--green);
@@ -98,44 +106,66 @@ html[data-theme="dark"] {
   --chart-tooltip-text: #f5f6f8;
 
   /* Central Compact Type Scale Tokens */
-  --text-2xs: 0.6875rem; /* 11px - metadata, micro badges */
-  --text-xs: 0.75rem;    /* 12px - labels, status pills, tags */
-  --text-sm: 0.84375rem; /* 13.5px - secondary descriptions, nav links */
-  --text-base: 0.9375rem;/* 15px - standard readable body copy */
-  --text-md: 1.03125rem; /* 16.5px - lead paragraphs */
-  --text-lg: 1.1875rem;  /* 19px - card / project titles */
-  --text-xl: 1.375rem;   /* 22px - prominent project names, metrics */
-  --text-2xl: 1.625rem;  /* 26px - subheadings */
-  --text-3xl: 2.125rem;  /* 34px - section titles */
-  --text-4xl: clamp(2.2rem, 4vw, 3.4rem); /* primary page headings */
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.84375rem; /* 13.5px */
+  --text-base: 0.9375rem;/* 15px */
+  --text-md: 1.03125rem; /* 16.5px */
+  --text-lg: 1.1875rem;  /* 19px */
+  --text-xl: 1.375rem;   /* 22px */
+  --text-2xl: 1.625rem;  /* 26px */
+  --text-3xl: 2.125rem;  /* 34px */
+  --text-4xl: clamp(2.2rem, 4vw, 3.4rem);
 }
 
 html.light,
 html[data-theme="light"] {
-  /* Global Surface Architecture (Section 32) */
-  --bg: #f4f5f8;
-  --surface: #ffffff;
-  --surface-raised: #ffffff;
-  --surface-soft: #f8f9fc;
+  --bg: #f6f7fb;
+  --surface: rgba(255, 255, 255, 0.86);
+  --surface-2: #ffffff;
+  --surface-3: #f0f1f6;
 
-  /* Typographic Contrast Hierarchy */
-  --text: #15151b;
-  --text-secondary: #555866;
-  --text-muted: #7d808d;
+  --text: #17171c;
+  --text-secondary: #5e606b;
+  --text-muted: #858792;
   --text-faint: #94a3b8;
 
-  /* Semantic Accent Palette */
-  --purple: #7138d8;
-  --purple-bright: #7c3aed;
-  --cyan: #089bb5;
-  --blue: #2563eb;
-  --green: #059669;
-  --amber: #d97706;
-
-  /* Restrained Border Hierarchy */
   --border: rgba(20, 20, 35, 0.10);
   --border-strong: rgba(20, 20, 35, 0.16);
   --border-subtle: rgba(20, 20, 35, 0.07);
+
+  --accent: #7c3aed;
+  --accent-2: #0891b2;
+  --success: #059669;
+  --warning: #d97706;
+  --danger: #dc2626;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --container: 1440px;
+
+  /* Aliases & Semantic Accent Palette */
+  --purple: var(--accent);
+  --purple-bright: #6d28d9;
+  --cyan: var(--accent-2);
+  --blue: #2563eb;
+  --green: var(--success);
+  --amber: var(--warning);
+
+  --surface-raised: var(--surface-2);
+  --surface-soft: var(--surface-3);
 
   --shadow: 0 10px 30px -4px rgba(15, 23, 42, 0.08);
   --shadow-elevated: 0 20px 45px -8px rgba(15, 23, 42, 0.12);
@@ -146,7 +176,6 @@ html[data-theme="light"] {
   --bg-2: #e2e8f0;
   --surface-0: rgba(255, 255, 255, 0.92);
   --surface-1: var(--surface);
-  --surface-2: var(--surface-soft);
 
   --page-bg: var(--bg);
   --surface-primary: var(--surface);
@@ -162,9 +191,9 @@ html[data-theme="light"] {
 
   --accent-purple: var(--purple);
   --accent-purple-hover: #5b21b6;
-  --accent-purple-glow: rgba(113, 56, 216, 0.12);
+  --accent-purple-glow: rgba(124, 58, 237, 0.12);
   --accent-cyan: var(--cyan);
-  --accent-cyan-glow: rgba(8, 155, 181, 0.12);
+  --accent-cyan-glow: rgba(8, 145, 178, 0.12);
   --accent-emerald: var(--green);
   --accent-blue: var(--blue);
   --accent-amber: var(--amber);
@@ -181,6 +210,106 @@ html[data-theme="light"] {
   --chart-tooltip-bg: rgba(255, 255, 255, 0.98);
   --chart-tooltip-border: rgba(15, 23, 42, 0.15);
   --chart-tooltip-text: #15151b;
+}
+
+/* ==========================================================================
+   BUTTON DESIGN SYSTEM (3 Distinct Variants Only)
+   ========================================================================== */
+
+.btn {
+  min-height: 42px;
+  padding: 0.65rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:hover {
+  opacity: 0.94;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+  background: var(--surface-2);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-3);
+  border-color: var(--border-strong);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover {
+  background: var(--surface);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+/* Card & Layout Primitives */
+.card {
+  min-width: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+}
+
+.grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 1rem;
+}
+
+.section-header {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.section-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 /* ==========================================================================
