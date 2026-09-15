@@ -1,10 +1,11 @@
 import { useState, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { usePortfolio } from "../context/PortfolioContext";
 import { 
   GraduationCap, Award, MapPin, Calendar, Heart, Shield, Compass, 
-  Sparkles, CheckCircle2, AlertTriangle, BookOpen, Camera, Play, 
-  Smile, Flame, Quote, Volume2, User, HelpCircle, Layers, Target, Eye, Cpu,
-  Trophy, Medal, Video, Briefcase, Youtube, Code, Building2, TrendingUp, Star, Rocket
+  Sparkles, CheckCircle2, BookOpen, User, Target, Cpu,
+  Trophy, Medal, Video, Briefcase, Youtube, Code, Building2, Star, Rocket,
+  Flame, Quote, Dumbbell
 } from "lucide-react";
 
 interface JourneyMilestone {
@@ -17,110 +18,114 @@ interface JourneyMilestone {
 }
 
 function AboutSectionComponent() {
-  const [activeTab, setActiveTab] = useState<"about" | "timeline" | "education">("about");
-  const [hoveredValue, setHoveredValue] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<"narrative" | "timeline" | "education">("narrative");
+  const [activeValueIndex, setActiveValueIndex] = useState<number>(0);
+  const { theme } = usePortfolio();
+  const isLight = theme === "light";
 
-  // Values data
+  // Operating Values
   const values = [
-    { name: "Continuous Learning", desc: "A commitment to expand knowledge constantly.", icon: BookOpen, color: "from-purple-500 to-indigo-500" },
-    { name: "Integrity", desc: "Honesty and alignment between actions and ethics.", icon: Shield, color: "from-emerald-500 to-teal-500" },
-    { name: "Curiosity", desc: "Digging deep into the 'why' of complex systems.", icon: Compass, color: "from-cyan-500 to-blue-500" },
-    { name: "Consistency", desc: "Doing the small daily work that compounds.", icon: Flame, color: "from-amber-500 to-orange-500" },
-    { name: "Discipline", desc: "Commanding focus over instant distractions.", icon: Target, color: "from-rose-500 to-pink-500" },
-    { name: "Innovation", desc: "Pioneering creative workflows and structures.", icon: Sparkles, color: "from-violet-500 to-purple-500" },
-    { name: "Collaboration", desc: "Empowering cohorts and growing collectively.", icon: Smile, color: "from-teal-500 to-emerald-500" },
-    { name: "Growth Mindset", desc: "Embracing obstacles as blueprints for progress.", icon: CheckCircle2, color: "from-blue-500 to-cyan-500" }
+    { name: "Continuous Learning", desc: "A disciplined commitment to expand domain mastery daily.", icon: BookOpen },
+    { name: "Integrity", desc: "Honesty and alignment between architecture, actions, and ethics.", icon: Shield },
+    { name: "Curiosity", desc: "Digging deeply into the 'why' of complex systems and neural mechanics.", icon: Compass },
+    { name: "Consistency", desc: "Compounding value through quiet, relentless daily problem solving.", icon: Flame },
+    { name: "Discipline", desc: "Commanding attention and deep work over instant superficial distractions.", icon: Target },
+    { name: "Collaboration", desc: "Empowering engineering peers and succeeding as a cohesive unit.", icon: Sparkles }
   ];
 
-  // Strengths
+  // Self-Reflective Strengths
   const strengths = [
-    { title: "Quick Learner", desc: "Deconstructs technical documentation and API specifications in hours, executing clean production-ready implementations.", icon: Sparkles },
-    { title: "Consistent & Disciplined", desc: "Maintains high metrics of performance—be it coding streaks, academic lectures, or physical development.", icon: Flame },
-    { title: "Problem Solver", desc: "Approaches roadblocks with high structured debug pipelines, tracing logic flows from database records to visual states.", icon: CheckCircle2 },
-    { title: "Creative Thinker", desc: "Bridges the gap between technical backends and viewer psychology to craft highly clickable layouts and designs.", icon: Compass },
-    { title: "Growth-Oriented", desc: "Actively solicits critical code reviews, iterating rapidly to transform initial feedback into exceptional results.", icon: Target }
+    { title: "Rapid System Synthesis", desc: "Deconstructs complex documentation, research papers, and API specifications quickly into clean, type-safe working prototypes." },
+    { title: "Rigorous Algorithmic Discipline", desc: "Approaches data structures with space-time bounds awareness, maintaining 100% acceptance across practiced LeetCode problems." },
+    { title: "Full-Cycle Ownership", desc: "Bridges user intuition, frontend UI precision, and server-side logic from first idea through deployment and monitoring." },
+    { title: "Resilience Under Pressure", desc: "Proven under high-stakes hackathon deadlines (SIH 2026, Technex'26 IIT BHU) without compromising architecture or team morale." }
   ];
 
-  // Areas of Continuous Improvement
+  // Areas of Continuous Improvement (Honest & Self-Aware)
   const improvements = [
-    { title: "Perfectionism", area: "Codebase Elegance", desc: "Sometimes spends excessive time polishing layouts or refactoring helper code. Mitigated by setting hard time blocks and focusing on delivering MVP outcomes first." },
-    { title: "Taking on Too Much", area: "Resource Scheduling", desc: "Eager to learn everything (React, PyTorch, Market trading) simultaneously. Overcome by implementing a disciplined 3-bucket priority calendar." },
-    { title: "Limited Industry Experience", area: "Enterprise Practice", desc: "While highly capable with side-projects and freelance clients, lacks direct large-scale corporate exposure. Mitigated by studying robust system designs and seeking internships." }
+    { 
+      title: "Over-Polishing & Perfectionism", 
+      area: "Time Management", 
+      desc: "Prone to spending extra hours obsessing over micro-spacing or aesthetic details. Actively mitigated by establishing strict MVP timeboxes before refactoring." 
+    },
+    { 
+      title: "Breadth vs. Depth Scheduling", 
+      area: "Cognitive Load", 
+      desc: "Desire to master AI theory, market mechanics, and web systems simultaneously can fracture focus. Managed through structured priority sprints." 
+    },
+    { 
+      title: "Enterprise Scale Exposure", 
+      area: "Industry Experience", 
+      desc: "While skilled at building and shipping standalone full-stack apps, still expanding hands-on familiarity with multi-team legacy enterprise codebases." 
+    }
   ];
 
-  // Hobbies list
-  const hobbies = [
-    { name: "Building Software", icon: "💻", color: "hover:bg-purple-950/40 hover:border-purple-500/40" },
-    { name: "Artificial Intelligence", icon: "🤖", color: "hover:bg-cyan-950/40 hover:border-cyan-500/40" },
-    { name: "Photography", icon: "📷", color: "hover:bg-emerald-950/40 hover:border-emerald-500/40" },
-    { name: "Table Tennis", icon: "🏓", color: "hover:bg-rose-950/40 hover:border-rose-500/40" },
-    { name: "Content Creation", icon: "🎥", color: "hover:bg-amber-950/40 hover:border-amber-500/40" },
-    { name: "Finance & Stock Market", icon: "📈", color: "hover:bg-blue-950/40 hover:border-blue-500/40" },
-    { name: "Personal Development", icon: "📚", color: "hover:bg-pink-950/40 hover:border-pink-500/40" },
-    { name: "Creative Design", icon: "🎨", color: "hover:bg-indigo-950/40 hover:border-indigo-500/40" },
-    { name: "Books", icon: "📖", color: "hover:bg-teal-950/40 hover:border-teal-500/40" },
-    { name: "Podcasts", icon: "🎙️", color: "hover:bg-orange-950/40 hover:border-orange-500/40" }
+  // Extracurriculars
+  const extracurriculars = [
+    { name: "Competitive Table Tennis", desc: "District-level representative; trains agility, reflex speed, and mental composure under rally pressure.", icon: Trophy },
+    { name: "Content Creation (YouTube)", desc: "Grew Daily Decipher to 10K+ subscribers and Technical AZ to 2.06K+, distilling complex ideas into clear narratives.", icon: Youtube },
+    { name: "Financial Markets & Analysis", desc: "Studies quantitative market trends, macroeconomic liquidity cycles, and algorithmic trading foundations.", icon: Briefcase },
+    { name: "Nature & Urban Photography", desc: "Cultivates observational patience, composition geometry, and lighting discipline outside the terminal.", icon: CameraIcon }
   ];
 
-  // Personality badges
-  const personalityBadges = [
-    "Curious", "Ambitious", "Self-driven", "Patient", "Creative", "Disciplined", "Growth-focused"
-  ];
+  function CameraIcon(props: { className?: string }) {
+    return <Sparkles {...props} />;
+  }
 
   // Engineering Journey Timeline Data (Strictly Chronological & Exact)
   const engineeringJourney: JourneyMilestone[] = [
     {
       period: "2011",
-      title: "Started Schooling",
-      description: "Began my formal schooling journey.",
+      title: "Began Formal Schooling",
+      description: "Started my formal educational journey with early curiosity for natural sciences and mathematics.",
       category: "Education",
       icon: BookOpen,
       status: "past"
     },
     {
       period: "2013",
-      title: "Started Playing Table Tennis",
-      description: "Started playing table tennis and developed a long-term passion for the sport.",
-      category: "Sports",
+      title: "Began Table Tennis Training",
+      description: "Started competitive table tennis training, instilling lifelong disciplines of hand-eye reflex and deliberate practice.",
+      category: "Athletics",
       icon: Trophy,
       status: "past"
     },
     {
       period: "2019",
       title: "Represented District in Table Tennis",
-      description: "Represented my district in table tennis at the district level.",
-      category: "Sports",
+      description: "Selected to represent my district in competitive table tennis tournaments.",
+      category: "Athletics",
       icon: Medal,
       status: "past"
     },
     {
       period: "2021",
-      title: "Reached Finals in Toycathon — Top 15",
-      description: "Reached the finals and secured a Top 15 position in Toycathon, a national-level innovation event.",
-      category: "Competition",
+      title: "Toycathon National Finals — Top 15",
+      description: "Reached national finals and achieved a Top 15 ranking in Toycathon, an innovation competition organized by the Govt. of India.",
+      category: "Innovation",
       icon: Award,
       status: "past"
     },
     {
       period: "2021–2023",
       title: "Content Creator — Technical AZ",
-      description: "Worked as a content creator on my own YouTube channel, Technical AZ, which grew to 2.06K+ subscribers.",
+      description: "Founded and scaled Technical AZ on YouTube to 2.06K+ subscribers, producing tutorials on emerging consumer technologies and software.",
       category: "Content Creation",
       icon: Video,
       status: "past"
     },
     {
       period: "2021–2023",
-      title: "Ran My Own Social Media Agency & Marketing Panel",
-      description: "Ran my own social media agency and marketing panel, working on social media growth, digital marketing, and client-focused services.",
+      title: "Founded Social Media Agency & Growth Panel",
+      description: "Operated an independent digital marketing panel providing audience growth solutions and client consulting.",
       category: "Entrepreneurship",
       icon: Briefcase,
       status: "past"
     },
     {
       period: "2023",
-      title: "Scored 92.6% in Class 10 Boards",
-      description: "Achieved 92.6% in the CBSE Class 10 Board Examinations.",
+      title: "92.6% in CBSE Class 10 Board Examinations",
+      description: "Completed secondary education with top honors at Aditya Birla Vani Bharati.",
       category: "Academics",
       icon: GraduationCap,
       status: "past"
@@ -128,564 +133,518 @@ function AboutSectionComponent() {
     {
       period: "2023–2026",
       title: "Content Creator — Daily Decipher",
-      description: "Worked as a content creator on my own YouTube channel, Daily Decipher, which grew to 10K+ subscribers.",
+      description: "Founded Daily Decipher on YouTube, producing educational breakdowns and growing an organic community of 10K+ subscribers.",
       category: "Content Creation",
       icon: Youtube,
       status: "past"
     },
     {
       period: "2025",
-      title: "Scored 86.2% in Class 12 Boards",
-      description: "Achieved 86.2% in the CBSE Class 12 Board Examinations.",
+      title: "86.2% in CBSE Class 12 Board Examinations",
+      description: "Graduated higher secondary with science concentration (Physics, Chemistry, Mathematics, Computer Science).",
       category: "Academics",
       icon: GraduationCap,
       status: "past"
     },
     {
       period: "2025",
-      title: "Started Building Small Projects",
-      description: "Began building small software and web projects to strengthen my development and problem-solving skills.",
-      category: "Development",
+      title: "Commenced Open Source & Project Building",
+      description: "Began crafting production web apps, exploring deep learning architectures, and deepening algorithmic rigor in C++.",
+      category: "Engineering",
       icon: Code,
       status: "past"
     },
     {
-      period: "2025 - Present",
-      title: "Pursuing B.Tech CSE at KIIT, Bhubaneswar",
-      description: "Enrolled in B.Tech Computer Science Engineering at Kalinga Institute of Industrial Technology, Bhubaneswar.",
+      period: "2025 – Present",
+      title: "B.Tech CSE at KIIT Bhubaneswar",
+      description: "Enrolled in undergraduate Computer Science Engineering at Kalinga Institute of Industrial Technology, Bhubaneswar. Focusing on core systems, data structures, and AI engineering.",
       category: "University",
       icon: Building2,
       status: "present"
     },
     {
       period: "2026",
-      title: "Technex'26 — IIT BHU Finalist",
-      description: "Participated in IIT BHU Techfest (Technex'26) and stood as a finalist in 5 out of 6 competitions.",
-      category: "Competition",
+      title: "Technex'26 — IIT BHU Finalist in 5/6 Competitions",
+      description: "Competed at IIT Varanasi's national techfest, advancing to the finals across 5 separate technical challenges.",
+      category: "Competitions",
       icon: Star,
       status: "past"
     },
     {
       period: "2026",
-      title: "Built Multiple Technical Projects",
-      description: "Built an Interactive Portfolio, a YOLOv8-based Edge CV Motion Tracker, OPERON for a competition, and an enhanced MAUSAM webpage based on IMD government data for SIH 2026.",
+      title: "Engineered Flagship Systems (Operon, Mausam, RouteLedger)",
+      description: "Built the Operon multi-agent engine, Mausam meteorological platform for SIH 2026, RouteLedger HOS compliance router, and Memory-in-Motion neural laboratory.",
       category: "Projects",
       icon: Rocket,
-      status: "past"
-    },
-    {
-      period: "Present",
-      title: "Disciplined Skill Synthesis",
-      description: "Continuously deepening my knowledge in AI models, React, Advanced DSA including Dynamic Programming and Graphs, and System Architecture.",
-      category: "Current Focus",
-      icon: Cpu,
       status: "present"
     },
     {
-      period: "Future",
-      title: "The Roadmap Ahead",
-      description: "Excelling as a Software Engineer and AI Engineer, building high-impact startups, and contributing to open-source projects.",
-      category: "The Horizon",
+      period: "Horizon",
+      title: "AI Systems Engineering & Startup Impact",
+      description: "Aiming to design high-throughput machine learning infrastructure, lead high-impact engineering ventures, and contribute meaningfully to foundational open source.",
+      category: "Vision",
       icon: Target,
       status: "future"
     }
   ];
 
   return (
-    <div className="relative font-sans space-y-16 py-12">
-      {/* Dynamic Animated background nodes */}
-      <div className="absolute inset-0 bg-radial-gradient-to-tr from-purple-500/5 via-transparent to-cyan-500/5 blur-[120px] pointer-events-none -z-10" />
-
-      {/* SECTION HEADER: Luxury/Asymmetric typography */}
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start border-b border-zinc-900 pb-12">
-        <div className="lg:col-span-6 space-y-4">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-zinc-950/80 border border-zinc-900 rounded-full">
-            <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-ping" />
-            <span className="text-[10px] text-zinc-400 font-mono tracking-widest uppercase">THE IDENTITY GENESIS</span>
-          </div>
-          <h2 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-white font-display leading-[1.1]"
-          >
-            Architect of <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400">
-              Intelligent Software
-            </span>
-          </h2>
+    <div className="w-full space-y-12 sm:space-y-16 pb-12">
+      {/* 1. EDITORIAL HEADER */}
+      <header className="space-y-4 pt-2">
+        <div className="flex items-center gap-3">
+          <span className="text-[11px] font-mono font-medium uppercase tracking-[0.16em] text-cyan-600 dark:text-cyan-400">
+            BIOGRAPHY &amp; HUMAN CORE · ABOUT SAYAM
+          </span>
+          <span className="h-px w-8 bg-zinc-300 dark:bg-zinc-800" />
+          <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
+            Who I Am, How I Think, What Drives Me
+          </span>
         </div>
-        <div className="lg:col-span-6 lg:pt-8 text-zinc-400 text-sm leading-relaxed space-y-4">
-          <p>
-            Operating at the intersection of quantitative computation and creative aesthetic engineering. As a 2nd Year (3rd Semester) undergraduate student at <strong className="text-white">Kalinga Institute of Industrial Technology, Bhubaneswar</strong> (originally from Hooghly, West Bengal), I devote my hours to decoding neural net layers, designing modular full-stack interfaces, and compiling high-efficiency software architectures.
+
+        <div className="space-y-2 max-w-3xl">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-zinc-900 dark:text-white font-display leading-[1.1]">
+            SAYAM MUKHERJEE <br />
+            <span className="text-zinc-500 dark:text-zinc-400">ENGINEER, BUILDER &amp; ATHLETE</span>
+          </h1>
+          <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans pt-1">
+            Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ total community reach, district table tennis athlete, and full-stack software engineer.
           </p>
-          
-          {/* Custom Aesthetic Tab Switching */}
-          <div className="flex flex-wrap gap-2 pt-4">
-            {[
-              { id: "about", label: "Core Profile", icon: User },
-              { id: "timeline", label: "Historical Timeline", icon: Calendar },
-              { id: "education", label: "Academic Blueprint", icon: GraduationCap }
-            ].map((tab) => {
-              const Icon = tab.icon;
-              const isSelected = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold border transition-all duration-300 cursor-pointer ${
-                    isSelected
-                      ? "bg-zinc-900 text-white border-purple-500/30 shadow-[0_4px_20px_rgba(139,92,246,0.15)]"
-                      : "bg-zinc-950/40 border-zinc-900 text-zinc-400 hover:text-white hover:border-zinc-800"
-                  }`}
-                >
-                  <Icon className={`w-3.5 h-3.5 ${isSelected ? "text-purple-400" : "text-zinc-500"}`} />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </div>
         </div>
-      </div>
 
-      {/* MAIN CONTAINER PANELS */}
-      <div className="max-w-7xl mx-auto px-6">
-        <AnimatePresence mode="wait">
-          
-          {/* ABOUT TAB */}
-          {activeTab === "about" && (
-            <motion.div
-              key="about-tab"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="grid grid-cols-1 lg:grid-cols-12 gap-8"
-            >
-              {/* Left 4 Cols: Values & Personality */}
-              <div className="lg:col-span-4 space-y-6">
-                {/* Brand Identity / Profile Photo Card */}
-                <div className="glass-card p-5 rounded-3xl relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 to-cyan-500/5 pointer-events-none" />
-                  
-                  {/* Photo Frame */}
-                  <div className="aspect-square w-full rounded-2xl overflow-hidden border border-zinc-900 relative shadow-2xl bg-zinc-900 flex items-center justify-center">
+        {/* View Switcher Tabs */}
+        <div className="flex flex-wrap gap-2 pt-2">
+          {[
+            { id: "narrative", label: "Personal Narrative & Values", icon: User },
+            { id: "timeline", label: "Lived Chronological Timeline (2011–2026)", icon: Calendar },
+            { id: "education", label: "Academics & Honors", icon: GraduationCap }
+          ].map((tab) => {
+            const Icon = tab.icon;
+            const isSelected = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id as any)}
+                className={`px-4 py-2 rounded-xl text-xs font-mono flex items-center gap-2 transition-all cursor-pointer ${
+                  isSelected
+                    ? "bg-cyan-500 text-white font-semibold shadow-sm"
+                    : isLight
+                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200"
+                    : "bg-zinc-900/60 hover:bg-zinc-800 text-zinc-400 border border-zinc-800 hover:text-white"
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{tab.label}</span>
+              </button>
+            );
+          })}
+        </div>
+      </header>
+
+      {/* 2. TAB CONTENT PANELS */}
+      <AnimatePresence mode="wait">
+        {/* NARRATIVE & VALUES TAB */}
+        {activeTab === "narrative" && (
+          <motion.div
+            key="narrative-tab"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-12"
+          >
+            {/* Biography & Profile Hero Card */}
+            <div className={`p-6 sm:p-8 rounded-2xl border ${
+              isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
+            }`}>
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                {/* Photo & Essential Badges */}
+                <div className="lg:col-span-4 space-y-4">
+                  <div className="aspect-square w-full rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 relative bg-zinc-100 dark:bg-zinc-900">
                     <img 
                       src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
                       alt="Sayam Mukherjee" 
-                      className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105 group-hover:rotate-1 filter brightness-95 group-hover:brightness-100"
+                      className="w-full h-full object-cover"
                     />
-                    {/* Glowing Accent Border lines */}
-                    <div className="absolute top-3 left-3 px-2 py-0.5 bg-zinc-950/80 backdrop-blur border border-zinc-850 rounded font-mono text-[8px] tracking-wider text-purple-400 uppercase select-none z-10">
-                      SAYAM MUKHERJEE
+                  </div>
+
+                  <div className={`p-4 rounded-xl border space-y-2 text-xs font-mono ${
+                    isLight ? "bg-slate-50 border-slate-200 text-slate-600" : "bg-zinc-900/40 border-zinc-850 text-zinc-400"
+                  }`}>
+                    <div className="flex justify-between">
+                      <span>Location:</span>
+                      <span className="font-semibold text-zinc-900 dark:text-zinc-200">Hooghly / Bhubaneswar, India</span>
                     </div>
-                    <div className="absolute bottom-3 right-3 px-2 py-0.5 bg-zinc-950/80 backdrop-blur border border-zinc-850 rounded font-mono text-[8px] tracking-wider text-cyan-400 uppercase select-none z-10">
-                      SYS: ONLINE
+                    <div className="flex justify-between">
+                      <span>Institution:</span>
+                      <span className="font-semibold text-zinc-900 dark:text-zinc-200">KIIT University (B.Tech CSE)</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>LeetCode:</span>
+                      <span className="font-semibold text-emerald-600 dark:text-emerald-400">100% Acceptance Rate</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Audience:</span>
+                      <span className="font-semibold text-zinc-900 dark:text-zinc-200">12K+ Total YouTube Subs</span>
                     </div>
                   </div>
                 </div>
 
-                {/* Personality Badge Box */}
-                <div className="glass-card p-6 rounded-3xl relative overflow-hidden group">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/5 rounded-full blur-2xl pointer-events-none" />
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono tracking-widest block">Character Parameters</span>
-                  <h3 className="text-lg font-bold text-white font-display mt-1">Personality Matrix</h3>
-                  
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {personalityBadges.map((badge, idx) => (
-                      <span 
-                        key={idx}
-                        className="px-3 py-1 bg-zinc-900/60 border border-zinc-800 hover:border-purple-500/30 hover:text-purple-300 text-[10px] text-zinc-300 font-mono rounded-full transition-all duration-300"
-                      >
-                        {badge}
-                      </span>
-                    ))}
+                {/* Narrative Text */}
+                <div className="lg:col-span-8 space-y-4">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 font-semibold">
+                    PERSONAL STORY &amp; MOTIVATION
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-bold font-display text-zinc-900 dark:text-white">
+                    Bridging Computational Rigor with Human Impact
+                  </h2>
+
+                  <div className="space-y-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+                    <p>
+                      I am a Computer Science undergraduate at KIIT Bhubaneswar with a deep fascination for autonomous AI agents, spatial computing, and high-performance full-stack architectures. Originally from Hooghly, West Bengal, I grew up balancing intense athletic training in table tennis with self-directed explorations in programming and digital media.
+                    </p>
+                    <p>
+                      At age 16, I founded my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which has now reached an organic audience of over 10,000 learners. Running these channels and operating an independent digital marketing agency taught me how real users consume information: they value clarity, speed, and genuine utility above buzzwords.
+                    </p>
+                    <p>
+                      In software engineering, I apply this same philosophy. I don’t build toy applications or decorative cards; I build end-to-end operational systems like <strong>Operon</strong> (a multi-agent AI engine with non-bypassable human governance), <strong>Mausam</strong> (an IMD-grounded climate platform for SIH 2026), and <strong>RouteLedger</strong> (a graph-routing engine enforcing federal trucker rest mandates).
+                    </p>
                   </div>
 
-                  <div className="mt-6 p-4 bg-zinc-950/50 border border-zinc-900 rounded-2xl relative">
-                    <Quote className="absolute -top-3 left-4 w-6 h-6 text-purple-500/20" />
-                    <p className="text-xs text-zinc-400 italic leading-relaxed pt-2">
-                      "I do not seek paths that are pre-coded. I construct systems that solve challenges with beautiful, modular architecture."
+                  {/* Quote Banner */}
+                  <div className={`mt-4 p-4 rounded-xl border flex items-start gap-3 ${
+                    isLight ? "bg-slate-50 border-slate-200 text-slate-700" : "bg-zinc-900/30 border-zinc-850 text-zinc-300"
+                  }`}>
+                    <Quote className="w-5 h-5 text-cyan-500 shrink-0 mt-0.5" />
+                    <p className="text-xs sm:text-sm italic font-sans leading-relaxed">
+                      "I believe great engineering is not about writing the maximum amount of code, but about constructing reliable boundaries where systems fail gracefully and users feel empowered."
                     </p>
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Hobbies list */}
-                <div className="glass-card p-6 rounded-3xl">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono tracking-widest block">Extracurricular Nodes</span>
-                  <h3 className="text-lg font-bold text-white font-display mt-1">Sectors of Interest</h3>
-                  
-                  <div className="grid grid-cols-2 gap-2 mt-4">
-                    {hobbies.map((h, i) => (
-                      <div 
-                        key={i}
-                        className={`p-3 bg-zinc-950 border border-zinc-900 rounded-xl flex items-center gap-2.5 text-xs text-zinc-300 transition-all duration-300 border-l-2 hover:border-l-purple-500 cursor-default ${h.color}`}
-                      >
-                        <span className="text-sm shrink-0">{h.icon}</span>
-                        <span className="font-medium truncate">{h.name}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            {/* Operating Values & Principles */}
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                  CORE PRINCIPLES
+                </span>
+                <h3 className="text-xl font-bold font-display text-zinc-900 dark:text-white">
+                  Values &amp; Working Philosophy
+                </h3>
               </div>
 
-              {/* Middle 5 Cols: Core Strengths */}
-              <div className="lg:col-span-5 space-y-6">
-                <div className="glass-card p-6 rounded-3xl">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono tracking-widest block">Strategic Valuation</span>
-                  <h3 className="text-lg font-bold text-white font-display mt-1">Core Strengths</h3>
-
-                  <div className="space-y-4 mt-6">
-                    {strengths.map((str, idx) => {
-                      const Icon = str.icon;
-                      return (
-                        <div 
-                          key={idx} 
-                          className="flex gap-4 p-3.5 hover:bg-zinc-900/30 border border-transparent hover:border-zinc-900 rounded-2xl transition-all duration-300 group"
-                        >
-                          <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0 group-hover:border-purple-500/30 group-hover:bg-purple-950/10 transition-colors">
-                            <Icon className="w-4 h-4 text-purple-400" />
-                          </div>
-                          <div className="space-y-1">
-                            <h4 className="text-sm font-bold text-zinc-100 group-hover:text-white transition-colors">{str.title}</h4>
-                            <p className="text-xs text-zinc-400 leading-normal">{str.desc}</p>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Right 3 Cols: Core Values (Interactive hover) */}
-              <div className="lg:col-span-3 space-y-6">
-                <div className="glass-card p-6 rounded-3xl relative overflow-hidden h-full flex flex-col justify-between">
-                  <div className="space-y-4">
-                    <span className="text-[9px] text-purple-400 font-mono tracking-widest block font-bold">ETHICAL ANCHORS</span>
-                    <h3 className="text-xl font-bold text-white font-display">Philosophy & Values</h3>
-                    <p className="text-xs text-zinc-400 leading-normal">
-                      Systemic ideals guiding my code, academic studies, and collaborative work.
-                    </p>
-
-                    <div className="grid grid-cols-1 gap-2 pt-2">
-                      {values.slice(0, 5).map((val) => {
-                        const Icon = val.icon;
-                        const isHovered = hoveredValue === val.name;
-                        return (
-                          <div
-                            key={val.name}
-                            onMouseEnter={() => setHoveredValue(val.name)}
-                            onMouseLeave={() => setHoveredValue(null)}
-                            className={`p-3 border rounded-xl flex items-center justify-between transition-all duration-300 cursor-default ${
-                              isHovered 
-                                ? "bg-zinc-900/80 border-purple-500/30 shadow-md" 
-                                : "bg-zinc-950/50 border-zinc-900"
-                            }`}
-                          >
-                            <div className="flex items-center gap-2.5">
-                              <Icon className={`w-3.5 h-3.5 ${isHovered ? "text-purple-400" : "text-zinc-500"}`} />
-                              <span className="text-xs font-semibold text-zinc-200">{val.name}</span>
-                            </div>
-                            <span className="text-[9px] font-mono text-zinc-600">0{values.indexOf(val) + 1}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Active Value Card */}
-                  <div className="mt-6 p-4 bg-zinc-950 border border-zinc-900 rounded-2xl min-h-[90px] flex items-center justify-center relative">
-                    <div className="absolute inset-x-0 bottom-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/30 to-transparent" />
-                    <AnimatePresence mode="wait">
-                      {hoveredValue ? (
-                        <motion.div
-                          key={hoveredValue}
-                          initial={{ opacity: 0, y: 5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -5 }}
-                          transition={{ duration: 0.15 }}
-                          className="text-center"
-                        >
-                          <span className="text-[10px] text-purple-400 font-mono block uppercase">Active Axiom</span>
-                          <p className="text-xs text-zinc-300 mt-1 font-sans">
-                            {values.find(v => v.name === hoveredValue)?.desc}
-                          </p>
-                        </motion.div>
-                      ) : (
-                        <span className="text-[10px] text-zinc-500 font-mono tracking-wider text-center">
-                          Hover an Axiom to retrieve semantic telemetry
-                        </span>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-
-          {/* TIMELINE TAB */}
-          {activeTab === "timeline" && (
-            <motion.div
-              key="timeline-tab"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-4xl mx-auto space-y-12"
-            >
-              <div className="text-center space-y-2">
-                <span className="text-xs text-purple-400 font-mono uppercase tracking-widest block font-bold">The Chronicles</span>
-                <h3 className="text-3xl font-bold text-white font-display">Engineering Journey</h3>
-                <p className="text-xs sm:text-sm text-zinc-400 max-w-lg mx-auto leading-relaxed">
-                  A chronological chronicle documenting my academic progression, competitive milestones, content ventures, and software engineering projects.
-                </p>
-              </div>
-
-              {/* Storytelling Timeline structure */}
-              <div className="relative border-l border-zinc-900 ml-4 md:ml-36 pl-6 md:pl-10 space-y-8 py-4">
-                {engineeringJourney.map((ev, idx) => {
-                  const Icon = ev.icon;
-                  const isPresent = ev.status === "present";
-                  const isFuture = ev.status === "future";
-
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {values.map((v, i) => {
+                  const Icon = v.icon;
                   return (
-                    <motion.div 
-                      key={idx}
-                      initial={{ opacity: 0, y: 14 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, margin: "-20px" }}
-                      transition={{ duration: 0.35, delay: Math.min(idx * 0.03, 0.3) }}
-                      className="relative group"
+                    <div
+                      key={v.name}
+                      className={`p-4 rounded-xl border space-y-2 ${
+                        isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
+                      }`}
                     >
-                      {/* Floating year column on desktop screens */}
-                      <div className="hidden md:flex flex-col items-end absolute -left-[180px] top-3 w-32 pr-4 text-right select-none">
-                        <span className={`font-mono font-bold text-xs tracking-tight transition-colors ${
-                          isPresent
-                            ? "text-emerald-400"
-                            : isFuture
-                            ? "text-cyan-400"
-                            : "text-zinc-400 group-hover:text-purple-400"
-                        }`}>
-                          {ev.period}
-                        </span>
-                        {isPresent && (
-                          <span className="inline-flex items-center gap-1 text-[9px] font-mono text-emerald-400 uppercase tracking-wider mt-0.5 font-semibold">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-                            Active
-                          </span>
-                        )}
-                        {isFuture && (
-                          <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-wider mt-0.5 font-semibold">
-                            Horizon
-                          </span>
-                        )}
+                      <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
+                        <Icon className="w-4 h-4" />
+                        <h4 className="text-sm font-bold font-display text-zinc-900 dark:text-zinc-100">
+                          {v.name}
+                        </h4>
                       </div>
-
-                      {/* Timeline dot node badge */}
-                      <span className={`absolute -left-[31px] md:-left-[47px] top-3.5 w-3.5 h-3.5 rounded-full flex items-center justify-center transition-all duration-300 ${
-                        isPresent
-                          ? "bg-emerald-950 border-2 border-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]"
-                          : isFuture
-                          ? "bg-cyan-950 border-2 border-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.8)]"
-                          : "bg-zinc-950 border-2 border-zinc-800 group-hover:border-purple-500 group-hover:shadow-[0_0_8px_rgba(168,85,247,0.5)]"
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full transition-colors ${
-                          isPresent
-                            ? "bg-emerald-400 animate-pulse"
-                            : isFuture
-                            ? "bg-cyan-400"
-                            : "bg-zinc-700 group-hover:bg-purple-400"
-                        }`} />
-                      </span>
-
-                      {/* Card container */}
-                      <div className={`p-4 sm:p-5 rounded-2xl transition-all duration-300 relative overflow-hidden ${
-                        isPresent
-                          ? "bg-gradient-to-br from-purple-950/25 via-zinc-950/80 to-zinc-950 border border-purple-500/40 shadow-[0_0_25px_rgba(168,85,247,0.12),inset_0_1px_1px_rgba(255,255,255,0.06)] hover:border-purple-500/70"
-                          : isFuture
-                          ? "bg-gradient-to-br from-cyan-950/25 via-zinc-950/80 to-zinc-950 border border-cyan-500/40 shadow-[0_0_25px_rgba(6,182,212,0.12),inset_0_1px_1px_rgba(255,255,255,0.06)] hover:border-cyan-500/70"
-                          : "glass-card hover:border-zinc-800 hover:bg-zinc-900/40"
-                      }`}>
-                        {/* Mobile Year & Category Header */}
-                        <div className="flex md:hidden items-center justify-between gap-2 border-b border-zinc-900 pb-2 mb-3">
-                          <span className={`text-xs font-mono font-bold tracking-tight ${
-                            isPresent
-                              ? "text-emerald-400"
-                              : isFuture
-                              ? "text-cyan-400"
-                              : "text-purple-400"
-                          }`}>
-                            {ev.period}
-                          </span>
-                          <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full border ${
-                            isPresent
-                              ? "bg-purple-500/15 text-purple-300 border-purple-500/30"
-                              : isFuture
-                              ? "bg-cyan-500/15 text-cyan-300 border-cyan-500/30"
-                              : "bg-zinc-900 text-zinc-400 border-zinc-800"
-                          }`}>
-                            {ev.category}
-                          </span>
-                        </div>
-
-                        {/* Card Content */}
-                        <div className="flex items-start gap-3 sm:gap-3.5">
-                          <div className={`w-8 h-8 rounded-xl flex items-center justify-center shrink-0 border transition-all duration-300 ${
-                            isPresent
-                              ? "bg-purple-950/50 border-purple-500/40 text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.25)]"
-                              : isFuture
-                              ? "bg-cyan-950/50 border-cyan-500/40 text-cyan-300 shadow-[0_0_12px_rgba(6,182,212,0.25)]"
-                              : "bg-zinc-900/90 border-zinc-800 text-zinc-400 group-hover:text-purple-400 group-hover:border-purple-500/40"
-                          }`}>
-                            <Icon className="w-4 h-4" />
-                          </div>
-
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-baseline justify-between gap-2">
-                              <h4 className={`text-sm sm:text-[15px] font-bold font-display tracking-tight leading-snug transition-colors ${
-                                isPresent
-                                  ? "text-purple-200"
-                                  : isFuture
-                                  ? "text-cyan-200"
-                                  : "text-zinc-100 group-hover:text-white"
-                              }`}>
-                                {ev.title}
-                              </h4>
-
-                              {/* Desktop Category Pill */}
-                              <span className={`hidden md:inline-flex items-center text-[10px] font-mono px-2.5 py-0.5 rounded-full border shrink-0 ${
-                                isPresent
-                                  ? "bg-purple-500/15 text-purple-300 border-purple-500/30"
-                                  : isFuture
-                                  ? "bg-cyan-500/15 text-cyan-300 border-cyan-500/30"
-                                  : "bg-zinc-900 text-zinc-400 border-zinc-800"
-                              }`}>
-                                {ev.category}
-                              </span>
-                            </div>
-
-                            <p className="text-xs sm:text-[13px] text-zinc-400 leading-relaxed mt-1.5 font-sans">
-                              {ev.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                        {v.desc}
+                      </p>
+                    </div>
                   );
                 })}
               </div>
-            </motion.div>
-          )}
+            </div>
 
-          {/* EDUCATION TAB */}
-          {activeTab === "education" && (
-            <motion.div
-              key="education-tab"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-12 max-w-4xl mx-auto"
-            >
-              <div className="text-center space-y-2">
-                <span className="text-xs text-cyan-400 font-mono uppercase tracking-widest block font-bold">Intellectual Blueprint</span>
-                <h3 className="text-3xl font-bold text-white font-display">Academics & Curriculums</h3>
-                <p className="text-xs text-zinc-400 max-w-md mx-auto">
-                  A structured matrix highlighting academic milestones, scientific focus scopes, and certified qualifications.
+            {/* Strengths & Honest Areas of Improvement */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Strengths */}
+              <div className={`p-6 rounded-2xl border space-y-4 ${
+                isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
+              }`}>
+                <div className="space-y-1">
+                  <span className="text-[11px] font-mono font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">
+                    PROVEN CAPACITIES
+                  </span>
+                  <h3 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
+                    Core Strengths
+                  </h3>
+                </div>
+
+                <div className="space-y-3">
+                  {strengths.map((s, idx) => (
+                    <div key={idx} className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 shrink-0" />
+                        <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 font-sans">
+                          {s.title}
+                        </h4>
+                      </div>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed pl-5 font-sans">
+                        {s.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Areas for Growth */}
+              <div className={`p-6 rounded-2xl border space-y-4 ${
+                isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
+              }`}>
+                <div className="space-y-1">
+                  <span className="text-[11px] font-mono font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">
+                    SELF-REFLECTION
+                  </span>
+                  <h3 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
+                    Areas of Continuous Improvement
+                  </h3>
+                </div>
+
+                <div className="space-y-3">
+                  {improvements.map((imp, idx) => (
+                    <div key={idx} className="space-y-1">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 font-sans">
+                          {imp.title}
+                        </h4>
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                          {imp.area}
+                        </span>
+                      </div>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                        {imp.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Beyond the Screen / Extracurriculars */}
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                  LIFE BEYOND THE SCREEN
+                </span>
+                <h3 className="text-xl font-bold font-display text-zinc-900 dark:text-white">
+                  Athletics, Content &amp; Inquiries
+                </h3>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {extracurriculars.map((e, idx) => {
+                  const Icon = e.icon;
+                  return (
+                    <div
+                      key={idx}
+                      className={`p-4 rounded-xl border space-y-2 ${
+                        isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
+                      }`}
+                    >
+                      <Icon className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                      <h4 className="text-sm font-bold font-display text-zinc-900 dark:text-zinc-100">
+                        {e.name}
+                      </h4>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                        {e.desc}
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* TIMELINE TAB */}
+        {activeTab === "timeline" && (
+          <motion.div
+            key="timeline-tab"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-8"
+          >
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                LIVED CHRONOLOGY
+              </span>
+              <h3 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
+                Engineering &amp; Life Milestones (2011 – Present)
+              </h3>
+              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 font-sans">
+                An authentic chronological account of schooling, athletic achievements, entrepreneurial ventures, and software systems.
+              </p>
+            </div>
+
+            <div className={`relative border-l ml-3 sm:ml-6 pl-6 sm:pl-8 space-y-8 py-2 ${
+              isLight ? "border-slate-300" : "border-zinc-800"
+            }`}>
+              {engineeringJourney.map((item, idx) => {
+                const Icon = item.icon;
+                const isCurrent = item.status === "present";
+                const isFuture = item.status === "future";
+
+                return (
+                  <div key={idx} className="relative group">
+                    {/* Timeline Node Dot */}
+                    <div className={`absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 transition-all ${
+                      isCurrent
+                        ? "bg-emerald-500 border-emerald-300 ring-4 ring-emerald-500/20"
+                        : isFuture
+                        ? "bg-cyan-500 border-cyan-300"
+                        : isLight
+                        ? "bg-white border-slate-400 group-hover:border-cyan-500"
+                        : "bg-zinc-900 border-zinc-700 group-hover:border-cyan-400"
+                    }`} />
+
+                    <div className={`p-4 sm:p-5 rounded-xl border transition-all ${
+                      isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
+                    }`}>
+                      <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5">
+                        <div className="flex items-center gap-2">
+                          <span className={`text-xs font-mono font-bold ${
+                            isCurrent 
+                              ? "text-emerald-600 dark:text-emerald-400" 
+                              : isFuture
+                              ? "text-cyan-600 dark:text-cyan-400"
+                              : "text-zinc-500"
+                          }`}>
+                            {item.period}
+                          </span>
+                          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-800">
+                            {item.category}
+                          </span>
+                        </div>
+                        {isCurrent && (
+                          <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                            ACTIVE PHASE
+                          </span>
+                        )}
+                      </div>
+
+                      <h4 className="text-base font-bold font-display text-zinc-900 dark:text-white pt-1">
+                        {item.title}
+                      </h4>
+                      <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans pt-1">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+
+        {/* EDUCATION & HONORS TAB */}
+        {activeTab === "education" && (
+          <motion.div
+            key="education-tab"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.25 }}
+            className="space-y-8"
+          >
+            <div className="space-y-1">
+              <span className="text-[11px] font-mono font-semibold text-cyan-600 dark:text-cyan-400 uppercase tracking-wider">
+                ACADEMIC CREDENTIALS
+              </span>
+              <h3 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
+                Formal Education &amp; Academic Honors
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* KIIT University */}
+              <div className={`p-6 rounded-2xl border space-y-3 ${
+                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
+              }`}>
+                <div className="flex items-center justify-between text-xs font-mono text-cyan-600 dark:text-cyan-400 font-semibold">
+                  <span>2025 – PRESENT</span>
+                  <span className="px-2 py-0.5 rounded bg-cyan-500/10 border border-cyan-500/20">UNDERGRADUATE</span>
+                </div>
+                <h4 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
+                  B.Tech in Computer Science Engineering
+                </h4>
+                <p className="text-xs font-mono text-zinc-500">
+                  Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar
+                </p>
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans pt-1">
+                  Core coursework in Data Structures &amp; Algorithms, Object-Oriented Programming, Computer Organization, and Discrete Mathematics.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                
-                {/* Institute 1 */}
-                <div className="glass-card p-6 rounded-3xl relative overflow-hidden hover:border-cyan-500/20 transition-all duration-300 group">
-                  <div className="absolute top-4 right-4 text-cyan-400/5">
-                    <GraduationCap className="w-20 h-20" />
-                  </div>
-                  <div className="flex items-center gap-2.5 text-xs text-cyan-400 font-mono">
-                    <span>2025 - Present</span>
-                    <span>•</span>
-                    <span>KALINGA INSTITUTE OF INDUSTRIAL TECHNOLOGY, BHUBANESWAR</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-white font-display mt-2">B.Tech in Computer Science Engineering</h3>
-                  <p className="text-xs text-purple-400 font-mono mt-0.5">Focus: Core CS, Foundational Algorithms & AI Systems</p>
-                  
-                  <div className="mt-4 space-y-2 text-xs text-zinc-400 leading-relaxed">
-                    <p>Currently in 2nd year (3rd semester) B.Tech CSE at Kalinga Institute of Industrial Technology, Bhubaneswar. Advancing in Data Structures & Algorithms, Systems Architecture, and practical AI implementations.</p>
-                    <div className="flex items-center gap-2 pt-3 border-t border-zinc-900 font-mono mt-4">
-                      <span className="text-[10px] text-zinc-500 uppercase">ACADEMIC STATUS:</span>
-                      <span className="text-xs font-bold text-white bg-purple-950/40 px-2 py-0.5 rounded border border-purple-900/30">2nd Year, 3rd Semester (Undergraduate)</span>
-                    </div>
-                  </div>
+              {/* High School / CBSE */}
+              <div className={`p-6 rounded-2xl border space-y-3 ${
+                isLight ? "bg-white border-slate-200 shadow-sm" : "bg-zinc-950/40 border-zinc-850"
+              }`}>
+                <div className="flex items-center justify-between text-xs font-mono text-cyan-600 dark:text-cyan-400 font-semibold">
+                  <span>CBSE BOARD EXAMINATIONS</span>
+                  <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">TOP HONORS</span>
                 </div>
-
-                {/* Institute 2 */}
-                <div className="glass-card p-6 rounded-3xl relative overflow-hidden hover:border-purple-500/20 transition-all duration-300 group">
-                  <div className="absolute top-4 right-4 text-purple-500/5">
-                    <BookOpen className="w-20 h-20" />
+                <h4 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
+                  Aditya Birla Vani Bharati
+                </h4>
+                <p className="text-xs font-mono text-zinc-500">
+                  Secondary &amp; Senior Secondary Education
+                </p>
+                <div className="pt-2 space-y-1.5 text-xs font-mono">
+                  <div className="flex justify-between p-2 rounded bg-zinc-100 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+                    <span>Class 10 CBSE Board (2023):</span>
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">92.6%</span>
                   </div>
-                  <div className="flex items-center gap-2.5 text-xs text-purple-400 font-mono">
-                    <span>CBSE Board Examinations</span>
-                    <span>•</span>
-                    <span>ADITYA BIRLA VANI BHARATI</span>
+                  <div className="flex justify-between p-2 rounded bg-zinc-100 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800">
+                    <span>Class 12 CBSE Board (2025):</span>
+                    <span className="font-bold text-zinc-900 dark:text-zinc-100">86.2%</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white font-display mt-2">Secondary & Senior Secondary</h3>
-                  <p className="text-xs text-zinc-400 mt-0.5">Rigorous coursework in Mathematics, Physics, Chemistry & Computer Science.</p>
-
-                  <div className="mt-4 space-y-2 text-xs text-zinc-400 leading-relaxed">
-                    <p>Scored 92.6% in CBSE Class 10 Board Examinations (2023) and 86.2% in CBSE Class 12 Board Examinations (2025).</p>
-                    <div className="flex items-center gap-2 pt-3 border-t border-zinc-900 font-mono mt-4">
-                      <span className="text-[10px] text-zinc-500 uppercase">BOARD RESULTS:</span>
-                      <span className="text-xs font-bold text-white bg-cyan-950/40 px-2 py-0.5 rounded border border-cyan-900/30">Class 10: 92.6% | Class 12: 86.2%</span>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Scientific fields */}
-              <div className="p-6 glass-card rounded-3xl space-y-4">
-                <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-wider">Natural Science Core</span>
-                <h3 className="text-lg font-bold text-white font-display">Favorite Fields of Scientific Inquiry</h3>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-                  {[
-                    { name: "Biology", desc: "Deciphering complex multicellular patterns, organic neural pathways, and evolutionary structures." },
-                    { name: "Chemistry", desc: "Calculating thermodynamic rates, kinetic structures, electron vectors, and balance matrices." },
-                    { name: "Information Technology", desc: "Assembling robust compiler sequences, linear data structures, search pathways, and data tables." }
-                  ].map((item, idx) => (
-                    <div key={idx} className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl space-y-1.5 hover:border-purple-500/10 transition-colors">
-                      <span className="font-bold text-purple-400">{item.name}</span>
-                      <p className="text-[11px] text-zinc-400 font-sans leading-normal">{item.desc}</p>
-                    </div>
-                  ))}
                 </div>
               </div>
+            </div>
 
-              {/* Certified listings */}
-              <div className="p-6 glass-card rounded-3xl space-y-4">
-                <span className="text-[10px] text-zinc-500 uppercase font-mono tracking-wider">Verified Honors</span>
-                <h3 className="text-lg font-bold text-white font-display">Competitions & Key Achievements</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
-                  {[
-                    "Technex'26 IIT BHU Finalist (5/6)",
-                    "Toycathon Finals — Top 15 (National)",
-                    "Smart India Hackathon (SIH 2026)",
-                    "District Table Tennis Representative"
-                  ].map((cert, idx) => (
-                    <div key={idx} className="p-4 bg-zinc-950 border border-zinc-900 rounded-2xl flex items-center gap-3">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
-                      <span className="text-zinc-300 font-sans font-medium">{cert}</span>
-                    </div>
-                  ))}
-                </div>
+            {/* Key Honors */}
+            <div className="space-y-3">
+              <h4 className="text-sm font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+                Verified Honors &amp; Competitions
+              </h4>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {[
+                  { title: "Technex'26 IIT BHU", desc: "Finalist across 5 out of 6 challenges at IIT Varanasi techfest" },
+                  { title: "Toycathon National Finals", desc: "Top 15 ranking in Govt. of India national innovation hackathon" },
+                  { title: "Smart India Hackathon", desc: "Team Algnite member developing the Mausam platform (2026)" },
+                  { title: "District Table Tennis", desc: "Selected and represented district at competitive table tennis tournaments" }
+                ].map((h, i) => (
+                  <div
+                    key={i}
+                    className={`p-4 rounded-xl border space-y-1 ${
+                      isLight ? "bg-white border-slate-200" : "bg-zinc-950/40 border-zinc-850"
+                    }`}
+                  >
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500" />
+                    <h5 className="text-xs font-bold font-sans text-zinc-900 dark:text-zinc-100 pt-1">
+                      {h.title}
+                    </h5>
+                    <p className="text-[11px] text-zinc-600 dark:text-zinc-400 font-sans leading-relaxed">
+                      {h.desc}
+                    </p>
+                  </div>
+                ))}
               </div>
-
-            </motion.div>
-          )}
-
-        </AnimatePresence>
-      </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-const AboutSection = memo(AboutSectionComponent);
+export const AboutSection = memo(AboutSectionComponent);
 export default AboutSection;

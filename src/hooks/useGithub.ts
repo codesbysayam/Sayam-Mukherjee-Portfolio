@@ -5,11 +5,14 @@ import {
   GitHubRepo,
   GitHubEvent,
   GitHubStatsData,
+  GitHubPulseData,
+  computeGitHubPulse,
   fetchGitHubStats,
   GITHUB_TTL,
   VERIFIED_USER_BASELINE,
   VERIFIED_REPOS_BASELINE,
   VERIFIED_EVENTS_BASELINE,
+  VERIFIED_PULSE_BASELINE,
   VERIFIED_GITHUB_FALLBACK
 } from "../services/github";
 
@@ -18,6 +21,7 @@ export interface GitHubState {
   repos: GitHubRepo[];
   events: GitHubEvent[];
   stats: GitHubStatsData;
+  pulse: GitHubPulseData;
   loading: boolean;
   error: string | null;
   syncedAt: number | null;
@@ -25,12 +29,13 @@ export interface GitHubState {
   rateLimited: boolean;
 }
 
-// Global shared state across all components initialized with verified 4-repo data
+// Global shared state across all components initialized with verified data
 let globalState: GitHubState = {
   user: VERIFIED_USER_BASELINE,
   repos: VERIFIED_REPOS_BASELINE,
   events: VERIFIED_EVENTS_BASELINE,
   stats: VERIFIED_GITHUB_FALLBACK,
+  pulse: VERIFIED_PULSE_BASELINE,
   loading: false,
   error: null,
   syncedAt: Date.now(),
@@ -105,11 +110,16 @@ async function fetchAllGitHubData(force = false): Promise<void> {
         Date.now()
       );
 
+      const finalEvents = Array.isArray(eventsRes?.data) && eventsRes.data.length > 0 ? eventsRes.data : globalState.events;
+      const finalRepos = Array.isArray(reposRes?.data) && reposRes.data.length > 0 ? reposRes.data : globalState.repos;
+      const computedPulse = computeGitHubPulse(finalEvents, finalRepos, syncedTimestamp);
+
       globalState = {
         user: userRes?.data || globalState.user,
-        repos: Array.isArray(reposRes?.data) && reposRes.data.length > 0 ? reposRes.data : globalState.repos,
-        events: Array.isArray(eventsRes?.data) && eventsRes.data.length > 0 ? eventsRes.data : globalState.events,
+        repos: finalRepos,
+        events: finalEvents,
         stats: statsRes || globalState.stats,
+        pulse: computedPulse,
         loading: false,
         error: null,
         syncedAt: syncedTimestamp,
@@ -184,8 +194,13 @@ export function useGithub() {
     return state.events.length > 0 ? state.events[0] : null;
   }, [state.events]);
 
+  const pulse = useMemo(() => {
+    return computeGitHubPulse(state.events, state.repos, state.syncedAt || Date.now());
+  }, [state.events, state.repos, state.syncedAt]);
+
   return {
     ...state,
+    pulse,
     latestRepo,
     latestEvent,
     totalReposCount: state.user?.public_repos ?? state.repos.length,

@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { GitBranch, ArrowDown, CheckCircle2, ChevronRight } from "lucide-react";
 import { ProjectItem } from "../../data/projects";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 interface BuildEvolutionProps {
   onSelectProject?: (project: ProjectItem) => void;
@@ -65,17 +66,26 @@ const EVOLUTION_STAGES: EvolutionStage[] = [
 ];
 
 function BuildEvolutionComponent({ onSelectProject }: BuildEvolutionProps) {
+  const { theme } = usePortfolio();
+  const isLight = theme === "light";
+
   return (
-    <div className="glass-card rounded-2xl p-6 sm:p-7 border border-zinc-850 bg-zinc-950/70 space-y-6">
+    <div className={`glass-card rounded-2xl p-6 sm:p-7 border space-y-6 transition-colors ${
+      isLight ? "bg-white/80 border-slate-200 shadow-sm" : "border-zinc-850 bg-zinc-950/70"
+    }`}>
       {/* Header */}
-      <div className="space-y-1 border-b border-zinc-900 pb-4">
+      <div className={`space-y-1 border-b pb-4 ${
+        isLight ? "border-slate-200" : "border-zinc-900"
+      }`}>
         <div className="flex items-center gap-2">
-          <GitBranch className="w-4 h-4 text-cyan-400" />
-          <h3 className="text-sm sm:text-base font-bold text-white font-display uppercase tracking-wider">
+          <GitBranch className="w-4 h-4 text-cyan-500" />
+          <h3 className={`text-sm sm:text-base font-bold font-display uppercase tracking-wider ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}>
             BUILD EVOLUTION &amp; ARCHITECTURAL LIFECYCLE
           </h3>
         </div>
-        <p className="text-xs text-zinc-400 font-sans">
+        <p className={`text-xs font-sans ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
           Progression of software systems from early algorithmic foundations to autonomous multi-agent pipelines.
         </p>
       </div>
@@ -83,7 +93,9 @@ function BuildEvolutionComponent({ onSelectProject }: BuildEvolutionProps) {
       {/* Evolution Timeline List */}
       <div className="space-y-3 relative">
         {/* Subtle vertical spine */}
-        <div className="absolute left-[19px] top-4 bottom-4 w-px bg-zinc-800 -z-0" />
+        <div className={`absolute left-[19px] top-4 bottom-4 w-px -z-0 ${
+          isLight ? "bg-slate-200" : "bg-zinc-800"
+        }`} />
 
         {EVOLUTION_STAGES.map((stage, idx) => {
           const isLast = idx === EVOLUTION_STAGES.length - 1;
@@ -92,28 +104,38 @@ function BuildEvolutionComponent({ onSelectProject }: BuildEvolutionProps) {
               {/* Step indicator circle */}
               <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-mono text-xs font-bold shrink-0 border transition-all ${
                 isLast
-                  ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/40 shadow-sm"
+                  ? isLight
+                    ? "bg-cyan-50 text-cyan-800 border-cyan-300 shadow-sm"
+                    : "bg-cyan-500/20 text-cyan-300 border-cyan-500/40 shadow-sm"
+                  : isLight
+                  ? "bg-slate-100 text-slate-600 border-slate-200 group-hover:border-slate-300"
                   : "bg-zinc-900 text-zinc-400 border-zinc-800 group-hover:border-zinc-700"
               }`}>
                 {stage.step}
               </div>
 
               {/* Card Body */}
-              <div className="flex-1 p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-850/80 hover:border-zinc-750 transition-colors space-y-1.5">
+              <div className={`flex-1 p-3.5 rounded-xl border transition-colors space-y-1.5 ${
+                isLight
+                  ? "bg-slate-50/80 border-slate-200 hover:border-slate-300"
+                  : "bg-zinc-900/40 border-zinc-850/80 hover:border-zinc-750"
+              }`}>
                 <div className="flex items-center justify-between gap-2 flex-wrap">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-400 font-semibold">
+                  <span className={`text-[10px] font-mono uppercase tracking-widest font-semibold ${
+                    isLight ? "text-cyan-700" : "text-cyan-400"
+                  }`}>
                     {stage.stage}
                   </span>
-                  <span className="text-[10px] font-mono text-zinc-500">
+                  <span className={`text-[10px] font-mono ${isLight ? "text-slate-500" : "text-zinc-500"}`}>
                     {stage.domain}
                   </span>
                 </div>
 
-                <h4 className="text-sm font-bold text-white font-display">
+                <h4 className={`text-sm font-bold font-display ${isLight ? "text-slate-900" : "text-white"}`}>
                   {stage.title}
                 </h4>
 
-                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+                <p className={`text-xs leading-relaxed font-sans ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
                   {stage.narrative}
                 </p>
 
@@ -121,7 +143,11 @@ function BuildEvolutionComponent({ onSelectProject }: BuildEvolutionProps) {
                   {stage.tech.map((t, tIdx) => (
                     <span 
                       key={tIdx} 
-                      className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-zinc-950 text-zinc-400 border border-zinc-850"
+                      className={`text-[9px] font-mono px-1.5 py-0.2 rounded border ${
+                        isLight
+                          ? "bg-white text-slate-700 border-slate-200"
+                          : "bg-zinc-950 text-zinc-400 border-zinc-850"
+                      }`}
                     >
                       {t}
                     </span>

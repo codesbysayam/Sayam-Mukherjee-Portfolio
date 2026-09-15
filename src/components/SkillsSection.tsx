@@ -1,4 +1,5 @@
-import EcosystemSection from "./EcosystemSection";
+import SkillsPage from "./skills/SkillsPage";
 
-export const SkillsSection = EcosystemSection;
-export default EcosystemSection;
+export const SkillsSection = SkillsPage;
+export default SkillsPage;
+

@@ -3,9 +3,12 @@ import { Radio, Star, GitFork, Code2, Clock, CheckCircle2, RefreshCw } from "luc
 import { PROJECTS } from "../../data/projects";
 import { useGithub } from "../../hooks/useGithub";
 import { formatRelativeTime, formatSyncAge } from "../../services/github";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 function RepositorySignalComponent() {
   const { repos, syncedAt, loading, error } = useGithub();
+  const { theme } = usePortfolio();
+  const isLight = theme === "light";
 
   // Calculate telemetry metrics ONLY from the 5 verified projects
   const {
@@ -74,17 +77,23 @@ function RepositorySignalComponent() {
   }, [repos]);
 
   return (
-    <div className="glass-card rounded-2xl p-5 sm:p-6 border border-zinc-850 bg-zinc-950/70 space-y-4">
+    <div className={`glass-card rounded-2xl p-5 sm:p-6 border space-y-4 transition-colors ${
+      isLight ? "bg-white/80 border-slate-200 shadow-sm" : "border-zinc-850 bg-zinc-950/70"
+    }`}>
       {/* Top Banner */}
-      <div className="flex items-center justify-between gap-3 border-b border-zinc-900 pb-3.5 flex-wrap">
+      <div className={`flex items-center justify-between gap-3 border-b pb-3.5 flex-wrap ${
+        isLight ? "border-slate-200" : "border-zinc-900"
+      }`}>
         <div className="flex items-center gap-2">
-          <Radio className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-          <h4 className="text-xs sm:text-sm font-mono font-bold text-white uppercase tracking-wider">
+          <Radio className="w-3.5 h-3.5 text-cyan-500 animate-pulse" />
+          <h4 className={`text-xs sm:text-sm font-mono font-bold uppercase tracking-wider ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}>
             REPOSITORY SIGNAL • VERIFIED REPOSITORY TELEMETRY
           </h4>
         </div>
 
-        <span className="text-[10px] font-mono text-zinc-500">
+        <span className={`text-[10px] font-mono ${isLight ? "text-slate-500" : "text-zinc-500"}`}>
           {formatSyncAge(syncedAt)}
         </span>
       </div>
@@ -92,64 +101,94 @@ function RepositorySignalComponent() {
       {/* 5 Compact Telemetry Panels */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {/* Total Verified Projects */}
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-850 space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
+        <div className={`p-3.5 rounded-xl border space-y-1 transition-colors ${
+          isLight ? "bg-slate-50/80 border-slate-200" : "bg-zinc-900/50 border-zinc-850"
+        }`}>
+          <span className={`text-[10px] font-mono uppercase tracking-widest block ${
+            isLight ? "text-slate-500" : "text-zinc-500"
+          }`}>
             VERIFIED REPOSITORIES
           </span>
-          <p className="text-lg sm:text-xl font-mono font-extrabold text-white">
+          <p className={`text-lg sm:text-xl font-mono font-extrabold ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}>
             {totalProjectsCount}
           </p>
-          <span className="text-[10px] font-mono text-cyan-400/80">Strictly verified</span>
+          <span className={`text-[10px] font-mono ${isLight ? "text-cyan-700" : "text-cyan-400/80"}`}>Strictly verified</span>
         </div>
 
         {/* Latest Updated Project */}
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-850 space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
+        <div className={`p-3.5 rounded-xl border space-y-1 transition-colors ${
+          isLight ? "bg-slate-50/80 border-slate-200" : "bg-zinc-900/50 border-zinc-850"
+        }`}>
+          <span className={`text-[10px] font-mono uppercase tracking-widest block ${
+            isLight ? "text-slate-500" : "text-zinc-500"
+          }`}>
             LATEST ACTIVITY
           </span>
-          <p className="text-xs font-mono font-bold text-zinc-200 truncate" title={String(latestUpdatedProject)}>
+          <p className={`text-xs font-mono font-bold truncate ${
+            isLight ? "text-slate-800" : "text-zinc-200"
+          }`} title={String(latestUpdatedProject)}>
             {latestUpdatedProject}
           </p>
-          <span className="text-[10px] font-mono text-emerald-400/80">Live GitHub sync</span>
+          <span className={`text-[10px] font-mono ${isLight ? "text-emerald-700" : "text-emerald-400/80"}`}>Live GitHub sync</span>
         </div>
 
         {/* Most Used Language */}
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-850 space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
+        <div className={`p-3.5 rounded-xl border space-y-1 transition-colors ${
+          isLight ? "bg-slate-50/80 border-slate-200" : "bg-zinc-900/50 border-zinc-850"
+        }`}>
+          <span className={`text-[10px] font-mono uppercase tracking-widest block ${
+            isLight ? "text-slate-500" : "text-zinc-500"
+          }`}>
             PRIMARY LANGUAGE
           </span>
-          <p className="text-lg sm:text-xl font-mono font-extrabold text-white">
+          <p className={`text-lg sm:text-xl font-mono font-extrabold ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}>
             {mostUsedLanguage}
           </p>
-          <span className="text-[10px] font-mono text-zinc-400">Calculated from 5 repos</span>
+          <span className={`text-[10px] font-mono ${isLight ? "text-slate-500" : "text-zinc-400"}`}>Calculated from 5 repos</span>
         </div>
 
         {/* Total Stars */}
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-850 space-y-1">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
+        <div className={`p-3.5 rounded-xl border space-y-1 transition-colors ${
+          isLight ? "bg-slate-50/80 border-slate-200" : "bg-zinc-900/50 border-zinc-850"
+        }`}>
+          <span className={`text-[10px] font-mono uppercase tracking-widest block ${
+            isLight ? "text-slate-500" : "text-zinc-500"
+          }`}>
             TOTAL STARS
           </span>
           <div className="flex items-center gap-1.5">
-            <Star className="w-3.5 h-3.5 text-amber-400 shrink-0" />
-            <span className="text-lg sm:text-xl font-mono font-extrabold text-white">
+            <Star className="w-3.5 h-3.5 text-amber-500 shrink-0" />
+            <span className={`text-lg sm:text-xl font-mono font-extrabold ${
+              isLight ? "text-slate-900" : "text-white"
+            }`}>
               {totalStars}
             </span>
           </div>
-          <span className="text-[10px] font-mono text-zinc-500">Live repository data</span>
+          <span className={`text-[10px] font-mono ${isLight ? "text-slate-500" : "text-zinc-500"}`}>Live repository data</span>
         </div>
 
         {/* Total Forks */}
-        <div className="p-3.5 rounded-xl bg-zinc-900/50 border border-zinc-850 space-y-1 col-span-2 sm:col-span-1">
-          <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
+        <div className={`p-3.5 rounded-xl border space-y-1 col-span-2 sm:col-span-1 transition-colors ${
+          isLight ? "bg-slate-50/80 border-slate-200" : "bg-zinc-900/50 border-zinc-850"
+        }`}>
+          <span className={`text-[10px] font-mono uppercase tracking-widest block ${
+            isLight ? "text-slate-500" : "text-zinc-500"
+          }`}>
             TOTAL FORKS
           </span>
           <div className="flex items-center gap-1.5">
-            <GitFork className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
-            <span className="text-lg sm:text-xl font-mono font-extrabold text-white">
+            <GitFork className={`w-3.5 h-3.5 shrink-0 ${isLight ? "text-slate-400" : "text-zinc-400"}`} />
+            <span className={`text-lg sm:text-xl font-mono font-extrabold ${
+              isLight ? "text-slate-900" : "text-white"
+            }`}>
               {totalForks}
             </span>
           </div>
-          <span className="text-[10px] font-mono text-zinc-500">Live repository data</span>
+          <span className={`text-[10px] font-mono ${isLight ? "text-slate-500" : "text-zinc-500"}`}>Live repository data</span>
         </div>
       </div>
     </div>

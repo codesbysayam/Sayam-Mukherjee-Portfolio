@@ -44,22 +44,22 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
       </div>
 
       {/* 6-Category Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {ENGINEERING_STACK_CATEGORIES.map((group) => {
-          const icon = CATEGORY_ICONS[group.id] || <Code2 className="w-4 h-4 text-cyan-400" />;
+          const icon = CATEGORY_ICONS[group.id] || <Code2 className="w-4 h-4 text-cyan-500 dark:text-cyan-400" />;
 
           return (
             <div
               key={group.id}
-              className="p-4 sm:p-5 rounded-xl bg-zinc-950/40 border border-zinc-850 hover:border-zinc-800 transition-all flex flex-col justify-between space-y-3"
+              className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-[#11131c]/90 border border-zinc-200/90 dark:border-white/[0.08] hover:border-cyan-500/30 dark:hover:border-white/[0.16] shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-3.5"
             >
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="p-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-1.5 rounded-lg bg-zinc-100 dark:bg-white/[0.05] border border-zinc-200 dark:border-white/[0.08]">
                       {icon}
                     </div>
-                    <h3 className="text-xs font-mono font-semibold tracking-wider text-zinc-300 uppercase">
+                    <h3 className="text-xs font-mono font-semibold tracking-wider text-zinc-900 dark:text-zinc-200 uppercase">
                       {group.category}
                     </h3>
                   </div>
@@ -68,13 +68,13 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
                   </span>
                 </div>
 
-                <p className="text-xs text-zinc-400 leading-relaxed min-h-[32px]">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed min-h-[32px] font-sans">
                   {group.description}
                 </p>
               </div>
 
               {/* Skills Tags */}
-              <div className="pt-2.5 border-t border-zinc-850/80 flex flex-wrap gap-1.5">
+              <div className="pt-2.5 border-t border-zinc-100 dark:border-white/[0.06] flex flex-wrap gap-1.5">
                 {group.skills.map((skillName) => {
                   const isSelected = selectedTech?.toLowerCase() === skillName.toLowerCase();
 
@@ -83,14 +83,14 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
                       key={skillName}
                       type="button"
                       onClick={() => onSelectTech?.(isSelected ? null : skillName)}
-                      className={`px-2 py-0.5 rounded text-[11px] font-mono transition-all text-left flex items-center gap-1 ${
+                      className={`px-2 py-0.5 rounded-lg text-[11px] font-mono transition-all text-left flex items-center gap-1 cursor-pointer ${
                         isSelected
-                          ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 shadow-sm"
-                          : "bg-zinc-900/70 text-zinc-300 border border-zinc-800 hover:border-zinc-700 hover:text-white"
+                          ? "bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border border-cyan-500/50 shadow-sm"
+                          : "bg-zinc-100 dark:bg-white/[0.04] text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-white/[0.06] hover:border-zinc-300 dark:hover:border-white/[0.12] hover:text-black dark:hover:text-white"
                       }`}
                     >
                       <span>{skillName}</span>
-                      {isSelected && <CheckCircle2 className="w-2.5 h-2.5 text-cyan-400 shrink-0" />}
+                      {isSelected && <CheckCircle2 className="w-2.5 h-2.5 text-cyan-500 dark:text-cyan-400 shrink-0" />}
                     </button>
                   );
                 })}

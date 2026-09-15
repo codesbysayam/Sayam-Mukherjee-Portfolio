@@ -4,6 +4,7 @@ import {
   AlertCircle, Sparkles, X, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight
 } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
+import { usePortfolio } from "../context/PortfolioContext";
 import { 
   formatRelativeTime, 
   formatSyncAge,
@@ -27,6 +28,9 @@ const LANGUAGE_COLORS: Record<string, string> = {
 const GITHUB_PROFILE_REPOS_URL = "https://github.com/codesbysayam?tab=repositories";
 
 function LiveBuildFeedComponent() {
+  const { theme } = usePortfolio();
+  const isLight = theme === "light";
+
   const { 
     repos, 
     loading, 
@@ -38,7 +42,7 @@ function LiveBuildFeedComponent() {
   } = useGithub();
 
   // Search and language filter state
-  const [query, setQuery] = useState<string>("" );
+  const [query, setQuery] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] = useState<string>("ALL");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number | "ALL">(6);
@@ -110,88 +114,51 @@ function LiveBuildFeedComponent() {
   return (
     <section 
       id="live-build-feed" 
-      className="live-build-feed-panel relative w-full rounded-3xl overflow-hidden font-sans text-zinc-100 select-none"
+      className={`relative w-full rounded-3xl overflow-hidden font-sans select-none border transition-all p-5 sm:p-7 md:p-8 ${
+        isLight
+          ? "bg-white border-slate-200/90 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.08)] text-slate-800"
+          : "bg-[#11131c]/90 border-white/[0.08] shadow-[0_24px_60px_-15px_rgba(0,0,0,0.6)] text-zinc-100"
+      }`}
       aria-label="Live Build Feed from GitHub"
     >
-      <style>{`
-        .live-build-feed-panel {
-          background: linear-gradient(160deg, rgba(20, 20, 26, 0.92) 0%, rgba(10, 10, 14, 0.97) 100%);
-          border: 1px solid rgba(255, 255, 255, 0.09);
-          box-shadow: 0 24px 60px -15px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-          padding: clamp(20px, 3vw, 32px);
-        }
-
-        .feed-card-interactive {
-          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .feed-card-interactive:hover {
-          transform: translateY(-2px);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .feed-card-interactive:hover {
-            transform: none !important;
-          }
-        }
-
-        html.light .live-build-feed-panel,
-        html[data-theme="light"] .live-build-feed-panel {
-          background: linear-gradient(160deg, rgba(255, 255, 255, 0.97) 0%, rgba(244, 244, 248, 0.98) 100%) !important;
-          border-color: rgba(0, 0, 0, 0.09) !important;
-          box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
-          color: #18181b !important;
-        }
-
-        html.light .live-build-feed-panel h3,
-        html[data-theme="light"] .live-build-feed-panel h3,
-        html.light .live-build-feed-panel .feed-heading,
-        html[data-theme="light"] .live-build-feed-panel .feed-heading {
-          color: #09090b !important;
-        }
-
-        html.light .live-build-feed-panel p,
-        html[data-theme="light"] .live-build-feed-panel p {
-          color: #52525b !important;
-        }
-
-        html.light .feed-card-interactive,
-        html[data-theme="light"] .feed-card-interactive {
-          background: rgba(255, 255, 255, 0.9) !important;
-          border-color: rgba(0, 0, 0, 0.09) !important;
-          color: #18181b !important;
-        }
-
-        html.light .feed-card-interactive:hover,
-        html[data-theme="light"] .feed-card-interactive:hover {
-          background: rgba(255, 255, 255, 1) !important;
-          border-color: rgba(168, 85, 247, 0.35) !important;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.06) !important;
-        }
-      `}</style>
-
       {/* ==================================================
           TOP CONTROLS & HEADER
           ================================================== */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-white/[0.08]">
+      <div className={`flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b ${
+        isLight ? "border-slate-200/80" : "border-white/[0.08]"
+      }`}>
         <div>
           <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-wider uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-wider uppercase border ${
+              isLight
+                ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+            }`}>
+              <span className={`w-1.5 h-1.5 rounded-full animate-pulse shrink-0 ${isLight ? "bg-emerald-600" : "bg-emerald-400"}`} />
               <span>LIVE FROM GITHUB</span>
             </span>
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-purple-500/10 text-purple-300 border border-purple-500/20">
+            <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono border ${
+              isLight
+                ? "bg-violet-50 text-violet-800 border-violet-200"
+                : "bg-purple-500/10 text-purple-300 border-purple-500/20"
+            }`}>
               {repos.length} Public {repos.length === 1 ? "Repository" : "Repositories"}
             </span>
-            <span className="text-[10px] font-mono text-zinc-400 hidden sm:inline">
+            <span className={`text-[10px] font-mono hidden sm:inline ${
+              isLight ? "text-slate-500" : "text-zinc-400"
+            }`}>
               {formatSyncAge(syncedAt)}
             </span>
           </div>
-          <h3 className="feed-heading text-xl sm:text-2xl font-bold font-display tracking-tight text-white flex items-center gap-2">
-            <Github className="w-5 h-5 text-purple-400" />
+          <h3 className={`text-xl sm:text-2xl font-bold font-display tracking-tight flex items-center gap-2 ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}>
+            <Github className={`w-5 h-5 ${isLight ? "text-violet-600" : "text-purple-400"}`} />
             <span>Repository Explorer</span>
           </h3>
-          <p className="text-xs sm:text-sm text-zinc-400 mt-0.5">
+          <p className={`text-xs sm:text-sm mt-0.5 ${
+            isLight ? "text-slate-600" : "text-zinc-400"
+          }`}>
             Real public code repositories synced directly from github.com/codesbysayam.
           </p>
         </div>
@@ -199,20 +166,28 @@ function LiveBuildFeedComponent() {
         {/* Action Controls: Search & Refresh */}
         <div className="flex flex-wrap items-center gap-2.5">
           <div className="relative min-w-[200px] sm:min-w-[240px]">
-            <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <Search className={`w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none ${
+              isLight ? "text-slate-400" : "text-zinc-400"
+            }`} />
             <input
               type="text"
               value={query}
               onChange={(e) => handleQueryChange(e.target.value)}
               placeholder="Search repositories..."
               aria-label="Search repositories"
-              className="w-full pl-8 pr-8 py-1.5 rounded-xl text-xs font-mono bg-white/[0.04] border border-white/10 text-white placeholder-zinc-400 focus:outline-none focus:border-purple-500/50 transition-all"
+              className={`w-full pl-8 pr-8 py-2 rounded-xl text-xs font-mono transition-all focus:outline-none ${
+                isLight
+                  ? "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-violet-500 focus:bg-white"
+                  : "bg-white/[0.04] border border-white/10 text-white placeholder-zinc-500 focus:border-purple-500/50"
+              }`}
             />
             {query && (
               <button
                 type="button"
                 onClick={() => handleQueryChange("")}
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white p-0.5"
+                className={`absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 ${
+                  isLight ? "text-slate-400 hover:text-slate-700" : "text-zinc-400 hover:text-white"
+                }`}
               >
                 <X className="w-3 h-3" />
               </button>
@@ -224,7 +199,11 @@ function LiveBuildFeedComponent() {
             onClick={() => refresh()}
             disabled={loading}
             title="Refresh repositories"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white border border-white/10 text-xs font-mono transition-colors disabled:opacity-40 cursor-pointer"
+            className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono border transition-colors disabled:opacity-40 cursor-pointer ${
+              isLight
+                ? "bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 hover:text-slate-950 border-slate-200"
+                : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white border-white/10"
+            }`}
           >
             <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-purple-400" : ""}`} />
             <span className="hidden sm:inline">Refresh</span>
@@ -234,8 +213,12 @@ function LiveBuildFeedComponent() {
 
       {/* Rate limit warning banner */}
       {rateLimited && (
-        <div className="mt-4 p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 shrink-0 text-amber-400" />
+        <div className={`mt-4 p-3 rounded-xl border text-xs font-mono flex items-center gap-2 ${
+          isLight
+            ? "bg-amber-50 border-amber-200 text-amber-800"
+            : "bg-amber-500/10 border-amber-500/20 text-amber-300"
+        }`}>
+          <AlertCircle className={`w-4 h-4 shrink-0 ${isLight ? "text-amber-600" : "text-amber-400"}`} />
           <span>GitHub API rate limit reached. Displaying latest cached data.</span>
         </div>
       )}
@@ -244,7 +227,9 @@ function LiveBuildFeedComponent() {
       <div className="flex flex-wrap items-center justify-between gap-3 pt-5 pb-2">
         {availableLanguages.length > 1 && (
           <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 font-semibold mr-1">
+            <span className={`text-[10px] font-mono uppercase tracking-wider font-semibold mr-1 ${
+              isLight ? "text-slate-500" : "text-zinc-400"
+            }`}>
               Language:
             </span>
             {availableLanguages.map((lang) => {
@@ -254,10 +239,14 @@ function LiveBuildFeedComponent() {
                   key={lang}
                   type="button"
                   onClick={() => handleLanguageChange(lang)}
-                  className={`px-2.5 py-1 rounded-lg text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
                     isSelected
-                      ? "bg-purple-600 text-white font-semibold shadow-sm border border-purple-400/30"
-                      : "bg-white/[0.035] hover:bg-white/[0.07] text-zinc-400 hover:text-zinc-200 border border-white/10"
+                      ? isLight
+                        ? "bg-violet-600 text-white font-semibold shadow-xs"
+                        : "bg-purple-600 text-white font-semibold shadow-xs border border-purple-400/30"
+                      : isLight
+                        ? "bg-slate-100 hover:bg-slate-200/70 text-slate-700 border border-slate-200/80"
+                        : "bg-white/[0.035] hover:bg-white/[0.07] text-zinc-400 hover:text-zinc-200 border border-white/10"
                   }`}
                 >
                   {lang !== "ALL" && (
@@ -278,7 +267,11 @@ function LiveBuildFeedComponent() {
           <button
             type="button"
             onClick={() => setPageSize(isViewAll ? 6 : "ALL")}
-            className="px-2.5 py-1 text-xs font-mono rounded-lg bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white border border-white/10 transition-colors cursor-pointer"
+            className={`px-3 py-1.5 text-xs font-mono rounded-lg border transition-colors cursor-pointer ${
+              isLight
+                ? "bg-slate-100 hover:bg-slate-200/70 text-slate-700 border-slate-200"
+                : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white border-white/10"
+            }`}
           >
             {isViewAll ? "Show Paginated (6/page)" : `View All (${totalFiltered})`}
           </button>
@@ -294,12 +287,14 @@ function LiveBuildFeedComponent() {
           Array.from({ length: 3 }).map((_, idx) => (
             <div
               key={idx}
-              className="rounded-2xl p-5 bg-white/[0.02] border border-white/10 animate-pulse space-y-3 min-w-0"
+              className={`rounded-2xl p-5 animate-pulse space-y-3 min-w-0 border ${
+                isLight ? "bg-slate-100 border-slate-200" : "bg-white/[0.02] border-white/10"
+              }`}
             >
-              <div className="h-4 w-24 bg-white/10 rounded" />
-              <div className="h-6 w-3/4 bg-white/10 rounded" />
-              <div className="h-10 w-full bg-white/5 rounded" />
-              <div className="h-4 w-1/2 bg-white/10 rounded pt-2" />
+              <div className={`h-4 w-24 rounded ${isLight ? "bg-slate-200" : "bg-white/10"}`} />
+              <div className={`h-6 w-3/4 rounded ${isLight ? "bg-slate-200" : "bg-white/10"}`} />
+              <div className={`h-10 w-full rounded ${isLight ? "bg-slate-200/60" : "bg-white/5"}`} />
+              <div className={`h-4 w-1/2 rounded pt-2 ${isLight ? "bg-slate-200" : "bg-white/10"}`} />
             </div>
           ))
         ) : displayedRepos.length > 0 ? (
@@ -308,20 +303,28 @@ function LiveBuildFeedComponent() {
             return (
               <div
                 key={repo.id || repo.name}
-                className="feed-card-interactive flex flex-col justify-between rounded-2xl p-5 bg-white/[0.035] border border-white/[0.08] hover:border-purple-500/30 select-text min-w-0 w-full"
+                className={`flex flex-col justify-between rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 select-text min-w-0 w-full ${
+                  isLight
+                    ? "bg-slate-50/70 border-slate-200/90 hover:bg-white hover:border-violet-400/60 hover:shadow-md"
+                    : "bg-white/[0.025] border-white/[0.07] hover:bg-white/[0.05] hover:border-purple-500/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
+                }`}
               >
                 <div className="space-y-2.5 min-w-0">
                   {/* Top Badge Row */}
                   <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
                     {isLatest ? (
-                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-300 border border-purple-500/30 font-semibold tracking-wider">
-                        <Sparkles className="w-2.5 h-2.5 text-purple-400" />
+                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-semibold tracking-wider border ${
+                        isLight
+                          ? "bg-violet-50 text-violet-800 border-violet-200"
+                          : "bg-purple-500/15 text-purple-300 border-purple-500/30"
+                      }`}>
+                        <Sparkles className={`w-2.5 h-2.5 ${isLight ? "text-violet-600" : "text-purple-400"}`} />
                         <span>LATEST</span>
                       </span>
                     ) : (
-                      <span className="text-zinc-500">Repository</span>
+                      <span className={isLight ? "text-slate-500" : "text-zinc-500"}>Repository</span>
                     )}
-                    <span className="text-zinc-400">
+                    <span className={isLight ? "text-slate-500" : "text-zinc-400"}>
                       Updated {formatRelativeTime(repo.updated_at)}
                     </span>
                   </div>
@@ -333,14 +336,20 @@ function LiveBuildFeedComponent() {
                     rel="noopener noreferrer"
                     className="block group min-w-0"
                   >
-                    <h4 className="text-base font-bold font-sans text-white group-hover:text-purple-300 transition-colors flex items-center justify-between gap-2 min-w-0">
+                    <h4 className={`text-base font-bold font-sans transition-colors flex items-center justify-between gap-2 min-w-0 ${
+                      isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-purple-300"
+                    }`}>
                       <span className="break-all overflow-wrap-anywhere min-w-0">{repo.name}</span>
-                      <ArrowUpRight className="w-4 h-4 text-zinc-500 group-hover:text-purple-300 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                      <ArrowUpRight className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${
+                        isLight ? "text-slate-400 group-hover:text-violet-700" : "text-zinc-500 group-hover:text-purple-300"
+                      }`} />
                     </h4>
                   </a>
 
                   {/* Description */}
-                  <p className="text-xs text-zinc-300/85 leading-relaxed line-clamp-2 break-words">
+                  <p className={`text-xs leading-relaxed line-clamp-2 break-words ${
+                    isLight ? "text-slate-600" : "text-zinc-300/85"
+                  }`}>
                     {repo.description || "Public open-source repository."}
                   </p>
 
@@ -350,7 +359,11 @@ function LiveBuildFeedComponent() {
                       {repo.topics.slice(0, 3).map((topic) => (
                         <span
                           key={topic}
-                          className="px-1.5 py-0.5 text-[9px] font-mono rounded bg-white/[0.04] text-zinc-400 border border-white/5"
+                          className={`px-1.5 py-0.5 text-[9px] font-mono rounded border ${
+                            isLight
+                              ? "bg-slate-100 text-slate-700 border-slate-200"
+                              : "bg-white/[0.04] text-zinc-400 border-white/5"
+                          }`}
                         >
                           #{topic}
                         </span>
@@ -360,10 +373,12 @@ function LiveBuildFeedComponent() {
                 </div>
 
                 {/* Footer: Language, Stars, Forks, Link */}
-                <div className="mt-4 pt-3 border-t border-white/[0.08] flex items-center justify-between text-xs font-mono">
-                  <div className="flex items-center gap-3 text-zinc-400">
+                <div className={`mt-4 pt-3 border-t flex items-center justify-between text-xs font-mono ${
+                  isLight ? "border-slate-200/80 text-slate-600" : "border-white/[0.08] text-zinc-400"
+                }`}>
+                  <div className="flex items-center gap-3">
                     {repo.language && (
-                      <span className="flex items-center gap-1.5 text-zinc-200">
+                      <span className={`flex items-center gap-1.5 ${isLight ? "text-slate-800 font-medium" : "text-zinc-200"}`}>
                         <span
                           className="w-2 h-2 rounded-full shrink-0"
                           style={{ backgroundColor: getLanguageColor(repo.language) }}
@@ -372,11 +387,11 @@ function LiveBuildFeedComponent() {
                       </span>
                     )}
                     <span className="flex items-center gap-1">
-                      <Star className="w-3 h-3 text-amber-400" />
+                      <Star className={`w-3 h-3 ${isLight ? "text-amber-500" : "text-amber-400"}`} />
                       <span>{repo.stargazers_count}</span>
                     </span>
                     <span className="flex items-center gap-1">
-                      <GitFork className="w-3 h-3 text-zinc-400" />
+                      <GitFork className={`w-3 h-3 ${isLight ? "text-slate-400" : "text-zinc-400"}`} />
                       <span>{repo.forks_count}</span>
                     </span>
                   </div>
@@ -385,7 +400,9 @@ function LiveBuildFeedComponent() {
                     href={repo.html_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-purple-400 hover:text-purple-300 font-medium inline-flex items-center gap-0.5 transition-colors"
+                    className={`font-semibold inline-flex items-center gap-0.5 transition-colors ${
+                      isLight ? "text-violet-700 hover:text-violet-900" : "text-purple-400 hover:text-purple-300"
+                    }`}
                   >
                     <span>Open ↗</span>
                   </a>
@@ -395,14 +412,16 @@ function LiveBuildFeedComponent() {
           })
         ) : (
           <div className="col-span-full py-10 text-center space-y-2">
-            <p className="text-sm font-mono text-zinc-400">No repositories matching your filter.</p>
+            <p className={`text-sm font-mono ${isLight ? "text-slate-600" : "text-zinc-400"}`}>No repositories matching your filter.</p>
             <button
               type="button"
               onClick={() => {
                 handleQueryChange("");
                 handleLanguageChange("ALL");
               }}
-              className="text-xs font-mono text-purple-400 hover:text-purple-300 underline cursor-pointer"
+              className={`text-xs font-mono underline cursor-pointer ${
+                isLight ? "text-violet-700 hover:text-violet-900" : "text-purple-400 hover:text-purple-300"
+              }`}
             >
               Reset filters
             </button>
@@ -413,7 +432,9 @@ function LiveBuildFeedComponent() {
       {/* ==================================================
           PAGINATION & FOOTER
           ================================================== */}
-      <div className="mt-6 pt-4 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-zinc-400">
+      <div className={`mt-6 pt-4 border-t flex flex-wrap items-center justify-between gap-3 text-xs font-mono ${
+        isLight ? "border-slate-200/80 text-slate-600" : "border-white/[0.08] text-zinc-400"
+      }`}>
         <div>
           Showing {displayedRepos.length} of {totalFiltered} {totalFiltered === 1 ? "repository" : "repositories"}
           {totalFiltered !== repos.length && ` (${repos.length} total on profile)`}
@@ -426,19 +447,27 @@ function LiveBuildFeedComponent() {
                 type="button"
                 disabled={safeCurrentPage <= 1}
                 onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                className="px-2 py-1 rounded-md bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10 transition-colors flex items-center gap-1 cursor-pointer"
+                className={`px-2 py-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed border transition-colors flex items-center gap-1 cursor-pointer ${
+                  isLight
+                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
+                    : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border-white/10"
+                }`}
               >
                 <ChevronLeft className="w-3 h-3" />
                 <span>Prev</span>
               </button>
-              <span className="text-[11px] text-zinc-400 px-1">
+              <span className={`text-[11px] px-1 ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
                 {safeCurrentPage} / {totalPages}
               </span>
               <button
                 type="button"
                 disabled={safeCurrentPage >= totalPages}
                 onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                className="px-2 py-1 rounded-md bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 disabled:opacity-30 disabled:cursor-not-allowed border border-white/10 transition-colors flex items-center gap-1 cursor-pointer"
+                className={`px-2 py-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed border transition-colors flex items-center gap-1 cursor-pointer ${
+                  isLight
+                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
+                    : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border-white/10"
+                }`}
               >
                 <span>Next</span>
                 <ChevronRight className="w-3 h-3" />
@@ -450,7 +479,9 @@ function LiveBuildFeedComponent() {
             href={GITHUB_PROFILE_REPOS_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-purple-400 hover:text-purple-300 font-semibold transition-colors"
+            className={`inline-flex items-center gap-1 font-semibold transition-colors ${
+              isLight ? "text-violet-700 hover:text-violet-900" : "text-purple-400 hover:text-purple-300"
+            }`}
           >
             <span>View All on GitHub</span>
             <ArrowRight className="w-3.5 h-3.5" />

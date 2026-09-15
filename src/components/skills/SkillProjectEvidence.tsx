@@ -64,6 +64,26 @@ const PROJECT_EVIDENCE_DATA: EvidenceRow[] = [
     evidence: "Trained and benchmarked real-time bounding box object detection, polygon ROI boundary monitoring, and frame latency optimization for embedded feeds.",
     githubUrl: "https://github.com/codesbysayam",
     statusBadge: "RESEARCH PROTOTYPE"
+  },
+  {
+    id: "memory-in-motion",
+    projectTitle: "Memory-in-Motion",
+    projectSubtitle: "Recurrent Memory Laboratory",
+    skills: ["TypeScript", "Recurrent State Dynamics", "Phase Portraits", "Information Theory", "Web Workers"],
+    evidence: "Interactive mathematical laboratory exploring how recurrent neural networks compress sequential history into continuous latent state trajectories.",
+    githubUrl: "https://github.com/codesbysayam/Memory-in-Motion",
+    liveUrl: "https://memory-in-motion.vercel.app",
+    statusBadge: "RESEARCH / AI"
+  },
+  {
+    id: "routeledger",
+    projectTitle: "RouteLedger",
+    projectSubtitle: "Fleet Routing & Hours-of-Service Engine",
+    skills: ["TypeScript", "Graph Theory", "FMCSR Regulations", "Spatial Algorithms", "Node.js"],
+    evidence: "Turn-by-turn commercial routing platform enforcing federal Hours of Service (HOS) rest mandates and optimizing multi-stop carrier dispatch.",
+    githubUrl: "https://github.com/codesbysayam/RouteLedger",
+    liveUrl: "https://routeledger.vercel.app",
+    statusBadge: "LOGISTICS / SYSTEMS"
   }
 ];
 

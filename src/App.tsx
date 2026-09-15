@@ -24,6 +24,7 @@ import Toast from "./components/Toast";
 
 // Code-split heavy interactive components to keep initial bundle ultra-light and fast
 const AIChatBot = lazy(() => import("./components/AssistantChat"));
+const SkillsSection = lazy(() => import("./components/SkillsSection"));
 const EcosystemSection = lazy(() => import("./components/EcosystemSection"));
 const ProjectsShowcase = lazy(() => import("./components/ProjectsShowcase"));
 const BlogsSection = lazy(() => import("./components/BlogsSection"));
@@ -802,12 +803,12 @@ function AppContent() {
                 className="w-full min-h-[60vh]"
               >
                 {activeTab === "home" && (
-                  <div className="space-y-12 sm:space-y-16">
+                  <div className="space-y-8 sm:space-y-12">
                     {/* REBUILT HERO SECTION */}
                     <HeroSection onViewWork={() => navigateToTab("projects")} />
 
                     {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
-                    <section id="live-build-feed" className="w-full pt-2 pb-8">
+                    <section id="live-build-feed" className="w-full pt-1 pb-4">
                       <LiveBuildFeed />
                     </section>
 
@@ -819,13 +820,13 @@ function AppContent() {
                 )}
 
                 <Suspense fallback={
-                  <div className="w-full py-20 flex items-center justify-center text-zinc-500 font-mono text-xs">
+                  <div className="w-full py-16 flex items-center justify-center text-zinc-500 font-mono text-xs">
                     <div className="w-4 h-4 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mr-2" />
                     Rendering view...
                   </div>
                 }>
                   {activeTab === "about" && (
-                    <div className="space-y-16 py-8">
+                    <div className="space-y-10 sm:space-y-14 py-2">
                       <Reveal delay={0}>
                         <AboutSection />
                       </Reveal>
@@ -838,14 +839,20 @@ function AppContent() {
                     </div>
                   )}
 
-                  {(activeTab === "ecosystem" || activeTab === "skills") && (
-                    <div className="py-4">
+                  {activeTab === "skills" && (
+                    <div className="py-2">
+                      <SkillsSection onNavigateToProject={(id: string) => navigateToTab("projects")} />
+                    </div>
+                  )}
+
+                  {activeTab === "ecosystem" && (
+                    <div className="py-2">
                       <EcosystemSection />
                     </div>
                   )}
 
                   {activeTab === "projects" && (
-                    <div className="py-4 sm:py-6">
+                    <div className="py-2 sm:py-4">
                       <Reveal delay={0}>
                         <ProjectsShowcase />
                       </Reveal>
@@ -853,13 +860,13 @@ function AppContent() {
                   )}
 
                   {activeTab === "certificates" && (
-                    <div className="py-4 sm:py-6">
+                    <div className="py-2 sm:py-4">
                       <CertificatesPage />
                     </div>
                   )}
 
                   {activeTab === "journal" && (
-                    <div className="space-y-16 py-8">
+                    <div className="space-y-10 sm:space-y-14 py-2">
                       <Reveal delay={0}>
                         <BlogsSection />
                       </Reveal>
@@ -870,7 +877,7 @@ function AppContent() {
                   )}
 
                   {activeTab === "contact" && (
-                    <div className="w-full">
+                    <div className="w-full py-2">
                       <Reveal delay={0}>
                         <ContactSection />
                       </Reveal>

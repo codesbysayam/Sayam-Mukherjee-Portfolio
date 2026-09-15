@@ -1,5 +1,6 @@
 import { memo } from "react";
 import { Layers, Terminal, Cpu, Wrench } from "lucide-react";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 interface TechGroup {
   category: string;
@@ -15,7 +16,7 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "Frontend & Interface",
     icon: Layers,
-    color: "text-cyan-400",
+    color: "text-cyan-500",
     items: [
       { name: "React", usedIn: "Mausam, Operon, Portfolio" },
       { name: "TypeScript", usedIn: "Mausam, Operon, Portfolio" },
@@ -27,7 +28,7 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "Backend & Systems",
     icon: Terminal,
-    color: "text-emerald-400",
+    color: "text-emerald-500",
     items: [
       { name: "Node.js", usedIn: "Operon, Portfolio proxy" },
       { name: "Express.js", usedIn: "Operon backend, API proxy" },
@@ -39,7 +40,7 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "AI, ML & Computer Vision",
     icon: Cpu,
-    color: "text-purple-400",
+    color: "text-purple-500",
     items: [
       { name: "YOLOv8", usedIn: "Edge Computer Vision pipeline" },
       { name: "OpenCV", usedIn: "Spatial motion & frame processing" },
@@ -51,7 +52,7 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "Tools & Infrastructure",
     icon: Wrench,
-    color: "text-amber-400",
+    color: "text-amber-500",
     items: [
       { name: "Git & GitHub", usedIn: "Version control across all 5 repos" },
       { name: "Vercel", usedIn: "Mausam, Operon, Portfolio deployment" },
@@ -62,17 +63,26 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
 ];
 
 function TechnologyLandscapeComponent() {
+  const { theme } = usePortfolio();
+  const isLight = theme === "light";
+
   return (
-    <div className="glass-card rounded-2xl p-6 sm:p-7 border border-zinc-850 bg-zinc-950/70 space-y-6">
+    <div className={`glass-card rounded-2xl p-6 sm:p-7 border space-y-6 transition-colors ${
+      isLight ? "bg-white/80 border-slate-200 shadow-sm" : "border-zinc-850 bg-zinc-950/70"
+    }`}>
       {/* Section Header */}
-      <div className="space-y-1 border-b border-zinc-900 pb-4">
+      <div className={`space-y-1 border-b pb-4 ${
+        isLight ? "border-slate-200" : "border-zinc-900"
+      }`}>
         <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-cyan-400" />
-          <h3 className="text-sm sm:text-base font-bold text-white font-display uppercase tracking-wider">
+          <Layers className="w-4 h-4 text-cyan-500" />
+          <h3 className={`text-sm sm:text-base font-bold font-display uppercase tracking-wider ${
+            isLight ? "text-slate-900" : "text-white"
+          }`}>
             TECHNOLOGY LANDSCAPE
           </h3>
         </div>
-        <p className="text-xs text-zinc-400 font-sans">
+        <p className={`text-xs font-sans ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
           Taxonomy of verified technologies used across Sayam's 5 systems. No generic skill bars.
         </p>
       </div>
@@ -84,11 +94,17 @@ function TechnologyLandscapeComponent() {
           return (
             <div 
               key={gIdx} 
-              className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-850/80 space-y-3"
+              className={`p-4 rounded-xl border space-y-3 transition-colors ${
+                isLight 
+                  ? "bg-slate-50/80 border-slate-200" 
+                  : "bg-zinc-900/40 border-zinc-850/80"
+              }`}
             >
               <div className="flex items-center gap-2">
                 <Icon className={`w-3.5 h-3.5 ${group.color}`} />
-                <h4 className="text-xs font-mono font-bold text-zinc-200 uppercase tracking-wider">
+                <h4 className={`text-xs font-mono font-bold uppercase tracking-wider ${
+                  isLight ? "text-slate-800" : "text-zinc-200"
+                }`}>
                   {group.category}
                 </h4>
               </div>
@@ -99,10 +115,14 @@ function TechnologyLandscapeComponent() {
                     key={iIdx} 
                     className="flex items-center justify-between gap-2 text-xs"
                   >
-                    <span className="font-mono font-semibold text-zinc-300">
+                    <span className={`font-mono font-semibold ${
+                      isLight ? "text-slate-700" : "text-zinc-300"
+                    }`}>
                       {item.name}
                     </span>
-                    <span className="text-[10px] font-mono text-zinc-500 truncate text-right">
+                    <span className={`text-[10px] font-mono truncate text-right ${
+                      isLight ? "text-slate-500" : "text-zinc-500"
+                    }`}>
                       {item.usedIn}
                     </span>
                   </div>
