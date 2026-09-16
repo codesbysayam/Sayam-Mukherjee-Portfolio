@@ -51,39 +51,27 @@ function FeaturedProjectComponent({
           {/* Eyebrow & Badges */}
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 shadow-sm">
+              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 shadow-sm">
                 <Sparkles className="w-3 h-3 text-cyan-400" />
-                FEATURED WORK
+                Featured Work
               </span>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-mono text-zinc-400 dark:text-zinc-400 border border-zinc-700/50 bg-zinc-900/60 dark:bg-zinc-900/80">
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono text-zinc-400 border border-zinc-700/50 bg-zinc-900/60 dark:bg-zinc-900/80">
                 {project.category}
               </span>
               {project.id === "mausam" && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-mono text-amber-300 border border-amber-500/30 bg-amber-500/10 flex items-center gap-1">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono text-amber-300 border border-amber-500/30 bg-amber-500/10 flex items-center gap-1">
                   <Award className="w-3 h-3 text-amber-400" />
                   SIH 2026
                 </span>
               )}
             </div>
-
-            {/* Switcher between candidate projects */}
-            {candidateTitle && onToggleCandidate && (
-              <button
-                onClick={onToggleCandidate}
-                className="text-[11px] font-mono text-zinc-400 hover:text-cyan-300 transition-colors flex items-center gap-1 cursor-pointer bg-zinc-900/60 dark:bg-zinc-900/80 px-2.5 py-1 rounded-lg border border-zinc-700/60 hover:border-cyan-500/40"
-                title={`Switch featured view to ${candidateTitle}`}
-              >
-                <span>View {candidateTitle}</span>
-                <ArrowRight className="w-3 h-3" />
-              </button>
-            )}
           </div>
 
           {/* Project Title & Subtitle */}
           <div className="space-y-1.5">
-            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-900 dark:text-white font-display tracking-tight leading-tight">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-900 dark:text-white font-display tracking-tight leading-tight">
               {project.title}
-            </h3>
+            </h2>
             {project.subtitle && (
               <p className="text-xs sm:text-sm font-mono text-cyan-600 dark:text-cyan-400 font-medium">
                 {project.subtitle}
@@ -96,9 +84,9 @@ function FeaturedProjectComponent({
 
           {/* Why It Exists */}
           <div className="p-3.5 rounded-xl bg-zinc-900/30 dark:bg-white/[0.03] border border-zinc-800/80 dark:border-white/[0.07] space-y-1">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-cyan-600 dark:text-cyan-400 font-semibold flex items-center gap-1.5">
+            <span className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 font-semibold flex items-center gap-1.5">
               <Layers className="w-3 h-3" />
-              WHY THIS SYSTEM MATTERS
+              Why this system matters
             </span>
             <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
               {project.whyItExists}
@@ -107,8 +95,8 @@ function FeaturedProjectComponent({
 
           {/* Technology Badges */}
           <div className="space-y-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 font-semibold block">
-              VERIFIED ARCHITECTURE STACK
+            <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold block">
+              Verified Architecture Stack
             </span>
             <div className="flex flex-wrap gap-1.5">
               {project.techStack.map((tech, idx) => (
@@ -163,13 +151,13 @@ function FeaturedProjectComponent({
           {/* Engineering Solution Card */}
           <div className="card p-4 sm:p-5 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
+              <span className="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                ENGINEERING IMPLEMENTATION
+                Engineering Implementation
               </span>
-              <span className="text-[10px] font-mono text-zinc-500">PRODUCTION CODE</span>
+              <span className="text-xs font-mono text-zinc-500">Production Code</span>
             </div>
-            <p className="text-xs text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
               {project.whatIBuilt}
             </p>
           </div>
@@ -177,18 +165,18 @@ function FeaturedProjectComponent({
           {/* GitHub Telemetry Panel */}
           <div className="card p-4 sm:p-5 space-y-3">
             <div className="flex items-center justify-between border-b border-zinc-200 dark:border-white/[0.06] pb-2.5">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 font-semibold">
-                REPOSITORY METRICS
+              <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+                Repository Metrics
               </span>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-semibold">VERIFIED</span>
+                <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold">Verified</span>
               </div>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
               <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-[10px] font-mono text-zinc-500 block">PRIMARY STACK</span>
+                <span className="text-xs font-mono text-zinc-500 block">PRIMARY STACK</span>
                 <div className="flex items-center gap-1.5 pt-1">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0 inline-block"
@@ -201,7 +189,7 @@ function FeaturedProjectComponent({
               </div>
 
               <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-[10px] font-mono text-zinc-500 block">LAST CODE SYNC</span>
+                <span className="text-xs font-mono text-zinc-500 block">LAST CODE SYNC</span>
                 <div className="flex items-center gap-1 pt-1 text-xs font-mono text-zinc-800 dark:text-zinc-200">
                   <Calendar className="w-3 h-3 text-cyan-400 shrink-0" />
                   <span className="truncate">{lastUpdated}</span>
@@ -209,7 +197,7 @@ function FeaturedProjectComponent({
               </div>
 
               <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-[10px] font-mono text-zinc-500 block">STARS</span>
+                <span className="text-xs font-mono text-zinc-500 block">STARS</span>
                 <div className="flex items-center gap-1.5 pt-1">
                   <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400/20" />
                   <span className="text-xs font-mono font-bold text-zinc-900 dark:text-white">
@@ -219,7 +207,7 @@ function FeaturedProjectComponent({
               </div>
 
               <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-[10px] font-mono text-zinc-500 block">FORKS</span>
+                <span className="text-xs font-mono text-zinc-500 block">FORKS</span>
                 <div className="flex items-center gap-1.5 pt-1">
                   <GitFork className="w-3.5 h-3.5 text-cyan-400" />
                   <span className="text-xs font-mono font-bold text-zinc-900 dark:text-white">

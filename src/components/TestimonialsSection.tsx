@@ -74,11 +74,11 @@ export default function TestimonialsSection() {
               {/* Author Info */}
               <div className="flex items-center justify-between pt-4 border-t border-zinc-900/60 relative z-10">
                 <div>
-                  <h4 className="text-sm font-bold text-white font-display leading-tight">{activeTestimony.name}</h4>
-                  <p className="text-[11px] text-zinc-400 font-mono mt-0.5">{activeTestimony.role} • <span className="text-purple-400 font-bold">{activeTestimony.organization}</span></p>
+                  <h3 className="text-sm font-bold text-white font-display leading-tight">{activeTestimony.name}</h3>
+                  <p className="text-xs text-zinc-400 font-mono mt-0.5">{activeTestimony.role} • <span className="text-purple-400 font-bold">{activeTestimony.organization}</span></p>
                 </div>
 
-                <span className="text-[9px] font-mono tracking-wider bg-purple-950/20 text-purple-400 border border-purple-800/20 px-2.5 py-1 rounded-full uppercase font-bold">
+                <span className="text-xs font-mono tracking-wider bg-purple-950/20 text-purple-400 border border-purple-800/20 px-2.5 py-1 rounded-full uppercase font-bold">
                   {activeTestimony.type}
                 </span>
               </div>

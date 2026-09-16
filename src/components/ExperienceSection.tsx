@@ -25,10 +25,10 @@ function ExperienceSectionComponent() {
     <div className="space-y-8 font-sans" id="professional-experience">
       {/* Section title */}
       <div className="space-y-2">
-        <span className={`text-xs font-mono uppercase tracking-widest block font-bold ${
+        <span className={`text-xs font-mono tracking-wide block font-semibold ${
           isLight ? "text-purple-700" : "text-purple-400"
         }`}>
-          JOURNEY TIMELINE
+          Journey Timeline
         </span>
         <h2 
           style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)" }} 
@@ -52,8 +52,8 @@ function ExperienceSectionComponent() {
             ? "bg-white border-slate-200/90 shadow-sm" 
             : "bg-[#11131c]/90 border-white/[0.08] shadow-[0_16px_40px_-10px_rgba(0,0,0,0.5)]"
         }`}>
-          <span className={`text-[9px] font-mono uppercase tracking-widest px-3 py-1 block ${
-            isLight ? "text-slate-400" : "text-zinc-500"
+          <span className={`text-xs font-mono tracking-wider px-3 py-1 block ${
+            isLight ? "text-slate-500" : "text-zinc-400"
           }`}>
             Select Track
           </span>
@@ -130,7 +130,7 @@ function ExperienceSectionComponent() {
                       </p>
                     </div>
 
-                    <span className={`text-[10px] px-3 py-1 rounded-full font-mono font-bold uppercase tracking-wider border ${
+                    <span className={`text-xs px-3 py-1 rounded-full font-mono font-medium border ${
                       isLight
                         ? "bg-slate-100 border-slate-200 text-slate-700"
                         : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
@@ -142,7 +142,7 @@ function ExperienceSectionComponent() {
                   {/* Bullet description block */}
                   <ul className="space-y-3.5">
                     {currentExperience.description.map((bullet, idx) => (
-                      <li key={idx} className={`text-xs flex items-start gap-3 leading-relaxed ${
+                      <li key={idx} className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
                         isLight ? "text-slate-700" : "text-zinc-200"
                       }`}>
                         <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
@@ -157,14 +157,14 @@ function ExperienceSectionComponent() {
                 <div className={`space-y-4 pt-4 border-t ${
                   isLight ? "border-slate-100" : "border-white/[0.06]"
                 }`}>
-                  <span className={`text-[9px] font-mono uppercase tracking-widest block ${
-                    isLight ? "text-slate-400" : "text-zinc-500"
+                  <span className={`text-xs font-mono tracking-wider block ${
+                    isLight ? "text-slate-500" : "text-zinc-400"
                   }`}>
                     Core Competency Deployed
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {currentExperience.skills?.map((skill, sIdx) => (
-                      <span key={sIdx} className={`text-[10px] px-3 py-1 rounded-lg font-mono border ${
+                      <span key={sIdx} className={`text-xs px-3 py-1 rounded-lg font-mono border ${
                         isLight
                           ? "bg-slate-100 border-slate-200 text-slate-800"
                           : "bg-white/[0.04] border-white/[0.08] text-zinc-300"

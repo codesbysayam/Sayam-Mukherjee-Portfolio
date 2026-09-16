@@ -376,13 +376,13 @@ export default function AssistantChat() {
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                     <span
-                      className={`text-[10px] font-medium leading-none ${
+                      className={`text-xs font-medium leading-none ${
                         isDark ? "text-zinc-400" : "text-zinc-600"
                       }`}
                     >
                       Local Portfolio Assistant
                     </span>
-                    <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/10 text-emerald-400 font-mono">
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono">
                       ● Online
                     </span>
                   </div>
@@ -481,7 +481,7 @@ export default function AssistantChat() {
                     {isInitial && index === 0 && (
                       <div className="mt-3 max-w-full">
                         <span
-                          className={`text-[10px] uppercase font-mono tracking-wider block mb-1.5 ${
+                          className={`text-xs uppercase font-mono tracking-wider block mb-1.5 ${
                             isDark ? "text-zinc-400" : "text-zinc-500"
                           }`}
                         >
@@ -493,7 +493,7 @@ export default function AssistantChat() {
                               key={cIdx}
                               type="button"
                               onClick={() => handleSend(chip.query)}
-                              className={`text-[11px] px-2.5 py-1 rounded-full border transition-all duration-150 cursor-pointer ${
+                              className={`text-xs px-2.5 py-1 rounded-full border transition-all duration-150 cursor-pointer ${
                                 isDark
                                   ? "bg-zinc-900/80 hover:bg-zinc-800 border-zinc-800 hover:border-purple-500/40 text-zinc-300 hover:text-white"
                                   : "bg-white hover:bg-purple-50 border-purple-100 hover:border-purple-300 text-zinc-700 hover:text-purple-900 shadow-2xs"
@@ -514,7 +514,7 @@ export default function AssistantChat() {
                             key={sIdx}
                             type="button"
                             onClick={() => handleSend(suggestion)}
-                            className={`text-[10px] font-medium px-2 py-0.5 rounded-md border transition-all cursor-pointer ${
+                            className={`text-xs font-medium px-2.5 py-1 rounded-md border transition-all cursor-pointer ${
                               isDark
                                 ? "bg-zinc-900/70 hover:bg-zinc-800 border-zinc-800/80 text-zinc-300 hover:text-cyan-300 hover:border-cyan-500/30"
                                 : "bg-purple-50/70 hover:bg-purple-100 border-purple-200/60 text-purple-900"
@@ -561,7 +561,7 @@ export default function AssistantChat() {
                     key={sIdx}
                     type="button"
                     onClick={() => handleSend(suggestion)}
-                    className={`text-[10px] font-medium px-2.5 py-1 rounded-full border transition-all duration-150 cursor-pointer shrink-0 ${
+                    className={`text-xs font-medium px-2.5 py-1 rounded-full border transition-all duration-150 cursor-pointer shrink-0 ${
                       isDark
                         ? "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-cyan-500/40 text-zinc-300 hover:text-cyan-300"
                         : "bg-purple-50/70 hover:bg-purple-100/80 border-purple-200/60 text-purple-900"

@@ -414,14 +414,14 @@ export default function CertificatesPage() {
 
         <div className="relative z-10 max-w-3xl space-y-3">
           <div 
-            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono tracking-widest uppercase font-bold border ${
+            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono tracking-wider font-semibold border ${
               isLight 
                 ? "bg-purple-50 border-purple-200 text-purple-700 shadow-xs" 
                 : "bg-purple-950/40 border-purple-800/40 text-purple-300"
             }`}
           >
             <Award className="w-3.5 h-3.5 text-purple-500" />
-            <span>VERIFIED ARCHIVE • CREDENTIAL REGISTRY</span>
+            <span>Verified Archive • Credential Registry</span>
           </div>
 
           <h1 
@@ -453,8 +453,8 @@ export default function CertificatesPage() {
         >
           <div className="flex items-center gap-2.5">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            <span className={`font-mono font-bold uppercase tracking-wider ${isLight ? "text-purple-800" : "text-purple-300"}`}>
-              VAULT ADMIN ACTIVE
+            <span className={`font-mono font-bold tracking-wider ${isLight ? "text-purple-800" : "text-purple-300"}`}>
+              Vault Admin Active
             </span>
             <span className={`font-sans hidden sm:inline ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
               · Full credentials management unlocked
@@ -467,7 +467,7 @@ export default function CertificatesPage() {
                 setEditingCertificate(null);
                 setIsAddModalOpen(true);
               }}
-              className="flex items-center gap-1.5 px-3.5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-semibold shadow-md shadow-purple-600/20 transition-all cursor-pointer font-mono"
+              className="btn btn-primary !py-2 !px-3.5 !text-xs cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
               <span>+ Add Certificate</span>
@@ -475,11 +475,7 @@ export default function CertificatesPage() {
             <button
               id="owner-toolbar-lock-vault-btn"
               onClick={handleLockVault}
-              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono transition-colors cursor-pointer border ${
-                isLight
-                  ? "bg-white hover:bg-slate-100 text-slate-700 border-slate-300 shadow-sm"
-                  : "bg-zinc-900 hover:bg-zinc-850 text-zinc-300 hover:text-white border-zinc-800"
-              }`}
+              className="btn btn-secondary !py-2 !px-3 !text-xs cursor-pointer"
               title="Lock Vault & Return to Public View"
             >
               <Lock className="w-3.5 h-3.5 text-purple-500" />
@@ -493,28 +489,28 @@ export default function CertificatesPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         {[
           { 
-            label: "TOTAL CREDENTIALS", 
+            label: "Total Credentials", 
             count: stats.total, 
             icon: Award, 
             color: isLight ? "text-purple-600" : "text-purple-400",
             category: "ALL" as CertificateCategory
           },
           { 
-            label: "TECHNICAL", 
+            label: "Technical", 
             count: stats.technical, 
             icon: Layers, 
             color: isLight ? "text-cyan-600" : "text-cyan-400",
             category: "CERTIFICATIONS" as CertificateCategory
           },
           { 
-            label: "COMPETITIONS", 
+            label: "Competitions", 
             count: stats.competitions, 
             icon: Trophy, 
             color: isLight ? "text-amber-600" : "text-amber-400",
             category: "COMPETITIONS" as CertificateCategory
           },
           { 
-            label: "ACHIEVEMENTS", 
+            label: "Achievements", 
             count: stats.achievements, 
             icon: CheckCircle2, 
             color: isLight ? "text-emerald-600" : "text-emerald-400",
@@ -528,7 +524,7 @@ export default function CertificatesPage() {
             <button
               key={idx}
               onClick={() => setSelectedCategory(item.category)}
-              className={`rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-2.5 transition-all text-left border cursor-pointer ${
+              className={`rounded-2xl p-4 sm:p-5 flex flex-col justify-between space-y-2.5 transition-all text-left border cursor-pointer focus-visible:ring-2 focus-visible:ring-purple-500 ${
                 isSelected
                   ? isLight
                     ? "bg-purple-50/70 border-purple-400 shadow-sm ring-2 ring-purple-400/20"
@@ -539,7 +535,7 @@ export default function CertificatesPage() {
               }`}
             >
               <div className="flex items-center justify-between w-full">
-                <span className={`text-[10px] font-mono tracking-wider uppercase font-semibold ${
+                <span className={`text-xs font-mono tracking-wider font-semibold ${
                   isLight ? "text-slate-500" : "text-zinc-400"
                 }`}>
                   {item.label}
@@ -574,17 +570,13 @@ export default function CertificatesPage() {
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-mono tracking-wider uppercase font-semibold whitespace-nowrap transition-all cursor-pointer border flex items-center gap-1.5 ${
-                  isSelected
-                    ? "bg-purple-600 text-white border-purple-500 shadow-sm"
-                    : isLight
-                      ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
-                      : "bg-zinc-900/90 hover:bg-zinc-850 text-zinc-400 hover:text-zinc-200 border-zinc-800"
+                className={`btn !py-1.5 !px-3.5 !text-xs whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
+                  isSelected ? "btn-primary" : "btn-secondary"
                 }`}
               >
                 <span>{cat}</span>
                 <span 
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
+                  className={`text-xs px-1.5 py-0.2 rounded-full font-bold ${
                     isSelected
                       ? "bg-white/20 text-white"
                       : isLight

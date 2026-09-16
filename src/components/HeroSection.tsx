@@ -346,19 +346,19 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
           COMPACT PROOF STRIP WITH ONLY GENUINE INFORMATION
           ================================================== */}
       <div className="w-full pt-4 pb-2 border-t border-zinc-200/80 dark:border-white/[0.08]">
-        <div className={`flex flex-wrap items-center justify-center sm:justify-between gap-3 sm:gap-6 text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-center sm:text-left ${
+        <div className={`flex flex-wrap items-center justify-center sm:justify-between gap-3 sm:gap-6 text-xs font-mono text-center sm:text-left ${
           isLight ? "text-slate-600" : "text-zinc-400"
         }`}>
           <div className="flex items-center gap-2">
             <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isLight ? "bg-violet-600" : "bg-purple-400"}`} />
-            <span className={`font-bold ${isLight ? "text-slate-900" : "text-zinc-200 font-medium"}`}>KIIT UNIVERSITY</span>
+            <span className={`font-semibold ${isLight ? "text-slate-900" : "text-zinc-200"}`}>KIIT University</span>
           </div>
           <span className={`hidden sm:inline ${isLight ? "text-slate-400" : "text-zinc-700"}`}>·</span>
-          <div className={isLight ? "text-slate-700 font-medium" : ""}>B.TECH CSE (AI &amp; ML)</div>
+          <div className={isLight ? "text-slate-700 font-medium" : ""}>B.Tech CSE (AI &amp; ML)</div>
           <span className={`hidden sm:inline ${isLight ? "text-slate-400" : "text-zinc-700"}`}>·</span>
-          <div className={`font-bold ${isLight ? "text-slate-900" : "text-zinc-200 font-medium"}`}>9.06 FIRST-YEAR CGPA</div>
+          <div className={`font-semibold ${isLight ? "text-slate-900" : "text-zinc-200"}`}>9.06 First-Year CGPA</div>
           <span className={`hidden sm:inline ${isLight ? "text-slate-400" : "text-zinc-700"}`}>·</span>
-          <div className={isLight ? "text-slate-700 font-medium" : ""}>KOLKATA / BHUBANESWAR</div>
+          <div className={isLight ? "text-slate-700 font-medium" : ""}>Kolkata / Bhubaneswar</div>
         </div>
       </div>
     </div>

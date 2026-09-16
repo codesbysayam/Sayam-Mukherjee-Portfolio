@@ -267,6 +267,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             {/* Close Button */}
             <button
               onClick={onClose}
+              aria-label="Close resume modal"
               className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 rounded-xl text-zinc-400 hover:text-white cursor-pointer transition-all"
             >
               <X className="w-4 h-4" />
@@ -292,7 +293,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
             <div className="text-center md:text-left space-y-1.5">
               <h1 className="text-3xl font-extrabold text-white tracking-tight font-display">{resumeData.name}</h1>
-              <p className="text-cyan-400 font-mono text-sm uppercase tracking-widest font-semibold">{resumeData.title}</p>
+              <p className="text-cyan-400 font-mono text-sm tracking-wide font-semibold">{resumeData.title}</p>
               
               {/* DOB and details */}
               <div className="flex flex-wrap justify-center md:justify-start gap-4 text-xs text-zinc-400 pt-1">
@@ -312,7 +313,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               <section className="space-y-3">
                 <div className="flex items-center gap-2 border-b border-zinc-900 pb-2">
                   <Sparkles className="w-4.5 h-4.5 text-purple-400" />
-                  <h3 className="text-base font-bold text-white uppercase font-display tracking-wider">Career Objective</h3>
+                  <h3 className="text-base font-bold text-white font-display tracking-wide">Career Objective</h3>
                 </div>
                 <p className="text-sm text-zinc-400 leading-relaxed text-justify bg-zinc-950/40 p-4 rounded-xl border border-zinc-900/60">
                   {resumeData.careerObjective}
@@ -323,7 +324,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               <section className="space-y-4">
                 <div className="flex items-center gap-2 border-b border-zinc-900 pb-2">
                   <GraduationCap className="w-4.5 h-4.5 text-cyan-400" />
-                  <h3 className="text-base font-bold text-white uppercase font-display tracking-wider">Academic Qualification</h3>
+                  <h3 className="text-base font-bold text-white font-display tracking-wide">Academic Qualification</h3>
                 </div>
                 <div className="space-y-4">
                   {resumeData.academics.map((academic, index) => (
@@ -336,7 +337,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                         <p className="text-xs text-zinc-400">{academic.institution}</p>
                       </div>
                       <div className="text-left sm:text-right shrink-0">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">{academic.period}</span>
+                        <span className="text-xs font-mono text-zinc-500 block">{academic.period}</span>
                         <span className="inline-block mt-1 px-2.5 py-1 bg-zinc-900 border border-zinc-850 rounded-lg text-xs font-bold text-white">
                           {academic.scoreLabel}: <span className="text-cyan-400">{academic.score}</span>
                         </span>
@@ -350,7 +351,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               <section className="space-y-4">
                 <div className="flex items-center gap-2 border-b border-zinc-900 pb-2">
                   <Briefcase className="w-4.5 h-4.5 text-purple-400" />
-                  <h3 className="text-base font-bold text-white uppercase font-display tracking-wider">Professional Experience</h3>
+                  <h3 className="text-base font-bold text-white font-display tracking-wide">Professional Experience</h3>
                 </div>
 
                 {/* TCS Internship card */}
@@ -360,7 +361,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                       <h4 className="text-sm font-bold text-white text-purple-300">Internship at Tata Consultancy Services (TCS)</h4>
                       <p className="text-xs text-zinc-500 font-mono mt-0.5">Industry-level problem-solving approaches</p>
                     </div>
-                    <span className="px-2.5 py-1 bg-zinc-900 text-[10px] font-mono font-bold text-zinc-400 border border-zinc-800 rounded-lg shrink-0 w-fit">
+                    <span className="px-2.5 py-1 bg-zinc-900 text-xs font-mono font-bold text-zinc-400 border border-zinc-800 rounded-lg shrink-0 w-fit">
                       {resumeData.experience.internship.duration}
                     </span>
                   </div>
@@ -376,7 +377,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
                 {/* Workshops list */}
                 <div className="bg-zinc-950/40 border border-zinc-900 p-4.5 rounded-xl space-y-3">
-                  <h4 className="text-xs font-bold uppercase tracking-widest text-zinc-400 font-mono">Workshops / Seminars / Programs</h4>
+                  <h4 className="text-xs font-bold tracking-wide text-zinc-400 font-mono">Workshops, Seminars &amp; Programs</h4>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {resumeData.experience.workshops.map((workshop, idx) => (
                       <div key={idx} className="p-3 bg-zinc-900/40 border border-zinc-900/80 rounded-xl text-xs text-zinc-300 flex items-center gap-2.5">
@@ -392,7 +393,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               <section className="space-y-3">
                 <div className="flex items-center gap-2 border-b border-zinc-900 pb-2">
                   <Award className="w-4.5 h-4.5 text-cyan-400" />
-                  <h3 className="text-base font-bold text-white uppercase font-display tracking-wider">Awards & Achievements</h3>
+                  <h3 className="text-base font-bold text-white font-display tracking-wide">Awards &amp; Achievements</h3>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   {resumeData.awards.map((award, idx) => (
@@ -414,27 +415,27 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               
               {/* Live Coordinates */}
               <div className="bg-zinc-950/80 border border-zinc-900 p-5 rounded-2xl space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 font-mono border-b border-zinc-900 pb-2 flex items-center gap-2">
+                <h4 className="text-xs font-bold tracking-wide text-zinc-400 font-mono border-b border-zinc-900 pb-2 flex items-center gap-2">
                   <Mail className="w-3.5 h-3.5 text-cyan-400" />
                   <span>Resume Contacts</span>
                 </h4>
                 <div className="space-y-3.5 text-xs">
                   <div className="space-y-1">
-                    <span className="text-[10px] text-zinc-500 block uppercase font-mono">Mobile Node</span>
+                    <span className="text-xs text-zinc-500 block font-mono">Mobile Node</span>
                     <a href={`tel:${resumeData.contact.phone}`} className="text-zinc-300 hover:text-white transition-colors flex items-center gap-1.5 font-semibold">
                       <Phone className="w-3.5 h-3.5 text-zinc-500" />
                       <span>{resumeData.contact.phone}</span>
                     </a>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[10px] text-zinc-500 block uppercase font-mono">Educational Mail</span>
+                    <span className="text-xs text-zinc-500 block font-mono">Educational Mail</span>
                     <a href={`mailto:${resumeData.contact.email}`} className="text-zinc-300 hover:text-white transition-colors flex items-center gap-1.5 font-semibold break-all">
                       <Mail className="w-3.5 h-3.5 text-zinc-500" />
                       <span>{resumeData.contact.email}</span>
                     </a>
                   </div>
                   <div className="space-y-1">
-                    <span className="text-[10px] text-zinc-500 block uppercase font-mono">Academic Campus</span>
+                    <span className="text-xs text-zinc-500 block font-mono">Academic Campus</span>
                     <div className="text-zinc-300 flex items-start gap-1.5 leading-relaxed font-medium">
                       <MapPin className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5" />
                       <span>{resumeData.contact.location}</span>
@@ -445,7 +446,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Skills Card */}
               <div className="bg-zinc-900/30 border border-zinc-900 p-5 rounded-2xl space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 font-mono border-b border-zinc-900 pb-2">
+                <h4 className="text-xs font-bold tracking-wide text-zinc-400 font-mono border-b border-zinc-900 pb-2">
                   Professional Skills
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -462,7 +463,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Technical Skills Card */}
               <div className="bg-zinc-900/30 border border-zinc-900 p-5 rounded-2xl space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 font-mono border-b border-zinc-900 pb-2">
+                <h4 className="text-xs font-bold tracking-wide text-zinc-400 font-mono border-b border-zinc-900 pb-2">
                   Technical Stack
                 </h4>
                 <div className="flex flex-wrap gap-2">
@@ -479,7 +480,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Languages Card */}
               <div className="bg-zinc-900/30 border border-zinc-900 p-5 rounded-2xl space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 font-mono border-b border-zinc-900 pb-2 flex items-center gap-1.5">
+                <h4 className="text-xs font-bold tracking-wide text-zinc-400 font-mono border-b border-zinc-900 pb-2 flex items-center gap-1.5">
                   <Languages className="w-3.5 h-3.5 text-purple-400" />
                   <span>Languages Spoken</span>
                 </h4>
@@ -487,7 +488,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   {resumeData.languages.map((lang, index) => (
                     <div key={index} className="flex items-center justify-between text-xs font-medium text-zinc-300">
                       <span>{lang}</span>
-                      <span className="text-[10px] text-zinc-500 font-mono">Fluent Node</span>
+                      <span className="text-xs text-zinc-500 font-mono">Fluent Node</span>
                     </div>
                   ))}
                 </div>
@@ -495,8 +496,8 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
               {/* Table Tennis & Creative Hobbies */}
               <div className="bg-zinc-900/30 border border-zinc-900 p-5 rounded-2xl space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-400 font-mono border-b border-zinc-900 pb-2">
-                  Creative & Hobbies
+                <h4 className="text-xs font-bold tracking-wide text-zinc-400 font-mono border-b border-zinc-900 pb-2">
+                  Creative &amp; Hobbies
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {resumeData.hobbies.map((hobby, index) => (
@@ -517,8 +518,8 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         </div>
 
         {/* Footer info text */}
-        <div className="px-6 py-4 bg-zinc-950 border-t border-zinc-900 text-center text-[10px] text-zinc-500 font-mono">
-          Clicking "Print / Save as PDF" will format this resume into a perfect single A4 vector-sharp executive document.
+        <div className="px-6 py-4 bg-zinc-950 border-t border-zinc-900 text-center text-xs text-zinc-500 font-mono">
+          Clicking "Download Resume" will open the vector-sharp executive PDF document.
         </div>
 
       </motion.div>

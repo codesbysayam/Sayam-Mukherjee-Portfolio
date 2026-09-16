@@ -73,20 +73,20 @@ export function LiveRepositorySignal() {
       {/* Section Header */}
       <div className="space-y-1.5">
         <div className="flex items-center gap-3">
-          <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-400">
-            06 — LIVE REPOSITORY SIGNAL
+          <span className="text-xs font-mono font-medium tracking-wide text-cyan-400">
+            06 — Live Repository Signal
           </span>
           <span className="h-px w-8 bg-zinc-800" />
-          <div className="flex items-center gap-1.5 text-[11px] font-mono text-emerald-400">
+          <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>LIVE FROM GITHUB</span>
+            <span>Live from GitHub</span>
           </div>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">
             Repository Health &amp; Deployment State
           </h2>
-          <span className="text-[11px] font-mono text-zinc-500">
+          <span className="text-xs font-mono text-zinc-500">
             {syncStatusText}
           </span>
         </div>

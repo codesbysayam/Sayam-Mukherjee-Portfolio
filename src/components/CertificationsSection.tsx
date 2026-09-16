@@ -75,25 +75,25 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
               <div className="glass-card rounded-2xl p-6 border border-zinc-850/60 hover:border-purple-500/20 transition-all duration-300 space-y-3">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
-                    <span className="text-[10px] text-purple-400 font-mono uppercase tracking-widest block font-bold">
+                    <span className="text-xs text-purple-400 font-mono tracking-wider block font-semibold">
                       {ach.category}
                     </span>
-                    <h4 className="text-base font-bold text-white font-display tracking-tight mt-1">
+                    <h3 className="text-base font-bold text-white font-display tracking-tight mt-1">
                       {ach.title}
-                    </h4>
+                    </h3>
                   </div>
-                  <span className="text-[9px] font-mono bg-zinc-900 border border-zinc-850 text-zinc-400 px-2 py-0.5 rounded-md">
+                  <span className="text-xs font-mono bg-zinc-900 border border-zinc-850 text-zinc-400 px-2.5 py-0.5 rounded-md">
                     {ach.date}
                   </span>
                 </div>
 
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
                   {ach.description}
                 </p>
 
-                <div className="flex items-center gap-1.5 pt-2 text-[10px] text-zinc-500 font-mono">
+                <div className="flex items-center gap-1.5 pt-2 text-xs text-zinc-400 font-mono">
                   <span>Organized by:</span>
-                  <span className="text-zinc-300 font-bold">{ach.organization}</span>
+                  <span className="text-zinc-200 font-semibold">{ach.organization}</span>
                 </div>
               </div>
             </div>
@@ -104,18 +104,18 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
         <div className="lg:col-span-4 space-y-6">
           <div className="glass-card p-6 rounded-2xl space-y-4">
             <GraduationCap className="w-8 h-8 text-cyan-400" />
-            <h4 className="text-base font-bold text-white font-display tracking-tight">Academic Profile Summary</h4>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-base font-bold text-white font-display tracking-tight">Academic Profile Summary</h3>
+            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
               Pursuing B.Tech in Computer Science &amp; Engineering (AI &amp; ML) at Kalinga Institute of Industrial Technology, Bhubaneswar, with a dedicated focus on algorithmic foundations and system design.
             </p>
 
             <div className="grid grid-cols-2 gap-3 pt-2">
               <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                <span className="text-[9px] text-zinc-500 block uppercase font-mono">CURRENT STATUS</span>
+                <span className="text-xs text-zinc-400 block uppercase font-mono">Current Status</span>
                 <span className="text-xs font-bold text-white block mt-1 font-display">2nd Year, 3rd Sem</span>
               </div>
               <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                <span className="text-[9px] text-zinc-500 block uppercase font-mono">INSTITUTION</span>
+                <span className="text-xs text-zinc-400 block uppercase font-mono">Institution</span>
                 <span className="text-xs font-bold text-cyan-400 block mt-1 font-display">KIIT, Bhubaneswar</span>
               </div>
             </div>
@@ -123,8 +123,8 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
 
           <div className="glass-card p-6 rounded-2xl space-y-4">
             <Trophy className="w-8 h-8 text-pink-400" />
-            <h4 className="text-base font-bold text-white font-display tracking-tight">Sports &amp; Reflex Skills</h4>
-            <p className="text-xs text-zinc-400 leading-relaxed">
+            <h3 className="text-base font-bold text-white font-display tracking-tight">Sports &amp; Reflex Skills</h3>
+            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
               High-speed dynamic processing translates into gaming and athletics. Securing multiple first positions in regional Table Tennis tournaments.
             </p>
             <div className="flex items-center gap-2.5 bg-zinc-900/40 p-3 rounded-xl border border-zinc-850">

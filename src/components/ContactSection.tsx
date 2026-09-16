@@ -18,7 +18,7 @@ const OPEN_ROLES = [
 // Verified Social & Professional Connections
 const SOCIAL_PROFILES = [
   {
-    name: "LINKEDIN",
+    name: "LinkedIn",
     description: "Connect professionally",
     url: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
     icon: Linkedin,
@@ -26,7 +26,7 @@ const SOCIAL_PROFILES = [
     hoverBorder: "hover:border-cyan-500/40"
   },
   {
-    name: "GITHUB",
+    name: "GitHub",
     description: "Explore my code",
     url: "https://github.com/codesbysayam",
     icon: Github,
@@ -34,7 +34,7 @@ const SOCIAL_PROFILES = [
     hoverBorder: "hover:border-purple-500/40"
   },
   {
-    name: "CODOLIO",
+    name: "Codolio",
     description: "View coding profile",
     url: "https://codolio.com/profile/codesbysayam",
     icon: Award,
@@ -42,7 +42,7 @@ const SOCIAL_PROFILES = [
     hoverBorder: "hover:border-amber-500/40"
   },
   {
-    name: "YOUTUBE",
+    name: "YouTube",
     description: "Explore my content",
     url: "https://youtube.com/@technicalaz",
     icon: Youtube,
@@ -295,16 +295,16 @@ export default function ContactSection() {
         {/* Availability Status Pill */}
         <div className="flex flex-wrap items-center gap-3">
           <div 
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[11px] font-mono font-semibold tracking-wider uppercase border border-emerald-500/25 bg-emerald-950/20 text-emerald-400 backdrop-blur-sm select-none"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold tracking-wider border border-emerald-500/25 bg-emerald-950/20 text-emerald-400 backdrop-blur-sm select-none"
             role="status"
             aria-label="Available for opportunities"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>AVAILABLE FOR OPPORTUNITIES</span>
+            <span>Available for opportunities</span>
           </div>
 
-          <span className="text-[11px] font-mono tracking-[0.2em] text-purple-400 uppercase font-semibold">
-            CONTACT
+          <span className="text-xs font-mono tracking-widest text-purple-400 font-semibold">
+            Contact
           </span>
 
           {/* Optional Native Share button if supported by browser */}
@@ -312,17 +312,17 @@ export default function ContactSection() {
             <button
               type="button"
               onClick={handleSharePortfolio}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-mono text-zinc-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-colors cursor-pointer ml-auto"
+              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-zinc-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-colors cursor-pointer ml-auto"
               aria-label="Share Sayam's Portfolio"
             >
-              <Share2 className="w-3 h-3 text-purple-400" />
+              <Share2 className="w-3.5 h-3.5 text-purple-400" />
               <span>Share Portfolio</span>
             </button>
           )}
         </div>
 
         {/* Heading */}
-        <h2 
+        <h1 
           className="contact-heading font-display font-extrabold text-white"
           style={{ maxWidth: "800px" }}
         >
@@ -331,7 +331,7 @@ export default function ContactSection() {
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400">
             meaningful.
           </span>
-        </h2>
+        </h1>
 
         {/* Subtitle */}
         <p 
@@ -354,9 +354,9 @@ export default function ContactSection() {
 
           {/* Currently Open To Card */}
           <div className="rounded-2xl p-5 md:p-6 bg-white/[0.03] border border-white/10 backdrop-blur-md space-y-3">
-            <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 font-semibold flex items-center gap-2">
+            <span className="text-xs font-mono tracking-wider text-zinc-400 font-semibold flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              CURRENTLY OPEN TO
+              Currently open to
             </span>
 
             <div className="flex flex-wrap gap-2 pt-1">
@@ -400,13 +400,13 @@ export default function ContactSection() {
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-purple-300 block font-semibold">
-                      BUSINESS & HACKATHONS
+                    <span className="text-xs font-mono tracking-wider text-purple-300 block font-semibold">
+                      Business & Hackathons
                     </span>
                     <span className="text-xs md:text-sm font-mono text-white font-medium truncate block mt-0.5 select-all">
                       {businessEmail}
                     </span>
-                    <span className="text-[11px] text-zinc-400 font-sans block truncate">
+                    <span className="text-xs text-zinc-400 font-sans block truncate">
                       Collaborations, hackathons & business
                     </span>
                   </div>
@@ -425,7 +425,7 @@ export default function ContactSection() {
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3 h-3 text-zinc-400" />
+                      <Copy className="w-3.5 h-3.5 text-zinc-400" />
                       <span>Copy →</span>
                     </>
                   )}
@@ -446,13 +446,13 @@ export default function ContactSection() {
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-emerald-300 block font-semibold">
-                      CONTACT & INTERNSHIPS
+                    <span className="text-xs font-mono tracking-wider text-emerald-300 block font-semibold">
+                      Contact & Internships
                     </span>
                     <span className="text-xs md:text-sm font-mono text-white font-medium truncate block mt-0.5 select-all">
                       {contactEmail}
                     </span>
-                    <span className="text-[11px] text-zinc-400 font-sans block truncate">
+                    <span className="text-xs text-zinc-400 font-sans block truncate">
                       Internships, student outreach & queries
                     </span>
                   </div>
@@ -576,7 +576,7 @@ export default function ContactSection() {
           <div className="border-b border-white/10 pb-4 space-y-1.5">
             <div className="flex items-center justify-between">
               <h3 className="text-xl md:text-2xl font-bold font-display text-white tracking-tight">
-                LET’S CONNECT
+                Let’s connect
               </h3>
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             </div>
@@ -592,11 +592,11 @@ export default function ContactSection() {
             {/* Block 1: Business & Hackathons */}
             <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5 hover:border-purple-500/30 transition-colors">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-purple-300 font-semibold">
+                <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-purple-300 font-semibold">
                   <Mail className="w-3.5 h-3.5 text-purple-400" />
-                  <span>BUSINESS & HACKATHONS</span>
+                  <span>Business & Hackathons</span>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-500 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                <span className="text-xs font-mono text-zinc-400 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
                   Collaborations & Inquiries
                 </span>
               </div>
@@ -638,11 +638,11 @@ export default function ContactSection() {
             {/* Block 2: Contact & Internships */}
             <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5 hover:border-emerald-500/30 transition-colors">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-emerald-300 font-semibold">
+                <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-emerald-300 font-semibold">
                   <Mail className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>CONTACT & INTERNSHIPS</span>
+                  <span>Contact & Internships</span>
                 </div>
-                <span className="text-[10px] font-mono text-zinc-500 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
+                <span className="text-xs font-mono text-zinc-400 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
                   Direct & Student Outreach
                 </span>
               </div>
@@ -686,14 +686,14 @@ export default function ContactSection() {
               "BEST FOR" PILLS
               ================================================== */}
           <div className="space-y-2">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold block">
-              BEST FOR
+            <span className="text-xs font-mono tracking-wider text-zinc-400 font-semibold block">
+              Best for
             </span>
             <div className="flex flex-wrap gap-1.5">
               {OPEN_ROLES.map((role) => (
                 <span
                   key={role}
-                  className="px-2.5 py-1 rounded-full text-[11px] font-mono text-zinc-300 bg-white/[0.04] border border-white/[0.08]"
+                  className="px-2.5 py-1 rounded-full text-xs font-mono text-zinc-300 bg-white/[0.04] border border-white/[0.08]"
                 >
                   {role}
                 </span>
@@ -705,8 +705,8 @@ export default function ContactSection() {
               SOCIAL / PROFESSIONAL CONNECTIONS (2x2 GRID)
               ================================================== */}
           <div className="space-y-2.5 pt-1">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold block">
-              PROFILES
+            <span className="text-xs font-mono tracking-wider text-zinc-400 font-semibold block">
+              Profiles
             </span>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
@@ -725,14 +725,14 @@ export default function ContactSection() {
                       <div className={`w-8 h-8 rounded-xl flex items-center justify-center border ${profile.bgClass}`}>
                         <IconComponent className="w-4 h-4" />
                       </div>
-                      <span className="inline-flex items-center gap-1 text-[11px] font-mono text-zinc-400 group-hover:text-white transition-colors">
+                      <span className="inline-flex items-center gap-1 text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
                         <span>Open</span>
                         <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                       </span>
                     </div>
 
                     <div>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block font-semibold">
+                      <span className="text-xs font-mono tracking-wider text-zinc-400 block font-semibold">
                         {profile.name}
                       </span>
                       <span className="text-xs text-zinc-200 group-hover:text-white font-medium block mt-0.5">
@@ -752,12 +752,12 @@ export default function ContactSection() {
             <button
               type="button"
               onClick={handleStartConversation}
-              className="contact-btn-hover w-full py-3.5 px-6 rounded-xl font-mono text-xs font-bold tracking-wider uppercase text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 shadow-[0_4px_24px_rgba(168,85,247,0.25)] flex items-center justify-center gap-2 cursor-pointer transition-all"
+              className="contact-btn-hover w-full py-3.5 px-6 rounded-xl font-mono text-xs font-bold tracking-wider text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 shadow-[0_4px_24px_rgba(168,85,247,0.25)] flex items-center justify-center gap-2 cursor-pointer transition-all"
               aria-label="Start a conversation via email"
             >
               <span>Start a conversation →</span>
             </button>
-            <p className="text-[11px] font-mono text-zinc-400 text-center">
+            <p className="text-xs font-mono text-zinc-400 text-center">
               Opens your email app
             </p>
           </div>

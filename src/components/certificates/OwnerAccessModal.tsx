@@ -198,11 +198,11 @@ export default function OwnerAccessModal({
         {/* Passkey Input Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className={`text-xs font-mono flex items-center justify-between font-medium ${
+            <label htmlFor="owner-passkey-input" className={`text-xs font-mono flex items-center justify-between font-medium ${
               isLight ? "text-slate-700" : "text-zinc-300"
             }`}>
               <span>Owner Passkey</span>
-              <span className={`text-[10px] font-sans ${isLight ? "text-slate-400" : "text-zinc-500"}`}>Required</span>
+              <span className={`text-xs font-sans ${isLight ? "text-slate-400" : "text-zinc-500"}`}>Required</span>
             </label>
             <div className="relative">
               <KeyRound className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 pointer-events-none ${
@@ -213,10 +213,11 @@ export default function OwnerAccessModal({
                 type={showPassword ? "text" : "password"}
                 autoFocus
                 required
+                aria-label="Owner Passkey"
                 value={passkey}
                 onChange={(e) => setPasskey(e.target.value)}
                 placeholder="Enter owner passkey"
-                className={`w-full border rounded-xl pl-10 pr-11 py-2.5 text-xs font-mono transition-colors focus:outline-none ${
+                className={`w-full border rounded-xl pl-10 pr-11 py-2.5 text-xs font-mono transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 ${
                   isLight
                     ? "bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-400 focus:border-purple-600 focus:bg-white"
                     : "bg-zinc-950 border-zinc-800 text-white placeholder-zinc-500 focus:border-purple-500"

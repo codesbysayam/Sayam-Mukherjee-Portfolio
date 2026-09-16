@@ -178,8 +178,9 @@ export function EcosystemPage() {
       {/* 1. EDITORIAL SYSTEM ARCHITECTURE HEADER */}
       <header className="space-y-4 pt-2">
         <SectionHeader
-          eyebrow="SYSTEM ARCHITECTURE · PROCESS &amp; RELATIONSHIPS"
-          title={<>ENGINEERING ECOSYSTEM <br /><span className="text-zinc-400 dark:text-zinc-500 font-normal">&amp; SYSTEM BLUEPRINTS</span></>}
+          level="h1"
+          eyebrow="System Architecture · Process &amp; Relationships"
+          title={<>Engineering Ecosystem <br /><span className="text-zinc-400 dark:text-zinc-500 font-normal">&amp; System Blueprints</span></>}
           description="Software is rarely an isolated card—it is an interconnected ecosystem of state machines, telemetry pipelines, mathematical invariants, and human-in-the-loop governance."
         />
 
@@ -195,8 +196,8 @@ export function EcosystemPage() {
       {/* 2. THE 5-STAGE ENGINEERING DELIVERY LIFECYCLE */}
       <section className="space-y-6">
         <div className="space-y-2">
-          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-            PHASE 01 — DELIVERY LIFECYCLE
+          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 tracking-wide">
+            Phase 01 — Delivery Lifecycle
           </span>
           <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
             The Engineering Pipeline

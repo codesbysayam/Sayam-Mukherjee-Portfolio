@@ -612,8 +612,8 @@ function AppContent() {
                 </div>
               </button>
 
-              {/* Desktop Directory Menu (Capsule Tab Group - 5 Core Sections) */}
-              <nav className={`hidden lg:flex items-center gap-1 p-1 rounded-full backdrop-blur-xl shrink-0 transition-all ${
+              {/* Desktop Directory Menu (Capsule Tab Group - All 8 Sections) */}
+              <nav aria-label="Primary navigation" className={`hidden lg:flex items-center gap-0.5 xl:gap-1 p-1 rounded-full backdrop-blur-xl shrink-0 transition-all ${
                 theme === "dark" 
                   ? "bg-zinc-900/70 border border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]" 
                   : "bg-zinc-100/90 border border-zinc-200 shadow-sm"
@@ -623,7 +623,10 @@ function AppContent() {
                   { id: "about", label: "About", shortcut: "A" },
                   { id: "projects", label: "Projects", shortcut: "P" },
                   { id: "skills", label: "Skills", shortcut: "S" },
-                  { id: "ecosystem", label: "Ecosystem", shortcut: "E" }
+                  { id: "ecosystem", label: "Ecosystem", shortcut: "E" },
+                  { id: "certificates", label: "Certificates", shortcut: "C" },
+                  { id: "journal", label: "Journal", shortcut: "J" },
+                  { id: "contact", label: "Contact", shortcut: "M" }
                 ].map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
@@ -631,7 +634,8 @@ function AppContent() {
                       key={tab.id}
                       onClick={() => navigateToTab(tab.id as any)}
                       title={`${tab.label} (Press '${tab.shortcut}')`}
-                      className={`relative px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer whitespace-nowrap select-none ${
+                      aria-current={isActive ? "page" : undefined}
+                      className={`relative px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer whitespace-nowrap select-none ${
                         isActive 
                           ? theme === "dark" ? "text-white" : "text-zinc-950"
                           : theme === "dark" ? "text-zinc-400 hover:text-zinc-100" : "text-zinc-500 hover:text-zinc-900"
@@ -664,7 +668,7 @@ function AppContent() {
                 >
                   <Search className="w-3.5 h-3.5" />
                   <span className="hidden xl:inline text-xs">Search</span>
-                  <span className="text-[10px] font-mono bg-zinc-800/80 border border-zinc-750 px-1.5 py-0.5 rounded text-zinc-400 uppercase">⌘K</span>
+                  <span className="text-xs font-mono bg-zinc-800/80 border border-zinc-750 px-1.5 py-0.5 rounded text-zinc-400 uppercase">⌘K</span>
                 </button>
 
                 {/* Live IST Clock */}
@@ -695,10 +699,10 @@ function AppContent() {
                   <span>Resume</span>
                 </button>
 
-                {/* Contact Button */}
+                {/* Contact Button (Shown on mobile/tablet when desktop capsule nav is hidden) */}
                 <button
                   onClick={() => navigateToTab("contact")}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold rounded-xl shadow-sm transition-all duration-200 cursor-pointer shrink-0 border border-purple-500"
+                  className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold rounded-xl shadow-sm transition-all duration-200 cursor-pointer shrink-0 border border-purple-500"
                   title="Contact Sayam"
                 >
                   <Mail className="w-3.5 h-3.5" />
@@ -743,6 +747,7 @@ function AppContent() {
                           navigateToTab(tab.id as any);
                           setIsMenuOpen(false);
                         }}
+                        aria-current={activeTab === tab.id ? "page" : undefined}
                         className={`text-left py-2 px-3 rounded-lg hover:bg-zinc-900 transition-colors flex items-center justify-between ${
                           activeTab === tab.id ? "bg-purple-500/10 text-purple-400 font-bold border border-purple-500/20" : "text-zinc-400"
                         }`}
@@ -897,6 +902,30 @@ function AppContent() {
                 <p className="text-xs text-zinc-400 font-sans tracking-normal mt-1">AI &amp; ML CSE Undergraduate · Developer Portfolio</p>
                 <p className="font-mono text-[11px] text-zinc-500 mt-2 block">© 2026 Sayam Mukherjee. All rights reserved.</p>
               </div>
+
+              {/* Directory Navigation Links */}
+              <nav aria-label="Footer navigation" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-mono">
+                {[
+                  { id: "home", label: "Home" },
+                  { id: "about", label: "About" },
+                  { id: "projects", label: "Projects" },
+                  { id: "skills", label: "Skills" },
+                  { id: "ecosystem", label: "Ecosystem" },
+                  { id: "certificates", label: "Certificates" },
+                  { id: "journal", label: "Journal" },
+                  { id: "contact", label: "Contact" }
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => navigateToTab(tab.id as any)}
+                    className={`transition-colors cursor-pointer ${
+                      activeTab === tab.id ? "text-purple-400 font-semibold" : "text-zinc-400 hover:text-white"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </nav>
 
               {/* Actions */}
               <div className="flex items-center gap-3">

@@ -242,10 +242,9 @@ function BlogsSectionComponent() {
           {/* Eyebrow */}
           <div className="flex items-center gap-2">
             <span 
-              className="font-mono text-purple-400 font-semibold uppercase tracking-[0.18em]"
-              style={{ fontSize: "12px" }}
+              className="font-mono text-purple-400 font-semibold tracking-wider text-xs"
             >
-              PERSONAL ENGINEERING LOG
+              Engineering Log
             </span>
           </div>
 
@@ -271,11 +270,11 @@ function BlogsSectionComponent() {
           <div className="pt-6">
             <div className="w-full h-px bg-white/10" />
             <div className="pt-4 flex items-center gap-3 text-xs font-mono text-zinc-400">
-              <span className="uppercase tracking-widest text-zinc-500 font-medium">
-                JOURNAL STATUS
+              <span className="tracking-wider text-zinc-500 font-medium">
+                Journal Status
               </span>
               <span className="px-2.5 py-0.5 rounded-full bg-white/[0.04] border border-white/10 text-purple-300 font-semibold tracking-wide">
-                [ {count === 0 ? "PRIVATE BUILD LOG" : `${count} PUBLISHED NOTE${count === 1 ? "" : "S"}`} ]
+                [ {count === 0 ? "Private Build Log" : `${count} published note${count === 1 ? "" : "s"}`} ]
               </span>
             </div>
           </div>
@@ -340,16 +339,16 @@ function BlogsSectionComponent() {
                 <span className="font-mono text-3xl sm:text-4xl font-bold tracking-tight text-zinc-600 select-none">
                   00
                 </span>
-                <div className="flex items-center gap-2 font-mono text-[11px] text-zinc-500 uppercase tracking-widest">
+                <div className="flex items-center gap-2 font-mono text-xs text-zinc-500 tracking-wider">
                   <span className="w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
-                  <span>AWAITING ENTRY</span>
+                  <span>Awaiting entry</span>
                 </div>
               </div>
 
               {/* Empty state title */}
               <div className="space-y-2 pt-2">
-                <h2 className="text-xl sm:text-2xl font-bold font-display tracking-tight text-white uppercase">
-                  NOTHING PUBLISHED YET
+                <h2 className="text-xl sm:text-2xl font-bold font-display tracking-tight text-white">
+                  Nothing published yet
                 </h2>
                 <p className="text-base sm:text-lg text-zinc-400 leading-relaxed font-normal max-w-xl">
                   I’m keeping this space for genuine notes from projects, experiments and things I actually learn along the way.
@@ -364,10 +363,10 @@ function BlogsSectionComponent() {
                 <button
                   type="button"
                   onClick={() => handleNavigate("projects")}
-                  className="px-6 py-3 rounded-xl bg-white/[0.06] hover:bg-white/[0.1] border border-white/15 hover:border-purple-500/50 text-white font-mono text-xs font-semibold tracking-wider uppercase inline-flex items-center gap-2 cursor-pointer transition-all hover:-translate-y-0.5 group shadow-[0_4px_20px_rgba(0,0,0,0.2)]"
+                  className="btn btn-primary !py-2.5 !px-5 !text-xs font-mono tracking-wider inline-flex items-center gap-2 group cursor-pointer"
                 >
                   <span>Explore Projects</span>
-                  <ArrowRight className="w-3.5 h-3.5 text-purple-400 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </button>
 
                 <span className="text-xs font-mono text-zinc-500 italic">
@@ -404,8 +403,8 @@ function BlogsSectionComponent() {
                   <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 via-indigo-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
 
                   <div className="flex items-center justify-between text-xs font-mono text-zinc-500 mb-6 pb-4 border-b border-white/10">
-                    <span className="text-purple-400 uppercase tracking-widest font-semibold">
-                      FEATURED NOTE
+                    <span className="text-purple-400 tracking-wider font-semibold">
+                      Featured note
                     </span>
                     <span className="font-bold text-zinc-400">01</span>
                   </div>
@@ -424,7 +423,7 @@ function BlogsSectionComponent() {
                     <div className="flex flex-wrap items-center justify-between gap-4 pt-4 text-xs font-mono">
                       <div className="flex items-center gap-3 text-zinc-400">
                         {featuredEntry.category && (
-                          <span className="uppercase tracking-wider font-semibold text-purple-300">
+                          <span className="tracking-wider font-semibold text-purple-300">
                             {featuredEntry.category}
                           </span>
                         )}
@@ -437,7 +436,7 @@ function BlogsSectionComponent() {
                           <>
                             <span>·</span>
                             <span className="text-cyan-400 font-semibold">
-                              RELATED PROJECT: {featuredEntry.relatedProject.name} →
+                              Related Project: {featuredEntry.relatedProject.name} →
                             </span>
                           </>
                         )}
@@ -473,12 +472,12 @@ function BlogsSectionComponent() {
                       <div className="text-lg sm:text-xl font-bold text-zinc-400 group-hover:text-purple-300 transition-colors">
                         {entryNumber}
                       </div>
-                      <div className="text-[11px] text-zinc-600">{entryYear}</div>
+                      <div className="text-xs text-zinc-500">{entryYear}</div>
                     </div>
 
                     {/* Column 2: CATEGORY (12px uppercase monospace) */}
-                    <div className="font-mono text-xs uppercase tracking-wider text-purple-400/90 font-semibold pt-1">
-                      {entry.category || "ENGINEERING"}
+                    <div className="font-mono text-xs tracking-wider text-purple-400/90 font-semibold pt-1">
+                      {entry.category || "Engineering"}
                     </div>
 
                     {/* Column 3: CONTENT (Title clamp 1.4-2.2rem, Excerpt 16-18px) */}
@@ -499,7 +498,7 @@ function BlogsSectionComponent() {
                       {/* Related Project (Section 16: only if explicitly present) */}
                       {entry.relatedProject && (
                         <div className="pt-1 text-xs font-mono text-cyan-400 font-semibold">
-                          RELATED PROJECT: {entry.relatedProject.name} →
+                          Related Project: {entry.relatedProject.name} →
                         </div>
                       )}
                     </div>
@@ -567,13 +566,13 @@ function BlogsSectionComponent() {
               {/* Note Header */}
               <div className="space-y-3">
                 {activeReadingEntry.category && (
-                  <span className="text-xs font-mono uppercase tracking-widest text-purple-400 font-semibold block">
+                  <span className="text-xs font-mono tracking-wider text-purple-400 font-semibold block">
                     {activeReadingEntry.category}
                   </span>
                 )}
-                <h1 className="text-2xl sm:text-4xl font-bold font-display text-white leading-tight">
+                <h2 className="text-2xl sm:text-4xl font-bold font-display text-white leading-tight">
                   {activeReadingEntry.title}
-                </h1>
+                </h2>
                 {activeReadingEntry.excerpt && (
                   <p className="text-base text-zinc-400 italic">
                     {activeReadingEntry.excerpt}
@@ -591,7 +590,7 @@ function BlogsSectionComponent() {
                 <button
                   type="button"
                   onClick={() => setReadingEntryId(null)}
-                  className="px-5 py-2 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 text-xs font-mono text-zinc-300 hover:text-white transition-all cursor-pointer"
+                  className="btn btn-secondary !py-2 !px-5 !text-xs font-mono cursor-pointer"
                 >
                   Close Note
                 </button>

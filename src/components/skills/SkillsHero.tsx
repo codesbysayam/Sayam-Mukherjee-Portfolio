@@ -6,8 +6,9 @@ export function SkillsHero() {
   return (
     <header className="space-y-4 pt-2 pb-2">
       <SectionHeader
-        eyebrow="TECHNICAL CAPABILITIES · VERIFIED COMPETENCIES"
-        title={<>SKILLS &amp; TECHNICAL <br /><span className="text-zinc-400 dark:text-zinc-500 font-normal">COMPETENCY LEDGER</span></>}
+        level="h1"
+        eyebrow="Technical Capabilities · Verified Competencies"
+        title={<>Skills &amp; Technical <br /><span className="text-zinc-400 dark:text-zinc-500 font-normal">Competency Ledger</span></>}
         description="An authentic, evidence-based ledger of my engineering competencies. Spanning multi-agent AI systems, full-stack web platforms, asymptotic algorithmic problem solving, and genuine repository language telemetry."
       />
 

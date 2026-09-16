@@ -193,11 +193,11 @@ function AboutSectionComponent() {
       {/* 1. EDITORIAL HEADER */}
       <header className="space-y-4 pt-2">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-purple-700 dark:text-purple-400">
-            BIOGRAPHY &amp; HUMAN CORE · ABOUT SAYAM
+          <span className="text-xs font-mono font-semibold tracking-wide text-purple-700 dark:text-purple-400">
+            Biography &amp; Human Core · About Sayam
           </span>
           <span className="h-px w-8 bg-zinc-300 dark:border-white/[0.08]" />
-          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
+          <span className="text-xs font-mono text-zinc-500 tracking-wide hidden sm:inline">
             Engineering Identity, Values &amp; Story
           </span>
         </div>
@@ -288,8 +288,8 @@ function AboutSectionComponent() {
 
                 {/* Narrative Text */}
                 <div className="lg:col-span-8 space-y-4">
-                  <span className="text-xs font-mono uppercase tracking-wider text-purple-700 dark:text-purple-400 font-semibold">
-                    PERSONAL STORY &amp; MOTIVATION
+                  <span className="text-xs font-mono tracking-wide text-purple-700 dark:text-purple-400 font-semibold">
+                    Personal Story &amp; Motivation
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-bold font-display text-zinc-900 dark:text-white">
                     Bridging Computational Rigor with Human Impact

@@ -127,11 +127,11 @@ function ProjectsShowcaseComponent() {
       <section className="space-y-4 pt-1">
         <div className="space-y-2 max-w-3xl">
           <div className="flex items-center gap-2">
-            <span className="text-[11px] font-mono tracking-widest text-purple-700 dark:text-purple-400 uppercase font-semibold">
-              ENGINEERING ARCHIVE
+            <span className="text-xs font-mono tracking-wider text-purple-700 dark:text-purple-400 font-semibold">
+              Engineering Archive
             </span>
             <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-            <span className="text-[11px] font-mono text-zinc-500">VERIFIED CODEBASE</span>
+            <span className="text-xs font-mono text-zinc-500">Verified Codebase</span>
           </div>
 
           <h1 
@@ -181,7 +181,7 @@ function ProjectsShowcaseComponent() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-200/80 dark:border-white/[0.08] pb-5">
           <div className="space-y-1">
             <h2 className="text-xl sm:text-2xl font-bold font-display text-zinc-900 dark:text-white">
-              {selectedCategory === "ALL" ? "PROJECT EXPLORER" : `${selectedCategory} SYSTEMS`}
+              {selectedCategory === "ALL" ? "Project Explorer" : `${selectedCategory.charAt(0) + selectedCategory.slice(1).toLowerCase()} Systems`}
             </h2>
             <p className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
               Showing {filteredProjects.length} of {PROJECTS.length} verified projects
@@ -223,7 +223,7 @@ function ProjectsShowcaseComponent() {
                 }`}
               >
                 <span>{cat.label}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${
+                <span className={`text-xs px-1.5 py-0.2 rounded-full ${
                   isSelected 
                     ? "bg-white/20 text-white" 
                     : "bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
@@ -242,8 +242,8 @@ function ProjectsShowcaseComponent() {
               <Search className="w-5 h-5" />
             </div>
             <div className="space-y-1">
-              <h3 className="text-sm font-mono font-bold uppercase tracking-wider text-zinc-800 dark:text-zinc-200">
-                NO MATCHES FOUND
+              <h3 className="text-sm font-mono font-bold tracking-wider text-zinc-800 dark:text-zinc-200">
+                No matches found
               </h3>
               <p className="text-xs font-sans text-zinc-500">
                 Try another keyword or reset the category filters.
