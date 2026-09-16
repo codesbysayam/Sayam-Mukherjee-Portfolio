@@ -101,8 +101,8 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                   isLight ? "text-slate-900" : "text-white"
                 }`}>
                   <span>Sayam Mukherjee</span>
-                  <span className={`text-[11px] font-mono font-normal hidden sm:inline ${
-                    isLight ? "text-slate-600" : "text-zinc-400"
+                  <span className={`text-xs font-mono font-normal hidden sm:inline ${
+                    isLight ? "text-zinc-600" : "text-zinc-400"
                   }`}>
                     · KIIT B.Tech CSE (AI &amp; ML)
                   </span>
@@ -232,9 +232,9 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
 
                   <div className="flex flex-col min-w-0">
                     <div className="flex items-center gap-1.5">
-                      <span className="text-sm font-bold text-zinc-900 dark:text-white group-hover/profile:text-purple-600 dark:group-hover/profile:text-purple-400 transition-colors truncate">
+                      <h2 className="text-sm font-bold text-zinc-900 dark:text-white group-hover/profile:text-purple-600 dark:group-hover/profile:text-purple-400 transition-colors truncate">
                         {user?.name || "Sayam Mukherjee"}
-                      </span>
+                      </h2>
                     </div>
                     <span className="text-xs font-mono font-medium text-purple-700 dark:text-purple-400">
                       @{user?.login || "codesbysayam"}
@@ -260,7 +260,7 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                   <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
                     {user ? user.public_repos : repos.length || 5}
                   </div>
-                  <div className="text-[11px] font-sans text-zinc-500 dark:text-zinc-400 font-medium">
+                  <div className="text-xs font-sans text-zinc-500 dark:text-zinc-400 font-medium">
                     Repositories
                   </div>
                 </div>
@@ -269,7 +269,7 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                   <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
                     {stats?.totalStars ?? 0}
                   </div>
-                  <div className="text-[11px] font-sans text-zinc-500 dark:text-zinc-400 font-medium">
+                  <div className="text-xs font-sans text-zinc-500 dark:text-zinc-400 font-medium">
                     Stars Earned
                   </div>
                 </div>
@@ -278,20 +278,20 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                   <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
                     {user?.followers ?? 0}
                   </div>
-                  <div className="text-[11px] font-sans text-zinc-500 dark:text-zinc-400 font-medium">
+                  <div className="text-xs font-sans text-zinc-500 dark:text-zinc-400 font-medium">
                     Followers
                   </div>
                 </div>
               </div>
 
               {/* Latest Real Push / Commit Signal */}
-              <div className="pt-3.5 space-y-2">
+              <div id="hero-latest-commit-box" className="pt-3.5 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
+                  <span className="font-mono text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
                     <GitCommit className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                    LATEST COMMIT
+                    Latest Commit
                   </span>
-                  <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
+                  <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
                     {latestCommitInfo.time}
                   </span>
                 </div>
@@ -302,7 +302,7 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                   rel="noopener noreferrer"
                   className="block p-2.5 rounded-lg bg-zinc-100 dark:bg-white/[0.04] border border-zinc-200/60 dark:border-white/[0.06] hover:border-purple-400 dark:hover:border-purple-500/40 transition-colors group/commit"
                 >
-                  <div className="flex items-center gap-1.5 text-[11px] font-mono text-purple-700 dark:text-purple-300 font-semibold mb-1">
+                  <div className="flex items-center gap-1.5 text-xs font-mono text-purple-700 dark:text-purple-300 font-semibold mb-1">
                     <span>{latestCommitInfo.repoName}</span>
                     <span className="text-zinc-400">/</span>
                     <span className="text-zinc-500 dark:text-zinc-400">{latestCommitInfo.branch}</span>

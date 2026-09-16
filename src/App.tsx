@@ -606,13 +606,13 @@ function AppContent() {
                   }`}>
                     Sayam Mukherjee
                   </span>
-                  <span className="text-[9px] text-zinc-500 font-mono tracking-wider mt-1 font-medium">
-                    UNDERGRADUATE • AI &amp; DEV
+                  <span className="text-xs text-zinc-500 font-mono tracking-wide mt-0.5 font-medium">
+                    Undergraduate · AI &amp; ML Dev
                   </span>
                 </div>
               </button>
 
-              {/* Desktop Directory Menu (Capsule Tab Group) */}
+              {/* Desktop Directory Menu (Capsule Tab Group - 5 Core Sections) */}
               <nav className={`hidden lg:flex items-center gap-1 p-1 rounded-full backdrop-blur-xl shrink-0 transition-all ${
                 theme === "dark" 
                   ? "bg-zinc-900/70 border border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]" 
@@ -621,12 +621,9 @@ function AppContent() {
                 {[
                   { id: "home", label: "Home", shortcut: "H" },
                   { id: "about", label: "About", shortcut: "A" },
-                  { id: "skills", label: "Skills", shortcut: "S" },
-                  { id: "ecosystem", label: "Ecosystem", shortcut: "E" },
                   { id: "projects", label: "Projects", shortcut: "P" },
-                  { id: "certificates", label: "Certificates", shortcut: "C" },
-                  { id: "journal", label: "Journal", shortcut: "J" },
-                  { id: "contact", label: "Contact", shortcut: "M" }
+                  { id: "skills", label: "Skills", shortcut: "S" },
+                  { id: "ecosystem", label: "Ecosystem", shortcut: "E" }
                 ].map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
@@ -691,7 +688,8 @@ function AppContent() {
                     triggerConfetti();
                     setIsResumeModalOpen(true);
                   }}
-                  className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-semibold rounded-lg transition-all duration-200 cursor-pointer shrink-0"
+                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0"
+                  title="View & Download Resume"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Resume</span>
@@ -700,9 +698,11 @@ function AppContent() {
                 {/* Contact Button */}
                 <button
                   onClick={() => navigateToTab("contact")}
-                  className="px-3.5 py-1.5 bg-white hover:bg-zinc-100 text-black text-xs font-semibold rounded-lg shadow-sm transition-all duration-200 cursor-pointer shrink-0 border border-zinc-200"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold rounded-xl shadow-sm transition-all duration-200 cursor-pointer shrink-0 border border-purple-500"
+                  title="Contact Sayam"
                 >
-                  Contact
+                  <Mail className="w-3.5 h-3.5" />
+                  <span>Contact</span>
                 </button>
 
                 {/* Mobile / Tablet Menu Toggle */}
@@ -894,8 +894,8 @@ function AppContent() {
               
               <div className="flex flex-col items-center md:items-start text-center md:text-left">
                 <p className="font-bold text-white font-display tracking-tight text-sm">Sayam Mukherjee</p>
-                <p className="text-[10px] text-zinc-500 font-mono tracking-wider uppercase mt-1">AI & ML CSE undergraduate • Developer Portfolio</p>
-                <p className="font-mono text-[10px] text-zinc-600 mt-2 block">© 2026 Sayam Mukherjee. All rights reserved.</p>
+                <p className="text-xs text-zinc-400 font-sans tracking-normal mt-1">AI &amp; ML CSE Undergraduate · Developer Portfolio</p>
+                <p className="font-mono text-[11px] text-zinc-500 mt-2 block">© 2026 Sayam Mukherjee. All rights reserved.</p>
               </div>
 
               {/* Actions */}

@@ -4,6 +4,7 @@ import { usePortfolio } from "../../context/PortfolioContext";
 import CertificateCard from "./CertificateCard";
 import CertificateViewerModal from "./CertificateViewerModal";
 import { Award, ArrowRight, Sparkles } from "lucide-react";
+import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 
 interface CredentialsHomePreviewProps {
   onNavigateToCertificates: () => void;
@@ -21,14 +22,24 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
     fetch("/api/certificates")
       .then((res) => res.json())
       .then((data: Certificate[]) => {
-        if (Array.isArray(data)) {
+        if (Array.isArray(data) && data.length > 0) {
           const featured = data.filter((c) => c.featured).slice(0, 3);
-          setFeaturedCerts(featured);
+          setFeaturedCerts(featured.length > 0 ? featured : data.slice(0, 3));
+        } else {
+          setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 3));
         }
       })
-      .catch((err) => console.error("Error loading featured credentials:", err))
+      .catch((err) => {
+        console.error("Error loading featured credentials:", err);
+        setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 3));
+      })
       .finally(() => setLoading(false));
   }, []);
+
+  // If not loading and no certificates exist, gracefully hide section to avoid "under construction" feeling
+  if (!loading && featuredCerts.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full space-y-6 pt-4 pb-8" id="credentials-home-preview">
@@ -36,31 +47,27 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
         isLight ? "border-slate-200" : "border-zinc-850/80"
       }`}>
         <div className="space-y-1.5">
-          <span className={`text-xs font-mono uppercase tracking-widest block font-bold ${
+          <span className={`text-xs font-mono tracking-wider block font-semibold ${
             isLight ? "text-purple-700" : "text-purple-400"
           }`}>
-            CREDENTIALS
+            Credentials &amp; Milestones
           </span>
           <h2 className={`text-xl sm:text-2xl font-bold font-display tracking-tight ${
             isLight ? "text-slate-900" : "text-white"
           }`}>
             Selected Certificates &amp; Achievements
           </h2>
-          <p className={`text-xs max-w-xl ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
+          <p className={`text-sm max-w-xl ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
             Verified milestones, competition honours, and certified technical credentials.
           </p>
         </div>
 
         <button
           onClick={onNavigateToCertificates}
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold font-mono transition-all self-start sm:self-auto cursor-pointer border ${
-            isLight
-              ? "bg-white hover:bg-slate-100 text-slate-800 border-slate-300 shadow-xs"
-              : "bg-zinc-900 hover:bg-zinc-800 text-zinc-200 hover:text-white border-zinc-800 hover:border-zinc-700"
-          }`}
+          className="btn btn-secondary !py-2 !px-4 !text-xs self-start sm:self-auto"
         >
-          <span>VIEW ALL CERTIFICATES</span>
-          <ArrowRight className="w-3.5 h-3.5 text-purple-500" />
+          <span>View all credentials</span>
+          <ArrowRight className="w-3.5 h-3.5 text-purple-400" />
         </button>
       </div>
 
@@ -68,7 +75,7 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
         <div className={`py-12 text-center font-mono text-xs ${isLight ? "text-slate-500" : "text-zinc-500"}`}>
           Loading credentials spotlight...
         </div>
-      ) : featuredCerts.length > 0 ? (
+      ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredCerts.map((cert) => (
             <CertificateCard
@@ -77,17 +84,6 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
               onView={setViewingCert}
             />
           ))}
-        </div>
-      ) : (
-        <div className={`p-8 rounded-2xl border border-dashed text-center space-y-3 ${
-          isLight 
-            ? "border-slate-300 bg-slate-50/50" 
-            : "border-zinc-850 bg-[#09090e]/40"
-        }`}>
-          <Award className="w-6 h-6 text-zinc-500 mx-auto" />
-          <p className={`text-xs font-mono ${isLight ? "text-slate-500" : "text-zinc-500"}`}>
-            Certificates will appear here once marked as featured.
-          </p>
         </div>
       )}
 

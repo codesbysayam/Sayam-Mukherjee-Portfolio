@@ -682,20 +682,20 @@ export function formatRelativeTime(dateString?: string | null): string {
 }
 
 /**
- * Formats the sync status time for display in cards (e.g. "SYNCED 2M AGO")
+ * Formats the sync status time for display in cards (e.g. "Synced 2m ago")
  */
 export function formatSyncAge(timestamp?: number | null): string {
-  if (!timestamp) return "SYNCED JUST NOW";
+  if (!timestamp) return "Synced just now";
   const diffSeconds = Math.max(0, Math.floor((Date.now() - timestamp) / 1000));
   const diffMinutes = Math.floor(diffSeconds / 60);
-  if (diffMinutes < 1) return "SYNCED JUST NOW";
-  if (diffMinutes === 1) return "SYNCED 1M AGO";
-  if (diffMinutes < 60) return `SYNCED ${diffMinutes}M AGO`;
+  if (diffMinutes < 1) return "Synced just now";
+  if (diffMinutes === 1) return "Synced 1m ago";
+  if (diffMinutes < 60) return `Synced ${diffMinutes}m ago`;
   const diffHours = Math.floor(diffMinutes / 60);
-  if (diffHours === 1) return "SYNCED 1H AGO";
-  if (diffHours < 24) return `SYNCED ${diffHours}H AGO`;
+  if (diffHours === 1) return "Synced 1h ago";
+  if (diffHours < 24) return `Synced ${diffHours}h ago`;
   const diffDays = Math.floor(diffHours / 24);
-  return `SYNCED ${diffDays}D AGO`;
+  return `Synced ${diffDays}d ago`;
 }
 
 /**
