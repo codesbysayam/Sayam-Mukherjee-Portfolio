@@ -13,6 +13,24 @@
   },
   "repositories": [
     {
+      "id": 1355576736,
+      "name": "Sayam-Mukherjee-Portfolio",
+      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "homepage": "www.sayammukherjee.in",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-03T06:02:37Z",
+      "updated_at": "2026-09-17T18:51:38Z",
+      "pushed_at": "2026-09-17T18:51:35Z"
+    },
+    {
       "id": 1368247830,
       "name": "codesbysayam",
       "full_name": "codesbysayam/codesbysayam",
@@ -47,24 +65,6 @@
       "created_at": "2026-09-14T17:56:01Z",
       "updated_at": "2026-09-16T19:29:45Z",
       "pushed_at": "2026-09-16T19:29:42Z"
-    },
-    {
-      "id": 1355576736,
-      "name": "Sayam-Mukherjee-Portfolio",
-      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "homepage": "www.sayammukherjee.in",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-16T15:22:54Z",
-      "pushed_at": "2026-09-16T15:22:49Z"
     },
     {
       "id": 1361090226,
@@ -140,6 +140,13 @@
     }
   ],
   "events": [
+    {
+      "id": "21427082893",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-09-17T18:51:35Z",
+      "public": true
+    },
     {
       "id": "21391348734",
       "type": "PushEvent",
@@ -342,53 +349,50 @@
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-09-13T15:25:38Z",
       "public": true
-    },
-    {
-      "id": "20999801838",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-09-13T15:24:41Z",
-      "public": true
     }
   ],
   "languages": {
-    "codesbysayam/codesbysayam": {
-      "Python": 2500,
-      "Shell": 1200
+    "codesbysayam/Sayam-Mukherjee-Portfolio": {
+      "TypeScript": 1066049,
+      "CSS": 56974,
+      "JavaScript": 12277,
+      "C": 6359,
+      "Python": 5783,
+      "Jupyter Notebook": 5438,
+      "HTML": 2074
     },
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/RouteLedger": {
       "TypeScript": 323332,
       "Python": 90890,
       "CSS": 6949,
       "HTML": 1497
     },
-    "codesbysayam/Sayam-Mukherjee-Portfolio": {
-      "TypeScript": 582410,
-      "CSS": 42100,
-      "HTML": 8500,
-      "JavaScript": 15400
-    },
     "codesbysayam/Memory-in-Motion": {
-      "TypeScript": 194200,
-      "Python": 48200,
-      "CSS": 5200
+      "TypeScript": 1324238,
+      "CSS": 12768,
+      "HTML": 1552
     },
     "codesbysayam/mausam": {
-      "TypeScript": 412000,
-      "CSS": 28400,
-      "HTML": 12100,
-      "JavaScript": 8200
+      "TypeScript": 3993082,
+      "Python": 84435,
+      "JavaScript": 46500,
+      "CSS": 37094,
+      "C": 31107,
+      "HTML": 26163,
+      "Jupyter Notebook": 14149,
+      "PLpgSQL": 3057,
+      "Makefile": 1358
     },
     "codesbysayam/sayam-solves": {
-      "C++": 86400,
-      "Python": 12400
+      "C++": 2037
     },
     "codesbysayam/Operon": {
-      "TypeScript": 384000,
-      "JavaScript": 34000,
-      "CSS": 12000
+      "TypeScript": 620144,
+      "CSS": 11457,
+      "HTML": 1230
     }
   },
-  "syncedAt": "2026-09-17T08:37:34Z",
+  "syncedAt": "2026-09-17T22:08:08.976Z",
   "status": "ok"
 }
