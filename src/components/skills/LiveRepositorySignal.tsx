@@ -31,7 +31,7 @@ const DEPLOYED_APPS = [
 ];
 
 export function LiveRepositorySignal() {
-  const { repos, events, loading, usingCache, syncedAt, rateLimited } = useGithub();
+  const { repos, events, syncedAt } = useGithub();
 
   // Primary languages across verified codebases
   const primaryLanguages = ["TypeScript", "C++", "Python", "JavaScript"];

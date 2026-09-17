@@ -1,7 +1,7 @@
 import { useState, useMemo, memo } from "react";
 import { 
   Github, ExternalLink, RotateCw, Search, Star, GitFork, 
-  AlertCircle, Sparkles, X, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight
+  Sparkles, X, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight
 } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
 import { usePortfolio } from "../context/PortfolioContext";
@@ -35,7 +35,6 @@ function LiveBuildFeedComponent() {
     repos, 
     loading, 
     error, 
-    rateLimited, 
     syncedAt, 
     usingCache, 
     refresh 
@@ -46,7 +45,6 @@ function LiveBuildFeedComponent() {
   const [selectedLanguage, setSelectedLanguage] = useState<string>("ALL");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number | "ALL">(6);
-  const [rateLimitDismissed, setRateLimitDismissed] = useState<boolean>(false);
 
   // Dynamically compute available languages from the actual fetched repos
   const availableLanguages = useMemo(() => {
@@ -164,28 +162,6 @@ function LiveBuildFeedComponent() {
           </p>
         </div>
       </div>
-
-      {/* Dismissible Rate limit notification */}
-      {rateLimited && !rateLimitDismissed && (
-        <div className={`mt-4 px-3.5 py-2.5 rounded-xl border text-xs font-mono flex items-center justify-between gap-3 ${
-          isLight
-            ? "bg-amber-50/90 border-amber-200 text-amber-800"
-            : "bg-amber-500/10 border-amber-500/20 text-amber-300"
-        }`}>
-          <div className="flex items-center gap-2 min-w-0">
-            <AlertCircle className={`w-4 h-4 shrink-0 ${isLight ? "text-amber-600" : "text-amber-400"}`} />
-            <span className="truncate">GitHub API rate limit reached. Displaying latest cached data.</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => setRateLimitDismissed(true)}
-            className="p-1 hover:opacity-75 transition-opacity cursor-pointer shrink-0"
-            aria-label="Dismiss notice"
-          >
-            <X className="w-3.5 h-3.5" />
-          </button>
-        </div>
-      )}
 
       {/* Unified Repository Controls Toolbar (Search, Filter, View All, Refresh) */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-5 pb-2">

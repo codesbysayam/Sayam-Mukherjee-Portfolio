@@ -5,11 +5,8 @@ import { formatRelativeTime, formatSyncAge } from "../../services/github";
 
 function EngineeringSnapshotComponent() {
   const { 
-    user, 
     repos, 
     syncedAt, 
-    usingCache, 
-    rateLimited, 
     loading, 
     refresh 
   } = useGithub();

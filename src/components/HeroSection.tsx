@@ -42,7 +42,6 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
     loading,
     syncedAt,
     usingCache,
-    rateLimited,
     refresh
   } = useGithub();
 

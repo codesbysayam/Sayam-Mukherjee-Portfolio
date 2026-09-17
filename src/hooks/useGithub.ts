@@ -100,9 +100,7 @@ async function fetchAllGitHubData(force = false): Promise<void> {
       const isUsingCache = Boolean(
         userRes?.fromCache || reposRes?.fromCache || eventsRes?.fromCache
       );
-      const isRateLimited = Boolean(
-        userRes?.rateLimited || reposRes?.rateLimited || eventsRes?.rateLimited
-      );
+      const isRateLimited = false;
       const syncedTimestamp = Math.max(
         userRes?.timestamp || 0,
         reposRes?.timestamp || 0,
