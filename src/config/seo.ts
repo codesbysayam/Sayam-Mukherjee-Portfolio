@@ -108,25 +108,25 @@ export const SEO_CONFIG: Record<string, RouteSEO> = {
   },
   privacy: {
     title: "Privacy Policy — Sayam Mukherjee",
-    description: "Privacy policy for Sayam Mukherjee's engineering portfolio. Transparent details on minimal data collection, cookies, and privacy rights.",
+    description: "Read the privacy policy for Sayam Mukherjee's personal portfolio website.",
     canonicalPath: "/privacy",
-    robots: "noindex, follow",
+    robots: "index, follow",
     ogTitle: "Privacy Policy — Sayam Mukherjee",
-    ogDescription: "Transparent privacy policy detailing data practices and zero advertising tracking.",
+    ogDescription: "Read the privacy policy for Sayam Mukherjee's personal portfolio website.",
     ogType: "website",
     twitterTitle: "Privacy Policy — Sayam Mukherjee",
-    twitterDescription: "Privacy practices for Sayam Mukherjee's developer portfolio."
+    twitterDescription: "Read the privacy policy for Sayam Mukherjee's personal portfolio website."
   },
   terms: {
     title: "Terms & Conditions — Sayam Mukherjee",
-    description: "Terms and conditions governing access to Sayam Mukherjee's personal developer website and engineering ecosystem.",
+    description: "Read the terms and conditions governing use of Sayam Mukherjee's personal portfolio website.",
     canonicalPath: "/terms",
-    robots: "noindex, follow",
+    robots: "index, follow",
     ogTitle: "Terms & Conditions — Sayam Mukherjee",
-    ogDescription: "Terms of use and intellectual property notices for Sayam Mukherjee's software portfolio.",
+    ogDescription: "Read the terms and conditions governing use of Sayam Mukherjee's personal portfolio website.",
     ogType: "website",
     twitterTitle: "Terms & Conditions — Sayam Mukherjee",
-    twitterDescription: "Terms of service for Sayam Mukherjee's portfolio."
+    twitterDescription: "Read the terms and conditions governing use of Sayam Mukherjee's personal portfolio website."
   },
   notFound: {
     title: "Page Not Found (404) — Sayam Mukherjee",

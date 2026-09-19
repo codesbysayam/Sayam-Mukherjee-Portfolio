@@ -2016,3 +2016,45 @@ html[data-theme="light"] .modal-backdrop {
     scroll-behavior: auto !important;
   }
 }
+
+/* ==================================================
+   LEGAL DOCUMENT & EDITORIAL STYLING
+   Suppresses floating cursor glows, pointer lights, and visual clutter
+   ================================================== */
+.legal-document-shell {
+  cursor: auto !important;
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.legal-document-shell *,
+.legal-document-shell *::before,
+.legal-document-shell *::after {
+  cursor: auto;
+}
+
+.legal-document-shell a,
+.legal-document-shell button,
+.legal-document-shell input {
+  cursor: pointer !important;
+}
+
+.legal-document-shell section {
+  scroll-margin-top: 120px;
+}
+
+/* Ensure no floating glass-card after-glows leak into legal reading */
+body.has-legal-page .glass-card::after,
+.legal-document-shell .glass-card::after {
+  display: none !important;
+  opacity: 0 !important;
+}
+
+/* Disable pointer tracking effects on non-hover devices */
+@media (hover: none) {
+  .glass-card::after {
+    display: none !important;
+    opacity: 0 !important;
+  }
+}
+

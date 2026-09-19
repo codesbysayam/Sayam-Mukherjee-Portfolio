@@ -35,8 +35,9 @@ const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const CommandMenu = lazy(() => import("./components/CommandMenu"));
 const CertificatesPage = lazy(() => import("./components/certificates/CertificatesPage"));
 const CredentialsHomePreview = lazy(() => import("./components/certificates/CredentialsHomePreview"));
-const PrivacyPage = lazy(() => import("./pages/Privacy"));
-const TermsPage = lazy(() => import("./pages/Terms"));
+import PrivacyPage from "./pages/Privacy";
+import TermsPage from "./pages/Terms";
+import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary";
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 
 export default function App() {
@@ -302,6 +303,14 @@ function AppContent() {
 
   // Categorical Page Router State with direct URL resolution
   const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
+  const isLegalPage = activeTab === "privacy" || activeTab === "terms";
+
+  // Toggle body class for legal pages to suppress cursor effects
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.body.classList.toggle("has-legal-page", isLegalPage);
+    }
+  }, [isLegalPage]);
 
   const navigateToTab = (tab: TabType) => {
     setActiveTab(tab);
@@ -328,6 +337,8 @@ function AppContent() {
     ];
 
     const handleKeyDown = (e: KeyboardEvent) => {
+      // Avoid intercepting shortcuts on legal reading pages
+      if (isLegalPage) return;
       // Ignore if user is typing in form fields, search inputs, or other text boxes
       const target = e.target as HTMLElement;
       if (
@@ -563,20 +574,24 @@ function AppContent() {
           
           {/* Hardware-accelerated Scroll Progress Bar and Fluid Cursor */}
           <ScrollProgressBar />
-          <CustomCursor />
+          <CustomCursor disabled={isLegalPage} />
 
           {/* Zero-CPU Sentinel Element for Scrolled Header detection */}
           <div ref={topSentinelRef} className="absolute top-0 left-0 w-full h-10 pointer-events-none opacity-0" aria-hidden="true" />
 
-          <div className="absolute top-1/4 left-1/4 w-4 h-4 text-purple-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-          <div className="absolute top-1/4 right-1/4 w-4 h-4 text-cyan-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-          <div className="absolute bottom-1/4 left-1/3 w-4 h-4 text-indigo-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-          <div className="absolute bottom-1/3 right-1/3 w-4 h-4 text-pink-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-          {/* Glowing Animated Ambient iOS 27 Liquid Glass Blobs */}
-          <div className="absolute top-[8%] left-[2%] liquid-blob liquid-blob-1 pointer-events-none select-none" />
-          <div className="absolute top-[28%] right-[4%] liquid-blob liquid-blob-2 pointer-events-none select-none" />
-          <div className="absolute bottom-[22%] left-[5%] liquid-blob liquid-blob-3 pointer-events-none select-none" />
-          <div className="absolute bottom-[38%] right-[3%] liquid-blob liquid-blob-4 pointer-events-none select-none" />
+          {!isLegalPage && (
+            <>
+              <div className="absolute top-1/4 left-1/4 w-4 h-4 text-purple-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
+              <div className="absolute top-1/4 right-1/4 w-4 h-4 text-cyan-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
+              <div className="absolute bottom-1/4 left-1/3 w-4 h-4 text-indigo-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
+              <div className="absolute bottom-1/3 right-1/3 w-4 h-4 text-pink-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
+              {/* Glowing Animated Ambient iOS 27 Liquid Glass Blobs */}
+              <div className="absolute top-[8%] left-[2%] liquid-blob liquid-blob-1 pointer-events-none select-none" />
+              <div className="absolute top-[28%] right-[4%] liquid-blob liquid-blob-2 pointer-events-none select-none" />
+              <div className="absolute bottom-[22%] left-[5%] liquid-blob liquid-blob-3 pointer-events-none select-none" />
+              <div className="absolute bottom-[38%] right-[3%] liquid-blob liquid-blob-4 pointer-events-none select-none" />
+            </>
+          )}
 
           {/* Skip to main content for screen reader & keyboard accessibility */}
           <a
@@ -812,7 +827,16 @@ function AppContent() {
           </header>
 
           {/* Main Content Layout with Framer Motion tab transition routing */}
-          <main id="main-content" tabIndex={-1} className="relative z-10 w-full pt-3 sm:pt-4 pb-16 overflow-x-clip focus:outline-none" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)" }}>
+          <main 
+            id="main-content" 
+            tabIndex={-1} 
+            className="relative z-10 w-full pt-3 sm:pt-4 pb-16 overflow-x-clip focus:outline-none" 
+            style={
+              isLegalPage
+                ? { width: "100%", marginInline: "auto", paddingInline: 0 }
+                : { width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)" }
+            }
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -837,6 +861,25 @@ function AppContent() {
                       <CredentialsHomePreview onNavigateToCertificates={() => navigateToTab("certificates")} />
                     </Suspense>
                   </div>
+                )}
+
+                {/* Instantaneous Static Legal Routes (Zero-delay, No Suspense) */}
+                {activeTab === "privacy" && (
+                  <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
+                    <PrivacyPage 
+                      onNavigateHome={() => navigateToTab("home")} 
+                      onNavigateTab={(tab) => navigateToTab(tab as TabType)}
+                    />
+                  </LegalRouteErrorBoundary>
+                )}
+
+                {activeTab === "terms" && (
+                  <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
+                    <TermsPage 
+                      onNavigateHome={() => navigateToTab("home")} 
+                      onNavigateTab={(tab) => navigateToTab(tab as TabType)}
+                    />
+                  </LegalRouteErrorBoundary>
                 )}
 
                 <Suspense fallback={
@@ -903,126 +946,112 @@ function AppContent() {
                       </Reveal>
                     </div>
                   )}
-
-                  {activeTab === "privacy" && (
-                    <div className="w-full py-2">
-                      <Reveal delay={0}>
-                        <PrivacyPage onNavigateHome={() => navigateToTab("home")} />
-                      </Reveal>
-                    </div>
-                  )}
-
-                  {activeTab === "terms" && (
-                    <div className="w-full py-2">
-                      <Reveal delay={0}>
-                        <TermsPage onNavigateHome={() => navigateToTab("home")} />
-                      </Reveal>
-                    </div>
-                  )}
                 </Suspense>
               </motion.div>
             </AnimatePresence>
           </main>
 
-          {/* MASTER FOOTER */}
-          <footer className="relative bg-[#070709] border-t border-zinc-900/60 z-10 py-12 text-zinc-500 text-xs mt-12 pb-24">
-            <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3vw, 3rem)" }}>
-              
-              <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                <p className="font-bold text-white font-display tracking-tight text-sm">Sayam Mukherjee</p>
-                <p className="text-xs text-zinc-400 font-sans tracking-normal mt-1">AI &amp; ML CSE Undergraduate · Developer Portfolio</p>
-                <div className="flex items-center gap-2.5 mt-2 text-[11px] font-mono text-zinc-500 flex-wrap justify-center md:justify-start">
-                  <span>© 2026 Sayam Mukherjee. All rights reserved.</span>
-                  <span>·</span>
+          {/* MASTER FOOTER (Hidden on legal pages which provide their own restrained editorial footer) */}
+          {!isLegalPage && (
+            <footer className="relative bg-[#070709] border-t border-zinc-900/60 z-10 py-12 text-zinc-500 text-xs mt-12 pb-24">
+              <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3vw, 3rem)" }}>
+                
+                <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                  <p className="font-bold text-white font-display tracking-tight text-sm">Sayam Mukherjee</p>
+                  <p className="text-xs text-zinc-400 font-sans tracking-normal mt-1">AI &amp; ML CSE Undergraduate · Developer Portfolio</p>
+                  <div className="flex items-center gap-2.5 mt-2 text-[11px] font-mono text-zinc-500 flex-wrap justify-center md:justify-start">
+                    <span>© 2026 Sayam Mukherjee. All rights reserved.</span>
+                    <span>·</span>
+                    <button
+                      onClick={() => navigateToTab("privacy")}
+                      className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
+                    >
+                      Privacy Policy
+                    </button>
+                    <span>·</span>
+                    <button
+                      onClick={() => navigateToTab("terms")}
+                      className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
+                    >
+                      Terms &amp; Conditions
+                    </button>
+                  </div>
+                </div>
+
+                {/* Directory Navigation Links */}
+                <nav aria-label="Footer navigation" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-mono">
+                  {[
+                    { id: "home", label: "Home" },
+                    { id: "about", label: "About" },
+                    { id: "projects", label: "Projects" },
+                    { id: "skills", label: "Skills" },
+                    { id: "ecosystem", label: "Ecosystem" },
+                    { id: "certificates", label: "Certificates" },
+                    { id: "journal", label: "Journal" },
+                    { id: "contact", label: "Contact" },
+                    { id: "privacy", label: "Privacy" },
+                    { id: "terms", label: "Terms" }
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => navigateToTab(tab.id as any)}
+                      className={`transition-colors cursor-pointer ${
+                        activeTab === tab.id ? "text-purple-400 font-semibold" : "text-zinc-400 hover:text-white"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </nav>
+
+                {/* Actions */}
+                <div className="flex items-center gap-3">
                   <button
-                    onClick={() => navigateToTab("privacy")}
-                    className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
+                    onClick={() => setReadingMode(!readingMode)}
+                    className={`p-2 border rounded-xl transition-all cursor-pointer ${
+                      readingMode 
+                        ? "bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20" 
+                        : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white"
+                    }`}
+                    title="Toggle Eye-Care Reading Mode"
                   >
-                    Privacy Policy
+                    <BookOpen className="w-4 h-4" />
                   </button>
-                  <span>·</span>
                   <button
-                    onClick={() => navigateToTab("terms")}
-                    className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
+                    onClick={toggleTheme}
+                    className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white rounded-xl transition-all cursor-pointer"
+                    title="Toggle System Visual Theme"
                   >
-                    Terms &amp; Conditions
+                    {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+                  </button>
+                  <button
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    className="p-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 rounded-xl cursor-pointer"
+                    title="Return to top coordinate"
+                  >
+                    <ArrowUp className="w-4 h-4" />
                   </button>
                 </div>
+
               </div>
 
-              {/* Directory Navigation Links */}
-              <nav aria-label="Footer navigation" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-mono">
-                {[
-                  { id: "home", label: "Home" },
-                  { id: "about", label: "About" },
-                  { id: "projects", label: "Projects" },
-                  { id: "skills", label: "Skills" },
-                  { id: "ecosystem", label: "Ecosystem" },
-                  { id: "certificates", label: "Certificates" },
-                  { id: "journal", label: "Journal" },
-                  { id: "contact", label: "Contact" },
-                  { id: "privacy", label: "Privacy" },
-                  { id: "terms", label: "Terms" }
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => navigateToTab(tab.id as any)}
-                    className={`transition-colors cursor-pointer ${
-                      activeTab === tab.id ? "text-purple-400 font-semibold" : "text-zinc-400 hover:text-white"
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-              </nav>
-
-              {/* Actions */}
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setReadingMode(!readingMode)}
-                  className={`p-2 border rounded-xl transition-all cursor-pointer ${
-                    readingMode 
-                      ? "bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20" 
-                      : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white"
-                  }`}
-                  title="Toggle Eye-Care Reading Mode"
-                >
-                  <BookOpen className="w-4 h-4" />
-                </button>
-                <button
-                  onClick={toggleTheme}
-                  className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white rounded-xl transition-all cursor-pointer"
-                  title="Toggle System Visual Theme"
-                >
-                  {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
-                </button>
-                <button
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  className="p-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 rounded-xl cursor-pointer"
-                  title="Return to top coordinate"
-                >
-                  <ArrowUp className="w-4 h-4" />
-                </button>
+              {/* PRINT ONLY SECTION */}
+              <div className="hidden print:block max-w-7xl mx-auto px-6 pt-8 mt-8 border-t border-zinc-800 text-black dark:text-white">
+                <h2 className="text-xl font-bold font-display">Sayam Mukherjee</h2>
+                <p className="text-sm font-mono mt-1 text-zinc-600 dark:text-zinc-400">AI & ML CSE undergraduate • Developer Portfolio</p>
+                <div className="mt-4 flex flex-col gap-2 text-sm text-zinc-800 dark:text-zinc-300">
+                  <p><strong>Email:</strong> {SAYAM_DATA.socials.email}</p>
+                  <p><strong>LinkedIn:</strong> {SAYAM_DATA.socials.linkedin}</p>
+                  <p><strong>GitHub:</strong> {SAYAM_DATA.socials.github}</p>
+                </div>
+                <p className="mt-6 text-sm leading-relaxed text-zinc-800 dark:text-zinc-300">{SAYAM_DATA.bio}</p>
               </div>
-
-            </div>
-
-            {/* PRINT ONLY SECTION */}
-            <div className="hidden print:block max-w-7xl mx-auto px-6 pt-8 mt-8 border-t border-zinc-800 text-black dark:text-white">
-              <h2 className="text-xl font-bold font-display">Sayam Mukherjee</h2>
-              <p className="text-sm font-mono mt-1 text-zinc-600 dark:text-zinc-400">AI & ML CSE undergraduate • Developer Portfolio</p>
-              <div className="mt-4 flex flex-col gap-2 text-sm text-zinc-800 dark:text-zinc-300">
-                <p><strong>Email:</strong> {SAYAM_DATA.socials.email}</p>
-                <p><strong>LinkedIn:</strong> {SAYAM_DATA.socials.linkedin}</p>
-                <p><strong>GitHub:</strong> {SAYAM_DATA.socials.github}</p>
-              </div>
-              <p className="mt-6 text-sm leading-relaxed text-zinc-800 dark:text-zinc-300">{SAYAM_DATA.bio}</p>
-            </div>
-          </footer>
+            </footer>
+          )}
 
           {/* Floating AI Representative Bot & Modals */}
           <Suspense fallback={null}>
-            <AIChatBot />
+            {!isLegalPage && <AIChatBot />}
             {isResumeModalOpen && (
               <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
             )}

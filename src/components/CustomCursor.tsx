@@ -1,14 +1,27 @@
 import { useEffect, useRef } from "react";
 
-export default function CustomCursor() {
+interface CustomCursorProps {
+  disabled?: boolean;
+}
+
+export default function CustomCursor({ disabled = false }: CustomCursorProps) {
   const cursorRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only run on desktop devices with fine pointer
+    if (disabled) return;
+
+    // Check if currently on legal page
+    const path = typeof window !== "undefined" ? window.location.pathname.toLowerCase() : "";
+    if (path.startsWith("/privacy") || path.startsWith("/terms")) {
+      return;
+    }
+
+    // Only run on desktop devices with fine pointer and hover capability
     if (
       typeof window === "undefined" ||
       window.matchMedia("(pointer: coarse)").matches ||
+      window.matchMedia("(hover: none)").matches ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
       window.innerWidth <= 768
     ) {
@@ -76,7 +89,9 @@ export default function CustomCursor() {
         cancelAnimationFrame(frame);
       }
     };
-  }, []);
+  }, [disabled]);
+
+  if (disabled) return null;
 
   return (
     <div className="pointer-events-none hidden md:block">
