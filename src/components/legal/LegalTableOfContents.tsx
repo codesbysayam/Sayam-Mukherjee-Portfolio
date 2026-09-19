@@ -87,21 +87,21 @@ export const LegalTableOfContents: React.FC<LegalTableOfContentsProps> = ({
         </div>
       </div>
 
-      {/* Desktop Sticky Sidebar Navigation */}
-      <aside className="hidden lg:block sticky top-[120px] self-start w-full pr-4 select-none">
+      {/* Desktop Static Sidebar Navigation (Fixed in document flow, not floating/moving with scroll) */}
+      <aside className="hidden lg:block w-full pr-4 select-none">
         <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400 dark:text-zinc-500 mb-3 font-sans">
           On this page
         </div>
 
         <nav aria-label="Table of contents">
-          <ul className="space-y-0.5 border-l border-zinc-200 dark:border-zinc-800/80 pl-0">
+          <ul className="space-y-1 border-l border-zinc-200 dark:border-zinc-800/80 pl-0">
             {sections.map((section) => {
               const isActive = activeId === section.id;
               return (
                 <li key={section.id}>
                   <button
                     onClick={() => onSelectSection(section.id)}
-                    className={`group flex items-start w-full text-left py-1 text-[13px] leading-snug transition-colors cursor-pointer relative pl-3 -ml-[1px] ${
+                    className={`group flex items-start w-full text-left py-1 text-[13px] leading-snug cursor-pointer relative pl-3 -ml-[1px] ${
                       isActive
                         ? "text-zinc-900 dark:text-zinc-100 font-medium"
                         : "text-zinc-500 dark:text-zinc-400 hover:text-zinc-800 dark:hover:text-zinc-200"
@@ -109,14 +109,14 @@ export const LegalTableOfContents: React.FC<LegalTableOfContentsProps> = ({
                   >
                     {/* Active vertical accent bar */}
                     <span
-                      className={`absolute left-0 top-1 bottom-1 w-[2px] rounded-full transition-all ${
+                      className={`absolute left-0 top-1 bottom-1 w-[2px] rounded-full ${
                         isActive
                           ? "bg-purple-600 dark:bg-purple-400"
                           : "bg-transparent group-hover:bg-zinc-300 dark:group-hover:bg-zinc-700"
                       }`}
                       aria-hidden="true"
                     />
-                    <span className="truncate">{section.title}</span>
+                    <span className="break-words">{section.title}</span>
                   </button>
                 </li>
               );

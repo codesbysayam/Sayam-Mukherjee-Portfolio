@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import LegalHeader from "./LegalHeader";
 import LegalTableOfContents, { TOCSection } from "./LegalTableOfContents";
 import LegalFooter from "./LegalFooter";
@@ -25,7 +25,6 @@ export const LegalLayout: React.FC<LegalLayoutProps> = ({
   onNavigateTab,
 }) => {
   const [activeId, setActiveId] = useState<string>(sections[0]?.id || "");
-  const isUserScrollingRef = useRef(false);
 
   // URL Hash support on mount & hashchange
   useEffect(() => {
@@ -46,51 +45,15 @@ export const LegalLayout: React.FC<LegalLayoutProps> = ({
     return () => window.removeEventListener("hashchange", handleHash);
   }, [sections]);
 
-  // IntersectionObserver to highlight active section without per-frame state
-  useEffect(() => {
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (isUserScrollingRef.current) return;
-        // Find visible section closest to top
-        const visibleEntries = entries.filter((e) => e.isIntersecting);
-        if (visibleEntries.length > 0) {
-          const topEntry = visibleEntries.reduce((prev, curr) =>
-            prev.boundingClientRect.top < curr.boundingClientRect.top ? prev : curr
-          );
-          if (topEntry.target.id) {
-            setActiveId(topEntry.target.id);
-          }
-        }
-      },
-      {
-        rootMargin: "-100px 0px -50% 0px",
-        threshold: [0, 0.1, 0.5],
-      }
-    );
-
-    sections.forEach((sec) => {
-      const el = document.getElementById(sec.id);
-      if (el) observer.observe(el);
-    });
-
-    return () => observer.disconnect();
-  }, [sections]);
-
   const handleSelectSection = (id: string) => {
     setActiveId(id);
     const el = document.getElementById(id);
     if (el) {
-      isUserScrollingRef.current = true;
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       el.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth", block: "start" });
       if (window.history.pushState) {
         window.history.pushState(null, "", `#${id}`);
       }
-      setTimeout(() => {
-        isUserScrollingRef.current = false;
-      }, 600);
     }
   };
 
