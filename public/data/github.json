@@ -13,6 +13,24 @@
   },
   "repositories": [
     {
+      "id": 1355576736,
+      "name": "Sayam-Mukherjee-Portfolio",
+      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "homepage": "www.sayammukherjee.in",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-03T06:02:37Z",
+      "updated_at": "2026-09-18T21:40:17Z",
+      "pushed_at": "2026-09-18T21:40:13Z"
+    },
+    {
       "id": 1346623047,
       "name": "mausam",
       "full_name": "codesbysayam/mausam",
@@ -29,24 +47,6 @@
       "created_at": "2026-08-25T20:56:02Z",
       "updated_at": "2026-09-18T21:40:01Z",
       "pushed_at": "2026-09-18T21:39:58Z"
-    },
-    {
-      "id": 1355576736,
-      "name": "Sayam-Mukherjee-Portfolio",
-      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "homepage": "www.sayammukherjee.in",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-18T18:27:07Z",
-      "pushed_at": "2026-09-18T18:27:03Z"
     },
     {
       "id": 1361090226,
@@ -352,6 +352,15 @@
     }
   ],
   "languages": {
+    "codesbysayam/Sayam-Mukherjee-Portfolio": {
+      "TypeScript": 1066049,
+      "CSS": 56974,
+      "JavaScript": 12277,
+      "C": 6359,
+      "Python": 5783,
+      "Jupyter Notebook": 5438,
+      "HTML": 2074
+    },
     "codesbysayam/mausam": {
       "TypeScript": 4050058,
       "Python": 84435,
@@ -362,15 +371,6 @@
       "Jupyter Notebook": 14149,
       "PLpgSQL": 3057,
       "Makefile": 1358
-    },
-    "codesbysayam/Sayam-Mukherjee-Portfolio": {
-      "TypeScript": 1066049,
-      "CSS": 56974,
-      "JavaScript": 12277,
-      "C": 6359,
-      "Python": 5783,
-      "Jupyter Notebook": 5438,
-      "HTML": 2074
     },
     "codesbysayam/Memory-in-Motion": {
       "TypeScript": 1320146,
@@ -393,6 +393,6 @@
       "HTML": 1230
     }
   },
-  "syncedAt": "2026-09-18T21:40:13.057Z",
+  "syncedAt": "2026-09-19T00:19:17.024Z",
   "status": "ok"
 }
