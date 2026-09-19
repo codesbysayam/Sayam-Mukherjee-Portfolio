@@ -1,12 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, Terminal, FileText, Send, Sparkles, Code, Server, AppWindow, Cpu, Mail, Globe, ArrowRight, Bookmark, Award, Lock } from "lucide-react";
+import { Search, Terminal, FileText, Send, Sparkles, Code, Server, AppWindow, Cpu, Mail, Globe, ArrowRight, Bookmark, Award, Lock, Shield, Scale } from "lucide-react";
 import { EXTENDED_DATA } from "../data/extendedData";
 
 interface CommandMenuProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigate: (tab: "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact") => void;
+  onNavigate: (tab: "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms") => void;
   onOpenResume: () => void;
   onTriggerConfetti: () => void;
   onOpenVault?: () => void;
@@ -55,6 +55,8 @@ export default function CommandMenu({
     { id: "certificates", label: "Navigate to Certificates & Achievements Vault", category: "Navigation", icon: Award, action: () => onNavigate("certificates") },
     { id: "journal", label: "Navigate to Engineering Notes & Journal", category: "Navigation", icon: FileText, action: () => onNavigate("journal") },
     { id: "contact", label: "Navigate to Contact & Telemetry Channel", category: "Navigation", icon: Mail, action: () => onNavigate("contact") },
+    { id: "privacy", label: "Privacy Policy & Transparent Data Disclosure", category: "Legal & Compliance", icon: Shield, action: () => onNavigate("privacy") },
+    { id: "terms", label: "Terms & Conditions / Acceptable Use", category: "Legal & Compliance", icon: Scale, action: () => onNavigate("terms") },
     { id: "vault", label: "Owner Vault Access (Passkey Unlock 🔒)", category: "Security & Admin", icon: Lock, action: () => { onClose(); if (onOpenVault) onOpenVault(); } },
     { id: "resume", label: "Download Technical Resume (PDF)", category: "Utility", icon: FileText, action: () => { onOpenResume(); onTriggerConfetti(); } },
     { id: "confetti", label: "Simulate Success Event (Trigger Confetti)", category: "System", icon: Sparkles, action: () => { onTriggerConfetti(); } },

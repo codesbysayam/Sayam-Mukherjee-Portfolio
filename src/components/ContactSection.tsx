@@ -5,6 +5,7 @@ import {
   Share2
 } from "lucide-react";
 import { showToast } from "./Toast";
+import { ContactForm } from "./ContactForm";
 
 // Opportunities Sayam is actively open to
 const OPEN_ROLES = [
@@ -581,9 +582,12 @@ export default function ContactSection() {
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
             </div>
             <p className="text-xs md:text-sm text-zinc-300 leading-relaxed font-normal">
-              Have an opportunity, project or idea? Reach out through whichever channel works best.
+              Have an opportunity, project or idea? Send a direct dispatch below or reach out via email.
             </p>
           </div>
+
+          {/* Interactive Validated Contact Form */}
+          <ContactForm />
 
           {/* ==================================================
               DUAL EMAIL BLOCKS

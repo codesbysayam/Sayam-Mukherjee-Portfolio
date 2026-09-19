@@ -48,7 +48,11 @@ export default function Loader({ onComplete }: LoaderProps) {
             <div className="w-16 h-16 rounded-full bg-zinc-900/60 border border-zinc-800 flex items-center justify-center shadow-[0_0_20px_rgba(139,92,246,0.15)] relative overflow-hidden group">
               <img 
                 src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                alt="Sayam Mukherjee" 
+                alt="Sayam Mukherjee avatar" 
+                width={64}
+                height={64}
+                loading="eager"
+                decoding="async"
                 className="w-full h-full object-cover"
               />
             </div>

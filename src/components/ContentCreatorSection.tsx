@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, memo } from "react";
 import { motion } from "motion/react";
 import { EXTENDED_DATA } from "../data/extendedData";
+import { LINKS } from "../config/links";
 import { 
   Youtube, Video, Users, Eye, Sparkles, Play, Clock, 
   ArrowRight, Compass, HelpCircle, BarChart, TrendingUp, ChevronLeft, ChevronRight 
@@ -188,14 +189,17 @@ function ContentCreatorSection() {
                   {video.duration}
                 </span>
 
-                {/* Simulated watch player hover */}
+                {/* Watch player hover */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-zinc-950/60 transition-opacity">
-                  <button 
-                    onClick={() => alert(`Redirecting securely to YouTube node to watch: "${video.title}"`)}
+                  <a 
+                    href={LINKS.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={`Watch ${video.title} on YouTube`}
                     className="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white hover:scale-110 transition-transform cursor-pointer"
                   >
                     <Play className="w-5 h-5 ml-0.5" />
-                  </button>
+                  </a>
                 </div>
               </div>
 
@@ -210,12 +214,14 @@ function ContentCreatorSection() {
                     {video.views} views
                   </span>
 
-                  <button
-                    onClick={() => alert(`Launching YouTube player container...`)}
+                  <a
+                    href={LINKS.youtube}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-red-400 hover:text-red-300 transition-colors font-bold cursor-pointer"
                   >
-                    Watch Now
-                  </button>
+                    Watch Now ↗
+                  </a>
                 </div>
               </div>
             </div>

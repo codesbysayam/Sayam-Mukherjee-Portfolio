@@ -11,10 +11,10 @@ export function EcosystemCta({ onNavigateTab }: EcosystemCtaProps) {
       <div className="rounded-xl bg-zinc-950/50 border border-zinc-850 p-5 sm:p-6 space-y-4">
         <div className="space-y-1.5 max-w-xl">
           <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-400">
-            12 — COLLABORATION
+            COLLABORATION
           </span>
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">
-            Interested in collaborating or reviewing my code?
+            Let’s build something meaningful.
           </h2>
           <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
             Explore verified public repositories on GitHub, inspect architectural writeups for published projects, or reach out directly for engineering opportunities.
@@ -60,7 +60,7 @@ export function EcosystemCta({ onNavigateTab }: EcosystemCtaProps) {
               if (onNavigateTab) {
                 onNavigateTab("contact");
               } else {
-                window.location.href = "mailto:sayammukherjee@outlook.com";
+                window.location.href = "mailto:sayammukherjee1506@gmail.com";
               }
             }}
             className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white font-mono text-xs border border-zinc-800 hover:border-zinc-700 transition-colors"

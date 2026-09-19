@@ -190,8 +190,11 @@ export default function CertificateCard({
             /* High-res Image Preview */
             <img
               src={imageUrl}
-              alt={title}
+              alt={`Official Certificate Credential: ${title} issued by ${issuer}`}
+              width={360}
+              height={220}
               loading="lazy"
+              decoding="async"
               referrerPolicy="no-referrer"
               onError={() => setImageError(true)}
               className="w-full h-full object-contain p-2.5 group-hover:scale-105 transition-transform duration-300"

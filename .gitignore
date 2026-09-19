@@ -6,5 +6,8 @@ coverage/
 *.log
 tools/c/portfolio_metrics
 *.o
+*.local
+.env
+.env.*
 .env*
 !.env.example

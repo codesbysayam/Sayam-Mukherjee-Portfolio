@@ -1,0 +1,22 @@
+{
+  "name": "Sayam Mukherjee — AI & ML Student | Full-Stack Developer",
+  "short_name": "Sayam",
+  "description": "Evidence-based engineering portfolio of Sayam Mukherjee, showcasing verified projects, system ecosystem, and technical writings.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#09090b",
+  "theme_color": "#09090b",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

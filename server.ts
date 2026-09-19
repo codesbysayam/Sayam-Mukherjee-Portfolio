@@ -17,6 +17,19 @@ const PORT = 3000;
 
 app.use(express.json({ limit: "25mb" }));
 
+// Production HTTPS and Security Headers
+app.use((_req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "SAMEORIGIN");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
+  res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+  next();
+});
+
+// Rate limiting store for contact submissions (max 5 per IP per hour)
+const contactSubmissionRateLimits = new Map<string, number[]>();
+
 // Lazy-initialized Gemini Client
 let aiInstance: GoogleGenAI | null = null;
 
@@ -804,8 +817,29 @@ app.post("/api/certificates/verify", (req, res) => {
   }
 });
 
-// 4. Contact submissions
+// 4. Contact submissions with spam & bot protection
 app.post("/api/contact", (req, res) => {
+  const ip = req.ip || req.socket.remoteAddress || "anonymous";
+  const now = Date.now();
+
+  // 1. IP rate limiting (5 submissions per 60 minutes)
+  const timestamps = (contactSubmissionRateLimits.get(ip) || []).filter(t => now - t < 3600000);
+  if (timestamps.length >= 5) {
+    return res.status(429).json({ error: "Too many contact inquiries from this IP address. Please try again later or email directly." });
+  }
+
+  // 2. Honeypot check (Spam protection)
+  const honeypot = req.body.website || req.body.phone_hp || req.body.honeypot;
+  if (honeypot && String(honeypot).trim().length > 0) {
+    return res.status(400).json({ error: "Spam submission detected and rejected." });
+  }
+
+  // 3. Client timestamp check (Anti-bot speed detection: must take >= 2.5s)
+  const clientTimestamp = Number(req.body.clientTimestamp || req.body.timestamp);
+  if (clientTimestamp && (now - clientTimestamp < 2500)) {
+    return res.status(400).json({ error: "Form submission too rapid. Please take a moment to review before submitting." });
+  }
+
   const { 
     firstName, 
     lastName, 
@@ -835,6 +869,10 @@ app.post("/api/contact", (req, res) => {
   if (!resolvedFirstName || !email || !message) {
     return res.status(400).json({ error: "Missing required contact parameters (name/firstName, email, message)" });
   }
+
+  // Record rate limit timestamp
+  timestamps.push(now);
+  contactSubmissionRateLimits.set(ip, timestamps);
 
   const resolvedSubject = subject || (topic ? `Portfolio Contact — ${topic} — ${resolvedFirstName} ${resolvedLastName}`.trim() : "No Subject Specified");
   const resolvedCompany = company || organization || "";

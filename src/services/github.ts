@@ -374,14 +374,17 @@ export async function loadGitHubSnapshot(force = false): Promise<GitHubRawSnapsh
       const res = await fetch(url);
       if (res.ok) {
         const snapshot = (await res.json()) as GitHubRawSnapshot;
-        if (snapshot && Array.isArray(snapshot.repositories) && snapshot.repositories.length > 0) {
-          memorySnapshot = { data: snapshot, timestamp: now };
-          if (typeof window !== "undefined") {
-            try {
-              localStorage.setItem("github:snapshot", JSON.stringify({ data: snapshot, timestamp: now }));
-            } catch {}
+        if (snapshot && typeof snapshot === "object") {
+          // Accept snapshot if it has explicit error status or valid repository array
+          if (snapshot.status === "error" || Array.isArray(snapshot.repositories)) {
+            memorySnapshot = { data: snapshot, timestamp: now };
+            if (typeof window !== "undefined") {
+              try {
+                localStorage.setItem("github:snapshot", JSON.stringify({ data: snapshot, timestamp: now }));
+              } catch {}
+            }
+            return snapshot;
           }
-          return snapshot;
         }
       }
     } catch {
@@ -466,7 +469,15 @@ export const github = {
 
   repos: async (force = false): Promise<FetchResult<GitHubRepo[]>> => {
     const snapshot = await loadGitHubSnapshot(force);
-    const repos = snapshot.repositories?.length ? snapshot.repositories : VERIFIED_REPOS_BASELINE;
+    if (snapshot.status === "error") {
+      return {
+        data: [],
+        fromCache: !force,
+        rateLimited: false,
+        timestamp: Date.now()
+      };
+    }
+    const repos = Array.isArray(snapshot.repositories) ? snapshot.repositories : VERIFIED_REPOS_BASELINE;
     return {
       data: repos,
       fromCache: !force,

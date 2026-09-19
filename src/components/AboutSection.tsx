@@ -261,7 +261,11 @@ function AboutSectionComponent() {
                   <div className="aspect-square w-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 relative bg-zinc-100 dark:bg-zinc-900">
                     <img 
                       src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                      alt="Sayam Mukherjee" 
+                      alt="Portrait of Sayam Mukherjee, Computer Science and Engineering student at KIIT" 
+                      width={400}
+                      height={400}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover"
                     />
                   </div>

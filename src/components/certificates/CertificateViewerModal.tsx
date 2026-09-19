@@ -220,7 +220,9 @@ export default function CertificateViewerModal({ certificate, onClose }: Certifi
             <div className="relative overflow-auto flex items-center justify-center max-w-full max-h-full">
               <img
                 src={fileUrl}
-                alt={certificate.title}
+                alt={`Full-resolution certificate document for ${certificate.title}`}
+                loading="lazy"
+                decoding="async"
                 onError={() => setImageError(true)}
                 style={{
                   transform: `scale(${zoom})`,

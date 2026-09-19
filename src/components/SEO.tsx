@@ -1,50 +1,41 @@
 import React, { useEffect } from "react";
+import { SEO_CONFIG, CANONICAL_DOMAIN, RouteSEO } from "../config/seo";
 
-interface SEOProps {
+export interface SEOProps {
+  routeKey?: string;
   title?: string;
   description?: string;
-  keywords?: string;
-  canonicalUrl?: string;
+  canonicalPath?: string;
+  robots?: string;
   imageUrl?: string;
-  type?: "website" | "article" | "profile";
-  author?: string;
-  schemaType?: "Person" | "WebSite" | "TechArticle" | "CreativeWork";
-  schemaData?: any;
+  ogType?: string;
 }
 
-export const SEO: React.FC<SEOProps> = ({
-  title = "Sayam Mukherjee - AI & ML Developer Portfolio Node",
-  description = "Portfolio of Sayam Mukherjee, 2nd Year (3rd Semester) Computer Science student at Kalinga Institute of Industrial Technology, Bhubaneswar. AI Developer, Full Stack Engineer, and Software Builder.",
-  keywords = "Sayam Mukherjee, AI Student, Machine Learning Engineer, Kalinga Institute of Industrial Technology, Bhubaneswar, KIIT, Full Stack Developer, Hooghly",
-  canonicalUrl = "https://sayammukherjee.com",
-  imageUrl = "https://picsum.photos/seed/sayam-portfolio/1200/630",
-  type = "website",
-  author = "Sayam Mukherjee",
-  schemaType = "Person",
-  schemaData,
-}) => {
+export function useRouteSEO(routeKey: string) {
   useEffect(() => {
-    // 1. Title
-    document.title = title;
+    const config: RouteSEO = SEO_CONFIG[routeKey] || SEO_CONFIG.home;
+    const origin = typeof window !== "undefined" ? window.location.origin : CANONICAL_DOMAIN;
+    const canonicalUrl = `${origin}${config.canonicalPath}`;
+    const imageUrl = `${origin}/og-image.png`;
 
-    // 2. Selectors for standard meta tags
-    const updateMetaTag = (selector: string, attribute: string, value: string) => {
-      let element = document.querySelector(selector);
-      if (!element) {
-        element = document.createElement("meta");
-        const match = selector.match(/\[([^=]+)=["']?([^"']+)["']?\]/);
-        if (match) {
-          element.setAttribute(match[1], match[2]);
-        }
-        document.head.appendChild(element);
+    // 1. Update document title
+    document.title = config.title;
+
+    // Helper to create or update meta tag
+    const setMetaTag = (attributeName: string, attributeValue: string, content: string) => {
+      let el = document.querySelector(`meta[${attributeName}="${attributeValue}"]`);
+      if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute(attributeName, attributeValue);
+        document.head.appendChild(el);
       }
-      element.setAttribute(attribute, value);
+      el.setAttribute("content", content);
     };
 
-    // Standard Tags
-    updateMetaTag('meta[name="description"]', "content", description);
-    updateMetaTag('meta[name="keywords"]', "content", keywords);
-    updateMetaTag('meta[name="author"]', "content", author);
+    // Standard Meta Tags
+    setMetaTag("name", "description", config.description);
+    setMetaTag("name", "robots", config.robots);
+    setMetaTag("name", "author", "Sayam Mukherjee");
 
     // Canonical Link
     let canonical = document.querySelector('link[rel="canonical"]');
@@ -55,22 +46,23 @@ export const SEO: React.FC<SEOProps> = ({
     }
     canonical.setAttribute("href", canonicalUrl);
 
-    // Open Graph Tags
-    updateMetaTag('meta[property="og:title"]', "content", title);
-    updateMetaTag('meta[property="og:description"]', "content", description);
-    updateMetaTag('meta[property="og:type"]', "content", type);
-    updateMetaTag('meta[property="og:url"]', "content", canonicalUrl);
-    updateMetaTag('meta[property="og:image"]', "content", imageUrl);
-    updateMetaTag('meta[property="og:site_name"]', "content", "Sayam Mukherjee Hub");
+    // OpenGraph Meta Tags
+    setMetaTag("property", "og:title", config.ogTitle);
+    setMetaTag("property", "og:description", config.ogDescription);
+    setMetaTag("property", "og:type", config.ogType);
+    setMetaTag("property", "og:url", canonicalUrl);
+    setMetaTag("property", "og:image", imageUrl);
+    setMetaTag("property", "og:image:width", "1200");
+    setMetaTag("property", "og:image:height", "630");
+    setMetaTag("property", "og:site_name", "Sayam Mukherjee — Portfolio");
 
-    // Twitter Card Tags
-    updateMetaTag('meta[name="twitter:card"]', "content", "summary_large_image");
-    updateMetaTag('meta[name="twitter:creator"]', "content", "@sayam_mukherjee");
-    updateMetaTag('meta[name="twitter:title"]', "content", title);
-    updateMetaTag('meta[name="twitter:description"]', "content", description);
-    updateMetaTag('meta[name="twitter:image"]', "content", imageUrl);
+    // Twitter Card Meta Tags
+    setMetaTag("name", "twitter:card", "summary_large_image");
+    setMetaTag("name", "twitter:title", config.twitterTitle);
+    setMetaTag("name", "twitter:description", config.twitterDescription);
+    setMetaTag("name", "twitter:image", imageUrl);
 
-    // Schema.org Structured Data
+    // Structured Data (JSON-LD)
     let schemaScript = document.getElementById("structured-data-schema") as HTMLScriptElement;
     if (schemaScript) {
       schemaScript.remove();
@@ -80,11 +72,11 @@ export const SEO: React.FC<SEOProps> = ({
     schemaScript.id = "structured-data-schema";
     schemaScript.type = "application/ld+json";
 
-    const defaultSchema = {
+    const schemaData = {
       "@context": "https://schema.org",
-      "@type": schemaType,
+      "@type": "Person",
       "name": "Sayam Mukherjee",
-      "jobTitle": "AI & ML Specialist Student & Full Stack Web Engineer",
+      "jobTitle": "Undergraduate Student · AI & ML Developer",
       "alumniOf": {
         "@type": "CollegeOrUniversity",
         "name": "Kalinga Institute of Industrial Technology, Bhubaneswar"
@@ -94,24 +86,29 @@ export const SEO: React.FC<SEOProps> = ({
       "sameAs": [
         "https://github.com/codesbysayam",
         "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
-        "https://www.instagram.com/_.wrick._/"
+        "https://leetcode.com/u/sayammukherjee/",
+        "https://codolio.com/profile/codesbysayam"
       ],
       "knowsAbout": [
-        "Computer Vision",
+        "Artificial Intelligence",
         "Machine Learning",
-        "Deep Learning",
+        "Computer Vision",
         "React",
-        "Node.js",
         "TypeScript",
-        "UI Psychology"
+        "C++",
+        "Python"
       ]
     };
 
-    schemaScript.innerHTML = JSON.stringify(schemaData || defaultSchema);
+    schemaScript.innerHTML = JSON.stringify(schemaData);
     document.head.appendChild(schemaScript);
 
-  }, [title, description, keywords, canonicalUrl, imageUrl, type, author, schemaType, schemaData]);
+  }, [routeKey]);
+}
 
+export const SEO: React.FC<SEOProps> = ({ routeKey = "home" }) => {
+  useRouteSEO(routeKey);
   return null;
 };
+
 export default SEO;

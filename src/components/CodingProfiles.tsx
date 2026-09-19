@@ -7,6 +7,7 @@ import {
 } from "lucide-react";
 import GitHubActivityHeatmap from "./GitHubActivityHeatmap";
 import LanguageRingChart from "./LanguageRingChart";
+import { Unavailable } from "./Unavailable";
 import { fetchGitHubStats, GitHubStatsData, VERIFIED_GITHUB_FALLBACK } from "../services/github";
 import { fetchLeetCodeStats, LeetCodeStatsData, VERIFIED_LEETCODE_FALLBACK } from "../services/leetcode";
 import { fetchCodolioProfile, CodolioProfileData, VERIFIED_CODOLIO_DATA } from "../services/codolio";
@@ -247,32 +248,42 @@ export default function CodingProfiles() {
                   </span>
                   
                   <div className="space-y-3">
-                    {githubData.repositories.map((repo, idx) => (
-                      <div key={idx} className="bg-zinc-950/50 border border-zinc-900/80 p-4 rounded-xl space-y-2 hover:border-purple-500/30 transition-all">
-                        <div className="flex items-center justify-between">
-                          <h4 className="text-xs font-bold text-white font-mono flex items-center gap-1.5">
-                            <Layers className="w-3.5 h-3.5 text-purple-400" />
-                            {repo.name}
-                          </h4>
-                          <a 
-                            href={repo.url} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-[10px] font-mono bg-zinc-900 text-zinc-300 hover:text-white px-2 py-0.5 rounded border border-zinc-800 flex items-center gap-1"
-                          >
-                            <span>Open</span>
-                            <ExternalLink className="w-2.5 h-2.5" />
-                          </a>
+                    {githubData.repositories.length === 0 ? (
+                      <Unavailable
+                        onRetry={handleRefreshGitHub}
+                        isRetrying={refreshingGitHub}
+                        compact
+                        title="Repositories Unavailable"
+                        status="empty"
+                      />
+                    ) : (
+                      githubData.repositories.map((repo, idx) => (
+                        <div key={idx} className="bg-zinc-950/50 border border-zinc-900/80 p-4 rounded-xl space-y-2 hover:border-purple-500/30 transition-all">
+                          <div className="flex items-center justify-between">
+                            <h4 className="text-xs font-bold text-white font-mono flex items-center gap-1.5">
+                              <Layers className="w-3.5 h-3.5 text-purple-400" />
+                              {repo.name}
+                            </h4>
+                            <a 
+                              href={repo.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-[10px] font-mono bg-zinc-900 text-zinc-300 hover:text-white px-2 py-0.5 rounded border border-zinc-800 flex items-center gap-1"
+                            >
+                              <span>Open</span>
+                              <ExternalLink className="w-2.5 h-2.5" />
+                            </a>
+                          </div>
+                          <p className="text-[11px] text-zinc-400 leading-normal">{repo.description}</p>
+                          
+                          <div className="flex items-center gap-3 text-[10px] text-zinc-500 font-mono pt-1">
+                            <span className="text-cyan-400 font-medium">{repo.language}</span>
+                            <span className="flex items-center gap-1"><Star className="w-3 h-3 text-yellow-500" /> {repo.stars} stars</span>
+                            <span className="flex items-center gap-1"><GitFork className="w-3 h-3 text-purple-500" /> {repo.forks} forks</span>
+                          </div>
                         </div>
-                        <p className="text-[11px] text-zinc-400 leading-normal">{repo.description}</p>
-                        
-                        <div className="flex items-center gap-3 text-[10px] text-zinc-500 font-mono pt-1">
-                          <span className="text-cyan-400 font-medium">{repo.language}</span>
-                          <span className="flex items-center gap-1"><Star className="w-3 h-3 text-yellow-500" /> {repo.stars} stars</span>
-                          <span className="flex items-center gap-1"><GitFork className="w-3 h-3 text-purple-500" /> {repo.forks} forks</span>
-                        </div>
-                      </div>
-                    ))}
+                      ))
+                    )}
                   </div>
                 </div>
 

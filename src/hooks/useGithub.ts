@@ -6,6 +6,8 @@ import {
   GitHubEvent,
   GitHubStatsData,
   GitHubPulseData,
+  GitHubRawSnapshot,
+  loadGitHubSnapshot,
   computeGitHubPulse,
   fetchGitHubStats,
   GITHUB_TTL,
@@ -27,6 +29,8 @@ export interface GitHubState {
   syncedAt: number | null;
   usingCache: boolean;
   rateLimited: boolean;
+  snapshot: GitHubRawSnapshot | null;
+  snapshotStatus: string;
 }
 
 // Global shared state across all components initialized with verified data
@@ -40,7 +44,9 @@ let globalState: GitHubState = {
   error: null,
   syncedAt: Date.now(),
   usingCache: true,
-  rateLimited: false
+  rateLimited: false,
+  snapshot: null,
+  snapshotStatus: "ok"
 };
 
 const listeners = new Set<(state: GitHubState) => void>();
@@ -78,7 +84,11 @@ async function fetchAllGitHubData(force = false): Promise<void> {
 
   inFlightPromise = (async () => {
     try {
-      const [userRes, reposRes, eventsRes, statsRes] = await Promise.all([
+      const [snapshot, userRes, reposRes, eventsRes, statsRes] = await Promise.all([
+        loadGitHubSnapshot(force).catch((e) => {
+          console.warn("GitHub snapshot fetch warning:", e);
+          return null;
+        }),
         github.user(force).catch((e) => {
           console.warn("GitHub user fetch warning:", e);
           return null;
@@ -97,6 +107,9 @@ async function fetchAllGitHubData(force = false): Promise<void> {
         })
       ]);
 
+      const snapshotStatus = snapshot?.status || "ok";
+      const isSnapshotError = snapshotStatus === "error";
+
       const isUsingCache = Boolean(
         userRes?.fromCache || reposRes?.fromCache || eventsRes?.fromCache
       );
@@ -108,8 +121,12 @@ async function fetchAllGitHubData(force = false): Promise<void> {
         Date.now()
       );
 
-      const finalEvents = Array.isArray(eventsRes?.data) && eventsRes.data.length > 0 ? eventsRes.data : globalState.events;
-      const finalRepos = Array.isArray(reposRes?.data) && reposRes.data.length > 0 ? reposRes.data : globalState.repos;
+      const finalEvents = isSnapshotError
+        ? []
+        : (Array.isArray(eventsRes?.data) ? eventsRes.data : globalState.events);
+      const finalRepos = isSnapshotError
+        ? []
+        : (Array.isArray(reposRes?.data) ? reposRes.data : globalState.repos);
       const computedPulse = computeGitHubPulse(finalEvents, finalRepos, syncedTimestamp);
 
       globalState = {
@@ -119,10 +136,12 @@ async function fetchAllGitHubData(force = false): Promise<void> {
         stats: statsRes || globalState.stats,
         pulse: computedPulse,
         loading: false,
-        error: null,
+        error: isSnapshotError ? "GitHub repository snapshot status is error" : null,
         syncedAt: syncedTimestamp,
         usingCache: isUsingCache,
-        rateLimited: isRateLimited
+        rateLimited: isRateLimited,
+        snapshot: snapshot,
+        snapshotStatus: snapshotStatus
       };
     } catch (err: any) {
       console.warn("useGithub overall fetch error:", err);
@@ -196,8 +215,14 @@ export function useGithub() {
     return computeGitHubPulse(state.events, state.repos, state.syncedAt || Date.now());
   }, [state.events, state.repos, state.syncedAt]);
 
+  const isUnavailable =
+    state.snapshotStatus === "error" ||
+    state.snapshot?.status === "error" ||
+    (!state.loading && state.repos.length === 0);
+
   return {
     ...state,
+    isUnavailable,
     pulse,
     latestRepo,
     latestEvent,

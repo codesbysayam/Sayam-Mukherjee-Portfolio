@@ -91,7 +91,11 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               <div className="w-28 h-28 rounded-full overflow-hidden border-2 border-zinc-300 mx-auto mb-6 bg-zinc-100 flex items-center justify-center">
                 <img 
                   src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                  alt="Sayam Mukherjee" 
+                  alt="Sayam Mukherjee portrait photo" 
+                  width={112}
+                  height={112}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -286,7 +290,11 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
             <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-zinc-800 bg-zinc-900 flex items-center justify-center shrink-0 shadow-lg">
               <img 
                 src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                alt="Sayam Mukherjee" 
+                alt="Sayam Mukherjee - AI & ML Developer profile avatar" 
+                width={96}
+                height={96}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover group-hover:scale-105 transition-all duration-500"
               />
             </div>

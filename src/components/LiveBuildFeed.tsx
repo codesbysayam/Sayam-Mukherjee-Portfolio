@@ -10,6 +10,7 @@ import {
   formatSyncAge,
   GitHubRepo
 } from "../services/github";
+import { Unavailable } from "./Unavailable";
 
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -37,7 +38,10 @@ function LiveBuildFeedComponent() {
     error, 
     syncedAt, 
     usingCache, 
-    refresh 
+    refresh,
+    snapshotStatus,
+    snapshot,
+    isUnavailable
   } = useGithub();
 
   // Search and language filter state
@@ -163,8 +167,18 @@ function LiveBuildFeedComponent() {
         </div>
       </div>
 
-      {/* Unified Repository Controls Toolbar (Search, Filter, View All, Refresh) */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-5 pb-2">
+      {/* If snapshot status is error or repos is empty and not loading, replace repository list with Unavailable UI */}
+      {!loading && (isUnavailable || snapshotStatus === "error" || snapshot?.status === "error" || repos.length === 0) ? (
+        <Unavailable
+          onRetry={refresh}
+          isRetrying={loading}
+          status={snapshotStatus === "error" || snapshot?.status === "error" ? "error" : "empty"}
+          profileUrl="https://github.com/codesbysayam"
+        />
+      ) : (
+        <>
+          {/* Unified Repository Controls Toolbar (Search, Filter, View All, Refresh) */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-5 pb-2">
         {/* Left: Language filter pills */}
         {availableLanguages.length > 1 && (
           <div className="flex flex-wrap items-center gap-1.5">
@@ -476,6 +490,8 @@ function LiveBuildFeedComponent() {
           </a>
         </div>
       </div>
+        </>
+      )}
     </section>
   );
 }

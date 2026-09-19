@@ -49,7 +49,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           COLLABORATE
         </span>
         <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight font-display">
-          Interested in technical collaboration or engineering roles?
+          Let’s build something meaningful.
         </h2>
         <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
           B.Tech CSE (AI &amp; ML) student at KIIT University available for software engineering internships, machine learning research projects, and hackathons.

@@ -35,6 +35,9 @@ const ResumeModal = lazy(() => import("./components/ResumeModal"));
 const CommandMenu = lazy(() => import("./components/CommandMenu"));
 const CertificatesPage = lazy(() => import("./components/certificates/CertificatesPage"));
 const CredentialsHomePreview = lazy(() => import("./components/certificates/CredentialsHomePreview"));
+const PrivacyPage = lazy(() => import("./pages/Privacy"));
+const TermsPage = lazy(() => import("./pages/Terms"));
+const CookieConsent = lazy(() => import("./components/CookieConsent"));
 
 export default function App() {
   return (
@@ -266,13 +269,15 @@ function AppContent() {
     };
   }, []);
 
-  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact";
+  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms";
 
   const getInitialTab = (): TabType => {
     if (typeof window === "undefined") return "home";
     const rawPath = window.location.pathname.toLowerCase();
     const path = rawPath.replace(/\/+$/, "");
 
+    if (path === "/privacy" || path.startsWith("/privacy/")) return "privacy";
+    if (path === "/terms" || path.startsWith("/terms/")) return "terms";
     if (path === "/certificates" || path === "/certificate" || path.startsWith("/certificates/") || path.startsWith("/certificate/")) return "certificates";
     if (path === "/projects" || path === "/project" || path.startsWith("/projects/") || path.startsWith("/project/")) return "projects";
     if (path === "/about" || path.startsWith("/about/")) return "about";
@@ -282,6 +287,8 @@ function AppContent() {
     if (path === "/contact" || path.startsWith("/contact/")) return "contact";
 
     const hash = window.location.hash.toLowerCase().replace("#", "").replace(/\/+$/, "");
+    if (hash === "privacy") return "privacy";
+    if (hash === "terms") return "terms";
     if (hash === "certificates" || hash === "certificate") return "certificates";
     if (hash === "projects") return "projects";
     if (hash === "about") return "about";
@@ -538,7 +545,7 @@ function AppContent() {
 
   return (
     <>
-      <SEO />
+      <SEO routeKey={activeTab} />
 
       <AnimatePresence mode="wait">
         {!loadingComplete && (
@@ -571,6 +578,14 @@ function AppContent() {
           <div className="absolute bottom-[22%] left-[5%] liquid-blob liquid-blob-3 pointer-events-none select-none" />
           <div className="absolute bottom-[38%] right-[3%] liquid-blob liquid-blob-4 pointer-events-none select-none" />
 
+          {/* Skip to main content for screen reader & keyboard accessibility */}
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-purple-600 focus:text-white focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-purple-400 font-mono text-xs font-semibold"
+          >
+            Skip to main content
+          </a>
+
           {/* Fixed / Sticky Top Header (Remains static and pinned at the top while page content scrolls) */}
           <header className={`sticky top-0 w-full z-50 border-b transition-all duration-300 backdrop-blur-xl ${
             theme === "dark"
@@ -592,7 +607,7 @@ function AppContent() {
                 <div className="w-9 h-9 rounded-full overflow-hidden border border-zinc-800 bg-zinc-900 flex items-center justify-center shadow-md shrink-0 group-hover:border-purple-500/50 transition-colors">
                   <img 
                     src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                    alt="Sayam Mukherjee" 
+                    alt="Sayam Mukherjee - Portfolio Home" 
                     width={36}
                     height={36}
                     loading="eager"
@@ -797,7 +812,7 @@ function AppContent() {
           </header>
 
           {/* Main Content Layout with Framer Motion tab transition routing */}
-          <main className="relative z-10 w-full pt-3 sm:pt-4 pb-16 overflow-x-clip" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)" }}>
+          <main id="main-content" tabIndex={-1} className="relative z-10 w-full pt-3 sm:pt-4 pb-16 overflow-x-clip focus:outline-none" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)" }}>
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeTab}
@@ -888,6 +903,22 @@ function AppContent() {
                       </Reveal>
                     </div>
                   )}
+
+                  {activeTab === "privacy" && (
+                    <div className="w-full py-2">
+                      <Reveal delay={0}>
+                        <PrivacyPage onNavigateHome={() => navigateToTab("home")} />
+                      </Reveal>
+                    </div>
+                  )}
+
+                  {activeTab === "terms" && (
+                    <div className="w-full py-2">
+                      <Reveal delay={0}>
+                        <TermsPage onNavigateHome={() => navigateToTab("home")} />
+                      </Reveal>
+                    </div>
+                  )}
                 </Suspense>
               </motion.div>
             </AnimatePresence>
@@ -900,7 +931,23 @@ function AppContent() {
               <div className="flex flex-col items-center md:items-start text-center md:text-left">
                 <p className="font-bold text-white font-display tracking-tight text-sm">Sayam Mukherjee</p>
                 <p className="text-xs text-zinc-400 font-sans tracking-normal mt-1">AI &amp; ML CSE Undergraduate · Developer Portfolio</p>
-                <p className="font-mono text-[11px] text-zinc-500 mt-2 block">© 2026 Sayam Mukherjee. All rights reserved.</p>
+                <div className="flex items-center gap-2.5 mt-2 text-[11px] font-mono text-zinc-500 flex-wrap justify-center md:justify-start">
+                  <span>© 2026 Sayam Mukherjee. All rights reserved.</span>
+                  <span>·</span>
+                  <button
+                    onClick={() => navigateToTab("privacy")}
+                    className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
+                  >
+                    Privacy Policy
+                  </button>
+                  <span>·</span>
+                  <button
+                    onClick={() => navigateToTab("terms")}
+                    className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
+                  >
+                    Terms &amp; Conditions
+                  </button>
+                </div>
               </div>
 
               {/* Directory Navigation Links */}
@@ -913,7 +960,9 @@ function AppContent() {
                   { id: "ecosystem", label: "Ecosystem" },
                   { id: "certificates", label: "Certificates" },
                   { id: "journal", label: "Journal" },
-                  { id: "contact", label: "Contact" }
+                  { id: "contact", label: "Contact" },
+                  { id: "privacy", label: "Privacy" },
+                  { id: "terms", label: "Terms" }
                 ].map((tab) => (
                   <button
                     key={tab.id}
@@ -986,6 +1035,7 @@ function AppContent() {
                 onTriggerConfetti={triggerConfetti}
               />
             )}
+            <CookieConsent />
           </Suspense>
 
           {/* Reusable Global Toast Notifications */}
