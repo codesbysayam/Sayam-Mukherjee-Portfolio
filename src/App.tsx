@@ -38,6 +38,7 @@ const CredentialsHomePreview = lazy(() => import("./components/certificates/Cred
 import PrivacyPage from "./pages/Privacy";
 import TermsPage from "./pages/Terms";
 import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary";
+import SiteFooter from "./components/SiteFooter";
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
 
 export default function App() {
@@ -951,102 +952,14 @@ function AppContent() {
             </AnimatePresence>
           </main>
 
-          {/* MASTER FOOTER (Hidden on legal pages which provide their own restrained editorial footer) */}
+          {/* REBUILT MINIMAL MASTER FOOTER */}
           {!isLegalPage && (
-            <footer className="relative bg-[#070709] border-t border-zinc-900/60 z-10 py-12 text-zinc-500 text-xs mt-12 pb-24">
-              <div className="w-full flex flex-col md:flex-row items-center justify-between gap-6" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3vw, 3rem)" }}>
-                
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <p className="font-bold text-white font-display tracking-tight text-sm">Sayam Mukherjee</p>
-                  <p className="text-xs text-zinc-400 font-sans tracking-normal mt-1">AI &amp; ML CSE Undergraduate · Developer Portfolio</p>
-                  <div className="flex items-center gap-2.5 mt-2 text-[11px] font-mono text-zinc-500 flex-wrap justify-center md:justify-start">
-                    <span>© 2026 Sayam Mukherjee. All rights reserved.</span>
-                    <span>·</span>
-                    <button
-                      onClick={() => navigateToTab("privacy")}
-                      className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
-                    >
-                      Privacy Policy
-                    </button>
-                    <span>·</span>
-                    <button
-                      onClick={() => navigateToTab("terms")}
-                      className="hover:text-purple-400 hover:underline transition-colors cursor-pointer"
-                    >
-                      Terms &amp; Conditions
-                    </button>
-                  </div>
-                </div>
-
-                {/* Directory Navigation Links */}
-                <nav aria-label="Footer navigation" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs font-mono">
-                  {[
-                    { id: "home", label: "Home" },
-                    { id: "about", label: "About" },
-                    { id: "projects", label: "Projects" },
-                    { id: "skills", label: "Skills" },
-                    { id: "ecosystem", label: "Ecosystem" },
-                    { id: "certificates", label: "Certificates" },
-                    { id: "journal", label: "Journal" },
-                    { id: "contact", label: "Contact" },
-                    { id: "privacy", label: "Privacy" },
-                    { id: "terms", label: "Terms" }
-                  ].map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => navigateToTab(tab.id as any)}
-                      className={`transition-colors cursor-pointer ${
-                        activeTab === tab.id ? "text-purple-400 font-semibold" : "text-zinc-400 hover:text-white"
-                      }`}
-                    >
-                      {tab.label}
-                    </button>
-                  ))}
-                </nav>
-
-                {/* Actions */}
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setReadingMode(!readingMode)}
-                    className={`p-2 border rounded-xl transition-all cursor-pointer ${
-                      readingMode 
-                        ? "bg-orange-500/10 border-orange-500/30 text-orange-400 hover:bg-orange-500/20" 
-                        : "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white"
-                    }`}
-                    title="Toggle Eye-Care Reading Mode"
-                  >
-                    <BookOpen className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={toggleTheme}
-                    className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white rounded-xl transition-all cursor-pointer"
-                    title="Toggle System Visual Theme"
-                  >
-                    {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
-                  </button>
-                  <button
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                    className="p-2 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white border border-zinc-800 rounded-xl cursor-pointer"
-                    title="Return to top coordinate"
-                  >
-                    <ArrowUp className="w-4 h-4" />
-                  </button>
-                </div>
-
-              </div>
-
-              {/* PRINT ONLY SECTION */}
-              <div className="hidden print:block max-w-7xl mx-auto px-6 pt-8 mt-8 border-t border-zinc-800 text-black dark:text-white">
-                <h2 className="text-xl font-bold font-display">Sayam Mukherjee</h2>
-                <p className="text-sm font-mono mt-1 text-zinc-600 dark:text-zinc-400">AI & ML CSE undergraduate • Developer Portfolio</p>
-                <div className="mt-4 flex flex-col gap-2 text-sm text-zinc-800 dark:text-zinc-300">
-                  <p><strong>Email:</strong> {SAYAM_DATA.socials.email}</p>
-                  <p><strong>LinkedIn:</strong> {SAYAM_DATA.socials.linkedin}</p>
-                  <p><strong>GitHub:</strong> {SAYAM_DATA.socials.github}</p>
-                </div>
-                <p className="mt-6 text-sm leading-relaxed text-zinc-800 dark:text-zinc-300">{SAYAM_DATA.bio}</p>
-              </div>
-            </footer>
+            <SiteFooter
+              onNavigateTab={(tab) => navigateToTab(tab as any)}
+              activeTab={activeTab}
+              theme={theme}
+              toggleTheme={toggleTheme}
+            />
           )}
 
           {/* Floating AI Representative Bot & Modals */}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import LegalHeader from "./LegalHeader";
 import LegalTableOfContents, { TOCSection } from "./LegalTableOfContents";
 import LegalFooter from "./LegalFooter";
@@ -11,7 +11,7 @@ interface LegalLayoutProps {
   sections: TOCSection[];
   children: React.ReactNode;
   onNavigateHome?: () => void;
-  onNavigateTab?: (tab: "privacy" | "terms" | "contact") => void;
+  onNavigateTab?: (tab: "privacy" | "terms" | "contact" | "home") => void;
 }
 
 export const LegalLayout: React.FC<LegalLayoutProps> = ({
@@ -24,14 +24,11 @@ export const LegalLayout: React.FC<LegalLayoutProps> = ({
   onNavigateHome,
   onNavigateTab,
 }) => {
-  const [activeId, setActiveId] = useState<string>(sections[0]?.id || "");
-
-  // URL Hash support on mount & hashchange
+  // URL Hash support on mount & hashchange for direct linking
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace(/^#/, "");
       if (hash && sections.some((s) => s.id === hash)) {
-        setActiveId(hash);
         const el = document.getElementById(hash);
         if (el) {
           const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -46,7 +43,6 @@ export const LegalLayout: React.FC<LegalLayoutProps> = ({
   }, [sections]);
 
   const handleSelectSection = (id: string) => {
-    setActiveId(id);
     const el = document.getElementById(id);
     if (el) {
       const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -59,7 +55,7 @@ export const LegalLayout: React.FC<LegalLayoutProps> = ({
 
   return (
     <div className="w-full min-h-screen legal-document-shell select-text font-sans bg-[#F7F7F8] dark:bg-[#09090B] text-[#18181B] dark:text-[#F5F5F7] transition-colors duration-200">
-      <div className="w-full max-w-[1180px] mx-auto px-[max(20px,env(safe-area-inset-left))] sm:px-8 pt-6 sm:pt-10 pb-16">
+      <div className="w-full max-w-[780px] mx-auto px-[max(20px,env(safe-area-inset-left))] sm:px-6 pt-6 sm:pt-10 pb-16">
         {/* Dedicated Legal Header */}
         <LegalHeader
           eyebrow={eyebrow}
@@ -69,22 +65,18 @@ export const LegalLayout: React.FC<LegalLayoutProps> = ({
           onNavigateHome={onNavigateHome}
         />
 
-        {/* Two-column layout on Desktop, Single column on Mobile */}
-        <div className="grid grid-cols-1 lg:grid-cols-[240px_minmax(0,1fr)] gap-8 lg:gap-14 items-start mt-8 sm:mt-12">
-          {/* Left Column: Table of Contents */}
-          <LegalTableOfContents
-            sections={sections}
-            activeId={activeId}
-            onSelectSection={handleSelectSection}
-          />
+        {/* Stationary "On this page" directory (Not moveable, fully static within document flow) */}
+        <LegalTableOfContents
+          sections={sections}
+          onSelectSection={handleSelectSection}
+        />
 
-          {/* Right Column: Actual Document Body constrained to 780px */}
-          <article className="min-w-0 max-w-[780px] w-full space-y-6 sm:space-y-8">
-            {children}
-          </article>
-        </div>
+        {/* Actual Document Body constrained to 780px */}
+        <article className="min-w-0 w-full space-y-6 sm:space-y-8">
+          {children}
+        </article>
 
-        {/* Compact, Restrained Legal Footer */}
+        {/* Compact, Restrained Editorial Legal Footer */}
         <LegalFooter
           onNavigateHome={onNavigateHome}
           onNavigateTab={onNavigateTab}
