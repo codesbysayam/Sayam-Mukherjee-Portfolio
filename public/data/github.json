@@ -13,6 +13,24 @@
   },
   "repositories": [
     {
+      "id": 1346623047,
+      "name": "mausam",
+      "full_name": "codesbysayam/mausam",
+      "description": "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for everyone. 🌍 Covering diverse regions and cities across India with meaningful environmental insights. 💡 Making weather information easier to understand, explore and use in everyday decisions.",
+      "html_url": "https://github.com/codesbysayam/mausam",
+      "homepage": "https://mausamgovt.vercel.app",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-08-25T20:56:02Z",
+      "updated_at": "2026-09-19T17:55:30Z",
+      "pushed_at": "2026-09-19T17:55:26Z"
+    },
+    {
       "id": 1355576736,
       "name": "Sayam-Mukherjee-Portfolio",
       "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
@@ -27,8 +45,8 @@
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-19T10:55:42Z",
-      "pushed_at": "2026-09-19T10:55:37Z"
+      "updated_at": "2026-09-19T14:23:48Z",
+      "pushed_at": "2026-09-19T14:23:45Z"
     },
     {
       "id": 1368247830,
@@ -47,24 +65,6 @@
       "created_at": "2026-09-13T09:39:25Z",
       "updated_at": "2026-09-19T08:01:17Z",
       "pushed_at": "2026-09-19T08:01:13Z"
-    },
-    {
-      "id": 1346623047,
-      "name": "mausam",
-      "full_name": "codesbysayam/mausam",
-      "description": "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for everyone. 🌍 Covering diverse regions and cities across India with meaningful environmental insights. 💡 Making weather information easier to understand, explore and use in everyday decisions.",
-      "html_url": "https://github.com/codesbysayam/mausam",
-      "homepage": "https://mausamgovt.vercel.app",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-08-25T20:56:02Z",
-      "updated_at": "2026-09-18T21:40:01Z",
-      "pushed_at": "2026-09-18T21:39:58Z"
     },
     {
       "id": 1361090226,
@@ -352,6 +352,17 @@
     }
   ],
   "languages": {
+    "codesbysayam/mausam": {
+      "TypeScript": 4085875,
+      "Python": 84435,
+      "JavaScript": 46500,
+      "CSS": 45430,
+      "C": 31107,
+      "HTML": 26163,
+      "Jupyter Notebook": 14149,
+      "PLpgSQL": 3057,
+      "Makefile": 1358
+    },
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
       "TypeScript": 1066049,
       "CSS": 56974,
@@ -362,17 +373,6 @@
       "HTML": 2074
     },
     "codesbysayam/codesbysayam": {},
-    "codesbysayam/mausam": {
-      "TypeScript": 4050058,
-      "Python": 84435,
-      "JavaScript": 46500,
-      "CSS": 45007,
-      "C": 31107,
-      "HTML": 26163,
-      "Jupyter Notebook": 14149,
-      "PLpgSQL": 3057,
-      "Makefile": 1358
-    },
     "codesbysayam/Memory-in-Motion": {
       "TypeScript": 1320146,
       "CSS": 16449,
@@ -393,6 +393,6 @@
       "HTML": 1230
     }
   },
-  "syncedAt": "2026-09-19T14:23:44.220Z",
+  "syncedAt": "2026-09-19T17:59:40.933Z",
   "status": "ok"
 }
