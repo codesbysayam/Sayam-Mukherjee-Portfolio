@@ -13,6 +13,24 @@
   },
   "repositories": [
     {
+      "id": 1346623047,
+      "name": "mausam",
+      "full_name": "codesbysayam/mausam",
+      "description": "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for everyone. 🌍 Covering diverse regions and cities across India with meaningful environmental insights. 💡 Making weather information easier to understand, explore and use in everyday decisions.",
+      "html_url": "https://github.com/codesbysayam/mausam",
+      "homepage": "https://mausamgovt.vercel.app",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-08-25T20:56:02Z",
+      "updated_at": "2026-09-20T21:24:29Z",
+      "pushed_at": "2026-09-20T21:24:20Z"
+    },
+    {
       "id": 1355576736,
       "name": "Sayam-Mukherjee-Portfolio",
       "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
@@ -27,8 +45,8 @@
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-20T16:03:10Z",
-      "pushed_at": "2026-09-20T16:03:06Z"
+      "updated_at": "2026-09-20T18:46:13Z",
+      "pushed_at": "2026-09-20T18:46:10Z"
     },
     {
       "id": 1368247830,
@@ -47,24 +65,6 @@
       "created_at": "2026-09-13T09:39:25Z",
       "updated_at": "2026-09-20T08:33:06Z",
       "pushed_at": "2026-09-20T08:33:02Z"
-    },
-    {
-      "id": 1346623047,
-      "name": "mausam",
-      "full_name": "codesbysayam/mausam",
-      "description": "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for everyone. 🌍 Covering diverse regions and cities across India with meaningful environmental insights. 💡 Making weather information easier to understand, explore and use in everyday decisions.",
-      "html_url": "https://github.com/codesbysayam/mausam",
-      "homepage": "https://mausamgovt.vercel.app",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-08-25T20:56:02Z",
-      "updated_at": "2026-09-19T19:05:05Z",
-      "pushed_at": "2026-09-19T19:05:02Z"
     },
     {
       "id": 1361090226,
@@ -140,6 +140,34 @@
     }
   ],
   "events": [
+    {
+      "id": "21684907288",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam",
+      "created_at": "2026-09-20T21:24:21Z",
+      "public": true
+    },
+    {
+      "id": "21684385649",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam",
+      "created_at": "2026-09-20T21:14:33Z",
+      "public": true
+    },
+    {
+      "id": "21683226049",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam",
+      "created_at": "2026-09-20T20:53:20Z",
+      "public": true
+    },
+    {
+      "id": "21682307918",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam",
+      "created_at": "2026-09-20T20:36:07Z",
+      "public": true
+    },
     {
       "id": "21665903277",
       "type": "PushEvent",
@@ -321,37 +349,20 @@
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-09-13T16:45:15Z",
       "public": true
-    },
-    {
-      "id": "21150566900",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-09-13T15:32:53Z",
-      "public": true
-    },
-    {
-      "id": "21149812385",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-09-13T15:16:47Z",
-      "public": true
-    },
-    {
-      "id": "21149613838",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-09-13T15:12:20Z",
-      "public": true
-    },
-    {
-      "id": "21147634350",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-09-13T14:23:56Z",
-      "public": true
     }
   ],
   "languages": {
+    "codesbysayam/mausam": {
+      "TypeScript": 4185217,
+      "Python": 118579,
+      "JavaScript": 65917,
+      "CSS": 49500,
+      "HTML": 31258,
+      "C": 31107,
+      "Jupyter Notebook": 14149,
+      "PLpgSQL": 3057,
+      "Makefile": 1358
+    },
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
       "TypeScript": 1166233,
       "CSS": 57972,
@@ -362,17 +373,6 @@
       "HTML": 3036
     },
     "codesbysayam/codesbysayam": {},
-    "codesbysayam/mausam": {
-      "TypeScript": 4120013,
-      "Python": 84435,
-      "JavaScript": 46519,
-      "CSS": 45430,
-      "C": 31107,
-      "HTML": 26163,
-      "Jupyter Notebook": 14149,
-      "PLpgSQL": 3057,
-      "Makefile": 1358
-    },
     "codesbysayam/Memory-in-Motion": {
       "TypeScript": 1320146,
       "CSS": 16449,
@@ -393,6 +393,6 @@
       "HTML": 1230
     }
   },
-  "syncedAt": "2026-09-20T18:46:09.056Z",
+  "syncedAt": "2026-09-20T21:31:34.236Z",
   "status": "ok"
 }
