@@ -13,6 +13,42 @@
   },
   "repositories": [
     {
+      "id": 1355576736,
+      "name": "Sayam-Mukherjee-Portfolio",
+      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "homepage": "www.sayammukherjee.in",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-03T06:02:37Z",
+      "updated_at": "2026-09-21T15:15:10Z",
+      "pushed_at": "2026-09-21T15:15:06Z"
+    },
+    {
+      "id": 1361090226,
+      "name": "Memory-in-Motion",
+      "full_name": "codesbysayam/Memory-in-Motion",
+      "description": "demo",
+      "html_url": "https://github.com/codesbysayam/Memory-in-Motion",
+      "homepage": "https://memoryinmotion.vercel.app",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-08T07:59:51Z",
+      "updated_at": "2026-09-21T14:50:47Z",
+      "pushed_at": "2026-09-21T14:50:43Z"
+    },
+    {
       "id": 1368247830,
       "name": "codesbysayam",
       "full_name": "codesbysayam/codesbysayam",
@@ -31,24 +67,6 @@
       "pushed_at": "2026-09-21T08:53:38Z"
     },
     {
-      "id": 1355576736,
-      "name": "Sayam-Mukherjee-Portfolio",
-      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "homepage": "www.sayammukherjee.in",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-21T04:57:26Z",
-      "pushed_at": "2026-09-21T04:57:22Z"
-    },
-    {
       "id": 1346623047,
       "name": "mausam",
       "full_name": "codesbysayam/mausam",
@@ -65,24 +83,6 @@
       "created_at": "2026-08-25T20:56:02Z",
       "updated_at": "2026-09-20T21:33:51Z",
       "pushed_at": "2026-09-20T21:33:47Z"
-    },
-    {
-      "id": 1361090226,
-      "name": "Memory-in-Motion",
-      "full_name": "codesbysayam/Memory-in-Motion",
-      "description": "demo",
-      "html_url": "https://github.com/codesbysayam/Memory-in-Motion",
-      "homepage": "https://memoryinmotion.vercel.app",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-08T07:59:51Z",
-      "updated_at": "2026-09-18T16:34:58Z",
-      "pushed_at": "2026-09-18T16:34:53Z"
     },
     {
       "id": 1370345267,
@@ -140,6 +140,20 @@
     }
   ],
   "events": [
+    {
+      "id": "21754503405",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-09-21T15:15:07Z",
+      "public": true
+    },
+    {
+      "id": "21752205269",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Memory-in-Motion",
+      "created_at": "2026-09-21T14:50:44Z",
+      "public": true
+    },
     {
       "id": "21685401700",
       "type": "PushEvent",
@@ -335,26 +349,11 @@
       "repo": "codesbysayam/Memory-in-Motion",
       "created_at": "2026-09-15T19:32:53Z",
       "public": true
-    },
-    {
-      "id": "21226694707",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-09-15T20:17:48Z",
-      "public": true
-    },
-    {
-      "id": "21164217267",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam",
-      "created_at": "2026-09-13T19:25:25Z",
-      "public": true
     }
   ],
   "languages": {
-    "codesbysayam/codesbysayam": {},
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
-      "TypeScript": 1166233,
+      "TypeScript": 1175848,
       "CSS": 57972,
       "JavaScript": 12277,
       "C": 6359,
@@ -362,6 +361,13 @@
       "Jupyter Notebook": 5438,
       "HTML": 3036
     },
+    "codesbysayam/Memory-in-Motion": {
+      "TypeScript": 1440641,
+      "CSS": 16449,
+      "Python": 12367,
+      "HTML": 3089
+    },
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/mausam": {
       "TypeScript": 4226041,
       "Python": 118579,
@@ -372,11 +378,6 @@
       "Jupyter Notebook": 14149,
       "PLpgSQL": 3057,
       "Makefile": 1358
-    },
-    "codesbysayam/Memory-in-Motion": {
-      "TypeScript": 1320146,
-      "CSS": 16449,
-      "HTML": 1552
     },
     "codesbysayam/RouteLedger": {
       "TypeScript": 323332,
@@ -393,6 +394,6 @@
       "HTML": 1230
     }
   },
-  "syncedAt": "2026-09-21T10:41:16.165Z",
+  "syncedAt": "2026-09-21T17:02:04.921Z",
   "status": "ok"
 }
