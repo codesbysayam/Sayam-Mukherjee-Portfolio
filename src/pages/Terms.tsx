@@ -1,7 +1,8 @@
 import React from "react";
-import LegalLayout from "../components/legal/LegalLayout";
+import LegalDocumentLayout, {
+  TOCSection,
+} from "../components/legal/LegalDocumentLayout";
 import LegalSection from "../components/legal/LegalSection";
-import { TOCSection } from "../components/legal/LegalTableOfContents";
 
 interface TermsPageProps {
   onNavigateHome?: () => void;
@@ -13,7 +14,7 @@ const TERMS_SECTIONS: TOCSection[] = [
   { id: "acceptance-of-terms", number: "02", title: "Acceptance of Terms" },
   { id: "permitted-use", number: "03", title: "Permitted Website Use" },
   { id: "intellectual-property", number: "04", title: "Intellectual Property" },
-  { id: "portfolio-code", number: "05", title: "Portfolio Content & Code" },
+  { id: "portfolio-code", number: "05", title: "Portfolio Content & Open Source Code" },
   { id: "external-links", number: "06", title: "External Links" },
   { id: "user-submitted-info", number: "07", title: "User-Submitted Information" },
   { id: "availability-accuracy", number: "08", title: "Availability & Accuracy" },
@@ -30,10 +31,10 @@ export const Terms: React.FC<TermsPageProps> = ({
   onNavigateTab,
 }) => {
   return (
-    <LegalLayout
+    <LegalDocumentLayout
       eyebrow="LEGAL"
       title="Terms & Conditions"
-      lastUpdated="September 19, 2026"
+      lastUpdated="September 21, 2026"
       intro="These terms govern your access to and use of this personal developer portfolio website and its accompanying project resources."
       sections={TERMS_SECTIONS}
       onNavigateHome={onNavigateHome}
@@ -43,8 +44,8 @@ export const Terms: React.FC<TermsPageProps> = ({
       <LegalSection id="introduction" number="01" title="Introduction">
         <p>
           Welcome to Sayam Mukherjee's personal software engineering portfolio. These Terms &amp;
-          Conditions ("Terms") establish the terms and rules governing access to and use of this
-          website, including its content, demonstrations, and related materials.
+          Conditions ("Terms") establish the rules governing access to and use of this
+          website, including its content, project descriptions, demonstrations, and related materials.
         </p>
       </LegalSection>
 
@@ -63,13 +64,13 @@ export const Terms: React.FC<TermsPageProps> = ({
       <LegalSection id="permitted-use" number="03" title="Permitted Website Use">
         <p>
           You are welcome to browse website content, review project documentation, read articles,
-          explore interactive software samples, and contact the site owner for professional or
-          academic reasons.
+          explore interactive software samples, and contact the site owner for professional, academic,
+          or collaboration inquiries.
         </p>
         <p>
           When accessing this website, you agree not to:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-600 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
           <li>Attempt to disrupt, compromise, or impair the website's infrastructure, servers, or networks</li>
           <li>Circumvent security, rate limits, or access controls implemented on the website</li>
           <li>Scrape or extract website data at abusive volumes that degrade system performance for other visitors</li>
@@ -86,17 +87,17 @@ export const Terms: React.FC<TermsPageProps> = ({
           property laws.
         </p>
         <p>
-          Third-party trademarks, project logos, framework badges, and company names referenced on
+          Third-party trademarks, project logos, framework badges, and organization names referenced on
           this site belong to their respective owners and are used purely for nominative,
-          informational, and descriptive purposes.
+          informational, and descriptive identification.
         </p>
       </LegalSection>
 
-      {/* 05 Portfolio Content & Code */}
-      <LegalSection id="portfolio-code" number="05" title="Portfolio Content & Code">
+      {/* 05 Portfolio Content & Open Source Code */}
+      <LegalSection id="portfolio-code" number="05" title="Portfolio Content & Open Source Code">
         <p>
           Individual software engineering projects, algorithmic solutions, and repositories
-          highlighted on this portfolio are typically hosted publicly on GitHub.
+          highlighted on this portfolio are hosted publicly on GitHub.
         </p>
         <p>
           Where a specific repository provides an open-source license (such as MIT, Apache 2.0, or
@@ -115,17 +116,17 @@ export const Terms: React.FC<TermsPageProps> = ({
         <p>
           These links are provided solely for convenience and reference. Sayam Mukherjee has no
           control over third-party websites and accepts no responsibility for their content, accuracy,
-          or operational policies. Accessing external links is done at your own risk.
+          or operational policies. Accessing external links is done at your own discretion.
         </p>
       </LegalSection>
 
       {/* 07 User-Submitted Information */}
       <LegalSection id="user-submitted-info" number="07" title="User-Submitted Information">
         <p>
-          When submitting messages through the contact form or sending emails, you agree that your
+          When submitting messages through the contact form or sending direct emails, you agree that your
           submissions:
         </p>
-        <ul className="list-disc pl-6 space-y-1 text-zinc-600 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
           <li>Do not contain malicious scripts, viruses, or harmful payloads</li>
           <li>Do not infringe on third-party intellectual property or confidentiality agreements</li>
           <li>Do not include unsolicited commercial spam, unlawful threats, or harassing messages</li>
@@ -138,7 +139,7 @@ export const Terms: React.FC<TermsPageProps> = ({
           This website is a personal developer portfolio provided on an "as is" and "as available"
           basis. While reasonable efforts are made to maintain accurate project descriptions, metrics,
           and live demonstrations, no guarantee is given that the site will always be uninterrupted,
-          error-free, or entirely up to date.
+          error-free, or completely current.
         </p>
         <p>
           Content, featured projects, and site capabilities may be updated, modified, or removed at
@@ -195,9 +196,8 @@ export const Terms: React.FC<TermsPageProps> = ({
       {/* 13 Governing Law */}
       <LegalSection id="governing-law" number="13" title="Governing Law">
         <p>
-          These terms are intended to be interpreted in accordance with applicable law. Any specific
-          governing-law or jurisdiction provision should be finalized by the site owner with
-          appropriate legal advice.
+          These terms are intended to be interpreted in accordance with applicable laws governing
+          personal informational websites and intellectual property.
         </p>
       </LegalSection>
 
@@ -210,7 +210,7 @@ export const Terms: React.FC<TermsPageProps> = ({
 
         <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/40">
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-mono">
               General Inquiries &amp; Questions
             </div>
             <a
@@ -222,8 +222,8 @@ export const Terms: React.FC<TermsPageProps> = ({
           </div>
 
           <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/40">
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-              Formal, Legal &amp; Serious Matters
+            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-mono">
+              Formal, Legal &amp; Collaboration
             </div>
             <a
               href="mailto:wrickbusiness@gmail.com"
@@ -234,7 +234,7 @@ export const Terms: React.FC<TermsPageProps> = ({
           </div>
         </div>
       </LegalSection>
-    </LegalLayout>
+    </LegalDocumentLayout>
   );
 };
 

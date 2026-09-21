@@ -15,7 +15,7 @@ export interface RouteSEO {
   twitterDescription: string;
 }
 
-export const CANONICAL_DOMAIN = "https://sayammukherjee.com";
+export const CANONICAL_DOMAIN = "https://sayammukherjee.in";
 
 export const SEO_CONFIG: Record<string, RouteSEO> = {
   home: {
@@ -127,6 +127,17 @@ export const SEO_CONFIG: Record<string, RouteSEO> = {
     ogType: "website",
     twitterTitle: "Terms & Conditions — Sayam Mukherjee",
     twitterDescription: "Read the terms and conditions governing use of Sayam Mukherjee's personal portfolio website."
+  },
+  "404": {
+    title: "Page Not Found (404) — Sayam Mukherjee",
+    description: "The requested route was not found on Sayam Mukherjee's engineering portfolio.",
+    canonicalPath: "/404",
+    robots: "noindex, nofollow",
+    ogTitle: "404 · Page Not Found — Sayam Mukherjee",
+    ogDescription: "The requested route does not exist. Explore projects or return to the portfolio home.",
+    ogType: "website",
+    twitterTitle: "404 · Page Not Found",
+    twitterDescription: "Requested page not found on Sayam Mukherjee's portfolio."
   },
   notFound: {
     title: "Page Not Found (404) — Sayam Mukherjee",

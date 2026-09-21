@@ -24,6 +24,7 @@ app.use((_req, res, next) => {
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
   res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
   res.setHeader("Content-Security-Policy", "upgrade-insecure-requests");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=()");
   next();
 });
 
@@ -291,8 +292,8 @@ app.post("/api/portfolio-data/update", (req, res) => {
 // ==========================================
 
 // Owner passkey stored server-side via CERTIFICATE_ADMIN_PASSKEY environment variable
-const OWNER_PASSKEY = process.env.CERTIFICATE_ADMIN_PASSKEY || "adminwrick@1506";
-const SESSION_SECRET = process.env.SESSION_SECRET || (OWNER_PASSKEY + "_cert_vault_secure_hmac_2026");
+const OWNER_PASSKEY = process.env.CERTIFICATE_ADMIN_PASSKEY;
+const SESSION_SECRET = process.env.SESSION_SECRET || (OWNER_PASSKEY ? OWNER_PASSKEY + "_cert_vault_secure_hmac_2026" : "sayam_vault_secure_hmac_production_key_2026");
 const SESSION_COOKIE_NAME = "vault_session";
 const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
 
@@ -484,6 +485,14 @@ app.post("/api/admin/auth", (req, res) => {
     });
   }
 
+  if (!OWNER_PASSKEY) {
+    return res.status(503).json({
+      success: false,
+      error: "AUTH_UNAVAILABLE",
+      message: "Certificate vault authentication is not configured on server (CERTIFICATE_ADMIN_PASSKEY is required)."
+    });
+  }
+
   // Timing safe passkey validation against server-side secret
   const inputBuffer = Buffer.from(passkey.trim());
   const targetBuffer = Buffer.from(OWNER_PASSKEY.trim());
@@ -508,7 +517,6 @@ app.post("/api/admin/auth", (req, res) => {
   return res.json({
     success: true,
     message: "ACCESS GRANTED",
-    token, // Provided for Authorization Bearer header usage
     role: "owner"
   });
 });
@@ -532,6 +540,14 @@ app.post("/api/auth/verify-vault-key", (req, res) => {
       success: false,
       error: "INVALID PASSKEY",
       message: "Access denied. Please try again."
+    });
+  }
+
+  if (!OWNER_PASSKEY) {
+    return res.status(503).json({
+      success: false,
+      error: "AUTH_UNAVAILABLE",
+      message: "Certificate vault authentication is not configured on server (CERTIFICATE_ADMIN_PASSKEY is required)."
     });
   }
 
@@ -1128,7 +1144,11 @@ app.post("/api/admin/login", (req, res) => {
 
   // Secure login credentials
   const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "wrickbusiness@gmail.com";
-  const ADMIN_PASS = process.env.ADMIN_PASSWORD || process.env.CERTIFICATE_ADMIN_PASSKEY || "adminwrick@1506";
+  const ADMIN_PASS = process.env.ADMIN_PASSWORD || process.env.CERTIFICATE_ADMIN_PASSKEY;
+
+  if (!ADMIN_PASS) {
+    return res.status(503).json({ error: "Admin authentication is not configured on the server." });
+  }
 
   if (email.toLowerCase() === ADMIN_EMAIL.toLowerCase() && password === ADMIN_PASS) {
     // Generate simulated JWT / Session Token

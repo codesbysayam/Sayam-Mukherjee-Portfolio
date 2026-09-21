@@ -69,7 +69,7 @@ interface PortfolioContextType {
   // Vault Owner State & Controls
   isVaultOwner: boolean;
   vaultToken: string;
-  setVaultOwnerSession: (token: string) => void;
+  setVaultOwnerSession: (token?: string) => void;
   clearVaultOwnerSession: () => void;
   isOwnerAccessModalOpen: boolean;
   setIsOwnerAccessModalOpen: (open: boolean) => void;
@@ -116,21 +116,15 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [isOwnerAccessModalOpen, setIsOwnerAccessModalOpen] = useState(false);
   const [isVaultAdminMenuOpen, setIsVaultAdminMenuOpen] = useState(false);
 
-  const setVaultOwnerSession = (token: string) => {
+  const setVaultOwnerSession = (token?: string) => {
     setIsVaultOwner(true);
-    setVaultToken(token);
-    try {
-      sessionStorage.setItem("vault_token", token);
-    } catch {}
+    if (token) setVaultToken(token);
   };
 
   const clearVaultOwnerSession = () => {
     setIsVaultOwner(false);
     setVaultToken("");
-    try {
-      sessionStorage.removeItem("vault_token");
-    } catch {}
-    // Also call server logout
+    // Also call server logout to clear HttpOnly cookie
     fetch("/api/admin/logout", { method: "POST", credentials: "include" }).catch(() => {});
   };
 
@@ -163,39 +157,21 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
     fetchData();
 
-    // Check Vault session from sessionStorage and server session
+    // Check Vault session via HttpOnly cookie
     try {
-      const savedVaultToken = sessionStorage.getItem("vault_token");
-      if (savedVaultToken) {
-        setVaultToken(savedVaultToken);
-        setIsVaultOwner(true);
-      }
       fetch("/api/admin/session", {
         credentials: "include",
-        headers: savedVaultToken ? { Authorization: `Bearer ${savedVaultToken}` } : {},
       })
         .then((res) => res.json())
         .then((data) => {
           if (data && data.authenticated) {
             setIsVaultOwner(true);
-            const token = data.token || savedVaultToken || "";
-            setVaultToken(token);
-            if (token) {
-              try {
-                sessionStorage.setItem("vault_token", token);
-              } catch {}
-            }
+          } else {
+            setIsVaultOwner(false);
           }
         })
         .catch(() => {});
     } catch {}
-
-    // Load credentials & theme preference from localStorage
-    const savedToken = localStorage.getItem("sayam_admin_token");
-    if (savedToken) {
-      setAdminToken(savedToken);
-      setIsAdmin(true);
-    }
 
     const savedTheme = (localStorage.getItem("sayam_theme") || localStorage.getItem("theme")) as "dark" | "light" | null;
     if (savedTheme) {
@@ -297,7 +273,6 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setAdminToken(tempToken);
       setIsAdmin(true);
       setOtpRequired(false);
-      localStorage.setItem("sayam_admin_token", tempToken);
       return true;
     }
     return false;
@@ -307,7 +282,6 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     setAdminToken(null);
     setIsAdmin(false);
     setOtpRequired(false);
-    localStorage.removeItem("sayam_admin_token");
   };
 
   // Contact form post

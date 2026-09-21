@@ -7,7 +7,7 @@ import { useBodyScrollLock } from "../../hooks/useBodyScrollLock";
 interface OwnerAccessModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: (token: string) => void;
+  onSuccess: (token?: string) => void;
 }
 
 export default function OwnerAccessModal({
@@ -54,16 +54,8 @@ export default function OwnerAccessModal({
 
       if (res.ok && data.success) {
         setSuccess(true);
-        const token = data.token || "";
-        if (token) {
-          try {
-            sessionStorage.setItem("vault_token", token);
-          } catch {
-            // Ignore if sessionStorage restricted
-          }
-        }
         setTimeout(() => {
-          onSuccess(token);
+          onSuccess();
           onClose();
           setPasskey("");
           setSuccess(false);

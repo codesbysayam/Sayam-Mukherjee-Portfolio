@@ -3,4 +3,4 @@ Allow: /
 Disallow: /admin
 Disallow: /api/
 
-Sitemap: https://sayammukherjee.com/sitemap.xml
+Sitemap: https://sayammukherjee.in/sitemap.xml

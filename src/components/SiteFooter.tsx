@@ -51,7 +51,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
           <p className="text-xs text-zinc-500 dark:text-zinc-400 tracking-normal font-sans">
             AI &amp; ML CSE Undergraduate · Developer Portfolio
           </p>
-          <p className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 mt-0.5">
+          <p className="text-xs font-mono text-zinc-400 dark:text-zinc-500 mt-0.5">
             © 2026 Sayam Mukherjee. All rights reserved.
           </p>
         </div>

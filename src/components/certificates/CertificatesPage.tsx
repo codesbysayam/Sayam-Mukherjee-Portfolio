@@ -67,47 +67,29 @@ export default function CertificatesPage() {
 
   // Owner Authentication State (harmonized with PortfolioContext)
   const [localIsOwner, setLocalIsOwner] = useState(false);
-  const [localVaultToken, setLocalVaultToken] = useState("");
   const [localIsOwnerModalOpen, setLocalIsOwnerModalOpen] = useState(false);
   const [localIsAdminMenuOpen, setLocalIsAdminMenuOpen] = useState(false);
 
   const isOwner = Boolean(contextIsVaultOwner || localIsOwner);
-  const vaultToken = contextVaultToken || localVaultToken || (typeof window !== "undefined" ? sessionStorage.getItem("vault_token") || "" : "");
   const isOwnerAccessModalOpen = localIsOwnerModalOpen || Boolean(contextIsOwnerAccessModalOpen);
   const isAdminMenuOpen = localIsAdminMenuOpen || Boolean(contextIsVaultAdminMenuOpen);
 
-  // Check existing session status on mount via /api/admin/session
+  // Check existing session status on mount via /api/admin/session (HttpOnly cookie)
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const savedToken = typeof window !== "undefined" ? sessionStorage.getItem("vault_token") : null;
-        const headers: Record<string, string> = {};
-        if (savedToken) headers["Authorization"] = `Bearer ${savedToken}`;
-
         const res = await fetch("/api/admin/session", {
           credentials: "include",
-          headers,
         }).catch(() => null);
 
         if (res && res.ok) {
           const data = await res.json();
           if (data.authenticated) {
             setLocalIsOwner(true);
-            const activeToken = data.token || savedToken || "";
-            setLocalVaultToken(activeToken);
-            setVaultOwnerSession?.(activeToken);
-            if (activeToken) {
-              try {
-                sessionStorage.setItem("vault_token", activeToken);
-              } catch {}
-            }
+            setVaultOwnerSession?.();
           } else {
             setLocalIsOwner(false);
-            setLocalVaultToken("");
             clearVaultOwnerSession?.();
-            try {
-              sessionStorage.removeItem("vault_token");
-            } catch {}
           }
         }
       } catch (err) {
@@ -255,24 +237,15 @@ export default function CertificatesPage() {
 
   const handleLockVault = async () => {
     try {
-      const headers: Record<string, string> = {};
-      const token = vaultToken || (typeof window !== "undefined" ? sessionStorage.getItem("vault_token") : null);
-      if (token) headers["Authorization"] = `Bearer ${token}`;
-
       await fetch("/api/admin/logout", {
         method: "POST",
         credentials: "include",
-        headers,
       }).catch(() => null);
     } catch (err) {
       console.error("Logout request error:", err);
     } finally {
       setLocalIsOwner(false);
-      setLocalVaultToken("");
       clearVaultOwnerSession?.();
-      try {
-        sessionStorage.removeItem("vault_token");
-      } catch {}
     }
   };
 
@@ -290,27 +263,16 @@ export default function CertificatesPage() {
   };
 
   const handleConfirmDelete = async (id: string) => {
-    const headers: Record<string, string> = {};
-    const token = vaultToken || (typeof window !== "undefined" ? sessionStorage.getItem("vault_token") : null);
-    if (token) {
-      headers["Authorization"] = `Bearer ${token}`;
-    }
-
     const res = await fetch(`/api/certificates/${id}`, {
       method: "DELETE",
       credentials: "include",
-      headers,
     });
 
     if (res.ok) {
       await fetchData();
     } else if (res.status === 401) {
       setLocalIsOwner(false);
-      setLocalVaultToken("");
       clearVaultOwnerSession?.();
-      try {
-        sessionStorage.removeItem("vault_token");
-      } catch {}
       throw new Error("Session expired. Please unlock owner access again.");
     } else {
       const data = await res.json().catch(() => ({}));
@@ -320,28 +282,19 @@ export default function CertificatesPage() {
 
   const handleToggleFeatured = async (cert: Certificate) => {
     try {
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
-      const token = vaultToken || (typeof window !== "undefined" ? sessionStorage.getItem("vault_token") : null);
-      if (token) {
-        headers["Authorization"] = `Bearer ${token}`;
-      }
       const res = await fetch(`/api/certificates/${cert.id}`, {
         method: "PATCH",
         credentials: "include",
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({ featured: !cert.featured }),
       });
       if (res.ok) {
         await fetchData();
       } else if (res.status === 401) {
         setLocalIsOwner(false);
-        setLocalVaultToken("");
         clearVaultOwnerSession?.();
-        try {
-          sessionStorage.removeItem("vault_token");
-        } catch {}
         setLocalIsOwnerModalOpen(true);
         setContextIsOwnerAccessModalOpen?.(true);
       }
@@ -792,7 +745,6 @@ export default function CertificatesPage() {
         }}
         onSaved={fetchData}
         editingCertificate={editingCertificate}
-        vaultToken={vaultToken}
       />
 
       {/* Owner Access Passkey Authentication Modal */}
@@ -802,10 +754,9 @@ export default function CertificatesPage() {
           setLocalIsOwnerModalOpen(false);
           setContextIsOwnerAccessModalOpen?.(false);
         }}
-        onSuccess={(token) => {
+        onSuccess={() => {
           setLocalIsOwner(true);
-          setLocalVaultToken(token);
-          setVaultOwnerSession?.(token);
+          setVaultOwnerSession?.();
         }}
       />
 

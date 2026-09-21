@@ -37,6 +37,7 @@ const CertificatesPage = lazy(() => import("./components/certificates/Certificat
 const CredentialsHomePreview = lazy(() => import("./components/certificates/CredentialsHomePreview"));
 import PrivacyPage from "./pages/Privacy";
 import TermsPage from "./pages/Terms";
+import NotFound from "./pages/NotFound";
 import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary";
 import SiteFooter from "./components/SiteFooter";
 const CookieConsent = lazy(() => import("./components/CookieConsent"));
@@ -271,13 +272,14 @@ function AppContent() {
     };
   }, []);
 
-  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms";
+  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms" | "404";
 
   const getInitialTab = (): TabType => {
     if (typeof window === "undefined") return "home";
     const rawPath = window.location.pathname.toLowerCase();
     const path = rawPath.replace(/\/+$/, "");
 
+    if (!path || path === "" || path === "/" || path === "/home") return "home";
     if (path === "/privacy" || path.startsWith("/privacy/")) return "privacy";
     if (path === "/terms" || path.startsWith("/terms/")) return "terms";
     if (path === "/certificates" || path === "/certificate" || path.startsWith("/certificates/") || path.startsWith("/certificate/")) return "certificates";
@@ -287,6 +289,7 @@ function AppContent() {
     if (path === "/ecosystem" || path.startsWith("/ecosystem/")) return "ecosystem";
     if (path === "/journal" || path === "/blog" || path.startsWith("/journal/") || path.startsWith("/blog/")) return "journal";
     if (path === "/contact" || path.startsWith("/contact/")) return "contact";
+    if (path === "/404" || path.startsWith("/404/")) return "404";
 
     const hash = window.location.hash.toLowerCase().replace("#", "").replace(/\/+$/, "");
     if (hash === "privacy") return "privacy";
@@ -298,8 +301,10 @@ function AppContent() {
     if (hash === "ecosystem") return "ecosystem";
     if (hash === "journal") return "journal";
     if (hash === "contact") return "contact";
+    if (hash === "404") return "404";
 
-    return "home";
+    // Any unrecognized path routes to the custom 404 page
+    return "404";
   };
 
   // Categorical Page Router State with direct URL resolution
@@ -315,7 +320,7 @@ function AppContent() {
 
   const navigateToTab = (tab: TabType) => {
     setActiveTab(tab);
-    const targetPath = tab === "home" ? "/" : `/${tab}`;
+    const targetPath = tab === "home" ? "/" : tab === "404" ? "/404" : `/${tab}`;
     if (window.location.pathname !== targetPath && window.location.pathname !== "/admin") {
       window.history.pushState(null, "", targetPath);
     }
@@ -694,12 +699,20 @@ function AppContent() {
                 {/* Raycast Quick Search Pill */}
                 <button 
                   onClick={() => setIsCommandMenuOpen(true)}
-                  className="hidden sm:flex items-center gap-2 px-2.5 py-1.5 bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-lg text-xs text-zinc-400 hover:text-zinc-200 transition-all cursor-pointer select-none"
+                  className={`hidden sm:flex items-center gap-2 min-h-[40px] px-2.5 py-1.5 border rounded-lg text-xs transition-all cursor-pointer select-none ${
+                    theme === "dark"
+                      ? "bg-zinc-900/80 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200"
+                      : "bg-white hover:bg-zinc-100 border-zinc-200 hover:border-zinc-300 text-zinc-600 hover:text-zinc-950 shadow-xs"
+                  }`}
                   title="Search Workspace (Ctrl+K or ⌘K)"
                 >
                   <Search className="w-3.5 h-3.5" />
                   <span className="hidden xl:inline text-xs">Search</span>
-                  <span className="text-xs font-mono bg-zinc-800/80 border border-zinc-750 px-1.5 py-0.5 rounded text-zinc-400 uppercase">⌘K</span>
+                  <span className={`text-xs font-mono border px-1.5 py-0.5 rounded uppercase ${
+                    theme === "dark"
+                      ? "bg-zinc-800/80 border-zinc-750 text-zinc-400"
+                      : "bg-zinc-100 border-zinc-250 text-zinc-600"
+                  }`}>⌘K</span>
                 </button>
 
                 {/* Live IST Clock */}
@@ -710,11 +723,15 @@ function AppContent() {
                 {/* Visual Theme Toggle */}
                 <button
                   onClick={toggleTheme}
-                  className="p-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white rounded-lg transition-all cursor-pointer shrink-0"
+                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center border rounded-lg transition-all cursor-pointer shrink-0 ${
+                    theme === "dark"
+                      ? "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white"
+                      : "bg-white hover:bg-zinc-100 border-zinc-200 hover:border-zinc-300 text-zinc-600 hover:text-zinc-950 shadow-xs"
+                  }`}
                   title="Toggle Visual Theme"
                   aria-label="Toggle Theme"
                 >
-                  {theme === "dark" ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-400" />}
+                  {theme === "dark" ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-500" />}
                 </button>
 
                 {/* Resume Button */}
@@ -723,27 +740,25 @@ function AppContent() {
                     triggerConfetti();
                     setIsResumeModalOpen(true);
                   }}
-                  className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-900/90 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0"
+                  className={`hidden sm:inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 border text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0 ${
+                    theme === "dark"
+                      ? "bg-zinc-900/90 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-200"
+                      : "bg-white hover:bg-zinc-100 border-zinc-200 hover:border-zinc-300 text-zinc-800 shadow-xs"
+                  }`}
                   title="View & Download Resume"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Resume</span>
                 </button>
 
-                {/* Contact Button (Shown on mobile/tablet when desktop capsule nav is hidden) */}
-                <button
-                  onClick={() => navigateToTab("contact")}
-                  className="hidden sm:inline-flex lg:hidden items-center gap-1.5 px-3.5 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold rounded-xl shadow-sm transition-all duration-200 cursor-pointer shrink-0 border border-purple-500"
-                  title="Contact Sayam"
-                >
-                  <Mail className="w-3.5 h-3.5" />
-                  <span>Contact</span>
-                </button>
-
                 {/* Mobile / Tablet Menu Toggle */}
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className="lg:hidden p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white cursor-pointer shrink-0"
+                  className={`lg:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center border rounded-lg cursor-pointer shrink-0 transition-all ${
+                    theme === "dark"
+                      ? "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white"
+                      : "bg-white border-zinc-200 text-zinc-600 hover:text-zinc-950 shadow-xs"
+                  }`}
                   aria-label="Toggle navigation menu"
                 >
                   {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -759,9 +774,13 @@ function AppContent() {
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.2 }}
-                  className="lg:hidden border-t border-zinc-800 bg-[#0c0c0f] py-4 px-6 shadow-2xl overflow-hidden"
+                  className={`lg:hidden border-t py-4 px-5 sm:px-6 shadow-2xl overflow-hidden transition-colors ${
+                    theme === "dark"
+                      ? "border-zinc-800 bg-[#0c0c0f]"
+                      : "border-zinc-200 bg-white"
+                  }`}
                 >
-                  <div className="flex flex-col gap-2.5 text-sm font-medium text-zinc-300">
+                  <div className="flex flex-col gap-1 text-sm font-medium">
                     {[
                       { id: "home", label: "Home" },
                       { id: "about", label: "About" },
@@ -771,30 +790,43 @@ function AppContent() {
                       { id: "certificates", label: "Certificates" },
                       { id: "journal", label: "Journal" },
                       { id: "contact", label: "Contact" }
-                    ].map((tab) => (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          navigateToTab(tab.id as any);
-                          setIsMenuOpen(false);
-                        }}
-                        aria-current={activeTab === tab.id ? "page" : undefined}
-                        className={`text-left py-2 px-3 rounded-lg hover:bg-zinc-900 transition-colors flex items-center justify-between ${
-                          activeTab === tab.id ? "bg-purple-500/10 text-purple-400 font-bold border border-purple-500/20" : "text-zinc-400"
-                        }`}
-                      >
-                        <span>{tab.label}</span>
-                        {activeTab === tab.id && <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />}
-                      </button>
-                    ))}
+                    ].map((tab) => {
+                      const isActive = activeTab === tab.id;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => {
+                            navigateToTab(tab.id as any);
+                            setIsMenuOpen(false);
+                          }}
+                          aria-current={isActive ? "page" : undefined}
+                          className={`text-left min-h-[44px] py-2 px-3 rounded-lg transition-colors flex items-center justify-between cursor-pointer ${
+                            isActive
+                              ? "bg-purple-500/10 text-purple-600 dark:text-purple-400 font-bold border border-purple-500/20"
+                              : theme === "dark"
+                                ? "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
+                                : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
+                          }`}
+                        >
+                          <span>{tab.label}</span>
+                          {isActive && <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
+                        </button>
+                      );
+                    })}
                     
-                    <div className="flex items-center gap-2 pt-3 border-t border-zinc-900">
+                    <div className={`flex items-center gap-2 pt-3 mt-1 border-t ${
+                      theme === "dark" ? "border-zinc-800" : "border-zinc-200"
+                    }`}>
                       <button
                         onClick={() => {
                           setIsMenuOpen(false);
                           setIsCommandMenuOpen(true);
                         }}
-                        className="flex-1 flex items-center justify-center gap-2 py-2 px-3 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-300"
+                        className={`flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border rounded-lg text-xs cursor-pointer ${
+                          theme === "dark"
+                            ? "bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800"
+                            : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+                        }`}
                       >
                         <Search className="w-3.5 h-3.5" />
                         <span>Search (⌘K)</span>
@@ -805,7 +837,11 @@ function AppContent() {
                           setIsMenuOpen(false);
                           setIsResumeModalOpen(true);
                         }}
-                        className="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-zinc-900 border border-zinc-800 rounded-lg text-xs font-semibold text-zinc-300"
+                        className={`flex-1 min-h-[44px] flex items-center justify-center gap-1.5 py-2 px-3 border rounded-lg text-xs font-semibold cursor-pointer ${
+                          theme === "dark"
+                            ? "bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800"
+                            : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+                        }`}
                       >
                         <FileText className="w-3.5 h-3.5" />
                         <span>Resume</span>
@@ -815,10 +851,14 @@ function AppContent() {
                           toggleTheme();
                           setIsMenuOpen(false);
                         }}
-                        className="p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300"
+                        className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center border rounded-lg cursor-pointer ${
+                          theme === "dark"
+                            ? "bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800"
+                            : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+                        }`}
                         aria-label="Toggle visual theme"
                       >
-                        {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-400" />}
+                        {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
                       </button>
                     </div>
                   </div>
@@ -881,6 +921,11 @@ function AppContent() {
                       onNavigateTab={(tab) => navigateToTab(tab as TabType)}
                     />
                   </LegalRouteErrorBoundary>
+                )}
+
+                {/* Instantaneous Custom 404 View */}
+                {activeTab === "404" && (
+                  <NotFound onNavigateTab={(tab) => navigateToTab(tab as TabType)} />
                 )}
 
                 <Suspense fallback={

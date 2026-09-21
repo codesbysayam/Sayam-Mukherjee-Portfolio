@@ -13,7 +13,7 @@ interface AddCertificateModalProps {
   onClose: () => void;
   onSaved: () => void;
   editingCertificate?: Certificate | null;
-  vaultToken: string;
+  vaultToken?: string;
 }
 
 const CATEGORIES: Exclude<CertificateCategory, "ALL">[] = [
@@ -157,17 +157,12 @@ export default function AddCertificateModal({
     reader.onload = async () => {
       const base64Data = reader.result as string;
       try {
-        const headers: Record<string, string> = {
-          "Content-Type": "application/json",
-        };
-        const effectiveToken = vaultToken || (typeof window !== "undefined" ? sessionStorage.getItem("vault_token") : null);
-        if (effectiveToken) {
-          headers["Authorization"] = `Bearer ${effectiveToken}`;
-        }
         const uploadRes = await fetch("/api/certificates/upload", {
           method: "POST",
           credentials: "include",
-          headers,
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             fileName: file.name,
             fileType: file.type,
@@ -230,18 +225,12 @@ export default function AddCertificateModal({
         featured: Boolean(formData.featured),
       };
 
-      const headers: Record<string, string> = {
-        "Content-Type": "application/json",
-      };
-      const effectiveToken = vaultToken || (typeof window !== "undefined" ? sessionStorage.getItem("vault_token") : null);
-      if (effectiveToken) {
-        headers["Authorization"] = `Bearer ${effectiveToken}`;
-      }
-
       const res = await fetch(url, {
         method,
         credentials: "include",
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(payload),
       });
 
