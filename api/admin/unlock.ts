@@ -6,8 +6,9 @@ import {
   checkRateLimit, 
   recordFailedAttempt, 
   clearRateLimit, 
-  getClientIp 
-} from "../../server/session.ts";
+  getClientIp,
+  applyCorsAndSecurityHeaders
+} from "../_lib/session.ts";
 
 interface CustomRequest extends IncomingMessage {
   body?: any;
@@ -16,9 +17,7 @@ interface CustomRequest extends IncomingMessage {
 
 export default async function handler(req: CustomRequest, res: ServerResponse) {
   // CORS & Security Headers
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
+  applyCorsAndSecurityHeaders(req as any, res as any);
 
   // Handle preflight
   if (req.method === "OPTIONS") {

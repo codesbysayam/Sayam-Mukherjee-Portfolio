@@ -30,6 +30,9 @@ class CertificatesStore {
   }
 
   private save(): void {
+    if (process.env.VERCEL || process.env.VERCEL_ENV) {
+      return;
+    }
     try {
       let existingData: any = {};
       if (fs.existsSync(DB_FILE_PATH)) {

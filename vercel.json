@@ -33,20 +33,8 @@
   ],
   "rewrites": [
     {
-      "source": "/api/admin/unlock",
-      "destination": "/api/admin/unlock.ts"
-    },
-    {
-      "source": "/api/admin/session",
-      "destination": "/api/admin/session.ts"
-    },
-    {
-      "source": "/api/admin/logout",
-      "destination": "/api/admin/logout.ts"
-    },
-    {
-      "source": "/api/admin/auth",
-      "destination": "/api/admin/auth.ts"
+      "source": "/api/admin/:match*",
+      "destination": "/api/admin/:match*"
     },
     {
       "source": "/api/(.*)",

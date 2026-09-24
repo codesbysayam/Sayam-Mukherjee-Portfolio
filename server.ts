@@ -1714,8 +1714,7 @@ app.post("/api/gemini/chat", async (req, res) => {
 });
 
 async function run() {
-  if (process.env.VERCEL) {
-    console.log("Running in Vercel environment - skipping server startup");
+  if (process.env.VERCEL || process.env.VERCEL_ENV || process.env.AWS_LAMBDA_FUNCTION_NAME) {
     return;
   }
 
@@ -1736,9 +1735,16 @@ async function run() {
     app.use(vite.middlewares);
   } else {
     const distPath = path.join(process.cwd(), 'dist');
-    app.use(express.static(distPath));
+    const indexHtml = path.join(distPath, 'index.html');
+    if (fs.existsSync(distPath)) {
+      app.use(express.static(distPath));
+    }
     app.get('*', (req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+      if (fs.existsSync(indexHtml)) {
+        res.sendFile(indexHtml);
+      } else {
+        res.status(404).json({ error: "Route not found", path: req.path });
+      }
     });
   }
 
@@ -1747,4 +1753,6 @@ async function run() {
   });
 }
 
-run();
+if (!process.env.VERCEL && !process.env.VERCEL_ENV && !process.env.AWS_LAMBDA_FUNCTION_NAME) {
+  run();
+}

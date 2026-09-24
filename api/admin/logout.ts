@@ -1,10 +1,8 @@
 import type { IncomingMessage, ServerResponse } from "http";
-import { clearSessionCookie } from "../../server/session.ts";
+import { clearSessionCookie, applyCorsAndSecurityHeaders } from "../_lib/session.ts";
 
 export default async function handler(req: IncomingMessage, res: ServerResponse) {
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("X-Content-Type-Options", "nosniff");
-  res.setHeader("X-Frame-Options", "DENY");
+  applyCorsAndSecurityHeaders(req as any, res as any);
 
   if (req.method === "OPTIONS") {
     res.statusCode = 204;
