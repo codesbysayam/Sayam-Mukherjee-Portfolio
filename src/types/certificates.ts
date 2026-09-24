@@ -15,15 +15,22 @@ export interface Certificate {
   issuer: string;
   category: Exclude<CertificateCategory, 'ALL'>;
   description?: string;
+  fullDescription?: string;
   issueDate: string; // e.g. "2026-02", "2025", "2024"
   expiryDate?: string;
   credentialId?: string;
   credentialUrl?: string;
   skills: string[];
+  tags?: string[];
   imageUrl?: string;
   pdfUrl?: string;
   verificationStatus: VerificationStatus;
   featured: boolean;
+  event?: string;
+  platform?: string;
+  project?: string;
+  theme?: string;
+  pathway?: string;
   createdAt: string;
   updatedAt: string;
 }

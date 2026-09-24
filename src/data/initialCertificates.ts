@@ -27,6 +27,37 @@ import { Certificate } from "../types/certificates";
  */
 export const INITIAL_CERTIFICATES: Certificate[] = [
   {
+    id: "dataforge-2026-memory-in-motion",
+    title: "DataForge 2026 — Memory in Motion",
+    issuer: "Kharagpur Data Analytics Group (KDAG), IIT Kharagpur",
+    event: "DataForge 2026",
+    platform: "Unstop",
+    category: "COMPETITIONS",
+    project: "Memory in Motion",
+    theme: "In-Context Learning with Recurrent Memory",
+    pathway: "Explain the Frontier",
+    issueDate: "2026",
+    description: "An interactive exploration of in-context learning with recurrent memory, demonstrating how fixed-size state can retain task-relevant information while compression introduces interference and forgetting.",
+    fullDescription: "Memory in Motion is an interactive research-exhibit project exploring in-context learning through recurrent memory. It demonstrates how a fixed-size recurrent state can carry task-relevant information forward without growing a token-by-token memory, while also exposing the trade-off: compressing information into a bounded state can introduce interference and forgetting.",
+    credentialUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
+    skills: [
+      "AI Research",
+      "Machine Learning",
+      "In-Context Learning",
+      "Recurrent Memory"
+    ],
+    tags: [
+      "AI Research",
+      "Machine Learning",
+      "In-Context Learning",
+      "Recurrent Memory"
+    ],
+    verificationStatus: "LINK AVAILABLE",
+    featured: true,
+    createdAt: "2026-02-15T00:00:00.000Z",
+    updatedAt: "2026-02-15T00:00:00.000Z"
+  },
+  {
     id: "comp-toycathon-2021",
     title: "National Finalist — Toycathon",
     issuer: "Ministry of Education & AICTE, Govt. of India",

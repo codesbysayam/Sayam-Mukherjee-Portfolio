@@ -48,13 +48,13 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
           </p>
         </div>
 
-        {/* Dedicated Vault Gateway Button */}
+        {/* Dedicated Certificates Gateway Button */}
         <button
           onClick={handleNavigate}
           className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/40 hover:border-purple-500/60 text-xs font-mono font-semibold transition-all shrink-0 cursor-pointer shadow-lg shadow-purple-950/40 group"
         >
           <Award className="w-4 h-4 text-purple-400" />
-          <span>OPEN CERTIFICATE VAULT</span>
+          <span>VIEW ALL CERTIFICATES</span>
           <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
         </button>
       </div>
