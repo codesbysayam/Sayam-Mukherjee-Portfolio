@@ -144,14 +144,6 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
             cookie consent choices so you are not repeatedly prompted on every page load.
           </li>
           <li>
-            <strong>Authentication Session (HttpOnly Cookie):</strong> For administrative functions
-            (such as the site owner updating verified certificates), an encrypted, HttpOnly{" "}
-            <code className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-xs font-mono text-zinc-800 dark:text-zinc-200">
-              vault_session
-            </code>{" "}
-            cookie is used. Regular visitors browsing public pages do not receive this cookie.
-          </li>
-          <li>
             <strong>Static GitHub Snapshots:</strong> Repository metrics and commit counts are
             periodically retrieved via background GitHub Actions and bundled in static JSON snapshots,
             eliminating browser-side tracking or excessive external API requests.

@@ -3,26 +3,18 @@ import { Certificate } from "../../types/certificates";
 import { usePortfolio } from "../../context/PortfolioContext";
 import { 
   Award, ExternalLink, Eye, FileText, CheckCircle2, 
-  Link as LinkIcon, ShieldAlert, Star, Edit3, Trash2,
+  Link as LinkIcon, ShieldAlert, Star,
   Calendar, Hash, Sparkles, Download
 } from "lucide-react";
 
 interface CertificateCardProps {
   certificate: Certificate;
   onView: (cert: Certificate) => void;
-  onEdit?: (cert: Certificate) => void;
-  onDelete?: (id: string) => void;
-  onToggleFeatured?: (cert: Certificate) => void;
-  isOwner?: boolean;
 }
 
 export default function CertificateCard({
   certificate,
   onView,
-  onEdit,
-  onDelete,
-  onToggleFeatured,
-  isOwner = false,
 }: CertificateCardProps) {
   const { theme } = usePortfolio();
   const isLight = theme === "light";
@@ -387,18 +379,18 @@ export default function CertificateCard({
             <span>Inspect</span>
           </button>
 
-          {/* Verify Link Button (if credentialUrl exists) */}
+          {/* View Credential Link Button (if credentialUrl exists) */}
           {credentialUrl && (
             <a
-              id={`btn-verify-${id}`}
+              id={`btn-credential-${id}`}
               href={credentialUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-primary !py-2 !px-3 !text-xs flex-1 inline-flex items-center justify-center gap-1.5 cursor-pointer"
-              title="Verify credential on official registry"
+              title="View Credential"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>Verify</span>
+              <span>View Credential</span>
             </a>
           )}
 
@@ -417,53 +409,6 @@ export default function CertificateCard({
             </a>
           )}
         </div>
-
-        {/* Owner Management Controls (Visible only when authenticated) */}
-        {isOwner && (
-          <div className={`flex items-center justify-between gap-2 pt-2 border-t text-xs ${isLight ? "border-slate-200" : "border-zinc-850"}`}>
-            <button
-              onClick={() => onToggleFeatured?.(certificate)}
-              className={`flex items-center gap-1 text-[11px] font-mono px-2 py-1 rounded border transition-colors cursor-pointer ${
-                featured 
-                  ? isLight
-                    ? "bg-amber-50 text-amber-700 border-amber-300 font-bold"
-                    : "bg-amber-950/40 text-amber-300 border-amber-800/40 font-bold"
-                  : isLight
-                    ? "bg-white text-slate-600 border-slate-200 hover:text-slate-900"
-                    : "bg-zinc-900 text-zinc-400 border-zinc-800 hover:text-zinc-200"
-              }`}
-              title={featured ? "Unfeature credential" : "Feature on homepage spotlight"}
-            >
-              <Star className="w-3 h-3 fill-current" />
-              <span>{featured ? "Featured" : "Feature"}</span>
-            </button>
-
-            <div className="flex items-center gap-1.5">
-              <button
-                onClick={() => onEdit?.(certificate)}
-                className={`p-1.5 rounded border transition-colors cursor-pointer ${
-                  isLight
-                    ? "text-slate-700 hover:text-purple-700 bg-white hover:bg-slate-100 border-slate-300"
-                    : "text-zinc-400 hover:text-white bg-zinc-900 hover:bg-zinc-800 border-zinc-800"
-                }`}
-                title="Edit Certificate Details"
-              >
-                <Edit3 className="w-3.5 h-3.5" />
-              </button>
-              <button
-                onClick={() => onDelete?.(id)}
-                className={`p-1.5 rounded border transition-colors cursor-pointer ${
-                  isLight
-                    ? "text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 border-red-200"
-                    : "text-red-400 hover:text-red-300 bg-red-950/30 hover:bg-red-950/60 border-red-900/40"
-                }`}
-                title="Delete Certificate"
-              >
-                <Trash2 className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-        )}
       </div>
     </div>
   );

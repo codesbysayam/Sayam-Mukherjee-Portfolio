@@ -1,7 +1,30 @@
 import { Certificate } from "../types/certificates";
 
-// Verified initial milestones (Logically separated: Achievements and Competitions)
-// Formal CERTIFICATIONS starts at 0 items as verified (no fabricated certificates)
+/**
+ * ============================================================================
+ * CERTIFICATES & CREDENTIALS ARCHIVE
+ * ============================================================================
+ * 
+ * Manually manage your certificate and credential entries here.
+ * Each entry supports the following fields:
+ * 
+ *   - id: string                (Required: Unique slug identifier)
+ *   - title: string             (Required: Name of certificate / credential / honour)
+ *   - issuer: string            (Required: Organization or institution that issued it)
+ *   - category: string          (Required: "CERTIFICATIONS" | "ACHIEVEMENTS" | "COMPETITIONS" | "COURSES" | "WORKSHOPS" | "OTHER")
+ *   - issueDate: string         (Required: e.g. "2026", "2025-06")
+ *   - description?: string      (Optional: Brief description of the achievement)
+ *   - credentialId?: string     (Optional: Unique certificate or roll identifier)
+ *   - credentialUrl?: string    (Optional: Authentic verification or credential URL)
+ *   - imageUrl?: string         (Optional: Direct image URL for certificate preview)
+ *   - pdfUrl?: string           (Optional: Direct PDF document URL)
+ *   - skills: string[]          (Relevant competencies and skills demonstrated)
+ *   - verificationStatus: string ("VERIFIED" | "LINK AVAILABLE" | "NO VERIFICATION LINK")
+ *   - featured: boolean         (Set to true to highlight in homepage spotlight)
+ *   - createdAt: string         (ISO timestamp)
+ *   - updatedAt: string         (ISO timestamp)
+ * ============================================================================
+ */
 export const INITIAL_CERTIFICATES: Certificate[] = [
   {
     id: "comp-toycathon-2021",

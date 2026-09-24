@@ -46,7 +46,7 @@ export const PROFILE_DATA: ProfileData = {
   degree: "B.Tech in Computer Science & Engineering",
   specialization: "Artificial Intelligence & Machine Learning",
   semester: "2nd Year, 3rd Semester",
-  cgpa: "2nd Year (3rd Semester)",
+  cgpa: "9.06",
   location: "Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)",
   bio: "2nd Year (3rd Semester) Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar (hometown: Hooghly, West Bengal). Focused on building real-world software, exploring computer vision and algorithmic foundations, and writing clean, scalable systems.",
   routine: {

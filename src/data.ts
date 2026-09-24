@@ -1,3 +1,7 @@
+import { RESUME_URL } from './config/links';
+
+export { RESUME_URL };
+
 export interface Project {
   id: string;
   title: string;
@@ -67,7 +71,7 @@ export const SAYAM_DATA = {
   ],
   bio: 'I am a 2nd Year (3rd Semester) Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar (hometown: Hooghly, West Bengal), passionate about building scalable software, intelligent systems, and meaningful digital experiences. I enjoy transforming ideas into real-world products through continuous learning, disciplined execution, and creative problem-solving.',
   stats: {
-    cgpa: '2nd Year (3rd Semester)',
+    cgpa: '9.06',
     university: 'Kalinga Institute of Industrial Technology, Bhubaneswar',
     semester: '2nd Year, 3rd Semester',
     location: 'Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)',
@@ -83,7 +87,8 @@ export const SAYAM_DATA = {
     instagram: 'https://www.instagram.com/_.wrick._/',
     youtube: 'https://youtube.com/@technicalaz',
     fiverr: 'https://www.fiverr.com/',
-    email: 'wrickbusiness@gmail.com'
+    email: 'wrickbusiness@gmail.com',
+    resume: RESUME_URL
   },
   projects: [
     {

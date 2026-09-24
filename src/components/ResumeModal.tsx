@@ -1,6 +1,7 @@
 import { X, Printer, Download, Mail, Phone, MapPin, Calendar, GraduationCap, Briefcase, Award, Sparkles, Languages, Check } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
+import { RESUME_URL } from "../config/links";
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -13,7 +14,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   if (!isOpen) return null;
 
   const handleDownload = () => {
-    window.open("https://above-violet-me5e9swh.edgeone.dev/25155271_SayamMukherjee.pdf", "_blank");
+    window.open(RESUME_URL, "_blank", "noopener,noreferrer");
   };
 
   // Resume details
@@ -36,8 +37,8 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         degree: "B.Tech - Computer Science & Engineering",
         period: "2025-2029",
         institution: "Kalinga Institute of Industrial Technology, Bhubaneswar",
-        scoreLabel: "Status",
-        score: "2nd Year, 3rd Semester"
+        scoreLabel: "CGPA",
+        score: "9.06"
       },
       {
         degree: "Senior Secondary (12th - CBSE)",

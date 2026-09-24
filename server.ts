@@ -8,19 +8,6 @@ import { GoogleGenAI } from "@google/genai";
 import AdmZip from "adm-zip";
 import { SAYAM_DATA } from "./src/data.ts";
 import { certificatesStore } from "./server/certificatesStore.ts";
-import {
-  getAdminPasskey,
-  validatePasskey,
-  generateSessionToken,
-  verifySessionToken,
-  extractToken,
-  createSessionCookie,
-  clearSessionCookie,
-  checkRateLimit,
-  recordFailedAttempt,
-  clearRateLimit,
-  getClientIp,
-} from "./server/session.ts";
 
 dotenv.config();
 
@@ -301,123 +288,10 @@ app.post("/api/portfolio-data/update", (req, res) => {
 });
 
 // ==========================================
-// CERTIFICATE VAULT & OWNER AUTHENTICATION
+// CERTIFICATES & CREDENTIALS PUBLIC API
 // ==========================================
 
-// Middleware: require owner authentication for sensitive mutations
-function requireOwnerSession(req: express.Request, res: express.Response, next: express.NextFunction) {
-  const token = extractToken(req.headers.cookie, req.headers.authorization, req.headers["x-vault-session"] as string);
-  if (!verifySessionToken(token)) {
-    return res.status(401).json({
-      ok: false,
-      error: "UNAUTHORIZED",
-      message: "SESSION EXPIRED. Please authenticate again."
-    });
-  }
-  next();
-}
-
-// 1. POST /api/admin/unlock - Validate passkey & create authenticated session
-const handleUnlock = (req: express.Request, res: express.Response) => {
-  const ip = getClientIp(req.headers, req.socket.remoteAddress);
-
-  // Rate limiting check
-  const rateLimit = checkRateLimit(ip);
-  if (!rateLimit.allowed) {
-    return res.status(429).json({
-      ok: false,
-      error: "Too many failed attempts. Security cooldown active. Please wait a few minutes before trying again."
-    });
-  }
-
-  const { passkey } = req.body || {};
-  const result = validatePasskey(passkey);
-
-  if (!result.ok) {
-    recordFailedAttempt(ip);
-    return res.status(result.status).json({
-      ok: false,
-      error: result.error || "Invalid credentials"
-    });
-  }
-
-  // Clear failed attempt tracking on successful login
-  clearRateLimit(ip);
-
-  // Generate secure signed session token and set HttpOnly cookie
-  const token = generateSessionToken();
-  res.setHeader("Set-Cookie", createSessionCookie(token));
-
-  return res.status(200).json({
-    ok: true,
-    success: true,
-    message: "ACCESS GRANTED",
-    role: "owner"
-  });
-};
-
-app.post("/api/admin/unlock", handleUnlock);
-app.post("/api/admin/auth", handleUnlock);
-app.post("/api/auth/verify-vault-key", (req, res) => {
-  const ip = getClientIp(req.headers, req.socket.remoteAddress);
-  const rateLimit = checkRateLimit(ip);
-  if (!rateLimit.allowed) {
-    return res.status(429).json({
-      ok: false,
-      error: "Too many failed attempts. Security cooldown active. Please wait a few minutes before trying again."
-    });
-  }
-
-  const { passkey } = req.body || {};
-  const result = validatePasskey(passkey);
-
-  if (!result.ok) {
-    recordFailedAttempt(ip);
-    return res.status(result.status).json({
-      ok: false,
-      error: result.error || "Invalid credentials"
-    });
-  }
-
-  clearRateLimit(ip);
-  const token = generateSessionToken();
-  res.setHeader("Set-Cookie", createSessionCookie(token));
-
-  return res.status(200).json({
-    ok: true,
-    success: true,
-    message: "ACCESS GRANTED",
-    token,
-    role: "owner"
-  });
-});
-
-// 2. GET /api/admin/session - Check if owner session is valid
-app.get("/api/admin/session", (req, res) => {
-  const token = extractToken(req.headers.cookie, req.headers.authorization, req.headers["x-vault-session"] as string);
-  const authenticated = verifySessionToken(token);
-  if (authenticated) {
-    return res.status(200).json({
-      authenticated: true,
-      role: "owner"
-    });
-  }
-  return res.status(200).json({
-    authenticated: false
-  });
-});
-
-// 3. POST /api/admin/logout - Invalidate session & clear cookie
-app.post("/api/admin/logout", (_req, res) => {
-  res.setHeader("Set-Cookie", clearSessionCookie());
-  return res.status(200).json({
-    ok: true,
-    success: true,
-    message: "Logged out"
-  });
-});
-
-// 2. Fetch all certificates with filtering
+// 1. Fetch all certificates with filtering
 app.get("/api/certificates", (req, res) => {
   try {
     const { category, search, issuer, skill, year, featured } = req.query;
@@ -458,7 +332,7 @@ app.get("/api/certificates/storage-status", (req, res) => {
   }
 });
 
-// 5. Fetch single certificate by ID
+// 4. Fetch single certificate by ID
 app.get("/api/certificates/:id", (req, res) => {
   try {
     const cert = certificatesStore.getById(req.params.id);
@@ -469,182 +343,6 @@ app.get("/api/certificates/:id", (req, res) => {
   } catch (err: any) {
     console.error(`GET /api/certificates/${req.params.id} error:`, err);
     res.status(500).json({ error: "Failed to fetch certificate", details: err.message });
-  }
-});
-
-// 6. Create new certificate (Owner auth required)
-app.post("/api/certificates", requireOwnerSession, (req, res) => {
-  const { title, issuer, category, issueDate, description, expiryDate, credentialId, credentialUrl, skills, imageUrl, pdfUrl, featured } = req.body;
-
-  if (!title || !issuer || !category || !issueDate) {
-    return res.status(400).json({ error: "Title, issuer, category, and issueDate are required fields." });
-  }
-
-  // Determine honest verification status based on provided information
-  let verificationStatus: "VERIFIED" | "LINK AVAILABLE" | "NO VERIFICATION LINK" = "NO VERIFICATION LINK";
-  if (credentialUrl && credentialUrl.trim().length > 0) {
-    verificationStatus = "LINK AVAILABLE";
-  }
-  if (req.body.verificationStatus === "VERIFIED" && (credentialUrl || credentialId)) {
-    verificationStatus = "VERIFIED";
-  }
-
-  try {
-    const newCert = certificatesStore.create({
-      title: title.trim(),
-      issuer: issuer.trim(),
-      category,
-      issueDate: issueDate.trim(),
-      description: description ? description.trim() : undefined,
-      expiryDate: expiryDate ? expiryDate.trim() : undefined,
-      credentialId: credentialId ? credentialId.trim() : undefined,
-      credentialUrl: credentialUrl ? credentialUrl.trim() : undefined,
-      skills: Array.isArray(skills) ? skills : typeof skills === "string" ? skills.split(",").map((s: string) => s.trim()).filter(Boolean) : [],
-      imageUrl: imageUrl ? imageUrl.trim() : undefined,
-      pdfUrl: pdfUrl ? pdfUrl.trim() : undefined,
-      verificationStatus,
-      featured: Boolean(featured)
-    });
-
-    res.status(201).json({ success: true, certificate: newCert });
-  } catch (err: any) {
-    console.error("POST /api/certificates error:", err);
-    res.status(500).json({ error: "Failed to create certificate", details: err.message });
-  }
-});
-
-// 7. Update certificate (Owner auth required)
-app.put("/api/certificates/:id", requireOwnerSession, (req, res) => {
-  try {
-    const updated = certificatesStore.update(req.params.id, req.body);
-    if (!updated) {
-      return res.status(404).json({ error: "Certificate not found" });
-    }
-    res.json({ success: true, certificate: updated });
-  } catch (err: any) {
-    console.error(`PUT /api/certificates/${req.params.id} error:`, err);
-    res.status(500).json({ error: "Failed to update certificate", details: err.message });
-  }
-});
-
-app.patch("/api/certificates/:id", requireOwnerSession, (req, res) => {
-  try {
-    const updated = certificatesStore.update(req.params.id, req.body);
-    if (!updated) {
-      return res.status(404).json({ error: "Certificate not found" });
-    }
-    res.json({ success: true, certificate: updated });
-  } catch (err: any) {
-    console.error(`PATCH /api/certificates/${req.params.id} error:`, err);
-    res.status(500).json({ error: "Failed to patch certificate", details: err.message });
-  }
-});
-
-// 8. Delete certificate (Owner auth required)
-app.delete("/api/certificates/:id", requireOwnerSession, (req, res) => {
-  try {
-    const deleted = certificatesStore.delete(req.params.id);
-    if (!deleted) {
-      return res.status(404).json({ error: "Certificate not found or already deleted" });
-    }
-    res.json({ success: true, message: "Certificate successfully removed" });
-  } catch (err: any) {
-    console.error(`DELETE /api/certificates/${req.params.id} error:`, err);
-    res.status(500).json({ error: "Failed to delete certificate", details: err.message });
-  }
-});
-
-// 9. Upload certificate file (Object Storage architecture with strict server-side validation)
-app.post("/api/certificates/upload", requireOwnerSession, (req, res) => {
-  const { fileName, fileType, fileData, year, issuer, title } = req.body;
-  
-  if (!fileName || !fileData) {
-    return res.status(400).json({ error: "Missing fileName or fileData payload" });
-  }
-
-  // Server-side file extension validation
-  const ext = path.extname(fileName).toLowerCase();
-  const ALLOWED_EXTS = [".png", ".jpg", ".jpeg", ".webp", ".pdf"];
-  if (!ALLOWED_EXTS.includes(ext)) {
-    return res.status(400).json({
-      error: "INVALID_FILE_EXTENSION",
-      message: `File extension '${ext}' is not permitted. Only PNG, JPG, JPEG, WEBP, and PDF files are allowed.`
-    });
-  }
-
-  // Server-side MIME type validation
-  const ALLOWED_MIMES = ["image/png", "image/jpeg", "image/webp", "application/pdf"];
-  if (fileType && !ALLOWED_MIMES.includes(fileType.toLowerCase())) {
-    return res.status(400).json({
-      error: "INVALID_MIME_TYPE",
-      message: `MIME type '${fileType}' is not supported. Allowed formats: PNG, JPG, WEBP, PDF.`
-    });
-  }
-
-  // Server-side file size validation (max 10MB)
-  const MAX_SIZE_BYTES = 10 * 1024 * 1024;
-  const base64Data = fileData.includes(",") ? fileData.split(",")[1] : fileData;
-  const estimatedSizeBytes = Math.ceil((base64Data.length * 3) / 4);
-  if (estimatedSizeBytes > MAX_SIZE_BYTES) {
-    return res.status(400).json({
-      error: "FILE_TOO_LARGE",
-      message: `File exceeds the maximum allowed size of 10MB (file size: ${(estimatedSizeBytes / (1024 * 1024)).toFixed(1)}MB).`
-    });
-  }
-
-  // Check if external cloud object storage (Supabase or Vercel Blob or AWS S3) is configured
-  const hasCloudStorage = Boolean(
-    (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) ||
-    process.env.BLOB_READ_WRITE_TOKEN ||
-    process.env.AWS_S3_BUCKET
-  );
-
-  if (!hasCloudStorage) {
-    // Explicitly do NOT fake successful uploads or store permanently on ephemeral Vercel container filesystem
-    return res.status(503).json({
-      success: false,
-      error: "STORAGE_NOT_CONFIGURED",
-      message: "Cloud Object Storage is not configured on this deployment. To enable binary uploads, configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (or BLOB_READ_WRITE_TOKEN) in environment variables. You can provide an authentic direct Image/PDF URL (Cloudinary, GitHub Raw, Google Drive, or Imgur) in the form instead."
-    });
-  }
-
-  // If cloud storage is configured, upload to storage bucket
-  try {
-    const cleanIssuer = (issuer || "org").toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const cleanTitle = (title || "credential").toLowerCase().replace(/[^a-z0-9]+/g, "-");
-    const targetYear = year || new Date().getFullYear().toString();
-    const objectKey = `certificates/${targetYear}/${cleanIssuer}-${cleanTitle}-${Date.now()}${ext}`;
-
-    return res.json({
-      success: true,
-      url: `https://storage.example.com/${objectKey}`,
-      key: objectKey
-    });
-  } catch (err: any) {
-    return res.status(500).json({ error: "Upload failed", details: err.message });
-  }
-});
-
-// 10. Verify credential URL
-app.post("/api/certificates/verify", (req, res) => {
-  const { credentialUrl } = req.body;
-  if (!credentialUrl || typeof credentialUrl !== "string") {
-    return res.status(400).json({ valid: false, message: "Invalid URL provided" });
-  }
-
-  try {
-    const parsed = new URL(credentialUrl);
-    if (parsed.protocol !== "http:" && parsed.protocol !== "https:") {
-      return res.status(400).json({ valid: false, message: "URL must use HTTP or HTTPS" });
-    }
-    return res.json({ 
-      valid: true, 
-      host: parsed.hostname, 
-      status: "LINK AVAILABLE",
-      message: "Credential URL conforms to verified external registry standards."
-    });
-  } catch {
-    return res.status(400).json({ valid: false, message: "Malformed credential URL" });
   }
 });
 
@@ -959,7 +657,7 @@ app.post("/api/admin/login", (req, res) => {
 
   // Secure login credentials
   const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "wrickbusiness@gmail.com";
-  const ADMIN_PASS = process.env.ADMIN_PASSWORD || process.env.CERTIFICATE_ADMIN_PASSKEY;
+  const ADMIN_PASS = process.env.ADMIN_PASSWORD;
 
   if (!ADMIN_PASS) {
     return res.status(503).json({ error: "Admin authentication is not configured on the server." });
@@ -1711,6 +1409,11 @@ app.post("/api/gemini/chat", async (req, res) => {
       details: error.message || error 
     });
   }
+});
+
+// Unmatched API endpoint 404 handler (prevents falling through to SPA HTML)
+app.all("/api/*", (req, res) => {
+  res.status(404).json({ error: "Endpoint not found", path: req.path });
 });
 
 async function run() {

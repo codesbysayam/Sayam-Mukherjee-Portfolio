@@ -4,52 +4,21 @@ import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 import { usePortfolio } from "../../context/PortfolioContext";
 import CertificateCard from "./CertificateCard";
 import CertificateViewerModal from "./CertificateViewerModal";
-import AddCertificateModal from "./AddCertificateModal";
-import OwnerAccessModal from "./OwnerAccessModal";
-import VaultAdminMenuModal from "./VaultAdminMenuModal";
-import DeleteConfirmationModal from "./DeleteConfirmationModal";
 import { 
-  Award, Search, Filter, Plus, Lock, Unlock, RotateCcw, 
-  Sparkles, CheckCircle2, ShieldCheck, Trophy, Layers, BookOpen, 
-  Calendar, KeyRound, AlertCircle, X, ChevronDown, Check,
-  SlidersHorizontal, ArrowUpDown
+  Award, Search, RotateCcw, 
+  CheckCircle2, Trophy, Layers, 
+  X, ChevronDown,
+  ArrowUpDown
 } from "lucide-react";
 
 export default function CertificatesPage() {
-  const { 
-    theme,
-    isVaultOwner: contextIsVaultOwner,
-    vaultToken: contextVaultToken,
-    setVaultOwnerSession,
-    clearVaultOwnerSession,
-    isOwnerAccessModalOpen: contextIsOwnerAccessModalOpen,
-    setIsOwnerAccessModalOpen: setContextIsOwnerAccessModalOpen,
-    isVaultAdminMenuOpen: contextIsVaultAdminMenuOpen,
-    setIsVaultAdminMenuOpen: setContextIsVaultAdminMenuOpen,
-  } = usePortfolio();
+  const { theme } = usePortfolio();
   const isLight = theme === "light";
 
-  // Resilient Initial Data with Local Cache and Fallback
+  // Initial Data from clean local archive, with optional background sync
   const [certificates, setCertificates] = useState<Certificate[]>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const cached = localStorage.getItem("sayam_cached_certificates");
-        if (cached) {
-          const parsed = JSON.parse(cached);
-          if (Array.isArray(parsed) && parsed.length > 0) return parsed;
-        }
-      } catch {}
-    }
     return INITIAL_CERTIFICATES;
   });
-
-  const [stats, setStats] = useState<CertificateStats>(() => ({
-    total: INITIAL_CERTIFICATES.length,
-    technical: INITIAL_CERTIFICATES.filter(c => c.category === "CERTIFICATIONS").length,
-    competitions: INITIAL_CERTIFICATES.filter(c => c.category === "COMPETITIONS").length,
-    achievements: INITIAL_CERTIFICATES.filter(c => c.category === "ACHIEVEMENTS").length,
-  }));
-  const [loading, setLoading] = useState(false);
 
   // Filters State
   const [selectedCategory, setSelectedCategory] = useState<CertificateCategory>("ALL");
@@ -59,78 +28,31 @@ export default function CertificatesPage() {
   const [selectedSkill, setSelectedSkill] = useState<string>("ALL");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "title">("newest");
 
-  // Modals & Viewer State
+  // Modal State for inspecting certificates
   const [viewingCertificate, setViewingCertificate] = useState<Certificate | null>(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [editingCertificate, setEditingCertificate] = useState<Certificate | null>(null);
-  const [deletingCert, setDeletingCert] = useState<Certificate | null>(null);
 
-  // Owner Authentication State (harmonized with PortfolioContext)
-  const [localIsOwner, setLocalIsOwner] = useState(false);
-  const [localIsOwnerModalOpen, setLocalIsOwnerModalOpen] = useState(false);
-  const [localIsAdminMenuOpen, setLocalIsAdminMenuOpen] = useState(false);
-
-  const isOwner = Boolean(contextIsVaultOwner || localIsOwner);
-  const isOwnerAccessModalOpen = localIsOwnerModalOpen || Boolean(contextIsOwnerAccessModalOpen);
-  const isAdminMenuOpen = localIsAdminMenuOpen || Boolean(contextIsVaultAdminMenuOpen);
-
-  // Check existing session status on mount via /api/admin/session (HttpOnly cookie)
+  // Background sync if /api/certificates is available
   useEffect(() => {
-    const checkSession = async () => {
-      try {
-        const res = await fetch("/api/admin/session", {
-          credentials: "include",
-        }).catch(() => null);
-
-        if (res && res.ok) {
-          const data = await res.json();
-          if (data.authenticated) {
-            setLocalIsOwner(true);
-            setVaultOwnerSession?.();
-          } else {
-            setLocalIsOwner(false);
-            clearVaultOwnerSession?.();
-          }
+    fetch("/api/certificates")
+      .then((res) => {
+        if (res.ok) return res.json();
+        return null;
+      })
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          setCertificates(data);
         }
-      } catch (err) {
-        console.warn("Session verification check notice:", err);
-      }
-    };
-    checkSession();
+      })
+      .catch(() => {});
   }, []);
 
-  // Fetch certificates and stats from server
-  const fetchData = async () => {
-    try {
-      const [certsRes, statsRes] = await Promise.all([
-        fetch("/api/certificates").catch(() => null),
-        fetch("/api/certificates/stats").catch(() => null),
-      ]);
-      if (certsRes && certsRes.ok) {
-        const certsData = await certsRes.json();
-        if (Array.isArray(certsData) && certsData.length > 0) {
-          setCertificates(certsData);
-          try {
-            localStorage.setItem("sayam_cached_certificates", JSON.stringify(certsData));
-          } catch {}
-        }
-      }
-      if (statsRes && statsRes.ok) {
-        const statsData = await statsRes.json();
-        if (statsData && typeof statsData.total === "number") {
-          setStats(statsData);
-        }
-      }
-    } catch (err) {
-      console.warn("Certificates sync notice:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // Reactive Stats derived directly from current certificate data
+  const stats: CertificateStats = useMemo(() => ({
+    total: certificates.length,
+    technical: certificates.filter((c) => c.category === "CERTIFICATIONS").length,
+    competitions: certificates.filter((c) => c.category === "COMPETITIONS").length,
+    achievements: certificates.filter((c) => c.category === "ACHIEVEMENTS").length,
+  }), [certificates]);
 
   // Extract unique filter options from data
   const availableYears = useMemo(() => {
@@ -150,16 +72,6 @@ export default function CertificatesPage() {
       if (c.issuer) issuers.add(c.issuer);
     });
     return Array.from(issuers).sort();
-  }, [certificates]);
-
-  const availableSkills = useMemo(() => {
-    const skills = new Set<string>();
-    certificates.forEach((c) => {
-      if (Array.isArray(c.skills)) {
-        c.skills.forEach((s) => skills.add(s));
-      }
-    });
-    return Array.from(skills).sort();
   }, [certificates]);
 
   // Category Counts
@@ -235,74 +147,6 @@ export default function CertificatesPage() {
     setSearchQuery("");
   };
 
-  const handleLockVault = async () => {
-    try {
-      await fetch("/api/admin/logout", {
-        method: "POST",
-        credentials: "include",
-      }).catch(() => null);
-    } catch (err) {
-      console.error("Logout request error:", err);
-    } finally {
-      setLocalIsOwner(false);
-      clearVaultOwnerSession?.();
-    }
-  };
-
-  // Card Operations
-  const handleEdit = (cert: Certificate) => {
-    setEditingCertificate(cert);
-    setIsAddModalOpen(true);
-  };
-
-  const handleDeleteClick = (id: string) => {
-    const cert = certificates.find((c) => c.id === id);
-    if (cert) {
-      setDeletingCert(cert);
-    }
-  };
-
-  const handleConfirmDelete = async (id: string) => {
-    const res = await fetch(`/api/certificates/${id}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-
-    if (res.ok) {
-      await fetchData();
-    } else if (res.status === 401) {
-      setLocalIsOwner(false);
-      clearVaultOwnerSession?.();
-      throw new Error("Session expired. Please unlock owner access again.");
-    } else {
-      const data = await res.json().catch(() => ({}));
-      throw new Error(data.message || data.error || "Failed to remove certificate.");
-    }
-  };
-
-  const handleToggleFeatured = async (cert: Certificate) => {
-    try {
-      const res = await fetch(`/api/certificates/${cert.id}`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ featured: !cert.featured }),
-      });
-      if (res.ok) {
-        await fetchData();
-      } else if (res.status === 401) {
-        setLocalIsOwner(false);
-        clearVaultOwnerSession?.();
-        setLocalIsOwnerModalOpen(true);
-        setContextIsOwnerAccessModalOpen?.(true);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   const CATEGORIES: CertificateCategory[] = [
     "ALL",
     "CERTIFICATIONS",
@@ -314,7 +158,7 @@ export default function CertificatesPage() {
   ];
 
   return (
-    <div className="space-y-6 sm:space-y-8 font-sans pb-16" id="certificates-vault-page">
+    <div className="space-y-6 sm:space-y-8 font-sans pb-16" id="certificates-page">
       {/* 1. COMPACT EDITORIAL HERO (25-30vh) */}
       <div 
         className={`relative overflow-hidden rounded-2xl sm:rounded-3xl border p-6 sm:p-8 md:p-10 transition-all ${
@@ -323,43 +167,6 @@ export default function CertificatesPage() {
             : "bg-gradient-to-b from-[#0f0f18] via-[#0a0a12] to-[#07070b] border-zinc-800/90 shadow-2xl"
         }`}
       >
-        {/* Unmistakable Vault Access & Owner Security Lock Button */}
-        <button
-          id="vault-access-lock-button"
-          onClick={() => {
-            if (isOwner) {
-              setLocalIsAdminMenuOpen(true);
-              setContextIsVaultAdminMenuOpen?.(true);
-            } else {
-              setLocalIsOwnerModalOpen(true);
-              setContextIsOwnerAccessModalOpen?.(true);
-            }
-          }}
-          className={`absolute top-4 right-4 sm:top-6 sm:right-6 inline-flex items-center gap-2 px-3 sm:px-3.5 py-1.5 sm:py-2 rounded-xl border transition-all duration-200 cursor-pointer z-20 font-mono text-xs shadow-sm select-none ${
-            isOwner
-              ? isLight
-                ? "bg-purple-100 hover:bg-purple-200 text-purple-900 border-purple-300 ring-2 ring-purple-400/30"
-                : "bg-purple-950/80 hover:bg-purple-900 text-purple-200 border-purple-700 ring-2 ring-purple-600/30"
-              : isLight
-                ? "bg-white/95 hover:bg-white text-slate-800 hover:text-slate-950 border-slate-300 hover:border-purple-500 shadow-sm ring-1 ring-slate-200"
-                : "bg-zinc-900/95 hover:bg-zinc-800 text-zinc-200 hover:text-white border-zinc-700 hover:border-purple-500 shadow-sm ring-1 ring-zinc-800"
-          }`}
-          title={isOwner ? "Owner Session Active — Click to open Vault Admin Menu" : "Owner Vault Lock (🔒) — Click to authenticate passkey"}
-          aria-label={isOwner ? "Owner Session Active" : "Owner Vault Lock"}
-        >
-          {isOwner ? (
-            <>
-              <Unlock className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-              <span className="font-bold text-[11px] tracking-wider">VAULT UNLOCKED</span>
-            </>
-          ) : (
-            <>
-              <Lock className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-              <span className="font-bold text-[11px] tracking-wider">VAULT ACCESS 🔒</span>
-            </>
-          )}
-        </button>
-
         {/* Ambient background accents */}
         <div className="absolute inset-0 tech-grid-bg opacity-15 pointer-events-none" />
         <div className={`absolute top-0 right-1/4 w-80 h-80 rounded-full blur-3xl pointer-events-none ${isLight ? "bg-purple-300/20" : "bg-purple-600/10"}`} />
@@ -393,50 +200,6 @@ export default function CertificatesPage() {
           </p>
         </div>
       </div>
-
-      {/* Owner Mode Action Bar (Only visible when owner is authenticated) */}
-      {isOwner && (
-        <div 
-          id="vault-owner-toolbar"
-          className={`flex flex-wrap items-center justify-between gap-3 px-5 py-3 rounded-2xl text-xs border animate-fade-in ${
-            isLight
-              ? "bg-purple-50/80 border-purple-200 shadow-sm"
-              : "bg-purple-950/30 border-purple-800/50"
-          }`}
-        >
-          <div className="flex items-center gap-2.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
-            <span className={`font-mono font-bold tracking-wider ${isLight ? "text-purple-800" : "text-purple-300"}`}>
-              Vault Admin Active
-            </span>
-            <span className={`font-sans hidden sm:inline ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
-              · Full credentials management unlocked
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <button
-              id="owner-toolbar-add-certificate-btn"
-              onClick={() => {
-                setEditingCertificate(null);
-                setIsAddModalOpen(true);
-              }}
-              className="btn btn-primary !py-2 !px-3.5 !text-xs cursor-pointer"
-            >
-              <Plus className="w-3.5 h-3.5" />
-              <span>+ Add Certificate</span>
-            </button>
-            <button
-              id="owner-toolbar-lock-vault-btn"
-              onClick={handleLockVault}
-              className="btn btn-secondary !py-2 !px-3 !text-xs cursor-pointer"
-              title="Lock Vault & Return to Public View"
-            >
-              <Lock className="w-3.5 h-3.5 text-purple-500" />
-              <span>Lock Vault</span>
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* 2. DYNAMIC STATISTICS DASHBOARD STRIP */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
@@ -498,7 +261,7 @@ export default function CertificatesPage() {
               <div className={`text-2xl sm:text-3xl font-bold font-display ${
                 isLight ? "text-slate-900" : "text-white"
               }`}>
-                {loading ? "..." : item.count}
+                {item.count}
               </div>
             </button>
           );
@@ -651,35 +414,13 @@ export default function CertificatesPage() {
 
       {/* 4. ALL CERTIFICATES GRID */}
       <div className="space-y-6">
-        {loading ? (
-          /* Loading Skeletons */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-            {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div
-                key={n}
-                className={`h-80 rounded-2xl border animate-pulse p-6 space-y-4 ${
-                  isLight ? "bg-white border-slate-200" : "bg-zinc-900/50 border-zinc-800/80"
-                }`}
-              >
-                <div className={`w-24 h-5 rounded ${isLight ? "bg-slate-200" : "bg-zinc-800"}`} />
-                <div className={`w-full h-36 rounded-xl ${isLight ? "bg-slate-100" : "bg-zinc-850"}`} />
-                <div className={`w-3/4 h-5 rounded ${isLight ? "bg-slate-200" : "bg-zinc-800"}`} />
-                <div className={`w-1/2 h-4 rounded ${isLight ? "bg-slate-100" : "bg-zinc-850"}`} />
-              </div>
-            ))}
-          </div>
-        ) : filteredCertificates.length > 0 ? (
-          /* Real Certificates Grid */
+        {filteredCertificates.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
             {filteredCertificates.map((cert) => (
               <CertificateCard
                 key={cert.id}
                 certificate={cert}
                 onView={(c) => setViewingCertificate(c)}
-                onEdit={handleEdit}
-                onDelete={handleDeleteClick}
-                onToggleFeatured={handleToggleFeatured}
-                isOwner={isOwner}
               />
             ))}
           </div>
@@ -729,58 +470,10 @@ export default function CertificatesPage() {
         )}
       </div>
 
-      {/* 5. MODALS & POPUPS */}
-      {/* Certificate Viewer Modal */}
+      {/* 5. MODAL VIEWER */}
       <CertificateViewerModal
         certificate={viewingCertificate}
         onClose={() => setViewingCertificate(null)}
-      />
-
-      {/* Add / Edit Certificate Modal */}
-      <AddCertificateModal
-        isOpen={isAddModalOpen}
-        onClose={() => {
-          setIsAddModalOpen(false);
-          setEditingCertificate(null);
-        }}
-        onSaved={fetchData}
-        editingCertificate={editingCertificate}
-      />
-
-      {/* Owner Access Passkey Authentication Modal */}
-      <OwnerAccessModal
-        isOpen={isOwnerAccessModalOpen}
-        onClose={() => {
-          setLocalIsOwnerModalOpen(false);
-          setContextIsOwnerAccessModalOpen?.(false);
-        }}
-        onSuccess={() => {
-          setLocalIsOwner(true);
-          setVaultOwnerSession?.();
-        }}
-      />
-
-      {/* Vault Owner Admin Controls Popover / Menu */}
-      <VaultAdminMenuModal
-        isOpen={isAdminMenuOpen}
-        onClose={() => {
-          setLocalIsAdminMenuOpen(false);
-          setContextIsVaultAdminMenuOpen?.(false);
-        }}
-        onAddNewCertificate={() => {
-          setEditingCertificate(null);
-          setIsAddModalOpen(true);
-        }}
-        onLockVault={handleLockVault}
-        totalCertificates={certificates.length || stats.total}
-      />
-
-      {/* In-App Delete Confirmation Modal */}
-      <DeleteConfirmationModal
-        isOpen={Boolean(deletingCert)}
-        certificate={deletingCert}
-        onClose={() => setDeletingCert(null)}
-        onConfirm={handleConfirmDelete}
       />
     </div>
   );

@@ -3,7 +3,13 @@
  * All URLs and social handles must be referenced from this registry to prevent dead links.
  */
 
+export const RESUME_URL =
+  "https://homely-scarlet-j1yvfmgp.edgeone.dev/Resume-Professional.pdf";
+
 export const LINKS = {
+  // Resume / CV Document
+  resume: RESUME_URL,
+
   // Primary Developer Profiles
   github: "https://github.com/codesbysayam",
   linkedin: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",

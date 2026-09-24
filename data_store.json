@@ -327,7 +327,7 @@
     }
   },
   "stats": {
-    "cgpa": "2nd Year (3rd Semester)",
+    "cgpa": "9.06",
     "university": "Kalinga Institute of Industrial Technology, Bhubaneswar",
     "semester": "2nd Year, 3rd Semester",
     "location": "Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)",
@@ -3822,6 +3822,267 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 57
+    },
+    {
+      "id": "visit_1790231265414_zwh1",
+      "timestamp": "2026-09-24T06:27:45.414Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 51
+    },
+    {
+      "id": "visit_1790231265421_rfo5",
+      "timestamp": "2026-09-24T06:27:45.421Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 137
+    },
+    {
+      "id": "visit_1790231265425_7eep",
+      "timestamp": "2026-09-24T06:27:45.425Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 64
+    },
+    {
+      "id": "visit_1790231265428_xaqo",
+      "timestamp": "2026-09-24T06:27:45.428Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 127
+    },
+    {
+      "id": "visit_1790231462938_05yd",
+      "timestamp": "2026-09-24T06:31:02.938Z",
+      "page": "CERTIFICATES Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 86
+    },
+    {
+      "id": "visit_1790231554390_3upi",
+      "timestamp": "2026-09-24T06:32:34.390Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 116
+    },
+    {
+      "id": "visit_1790231554407_5pcn",
+      "timestamp": "2026-09-24T06:32:34.407Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 139
+    },
+    {
+      "id": "visit_1790231554415_fr66",
+      "timestamp": "2026-09-24T06:32:34.415Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 145
+    },
+    {
+      "id": "visit_1790231554417_xkyw",
+      "timestamp": "2026-09-24T06:32:34.417Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 134
+    },
+    {
+      "id": "visit_1790232687755_81zm",
+      "timestamp": "2026-09-24T06:51:27.755Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 118
+    },
+    {
+      "id": "visit_1790232687773_9q7e",
+      "timestamp": "2026-09-24T06:51:27.773Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 112
+    },
+    {
+      "id": "visit_1790232687789_tddg",
+      "timestamp": "2026-09-24T06:51:27.789Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 65
+    },
+    {
+      "id": "visit_1790232687798_k5mz",
+      "timestamp": "2026-09-24T06:51:27.798Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 124
+    },
+    {
+      "id": "visit_1790233461577_hdpo",
+      "timestamp": "2026-09-24T07:04:21.577Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 141
+    },
+    {
+      "id": "visit_1790233461637_hsg2",
+      "timestamp": "2026-09-24T07:04:21.637Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 86
+    },
+    {
+      "id": "visit_1790233461644_ap1k",
+      "timestamp": "2026-09-24T07:04:21.644Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 92
+    },
+    {
+      "id": "visit_1790233461649_bss3",
+      "timestamp": "2026-09-24T07:04:21.649Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 79
+    },
+    {
+      "id": "visit_1790235128116_vk6e",
+      "timestamp": "2026-09-24T07:32:08.116Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 109
+    },
+    {
+      "id": "visit_1790235128136_wfjo",
+      "timestamp": "2026-09-24T07:32:08.136Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 115
+    },
+    {
+      "id": "visit_1790235128169_zckt",
+      "timestamp": "2026-09-24T07:32:08.169Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 128
+    },
+    {
+      "id": "visit_1790235128178_ck4t",
+      "timestamp": "2026-09-24T07:32:08.178Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 90
+    },
+    {
+      "id": "visit_1790236017592_9grf",
+      "timestamp": "2026-09-24T07:46:57.592Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 149
+    },
+    {
+      "id": "visit_1790236017615_birm",
+      "timestamp": "2026-09-24T07:46:57.615Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 147
+    },
+    {
+      "id": "visit_1790236017617_ovrh",
+      "timestamp": "2026-09-24T07:46:57.617Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 112
+    },
+    {
+      "id": "visit_1790236017619_pl0o",
+      "timestamp": "2026-09-24T07:46:57.619Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 80
+    },
+    {
+      "id": "visit_1790236467702_8w08",
+      "timestamp": "2026-09-24T07:54:27.702Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 33
+    },
+    {
+      "id": "visit_1790236467723_d9hi",
+      "timestamp": "2026-09-24T07:54:27.723Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 81
+    },
+    {
+      "id": "visit_1790236467725_acty",
+      "timestamp": "2026-09-24T07:54:27.725Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 100
+    },
+    {
+      "id": "visit_1790236467729_gbqo",
+      "timestamp": "2026-09-24T07:54:27.729Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 69
     }
   ],
   "certificateVault": [

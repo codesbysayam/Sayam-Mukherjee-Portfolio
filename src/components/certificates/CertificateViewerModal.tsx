@@ -419,7 +419,7 @@ export default function CertificateViewerModal({ certificate, onClose }: Certifi
                 }`}
               >
                 <ExternalLink className="w-3.5 h-3.5" />
-                <span>Verify Registry</span>
+                <span>View Credential</span>
               </a>
             )}
 
