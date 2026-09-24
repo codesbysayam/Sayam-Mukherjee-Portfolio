@@ -8,6 +8,19 @@ import { GoogleGenAI } from "@google/genai";
 import AdmZip from "adm-zip";
 import { SAYAM_DATA } from "./src/data.ts";
 import { certificatesStore } from "./server/certificatesStore.ts";
+import {
+  getAdminPasskey,
+  validatePasskey,
+  generateSessionToken,
+  verifySessionToken,
+  extractToken,
+  createSessionCookie,
+  clearSessionCookie,
+  checkRateLimit,
+  recordFailedAttempt,
+  clearRateLimit,
+  getClientIp,
+} from "./server/session.ts";
 
 dotenv.config();
 
@@ -291,169 +304,12 @@ app.post("/api/portfolio-data/update", (req, res) => {
 // CERTIFICATE VAULT & OWNER AUTHENTICATION
 // ==========================================
 
-// Owner passkey stored server-side via CERTIFICATE_ADMIN_PASSKEY environment variable
-const OWNER_PASSKEY = process.env.CERTIFICATE_ADMIN_PASSKEY;
-const SESSION_SECRET = process.env.SESSION_SECRET || (OWNER_PASSKEY ? OWNER_PASSKEY + "_cert_vault_secure_hmac_2026" : "sayam_vault_secure_hmac_production_key_2026");
-const SESSION_COOKIE_NAME = "vault_session";
-const SESSION_DURATION_MS = 24 * 60 * 60 * 1000; // 24 hours
-
-// Server-side rate limiter for POST /api/admin/auth (max 5 failed attempts per 15 minutes per IP)
-interface AuthRateLimitEntry {
-  failedAttempts: number;
-  lockoutUntil?: number;
-  firstAttemptAt: number;
-}
-const authRateLimits = new Map<string, AuthRateLimitEntry>();
-
-function getClientIp(req: express.Request): string {
-  const forwarded = req.headers["x-forwarded-for"];
-  if (typeof forwarded === "string") {
-    return forwarded.split(",")[0].trim();
-  }
-  return req.socket.remoteAddress || "127.0.0.1";
-}
-
-function checkRateLimit(ip: string): { allowed: boolean; retryAfterSeconds?: number } {
-  const now = Date.now();
-  const entry = authRateLimits.get(ip);
-  if (!entry) return { allowed: true };
-
-  // If currently locked out
-  if (entry.lockoutUntil && now < entry.lockoutUntil) {
-    const retryAfterSeconds = Math.ceil((entry.lockoutUntil - now) / 1000);
-    return { allowed: false, retryAfterSeconds };
-  }
-
-  // Reset window if 15 minutes have passed
-  if (now - entry.firstAttemptAt > 15 * 60 * 1000) {
-    authRateLimits.delete(ip);
-    return { allowed: true };
-  }
-
-  return { allowed: true };
-}
-
-function recordFailedAuthAttempt(ip: string): void {
-  const now = Date.now();
-  const entry = authRateLimits.get(ip) || { failedAttempts: 0, firstAttemptAt: now };
-  entry.failedAttempts += 1;
-  if (entry.failedAttempts >= 5) {
-    entry.lockoutUntil = now + 15 * 60 * 1000; // 15-minute lock
-  }
-  authRateLimits.set(ip, entry);
-}
-
-function clearAuthRateLimit(ip: string): void {
-  authRateLimits.delete(ip);
-}
-
-// Stateless HMAC-SHA256 session token generation and verification
-// Compatible with Vercel serverless containers, zero shared-memory dependencies
-function generateSessionToken(): string {
-  const issuedAt = Date.now();
-  const expiresAt = issuedAt + SESSION_DURATION_MS;
-  const payload = `owner:${issuedAt}:${expiresAt}`;
-  const encodedPayload = Buffer.from(payload, "utf-8").toString("base64url");
-  const hmac = crypto.createHmac("sha256", SESSION_SECRET).update(encodedPayload).digest("hex");
-  return `${encodedPayload}.${hmac}`;
-}
-
-function verifySessionToken(token: string | undefined | null): boolean {
-  if (!token || typeof token !== "string") return false;
-  try {
-    const parts = token.split(".");
-    if (parts.length !== 2) return false;
-    const [encodedPayload, hmac] = parts;
-    const expectedHmac = crypto.createHmac("sha256", SESSION_SECRET).update(encodedPayload).digest("hex");
-
-    // Timing-safe comparison to mitigate side-channel timing attacks
-    const hmacBuf = Buffer.from(hmac);
-    const expectedBuf = Buffer.from(expectedHmac);
-    if (hmacBuf.length !== expectedBuf.length) return false;
-    if (!crypto.timingSafeEqual(hmacBuf, expectedBuf)) {
-      return false;
-    }
-
-    const payload = Buffer.from(encodedPayload, "base64url").toString("utf-8");
-    const [role, , expiresAtStr] = payload.split(":");
-    if (role !== "owner") return false;
-    const expiresAt = parseInt(expiresAtStr, 10);
-    if (isNaN(expiresAt) || Date.now() > expiresAt) {
-      return false;
-    }
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-// Extract session token from HttpOnly cookie, Authorization Bearer header, or custom header
-function extractTokenFromRequest(req: express.Request): string | null {
-  // 1. From Cookie header
-  const cookieHeader = req.headers.cookie;
-  if (cookieHeader) {
-    const cookies = cookieHeader.split(";").map(c => c.trim());
-    for (const cookie of cookies) {
-      if (cookie.startsWith(`${SESSION_COOKIE_NAME}=`)) {
-        return decodeURIComponent(cookie.substring(SESSION_COOKIE_NAME.length + 1));
-      }
-    }
-  }
-  // 2. From Authorization: Bearer <token>
-  const authHeader = req.headers.authorization;
-  if (authHeader && authHeader.startsWith("Bearer ")) {
-    return authHeader.substring(7).trim();
-  }
-  // 3. From X-Vault-Session header
-  const customHeader = req.headers["x-vault-session"] as string;
-  if (customHeader) {
-    return customHeader.trim();
-  }
-  return null;
-}
-
-function isOwnerAuthorized(req: express.Request): boolean {
-  const token = extractTokenFromRequest(req);
-  return verifySessionToken(token);
-}
-
-// Set HttpOnly session cookie
-function setSessionCookie(res: express.Response, token: string): void {
-  const isProduction = process.env.NODE_ENV === "production";
-  const maxAgeSeconds = Math.floor(SESSION_DURATION_MS / 1000);
-  const cookieParts = [
-    `${SESSION_COOKIE_NAME}=${encodeURIComponent(token)}`,
-    "Path=/",
-    `Max-Age=${maxAgeSeconds}`,
-    "HttpOnly",
-    "SameSite=Lax"
-  ];
-  if (isProduction) {
-    cookieParts.push("Secure");
-  }
-  res.setHeader("Set-Cookie", cookieParts.join("; "));
-}
-
-// Clear HttpOnly session cookie
-function clearSessionCookie(res: express.Response): void {
-  const isProduction = process.env.NODE_ENV === "production";
-  const cookieParts = [
-    `${SESSION_COOKIE_NAME}=`,
-    "Path=/",
-    "Max-Age=0",
-    "HttpOnly",
-    "SameSite=Lax"
-  ];
-  if (isProduction) {
-    cookieParts.push("Secure");
-  }
-  res.setHeader("Set-Cookie", cookieParts.join("; "));
-}
-
 // Middleware: require owner authentication for sensitive mutations
 function requireOwnerSession(req: express.Request, res: express.Response, next: express.NextFunction) {
-  if (!isOwnerAuthorized(req)) {
+  const token = extractToken(req.headers.cookie, req.headers.authorization, req.headers["x-vault-session"] as string);
+  if (!verifySessionToken(token)) {
     return res.status(401).json({
+      ok: false,
       error: "UNAUTHORIZED",
       message: "SESSION EXPIRED. Please authenticate again."
     });
@@ -461,114 +317,74 @@ function requireOwnerSession(req: express.Request, res: express.Response, next: 
   next();
 }
 
-// 1. POST /api/admin/auth - Validate passkey & create authenticated session
-app.post("/api/admin/auth", (req, res) => {
-  const ip = getClientIp(req);
+// 1. POST /api/admin/unlock - Validate passkey & create authenticated session
+const handleUnlock = (req: express.Request, res: express.Response) => {
+  const ip = getClientIp(req.headers, req.socket.remoteAddress);
 
   // Rate limiting check
   const rateLimit = checkRateLimit(ip);
   if (!rateLimit.allowed) {
     return res.status(429).json({
-      success: false,
-      error: "TOO_MANY_ATTEMPTS",
-      message: "Too many failed attempts. Access temporarily locked. Please try again later."
+      ok: false,
+      error: "Too many failed attempts. Security cooldown active. Please wait a few minutes before trying again."
     });
   }
 
-  const { passkey } = req.body;
-  if (!passkey || typeof passkey !== "string") {
-    recordFailedAuthAttempt(ip);
-    return res.status(401).json({
-      success: false,
-      error: "INVALID PASSKEY",
-      message: "Access denied. Please try again."
-    });
-  }
+  const { passkey } = req.body || {};
+  const result = validatePasskey(passkey);
 
-  if (!OWNER_PASSKEY) {
-    return res.status(503).json({
-      success: false,
-      error: "AUTH_UNAVAILABLE",
-      message: "Certificate vault authentication is not configured on server (CERTIFICATE_ADMIN_PASSKEY is required)."
-    });
-  }
-
-  // Timing safe passkey validation against server-side secret
-  const inputBuffer = Buffer.from(passkey.trim());
-  const targetBuffer = Buffer.from(OWNER_PASSKEY.trim());
-  const isValid = inputBuffer.length === targetBuffer.length && crypto.timingSafeEqual(inputBuffer, targetBuffer);
-
-  if (!isValid) {
-    recordFailedAuthAttempt(ip);
-    return res.status(401).json({
-      success: false,
-      error: "INVALID PASSKEY",
-      message: "Access denied. Please try again."
+  if (!result.ok) {
+    recordFailedAttempt(ip);
+    return res.status(result.status).json({
+      ok: false,
+      error: result.error || "Invalid credentials"
     });
   }
 
   // Clear failed attempt tracking on successful login
-  clearAuthRateLimit(ip);
+  clearRateLimit(ip);
 
-  // Generate secure signed session token
+  // Generate secure signed session token and set HttpOnly cookie
   const token = generateSessionToken();
-  setSessionCookie(res, token);
+  res.setHeader("Set-Cookie", createSessionCookie(token));
 
-  return res.json({
+  return res.status(200).json({
+    ok: true,
     success: true,
     message: "ACCESS GRANTED",
     role: "owner"
   });
-});
+};
 
-// Backward-compatibility alias for verify-vault-key
+app.post("/api/admin/unlock", handleUnlock);
+app.post("/api/admin/auth", handleUnlock);
 app.post("/api/auth/verify-vault-key", (req, res) => {
-  const ip = getClientIp(req);
+  const ip = getClientIp(req.headers, req.socket.remoteAddress);
   const rateLimit = checkRateLimit(ip);
   if (!rateLimit.allowed) {
     return res.status(429).json({
-      success: false,
-      error: "TOO_MANY_ATTEMPTS",
-      message: "Too many failed attempts. Access temporarily locked. Please try again later."
+      ok: false,
+      error: "Too many failed attempts. Security cooldown active. Please wait a few minutes before trying again."
     });
   }
 
-  const { passkey } = req.body;
-  if (!passkey || typeof passkey !== "string") {
-    recordFailedAuthAttempt(ip);
-    return res.status(401).json({
-      success: false,
-      error: "INVALID PASSKEY",
-      message: "Access denied. Please try again."
+  const { passkey } = req.body || {};
+  const result = validatePasskey(passkey);
+
+  if (!result.ok) {
+    recordFailedAttempt(ip);
+    return res.status(result.status).json({
+      ok: false,
+      error: result.error || "Invalid credentials"
     });
   }
 
-  if (!OWNER_PASSKEY) {
-    return res.status(503).json({
-      success: false,
-      error: "AUTH_UNAVAILABLE",
-      message: "Certificate vault authentication is not configured on server (CERTIFICATE_ADMIN_PASSKEY is required)."
-    });
-  }
-
-  const inputBuffer = Buffer.from(passkey.trim());
-  const targetBuffer = Buffer.from(OWNER_PASSKEY.trim());
-  const isValid = inputBuffer.length === targetBuffer.length && crypto.timingSafeEqual(inputBuffer, targetBuffer);
-
-  if (!isValid) {
-    recordFailedAuthAttempt(ip);
-    return res.status(401).json({
-      success: false,
-      error: "INVALID PASSKEY",
-      message: "Access denied. Please try again."
-    });
-  }
-
-  clearAuthRateLimit(ip);
+  clearRateLimit(ip);
   const token = generateSessionToken();
-  setSessionCookie(res, token);
+  res.setHeader("Set-Cookie", createSessionCookie(token));
 
-  return res.json({
+  return res.status(200).json({
+    ok: true,
     success: true,
     message: "ACCESS GRANTED",
     token,
@@ -578,25 +394,24 @@ app.post("/api/auth/verify-vault-key", (req, res) => {
 
 // 2. GET /api/admin/session - Check if owner session is valid
 app.get("/api/admin/session", (req, res) => {
-  const token = extractTokenFromRequest(req);
+  const token = extractToken(req.headers.cookie, req.headers.authorization, req.headers["x-vault-session"] as string);
   const authenticated = verifySessionToken(token);
   if (authenticated) {
-    return res.json({
+    return res.status(200).json({
       authenticated: true,
-      role: "owner",
-      token: token || undefined
+      role: "owner"
     });
   }
-  return res.json({
-    authenticated: false,
-    message: "SESSION EXPIRED"
+  return res.status(200).json({
+    authenticated: false
   });
 });
 
 // 3. POST /api/admin/logout - Invalidate session & clear cookie
-app.post("/api/admin/logout", (req, res) => {
-  clearSessionCookie(res);
-  return res.json({
+app.post("/api/admin/logout", (_req, res) => {
+  res.setHeader("Set-Cookie", clearSessionCookie());
+  return res.status(200).json({
+    ok: true,
     success: true,
     message: "Logged out"
   });

@@ -9,6 +9,7 @@ import { Search, X, Filter, Sparkles, Terminal, Code2, Database } from "lucide-r
 import { FeaturedProject } from "./projects/FeaturedProject";
 import { ProjectCard } from "./projects/ProjectCard";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
+import { ProjectStatsOverview } from "./projects/ProjectStatsOverview";
 
 type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "DSA";
 
@@ -17,11 +18,12 @@ function ProjectsShowcaseComponent() {
   const isLight = theme === "light";
 
   const [selectedCategory, setSelectedCategory] = useState<FilterCategory>("ALL");
+  const [selectedTech, setSelectedTech] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<ProjectItem | null>(null);
 
   // Live GitHub telemetry hook
-  const { repos, loading: githubLoading } = useGithub();
+  const { repos, stats, user, snapshot, loading: githubLoading } = useGithub();
 
   // Map each project to its verified live GitHub repo if applicable
   const repoMap = useMemo(() => {
@@ -66,6 +68,24 @@ function ProjectsShowcaseComponent() {
     setFeaturedProjectId((prev) => (prev === "mausam" ? "operon" : "mausam"));
   };
 
+  // Helper to match technology accurately across verified projects
+  const matchTech = (project: ProjectItem, tech: string): boolean => {
+    if (tech === "ALL") return true;
+    const techLower = tech.toLowerCase();
+    if (techLower === "ai/ml" || techLower === "ai / ml") {
+      return (
+        project.id === "operon" ||
+        project.id === "yolo" ||
+        project.techStack.some((t) => /ai|ml|yolo|pytorch|vision|agent/i.test(t))
+      );
+    }
+    return (
+      project.techStack.some((t) => t.toLowerCase().includes(techLower)) ||
+      (project.tags && project.tags.some((t) => t.toLowerCase().includes(techLower))) ||
+      project.subtitle.toLowerCase().includes(techLower)
+    );
+  };
+
   // Category Filter Definitions with exact prompt specification
   const categoryFilters: { id: FilterCategory; label: string; count: number }[] = useMemo(() => {
     return [
@@ -73,19 +93,36 @@ function ProjectsShowcaseComponent() {
       {
         id: "AI / ML",
         label: "AI / ML",
-        count: PROJECTS.filter((p) => p.id === "operon" || p.id === "yolo").length
+        count: PROJECTS.filter((p) => p.id === "operon" || p.id === "yolo").length,
       },
       {
         id: "FULL-STACK",
         label: "Full-Stack",
-        count: PROJECTS.filter((p) => p.id === "mausam" || p.id === "portfolio" || p.id === "operon").length
+        count: PROJECTS.filter((p) => p.id === "mausam" || p.id === "portfolio" || p.id === "operon").length,
       },
       {
         id: "DSA",
         label: "DSA",
-        count: PROJECTS.filter((p) => p.id === "sayam-solves").length
-      }
+        count: PROJECTS.filter((p) => p.id === "sayam-solves").length,
+      },
     ];
+  }, []);
+
+  // Technology Filter Definitions
+  const techFilters = useMemo(() => {
+    const techs = [
+      { id: "ALL", label: "All Tech" },
+      { id: "React", label: "React" },
+      { id: "Python", label: "Python" },
+      { id: "AI/ML", label: "AI/ML" },
+      { id: "TypeScript", label: "TypeScript" },
+      { id: "Node.js", label: "Node.js" },
+      { id: "C++", label: "C++" },
+    ];
+    return techs.map((t) => ({
+      ...t,
+      count: PROJECTS.filter((p) => matchTech(p, t.id)).length,
+    }));
   }, []);
 
   // Filter & Search Logic
@@ -104,6 +141,11 @@ function ProjectsShowcaseComponent() {
         }
       }
 
+      // Technology Match
+      if (selectedTech !== "ALL") {
+        if (!matchTech(project, selectedTech)) return false;
+      }
+
       // Search Match
       if (!query) return true;
 
@@ -119,7 +161,7 @@ function ProjectsShowcaseComponent() {
         (project.githubRepoName && project.githubRepoName.toLowerCase().includes(query))
       );
     });
-  }, [selectedCategory, searchQuery]);
+  }, [selectedCategory, selectedTech, searchQuery]);
 
   return (
     <div className="w-full space-y-8 sm:space-y-12">
@@ -162,7 +204,16 @@ function ProjectsShowcaseComponent() {
         </div>
       </section>
 
-      {/* 2. FEATURED PROJECT (Shown primarily in ALL mode when not searching) */}
+      {/* 2. PROJECT STATS METRICS OVERVIEW (RECHARTS) */}
+      <ProjectStatsOverview 
+        repos={repos}
+        stats={stats}
+        user={user}
+        snapshot={snapshot}
+        loading={githubLoading}
+      />
+
+      {/* 3. FEATURED PROJECT (Shown primarily in ALL mode when not searching) */}
       {selectedCategory === "ALL" && !searchQuery.trim() && (
         <section className="w-full">
           <FeaturedProject
@@ -209,30 +260,86 @@ function ProjectsShowcaseComponent() {
           </div>
         </div>
 
-        {/* Category Filters (Horizontally scrollable with unified buttons) */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {categoryFilters.map((cat) => {
-            const isSelected = selectedCategory === cat.id;
-            return (
+        {/* Category & Technology Filters */}
+        <div className="space-y-3">
+          {/* 1. Category Filters (Domain) */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            <span className="text-[11px] font-mono font-semibold tracking-wider text-zinc-400 dark:text-zinc-500 uppercase shrink-0 mr-0.5">
+              Domain:
+            </span>
+            {categoryFilters.map((cat) => {
+              const isSelected = selectedCategory === cat.id;
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className={`btn !py-1.5 !px-3.5 !text-xs shrink-0 ${
+                    isSelected ? "btn-primary" : "btn-secondary"
+                  }`}
+                >
+                  <span>{cat.label}</span>
+                  <span className={`text-xs px-1.5 py-0.2 rounded-full ${
+                    isSelected 
+                      ? "bg-white/20 text-white" 
+                      : "bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
+                  }`}>
+                    {cat.count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* 2. Technology Filter Pills (Stack) */}
+          <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
+            <span className="text-[11px] font-mono font-semibold tracking-wider text-zinc-400 dark:text-zinc-500 uppercase shrink-0 mr-0.5 flex items-center gap-1">
+              <Code2 className="w-3 h-3 text-purple-500" />
+              <span>Tech:</span>
+            </span>
+            {techFilters.map((tech) => {
+              const isSelected = selectedTech === tech.id;
+              return (
+                <button
+                  key={tech.id}
+                  type="button"
+                  onClick={() => setSelectedTech(tech.id)}
+                  className={`inline-flex items-center gap-1.5 py-1 px-2.5 rounded-lg text-xs font-mono transition-all cursor-pointer ${
+                    isSelected
+                      ? "bg-purple-600 text-white font-medium shadow-xs shadow-purple-500/20"
+                      : "bg-zinc-100 hover:bg-zinc-200/80 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white border border-zinc-200/70 dark:border-white/[0.06]"
+                  }`}
+                >
+                  <span>{tech.label}</span>
+                  <span
+                    className={`text-[10px] px-1 py-0.2 rounded-md ${
+                      isSelected
+                        ? "bg-white/20 text-white"
+                        : "bg-zinc-200/70 dark:bg-zinc-800/80 text-zinc-500 dark:text-zinc-400"
+                    }`}
+                  >
+                    {tech.count}
+                  </span>
+                </button>
+              );
+            })}
+
+            {/* Clear All Active Filters */}
+            {(selectedTech !== "ALL" || selectedCategory !== "ALL" || searchQuery) && (
               <button
-                key={cat.id}
                 type="button"
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`btn !py-1.5 !px-3.5 !text-xs ${
-                  isSelected ? "btn-primary" : "btn-secondary"
-                }`}
+                onClick={() => {
+                  setSelectedCategory("ALL");
+                  setSelectedTech("ALL");
+                  setSearchQuery("");
+                }}
+                className="text-xs font-mono text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1 ml-auto cursor-pointer py-1 px-2"
               >
-                <span>{cat.label}</span>
-                <span className={`text-xs px-1.5 py-0.2 rounded-full ${
-                  isSelected 
-                    ? "bg-white/20 text-white" 
-                    : "bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400"
-                }`}>
-                  {cat.count}
-                </span>
+                <X className="w-3 h-3" />
+                <span>Reset filters</span>
               </button>
-            );
-          })}
+            )}
+          </div>
         </div>
 
         {/* Explorer Project Cards Grid */}
@@ -246,15 +353,16 @@ function ProjectsShowcaseComponent() {
                 No matches found
               </h3>
               <p className="text-xs font-sans text-zinc-500">
-                Try another keyword or reset the category filters.
+                Try another keyword or reset the technology/category filters.
               </p>
             </div>
             <button
               onClick={() => {
                 setSearchQuery("");
                 setSelectedCategory("ALL");
+                setSelectedTech("ALL");
               }}
-              className="btn btn-secondary !py-2 !px-4 !text-xs mx-auto"
+              className="btn btn-secondary !py-2 !px-4 !text-xs mx-auto cursor-pointer"
             >
               Reset Search &amp; Filters
             </button>

@@ -3,6 +3,7 @@ import { Lock, KeyRound, Eye, EyeOff, X, AlertCircle, CheckCircle2, Loader2, Shi
 import { usePortfolio } from "../../context/PortfolioContext";
 import ModalPortal from "../common/ModalPortal";
 import { useBodyScrollLock } from "../../hooks/useBodyScrollLock";
+import { inspectUnlockRequest, logUnlockResponse } from "../../utils/vaultUnlockDiagnostic";
 
 interface OwnerAccessModalProps {
   isOpen: boolean;
@@ -42,17 +43,31 @@ export default function OwnerAccessModal({
     setErrorTitle("");
     setErrorMessage("");
 
+    const requestUrl = "/api/admin/unlock";
+    const requestOptions: RequestInit = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ passkey: passkey.trim() }),
+    };
+
+    // Diagnostic inspection: Log URL, headers, credentials, and payload to console
+    inspectUnlockRequest(requestUrl, requestOptions);
+
     try {
-      const res = await fetch("/api/admin/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ passkey: passkey.trim() }),
-      });
+      const res = await fetch(requestUrl, requestOptions);
 
-      const data = await res.json();
+      let data: any = {};
+      try {
+        data = await res.json();
+      } catch {
+        data = {};
+      }
 
-      if (res.ok && data.success) {
+      // Diagnostic logging of response
+      logUnlockResponse(res.status, res.ok, data);
+
+      if (res.ok && (data.ok || data.success)) {
         setSuccess(true);
         setTimeout(() => {
           onSuccess();
@@ -60,23 +75,30 @@ export default function OwnerAccessModal({
           setPasskey("");
           setSuccess(false);
         }, 650);
+      } else if (res.status === 401) {
+        setErrorTitle("INVALID PASSKEY");
+        setErrorMessage(data.error || "Invalid passkey. Access denied.");
+      } else if (res.status === 404) {
+        setErrorTitle("ENDPOINT NOT DEPLOYED");
+        setErrorMessage("Authentication endpoint is not deployed. Please verify API functions.");
       } else if (res.status === 429) {
         setErrorTitle("ACCESS TEMPORARILY LOCKED");
         setErrorMessage(
-          data.message ||
+          data.error ||
+            data.message ||
             "Too many failed attempts. Security cooldown active. Please wait a few minutes before trying again."
         );
-      } else if (res.status === 401) {
-        setErrorTitle("INVALID PASSKEY");
-        setErrorMessage(data.message || "Access denied. Please check your credentials and try again.");
+      } else if (res.status === 500 || res.status === 503) {
+        setErrorTitle("AUTHENTICATION SERVICE UNAVAILABLE");
+        setErrorMessage(data.error || "Authentication service is temporarily unavailable.");
       } else {
         setErrorTitle("AUTHENTICATION FAILED");
-        setErrorMessage(data.message || data.error || "Authentication request rejected. Please retry.");
+        setErrorMessage(data.error || data.message || `Authentication request failed (${res.status}).`);
       }
     } catch (err: any) {
-      console.error("Auth request failed:", err);
-      setErrorTitle("AUTHENTICATION SERVICE UNAVAILABLE");
-      setErrorMessage("Unable to connect to security gateway. Please verify network connectivity.");
+      console.error("Auth network error:", err);
+      setErrorTitle("CONNECTION FAILED");
+      setErrorMessage("Unable to reach the authentication service. Please check your connection.");
     } finally {
       setLoading(false);
     }
