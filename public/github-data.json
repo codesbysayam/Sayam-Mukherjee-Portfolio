@@ -13,6 +13,60 @@
   },
   "repositories": [
     {
+      "id": 1368247830,
+      "name": "codesbysayam",
+      "full_name": "codesbysayam/codesbysayam",
+      "description": "Personal GitHub profile and developer portfolio of Sayam Mukherjee.",
+      "html_url": "https://github.com/codesbysayam/codesbysayam",
+      "homepage": null,
+      "language": null,
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-13T09:39:25Z",
+      "updated_at": "2026-09-26T08:33:53Z",
+      "pushed_at": "2026-09-26T08:33:49Z"
+    },
+    {
+      "id": 1388586720,
+      "name": "Campus_Connect",
+      "full_name": "codesbysayam/Campus_Connect",
+      "description": "Ignithon 2.0",
+      "html_url": "https://github.com/codesbysayam/Campus_Connect",
+      "homepage": null,
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-26T05:29:45Z",
+      "updated_at": "2026-09-26T07:55:50Z",
+      "pushed_at": "2026-09-26T07:55:47Z"
+    },
+    {
+      "id": 1355576736,
+      "name": "Sayam-Mukherjee-Portfolio",
+      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "homepage": "www.sayammukherjee.in",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-03T06:02:37Z",
+      "updated_at": "2026-09-26T07:38:39Z",
+      "pushed_at": "2026-09-26T07:38:36Z"
+    },
+    {
       "id": 1388762391,
       "name": "CAMPUSCONNECT_1273",
       "full_name": "codesbysayam/CAMPUSCONNECT_1273",
@@ -31,24 +85,6 @@
       "pushed_at": "2026-09-26T07:21:31Z"
     },
     {
-      "id": 1388586720,
-      "name": "Campus_Connect",
-      "full_name": "codesbysayam/Campus_Connect",
-      "description": "Ignithon 2.0",
-      "html_url": "https://github.com/codesbysayam/Campus_Connect",
-      "homepage": null,
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-26T05:29:45Z",
-      "updated_at": "2026-09-26T07:17:45Z",
-      "pushed_at": "2026-09-26T07:17:42Z"
-    },
-    {
       "id": 1388557215,
       "name": "Campus-Connect",
       "full_name": "codesbysayam/Campus-Connect",
@@ -65,42 +101,6 @@
       "created_at": "2026-09-26T05:08:55Z",
       "updated_at": "2026-09-26T05:08:56Z",
       "pushed_at": "2026-09-26T03:38:24Z"
-    },
-    {
-      "id": 1355576736,
-      "name": "Sayam-Mukherjee-Portfolio",
-      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "homepage": "www.sayammukherjee.in",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-26T01:31:50Z",
-      "pushed_at": "2026-09-26T01:31:46Z"
-    },
-    {
-      "id": 1368247830,
-      "name": "codesbysayam",
-      "full_name": "codesbysayam/codesbysayam",
-      "description": "Personal GitHub profile and developer portfolio of Sayam Mukherjee.",
-      "html_url": "https://github.com/codesbysayam/codesbysayam",
-      "homepage": null,
-      "language": null,
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 0,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-13T09:39:25Z",
-      "updated_at": "2026-09-25T08:47:22Z",
-      "pushed_at": "2026-09-26T04:59:19Z"
     },
     {
       "id": 1346623047,
@@ -194,6 +194,55 @@
     }
   ],
   "events": [
+    {
+      "id": "22214847854",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Campus_Connect",
+      "created_at": "2026-09-26T07:17:42Z",
+      "public": true
+    },
+    {
+      "id": "22214806203",
+      "type": "CreateEvent",
+      "repo": "codesbysayam/CAMPUSCONNECT_1273",
+      "created_at": "2026-09-26T07:21:32Z",
+      "public": true
+    },
+    {
+      "id": "22214424760",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Campus_Connect",
+      "created_at": "2026-09-26T07:06:32Z",
+      "public": true
+    },
+    {
+      "id": "22213186626",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Campus_Connect",
+      "created_at": "2026-09-26T06:37:39Z",
+      "public": true
+    },
+    {
+      "id": "22212435489",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Campus_Connect",
+      "created_at": "2026-09-26T07:55:47Z",
+      "public": true
+    },
+    {
+      "id": "22212015502",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Campus_Connect",
+      "created_at": "2026-09-26T06:05:18Z",
+      "public": true
+    },
+    {
+      "id": "22212011288",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Campus_Connect",
+      "created_at": "2026-09-26T07:48:03Z",
+      "public": true
+    },
     {
       "id": "22204657515",
       "type": "PushEvent",
@@ -354,67 +403,13 @@
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-09-19T20:27:04Z",
       "public": true
-    },
-    {
-      "id": "21645552171",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam",
-      "created_at": "2026-09-19T18:29:58Z",
-      "public": true
-    },
-    {
-      "id": "21623008560",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam",
-      "created_at": "2026-09-19T18:15:24Z",
-      "public": true
-    },
-    {
-      "id": "21606029555",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-09-19T19:56:59Z",
-      "public": true
-    },
-    {
-      "id": "21603284508",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam",
-      "created_at": "2026-09-19T19:05:02Z",
-      "public": true
-    },
-    {
-      "id": "21570017717",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Memory-in-Motion",
-      "created_at": "2026-09-18T16:34:54Z",
-      "public": true
-    },
-    {
-      "id": "21552367435",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-09-17T18:47:06Z",
-      "public": true
-    },
-    {
-      "id": "21538740976",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam",
-      "created_at": "2026-09-18T21:39:58Z",
-      "public": true
     }
   ],
   "languages": {
-    "codesbysayam/CAMPUSCONNECT_1273": {
-      "TypeScript": 111325,
-      "CSS": 8804,
-      "HTML": 995,
-      "JavaScript": 118
-    },
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/Campus_Connect": {
-      "TypeScript": 111325,
-      "CSS": 8804,
+      "TypeScript": 142971,
+      "CSS": 8895,
       "HTML": 995,
       "JavaScript": 118
     },
@@ -427,7 +422,12 @@
       "Jupyter Notebook": 5438,
       "HTML": 3036
     },
-    "codesbysayam/codesbysayam": {},
+    "codesbysayam/CAMPUSCONNECT_1273": {
+      "TypeScript": 111325,
+      "CSS": 8804,
+      "HTML": 995,
+      "JavaScript": 118
+    },
     "codesbysayam/mausam": {
       "TypeScript": 4972923,
       "Python": 118579,
@@ -460,6 +460,6 @@
       "HTML": 1230
     }
   },
-  "syncedAt": "2026-09-26T07:38:35.196Z",
+  "syncedAt": "2026-09-26T13:03:22.813Z",
   "status": "ok"
 }
