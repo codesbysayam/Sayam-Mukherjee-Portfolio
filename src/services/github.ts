@@ -362,11 +362,11 @@ export async function loadGitHubSnapshot(force = false): Promise<GitHubRawSnapsh
     } catch {}
   }
 
-  // 3. Fetch candidate snapshot URLs in order of preference
+  // 3. Fetch candidate snapshot URLs in order of preference (preferring live dynamic API)
   const candidateUrls = [
+    `/api/github-data${force ? `?t=${now}` : ""}`,
     `/github-data.json${force ? `?t=${now}` : ""}`,
     `/data/github.json${force ? `?t=${now}` : ""}`,
-    `/api/github-data${force ? `?t=${now}` : ""}`
   ];
 
   for (const url of candidateUrls) {

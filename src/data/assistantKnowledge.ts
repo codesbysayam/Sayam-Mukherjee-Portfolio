@@ -20,7 +20,7 @@ export const PROFILE_LINKS = {
   github: "https://github.com/codesbysayam",
   leetcode: "https://leetcode.com/u/codesbysayam/",
   codolio: "https://codolio.com/profile/codesbysayam",
-  linkedin: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
+  linkedin: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
   youtubeTechnicalAZ: "https://youtube.com/@technicalaz",
   youtubeDailyDecipher: "https://youtube.com/@dailydecipher",
   emailPrimary: "sayam.business@gmail.com",
@@ -172,7 +172,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "show projects",
       "featured projects"
     ],
-    answer: "Sayam has built 5 verified portfolio projects:\n1. OPERON — Autonomous multi-agent operations platform\n2. SayamSolves — Consistent daily LeetCode algorithmic problem solving in C++\n3. MAUSAM — Smart weather intelligence platform for SIH 2026\n4. Sayam Mukherjee — Interactive developer portfolio with live telemetry\n5. YOLO — Real-time edge computer vision & motion tracking pipeline",
+    answer: "Sayam has built 5 verified portfolio projects:\n1. OPERON | Autonomous multi-agent operations platform\n2. SayamSolves | Algorithmic problem solving and daily LeetCode practice in C++\n3. MAUSAM | Smart weather intelligence platform for SIH 2026\n4. Sayam Mukherjee | Interactive developer portfolio with live telemetry\n5. YOLO | Real-time edge computer vision and motion tracking pipeline",
     action: {
       type: "github",
       label: "Open GitHub",
@@ -300,7 +300,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       type: "linkedin",
       label: "Open LinkedIn",
       url: PROFILE_LINKS.linkedin,
-      handle: "sayam-mukherjee",
+      handle: "sayammukherjee-portfolio",
     },
     suggestions: ["📩 Contact", "💻 GitHub", "⚡ Projects"],
   },

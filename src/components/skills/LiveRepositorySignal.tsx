@@ -74,7 +74,7 @@ export function LiveRepositorySignal() {
       <div className="space-y-1.5">
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono font-medium tracking-wide text-cyan-400">
-            06 — Live Repository Signal
+            06 · Live Repository Signal
           </span>
           <span className="h-px w-8 bg-zinc-800" />
           <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400">

@@ -1,4 +1,4 @@
-# Engineering Rules & Guidelines — Sayam Mukherjee Portfolio
+# Engineering Rules & Guidelines | Sayam Mukherjee Portfolio
 
 ## 1. Zero Secrets & Security Mandates
 1. **Never Expose Credentials to the Client**:

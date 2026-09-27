@@ -30,7 +30,7 @@ export function RecentBuildActivity() {
           <span className={`text-[11px] font-mono font-medium uppercase tracking-[0.14em] ${
             isLight ? "text-cyan-700" : "text-cyan-400"
           }`}>
-            10 — RECENT BUILD ACTIVITY
+            10 · RECENT BUILD ACTIVITY
           </span>
           <span className={`h-px w-8 ${isLight ? "bg-slate-200" : "bg-white/[0.1]"}`} />
           <span className={`text-[11px] font-mono uppercase tracking-wider hidden sm:inline ${

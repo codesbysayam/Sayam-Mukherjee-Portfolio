@@ -41,7 +41,7 @@ function ExperienceSectionComponent() {
         <p className={`text-sm max-w-2xl leading-relaxed ${
           isLight ? "text-slate-600" : "text-zinc-400"
         }`}>
-          Learning by building, collaborating, and continuously improving—organizing my work into specialized fields of visual editing, content education, and community efforts.
+          Learning by building, collaborating, and continuously improving, while organizing my work across visual editing, tech content, and community initiatives.
         </p>
       </div>
 

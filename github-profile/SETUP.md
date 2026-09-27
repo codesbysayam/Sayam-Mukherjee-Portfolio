@@ -1,4 +1,4 @@
-# GitHub Profile README Automatic Sync — Setup Guide
+# GitHub Profile README Automatic Sync | Setup Guide
 
 This guide explains how to configure the automatic synchronization workflow between this portfolio repository (`codesbysayam/Sayam-Mukherjee-Portfolio`) and your public GitHub profile repository (`codesbysayam/codesbysayam`).
 

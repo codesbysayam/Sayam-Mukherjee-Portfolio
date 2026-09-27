@@ -1,4 +1,4 @@
-# Architecture & System Design — Sayam Mukherjee Portfolio
+# Architecture & System Design | Sayam Mukherjee Portfolio
 
 ## 1. System Architecture Overview
 The portfolio is architected as a modern, high-performance web application utilizing a dual-mode deployment structure:

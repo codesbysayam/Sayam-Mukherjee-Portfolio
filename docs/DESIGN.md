@@ -1,4 +1,4 @@
-# Design System & Aesthetic Standards — Sayam Mukherjee Portfolio
+# Design System & Aesthetic Standards | Sayam Mukherjee Portfolio
 
 ## 1. Aesthetic Direction: Premium Engineering Editorial
 The design language combines the precision of high-end developer platforms (Linear, Vercel) with the restrained elegance of Apple product typography and modern editorial publications.

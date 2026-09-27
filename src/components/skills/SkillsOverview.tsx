@@ -66,7 +66,7 @@ export function SkillsOverview({ onSelectSkill }: SkillsOverviewProps) {
       <div className="space-y-1.5">
         <div className="flex items-center gap-3">
           <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-400">
-            02 — TECHNOLOGY STACK
+            02 · TECHNOLOGY STACK
           </span>
           <span className="h-px w-8 bg-zinc-800" />
           <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider">

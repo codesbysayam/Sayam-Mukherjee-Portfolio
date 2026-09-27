@@ -60,7 +60,7 @@ class CertificatesStore {
     let result = [...this.certificates];
 
     if (filters?.category && filters.category !== "ALL") {
-      result = result.filter(c => c.category === filters.category);
+      result = result.filter(c => c.category.toUpperCase() === filters.category!.toUpperCase());
     }
 
     if (filters?.issuer && filters.issuer !== "ALL") {
@@ -85,7 +85,18 @@ class CertificatesStore {
         c.title.toLowerCase().includes(q) ||
         c.issuer.toLowerCase().includes(q) ||
         (c.description && c.description.toLowerCase().includes(q)) ||
+        (c.fullDescription && c.fullDescription.toLowerCase().includes(q)) ||
+        (c.event && c.event.toLowerCase().includes(q)) ||
+        (c.project && c.project.toLowerCase().includes(q)) ||
+        (c.track && c.track.toLowerCase().includes(q)) ||
+        (c.team && c.team.toLowerCase().includes(q)) ||
+        (c.contribution && c.contribution.toLowerCase().includes(q)) ||
+        (c.session && c.session.toLowerCase().includes(q)) ||
+        (c.credentialType && c.credentialType.toLowerCase().includes(q)) ||
+        (Array.isArray(c.subjects) && c.subjects.some(s => s.toLowerCase().includes(q))) ||
+        (Array.isArray(c.teamMembers) && c.teamMembers.some(m => m.toLowerCase().includes(q))) ||
         c.skills.some(s => s.toLowerCase().includes(q)) ||
+        (c.tags && c.tags.some(t => t.toLowerCase().includes(q))) ||
         (c.credentialId && c.credentialId.toLowerCase().includes(q))
       );
     }
@@ -148,15 +159,20 @@ class CertificatesStore {
 
   public getStats(): CertificateStats {
     const total = this.certificates.length;
-    const technical = this.certificates.filter(c => c.category === "CERTIFICATIONS" || c.category === "COURSES").length;
-    const competitions = this.certificates.filter(c => c.category === "COMPETITIONS").length;
-    const achievements = this.certificates.filter(c => c.category === "ACHIEVEMENTS").length;
+    const technical = this.certificates.filter(c => {
+      const cat = c.category.toUpperCase();
+      return cat === "CERTIFICATIONS" || cat === "COURSES";
+    }).length;
+    const competitions = this.certificates.filter(c => c.category.toUpperCase() === "COMPETITIONS").length;
+    const achievements = this.certificates.filter(c => c.category.toUpperCase() === "ACHIEVEMENTS").length;
+    const academic = this.certificates.filter(c => c.category.toUpperCase() === "ACADEMIC RECORD").length;
 
     return {
       total,
       technical,
       competitions,
-      achievements
+      achievements,
+      academic
     };
   }
 

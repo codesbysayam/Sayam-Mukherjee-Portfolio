@@ -9,7 +9,7 @@ Bhubaneswar, India · KIIT University
 <p align="center">
   <a href="https://sayammukherjee.in"><strong>🌐 Live Portfolio</strong></a> ·
   <a href="https://github.com/codesbysayam"><strong>💻 GitHub</strong></a> ·
-  <a href="https://www.linkedin.com/in/sayam-mukherjee-b96209324/"><strong>👔 LinkedIn</strong></a> ·
+  <a href="https://www.linkedin.com/in/sayammukherjee-portfolio/"><strong>👔 LinkedIn</strong></a> ·
   <a href="https://leetcode.com/u/codesbysayam/"><strong>🧠 LeetCode</strong></a> ·
   <a href="https://codolio.com/profile/codesbysayam"><strong>⚡ Codolio</strong></a> ·
   <a href="https://youtube.com/@technicalaz"><strong>🎥 YouTube</strong></a>
@@ -56,11 +56,11 @@ Computer Science Engineering student focused on Artificial Intelligence & Machin
 
 ## Verified Achievements
 
-- 🏆 **Toycathon 2021** — Top 15 / National Finalist
-- 🎖️ **Technex'26, IIT BHU** — Finalist across 5 of 6 technical competition categories
-- 📚 **Academic Excellence (KIIT University)** — 9.06 overall CGPA in first year (B.Tech CSE AI & ML)
-- 🎯 **CBSE Board Examination (Class 10)** — 92.6%
-- 🎯 **CBSE Board Examination (Class 12)** — 86.2%
+- 🏆 **Toycathon 2021** | Top 15 / National Finalist
+- 🎖️ **Technex'26, IIT BHU** | Finalist across 5 of 6 technical competition categories
+- 📚 **Academic Excellence (KIIT University)** | 9.06 overall CGPA in first year (B.Tech CSE AI & ML)
+- 🎯 **CBSE Board Examination (Class 10)** | 92.6%
+- 🎯 **CBSE Board Examination (Class 12)** | 86.2%
 
 ---
 
@@ -77,7 +77,7 @@ Computer Science Engineering student focused on Artificial Intelligence & Machin
 
 - 🌐 **Portfolio Website:** [sayammukherjee.in](https://sayammukherjee.in)
 - 💻 **GitHub:** [@codesbysayam](https://github.com/codesbysayam)
-- 👔 **LinkedIn:** [Sayam Mukherjee](https://www.linkedin.com/in/sayam-mukherjee-b96209324/)
+- 👔 **LinkedIn:** [Sayam Mukherjee](https://www.linkedin.com/in/sayammukherjee-portfolio/)
 - 🧠 **LeetCode:** [@codesbysayam](https://leetcode.com/u/codesbysayam/)
 - ⚡ **Codolio:** [codesbysayam](https://codolio.com/profile/codesbysayam)
 - 🎥 **YouTube:** [@technicalaz](https://youtube.com/@technicalaz)

@@ -28,7 +28,7 @@ import { Certificate } from "../types/certificates";
 export const INITIAL_CERTIFICATES: Certificate[] = [
   {
     id: "dataforge-2026-memory-in-motion",
-    title: "DataForge 2026 — Memory in Motion",
+    title: "DataForge 2026 | Memory in Motion",
     issuer: "Kharagpur Data Analytics Group (KDAG), IIT Kharagpur",
     event: "DataForge 2026",
     platform: "Unstop",
@@ -58,8 +58,55 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2026-02-15T00:00:00.000Z"
   },
   {
+    id: "gdg-kiit-operon-2026",
+    category: "COMPETITIONS",
+    title: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
+    issuer: "GDG on Campus KIIT",
+    event: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
+    year: 2026,
+    date: "8–9 August 2026",
+    issueDate: "2026",
+    track: "Track A | Business Process Automation",
+    project: "OPERON | Autonomous Operations, Human-Controlled",
+    team: "Team Nexus",
+    teamMembers: [
+      "Sayam Mukherjee",
+      "Sounak Chowdhury",
+      "Gourab Biswas",
+      "Aarush Roy"
+    ],
+    description:
+      "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
+    fullDescription:
+      "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
+    contribution:
+      "Sayam Mukherjee developed the OPERON website from scratch, implementing the product interface and workflow into a usable application.",
+    metrics: {
+      developmentTime: "4 Weeks (Hackathon to MVP)",
+      codeComplexityScore: "Low Coupling | High Cohesion (Multi-Agent)",
+      linesOfCode: "4,200+ Lines"
+    },
+    skills: [
+      "Agentic Systems",
+      "Business Process Automation",
+      "Multi-Agent Systems",
+      "Human-in-the-Loop"
+    ],
+    tags: [
+      "Agentic Systems",
+      "Business Process Automation",
+      "Multi-Agent Systems",
+      "Human-in-the-Loop"
+    ],
+    credentialUrl: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
+    verificationStatus: "LINK AVAILABLE",
+    featured: true,
+    createdAt: "2026-08-09T00:00:00.000Z",
+    updatedAt: "2026-08-09T00:00:00.000Z"
+  },
+  {
     id: "comp-toycathon-2021",
-    title: "National Finalist — Toycathon",
+    title: "National Finalist | Toycathon",
     issuer: "Ministry of Education & AICTE, Govt. of India",
     category: "COMPETITIONS",
     description: "Reached the National Grand Finale among thousands of competing collegiate teams in the national Toycathon innovation challenge.",
@@ -73,7 +120,7 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
   },
   {
     id: "comp-technex-iit-bhu",
-    title: "Multi-Event Finalist — Technex'26",
+    title: "Multi-Event Finalist | Technex'26",
     issuer: "IIT (BHU) Varanasi",
     category: "COMPETITIONS",
     description: "Qualified for the final rounds across 5 out of 6 technical challenges in Technex, the annual technical festival of IIT (BHU).",
@@ -86,17 +133,53 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2026-02-01T00:00:00.000Z"
   },
   {
-    id: "ach-kiit-academic-excellence",
-    title: "First-Year Academic Excellence (9.06 CGPA)",
-    issuer: "Kalinga Institute of Industrial Technology, Bhubaneswar",
-    category: "ACHIEVEMENTS",
-    description: "Maintained a 9.06 cumulative grade point average across the first year of Computer Science and Engineering curriculum.",
-    issueDate: "2024",
-    skills: ["Data Structures", "Algorithms", "Mathematics for CS", "Digital Systems"],
-    verificationStatus: "VERIFIED",
-    featured: true,
-    createdAt: "2024-07-01T00:00:00.000Z",
-    updatedAt: "2024-07-01T00:00:00.000Z"
+    id: "kiit-grade-report-2025-26",
+    title: "First-Year Grade Report",
+    issuer: "Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar",
+    category: "ACADEMIC RECORD",
+    year: 2025,
+    session: "2025–26",
+    credentialType: "Grade Report",
+    issueDate: "2025",
+    description: "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
+    fullDescription: "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
+    subjects: [
+      "Chemistry",
+      "English",
+      "Basic Electronics",
+      "Chemistry Lab",
+      "Engineering Lab",
+      "Workshop",
+      "Communication Lab",
+      "Basic Electrical Engineering",
+      "Creativity,Innovation and Entreprneurship",
+      "Sports and Yoga",
+      "Transforms and Numerical Methods",
+      "Physics",
+      "Physics Lab",
+      "Differential Equations and Linear Algebra",
+      "Science of Living Systems",
+      "Environmental Science",
+      "Engineering Drawing and Graphics",
+      "Programming Lab",
+      "Basic Civil Engineering",
+      "Optimization Technique"
+    ],
+    credentialUrl: "https://diverse-plum-xc5wzkru.edgeone.dev/",
+    skills: [
+      "Engineering Sciences",
+      "Mathematics",
+      "Programming",
+      "Laboratory Work"
+    ],
+    tags: [
+      "20 Subjects",
+      "2025–26"
+    ],
+    verificationStatus: "LINK AVAILABLE",
+    featured: false,
+    createdAt: "2025-06-01T00:00:00.000Z",
+    updatedAt: "2025-06-01T00:00:00.000Z"
   },
   {
     id: "ach-cbse-class-10",

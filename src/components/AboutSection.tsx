@@ -35,9 +35,9 @@ function AboutSectionComponent() {
 
   // Self-Reflective Strengths
   const strengths = [
-    { title: "Rapid System Synthesis", desc: "Deconstructs complex documentation, research papers, and API specifications quickly into clean, type-safe working prototypes." },
-    { title: "Rigorous Algorithmic Discipline", desc: "Approaches data structures with space-time bounds awareness, maintaining 100% acceptance across practiced LeetCode problems." },
-    { title: "Full-Cycle Ownership", desc: "Bridges user intuition, frontend UI precision, and server-side logic from first idea through deployment and monitoring." },
+    { title: "Rapid System Synthesis", desc: "Turns documentation, technical papers, and API specifications into clean, working prototypes." },
+    { title: "Rigorous Algorithmic Discipline", desc: "Approaches data structures with space-time bounds awareness, focusing on understanding core principles rather than memorizing solutions." },
+    { title: "Full-Cycle Ownership", desc: "Connects frontend interface details with server-side logic from first concept through deployment and monitoring." },
     { title: "Resilience Under Pressure", desc: "Proven under high-stakes hackathon deadlines (SIH 2026, Technex'26 IIT BHU) without compromising architecture or team morale." }
   ];
 
@@ -100,7 +100,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2021",
-      title: "Toycathon National Finals — Top 15",
+      title: "Toycathon National Finals | Top 15",
       description: "Reached national finals and achieved a Top 15 ranking in Toycathon, an innovation competition organized by the Govt. of India.",
       category: "Innovation",
       icon: Award,
@@ -108,7 +108,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2021–2023",
-      title: "Content Creator — Technical AZ",
+      title: "Content Creator | Technical AZ",
       description: "Founded and scaled Technical AZ on YouTube to 2.06K+ subscribers, producing tutorials on emerging consumer technologies and software.",
       category: "Content Creation",
       icon: Video,
@@ -132,7 +132,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2023–2026",
-      title: "Content Creator — Daily Decipher",
+      title: "Content Creator | Daily Decipher",
       description: "Founded Daily Decipher on YouTube, producing educational breakdowns and growing an organic community of 10K+ subscribers.",
       category: "Content Creation",
       icon: Youtube,
@@ -164,7 +164,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2026",
-      title: "Technex'26 — IIT BHU Finalist in 5/6 Competitions",
+      title: "Technex'26 | IIT BHU Finalist in 5/6 Competitions",
       description: "Competed at IIT Varanasi's national techfest, advancing to the finals across 5 separate technical challenges.",
       category: "Competitions",
       icon: Star,
@@ -296,18 +296,18 @@ function AboutSectionComponent() {
                     Personal Story &amp; Motivation
                   </span>
                   <h2 className="text-2xl sm:text-3xl font-bold font-display text-zinc-900 dark:text-white">
-                    Bridging Computational Rigor with Human Impact
+                    Building Practical Systems from Solid Fundamentals
                   </h2>
 
                   <div className="space-y-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
                     <p>
-                      I am a Computer Science undergraduate at KIIT Bhubaneswar with a deep fascination for autonomous AI agents, spatial computing, and high-performance full-stack architectures. Originally from Hooghly, West Bengal, I grew up balancing intense athletic training in table tennis with self-directed explorations in programming and digital media.
+                      I am a Computer Science undergraduate at KIIT Bhubaneswar interested in autonomous AI agents, practical computer vision, and reliable full-stack applications. Originally from Hooghly, West Bengal, I grew up balancing competitive table tennis with self-taught programming and digital media.
                     </p>
                     <p>
-                      At age 16, I founded my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which has now reached an organic audience of over 10,000 learners. Running these channels and operating an independent digital marketing agency taught me how real users consume information: they value clarity, speed, and genuine utility above buzzwords.
+                      At age 16, I started my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which has now reached an organic audience of over 10,000 learners. Producing technical tutorials and working with early clients taught me early on how people actually interact with technology: they value clarity, speed, and real utility over buzzwords.
                     </p>
                     <p>
-                      In software engineering, I apply this same philosophy. I build end-to-end operational systems like <strong>Operon</strong> (a multi-agent AI engine with non-bypassable human governance), <strong>Mausam</strong> (an IMD-grounded climate platform for SIH 2026), and <strong>SayamSolves</strong> (a verified competitive programming archive).
+                      In my software projects, I stick to that same practical focus. Whether building <strong>Operon</strong> (a multi-agent operational platform with human approvals), <strong>Mausam</strong> (a weather analytics app developed for SIH 2026), or maintaining <strong>SayamSolves</strong> (my C++ algorithmic archive), my priority is building reliable code that solves actual problems.
                     </p>
                   </div>
 

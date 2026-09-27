@@ -54,7 +54,7 @@ export function useRouteSEO(routeKey: string) {
     setMetaTag("property", "og:image", imageUrl);
     setMetaTag("property", "og:image:width", "1200");
     setMetaTag("property", "og:image:height", "630");
-    setMetaTag("property", "og:site_name", "Sayam Mukherjee — Portfolio");
+    setMetaTag("property", "og:site_name", "Sayam Mukherjee | Portfolio");
 
     // Twitter Card Meta Tags
     setMetaTag("name", "twitter:card", "summary_large_image");
@@ -85,7 +85,7 @@ export function useRouteSEO(routeKey: string) {
       "image": imageUrl,
       "sameAs": [
         "https://github.com/codesbysayam",
-        "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
+        "https://www.linkedin.com/in/sayammukherjee-portfolio/",
         "https://leetcode.com/u/sayammukherjee/",
         "https://codolio.com/profile/codesbysayam"
       ],

@@ -16,37 +16,80 @@ import HeroSection from "./components/HeroSection";
 import LiveBuildFeed from "./components/LiveBuildFeed";
 import CertificationsSection from "./components/CertificationsSection";
 import ContactSection from "./components/ContactSection";
+import { ErrorBoundary, RootErrorBoundary } from "./components/ErrorBoundary";
 import SEO from "./components/SEO";
 import { PortfolioProvider, usePortfolio } from "./context/PortfolioContext";
 import CustomCursor from "./components/CustomCursor";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Toast from "./components/Toast";
+import { NAVIGATION, RESUME_URL, SOCIAL_LINKS } from "./data/siteContent";
 
-// Code-split heavy interactive components to keep initial bundle ultra-light and fast
-const AIChatBot = lazy(() => import("./components/AssistantChat"));
-const SkillsSection = lazy(() => import("./components/SkillsSection"));
-const EcosystemSection = lazy(() => import("./components/EcosystemSection"));
-const ProjectsShowcase = lazy(() => import("./components/ProjectsShowcase"));
-const BlogsSection = lazy(() => import("./components/BlogsSection"));
-const ContentCreatorSection = lazy(() => import("./components/ContentCreatorSection"));
-const TestimonialsSection = lazy(() => import("./components/TestimonialsSection"));
-const AdminDashboard = lazy(() => import("./components/AdminDashboard"));
-const ResumeModal = lazy(() => import("./components/ResumeModal"));
-const CommandMenu = lazy(() => import("./components/CommandMenu"));
-const CertificatesPage = lazy(() => import("./components/certificates/CertificatesPage"));
-const CredentialsHomePreview = lazy(() => import("./components/certificates/CredentialsHomePreview"));
+// Resilient dynamic import wrapper that retries on network interruptions and reloads on stale hashes
+function lazyWithRetry<T extends React.ComponentType<any>>(
+  componentImport: () => Promise<{ default: T }>,
+  componentName = "Component",
+  retries = 3,
+  interval = 400
+): React.LazyExoticComponent<T> {
+  return lazy(() =>
+    new Promise<{ default: T }>((resolve, reject) => {
+      const attempt = (remaining: number) => {
+        componentImport()
+          .then(resolve)
+          .catch((error) => {
+            console.warn(`Dynamic module import failed for ${componentName} (${remaining} retries left):`, error);
+            if (remaining > 0) {
+              setTimeout(() => attempt(remaining - 1), interval * (4 - remaining));
+            } else {
+              const isChunkLoadError =
+                error?.name === "ChunkLoadError" ||
+                /failed to fetch dynamically imported module/i.test(error?.message || "");
+              if (isChunkLoadError && typeof window !== "undefined") {
+                const reloadKey = `portfolio_chunk_reload_${componentName.replace(/\s+/g, "_")}`;
+                const lastReload = sessionStorage.getItem(reloadKey);
+                const now = Date.now();
+                if (!lastReload || now - parseInt(lastReload, 10) > 12000) {
+                  sessionStorage.setItem(reloadKey, String(now));
+                  window.location.reload();
+                  return;
+                }
+              }
+              reject(error);
+            }
+          });
+      };
+      attempt(retries);
+    })
+  );
+}
+
+// Code-split heavy interactive components with resilient retries
+const ProjectsShowcase = lazyWithRetry(() => import("./components/ProjectsShowcase"), "Projects Showcase");
+const AIChatBot = lazyWithRetry(() => import("./components/AssistantChat"), "AI Chatbot");
+const SkillsSection = lazyWithRetry(() => import("./components/SkillsSection"), "Skills Section");
+const EcosystemSection = lazyWithRetry(() => import("./components/EcosystemSection"), "Ecosystem Section");
+const BlogsSection = lazyWithRetry(() => import("./components/BlogsSection"), "Blogs Section");
+const ContentCreatorSection = lazyWithRetry(() => import("./components/ContentCreatorSection"), "Creator Section");
+const TestimonialsSection = lazyWithRetry(() => import("./components/TestimonialsSection"), "Testimonials Section");
+const AdminDashboard = lazyWithRetry(() => import("./components/AdminDashboard"), "Admin Dashboard");
+const ResumeModal = lazyWithRetry(() => import("./components/ResumeModal"), "Resume Modal");
+const CommandMenu = lazyWithRetry(() => import("./components/CommandMenu"), "Command Menu");
+const CertificatesPage = lazyWithRetry(() => import("./components/certificates/CertificatesPage"), "Certificates Page");
+const CredentialsHomePreview = lazyWithRetry(() => import("./components/certificates/CredentialsHomePreview"), "Credentials Preview");
 import PrivacyPage from "./pages/Privacy";
 import TermsPage from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary";
 import SiteFooter from "./components/SiteFooter";
-const CookieConsent = lazy(() => import("./components/CookieConsent"));
+const CookieConsent = lazyWithRetry(() => import("./components/CookieConsent"), "Cookie Consent");
 
 export default function App() {
   return (
-    <PortfolioProvider>
-      <AppContent />
-    </PortfolioProvider>
+    <RootErrorBoundary>
+      <PortfolioProvider>
+        <AppContent />
+      </PortfolioProvider>
+    </RootErrorBoundary>
   );
 }
 
@@ -654,16 +697,7 @@ function AppContent() {
                   ? "bg-zinc-900/70 border border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]" 
                   : "bg-zinc-100/90 border border-zinc-200 shadow-sm"
               }`}>
-                {[
-                  { id: "home", label: "Home", shortcut: "H" },
-                  { id: "about", label: "About", shortcut: "A" },
-                  { id: "projects", label: "Projects", shortcut: "P" },
-                  { id: "skills", label: "Skills", shortcut: "S" },
-                  { id: "ecosystem", label: "Ecosystem", shortcut: "E" },
-                  { id: "certificates", label: "Certificates", shortcut: "C" },
-                  { id: "journal", label: "Journal", shortcut: "J" },
-                  { id: "contact", label: "Contact", shortcut: "M" }
-                ].map((tab) => {
+                {NAVIGATION.map((tab) => {
                   const isActive = activeTab === tab.id;
                   return (
                     <button
@@ -781,16 +815,7 @@ function AppContent() {
                   }`}
                 >
                   <div className="flex flex-col gap-1 text-sm font-medium">
-                    {[
-                      { id: "home", label: "Home" },
-                      { id: "about", label: "About" },
-                      { id: "skills", label: "Skills" },
-                      { id: "ecosystem", label: "Ecosystem" },
-                      { id: "projects", label: "Projects" },
-                      { id: "certificates", label: "Certificates" },
-                      { id: "journal", label: "Journal" },
-                      { id: "contact", label: "Contact" }
-                    ].map((tab) => {
+                    {NAVIGATION.map((tab) => {
                       const isActive = activeTab === tab.id;
                       return (
                         <button
@@ -888,20 +913,24 @@ function AppContent() {
                 className="w-full min-h-[60vh]"
               >
                 {activeTab === "home" && (
-                  <div className="space-y-8 sm:space-y-12">
-                    {/* REBUILT HERO SECTION */}
-                    <HeroSection onViewWork={() => navigateToTab("projects")} />
+                  <ErrorBoundary sectionName="Home Overview">
+                    <div className="space-y-8 sm:space-y-12">
+                      {/* REBUILT HERO SECTION */}
+                      <HeroSection onViewWork={() => navigateToTab("projects")} />
 
-                    {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
-                    <section id="live-build-feed" className="w-full pt-1 pb-4">
-                      <LiveBuildFeed />
-                    </section>
+                      {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
+                      <section id="live-build-feed" className="w-full pt-1 pb-4">
+                        <LiveBuildFeed />
+                      </section>
 
-                    {/* CREDENTIALS / CERTIFICATES PREVIEW SPOTLIGHT */}
-                    <Suspense fallback={null}>
-                      <CredentialsHomePreview onNavigateToCertificates={() => navigateToTab("certificates")} />
-                    </Suspense>
-                  </div>
+                      {/* CREDENTIALS / CERTIFICATES PREVIEW SPOTLIGHT */}
+                      <ErrorBoundary sectionName="Credentials Spotlight">
+                        <Suspense fallback={null}>
+                          <CredentialsHomePreview onNavigateToCertificates={() => navigateToTab("certificates")} />
+                        </Suspense>
+                      </ErrorBoundary>
+                    </div>
+                  </ErrorBoundary>
                 )}
 
                 {/* Instantaneous Static Legal Routes (Zero-delay, No Suspense) */}
@@ -935,61 +964,75 @@ function AppContent() {
                   </div>
                 }>
                   {activeTab === "about" && (
-                    <div className="space-y-10 sm:space-y-14 py-2">
-                      <Reveal delay={0}>
-                        <AboutSection />
-                      </Reveal>
-                      <Reveal delay={0.1}>
-                        <ExperienceSection />
-                      </Reveal>
-                      <Reveal delay={0.15}>
-                        <CertificationsSection onNavigateToCertificates={() => navigateToTab("certificates")} />
-                      </Reveal>
-                    </div>
+                    <ErrorBoundary sectionName="About Section">
+                      <div className="space-y-10 sm:space-y-14 py-2">
+                        <Reveal delay={0}>
+                          <AboutSection />
+                        </Reveal>
+                        <Reveal delay={0.1}>
+                          <ExperienceSection />
+                        </Reveal>
+                        <Reveal delay={0.15}>
+                          <CertificationsSection onNavigateToCertificates={() => navigateToTab("certificates")} />
+                        </Reveal>
+                      </div>
+                    </ErrorBoundary>
                   )}
 
                   {activeTab === "skills" && (
                     <div className="py-2">
-                      <SkillsSection onNavigateToProject={(id: string) => navigateToTab("projects")} />
+                      <ErrorBoundary sectionName="Skills & Technical Stack">
+                        <SkillsSection onNavigateToProject={(id: string) => navigateToTab("projects")} />
+                      </ErrorBoundary>
                     </div>
                   )}
 
                   {activeTab === "ecosystem" && (
                     <div className="py-2">
-                      <EcosystemSection />
+                      <ErrorBoundary sectionName="Engineering Ecosystem">
+                        <EcosystemSection />
+                      </ErrorBoundary>
                     </div>
                   )}
 
                   {activeTab === "projects" && (
                     <div className="py-2 sm:py-4">
-                      <Reveal delay={0}>
-                        <ProjectsShowcase />
-                      </Reveal>
+                      <ErrorBoundary sectionName="Projects Showcase">
+                        <Reveal delay={0}>
+                          <ProjectsShowcase />
+                        </Reveal>
+                      </ErrorBoundary>
                     </div>
                   )}
 
                   {activeTab === "certificates" && (
                     <div className="py-2 sm:py-4">
-                      <CertificatesPage />
+                      <ErrorBoundary sectionName="Certificates & Credentials">
+                        <CertificatesPage />
+                      </ErrorBoundary>
                     </div>
                   )}
 
                   {activeTab === "journal" && (
                     <div className="space-y-10 sm:space-y-14 py-2">
-                      <Reveal delay={0}>
-                        <BlogsSection />
-                      </Reveal>
-                      <Reveal delay={0.1}>
-                        <TestimonialsSection />
-                      </Reveal>
+                      <ErrorBoundary sectionName="Journal & Engineering Reflections">
+                        <Reveal delay={0}>
+                          <BlogsSection />
+                        </Reveal>
+                        <Reveal delay={0.1}>
+                          <TestimonialsSection />
+                        </Reveal>
+                      </ErrorBoundary>
                     </div>
                   )}
 
                   {activeTab === "contact" && (
                     <div className="w-full py-2">
-                      <Reveal delay={0}>
-                        <ContactSection />
-                      </Reveal>
+                      <ErrorBoundary sectionName="Contact Section">
+                        <Reveal delay={0}>
+                          <ContactSection />
+                        </Reveal>
+                      </ErrorBoundary>
                     </div>
                   )}
                 </Suspense>
@@ -1008,22 +1051,24 @@ function AppContent() {
           )}
 
           {/* Floating AI Representative Bot & Modals */}
-          <Suspense fallback={null}>
-            {!isLegalPage && <AIChatBot />}
-            {isResumeModalOpen && (
-              <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
-            )}
-            {isCommandMenuOpen && (
-              <CommandMenu
-                isOpen={isCommandMenuOpen}
-                onClose={() => setIsCommandMenuOpen(false)}
-                onNavigate={(tab) => navigateToTab(tab)}
-                onOpenResume={() => setIsResumeModalOpen(true)}
-                onTriggerConfetti={triggerConfetti}
-              />
-            )}
-            <CookieConsent />
-          </Suspense>
+          <ErrorBoundary sectionName="Modal System">
+            <Suspense fallback={null}>
+              {!isLegalPage && <AIChatBot />}
+              {isResumeModalOpen && (
+                <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
+              )}
+              {isCommandMenuOpen && (
+                <CommandMenu
+                  isOpen={isCommandMenuOpen}
+                  onClose={() => setIsCommandMenuOpen(false)}
+                  onNavigate={(tab) => navigateToTab(tab)}
+                  onOpenResume={() => setIsResumeModalOpen(true)}
+                  onTriggerConfetti={triggerConfetti}
+                />
+              )}
+              <CookieConsent />
+            </Suspense>
+          </ErrorBoundary>
 
           {/* Reusable Global Toast Notifications */}
           <Toast />

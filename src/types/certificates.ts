@@ -1,5 +1,6 @@
 export type CertificateCategory = 
   | 'ALL'
+  | 'ACADEMIC RECORD'
   | 'CERTIFICATIONS'
   | 'ACHIEVEMENTS'
   | 'COMPETITIONS'
@@ -13,10 +14,14 @@ export interface Certificate {
   id: string;
   title: string;
   issuer: string;
-  category: Exclude<CertificateCategory, 'ALL'>;
+  category: Exclude<CertificateCategory, 'ALL'> | 'Academic Record';
   description?: string;
   fullDescription?: string;
   issueDate: string; // e.g. "2026-02", "2025", "2024"
+  year?: number;
+  session?: string;
+  credentialType?: string;
+  subjects?: string[];
   expiryDate?: string;
   credentialId?: string;
   credentialUrl?: string;
@@ -31,6 +36,16 @@ export interface Certificate {
   project?: string;
   theme?: string;
   pathway?: string;
+  track?: string;
+  team?: string;
+  teamMembers?: string[];
+  contribution?: string;
+  metrics?: {
+    developmentTime?: string;
+    codeComplexityScore?: string;
+    linesOfCode?: string;
+  };
+  date?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -40,6 +55,7 @@ export interface CertificateStats {
   technical: number;
   competitions: number;
   achievements: number;
+  academic?: number;
 }
 
 export interface StorageStatus {

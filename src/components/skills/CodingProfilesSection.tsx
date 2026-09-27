@@ -40,7 +40,7 @@ const PROFILES: ProfileItem[] = [
   {
     platform: "LinkedIn",
     username: "Sayam Mukherjee",
-    url: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
+    url: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
     focus: "Professional & Academic Network",
     description: "B.Tech CSE (AI & ML) student profile at KIIT University (2024–2028). Research milestones and career collaborations.",
     icon: Linkedin

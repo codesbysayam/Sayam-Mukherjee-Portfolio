@@ -1,9 +1,9 @@
-# Product Requirements Document (PRD) — Sayam Mukherjee Portfolio
+# Product Requirements Document (PRD) | Sayam Mukherjee Portfolio
 
 ## 1. Executive Summary & Purpose
 The Sayam Mukherjee Engineering Portfolio (`https://sayammukherjee.in`) is an authoritative digital presence for Sayam Mukherjee, an undergraduate Computer Science Engineering (AI & Machine Learning) student, systems developer, and builder. 
 
-The primary goal of the portfolio is to present verified engineering work, algorithmic capability, project architecture, academic credentials, and systems proficiency to technical recruiters, hiring managers, engineering leads, and open-source collaborators—grounded entirely in authentic data without artificial claims or frontend secret exposure.
+The primary goal of the portfolio is to present verified engineering work, algorithmic capability, project architecture, academic credentials, and systems proficiency to technical recruiters, hiring managers, engineering leads, and open-source collaborators, grounded entirely in authentic data without artificial claims or frontend secret exposure.
 
 ---
 

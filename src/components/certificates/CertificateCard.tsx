@@ -23,10 +23,17 @@ export default function CertificateCard({
     category,
     description,
     issueDate,
+    year,
+    session,
+    credentialType,
+    subjects,
     platform,
     project,
     theme: projectTheme,
     pathway,
+    track,
+    team,
+    date,
     credentialId,
     credentialUrl,
     skills = [],
@@ -99,12 +106,32 @@ export default function CertificateCard({
 
         {/* Issuer Name */}
         <div
-          className={`text-sm font-medium mt-1 mb-3.5 ${
+          className={`text-sm font-medium mt-1 ${
+            session ? "mb-1.5" : "mb-3.5"
+          } ${
             isLight ? "text-slate-700" : "text-[#C4C9D2]"
           }`}
         >
           {issuer}
         </div>
+
+        {/* Academic Session / Record Context */}
+        {session && (
+          <div
+            className={`text-xs font-medium mb-3.5 ${
+              isLight ? "text-slate-600" : "text-[#A7ADB8]"
+            }`}
+          >
+            Academic Session:{" "}
+            <span
+              className={`font-semibold ${
+                isLight ? "text-slate-900" : "text-[#F5F7FA]"
+              }`}
+            >
+              {session}
+            </span>
+          </div>
+        )}
 
         {/* Visual Preview Section (Only when meaningful) */}
         {imageUrl && !imageError ? (
@@ -161,8 +188,8 @@ export default function CertificateCard({
               </span>
             </div>
           </div>
-        ) : project || projectTheme ? (
-          /* Structured Project Highlight Box (e.g. Memory in Motion / DataForge) */
+        ) : project || projectTheme || track ? (
+          /* Structured Project Highlight Box (e.g. Memory in Motion / Operon / DataForge) */
           <div
             className={`rounded-xl border p-3.5 mb-4 space-y-1.5 ${
               isLight
@@ -171,23 +198,37 @@ export default function CertificateCard({
             }`}
           >
             {project && (
-              <div className="flex items-center justify-between text-xs">
+              <div className="flex items-start justify-between gap-2 text-xs">
                 <span
-                  className={`font-semibold ${
+                  className={`font-semibold line-clamp-1 ${
                     isLight ? "text-purple-700" : "text-purple-300"
                   }`}
+                  title={project}
                 >
                   Project: {project}
                 </span>
-                {pathway && (
+                {pathway ? (
                   <span
-                    className={`text-[11px] ${
+                    className={`text-[11px] shrink-0 ${
                       isLight ? "text-slate-500" : "text-[#737A87]"
                     }`}
                   >
                     {pathway}
                   </span>
-                )}
+                ) : track ? (
+                  <span
+                    className={`text-[11px] shrink-0 font-medium ${
+                      isLight ? "text-purple-700" : "text-purple-300"
+                    }`}
+                  >
+                    {track}
+                  </span>
+                ) : null}
+              </div>
+            )}
+            {!project && track && (
+              <div className="text-xs font-semibold text-purple-700 dark:text-purple-300">
+                Track: {track}
               </div>
             )}
             {projectTheme && (
@@ -316,11 +357,11 @@ export default function CertificateCard({
                 ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
                 : "bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 border-white/10"
             }`}
-            aria-label={`Inspect Details of ${title}`}
-            title="Inspect Details"
+            aria-label={`Inspect Record for ${title}`}
+            title="Inspect Record"
           >
-            <Eye className="w-4 h-4 text-zinc-400" />
-            <span className="hidden sm:inline">Details</span>
+            <Eye className="w-4 h-4 text-purple-400" />
+            <span>Inspect Record</span>
           </button>
         )}
 

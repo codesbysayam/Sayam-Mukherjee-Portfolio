@@ -1,4 +1,4 @@
-# Project Memory & Architecture Context — Sayam Mukherjee Portfolio
+# Project Memory & Architecture Context | Sayam Mukherjee Portfolio
 
 ## 1. Project Identity & Purpose
 - **Developer**: Sayam Mukherjee

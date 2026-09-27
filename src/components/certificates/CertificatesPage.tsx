@@ -14,6 +14,7 @@ import {
   ChevronDown,
   ArrowUpDown,
   BookOpen,
+  GraduationCap,
 } from "lucide-react";
 
 export default function CertificatesPage() {
@@ -54,9 +55,14 @@ export default function CertificatesPage() {
   const stats: CertificateStats = useMemo(
     () => ({
       total: certificates.length,
-      technical: certificates.filter((c) => c.category === "CERTIFICATIONS").length,
       competitions: certificates.filter((c) => c.category === "COMPETITIONS").length,
+      academic: certificates.filter(
+        (c) => c.category === "ACADEMIC RECORD" || c.category === "Academic Record"
+      ).length,
       achievements: certificates.filter((c) => c.category === "ACHIEVEMENTS").length,
+      technical: certificates.filter(
+        (c) => c.category === "CERTIFICATIONS" || c.category === "COURSES"
+      ).length,
     }),
     [certificates]
   );
@@ -85,7 +91,8 @@ export default function CertificatesPage() {
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { ALL: certificates.length };
     certificates.forEach((c) => {
-      counts[c.category] = (counts[c.category] || 0) + 1;
+      const catKey = c.category.toUpperCase();
+      counts[catKey] = (counts[catKey] || 0) + 1;
     });
     return counts;
   }, [certificates]);
@@ -94,8 +101,10 @@ export default function CertificatesPage() {
   const filteredCertificates = useMemo(() => {
     const result = certificates.filter((cert) => {
       // Category filter
-      if (selectedCategory !== "ALL" && cert.category !== selectedCategory) {
-        return false;
+      if (selectedCategory !== "ALL") {
+        if (cert.category.toUpperCase() !== selectedCategory.toUpperCase()) {
+          return false;
+        }
       }
       // Year filter
       if (selectedYear !== "ALL" && !cert.issueDate.includes(selectedYear)) {
@@ -116,11 +125,38 @@ export default function CertificatesPage() {
         const matchesDesc = cert.description
           ? cert.description.toLowerCase().includes(q)
           : false;
+        const matchesFullDesc = cert.fullDescription
+          ? cert.fullDescription.toLowerCase().includes(q)
+          : false;
         const matchesProject = cert.project
           ? cert.project.toLowerCase().includes(q)
           : false;
+        const matchesEvent = cert.event
+          ? cert.event.toLowerCase().includes(q)
+          : false;
+        const matchesTrack = cert.track
+          ? cert.track.toLowerCase().includes(q)
+          : false;
+        const matchesTeam = cert.team
+          ? cert.team.toLowerCase().includes(q)
+          : false;
+        const matchesContribution = cert.contribution
+          ? cert.contribution.toLowerCase().includes(q)
+          : false;
         const matchesTheme = cert.theme
           ? cert.theme.toLowerCase().includes(q)
+          : false;
+        const matchesSession = cert.session
+          ? cert.session.toLowerCase().includes(q)
+          : false;
+        const matchesCredentialType = cert.credentialType
+          ? cert.credentialType.toLowerCase().includes(q)
+          : false;
+        const matchesSubjects = cert.subjects
+          ? cert.subjects.some((sub) => sub.toLowerCase().includes(q))
+          : false;
+        const matchesTeamMembers = Array.isArray(cert.teamMembers)
+          ? cert.teamMembers.some((m) => m.toLowerCase().includes(q))
           : false;
         const allTags = cert.tags || cert.skills || [];
         const matchesSkill = allTags.some((s) => s.toLowerCase().includes(q));
@@ -131,10 +167,19 @@ export default function CertificatesPage() {
           !matchesTitle &&
           !matchesIssuer &&
           !matchesDesc &&
+          !matchesFullDesc &&
           !matchesProject &&
+          !matchesEvent &&
+          !matchesTrack &&
+          !matchesTeam &&
+          !matchesContribution &&
+          !matchesTeamMembers &&
           !matchesTheme &&
           !matchesSkill &&
-          !matchesId
+          !matchesId &&
+          !matchesSession &&
+          !matchesCredentialType &&
+          !matchesSubjects
         ) {
           return false;
         }
@@ -179,6 +224,7 @@ export default function CertificatesPage() {
 
   const CATEGORIES: { id: CertificateCategory; label: string }[] = [
     { id: "ALL", label: "All Credentials" },
+    { id: "ACADEMIC RECORD", label: "Academic Record" },
     { id: "COMPETITIONS", label: "Competitions" },
     { id: "ACHIEVEMENTS", label: "Achievements" },
     { id: "CERTIFICATIONS", label: "Certifications" },
@@ -226,13 +272,19 @@ export default function CertificatesPage() {
       </header>
 
       {/* 2. REFINED STATISTICS STRIP */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
         {[
           {
             label: "Total Credentials",
             count: stats.total,
             icon: Award,
             category: "ALL" as CertificateCategory,
+          },
+          {
+            label: "Academic Record",
+            count: stats.academic ?? 0,
+            icon: GraduationCap,
+            category: "ACADEMIC RECORD" as CertificateCategory,
           },
           {
             label: "Competitions",

@@ -140,7 +140,7 @@ export function InteractiveEcosystemMap() {
       <div className="space-y-1.5">
         <div className="flex items-center gap-3">
           <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-400">
-            03 — INTERACTIVE ECOSYSTEM MAP
+            03 · INTERACTIVE ECOSYSTEM MAP
           </span>
           <span className="h-px w-8 bg-zinc-800" />
           <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">

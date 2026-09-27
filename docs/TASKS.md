@@ -1,4 +1,4 @@
-# Launch Tasks & Verification Checklist — 20 Production Milestones
+# Launch Tasks & Verification Checklist | 20 Production Milestones
 
 Status key:
 - `[ ]` Not started

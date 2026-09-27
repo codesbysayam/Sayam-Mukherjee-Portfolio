@@ -78,7 +78,7 @@ export function ProjectTechMatrix() {
       <div className="space-y-1.5">
         <div className="flex items-center gap-3">
           <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-400">
-            05 — PROJECT → TECHNOLOGY MATRIX
+            05 · PROJECT → TECHNOLOGY MATRIX
           </span>
           <span className="h-px w-8 bg-zinc-800" />
           <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">

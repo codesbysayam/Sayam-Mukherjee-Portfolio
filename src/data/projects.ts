@@ -8,6 +8,12 @@ export const VALID_PROJECT_IDS = [
 
 export type ValidProjectId = typeof VALID_PROJECT_IDS[number];
 
+export interface ProjectMetrics {
+  developmentTime?: string;
+  codeComplexityScore?: string;
+  linesOfCode?: string;
+}
+
 export interface ProjectItem {
   id: string;
   name?: string;
@@ -36,6 +42,7 @@ export interface ProjectItem {
   features?: string[];
   role?: string;
   architecture?: string[];
+  metrics?: ProjectMetrics;
   evolutionStage: {
     phase: string;
     step: string;
@@ -57,10 +64,10 @@ export const PROJECTS: ProjectItem[] = [
     name: "OPERON",
     title: "OPERON",
     subtitle: "Autonomous Operations & Multi-Agent Workflow Engine",
-    shortDescription: "Autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations.",
-    longDescription: "Operon is an autonomous operations platform engineered for complex enterprise operations. It combines multi-agent AI systems with human-in-the-loop governance to automate end-to-end organizational workflows, decision checkpoints, and state orchestration while keeping critical decisions firmly under human oversight.",
-    whyItExists: "Complex organizational workflows in support, finance, and operations frequently encounter bottlenecks caused by fragmented tools and rigid automation scripts that fail to involve human decision-makers at critical moments.",
-    whatIBuilt: "Architected a multi-agent orchestration engine with role-specific autonomous agents, auditable state machine checkpoints, an Express.js backend service, and a responsive React control interface.",
+    shortDescription: "An agent-driven operations platform I built to explore multi-agent workflows while keeping key decisions under human control.",
+    longDescription: "I built OPERON to explore how multiple specialized agents can collaborate on complex business tasks without running unchecked. The platform automates routine handoffs and data passing between roles in Support, Finance, and HR, while pausing high-stakes decisions at explicit checkpoints for human approval, validation, and audit logging.",
+    whyItExists: "Routine operational tasks often stall across disconnected tools, but fully autonomous scripts can make unchecked mistakes. OPERON explores an architecture where agents do the heavy lifting while people retain clear approval power.",
+    whatIBuilt: "I developed the OPERON website from scratch, implementing the multi-agent task dispatcher, state machine checkpoints, Node.js and Express backend service, and the full responsive React user interface.",
     category: "Autonomous Systems & AI",
     categoryLabel: "Autonomous Systems & AI",
     categoryFilter: "AI / ML",
@@ -69,22 +76,27 @@ export const PROJECTS: ProjectItem[] = [
     technologies: ["TypeScript", "Node.js", "Express", "React", "Multi-Agent AI", "REST API", "Vercel", "Git", "GitHub"],
     techStack: ["TypeScript", "Node.js", "Express", "React", "Multi-Agent AI", "REST API"],
     tech: ["TypeScript", "Node.js", "Express", "React", "Multi-Agent AI"],
-    tags: ["TypeScript", "Multi-Agent AI", "Node.js", "Express", "React", "Automation"],
+    tags: ["Agentic Systems", "Business Process Automation", "Multi-Agent Systems", "Human-in-the-Loop"],
     repository: "Operon",
     githubRepoName: "Operon",
     githubUrl: "https://github.com/codesbysayam/Operon",
     liveUrl: "https://operonpro.vercel.app",
     demoUrl: "https://operonpro.vercel.app",
     featured: true,
+    metrics: {
+      developmentTime: "4 Weeks (Hackathon to MVP)",
+      codeComplexityScore: "Low Coupling | High Cohesion (Multi-Agent)",
+      linesOfCode: "4,200+ Lines",
+    },
     highlights: [
-      "Autonomous multi-agent task routing and execution pipelines",
-      "Human-in-the-loop governance checkpoints for high-stakes operational actions",
-      "Modular backend architecture with Express.js and responsive React frontend"
+      "Role-specific agent task routing across support, finance, and operations",
+      "Human-in-the-loop approval checkpoints for high-impact actions",
+      "Decoupled React interface connected to a modular Node.js/Express service"
     ],
     features: [
-      "Autonomous multi-agent task routing and execution pipelines",
-      "Human-in-the-loop governance checkpoints for high-stakes operational actions",
-      "Modular backend architecture with Express.js and responsive React frontend"
+      "Role-specific agent task routing across support, finance, and operations",
+      "Human-in-the-loop approval checkpoints for high-impact actions",
+      "Decoupled React interface connected to a modular Node.js/Express service"
     ],
     role: "Lead Architect & Developer",
     architecture: [
@@ -104,9 +116,9 @@ export const PROJECTS: ProjectItem[] = [
     name: "SayamSolves",
     title: "SayamSolves",
     subtitle: "Algorithmic Problem Solving & LeetCode DSA Repository",
-    shortDescription: "Daily coding challenges solved by Sayam, powered by consistent DSA practice and algorithmic decomposition.",
-    longDescription: "A structured, open-source algorithmic repository documenting daily problem-solving across LeetCode and competitive programming platforms. Features optimal C++ implementations with comprehensive time and space complexity breakdowns for foundational data structures, two-pointers, arrays, strings, and recursion.",
-    whyItExists: "Engineered to establish disciplined problem-solving mastery through daily hands-on practice, focusing on asymptotic optimization, optimal memory allocation, and algorithmic decomposition.",
+    shortDescription: "My personal open-source C++ repository documenting daily algorithmic problem solving across LeetCode.",
+    longDescription: "A personal, open-source repository where I document my daily C++ practice on LeetCode and competitive programming platforms. Each solution includes asymptotic runtime benchmarks, space complexity notes, and edge-case reflections across arrays, strings, two-pointers, and recursion.",
+    whyItExists: "I believe problem-solving skill comes from consistent, deliberate daily practice rather than rushing through tutorials. This repository keeps my progress accountable and transparent.",
     whatIBuilt: "Structured open-source repository featuring optimal C++ implementations of LeetCode problems with line-by-line algorithmic complexity annotations and systematic categorizations.",
     category: "Competitive Programming & DSA",
     categoryLabel: "Competitive Programming & DSA",
@@ -148,11 +160,11 @@ export const PROJECTS: ProjectItem[] = [
     id: "mausam",
     name: "MAUSAM",
     title: "MAUSAM",
-    subtitle: "Smart Weather Intelligence Platform • SIH 2026",
-    shortDescription: "Smart weather intelligence platform built for SIH 2026 by Team Algnite providing real-time meteorological insights.",
-    longDescription: "Mausam is a smart weather intelligence platform engineered for the Smart India Hackathon (SIH 2026) by Team Algnite. It aggregates meteorological data, real-time AQI, UV index, humidity, wind, pollen, sea condition forecasts, tides, and soil moisture analytics into an accessible, high-signal dashboard.",
-    whyItExists: "Weather information is often fragmented across multiple disparate sources. Mausam unifies critical meteorological parameters, air quality alerts, and coastal data for agricultural workers, fishermen, and citizens.",
-    whatIBuilt: "Constructed a high-signal weather portal in React and TypeScript that ingests meteorological APIs and computes localized severity thresholds for air quality, tides, and UV exposure.",
+    subtitle: "Smart Weather Intelligence Platform | SIH 2026",
+    shortDescription: "A weather forecasting and climate telemetry dashboard built for Smart India Hackathon (SIH 2026) by Team Algnite.",
+    longDescription: "Mausam was developed for the Smart India Hackathon (SIH 2026) by Team Algnite. It unifies weather forecasts, localized AQI metrics, UV levels, soil moisture estimates, and sea condition forecasts into a clean, accessible interface.",
+    whyItExists: "Critical weather data is often spread across separate government portals. We built Mausam to pull essential climate telemetry, air quality alerts, and coastal tide estimates into one place for farmers, fishermen, and local residents.",
+    whatIBuilt: "I built the responsive weather portal in React and TypeScript, connecting it to meteorological APIs and setting up localized alert thresholds for air quality, tides, and UV exposure.",
     category: "Weather & Geospatial Systems",
     categoryLabel: "Weather & Geospatial Systems",
     categoryFilter: "FULL-STACK",
@@ -196,10 +208,10 @@ export const PROJECTS: ProjectItem[] = [
     name: "Sayam Mukherjee Interactive Portfolio",
     title: "Sayam Mukherjee Interactive Portfolio",
     subtitle: "Interactive Portfolio & Systems UI Architecture",
-    shortDescription: "Personal developer portfolio featuring clean editorial typography, live GitHub repository synchronization, and responsive design.",
-    longDescription: "An interactive, high-performance developer portfolio built with React, TypeScript, Tailwind CSS, Express, and Motion. Features cached GitHub repository synchronization, language breakdown analysis, command palette shortcuts, and fluid cross-device responsiveness.",
-    whyItExists: "Created to present authentic, verified software systems and live GitHub repository metadata in a bespoke, high-performance web experience, eliminating generic templates and mock data.",
-    whatIBuilt: "Engineered a full-stack web application with client-side GitHub caching, fluid clamp() typography, dark/light editorial aesthetics, and modular sub-second cold loads.",
+    shortDescription: "My personal developer portfolio built with React, TypeScript, and Tailwind CSS, featuring live GitHub synchronization.",
+    longDescription: "My personal portfolio designed from scratch to show real codebases, verified GitHub activity, and documented engineering notes without relying on boilerplate templates or fake telemetry.",
+    whyItExists: "I wanted a clear, fast, and authentic web presence that accurately reflects what I work on, what I study at KIIT, and what I build.",
+    whatIBuilt: "Built the complete frontend using React, TypeScript, and Tailwind CSS, configured Vite build optimizations, and implemented client-side caching for GitHub API data.",
     category: "Personal Portfolio & Systems UI",
     categoryLabel: "Personal Portfolio & Systems UI",
     categoryFilter: "FULL-STACK",
@@ -243,10 +255,10 @@ export const PROJECTS: ProjectItem[] = [
     name: "YOLO / Edge Computer Vision",
     title: "YOLO / Edge Computer Vision",
     subtitle: "Real-Time Edge Object Detection & Motion Tracking Pipeline",
-    shortDescription: "Autonomous edge computer vision pipeline detecting real-time object movement vectors and spatial tracking.",
-    longDescription: "A focused computer vision pipeline combining lightweight YOLOv8 models with OpenCV stream processing. Designed to run efficiently on compute-constrained edge hardware, generating real-time bounding vectors, trajectory estimates, and spatial movement metadata for autonomous monitoring without cloud latency.",
-    whyItExists: "Cloud-hosted computer vision creates high latency, high bandwidth costs, and privacy vulnerabilities. Edge processing enables instantaneous detection and offline spatial tracking.",
-    whatIBuilt: "Constructed a modular Python pipeline combining YOLOv8 model inference with OpenCV frame processing to compute real-time velocity vectors and bounding track telemetry directly on hardware.",
+    shortDescription: "An edge computer vision pipeline pairing lightweight YOLOv8 models with OpenCV for real-time motion and object tracking.",
+    longDescription: "A computer vision experiment combining compact YOLOv8 models with OpenCV frame processing to run directly on hardware. It computes bounding boxes, movement vectors, and trajectory estimates locally without relying on cloud servers.",
+    whyItExists: "Sending video streams to the cloud introduces latency and bandwidth costs. Running inference locally on the device enables immediate tracking and keeps camera feeds private.",
+    whatIBuilt: "I built a Python pipeline combining YOLOv8 inference with OpenCV frame processing to calculate object velocity vectors and track movement paths directly on local hardware.",
     category: "Edge Computer Vision & Tracking",
     categoryLabel: "Edge Computer Vision & Tracking",
     categoryFilter: "AI / ML",

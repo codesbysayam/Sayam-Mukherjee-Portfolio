@@ -2,6 +2,7 @@ import { useEffect, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
+import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import { 
   X, ExternalLink, Github, Star, GitFork, Check, 
   Layers, Terminal, Cpu, Calendar, Code, CheckCircle2 
@@ -141,6 +142,11 @@ function ProjectCaseStudyModalComponent({
             </div>
           )}
 
+          {/* Technical Effort & Metrics Summary (e.g. for OPERON) */}
+          {project.metrics && (
+            <ProjectMetricsSummary metrics={project.metrics} projectName={project.title} />
+          )}
+
           {/* Key Capabilities */}
           {project.highlights && project.highlights.length > 0 && (
             <div className="space-y-2.5">
@@ -229,7 +235,7 @@ function ProjectCaseStudyModalComponent({
               className="btn btn-secondary"
             >
               <Github className="w-4 h-4" />
-              <span>Repository on GitHub ↗</span>
+              <span>View on GitHub ↗</span>
             </a>
 
             {/* ONLY show live demo if liveUrl exists */}
@@ -241,7 +247,7 @@ function ProjectCaseStudyModalComponent({
                 className="btn btn-primary"
               >
                 <ExternalLink className="w-4 h-4" />
-                <span>Launch Live Deployment ↗</span>
+                <span>Open Project ↗</span>
               </a>
             )}
           </div>

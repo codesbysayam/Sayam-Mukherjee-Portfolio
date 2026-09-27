@@ -1625,7 +1625,7 @@ export default function AdminDashboard() {
                       <input
                         type="text"
                         required
-                        placeholder="Weekly Deep Learning Brief — YOLOv8 Optimizations"
+                        placeholder="Weekly Deep Learning Brief | YOLOv8 Optimizations"
                         value={newsSubject}
                         onChange={(e) => setNewsSubject(e.target.value)}
                         className="w-full bg-zinc-900 border border-zinc-850 rounded-xl px-3 py-2 text-white outline-none"

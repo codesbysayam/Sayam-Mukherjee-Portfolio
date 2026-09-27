@@ -343,7 +343,7 @@
     "happyClients": "15"
   },
   "socials": {
-    "linkedin": "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
+    "linkedin": "https://www.linkedin.com/in/sayammukherjee-portfolio/",
     "github": "https://github.com/codesbysayam",
     "instagram": "https://www.instagram.com/_.wrick._/",
     "instagramSecondary": "https://www.instagram.com/obsidianoptics.in/",
@@ -361,7 +361,7 @@
       "company": "uni",
       "country": "",
       "phone": "",
-      "subject": "Portfolio Contact — Freelance — Wrick Mukherjee",
+      "subject": "Portfolio Contact | Freelance | Wrick Mukherjee",
       "topic": "Freelance",
       "message": "sdfgvyhujuoikjogiy",
       "budget": "",
@@ -380,7 +380,7 @@
       "company": "Tech Innovations",
       "country": "",
       "phone": "",
-      "subject": "Portfolio Contact — Internship — Alex Rivers",
+      "subject": "Portfolio Contact | Internship | Alex Rivers",
       "topic": "Internship",
       "message": "Hi Sayam, I would love to discuss an AI internship opportunity with you.",
       "budget": "",
@@ -398,7 +398,7 @@
       "company": "KIIT",
       "country": "N/A",
       "phone": "N/A",
-      "subject": "Portfolio Contact — Internship",
+      "subject": "Portfolio Contact | Internship",
       "message": "I am interested",
       "budget": "N/A",
       "timeline": "Internship",
@@ -4128,12 +4128,174 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 42
+    },
+    {
+      "id": "visit_1790239498308_w1gx",
+      "timestamp": "2026-09-24T08:44:58.308Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 112
+    },
+    {
+      "id": "visit_1790239498363_2454",
+      "timestamp": "2026-09-24T08:44:58.363Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 74
+    },
+    {
+      "id": "visit_1790239498366_42bj",
+      "timestamp": "2026-09-24T08:44:58.366Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 63
+    },
+    {
+      "id": "visit_1790239498370_skfk",
+      "timestamp": "2026-09-24T08:44:58.370Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 148
+    },
+    {
+      "id": "visit_1790240759708_sate",
+      "timestamp": "2026-09-24T09:05:59.708Z",
+      "page": "CERTIFICATES Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 36
+    },
+    {
+      "id": "visit_1790346791042_n05h",
+      "timestamp": "2026-09-25T14:33:11.042Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 59
+    },
+    {
+      "id": "visit_1790346791046_1e4z",
+      "timestamp": "2026-09-25T14:33:11.046Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 133
+    },
+    {
+      "id": "visit_1790346791054_gocy",
+      "timestamp": "2026-09-25T14:33:11.054Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 115
+    },
+    {
+      "id": "visit_1790346791068_hopg",
+      "timestamp": "2026-09-25T14:33:11.068Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 87
+    },
+    {
+      "id": "visit_1790347651741_ebo0",
+      "timestamp": "2026-09-25T14:47:31.741Z",
+      "page": "CERTIFICATES Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 34
+    },
+    {
+      "id": "visit_1790492231582_syk5",
+      "timestamp": "2026-09-27T06:57:11.582Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 96
+    },
+    {
+      "id": "visit_1790492231586_l096",
+      "timestamp": "2026-09-27T06:57:11.586Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 50
+    },
+    {
+      "id": "visit_1790492231637_cdnx",
+      "timestamp": "2026-09-27T06:57:11.637Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 69
+    },
+    {
+      "id": "visit_1790492231685_58x2",
+      "timestamp": "2026-09-27T06:57:11.685Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 99
+    },
+    {
+      "id": "visit_1790492232975_xaw1",
+      "timestamp": "2026-09-27T06:57:12.975Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 55
+    },
+    {
+      "id": "visit_1790492232982_j84v",
+      "timestamp": "2026-09-27T06:57:12.982Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 131
+    },
+    {
+      "id": "visit_1790492232993_zd6f",
+      "timestamp": "2026-09-27T06:57:12.993Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 52
+    },
+    {
+      "id": "visit_1790492233073_djad",
+      "timestamp": "2026-09-27T06:57:13.073Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 96
     }
   ],
   "certificateVault": [
     {
       "id": "dataforge-2026-memory-in-motion",
-      "title": "DataForge 2026 — Memory in Motion",
+      "title": "DataForge 2026 | Memory in Motion",
       "issuer": "Kharagpur Data Analytics Group (KDAG), IIT Kharagpur",
       "event": "DataForge 2026",
       "platform": "Unstop",
@@ -4163,8 +4325,96 @@
       "updatedAt": "2026-02-15T00:00:00.000Z"
     },
     {
+      "id": "gdg-kiit-operon-2026",
+      "category": "COMPETITIONS",
+      "title": "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
+      "issuer": "GDG on Campus KIIT",
+      "event": "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
+      "year": 2026,
+      "date": "8–9 August 2026",
+      "issueDate": "2026",
+      "track": "Track A | Business Process Automation",
+      "project": "OPERON | Autonomous Operations, Human-Controlled",
+      "team": "Team Nexus",
+      "teamMembers": [
+        "Sayam Mukherjee",
+        "Sounak Chowdhury",
+        "Gourab Biswas",
+        "Aarush Roy"
+      ],
+      "description": "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
+      "fullDescription": "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A | Business Process Automation, the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
+      "contribution": "Sayam Mukherjee developed the OPERON website from scratch, implementing the product interface and workflow into a usable application.",
+      "skills": [
+        "Agentic Systems",
+        "Business Process Automation",
+        "Multi-Agent Systems",
+        "Human-in-the-Loop"
+      ],
+      "tags": [
+        "Agentic Systems",
+        "Business Process Automation",
+        "Multi-Agent Systems",
+        "Human-in-the-Loop"
+      ],
+      "credentialUrl": "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
+      "verificationStatus": "LINK AVAILABLE",
+      "featured": true,
+      "createdAt": "2026-08-09T00:00:00.000Z",
+      "updatedAt": "2026-08-09T00:00:00.000Z"
+    },
+    {
+      "id": "kiit-grade-report-2025-26",
+      "title": "First-Year Grade Report",
+      "issuer": "Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar",
+      "category": "ACADEMIC RECORD",
+      "year": 2025,
+      "session": "2025–26",
+      "credentialType": "Grade Report",
+      "issueDate": "2025",
+      "description": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
+      "fullDescription": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
+      "subjects": [
+        "Chemistry",
+        "English",
+        "Basic Electronics",
+        "Chemistry Lab",
+        "Engineering Lab",
+        "Workshop",
+        "Communication Lab",
+        "Basic Electrical Engineering",
+        "Creativity,Innovation and Entreprneurship",
+        "Sports and Yoga",
+        "Transforms and Numerical Methods",
+        "Physics",
+        "Physics Lab",
+        "Differential Equations and Linear Algebra",
+        "Science of Living Systems",
+        "Environmental Science",
+        "Engineering Drawing and Graphics",
+        "Programming Lab",
+        "Basic Civil Engineering",
+        "Optimization Technique"
+      ],
+      "credentialUrl": "https://diverse-plum-xc5wzkru.edgeone.dev/",
+      "skills": [
+        "Engineering Sciences",
+        "Mathematics",
+        "Programming",
+        "Laboratory Work"
+      ],
+      "tags": [
+        "20 Subjects",
+        "2025–26"
+      ],
+      "verificationStatus": "LINK AVAILABLE",
+      "featured": false,
+      "createdAt": "2025-06-01T00:00:00.000Z",
+      "updatedAt": "2025-06-01T00:00:00.000Z"
+    },
+    {
       "id": "comp-toycathon-2021",
-      "title": "National Finalist — Toycathon",
+      "title": "National Finalist | Toycathon",
       "issuer": "Ministry of Education & AICTE, Govt. of India",
       "category": "COMPETITIONS",
       "description": "Reached the National Grand Finale among thousands of competing collegiate teams in the national Toycathon innovation challenge.",
@@ -4182,7 +4432,7 @@
     },
     {
       "id": "comp-technex-iit-bhu",
-      "title": "Multi-Event Finalist — Technex'26",
+      "title": "Multi-Event Finalist | Technex'26",
       "issuer": "IIT (BHU) Varanasi",
       "category": "COMPETITIONS",
       "description": "Qualified for the final rounds across 5 out of 6 technical challenges in Technex, the annual technical festival of IIT (BHU).",
@@ -4197,24 +4447,6 @@
       "featured": true,
       "createdAt": "2026-02-01T00:00:00.000Z",
       "updatedAt": "2026-02-01T00:00:00.000Z"
-    },
-    {
-      "id": "ach-kiit-academic-excellence",
-      "title": "First-Year Academic Excellence (9.06 CGPA)",
-      "issuer": "Kalinga Institute of Industrial Technology, Bhubaneswar",
-      "category": "ACHIEVEMENTS",
-      "description": "Maintained a 9.06 cumulative grade point average across the first year of Computer Science and Engineering curriculum.",
-      "issueDate": "2024",
-      "skills": [
-        "Data Structures",
-        "Algorithms",
-        "Mathematics for CS",
-        "Digital Systems"
-      ],
-      "verificationStatus": "VERIFIED",
-      "featured": true,
-      "createdAt": "2024-07-01T00:00:00.000Z",
-      "updatedAt": "2024-07-01T00:00:00.000Z"
     },
     {
       "id": "ach-cbse-class-10",

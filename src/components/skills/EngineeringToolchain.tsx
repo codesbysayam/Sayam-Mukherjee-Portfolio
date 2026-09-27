@@ -48,7 +48,7 @@ export function EngineeringToolchain() {
       <div className="space-y-2">
         <div className="flex items-center gap-3">
           <span className="text-xs font-mono font-semibold uppercase tracking-[0.14em] text-cyan-400">
-            09 — ENGINEERING TOOLCHAIN
+            09 · ENGINEERING TOOLCHAIN
           </span>
           <span className="h-px w-12 bg-zinc-800" />
           <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider">

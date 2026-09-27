@@ -187,12 +187,20 @@ export function useGithub() {
       }
     };
 
+    // Periodic background sync every 5 minutes while user is on the site
+    const periodicTimer = setInterval(() => {
+      if (typeof document !== "undefined" && document.visibilityState === "visible" && !inFlightPromise) {
+        fetchAllGitHubData(false);
+      }
+    }, 5 * 60 * 1000);
+
     if (typeof document !== "undefined") {
       document.addEventListener("visibilitychange", handleVisibilityChange);
     }
 
     return () => {
       listeners.delete(setState);
+      clearInterval(periodicTimer);
       if (typeof document !== "undefined") {
         document.removeEventListener("visibilitychange", handleVisibilityChange);
       }

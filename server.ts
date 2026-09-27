@@ -53,7 +53,7 @@ function getGeminiClient(): GoogleGenAI {
 }
 
 const SAYAM_SYSTEM_INSTRUCTION = `
-You are Sayam Mukherjee's Interactive AI Representative—a helpful, highly capable, and tech-focused AI agent.
+You are Sayam Mukherjee's Interactive AI Representative, a helpful, highly capable, and tech-focused AI assistant.
 Your purpose is to assist recruiters, clients, and students visiting Sayam's portfolio. You answer questions accurately about his skills, experience, projects, and educational background.
 
 SAYAM'S BACKGROUND:
@@ -68,7 +68,7 @@ SAYAM'S VERIFIED REAL PROJECTS:
 1. "OPERON": Autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations, combining multi-agent AI with human-in-the-loop governance (TypeScript, Node.js, Express, React).
 2. "SayamSolves": Algorithmic problem solving and consistent daily DSA practice solving LeetCode challenges in C++ with structured complexity notes (C++, Algorithms, Data Structures).
 3. "MAUSAM": Smart India Hackathon (SIH 2026) Project by Team Algnite. Weather forecasting and localized climate analytics dashboard with real-time AQI, UV index, soil moisture, and meteorological telemetry (React, TypeScript, Tailwind CSS, Weather APIs, Python).
-4. "Sayam Mukherjee — Interactive Portfolio": Personal developer portfolio featuring dark/light liquid glass aesthetics, live GitHub activity telemetry, and responsive micro-interactions (React, TypeScript, Tailwind CSS, Express, Vite, Motion).
+4. "Sayam Mukherjee | Interactive Portfolio": Personal developer portfolio featuring dark/light liquid glass aesthetics, live GitHub activity telemetry, and responsive micro-interactions (React, TypeScript, Tailwind CSS, Express, Vite, Motion).
 5. "YOLO / YOLOv8 Edge Computer Vision": Autonomous edge camera pipeline detecting movement vectors and spatial telemetry using lightweight YOLOv8 models optimized for edge hardware (Python, OpenCV, YOLOv8, PyTorch).
 
 SAYAM'S SKILLS & TOOLKIT:
@@ -403,7 +403,7 @@ app.post("/api/contact", (req, res) => {
   timestamps.push(now);
   contactSubmissionRateLimits.set(ip, timestamps);
 
-  const resolvedSubject = subject || (topic ? `Portfolio Contact — ${topic} — ${resolvedFirstName} ${resolvedLastName}`.trim() : "No Subject Specified");
+  const resolvedSubject = subject || (topic ? `Portfolio Contact | ${topic} | ${resolvedFirstName} ${resolvedLastName}`.trim() : "No Subject Specified");
   const resolvedCompany = company || organization || "";
 
   const newMessage = {
@@ -430,7 +430,7 @@ app.post("/api/contact", (req, res) => {
   saveDatabase();
 
   // Automated contact notification logging
-  console.log(`[Email Hub] Recorded contact message from ${resolvedFirstName} (${email}) — Subject: ${resolvedSubject}`);
+  console.log(`[Email Hub] Recorded contact message from ${resolvedFirstName} (${email}) | Subject: ${resolvedSubject}`);
 
   res.json({ success: true, message: newMessage });
 });
@@ -705,6 +705,147 @@ function getLocalGitHubSnapshot(): any {
   return null;
 }
 
+/**
+ * Dynamically fetches live GitHub statistics for codesbysayam with automatic fallback.
+ * Keeps telemetry updated while completely protecting against rate-limiting or network outage.
+ */
+async function getDynamicGitHubSnapshot(force = false): Promise<any> {
+  const now = Date.now();
+  if (!force && TELEMETRY_CACHE.github.data && (now - TELEMETRY_CACHE.github.timestamp < CACHE_TTL_MS)) {
+    return TELEMETRY_CACHE.github.data;
+  }
+
+  try {
+    const headers: Record<string, string> = {
+      "User-Agent": "Sayam-Mukherjee-Portfolio-Engine",
+      "Accept": "application/vnd.github.v3+json",
+    };
+    if (process.env.GITHUB_TOKEN) {
+      headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
+    }
+
+    const [userRes, reposRes, eventsRes] = await Promise.all([
+      fetch("https://api.github.com/users/codesbysayam", { headers, signal: AbortSignal.timeout(6000) }).catch(() => null),
+      fetch("https://api.github.com/users/codesbysayam/repos?sort=pushed&per_page=30", { headers, signal: AbortSignal.timeout(6000) }).catch(() => null),
+      fetch("https://api.github.com/users/codesbysayam/events/public?per_page=30", { headers, signal: AbortSignal.timeout(6000) }).catch(() => null),
+    ]);
+
+    if (userRes && userRes.ok && reposRes && reposRes.ok) {
+      const user = await userRes.json();
+      const repos = await reposRes.json();
+      let events: any[] = [];
+      if (eventsRes && eventsRes.ok) {
+        try {
+          events = await eventsRes.json();
+        } catch {}
+      }
+
+      const languages: Record<string, Record<string, number>> = {};
+      let totalStars = 0;
+      let totalForks = 0;
+
+      const formattedRepos = Array.isArray(repos)
+        ? repos.map((r: any) => {
+            totalStars += r.stargazers_count || 0;
+            totalForks += r.forks_count || 0;
+            if (r.language) {
+              languages[r.full_name || `codesbysayam/${r.name}`] = {
+                [r.language]: 10000,
+              };
+            }
+            return {
+              id: r.id,
+              name: r.name,
+              full_name: r.full_name || `codesbysayam/${r.name}`,
+              html_url: r.html_url || `https://github.com/codesbysayam/${r.name}`,
+              description: r.description,
+              language: r.language,
+              stargazers_count: r.stargazers_count || 0,
+              forks_count: r.forks_count || 0,
+              updated_at: r.updated_at,
+              pushed_at: r.pushed_at || r.updated_at,
+              created_at: r.created_at,
+              fork: r.fork || false,
+              topics: r.topics || [],
+            };
+          })
+        : VERIFIED_GITHUB_BASELINE.repositories;
+
+      const formattedEvents = Array.isArray(events)
+        ? events.map((ev: any) => ({
+            id: ev.id,
+            type: ev.type,
+            repo: ev.repo?.name || "codesbysayam/codesbysayam",
+            created_at: ev.created_at,
+            public: ev.public ?? true,
+            payload: ev.payload || {},
+          }))
+        : [];
+
+      const dynamicSnapshot = {
+        source: "github-live-api",
+        owner: "codesbysayam",
+        profile: {
+          login: user.login || "codesbysayam",
+          name: user.name || VERIFIED_GITHUB_BASELINE.name,
+          avatar_url: user.avatar_url || VERIFIED_GITHUB_BASELINE.avatarUrl,
+          html_url: user.html_url || "https://github.com/codesbysayam",
+          bio: user.bio || VERIFIED_GITHUB_BASELINE.bio,
+          public_repos: user.public_repos ?? formattedRepos.length,
+          followers: user.followers || 0,
+          following: user.following || 0,
+        },
+        totalStars,
+        totalForks,
+        repositories: formattedRepos,
+        events: formattedEvents,
+        languages: Object.keys(languages).length > 0 ? languages : (getLocalGitHubSnapshot()?.languages || {}),
+        syncedAt: new Date().toISOString(),
+        status: "ok",
+        isLive: true,
+      };
+
+      TELEMETRY_CACHE.github = {
+        timestamp: now,
+        data: dynamicSnapshot,
+      };
+      console.log(`[GitHub Telemetry] Dynamically updated: ${formattedRepos.length} repos, ${totalStars} stars`);
+      return dynamicSnapshot;
+    }
+  } catch (err: any) {
+    console.warn("[GitHub Telemetry] Dynamic fetch error:", err?.message || err);
+  }
+
+  const local = getLocalGitHubSnapshot();
+  if (local) {
+    TELEMETRY_CACHE.github = {
+      timestamp: now,
+      data: local,
+    };
+    return local;
+  }
+
+  return {
+    source: "Verified Baseline",
+    owner: "codesbysayam",
+    profile: {
+      login: "codesbysayam",
+      name: VERIFIED_GITHUB_BASELINE.name,
+      avatar_url: VERIFIED_GITHUB_BASELINE.avatarUrl,
+      html_url: "https://github.com/codesbysayam",
+      bio: VERIFIED_GITHUB_BASELINE.bio,
+      public_repos: VERIFIED_GITHUB_BASELINE.repositories.length,
+      followers: 0,
+      following: 0,
+    },
+    repositories: VERIFIED_GITHUB_BASELINE.repositories,
+    events: [],
+    languages: {},
+    syncedAt: new Date().toISOString(),
+    status: "ok",
+  };
+}
+
 // Verified authentic fallbacks based on real GitHub repository data
 const VERIFIED_GITHUB_BASELINE = {
   username: "codesbysayam",
@@ -895,37 +1036,21 @@ const LANGUAGE_COLOR_MAP: Record<string, string> = {
   Shell: "#89e051"
 };
 
-// 8. Static GitHub Snapshot Endpoints (Browser -> /github-data.json)
-app.get(["/github-data.json", "/data/github.json", "/api/github-data"], (req, res) => {
-  const snapshot = getLocalGitHubSnapshot();
-  if (snapshot) {
-    res.setHeader("Cache-Control", "public, max-age=300");
+// 8. Static & Dynamic GitHub Snapshot Endpoints (Browser -> /github-data.json)
+app.get(["/github-data.json", "/data/github.json", "/api/github-data"], async (req, res) => {
+  try {
+    const force = req.query.t !== undefined;
+    const snapshot = await getDynamicGitHubSnapshot(force);
+    res.setHeader("Cache-Control", "public, max-age=180");
     return res.json(snapshot);
+  } catch (err) {
+    return res.json(getLocalGitHubSnapshot() || VERIFIED_GITHUB_BASELINE);
   }
-  return res.json({
-    source: "GitHub",
-    owner: "codesbysayam",
-    profile: {
-      login: "codesbysayam",
-      name: VERIFIED_GITHUB_BASELINE.name,
-      avatar_url: VERIFIED_GITHUB_BASELINE.avatarUrl,
-      html_url: "https://github.com/codesbysayam",
-      bio: VERIFIED_GITHUB_BASELINE.bio,
-      public_repos: VERIFIED_GITHUB_BASELINE.repositories.length,
-      followers: 0,
-      following: 0
-    },
-    repositories: VERIFIED_GITHUB_BASELINE.repositories,
-    events: [],
-    languages: {},
-    syncedAt: new Date().toISOString(),
-    status: "ok"
-  });
 });
 
-// 9. Live GitHub Profile and Telemetry Proxy (Read from public/data/github.json)
-app.get("/api/github/profile", (req, res) => {
-  const snapshot = getLocalGitHubSnapshot();
+// 9. Live GitHub Profile and Telemetry Proxy
+app.get("/api/github/profile", async (req, res) => {
+  const snapshot = await getDynamicGitHubSnapshot();
   if (snapshot) {
     const profile = snapshot.profile || {};
     const repos = snapshot.repositories || [];
@@ -1001,8 +1126,8 @@ app.get("/api/github/profile", (req, res) => {
 });
 
 // Dedicated endpoint for authentic GitHub repository language byte distribution (from snapshot)
-app.get("/api/github/languages", (req, res) => {
-  const snapshot = getLocalGitHubSnapshot();
+app.get("/api/github/languages", async (req, res) => {
+  const snapshot = await getDynamicGitHubSnapshot();
   if (snapshot && snapshot.languages) {
     const aggregatedBytes: Record<string, number> = {};
     for (const repoName of Object.keys(snapshot.languages)) {
@@ -1026,7 +1151,7 @@ app.get("/api/github/languages", (req, res) => {
     return res.json({
       languages,
       totalBytes,
-      source: "github-snapshot",
+      source: snapshot.source || "github-live",
       lastSynced: snapshot.syncedAt || new Date().toISOString()
     });
   }
@@ -1048,11 +1173,14 @@ app.get("/api/github/languages", (req, res) => {
 // Backward-compatible alias for existing callers
 app.get("/api/github-stats", async (req, res) => {
   try {
-    // Return verified stats matching the real GitHub profile (4 public repos)
+    const snapshot = await getDynamicGitHubSnapshot();
+    const repos = snapshot.repositories || [];
+    const totalStars = snapshot.totalStars ?? 0;
+    const totalForks = snapshot.totalForks ?? 0;
     res.json({
-      repositories: 4,
-      stars: 0,
-      forks: 0,
+      repositories: repos.length || 4,
+      stars: totalStars,
+      forks: totalForks,
       commitsThisYear: null,
       languages: [
         { name: "TypeScript", percent: 97.6 },
@@ -1061,21 +1189,27 @@ app.get("/api/github-stats", async (req, res) => {
         { name: "HTML", percent: 0.1 },
         { name: "C++", percent: 0.1 }
       ],
-      pinnedRepos: [
-        { name: "sayam-solves", stars: 0, description: "Daily coding challenges solved by Sayam in C++.", language: "C++" },
-        { name: "mausam", stars: 0, description: "Weather forecasting and localized climate analytics dashboard for Smart India Hackathon 2026.", language: "TypeScript" },
-        { name: "Sayam-Mukherjee-Portfolio", stars: 0, description: "Interactive AI-powered portfolio showcasing skills, projects, verified telemetry, and engineering journey.", language: "TypeScript" },
-        { name: "Operon", stars: 0, description: "Autonomous operations platform with multi-agent AI workflows.", language: "TypeScript" }
-      ]
+      pinnedRepos: repos.slice(0, 4).map((r: any) => ({
+        name: r.name,
+        stars: r.stargazers_count || 0,
+        description: r.description || "",
+        language: r.language || "TypeScript"
+      }))
     });
   } catch {
-    res.status(500).json({ error: "Failed to gather GitHub statistics" });
+    res.json({
+      repositories: 4,
+      stars: 0,
+      forks: 0,
+      languages: [{ name: "TypeScript", percent: 100 }],
+      pinnedRepos: []
+    });
   }
 });
 
 // Realtime GitHub proxy endpoints for front-end clients (Read from snapshot)
-app.get("/api/github/user", (req, res) => {
-  const snapshot = getLocalGitHubSnapshot();
+app.get("/api/github/user", async (req, res) => {
+  const snapshot = await getDynamicGitHubSnapshot();
   if (snapshot && snapshot.profile) {
     return res.json({
       ...snapshot.profile,
@@ -1102,8 +1236,8 @@ app.get("/api/github/user", (req, res) => {
   });
 });
 
-app.get("/api/github/repos", (req, res) => {
-  const snapshot = getLocalGitHubSnapshot();
+app.get("/api/github/repos", async (req, res) => {
+  const snapshot = await getDynamicGitHubSnapshot();
   if (snapshot && Array.isArray(snapshot.repositories) && snapshot.repositories.length > 0) {
     return res.json(snapshot.repositories);
   }
@@ -1124,8 +1258,8 @@ app.get("/api/github/repos", (req, res) => {
   })));
 });
 
-app.get("/api/github/events", (req, res) => {
-  const snapshot = getLocalGitHubSnapshot();
+app.get("/api/github/events", async (req, res) => {
+  const snapshot = await getDynamicGitHubSnapshot();
   if (snapshot && Array.isArray(snapshot.events) && snapshot.events.length > 0) {
     return res.json(snapshot.events.map((ev: any) => ({
       id: ev.id,
@@ -1450,6 +1584,12 @@ async function run() {
       }
     });
   }
+
+  // Warm up dynamic GitHub stats on startup and refresh periodically
+  getDynamicGitHubSnapshot(true).catch((e) => console.warn("Initial GitHub warmup error:", e));
+  setInterval(() => {
+    getDynamicGitHubSnapshot(true).catch((e) => console.warn("Periodic GitHub sync error:", e));
+  }, CACHE_TTL_MS);
 
   httpServer.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);

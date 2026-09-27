@@ -181,7 +181,7 @@ export function EcosystemPage() {
           level="h1"
           eyebrow="System Architecture · Process &amp; Relationships"
           title={<>Engineering Ecosystem <br /><span className="text-zinc-400 dark:text-zinc-500 font-normal">&amp; System Blueprints</span></>}
-          description="Software is rarely an isolated card—it is an interconnected ecosystem of state machines, telemetry pipelines, mathematical invariants, and human-in-the-loop governance."
+          description="Software is rarely built in isolation; it works best as an interconnected system of state machines, telemetry pipelines, mathematical invariants, and clear human oversight."
         />
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-zinc-500 pt-1">
@@ -197,7 +197,7 @@ export function EcosystemPage() {
       <section className="space-y-6">
         <div className="space-y-2">
           <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 tracking-wide">
-            Phase 01 — Delivery Lifecycle
+            Phase 01 · Delivery Lifecycle
           </span>
           <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
             The Engineering Pipeline
@@ -272,7 +272,7 @@ export function EcosystemPage() {
       <section className="space-y-6">
         <div className="space-y-2">
           <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-            PHASE 02 — ARCHITECTURAL BLUEPRINTS
+            PHASE 02 · ARCHITECTURAL BLUEPRINTS
           </span>
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
             <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
@@ -465,7 +465,7 @@ export function EcosystemPage() {
       <section className="space-y-6">
         <div className="space-y-2">
           <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-            PHASE 03 — INTERDISCIPLINARY COUPLING
+            PHASE 03 · INTERDISCIPLINARY COUPLING
           </span>
           <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
             Relational Interconnect Matrix
@@ -526,7 +526,7 @@ export function EcosystemPage() {
       <section className="space-y-6">
         <div className="space-y-2">
           <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-            PHASE 04 — RAPID COLLABORATION CASE STUDY
+            PHASE 04 · RAPID COLLABORATION CASE STUDY
           </span>
           <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
             Smart India Hackathon (SIH 2026) Architecture

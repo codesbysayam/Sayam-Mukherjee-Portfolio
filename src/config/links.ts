@@ -12,7 +12,7 @@ export const LINKS = {
 
   // Primary Developer Profiles
   github: "https://github.com/codesbysayam",
-  linkedin: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
+  linkedin: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
   leetcode: "https://leetcode.com/u/sayammukherjee/",
   codolio: "https://codolio.com/profile/codesbysayam",
   youtube: "https://youtube.com/@technicalaz",

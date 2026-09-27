@@ -70,7 +70,7 @@ export const PROFILE_DATA: ProfileData = {
     github: "https://github.com/codesbysayam",
     leetcode: "https://leetcode.com/u/codesbysayam/",
     codolio: "https://codolio.com/profile/codesbysayam",
-    linkedin: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
+    linkedin: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
     youtube: "https://youtube.com/@technicalaz",
     instagram: "https://www.instagram.com/_.wrick._/",
     email: "wrickbusiness@gmail.com"

@@ -2,6 +2,7 @@ import { memo, useMemo } from "react";
 import { ArrowUpRight, RotateCw, Star, GitFork, Github, GitCommit, GitBranch, Terminal, Activity, Zap, Radio } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
 import { usePortfolio } from "../context/PortfolioContext";
+import { siteContent, SOCIAL_LINKS } from "../data/siteContent";
 import {
   formatRelativeTime,
   formatSyncAge,
@@ -118,30 +119,22 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
             {/* Main Editorial Headline */}
             <h1 
               className="font-extrabold tracking-tight font-display text-zinc-900 dark:text-white leading-[1.05]"
-              style={{ fontSize: "clamp(3rem, 6vw, 6.5rem)" }}
+              style={{ fontSize: "clamp(2.75rem, 5.5vw, 5.5rem)" }}
             >
-              Designing the Next{" "}
-              <span className={
-                isLight
-                  ? "text-transparent bg-clip-text bg-gradient-to-r from-purple-700 via-indigo-600 to-cyan-700"
-                  : "text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-300"
-              }>
-                Standard of Software
-              </span>
+              {siteContent.hero.title}
             </h1>
 
             {/* Role Subtitle */}
             <p 
-              className="font-mono mt-4 font-semibold tracking-tight text-zinc-800 dark:text-zinc-200"
+              className="font-mono mt-3 font-semibold tracking-tight text-purple-700 dark:text-purple-400"
               style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.35rem)" }}
             >
-              I am a Future AI Engineer.
+              {siteContent.hero.subtitle}
             </p>
 
-            {/* 2-Sentence Summary of Actual Focus */}
+            {/* Clear summary of actual focus */}
             <p className="text-sm sm:text-base leading-relaxed max-w-xl mt-3 text-zinc-600 dark:text-zinc-400 font-normal">
-              Engineering intelligent systems, full-stack architectures, algorithms, and machine learning models. 
-              Currently in 2nd Year (3rd Sem) B.Tech CSE at KIIT University, building purposeful software with verified GitHub codebases.
+              {siteContent.hero.description}
             </p>
 
             {/* Two Actions Only: Primary & Secondary */}
@@ -151,17 +144,17 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                 onClick={onViewWork}
                 className="btn btn-primary"
               >
-                <span>View my work</span>
+                <span>{siteContent.hero.primaryCta}</span>
                 <ArrowUpRight className="w-4 h-4" />
               </button>
               <a
-                href="https://github.com/codesbysayam"
+                href={SOCIAL_LINKS.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-secondary"
               >
                 <Github className="w-4 h-4" />
-                <span>GitHub ↗</span>
+                <span>{siteContent.hero.secondaryCta}</span>
               </a>
             </div>
           </div>

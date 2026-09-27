@@ -82,7 +82,7 @@ export const SAYAM_DATA = {
     happyClients: '10'
   },
   socials: {
-    linkedin: 'https://www.linkedin.com/in/sayam-mukherjee-b96209324/',
+    linkedin: 'https://www.linkedin.com/in/sayammukherjee-portfolio/',
     github: 'https://github.com/codesbysayam',
     instagram: 'https://www.instagram.com/_.wrick._/',
     youtube: 'https://youtube.com/@technicalaz',

@@ -548,7 +548,7 @@ export const SKILLS_DATA: SkillItem[] = [
 
 /**
  * Genuine learning and development roadmap areas.
- * Real active learning focus — NO fake percentage completions.
+ * Focused on deliberate practice without artificial completion metrics.
  */
 export const CURRENTLY_DEVELOPING: LearningItem[] = [
   {

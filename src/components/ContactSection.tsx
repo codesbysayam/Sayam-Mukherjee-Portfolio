@@ -21,7 +21,7 @@ const SOCIAL_PROFILES = [
   {
     name: "LinkedIn",
     description: "Connect professionally",
-    url: "https://www.linkedin.com/in/sayam-mukherjee-b96209324/",
+    url: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
     icon: Linkedin,
     bgClass: "bg-cyan-500/10 border-cyan-500/20 text-cyan-400",
     hoverBorder: "hover:border-cyan-500/40"
@@ -57,7 +57,7 @@ export default function ContactSection() {
   const businessEmail = "wrickbusiness@gmail.com";
   const contactEmail = "sayammukherjee1506@gmail.com";
   const primaryEmail = businessEmail;
-  const verifiedLinkedin = "https://www.linkedin.com/in/sayam-mukherjee-b96209324/";
+  const verifiedLinkedin = "https://www.linkedin.com/in/sayammukherjee-portfolio/";
   const verifiedGithub = "https://github.com/codesbysayam";
   const verifiedCodolio = "https://codolio.com/profile/codesbysayam";
 
@@ -145,7 +145,7 @@ export default function ContactSection() {
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
-          title: "Sayam Mukherjee — Portfolio",
+          title: "Sayam Mukherjee | Portfolio",
           text: "Explore Sayam Mukherjee's portfolio.",
           url: window.location.href
         });

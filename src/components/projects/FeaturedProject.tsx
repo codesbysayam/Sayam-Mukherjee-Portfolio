@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
+import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import { 
   Star, GitFork, ExternalLink, Github, ArrowRight, 
   Sparkles, CheckCircle2, Award, Calendar, Layers 
@@ -86,17 +87,22 @@ function FeaturedProjectComponent({
           <div className="p-3.5 rounded-xl bg-zinc-900/30 dark:bg-white/[0.03] border border-zinc-800/80 dark:border-white/[0.07] space-y-1">
             <span className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 font-semibold flex items-center gap-1.5">
               <Layers className="w-3 h-3" />
-              Why this system matters
+              Why I Built This
             </span>
             <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
               {project.whyItExists}
             </p>
           </div>
 
+          {/* Technical Effort & Metrics Summary (e.g. for OPERON) */}
+          {project.metrics && (
+            <ProjectMetricsSummary metrics={project.metrics} projectName={project.title} />
+          )}
+
           {/* Technology Badges */}
           <div className="space-y-2">
             <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold block">
-              Verified Architecture Stack
+              Technologies Used
             </span>
             <div className="flex flex-wrap gap-1.5">
               {project.techStack.map((tech, idx) => (

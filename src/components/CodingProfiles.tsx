@@ -374,7 +374,7 @@ export default function CodingProfiles() {
                   AUTHENTIC ALGORITHMIC ROADMAP
                 </span>
                 <p className="text-xs text-zinc-400 leading-relaxed font-sans">
-                  "I prioritize deep conceptual understanding over inflated problem counts. Solving 4 problems thoroughly—analyzing pointer mechanics, memory layouts, and runtime complexity—lays the foundation for sustainable engineering problem solving as I advance into B.Tech CSE algorithms."
+                  "I prioritize deep conceptual understanding over inflated problem counts. Solving problems thoroughly, analyzing pointer mechanics, memory layouts, and runtime complexity, lays the foundation for solid engineering problem-solving as I advance through B.Tech CSE algorithms."
                 </p>
               </div>
 
@@ -499,7 +499,7 @@ export default function CodingProfiles() {
                 </div>
 
                 <a 
-                  href="https://www.linkedin.com/in/sayam-mukherjee-b96209324/"
+                  href="https://www.linkedin.com/in/sayammukherjee-portfolio/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="bg-[#0077b5] hover:bg-[#006699] text-white text-xs font-mono font-semibold px-4.5 py-2.5 rounded-xl transition-colors flex items-center gap-1.5 cursor-pointer shadow-md"
