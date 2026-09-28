@@ -7,29 +7,11 @@
     "avatar_url": "https://avatars.githubusercontent.com/u/85777731?v=4",
     "html_url": "https://github.com/codesbysayam",
     "bio": "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
-    "public_repos": 10,
+    "public_repos": 7,
     "followers": 1,
     "following": 0
   },
   "repositories": [
-    {
-      "id": 1368247830,
-      "name": "codesbysayam",
-      "full_name": "codesbysayam/codesbysayam",
-      "description": "Personal GitHub profile and developer portfolio of Sayam Mukherjee.",
-      "html_url": "https://github.com/codesbysayam/codesbysayam",
-      "homepage": null,
-      "language": null,
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-13T09:39:25Z",
-      "updated_at": "2026-09-28T09:42:56Z",
-      "pushed_at": "2026-09-28T09:42:52Z"
-    },
     {
       "id": 1355576736,
       "name": "Sayam-Mukherjee-Portfolio",
@@ -45,8 +27,44 @@
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-28T06:51:07Z",
-      "pushed_at": "2026-09-28T06:51:03Z"
+      "updated_at": "2026-09-28T19:54:17Z",
+      "pushed_at": "2026-09-28T19:54:12Z"
+    },
+    {
+      "id": 1368247830,
+      "name": "codesbysayam",
+      "full_name": "codesbysayam/codesbysayam",
+      "description": "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects. 🚀💻 | Code • Create • Learn • Build |",
+      "html_url": "https://github.com/codesbysayam/codesbysayam",
+      "homepage": "",
+      "language": null,
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-13T09:39:25Z",
+      "updated_at": "2026-09-28T19:00:57Z",
+      "pushed_at": "2026-09-28T09:42:52Z"
+    },
+    {
+      "id": 1393521230,
+      "name": "CAMPUSCONNECT_1273",
+      "full_name": "codesbysayam/CAMPUSCONNECT_1273",
+      "description": "🎓 A full-stack college event management platform that helps students discover, search, filter, and register for campus events while enabling organizers to create, manage, update, and monitor events through a dedicated dashboard. 📅 Built for a seamless, responsive campus experience.",
+      "html_url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
+      "homepage": "https://campusconnect1273.vercel.app/",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-28T18:08:23Z",
+      "updated_at": "2026-09-28T18:43:30Z",
+      "pushed_at": "2026-09-28T18:11:59Z"
     },
     {
       "id": 1346623047,
@@ -103,24 +121,6 @@
       "pushed_at": "2026-09-07T06:02:43Z"
     },
     {
-      "id": 1370345267,
-      "name": "RouteLedger",
-      "full_name": "codesbysayam/RouteLedger",
-      "description": "Commercial Driver Route & Hours-of-Service Planner",
-      "html_url": "https://github.com/codesbysayam/RouteLedger",
-      "homepage": "https://routeledger-six.vercel.app",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-14T17:56:01Z",
-      "updated_at": "2026-09-26T13:06:19Z",
-      "pushed_at": "2026-09-16T19:29:42Z"
-    },
-    {
       "id": 1361090226,
       "name": "Memory-in-Motion",
       "full_name": "codesbysayam/Memory-in-Motion",
@@ -137,60 +137,6 @@
       "created_at": "2026-09-08T07:59:51Z",
       "updated_at": "2026-09-26T13:06:17Z",
       "pushed_at": "2026-09-23T06:12:15Z"
-    },
-    {
-      "id": 1388557215,
-      "name": "Campus-Connect",
-      "full_name": "codesbysayam/Campus-Connect",
-      "description": "Ignithon 2.0",
-      "html_url": "https://github.com/codesbysayam/Campus-Connect",
-      "homepage": "https://campus-connect-omega-nine.vercel.app",
-      "language": null,
-      "fork": true,
-      "archived": false,
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-26T05:08:55Z",
-      "updated_at": "2026-09-26T13:06:15Z",
-      "pushed_at": "2026-09-26T03:38:24Z"
-    },
-    {
-      "id": 1388762391,
-      "name": "CAMPUSCONNECT_1273",
-      "full_name": "codesbysayam/CAMPUSCONNECT_1273",
-      "description": "IGNITHON2.0",
-      "html_url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
-      "homepage": "https://campusconnect1273.vercel.app/",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-26T07:18:58Z",
-      "updated_at": "2026-09-26T13:06:14Z",
-      "pushed_at": "2026-09-26T07:21:31Z"
-    },
-    {
-      "id": 1388586720,
-      "name": "Campus_Connect",
-      "full_name": "codesbysayam/Campus_Connect",
-      "description": "Ignithon 2.0",
-      "html_url": "https://github.com/codesbysayam/Campus_Connect",
-      "homepage": null,
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-26T05:29:45Z",
-      "updated_at": "2026-09-26T13:06:13Z",
-      "pushed_at": "2026-09-26T07:55:47Z"
     }
   ],
   "events": [
@@ -206,83 +152,6 @@
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-09-27T07:42:53Z",
-      "public": true
-    },
-    {
-      "id": "22240227599",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T07:53:01Z",
-      "public": true
-    },
-    {
-      "id": "22214847854",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T07:17:42Z",
-      "public": true
-    },
-    {
-      "id": "22214806203",
-      "type": "CreateEvent",
-      "repo": "codesbysayam/CAMPUSCONNECT_1273",
-      "created_at": "2026-09-26T07:21:32Z",
-      "public": true
-    },
-    {
-      "id": "22214424760",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T07:06:32Z",
-      "public": true
-    },
-    {
-      "id": "22213186626",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T06:37:39Z",
-      "public": true
-    },
-    {
-      "id": "22212435489",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T07:55:47Z",
-      "public": true
-    },
-    {
-      "id": "22212015502",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T06:05:18Z",
-      "public": true
-    },
-    {
-      "id": "22212011288",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T07:48:03Z",
-      "public": true
-    },
-    {
-      "id": "22204657515",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T05:30:17Z",
-      "public": true
-    },
-    {
-      "id": "22204633217",
-      "type": "CreateEvent",
-      "repo": "codesbysayam/Campus_Connect",
-      "created_at": "2026-09-26T05:29:50Z",
-      "public": true
-    },
-    {
-      "id": "15799352093",
-      "type": "ForkEvent",
-      "repo": "ishikajais27/CampusConnect",
-      "created_at": "2026-09-26T05:08:55Z",
       "public": true
     },
     {
@@ -382,39 +251,24 @@
       "repo": "codesbysayam/mausam",
       "created_at": "2026-09-20T20:53:20Z",
       "public": true
-    },
-    {
-      "id": "21682307918",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam",
-      "created_at": "2026-09-20T20:36:07Z",
-      "public": true
-    },
-    {
-      "id": "21665903277",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-09-19T20:41:27Z",
-      "public": true
-    },
-    {
-      "id": "21665225857",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-09-19T20:23:51Z",
-      "public": true
     }
   ],
   "languages": {
-    "codesbysayam/codesbysayam": {},
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
-      "TypeScript": 1185783,
+      "TypeScript": 1239595,
       "CSS": 57972,
       "JavaScript": 12277,
       "C": 6359,
       "Python": 5783,
       "Jupyter Notebook": 5438,
       "HTML": 3030
+    },
+    "codesbysayam/codesbysayam": {},
+    "codesbysayam/CAMPUSCONNECT_1273": {
+      "TypeScript": 210511,
+      "CSS": 9694,
+      "HTML": 995,
+      "JavaScript": 118
     },
     "codesbysayam/mausam": {
       "TypeScript": 5138656,
@@ -435,31 +289,13 @@
     "codesbysayam/sayam-solves": {
       "C++": 2037
     },
-    "codesbysayam/RouteLedger": {
-      "TypeScript": 323332,
-      "Python": 90890,
-      "CSS": 6949,
-      "HTML": 1497
-    },
     "codesbysayam/Memory-in-Motion": {
       "TypeScript": 1527729,
       "CSS": 20062,
       "Python": 12367,
       "HTML": 3089
-    },
-    "codesbysayam/CAMPUSCONNECT_1273": {
-      "TypeScript": 111325,
-      "CSS": 8804,
-      "HTML": 995,
-      "JavaScript": 118
-    },
-    "codesbysayam/Campus_Connect": {
-      "TypeScript": 142971,
-      "CSS": 8895,
-      "HTML": 995,
-      "JavaScript": 118
     }
   },
-  "syncedAt": "2026-09-28T15:25:10.980Z",
+  "syncedAt": "2026-09-28T21:58:49.111Z",
   "status": "ok"
 }
