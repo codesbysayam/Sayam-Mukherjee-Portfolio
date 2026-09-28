@@ -7,7 +7,7 @@ import {
 import { SectionHeader } from "../common/SectionHeader";
 import { Card } from "../common/Card";
 
-type BlueprintId = "operon" | "mausam" | "yolo" | "portfolio";
+type BlueprintId = "operon" | "sayamsolves" | "mausam" | "yolo" | "portfolio";
 
 interface SystemBlueprint {
   id: BlueprintId;
@@ -62,6 +62,40 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
       { label: "Architecture", value: "Multi-Agent DAG" },
       { label: "Core Runtime", value: "Node.js / TypeScript" },
       { label: "Governance", value: "Human-in-the-Loop" }
+    ]
+  },
+  sayamsolves: {
+    id: "sayamsolves",
+    title: "SayamSolves Algorithmic Engine & DSA Architecture",
+    subtitle: "High-performance C++ algorithmic problem solving and data structures repository",
+    category: "Algorithmic Engineering & C++ DSA",
+    status: "Active Practice",
+    purpose: "Systematic algorithmic repository cataloging optimal C++ solutions, time/space complexity invariants, graph traversal mechanics, and dynamic programming patterns across competitive platforms.",
+    nodes: [
+      { name: "Problem Invariant Modeling", description: "Constraint deconstruction, bounds checking & edge case mapping", type: "input" },
+      { name: "Data Structure Selection", description: "Segment trees, Trie, Fenwick trees, Disjoint Set Union", type: "process" },
+      { name: "Complexity Optimization Engine", description: "Pruning redundant branches, cache locality & vector allocations", type: "process" },
+      { name: "Asymptotic Proof & Verification", description: "Formal big-O time and space complexity validation", type: "decision" },
+      { name: "Annotated Solution Corpus", description: "Documented C++ templates and pattern classification", type: "storage" },
+      { name: "Verified Execution Matrix", description: "Sub-millisecond runtime execution on benchmark test suites", type: "output" }
+    ],
+    connections: [
+      "Problem Constraints -> Evaluates worst-case bounds to select asymptotic targets",
+      "Structure Selection -> Instantiates optimal memory layout (Trees, Graphs, Queues)",
+      "Optimization -> Applies two-pointer, DP bitmask, or greedy invariants",
+      "Proof Engine -> Verifies monotonic invariants and non-trivial edge conditions",
+      "Execution -> Benchmarks against LeetCode & Codeforces automated grading harnesses"
+    ],
+    invariants: [
+      "Strict asymptotic guarantees: all solutions verified against worst-case input bounds",
+      "Zero dynamic memory leaks: RAII and modern C++ standard library structures",
+      "Deterministic reproducible benchmarks with sub-millisecond execution runtime"
+    ],
+    repoUrl: "https://github.com/codesbysayam/sayam-solves",
+    stats: [
+      { label: "Language", value: "Modern C++ (C++17/20)" },
+      { label: "Specialization", value: "Algorithms & Data Structures" },
+      { label: "Evaluation", value: "Verified Invariant Proofs" }
     ]
   },
   mausam: {
@@ -185,7 +219,7 @@ export function EcosystemPage() {
         />
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-zinc-500 pt-1">
-          <span className="font-semibold text-zinc-800 dark:text-zinc-200">4 Verified Architectures</span>
+          <span className="font-semibold text-zinc-800 dark:text-zinc-200">5 Verified Architectures</span>
           <span>·</span>
           <span>End-to-End Delivery Lifecycle</span>
           <span>·</span>
@@ -283,7 +317,7 @@ export function EcosystemPage() {
             </span>
           </div>
           <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans">
-            Deep-dive into the architectural mechanics, node flows, and mathematical invariants of my four flagship platforms.
+            Deep-dive into the architectural mechanics, node flows, and mathematical invariants of my five flagship platforms.
           </p>
         </div>
 
@@ -291,6 +325,7 @@ export function EcosystemPage() {
         <div className="flex flex-wrap gap-2 pt-1">
           {[
             { id: "operon", label: "Operon: Multi-Agent AI", icon: Cpu },
+            { id: "sayamsolves", label: "SayamSolves: C++ Algorithms", icon: Binary },
             { id: "mausam", label: "Mausam: Weather Telemetry", icon: CloudRain },
             { id: "yolo", label: "YOLO: Edge Computer Vision", icon: Eye },
             { id: "portfolio", label: "Portfolio: Full-Stack Architecture", icon: Globe }

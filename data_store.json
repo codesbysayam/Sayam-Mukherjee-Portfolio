@@ -4290,6 +4290,312 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 96
+    },
+    {
+      "id": "visit_1790621534810_qi2k",
+      "timestamp": "2026-09-28T18:52:14.810Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 91
+    },
+    {
+      "id": "visit_1790621534815_6arm",
+      "timestamp": "2026-09-28T18:52:14.815Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 112
+    },
+    {
+      "id": "visit_1790621534818_e9bi",
+      "timestamp": "2026-09-28T18:52:14.818Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 102
+    },
+    {
+      "id": "visit_1790621534822_dxrg",
+      "timestamp": "2026-09-28T18:52:14.822Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 117
+    },
+    {
+      "id": "visit_1790622129477_8o07",
+      "timestamp": "2026-09-28T19:02:09.477Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 87
+    },
+    {
+      "id": "visit_1790622129568_vgl2",
+      "timestamp": "2026-09-28T19:02:09.568Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 77
+    },
+    {
+      "id": "visit_1790622129806_ofss",
+      "timestamp": "2026-09-28T19:02:09.806Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 116
+    },
+    {
+      "id": "visit_1790622129812_v728",
+      "timestamp": "2026-09-28T19:02:09.812Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 41
+    },
+    {
+      "id": "visit_1790622147024_1qsd",
+      "timestamp": "2026-09-28T19:02:27.024Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 36
+    },
+    {
+      "id": "visit_1790622147027_qhs6",
+      "timestamp": "2026-09-28T19:02:27.027Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 92
+    },
+    {
+      "id": "visit_1790622147365_3lx9",
+      "timestamp": "2026-09-28T19:02:27.365Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 143
+    },
+    {
+      "id": "visit_1790622147368_qhe0",
+      "timestamp": "2026-09-28T19:02:27.368Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 71
+    },
+    {
+      "id": "visit_1790622205200_5enz",
+      "timestamp": "2026-09-28T19:03:25.200Z",
+      "page": "ABOUT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 94
+    },
+    {
+      "id": "visit_1790622208509_ez93",
+      "timestamp": "2026-09-28T19:03:28.509Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 37
+    },
+    {
+      "id": "visit_1790622209599_vkv5",
+      "timestamp": "2026-09-28T19:03:29.599Z",
+      "page": "ABOUT Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 144
+    },
+    {
+      "id": "visit_1790622213503_90oo",
+      "timestamp": "2026-09-28T19:03:33.503Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 36
+    },
+    {
+      "id": "visit_1790622317034_26vg",
+      "timestamp": "2026-09-28T19:05:17.034Z",
+      "page": "SKILLS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 139
+    },
+    {
+      "id": "visit_1790622339668_rzep",
+      "timestamp": "2026-09-28T19:05:39.668Z",
+      "page": "ECOSYSTEM Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 100
+    },
+    {
+      "id": "visit_1790622423144_mzb1",
+      "timestamp": "2026-09-28T19:07:03.145Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 129
+    },
+    {
+      "id": "visit_1790622423149_9kt2",
+      "timestamp": "2026-09-28T19:07:03.149Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 100
+    },
+    {
+      "id": "visit_1790622423152_jsic",
+      "timestamp": "2026-09-28T19:07:03.152Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 69
+    },
+    {
+      "id": "visit_1790622423155_p9y9",
+      "timestamp": "2026-09-28T19:07:03.155Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 68
+    },
+    {
+      "id": "visit_1790622427877_4b50",
+      "timestamp": "2026-09-28T19:07:07.877Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 43
+    },
+    {
+      "id": "visit_1790622431998_9s37",
+      "timestamp": "2026-09-28T19:07:11.998Z",
+      "page": "JOURNAL Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 73
+    },
+    {
+      "id": "visit_1790622433870_5mqn",
+      "timestamp": "2026-09-28T19:07:13.870Z",
+      "page": "CERTIFICATES Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 149
+    },
+    {
+      "id": "visit_1790622749157_ungz",
+      "timestamp": "2026-09-28T19:12:29.157Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 39
+    },
+    {
+      "id": "visit_1790623051489_s0y7",
+      "timestamp": "2026-09-28T19:17:31.489Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 135
+    },
+    {
+      "id": "visit_1790623051495_8z82",
+      "timestamp": "2026-09-28T19:17:31.496Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 118
+    },
+    {
+      "id": "visit_1790623051498_9h7x",
+      "timestamp": "2026-09-28T19:17:31.498Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 148
+    },
+    {
+      "id": "visit_1790623051543_c1xl",
+      "timestamp": "2026-09-28T19:17:31.543Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 58
+    },
+    {
+      "id": "visit_1790623345365_17sk",
+      "timestamp": "2026-09-28T19:22:25.365Z",
+      "page": "ECOSYSTEM Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 115
+    },
+    {
+      "id": "visit_1790623347053_65md",
+      "timestamp": "2026-09-28T19:22:27.053Z",
+      "page": "SKILLS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 100
+    },
+    {
+      "id": "visit_1790623427263_8y45",
+      "timestamp": "2026-09-28T19:23:47.263Z",
+      "page": "ECOSYSTEM Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 92
+    },
+    {
+      "id": "visit_1790623431968_krp8",
+      "timestamp": "2026-09-28T19:23:51.968Z",
+      "page": "CERTIFICATES Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 63
     }
   ],
   "certificateVault": [
@@ -4449,39 +4755,53 @@
       "updatedAt": "2026-02-01T00:00:00.000Z"
     },
     {
-      "id": "ach-cbse-class-10",
-      "title": "CBSE Class 10 Board Examination (92.6%)",
-      "issuer": "Central Board of Secondary Education",
-      "category": "ACHIEVEMENTS",
-      "description": "Graduated secondary school with distinction scoring 92.6% in the nationwide CBSE Secondary School Examination.",
-      "issueDate": "2022",
-      "skills": [
-        "Mathematics",
-        "Science",
-        "Analytical Reasoning"
-      ],
-      "verificationStatus": "VERIFIED",
-      "featured": false,
-      "createdAt": "2024-01-01T00:00:00.000Z",
-      "updatedAt": "2024-01-01T00:00:00.000Z"
-    },
-    {
-      "id": "ach-cbse-class-12",
-      "title": "CBSE Class 12 Board Examination (86.2%)",
-      "issuer": "Central Board of Secondary Education",
-      "category": "ACHIEVEMENTS",
-      "description": "Completed higher secondary education in the Physics, Chemistry, and Mathematics (PCM) stream with 86.2%.",
-      "issueDate": "2024",
-      "skills": [
-        "Advanced Physics",
-        "Calculus",
+      "id": "kiit-grade-report-2025-26",
+      "title": "First-Year Grade Report",
+      "issuer": "Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar",
+      "category": "ACADEMIC RECORD",
+      "year": 2025,
+      "session": "2025–26",
+      "credentialType": "Grade Report",
+      "issueDate": "2025",
+      "description": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
+      "fullDescription": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
+      "subjects": [
         "Chemistry",
-        "Computer Science"
+        "English",
+        "Basic Electronics",
+        "Chemistry Lab",
+        "Engineering Lab",
+        "Workshop",
+        "Communication Lab",
+        "Basic Electrical Engineering",
+        "Creativity,Innovation and Entreprneurship",
+        "Sports and Yoga",
+        "Transforms and Numerical Methods",
+        "Physics",
+        "Physics Lab",
+        "Differential Equations and Linear Algebra",
+        "Science of Living Systems",
+        "Environmental Science",
+        "Engineering Drawing and Graphics",
+        "Programming Lab",
+        "Basic Civil Engineering",
+        "Optimization Technique"
       ],
-      "verificationStatus": "VERIFIED",
+      "credentialUrl": "https://diverse-plum-xc5wzkru.edgeone.dev/",
+      "skills": [
+        "Engineering Sciences",
+        "Mathematics",
+        "Programming",
+        "Laboratory Work"
+      ],
+      "tags": [
+        "20 Subjects",
+        "2025–26"
+      ],
+      "verificationStatus": "LINK AVAILABLE",
       "featured": false,
-      "createdAt": "2024-07-01T00:00:00.000Z",
-      "updatedAt": "2024-07-01T00:00:00.000Z"
+      "createdAt": "2025-06-01T00:00:00.000Z",
+      "updatedAt": "2025-06-01T00:00:00.000Z"
     },
     {
       "id": "ach-table-tennis-championship",

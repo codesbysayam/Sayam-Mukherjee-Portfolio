@@ -182,32 +182,6 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2025-06-01T00:00:00.000Z"
   },
   {
-    id: "ach-cbse-class-10",
-    title: "CBSE Class 10 Board Examination (92.6%)",
-    issuer: "Central Board of Secondary Education",
-    category: "ACHIEVEMENTS",
-    description: "Graduated secondary school with distinction scoring 92.6% in the nationwide CBSE Secondary School Examination.",
-    issueDate: "2022",
-    skills: ["Mathematics", "Science", "Analytical Reasoning"],
-    verificationStatus: "VERIFIED",
-    featured: false,
-    createdAt: "2024-01-01T00:00:00.000Z",
-    updatedAt: "2024-01-01T00:00:00.000Z"
-  },
-  {
-    id: "ach-cbse-class-12",
-    title: "CBSE Class 12 Board Examination (86.2%)",
-    issuer: "Central Board of Secondary Education",
-    category: "ACHIEVEMENTS",
-    description: "Completed higher secondary education in the Physics, Chemistry, and Mathematics (PCM) stream with 86.2%.",
-    issueDate: "2024",
-    skills: ["Advanced Physics", "Calculus", "Chemistry", "Computer Science"],
-    verificationStatus: "VERIFIED",
-    featured: false,
-    createdAt: "2024-07-01T00:00:00.000Z",
-    updatedAt: "2024-07-01T00:00:00.000Z"
-  },
-  {
     id: "ach-table-tennis-championship",
     title: "Inter-School Table Tennis Champion (3x 1st Position)",
     issuer: "Inter-School Sports Championship",

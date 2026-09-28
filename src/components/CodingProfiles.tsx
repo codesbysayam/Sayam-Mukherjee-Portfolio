@@ -5,10 +5,8 @@ import {
   ExternalLink, Code, Layers, Sparkles, Terminal, CheckCircle2,
   GitFork, ShieldCheck, Flame, AlertCircle, RefreshCw
 } from "lucide-react";
-import GitHubActivityHeatmap from "./GitHubActivityHeatmap";
-import LanguageRingChart from "./LanguageRingChart";
+import GitHubStats from "./GitHubStats";
 import { Unavailable } from "./Unavailable";
-import { fetchGitHubStats, GitHubStatsData, VERIFIED_GITHUB_FALLBACK } from "../services/github";
 import { fetchLeetCodeStats, LeetCodeStatsData, VERIFIED_LEETCODE_FALLBACK } from "../services/leetcode";
 import { fetchCodolioProfile, CodolioProfileData, VERIFIED_CODOLIO_DATA } from "../services/codolio";
 
@@ -16,37 +14,21 @@ export default function CodingProfiles() {
   const [activeTab, setActiveTab] = useState<'github' | 'leetcode' | 'codolio' | 'linkedin'>('github');
   
   // Real live telemetry states
-  const [githubData, setGithubData] = useState<GitHubStatsData>(VERIFIED_GITHUB_FALLBACK);
   const [leetcodeData, setLeetcodeData] = useState<LeetCodeStatsData>(VERIFIED_LEETCODE_FALLBACK);
   const [codolioData, setCodolioData] = useState<CodolioProfileData>(VERIFIED_CODOLIO_DATA);
   const [loading, setLoading] = useState<boolean>(true);
-  const [refreshingGitHub, setRefreshingGitHub] = useState<boolean>(false);
-
-  const handleRefreshGitHub = async () => {
-    setRefreshingGitHub(true);
-    try {
-      const data = await fetchGitHubStats(true);
-      setGithubData(data);
-    } catch (err) {
-      console.error("Manual GitHub refresh error:", err);
-    } finally {
-      setRefreshingGitHub(false);
-    }
-  };
 
   useEffect(() => {
     let isMounted = true;
     async function loadAllTelemetry() {
       setLoading(true);
       try {
-        const [gh, lc, cd] = await Promise.allSettled([
-          fetchGitHubStats(),
+        const [lc, cd] = await Promise.allSettled([
           fetchLeetCodeStats(),
           fetchCodolioProfile()
         ]);
 
         if (isMounted) {
-          if (gh.status === "fulfilled") setGithubData(gh.value);
           if (lc.status === "fulfilled") setLeetcodeData(lc.value);
           if (cd.status === "fulfilled") setCodolioData(cd.value);
         }
@@ -97,7 +79,7 @@ export default function CodingProfiles() {
               <Github className="w-4 h-4 text-purple-400" />
               <div className="flex flex-col">
                 <span className="text-xs font-bold font-display">GitHub Workspace</span>
-                <span className="text-[10px] text-zinc-500 font-mono">@{githubData.username}</span>
+                <span className="text-[10px] text-zinc-500 font-mono">@codesbysayam</span>
               </div>
             </div>
             <span className="text-[9px] font-mono text-emerald-400 bg-emerald-950/40 px-1.5 py-0.5 rounded border border-emerald-900/40">
@@ -166,137 +148,8 @@ export default function CodingProfiles() {
         <div className="lg:col-span-9">
           {/* GITHUB TAB */}
           {activeTab === 'github' && (
-            <div className="glass-card p-6 md:p-8 rounded-2xl space-y-6">
-              {/* GitHub Metrics Header */}
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-900 pb-5">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-xl bg-zinc-900 border border-zinc-850 flex items-center justify-center">
-                    <Github className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-base font-bold text-white font-display leading-none">
-                      @{githubData.username}
-                    </h3>
-                    <p className="text-[10px] text-zinc-400 font-mono mt-1">
-                      {githubData.name} • {githubData.location || "Kolkata, India"} • {githubData.publicRepos || 4} Public Repositories
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <span className="hidden sm:inline text-[10px] text-zinc-500 font-mono">
-                    Last synced: {githubData.lastSynced}
-                  </span>
-                  <button
-                    onClick={handleRefreshGitHub}
-                    disabled={refreshingGitHub}
-                    className="bg-purple-950/40 hover:bg-purple-900/50 border border-purple-800/50 text-purple-300 hover:text-white text-xs font-mono font-medium px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-                    title="Force refresh real-time GitHub telemetry"
-                  >
-                    <RefreshCw className={`w-3.5 h-3.5 ${refreshingGitHub ? "animate-spin" : ""}`} />
-                    <span>{refreshingGitHub ? "Syncing..." : "Sync Realtime"}</span>
-                  </button>
-                  <a 
-                    href="https://github.com/codesbysayam"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono font-semibold px-4 py-2 rounded-xl transition-colors flex items-center gap-1.5"
-                  >
-                    <span>Verify Profile</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </div>
-
-              {/* Grid statistics (Authentic Counts Only) */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
-                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">PUBLIC REPOSITORIES</span>
-                  <span className="text-xl font-bold text-white block mt-1 font-display">
-                    {githubData.publicRepos || 4}
-                  </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">4 verified repos</span>
-                </div>
-                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">PRIMARY LANGUAGE</span>
-                  <span className="text-xl font-bold text-purple-400 block mt-1 font-display">
-                    TypeScript
-                  </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">&gt;97% repository bytes</span>
-                </div>
-                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">NETWORK NODES</span>
-                  <span className="text-xl font-bold text-cyan-400 block mt-1 font-display">
-                    {githubData.followers} / {githubData.following}
-                  </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">Followers / Following</span>
-                </div>
-                <div className="bg-zinc-900/40 border border-zinc-850 p-3.5 rounded-xl text-center col-span-2 sm:col-span-1">
-                  <span className="text-[9px] text-zinc-500 uppercase font-mono block">TOTAL STARS</span>
-                  <span className="text-xl font-bold text-emerald-400 block mt-1 font-display">
-                    {githubData.totalStars}
-                  </span>
-                  <span className="text-[9px] text-zinc-500 font-mono">Public stars</span>
-                </div>
-              </div>
-
-              {/* Verified Public Repositories & Real Languages */}
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-                <div className="md:col-span-7 space-y-4">
-                  <span className="text-[10px] font-mono uppercase text-zinc-400 tracking-wider block">
-                    VERIFIED PUBLIC REPOSITORIES
-                  </span>
-                  
-                  <div className="space-y-3">
-                    {githubData.repositories.length === 0 ? (
-                      <Unavailable
-                        onRetry={handleRefreshGitHub}
-                        isRetrying={refreshingGitHub}
-                        compact
-                        title="Repositories Unavailable"
-                        status="empty"
-                      />
-                    ) : (
-                      githubData.repositories.map((repo, idx) => (
-                        <div key={idx} className="bg-zinc-950/50 border border-zinc-900/80 p-4 rounded-xl space-y-2 hover:border-purple-500/30 transition-all">
-                          <div className="flex items-center justify-between">
-                            <h4 className="text-xs font-bold text-white font-mono flex items-center gap-1.5">
-                              <Layers className="w-3.5 h-3.5 text-purple-400" />
-                              {repo.name}
-                            </h4>
-                            <a 
-                              href={repo.url} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-[10px] font-mono bg-zinc-900 text-zinc-300 hover:text-white px-2 py-0.5 rounded border border-zinc-800 flex items-center gap-1"
-                            >
-                              <span>Open</span>
-                              <ExternalLink className="w-2.5 h-2.5" />
-                            </a>
-                          </div>
-                          <p className="text-[11px] text-zinc-400 leading-normal">{repo.description}</p>
-                          
-                          <div className="flex items-center gap-3 text-[10px] text-zinc-500 font-mono pt-1">
-                            <span className="text-cyan-400 font-medium">{repo.language}</span>
-                            <span className="flex items-center gap-1"><Star className="w-3 h-3 text-yellow-500" /> {repo.stars} stars</span>
-                            <span className="flex items-center gap-1"><GitFork className="w-3 h-3 text-purple-500" /> {repo.forks} forks</span>
-                          </div>
-                        </div>
-                      ))
-                    )}
-                  </div>
-                </div>
-
-                {/* Real Language Ring Chart */}
-                <div className="md:col-span-5 bg-zinc-950/50 border border-zinc-900/80 p-5 rounded-2xl">
-                  <LanguageRingChart showLegend={true} />
-                </div>
-              </div>
-
-              {/* GitHub Activity Heatmap */}
-              <div className="pt-2">
-                <GitHubActivityHeatmap username="codesbysayam" />
-              </div>
+            <div className="glass-card p-6 md:p-8 rounded-2xl">
+              <GitHubStats />
             </div>
           )}
 

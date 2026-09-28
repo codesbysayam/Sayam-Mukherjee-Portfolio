@@ -121,14 +121,14 @@ export const ABOUT_CONTENT = {
     },
     {
       degree: "Senior Secondary (12th - CBSE)",
-      period: "2025",
+      period: "2024–2025",
       institution: "Aditya Birla Vani Bharati, Rishra, Hooghly",
       scoreLabel: "Percentage",
       score: "86.2%",
     },
     {
       degree: "Secondary (10th - CBSE)",
-      period: "2023",
+      period: "2022–2023",
       institution: "Aditya Birla Vani Bharati, Rishra, Hooghly",
       scoreLabel: "Percentage",
       score: "92.6%",
@@ -511,30 +511,6 @@ export const CERTIFICATES: readonly CertificateContent[] = [
     skills: ["Algorithmic Logic", "Data Analysis", "System Design"],
   },
   {
-    id: "ach-cbse-class-12",
-    title: "CBSE Class 12 Board Examination (86.2%)",
-    issuer: "Central Board of Secondary Education",
-    category: "ACHIEVEMENTS",
-    issueDate: "2024",
-    description:
-      "Completed higher secondary education in the Physics, Chemistry, and Mathematics (PCM) stream with 86.2%.",
-    verificationStatus: "VERIFIED",
-    featured: false,
-    skills: ["Advanced Physics", "Calculus", "Chemistry", "Computer Science"],
-  },
-  {
-    id: "ach-cbse-class-10",
-    title: "CBSE Class 10 Board Examination (92.6%)",
-    issuer: "Central Board of Secondary Education",
-    category: "ACHIEVEMENTS",
-    issueDate: "2022",
-    description:
-      "Graduated secondary school with distinction scoring 92.6% in the nationwide CBSE Secondary School Examination.",
-    verificationStatus: "VERIFIED",
-    featured: false,
-    skills: ["Mathematics", "Science", "Analytical Reasoning"],
-  },
-  {
     id: "ach-table-tennis-championship",
     title: "Inter-School Table Tennis Champion (3x 1st Position)",
     issuer: "Inter-School Sports Championship",
@@ -579,6 +555,10 @@ export const ECOSYSTEM_CONTENT = {
     "Software is rarely built in isolation; it works best as an interconnected ecosystem of state machines, data contracts, and human checkpoints.",
 } as const;
 
+import { JOURNAL_ENTRIES, JournalEntry } from "./journal";
+export { JOURNAL_ENTRIES };
+export type { JournalEntry };
+
 export const CONTACT_CONTENT = {
   title: "Get in Touch",
   subtitle: "Let's connect and discuss software, AI, or opportunities.",
@@ -615,6 +595,7 @@ export const siteContent = {
     subtitle:
       "Verified competition certificates, academic grade records, and hackathon milestones.",
   },
+  journal: JOURNAL_ENTRIES,
   contact: CONTACT_CONTENT,
   footer: FOOTER_CONTENT,
 };

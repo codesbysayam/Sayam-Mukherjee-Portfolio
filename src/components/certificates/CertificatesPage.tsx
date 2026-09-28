@@ -4,6 +4,7 @@ import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 import { usePortfolio } from "../../context/PortfolioContext";
 import CertificateCard from "./CertificateCard";
 import CertificateViewerModal from "./CertificateViewerModal";
+import AcademicRecord from "../AcademicRecord";
 import {
   Award,
   Search,
@@ -222,17 +223,67 @@ export default function CertificatesPage() {
     setSearchQuery("");
   };
 
-  const CATEGORIES: { id: CertificateCategory; label: string }[] = [
-    { id: "ALL", label: "All Credentials" },
-    { id: "ACADEMIC RECORD", label: "Academic Record" },
-    { id: "COMPETITIONS", label: "Competitions" },
-    { id: "ACHIEVEMENTS", label: "Achievements" },
-    { id: "CERTIFICATIONS", label: "Certifications" },
-  ];
+  const statCards = useMemo(() => {
+    const items = [
+      {
+        label: "Total Credentials",
+        count: certificates.length,
+        icon: Award,
+        category: "ALL" as CertificateCategory,
+      },
+      {
+        label: "Competitions",
+        count: stats.competitions,
+        icon: Trophy,
+        category: "COMPETITIONS" as CertificateCategory,
+      },
+      {
+        label: "Achievements",
+        count: stats.achievements,
+        icon: BookOpen,
+        category: "ACHIEVEMENTS" as CertificateCategory,
+      },
+    ];
+
+    if (stats.academic && stats.academic > 0) {
+      items.push({
+        label: "Grade Reports",
+        count: stats.academic,
+        icon: GraduationCap,
+        category: "ACADEMIC RECORD" as CertificateCategory,
+      });
+    }
+
+    if (stats.technical > 0) {
+      items.push({
+        label: "Certifications",
+        count: stats.technical,
+        icon: Layers,
+        category: "CERTIFICATIONS" as CertificateCategory,
+      });
+    }
+
+    return items;
+  }, [certificates.length, stats.competitions, stats.achievements, stats.academic, stats.technical]);
+
+  const CATEGORIES: { id: CertificateCategory; label: string }[] = useMemo(() => {
+    const list: { id: CertificateCategory; label: string }[] = [
+      { id: "ALL", label: "All Credentials" },
+      { id: "COMPETITIONS", label: "Competitions" },
+      { id: "ACHIEVEMENTS", label: "Achievements" },
+    ];
+    if (stats.academic && stats.academic > 0) {
+      list.push({ id: "ACADEMIC RECORD", label: "Grade Reports" });
+    }
+    if (stats.technical > 0) {
+      list.push({ id: "CERTIFICATIONS", label: "Certifications" });
+    }
+    return list;
+  }, [stats.academic, stats.technical]);
 
   return (
     <div
-      className="space-y-8 font-sans pb-20 max-w-[1240px] mx-auto px-4 sm:px-6"
+      className="space-y-12 font-sans pb-20 max-w-[1240px] mx-auto px-4 sm:px-6"
       id="certificates-page"
     >
       {/* 1. EDITORIAL HEADER SECTION */}
@@ -271,57 +322,46 @@ export default function CertificatesPage() {
         </div>
       </header>
 
-      {/* 2. REFINED STATISTICS STRIP */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-        {[
-          {
-            label: "Total Credentials",
-            count: stats.total,
-            icon: Award,
-            category: "ALL" as CertificateCategory,
-          },
-          {
-            label: "Academic Record",
-            count: stats.academic ?? 0,
-            icon: GraduationCap,
-            category: "ACADEMIC RECORD" as CertificateCategory,
-          },
-          {
-            label: "Competitions",
-            count: stats.competitions,
-            icon: Trophy,
-            category: "COMPETITIONS" as CertificateCategory,
-          },
-          {
-            label: "Achievements",
-            count: stats.achievements,
-            icon: BookOpen,
-            category: "ACHIEVEMENTS" as CertificateCategory,
-          },
-          {
-            label: "Certifications",
-            count: stats.technical,
-            icon: Layers,
-            category: "CERTIFICATIONS" as CertificateCategory,
-          },
-        ].map((item, idx) => {
-          const Icon = item.icon;
-          const isSelected = selectedCategory === item.category;
+      {/* 2. DEDICATED ACADEMIC RECORD WIDGET (UNIFIED ACADEMICS) */}
+      <div id="academics-section" className="space-y-4">
+        <AcademicRecord />
+      </div>
 
-          return (
-            <button
-              key={idx}
-              onClick={() => setSelectedCategory(item.category)}
-              className={`rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-2 transition-all text-left border cursor-pointer ${
-                isSelected
-                  ? isLight
-                    ? "bg-purple-50 border-purple-300 ring-1 ring-purple-300"
-                    : "bg-purple-950/20 border-purple-500/40 ring-1 ring-purple-500/30"
-                  : isLight
-                  ? "bg-white hover:bg-slate-50 border-slate-200"
-                  : "bg-[#111318] hover:bg-[#161920] border-white/10"
-              }`}
-            >
+      {/* 3. COMPETITION HONOURS & CREDENTIALS VAULT */}
+      <section className="space-y-6 pt-6 border-t border-zinc-200 dark:border-zinc-800" id="credentials-vault">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-widest text-purple-600 dark:text-purple-400 uppercase">
+            <Trophy className="w-4 h-4 text-purple-500" />
+            <span>COMPETITIONS &amp; VERIFIED CREDENTIALS</span>
+          </div>
+          <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight ${isLight ? "text-slate-900" : "text-white"} font-display`}>
+            Competitions &amp; Milestones
+          </h2>
+          <p className={`text-xs sm:text-sm ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
+            Verified national hackathons, research pathways, and athletic achievements.
+          </p>
+        </div>
+
+        {/* 4. REFINED STATISTICS STRIP */}
+        <div className={`grid grid-cols-2 sm:grid-cols-3 ${statCards.length >= 4 ? "lg:grid-cols-4" : ""} gap-3 sm:gap-4`}>
+          {statCards.map((item, idx) => {
+            const Icon = item.icon;
+            const isSelected = selectedCategory === item.category;
+
+            return (
+              <button
+                key={idx}
+                onClick={() => setSelectedCategory(item.category)}
+                className={`rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-2 transition-all text-left border cursor-pointer ${
+                  isSelected
+                    ? isLight
+                      ? "bg-purple-50 border-purple-300 ring-1 ring-purple-300"
+                      : "bg-purple-950/20 border-purple-500/40 ring-1 ring-purple-500/30"
+                    : isLight
+                    ? "bg-white hover:bg-slate-50 border-slate-200"
+                    : "bg-[#111318] hover:bg-[#161920] border-white/10"
+                }`}
+              >
               <div className="flex items-center justify-between w-full">
                 <span
                   className={`text-xs font-sans font-medium ${
@@ -584,6 +624,7 @@ export default function CertificatesPage() {
           </div>
         )}
       </div>
+    </section>
 
       {/* 5. REFINED MODAL VIEWER */}
       <CertificateViewerModal

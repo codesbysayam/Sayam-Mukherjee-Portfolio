@@ -1,6 +1,7 @@
 import { useState, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { usePortfolio } from "../context/PortfolioContext";
+import AcademicRecord from "./AcademicRecord";
 import { 
   GraduationCap, Award, MapPin, Calendar, Heart, Shield, Compass, 
   Sparkles, CheckCircle2, BookOpen, User, Target, Cpu,
@@ -141,7 +142,7 @@ function AboutSectionComponent() {
     {
       period: "2025",
       title: "86.2% in CBSE Class 12 Board Examinations",
-      description: "Graduated higher secondary with science concentration (Physics, Chemistry, Mathematics, Computer Science).",
+      description: "Completed the CBSE Class 12 Board Examination with 86.2% in the Science stream at Aditya Birla Vani Bharati.",
       category: "Academics",
       icon: GraduationCap,
       status: "past"
@@ -538,57 +539,8 @@ function AboutSectionComponent() {
             transition={{ duration: 0.2 }}
             className="space-y-8"
           >
-            <div className="space-y-1">
-              <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-                ACADEMIC CREDENTIALS
-              </span>
-              <h3 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
-                Formal Education &amp; Academic Honors
-              </h3>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* KIIT University */}
-              <div className="card p-6 space-y-3">
-                <div className="flex items-center justify-between text-xs font-mono text-purple-700 dark:text-purple-400 font-semibold">
-                  <span>2025 – PRESENT</span>
-                  <span className="px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40">UNDERGRADUATE</span>
-                </div>
-                <h4 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
-                  B.Tech in Computer Science Engineering
-                </h4>
-                <p className="text-xs font-mono text-zinc-500">
-                  Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar
-                </p>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans pt-1">
-                  Core coursework in Data Structures &amp; Algorithms, Object-Oriented Programming, Computer Organization, and Discrete Mathematics.
-                </p>
-              </div>
-
-              {/* High School / CBSE */}
-              <div className="card p-6 space-y-3">
-                <div className="flex items-center justify-between text-xs font-mono text-purple-700 dark:text-purple-400 font-semibold">
-                  <span>CBSE BOARD EXAMINATIONS</span>
-                  <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">TOP HONORS</span>
-                </div>
-                <h4 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
-                  Aditya Birla Vani Bharati
-                </h4>
-                <p className="text-xs font-mono text-zinc-500">
-                  Secondary &amp; Senior Secondary Education
-                </p>
-                <div className="pt-2 space-y-1.5 text-xs font-mono">
-                  <div className="flex justify-between p-2.5 rounded-lg bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06]">
-                    <span>Class 10 CBSE Board (2023):</span>
-                    <span className="font-bold text-zinc-900 dark:text-zinc-100">92.6%</span>
-                  </div>
-                  <div className="flex justify-between p-2.5 rounded-lg bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06]">
-                    <span>Class 12 CBSE Board (2025):</span>
-                    <span className="font-bold text-zinc-900 dark:text-zinc-100">86.2%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Unified Academic Hierarchy & Record Widget */}
+            <AcademicRecord />
 
             {/* Key Honors */}
             <div className="space-y-3">

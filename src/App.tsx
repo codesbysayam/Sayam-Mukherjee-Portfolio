@@ -5,7 +5,8 @@ import {
   Brain, Cpu, Layers, Server, Palette, TrendingUp, Sparkles, 
   Github, Linkedin, Instagram, Youtube, Mail, FileText, MapPin, 
   Calendar, GraduationCap, Award, CheckCircle2, ArrowUp, 
-  Send, Clock, Briefcase, Code, Flame, Menu, X, Check, Sun, Moon, Search, BookOpen, Download
+  Send, Clock, Briefcase, Code, Flame, Menu, X, Check, Sun, Moon, Search, BookOpen, Download,
+  AlertTriangle, RotateCcw
 } from "lucide-react";
 
 import { SAYAM_DATA } from "./data";
@@ -17,79 +18,45 @@ import LiveBuildFeed from "./components/LiveBuildFeed";
 import CertificationsSection from "./components/CertificationsSection";
 import ContactSection from "./components/ContactSection";
 import { ErrorBoundary, RootErrorBoundary } from "./components/ErrorBoundary";
+import AppErrorBoundary from "./components/AppErrorBoundary";
+import PageLoading from "./components/PageLoading";
 import SEO from "./components/SEO";
 import { PortfolioProvider, usePortfolio } from "./context/PortfolioContext";
 import CustomCursor from "./components/CustomCursor";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Toast from "./components/Toast";
 import { NAVIGATION, RESUME_URL, SOCIAL_LINKS } from "./data/siteContent";
-
-// Resilient dynamic import wrapper that retries on network interruptions and reloads on stale hashes
-function lazyWithRetry<T extends React.ComponentType<any>>(
-  componentImport: () => Promise<{ default: T }>,
-  componentName = "Component",
-  retries = 3,
-  interval = 400
-): React.LazyExoticComponent<T> {
-  return lazy(() =>
-    new Promise<{ default: T }>((resolve, reject) => {
-      const attempt = (remaining: number) => {
-        componentImport()
-          .then(resolve)
-          .catch((error) => {
-            console.warn(`Dynamic module import failed for ${componentName} (${remaining} retries left):`, error);
-            if (remaining > 0) {
-              setTimeout(() => attempt(remaining - 1), interval * (4 - remaining));
-            } else {
-              const isChunkLoadError =
-                error?.name === "ChunkLoadError" ||
-                /failed to fetch dynamically imported module/i.test(error?.message || "");
-              if (isChunkLoadError && typeof window !== "undefined") {
-                const reloadKey = `portfolio_chunk_reload_${componentName.replace(/\s+/g, "_")}`;
-                const lastReload = sessionStorage.getItem(reloadKey);
-                const now = Date.now();
-                if (!lastReload || now - parseInt(lastReload, 10) > 12000) {
-                  sessionStorage.setItem(reloadKey, String(now));
-                  window.location.reload();
-                  return;
-                }
-              }
-              reject(error);
-            }
-          });
-      };
-      attempt(retries);
-    })
-  );
-}
+import { lazyWithRetry, clearChunkReloadFlag } from "./utils/lazyWithRetry";
 
 // Code-split heavy interactive components with resilient retries
-const ProjectsShowcase = lazyWithRetry(() => import("./components/ProjectsShowcase"), "Projects Showcase");
-const AIChatBot = lazyWithRetry(() => import("./components/AssistantChat"), "AI Chatbot");
-const SkillsSection = lazyWithRetry(() => import("./components/SkillsSection"), "Skills Section");
-const EcosystemSection = lazyWithRetry(() => import("./components/EcosystemSection"), "Ecosystem Section");
-const BlogsSection = lazyWithRetry(() => import("./components/BlogsSection"), "Blogs Section");
-const ContentCreatorSection = lazyWithRetry(() => import("./components/ContentCreatorSection"), "Creator Section");
-const TestimonialsSection = lazyWithRetry(() => import("./components/TestimonialsSection"), "Testimonials Section");
-const AdminDashboard = lazyWithRetry(() => import("./components/AdminDashboard"), "Admin Dashboard");
-const ResumeModal = lazyWithRetry(() => import("./components/ResumeModal"), "Resume Modal");
-const CommandMenu = lazyWithRetry(() => import("./components/CommandMenu"), "Command Menu");
-const CertificatesPage = lazyWithRetry(() => import("./components/certificates/CertificatesPage"), "Certificates Page");
-const CredentialsHomePreview = lazyWithRetry(() => import("./components/certificates/CredentialsHomePreview"), "Credentials Preview");
+const ProjectsShowcase = lazyWithRetry(() => import("./components/ProjectsShowcase"));
+const AIChatBot = lazyWithRetry(() => import("./components/AssistantChat"));
+const SkillsSection = lazyWithRetry(() => import("./components/SkillsSection"));
+const EcosystemSection = lazyWithRetry(() => import("./components/EcosystemSection"));
+const BlogsSection = lazyWithRetry(() => import("./components/BlogsSection"));
+const ContentCreatorSection = lazyWithRetry(() => import("./components/ContentCreatorSection"));
+const TestimonialsSection = lazyWithRetry(() => import("./components/TestimonialsSection"));
+const AdminDashboard = lazyWithRetry(() => import("./components/AdminDashboard"));
+const ResumeModal = lazyWithRetry(() => import("./components/ResumeModal"));
+const CommandMenu = lazyWithRetry(() => import("./components/CommandMenu"));
+const CertificatesPage = lazyWithRetry(() => import("./components/certificates/CertificatesPage"));
+const CredentialsHomePreview = lazyWithRetry(() => import("./components/certificates/CredentialsHomePreview"));
 import PrivacyPage from "./pages/Privacy";
 import TermsPage from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary";
 import SiteFooter from "./components/SiteFooter";
-const CookieConsent = lazyWithRetry(() => import("./components/CookieConsent"), "Cookie Consent");
+const CookieConsent = lazyWithRetry(() => import("./components/CookieConsent"));
 
 export default function App() {
   return (
-    <RootErrorBoundary>
-      <PortfolioProvider>
-        <AppContent />
-      </PortfolioProvider>
-    </RootErrorBoundary>
+    <AppErrorBoundary>
+      <RootErrorBoundary>
+        <PortfolioProvider>
+          <AppContent />
+        </PortfolioProvider>
+      </RootErrorBoundary>
+    </AppErrorBoundary>
   );
 }
 
@@ -193,6 +160,7 @@ function AppContent() {
 
   useEffect(() => {
     trackVisit("Home Portfolio");
+    clearChunkReloadFlag();
   }, []);
 
   const [loadingComplete, setLoadingComplete] = useState(false);
@@ -957,85 +925,82 @@ function AppContent() {
                   <NotFound onNavigateTab={(tab) => navigateToTab(tab as TabType)} />
                 )}
 
-                <Suspense fallback={
-                  <div className="w-full py-16 flex items-center justify-center text-zinc-500 font-mono text-xs">
-                    <div className="w-4 h-4 border-2 border-purple-500/30 border-t-purple-500 rounded-full animate-spin mr-2" />
-                    Rendering view...
-                  </div>
-                }>
-                  {activeTab === "about" && (
-                    <ErrorBoundary sectionName="About Section">
-                      <div className="space-y-10 sm:space-y-14 py-2">
-                        <Reveal delay={0}>
-                          <AboutSection />
-                        </Reveal>
-                        <Reveal delay={0.1}>
-                          <ExperienceSection />
-                        </Reveal>
-                        <Reveal delay={0.15}>
-                          <CertificationsSection onNavigateToCertificates={() => navigateToTab("certificates")} />
-                        </Reveal>
+                <ErrorBoundary sectionName="Main Tab View">
+                  <Suspense fallback={<PageLoading />}>
+                    {activeTab === "about" && (
+                      <ErrorBoundary sectionName="About Section">
+                        <div className="space-y-10 sm:space-y-14 py-2">
+                          <Reveal delay={0}>
+                            <AboutSection />
+                          </Reveal>
+                          <Reveal delay={0.1}>
+                            <ExperienceSection />
+                          </Reveal>
+                          <Reveal delay={0.15}>
+                            <CertificationsSection onNavigateToCertificates={() => navigateToTab("certificates")} />
+                          </Reveal>
+                        </div>
+                      </ErrorBoundary>
+                    )}
+
+                    {activeTab === "skills" && (
+                      <div className="py-2">
+                        <ErrorBoundary sectionName="Skills & Technical Stack">
+                          <SkillsSection onNavigateToProject={(id: string) => navigateToTab("projects")} />
+                        </ErrorBoundary>
                       </div>
-                    </ErrorBoundary>
-                  )}
+                    )}
 
-                  {activeTab === "skills" && (
-                    <div className="py-2">
-                      <ErrorBoundary sectionName="Skills & Technical Stack">
-                        <SkillsSection onNavigateToProject={(id: string) => navigateToTab("projects")} />
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                    {activeTab === "ecosystem" && (
+                      <div className="py-2">
+                        <ErrorBoundary sectionName="Engineering Ecosystem">
+                          <EcosystemSection />
+                        </ErrorBoundary>
+                      </div>
+                    )}
 
-                  {activeTab === "ecosystem" && (
-                    <div className="py-2">
-                      <ErrorBoundary sectionName="Engineering Ecosystem">
-                        <EcosystemSection />
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                    {activeTab === "projects" && (
+                      <div className="py-2 sm:py-4">
+                        <ErrorBoundary sectionName="Projects Showcase">
+                          <Reveal delay={0}>
+                            <ProjectsShowcase />
+                          </Reveal>
+                        </ErrorBoundary>
+                      </div>
+                    )}
 
-                  {activeTab === "projects" && (
-                    <div className="py-2 sm:py-4">
-                      <ErrorBoundary sectionName="Projects Showcase">
-                        <Reveal delay={0}>
-                          <ProjectsShowcase />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                    {activeTab === "certificates" && (
+                      <div className="py-2 sm:py-4">
+                        <ErrorBoundary sectionName="Certificates & Credentials">
+                          <CertificatesPage />
+                        </ErrorBoundary>
+                      </div>
+                    )}
 
-                  {activeTab === "certificates" && (
-                    <div className="py-2 sm:py-4">
-                      <ErrorBoundary sectionName="Certificates & Credentials">
-                        <CertificatesPage />
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                    {activeTab === "journal" && (
+                      <div className="space-y-10 sm:space-y-14 py-2">
+                        <ErrorBoundary sectionName="Journal & Engineering Reflections">
+                          <Reveal delay={0}>
+                            <BlogsSection />
+                          </Reveal>
+                          <Reveal delay={0.1}>
+                            <TestimonialsSection />
+                          </Reveal>
+                        </ErrorBoundary>
+                      </div>
+                    )}
 
-                  {activeTab === "journal" && (
-                    <div className="space-y-10 sm:space-y-14 py-2">
-                      <ErrorBoundary sectionName="Journal & Engineering Reflections">
-                        <Reveal delay={0}>
-                          <BlogsSection />
-                        </Reveal>
-                        <Reveal delay={0.1}>
-                          <TestimonialsSection />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
-
-                  {activeTab === "contact" && (
-                    <div className="w-full py-2">
-                      <ErrorBoundary sectionName="Contact Section">
-                        <Reveal delay={0}>
-                          <ContactSection />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
-                </Suspense>
+                    {activeTab === "contact" && (
+                      <div className="w-full py-2">
+                        <ErrorBoundary sectionName="Contact Section">
+                          <Reveal delay={0}>
+                            <ContactSection />
+                          </Reveal>
+                        </ErrorBoundary>
+                      </div>
+                    )}
+                  </Suspense>
+                </ErrorBoundary>
               </motion.div>
             </AnimatePresence>
           </main>
