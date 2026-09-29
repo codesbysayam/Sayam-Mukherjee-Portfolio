@@ -57,14 +57,18 @@ export const AssistantSuggestions = memo(function AssistantSuggestions({
   disabled = false,
 }: AssistantSuggestionsProps) {
   return (
-    <div className="space-y-2 pt-2 pb-1">
-      <div className="flex items-center justify-between px-0.5">
-        <span className="text-[11px] font-mono uppercase tracking-wider text-zinc-400 dark:text-zinc-500 font-medium">
+    <div className="assistant-suggestions-bar">
+      <div className="flex items-center justify-between pb-1.5 px-0.5">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold">
           Explore
         </span>
       </div>
 
-      <div className="flex flex-wrap gap-1.5" role="group" aria-label="Suggested topics">
+      <div
+        className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none sm:flex-wrap"
+        role="group"
+        aria-label="Suggested topics"
+      >
         {ASSISTANT_SUGGESTIONS.map((item) => {
           const Icon = item.icon;
           return (
@@ -73,9 +77,9 @@ export const AssistantSuggestions = memo(function AssistantSuggestions({
               type="button"
               disabled={disabled}
               onClick={() => onSelect(item.query)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium text-zinc-300 dark:text-zinc-300 bg-zinc-900/80 dark:bg-zinc-900/90 border border-zinc-800/90 hover:border-zinc-700 hover:text-white hover:bg-zinc-850 active:scale-97 transition-all cursor-pointer disabled:opacity-50 disabled:pointer-events-none"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium text-zinc-300 bg-white/[0.04] border border-white/[0.08] hover:border-white/20 hover:text-white hover:bg-white/[0.08] active:scale-97 transition-all cursor-pointer disabled:opacity-40 disabled:pointer-events-none shrink-0"
             >
-              <Icon className="w-3.5 h-3.5 text-zinc-400 group-hover:text-zinc-200" />
+              <Icon className="w-3.5 h-3.5 text-zinc-400" />
               <span>{item.label}</span>
             </button>
           );

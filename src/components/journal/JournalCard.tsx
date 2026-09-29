@@ -6,56 +6,69 @@ interface JournalCardProps {
   entry: JournalEntry;
   onClick: (slug: string) => void;
   featured?: boolean;
+  index?: number;
 }
 
 export const JournalCard = memo(function JournalCard({
   entry,
   onClick,
   featured = false,
+  index,
 }: JournalCardProps) {
+  const indexFormatted = typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
+
   if (featured) {
     return (
       <article
         onClick={() => onClick(entry.slug)}
-        className="group relative rounded-2xl bg-zinc-950/40 dark:bg-zinc-950/50 border border-zinc-800/80 hover:border-zinc-700/90 p-6 sm:p-8 transition-all duration-200 cursor-pointer overflow-hidden backdrop-blur-xs"
-        aria-label={`Featured Journal: ${entry.title}`}
+        className="group relative rounded-2xl bg-gradient-to-b from-white/[0.05] to-white/[0.02] border border-white/[0.12] hover:border-purple-500/40 p-6 sm:p-8 transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-md shadow-xl hover:shadow-2xl hover:shadow-purple-950/20"
+        aria-label={`Featured Note: ${entry.title}`}
       >
-        <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6">
-          <div className="space-y-3.5 max-w-3xl">
-            {/* Metadata row: unboxed, clean typography */}
-            <div className="flex items-center gap-3 text-xs font-mono tracking-wider">
-              <span className="text-zinc-300 dark:text-zinc-300 font-semibold uppercase">
+        {/* Subtle decorative background glow */}
+        <div
+          className="absolute -top-24 -right-24 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none group-hover:bg-purple-500/15 transition-all duration-500"
+          aria-hidden="true"
+        />
+
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-start justify-between gap-6">
+          <div className="space-y-4 max-w-3xl">
+            {/* Metadata row */}
+            <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono tracking-wider">
+              <span className="px-2 py-0.5 rounded-md bg-purple-500/15 text-purple-300 border border-purple-500/25 font-semibold uppercase text-[11px]">
+                Featured Entry
+              </span>
+              <span className="text-zinc-300 font-semibold uppercase">
                 {entry.category}
               </span>
-              <span className="text-zinc-600 dark:text-zinc-500">•</span>
-              <span className="text-zinc-400 dark:text-zinc-400 flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5" />
+              <span className="text-zinc-600" aria-hidden="true">&bull;</span>
+              <span className="text-zinc-400 flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
                 {entry.date}
               </span>
-              <span className="text-zinc-600 dark:text-zinc-500">•</span>
-              <span className="text-zinc-400 dark:text-zinc-400 flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5" />
+              <span className="text-zinc-600" aria-hidden="true">&bull;</span>
+              <span className="text-zinc-400 flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5" aria-hidden="true" />
                 {entry.readingTime}
               </span>
             </div>
 
             {/* Title */}
-            <h3 className="text-xl sm:text-2xl font-bold text-white group-hover:text-zinc-100 font-display tracking-tight leading-snug">
+            <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white group-hover:text-purple-200 font-display tracking-tight leading-snug transition-colors">
               {entry.title}
             </h3>
 
             {/* Summary */}
-            <p className="text-sm text-zinc-300 dark:text-zinc-300 leading-relaxed line-clamp-3">
+            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed line-clamp-3">
               {entry.summary}
             </p>
-          </div>
 
-          {/* Action indicator */}
-          <div className="shrink-0 pt-2 lg:pt-0">
-            <span className="inline-flex items-center gap-1.5 text-xs font-semibold font-mono text-zinc-300 group-hover:text-white transition-colors">
-              <span>Read Journal</span>
-              <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-            </span>
+            {/* Read action */}
+            <div className="pt-2">
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold font-mono text-purple-300 group-hover:text-white transition-colors">
+                <span>Read Full Entry</span>
+                <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </span>
+            </div>
           </div>
         </div>
       </article>
@@ -65,36 +78,45 @@ export const JournalCard = memo(function JournalCard({
   return (
     <article
       onClick={() => onClick(entry.slug)}
-      className="group relative flex flex-col justify-between rounded-xl bg-zinc-950/40 dark:bg-zinc-950/50 border border-zinc-850 hover:border-zinc-700/80 p-5 sm:p-6 transition-all duration-200 cursor-pointer overflow-hidden backdrop-blur-xs"
-      aria-label={`Journal: ${entry.title}`}
+      className="group relative flex flex-col justify-between rounded-xl bg-white/[0.03] hover:bg-white/[0.05] border border-white/[0.08] hover:border-purple-500/35 p-5 sm:p-6 transition-all duration-300 cursor-pointer overflow-hidden backdrop-blur-xs shadow-sm hover:shadow-md"
+      aria-label={`Journal Entry: ${entry.title}`}
     >
       <div className="space-y-3">
-        {/* Metadata row: unboxed, clean typography */}
-        <div className="flex items-center gap-2.5 text-[11px] font-mono tracking-wider">
-          <span className="text-zinc-300 dark:text-zinc-300 font-semibold uppercase">
-            {entry.category}
-          </span>
-          <span className="text-zinc-600 dark:text-zinc-500">•</span>
-          <span className="text-zinc-400 dark:text-zinc-400">{entry.date}</span>
-          <span className="text-zinc-600 dark:text-zinc-500">•</span>
-          <span className="text-zinc-400 dark:text-zinc-400">{entry.readingTime}</span>
+        {/* Header: index number & category */}
+        <div className="flex items-center justify-between gap-2 text-[11px] font-mono tracking-wider">
+          <div className="flex items-center gap-2">
+            {indexFormatted && (
+              <span className="text-purple-400/80 font-bold">
+                № {indexFormatted}
+              </span>
+            )}
+            <span className="text-zinc-300 font-semibold uppercase">
+              {entry.category}
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1.5 text-zinc-400">
+            <span>{entry.date}</span>
+            <span className="text-zinc-600" aria-hidden="true">&bull;</span>
+            <span>{entry.readingTime}</span>
+          </div>
         </div>
 
         {/* Title */}
-        <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-zinc-100 font-display tracking-tight leading-snug">
+        <h3 className="text-base sm:text-lg font-bold text-white group-hover:text-purple-200 font-display tracking-tight leading-snug transition-colors">
           {entry.title}
         </h3>
 
         {/* Summary */}
-        <p className="text-xs sm:text-sm text-zinc-300 dark:text-zinc-300 leading-relaxed line-clamp-2">
+        <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed line-clamp-2">
           {entry.summary}
         </p>
       </div>
 
-      {/* Action link */}
-      <div className="pt-4 mt-2 border-t border-zinc-850/60 flex items-center justify-between">
-        <span className="inline-flex items-center gap-1 text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
-          <span>Read Journal</span>
+      {/* Footer action link */}
+      <div className="pt-4 mt-3 border-t border-white/[0.06] flex items-center justify-between">
+        <span className="text-[11px] font-mono text-zinc-400 group-hover:text-purple-300 transition-colors inline-flex items-center gap-1">
+          <span>Read Entry</span>
           <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </span>
       </div>

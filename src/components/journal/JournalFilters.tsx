@@ -23,18 +23,18 @@ export const JournalFilters = memo(function JournalFilters({
   totalResults,
 }: JournalFiltersProps) {
   return (
-    <div className="space-y-4 pt-2 pb-6 border-b border-zinc-800/80">
+    <div className="space-y-4 pt-2 pb-6 border-b border-white/[0.08]">
       {/* Search Bar + Sort Control Row */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         {/* Search Input */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          <Search className="w-4 h-4 text-zinc-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search entries by topic, title, or keywords..."
-            className="w-full bg-zinc-900/70 dark:bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 focus:border-zinc-600 rounded-xl pl-9 pr-9 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition-all font-sans"
+            className="w-full bg-white/[0.04] border border-white/[0.10] hover:border-white/20 focus:border-purple-400/50 rounded-xl pl-9 pr-9 py-2 text-sm text-zinc-100 placeholder:text-zinc-500 outline-none transition-all font-sans"
             aria-label="Search journal entries"
           />
           {searchQuery && (
@@ -56,11 +56,11 @@ export const JournalFilters = memo(function JournalFilters({
           </span>
 
           <div className="flex items-center gap-1.5 text-xs font-mono text-zinc-400">
-            <ArrowUpDown className="w-3.5 h-3.5 text-zinc-400" />
+            <ArrowUpDown className="w-3.5 h-3.5 text-zinc-400" aria-hidden="true" />
             <button
               type="button"
               onClick={() => onSortChange(sortOrder === "newest" ? "oldest" : "newest")}
-              className="hover:text-white transition-colors cursor-pointer capitalize font-medium underline underline-offset-4"
+              className="hover:text-purple-300 transition-colors cursor-pointer capitalize font-medium underline underline-offset-4"
               aria-label={`Sort order: currently ${sortOrder}`}
             >
               {sortOrder}
@@ -82,8 +82,8 @@ export const JournalFilters = memo(function JournalFilters({
               onClick={() => onCategoryChange(cat)}
               className={`px-3 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all cursor-pointer ${
                 isSelected
-                  ? "bg-zinc-800 text-white font-semibold border border-zinc-700 shadow-xs"
-                  : "bg-zinc-950/60 text-zinc-400 hover:text-zinc-200 border border-zinc-900 hover:border-zinc-800"
+                  ? "bg-purple-600/20 text-purple-200 font-semibold border border-purple-500/40 shadow-xs"
+                  : "bg-white/[0.03] text-zinc-400 hover:text-zinc-200 border border-white/[0.06] hover:border-white/[0.12]"
               }`}
             >
               {cat}

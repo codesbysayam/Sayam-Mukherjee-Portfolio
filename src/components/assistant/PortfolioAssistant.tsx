@@ -1,11 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Sparkles, X, RotateCcw, MessageSquare, Bot } from "lucide-react";
-import { AssistantMessage, ChatMessage } from "./AssistantMessage";
+import { Sparkles, Bot } from "lucide-react";
+import { AssistantHeader } from "./AssistantHeader";
+import { AssistantConversation } from "./AssistantConversation";
 import { AssistantSuggestions } from "./AssistantSuggestions";
-import { AssistantInput } from "./AssistantInput";
-import { AssistantTyping } from "./AssistantTyping";
+import { AssistantComposer } from "./AssistantComposer";
+import { ChatMessage } from "./AssistantMessage";
 import { streamAssistantMessage, AssistantMessage as ApiMessage } from "../../lib/assistant/client";
+import "./assistant.css";
 
 const INITIAL_GREETING = `Hi, I’m Sayam’s Portfolio Assistant.
 
@@ -37,7 +39,7 @@ export function PortfolioAssistant() {
     const el = scrollContainerRef.current;
     if (!el) return;
     const distanceToBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-    // If user is more than 80px away from bottom, they are reading older messages
+    // If user is more than 80px away from bottom, preserve scroll position
     isUserScrolledUp.current = distanceToBottom > 80;
   }, []);
 
@@ -191,7 +193,7 @@ export function PortfolioAssistant() {
     ]);
   };
 
-  const handleRetry = (failedContent: string) => {
+  const handleRetry = () => {
     // Find preceding user question
     const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
     if (lastUserMsg) {
@@ -205,7 +207,7 @@ export function PortfolioAssistant() {
 
   return (
     <>
-      {/* Floating launcher trigger */}
+      {/* Floating launcher button */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
@@ -215,12 +217,15 @@ export function PortfolioAssistant() {
             exit={{ scale: 0.85, opacity: 0 }}
             transition={{ duration: 0.18 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-zinc-900/90 dark:bg-zinc-900/95 text-white border border-zinc-700/80 shadow-xl backdrop-blur-md hover:border-zinc-500 hover:bg-zinc-850 active:scale-95 transition-all cursor-pointer group"
+            className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-zinc-900/90 text-white border border-white/15 shadow-2xl backdrop-blur-md hover:border-purple-500/50 hover:bg-zinc-850 active:scale-95 transition-all cursor-pointer group"
             aria-label="Open Sayam's Agent"
           >
-            <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-zinc-800 text-zinc-200 group-hover:text-white">
+            <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-zinc-800 text-zinc-200 group-hover:text-purple-300 transition-colors">
               <Bot className="w-4 h-4" />
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-zinc-900" />
+              <span
+                className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-zinc-900"
+                aria-hidden="true"
+              />
             </div>
             <span className="text-xs font-semibold font-display tracking-tight pr-1">
               Sayam's Agent
@@ -230,7 +235,7 @@ export function PortfolioAssistant() {
         )}
       </AnimatePresence>
 
-      {/* Main Assistant Panel */}
+      {/* Main Assistant Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -238,92 +243,38 @@ export function PortfolioAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.96 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-4 right-4 z-50 w-[calc(100vw-2rem)] sm:w-[420px] h-[min(650px,calc(100vh-2.5rem))] flex flex-col rounded-2xl bg-zinc-950/90 dark:bg-zinc-950/95 border border-zinc-800/90 shadow-2xl backdrop-blur-xl overflow-hidden font-sans"
+            className="assistant-window"
             role="dialog"
+            aria-modal="true"
             aria-labelledby="assistant-panel-title"
           >
-            {/* Header: compact, native feel */}
-            <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-800/80 bg-zinc-900/40 shrink-0">
-              <div className="flex items-center gap-2.5 min-w-0">
-                <div className="w-8 h-8 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-200 shrink-0 shadow-inner">
-                  <Bot className="w-4 h-4" />
-                </div>
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5 leading-tight">
-                    <h2
-                      id="assistant-panel-title"
-                      className="text-sm font-bold text-white font-display tracking-tight truncate"
-                    >
-                      Sayam's Agent
-                    </h2>
-                    <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[11px] text-zinc-400 mt-0.5">
-                    <span>Portfolio Assistant</span>
-                    <span className="text-zinc-600 dark:text-zinc-500">•</span>
-                    <span className="inline-flex items-center gap-1 text-emerald-400 font-mono text-[10px]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Online
-                    </span>
-                  </div>
-                </div>
-              </div>
+            {/* 1. Header (fixed height, never scrolls) */}
+            <AssistantHeader
+              onClear={handleClear}
+              onClose={() => setIsOpen(false)}
+              isGenerating={isGenerating}
+            />
 
-              {/* Action buttons */}
-              <div className="flex items-center gap-1 shrink-0">
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className="px-2 py-1 rounded-md text-[11px] font-mono text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850 active:scale-95 transition-all cursor-pointer flex items-center gap-1"
-                  title="Clear conversation"
-                  aria-label="Clear conversation"
-                >
-                  <RotateCcw className="w-3 h-3" />
-                  <span>Clear</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="w-7 h-7 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-850 active:scale-95 transition-all cursor-pointer flex items-center justify-center ml-0.5"
-                  title="Close assistant (Esc)"
-                  aria-label="Close assistant"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-
-            {/* Conversation Messages Area */}
-            <div
-              ref={scrollContainerRef}
+            {/* 2. Conversation (only vertically scrolling region) */}
+            <AssistantConversation
+              messages={messages}
+              isGenerating={isGenerating}
+              onRetry={handleRetry}
+              scrollContainerRef={scrollContainerRef}
+              messagesEndRef={messagesEndRef}
               onScroll={handleScroll}
-              className="flex-1 overflow-y-auto px-4 py-3 space-y-3 overscroll-contain"
-            >
-              {messages.map((msg) => (
-                <AssistantMessage
-                  key={msg.id}
-                  message={msg}
-                  onRetry={handleRetry}
-                />
-              ))}
+            />
 
-              {isGenerating && messages[messages.length - 1]?.content === "" && (
-                <AssistantTyping />
-              )}
+            {/* 3. Suggestions (rigid bar above composer when relevant) */}
+            {showSuggestions && (
+              <AssistantSuggestions
+                onSelect={handleSend}
+                disabled={isGenerating}
+              />
+            )}
 
-              {/* Explore Chips */}
-              {showSuggestions && (
-                <AssistantSuggestions
-                  onSelect={handleSend}
-                  disabled={isGenerating}
-                />
-              )}
-
-              <div ref={messagesEndRef} />
-            </div>
-
-            {/* Input Footer */}
-            <AssistantInput
+            {/* 4. Composer / Input (fixed at bottom, never scrolls away) */}
+            <AssistantComposer
               value={input}
               onChange={setInput}
               onSend={() => handleSend()}
@@ -336,3 +287,5 @@ export function PortfolioAssistant() {
     </>
   );
 }
+
+export default PortfolioAssistant;

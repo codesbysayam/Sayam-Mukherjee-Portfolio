@@ -1,0 +1,122 @@
+:root {
+  --assistant-width: min(440px, calc(100vw - 24px));
+  --assistant-max-height: min(760px, calc(100dvh - 32px));
+
+  --assistant-radius: 24px;
+  --assistant-border: rgba(255, 255, 255, 0.10);
+  --assistant-bg: rgba(12, 12, 16, 0.96);
+  --assistant-surface: rgba(255, 255, 255, 0.045);
+  --assistant-surface-hover: rgba(255, 255, 255, 0.075);
+  --assistant-text: rgba(255, 255, 255, 0.94);
+  --assistant-muted: rgba(255, 255, 255, 0.56);
+  --assistant-accent: #a855f7;
+  --assistant-accent-soft: rgba(168, 85, 247, 0.14);
+}
+
+/* Assistant Shell Container */
+.assistant-window {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  z-index: 50;
+  width: var(--assistant-width);
+  height: var(--assistant-max-height);
+  max-height: calc(100dvh - 24px);
+  display: flex;
+  flex-direction: column;
+  background: var(--assistant-bg);
+  border: 1px solid var(--assistant-border);
+  border-radius: var(--assistant-radius);
+  box-shadow:
+    0 20px 45px -10px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  font-family: inherit;
+}
+
+/* Conversation Scroll Container - The ONLY scrolling region */
+.assistant-conversation-viewport {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  padding: 16px 16px 12px 16px;
+}
+
+/* Custom scrollbar */
+.assistant-conversation-viewport::-webkit-scrollbar {
+  width: 5px;
+}
+
+.assistant-conversation-viewport::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.assistant-conversation-viewport::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+
+.assistant-conversation-viewport::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* Header, Suggestions, and Composer are rigid and non-scrolling */
+.assistant-header {
+  flex-shrink: 0;
+  user-select: none;
+}
+
+.assistant-suggestions-bar {
+  flex-shrink: 0;
+  padding: 6px 14px 10px 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(12, 12, 16, 0.6);
+}
+
+.assistant-composer-bar {
+  flex-shrink: 0;
+}
+
+/* Responsive Overrides */
+@media (max-width: 640px) {
+  .assistant-window {
+    bottom: 8px;
+    right: 8px;
+    left: 8px;
+    width: auto;
+    height: min(620px, calc(100dvh - 16px));
+    max-height: calc(100dvh - 16px);
+    border-radius: 20px;
+  }
+
+  .assistant-conversation-viewport {
+    padding: 12px 12px 8px 12px;
+  }
+
+  .assistant-suggestions-bar {
+    padding: 6px 10px 8px 10px;
+  }
+}
+
+/* Landscape orientation on mobile devices */
+@media (max-height: 520px) and (orientation: landscape) {
+  .assistant-window {
+    bottom: 6px;
+    right: 6px;
+    left: 6px;
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px);
+    border-radius: 16px;
+  }
+
+  .assistant-conversation-viewport {
+    padding: 8px 12px;
+  }
+}
