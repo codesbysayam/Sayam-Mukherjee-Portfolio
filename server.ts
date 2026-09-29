@@ -8,6 +8,7 @@ import { GoogleGenAI } from "@google/genai";
 import AdmZip from "adm-zip";
 import { SAYAM_DATA } from "./src/data.ts";
 import { certificatesStore } from "./server/certificatesStore.ts";
+import { assistantHandler } from "./server/routes/assistant.ts";
 
 dotenv.config();
 
@@ -1492,57 +1493,16 @@ app.get("/api/codolio/profile", (req, res) => {
   });
 });
 
+// 12. Knowledge-Grounded Portfolio Assistant (Streaming SSE & JSON)
+app.post("/api/assistant", assistantHandler);
+
+// Legacy chat endpoint mapped cleanly to knowledge assistant (no unhandled errors or invalid keys)
 app.post("/api/gemini/chat", async (req, res) => {
-  const { messages, userMessage, webGrounding } = req.body;
-
-  try {
-    const ai = getGeminiClient();
-
-    const formattedContents: any[] = [];
-    
-    if (messages && Array.isArray(messages)) {
-      messages.forEach((msg: any) => {
-        formattedContents.push({
-          role: msg.role === 'assistant' ? 'model' : 'user',
-          parts: [{ text: msg.text }]
-        });
-      });
-    }
-
-    formattedContents.push({
-      role: 'user',
-      parts: [{ text: userMessage }]
-    });
-
-    const config: any = {
-      systemInstruction: SAYAM_SYSTEM_INSTRUCTION,
-      temperature: 0.7,
-    };
-
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: formattedContents,
-      config: config
-    });
-
-    const textOutput = response.text || "I was unable to process that. How else can I help you today?";
-    
-    // Extract grounding sources
-    const chunks = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
-    const sources = chunks ? chunks.map((c: any) => ({
-      title: c.web?.title || c.web?.uri || "Web Source",
-      uri: c.web?.uri || ""
-    })).filter((s: any) => s.uri) : [];
-
-    res.json({ response: textOutput, sources });
-
-  } catch (error: any) {
-    console.error("Gemini API Error:", error);
-    res.status(500).json({ 
-      error: "Failed to communicate with the AI Representative", 
-      details: error.message || error 
-    });
-  }
+  const { userMessage, message } = req.body ?? {};
+  const query = (userMessage || message || "").trim();
+  const { generateDeterministicAnswer } = await import("./server/routes/assistant.ts");
+  const responseText = generateDeterministicAnswer(query);
+  res.json({ response: responseText, sources: [] });
 });
 
 // Unmatched API endpoint 404 handler (prevents falling through to SPA HTML)
