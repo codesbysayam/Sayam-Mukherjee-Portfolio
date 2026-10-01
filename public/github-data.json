@@ -13,6 +13,24 @@
   },
   "repositories": [
     {
+      "id": 1368247830,
+      "name": "codesbysayam",
+      "full_name": "codesbysayam/codesbysayam",
+      "description": "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects. 🚀💻 | Code • Create • Learn • Build |",
+      "html_url": "https://github.com/codesbysayam/codesbysayam",
+      "homepage": "",
+      "language": null,
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-13T09:39:25Z",
+      "updated_at": "2026-10-01T10:05:14Z",
+      "pushed_at": "2026-10-01T10:05:10Z"
+    },
+    {
       "id": 1355576736,
       "name": "Sayam-Mukherjee-Portfolio",
       "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
@@ -27,8 +45,8 @@
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-09-30T23:46:53Z",
-      "pushed_at": "2026-09-30T23:46:49Z"
+      "updated_at": "2026-10-01T05:48:37Z",
+      "pushed_at": "2026-10-01T05:48:33Z"
     },
     {
       "id": 1398703802,
@@ -65,24 +83,6 @@
       "created_at": "2026-09-30T18:20:33Z",
       "updated_at": "2026-09-30T18:23:43Z",
       "pushed_at": "2026-09-30T18:22:07Z"
-    },
-    {
-      "id": 1368247830,
-      "name": "codesbysayam",
-      "full_name": "codesbysayam/codesbysayam",
-      "description": "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects. 🚀💻 | Code • Create • Learn • Build |",
-      "html_url": "https://github.com/codesbysayam/codesbysayam",
-      "homepage": "",
-      "language": null,
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-13T09:39:25Z",
-      "updated_at": "2026-09-30T09:39:28Z",
-      "pushed_at": "2026-09-30T09:39:23Z"
     },
     {
       "id": 1393521230,
@@ -244,6 +244,7 @@
     }
   ],
   "languages": {
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
       "TypeScript": 1320399,
       "CSS": 60966,
@@ -265,7 +266,6 @@
       "PLpgSQL": 3057,
       "Makefile": 1358
     },
-    "codesbysayam/codesbysayam": {},
     "codesbysayam/CAMPUSCONNECT_1273": {
       "TypeScript": 210511,
       "CSS": 9694,
@@ -287,6 +287,6 @@
       "HTML": 3089
     }
   },
-  "syncedAt": "2026-10-01T05:48:32.709Z",
+  "syncedAt": "2026-10-01T13:09:09.682Z",
   "status": "ok"
 }
