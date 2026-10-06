@@ -7,11 +7,47 @@
     "avatar_url": "https://avatars.githubusercontent.com/u/85777731?v=4",
     "html_url": "https://github.com/codesbysayam",
     "bio": "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
-    "public_repos": 10,
+    "public_repos": 11,
     "followers": 1,
     "following": 0
   },
   "repositories": [
+    {
+      "id": 1406277351,
+      "name": "SightForge",
+      "full_name": "codesbysayam/SightForge",
+      "description": "YOLOv8 Edge CV Pipeline",
+      "html_url": "https://github.com/codesbysayam/SightForge",
+      "homepage": null,
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-10-05T19:18:39Z",
+      "updated_at": "2026-10-05T21:18:12Z",
+      "pushed_at": "2026-10-05T21:18:07Z"
+    },
+    {
+      "id": 1355576736,
+      "name": "Sayam-Mukherjee-Portfolio",
+      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "homepage": "www.sayammukherjee.in",
+      "language": "TypeScript",
+      "fork": false,
+      "archived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-03T06:02:37Z",
+      "updated_at": "2026-10-05T18:25:16Z",
+      "pushed_at": "2026-10-05T18:25:12Z"
+    },
     {
       "id": 1368247830,
       "name": "codesbysayam",
@@ -29,24 +65,6 @@
       "created_at": "2026-09-13T09:39:25Z",
       "updated_at": "2026-10-05T10:22:26Z",
       "pushed_at": "2026-10-05T10:22:22Z"
-    },
-    {
-      "id": 1355576736,
-      "name": "Sayam-Mukherjee-Portfolio",
-      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "homepage": "www.sayammukherjee.in",
-      "language": "TypeScript",
-      "fork": false,
-      "archived": false,
-      "stargazers_count": 1,
-      "forks_count": 0,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-10-05T09:00:39Z",
-      "pushed_at": "2026-10-05T09:00:35Z"
     },
     {
       "id": 1403521263,
@@ -195,6 +213,20 @@
   ],
   "events": [
     {
+      "id": "23100001916",
+      "type": "PushEvent",
+      "repo": "codesbysayam/SightForge",
+      "created_at": "2026-10-05T21:18:08Z",
+      "public": true
+    },
+    {
+      "id": "23091637872",
+      "type": "PushEvent",
+      "repo": "codesbysayam/SightForge",
+      "created_at": "2026-10-05T19:19:41Z",
+      "public": true
+    },
+    {
       "id": "23014394680",
       "type": "PushEvent",
       "repo": "codesbysayam/Operon",
@@ -277,24 +309,17 @@
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-09-24T09:23:57Z",
       "public": true
-    },
-    {
-      "id": "22025861089",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-09-24T07:32:36Z",
-      "public": true
-    },
-    {
-      "id": "22018621027",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-09-24T07:17:35Z",
-      "public": true
     }
   ],
   "languages": {
-    "codesbysayam/codesbysayam": {},
+    "codesbysayam/SightForge": {
+      "TypeScript": 169674,
+      "Python": 144851,
+      "CSS": 3810,
+      "Makefile": 2484,
+      "JavaScript": 2157,
+      "Shell": 569
+    },
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
       "TypeScript": 1320399,
       "CSS": 60966,
@@ -304,6 +329,7 @@
       "Jupyter Notebook": 5438,
       "HTML": 3030
     },
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/AXIOM": {
       "TypeScript": 793470,
       "CSS": 61244,
@@ -342,6 +368,6 @@
       "HTML": 3089
     }
   },
-  "syncedAt": "2026-10-05T18:25:10.957Z",
+  "syncedAt": "2026-10-06T00:47:41.027Z",
   "status": "ok"
 }
