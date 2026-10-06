@@ -13,22 +13,22 @@
   },
   "repositories": [
     {
-      "id": 1368247830,
-      "name": "codesbysayam",
-      "full_name": "codesbysayam/codesbysayam",
-      "description": "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects. 🚀💻 | Code • Create • Learn • Build |",
-      "html_url": "https://github.com/codesbysayam/codesbysayam",
-      "homepage": "",
-      "language": null,
+      "id": 1406277351,
+      "name": "SightForge",
+      "full_name": "codesbysayam/SightForge",
+      "description": "YOLOv8 Edge CV Pipeline",
+      "html_url": "https://github.com/codesbysayam/SightForge",
+      "homepage": null,
+      "language": "TypeScript",
       "fork": false,
       "archived": false,
-      "stargazers_count": 1,
+      "stargazers_count": 0,
       "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
-      "created_at": "2026-09-13T09:39:25Z",
-      "updated_at": "2026-10-06T10:14:08Z",
-      "pushed_at": "2026-10-06T10:14:04Z"
+      "created_at": "2026-10-05T19:18:39Z",
+      "updated_at": "2026-10-06T19:54:25Z",
+      "pushed_at": "2026-10-06T19:54:21Z"
     },
     {
       "id": 1355576736,
@@ -45,26 +45,26 @@
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-10-06T00:47:45Z",
-      "pushed_at": "2026-10-06T00:47:42Z"
+      "updated_at": "2026-10-06T15:08:59Z",
+      "pushed_at": "2026-10-06T15:08:54Z"
     },
     {
-      "id": 1406277351,
-      "name": "SightForge",
-      "full_name": "codesbysayam/SightForge",
-      "description": "YOLOv8 Edge CV Pipeline",
-      "html_url": "https://github.com/codesbysayam/SightForge",
-      "homepage": null,
-      "language": "TypeScript",
+      "id": 1368247830,
+      "name": "codesbysayam",
+      "full_name": "codesbysayam/codesbysayam",
+      "description": "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects. 🚀💻 | Code • Create • Learn • Build |",
+      "html_url": "https://github.com/codesbysayam/codesbysayam",
+      "homepage": "",
+      "language": null,
       "fork": false,
       "archived": false,
-      "stargazers_count": 0,
+      "stargazers_count": 1,
       "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
-      "created_at": "2026-10-05T19:18:39Z",
-      "updated_at": "2026-10-05T21:18:12Z",
-      "pushed_at": "2026-10-05T21:18:07Z"
+      "created_at": "2026-09-13T09:39:25Z",
+      "updated_at": "2026-10-06T10:14:08Z",
+      "pushed_at": "2026-10-06T10:14:04Z"
     },
     {
       "id": 1403521263,
@@ -312,7 +312,14 @@
     }
   ],
   "languages": {
-    "codesbysayam/codesbysayam": {},
+    "codesbysayam/SightForge": {
+      "TypeScript": 162597,
+      "Python": 144851,
+      "CSS": 3810,
+      "Makefile": 2484,
+      "JavaScript": 2157,
+      "Shell": 569
+    },
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
       "TypeScript": 1320399,
       "CSS": 60966,
@@ -322,14 +329,7 @@
       "Jupyter Notebook": 5438,
       "HTML": 3030
     },
-    "codesbysayam/SightForge": {
-      "TypeScript": 169674,
-      "Python": 144851,
-      "CSS": 3810,
-      "Makefile": 2484,
-      "JavaScript": 2157,
-      "Shell": 569
-    },
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/AXIOM": {
       "TypeScript": 793470,
       "CSS": 61244,
@@ -368,6 +368,6 @@
       "HTML": 3089
     }
   },
-  "syncedAt": "2026-10-06T15:08:53.008Z",
+  "syncedAt": "2026-10-06T20:17:31.063Z",
   "status": "ok"
 }
