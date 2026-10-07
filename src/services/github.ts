@@ -99,47 +99,15 @@ export const VERIFIED_USER_BASELINE: GitHubUser = {
   name: "Sayam Mukherjee",
   bio: "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
   location: "Kolkata, India",
-  public_repos: 7,
+  public_repos: 9,
   public_gists: 0,
-  followers: 0,
+  followers: 1,
   following: 0,
   created_at: "2021-06-12T04:55:46Z",
-  updated_at: "2026-09-17T08:37:34Z"
+  updated_at: "2026-10-04T19:35:34Z"
 };
 
 export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
-  {
-    id: 1368247830,
-    name: "codesbysayam",
-    full_name: "codesbysayam/codesbysayam",
-    html_url: "https://github.com/codesbysayam/codesbysayam",
-    description: "Personal GitHub profile and developer portfolio of Sayam Mukherjee.",
-    language: "Python",
-    stargazers_count: 0,
-    forks_count: 0,
-    updated_at: "2026-09-17T08:37:34Z",
-    pushed_at: "2026-09-17T08:37:30Z",
-    created_at: "2026-09-13T09:39:25Z",
-    fork: false,
-    homepage: "",
-    topics: ["developer", "profile", "readme"]
-  },
-  {
-    id: 1370345267,
-    name: "RouteLedger",
-    full_name: "codesbysayam/RouteLedger",
-    html_url: "https://github.com/codesbysayam/RouteLedger",
-    description: "Commercial Driver Route & Hours-of-Service Planner",
-    language: "TypeScript",
-    stargazers_count: 0,
-    forks_count: 0,
-    updated_at: "2026-09-16T19:29:45Z",
-    pushed_at: "2026-09-16T19:29:42Z",
-    created_at: "2026-09-14T17:56:01Z",
-    fork: false,
-    homepage: "https://routeledger-six.vercel.app",
-    topics: ["route-planning", "logistics", "hours-of-service", "typescript", "react"]
-  },
   {
     id: 1355576736,
     name: "Sayam-Mukherjee-Portfolio",
@@ -147,62 +115,30 @@ export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
     html_url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
     description: "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey.",
     language: "TypeScript",
-    stargazers_count: 0,
+    stargazers_count: 1,
     forks_count: 0,
-    updated_at: "2026-09-16T19:28:44Z",
-    pushed_at: "2026-09-16T19:28:41Z",
-    created_at: "2026-09-03T09:37:21Z",
+    updated_at: "2026-10-04T19:35:34Z",
+    pushed_at: "2026-10-04T19:35:30Z",
+    created_at: "2026-09-03T06:02:37Z",
     fork: false,
     homepage: "https://sayammukherjee.in",
     topics: ["portfolio", "react", "typescript", "tailwindcss", "vite", "full-stack"]
   },
   {
-    id: 1358811824,
-    name: "Memory-in-Motion",
-    full_name: "codesbysayam/Memory-in-Motion",
-    html_url: "https://github.com/codesbysayam/Memory-in-Motion",
-    description: "Interactive mechanistic laboratory exploring recurrent memory, hidden-state dynamics, and the compression vs interference trade-off.",
-    language: "TypeScript",
-    stargazers_count: 0,
+    id: 1368247830,
+    name: "codesbysayam",
+    full_name: "codesbysayam/codesbysayam",
+    html_url: "https://github.com/codesbysayam/codesbysayam",
+    description: "Personal GitHub profile and developer portfolio of Sayam Mukherjee.",
+    language: null,
+    stargazers_count: 1,
     forks_count: 0,
-    updated_at: "2026-09-14T17:54:12Z",
-    pushed_at: "2026-09-14T17:54:09Z",
-    created_at: "2026-09-06T14:52:00Z",
+    updated_at: "2026-10-04T09:44:33Z",
+    pushed_at: "2026-10-04T09:44:33Z",
+    created_at: "2026-09-13T09:39:25Z",
     fork: false,
     homepage: "",
-    topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
-  },
-  {
-    id: 1347892011,
-    name: "mausam",
-    full_name: "codesbysayam/mausam",
-    html_url: "https://github.com/codesbysayam/mausam",
-    description: "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Real-time weather, AQI, UV index, and soil moisture.",
-    language: "TypeScript",
-    stargazers_count: 0,
-    forks_count: 0,
-    updated_at: "2026-09-14T17:53:57Z",
-    pushed_at: "2026-09-14T17:53:54Z",
-    created_at: "2026-08-25T20:56:02Z",
-    fork: false,
-    homepage: "https://mausamgovt.vercel.app",
-    topics: ["sih2026", "weather", "forecast", "react", "typescript"]
-  },
-  {
-    id: 1358811826,
-    name: "sayam-solves",
-    full_name: "codesbysayam/sayam-solves",
-    html_url: "https://github.com/codesbysayam/sayam-solves",
-    description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice in C++.",
-    language: "C++",
-    stargazers_count: 0,
-    forks_count: 0,
-    updated_at: "2026-09-14T17:53:40Z",
-    pushed_at: "2026-09-14T17:53:36Z",
-    created_at: "2026-09-06T05:18:47Z",
-    fork: false,
-    homepage: "",
-    topics: ["dsa", "dsa-algorithm", "dsa-practice", "leetcode", "leetcode-solutions"]
+    topics: ["developer", "profile", "readme"]
   },
   {
     id: 1350807639,
@@ -211,14 +147,110 @@ export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
     html_url: "https://github.com/codesbysayam/Operon",
     description: "🤖 Autonomous operations platform with multi-agent AI workflows across Support, Finance, and Operations.",
     language: "TypeScript",
-    stargazers_count: 0,
+    stargazers_count: 1,
     forks_count: 0,
-    updated_at: "2026-09-14T17:53:23Z",
-    pushed_at: "2026-09-14T17:53:19Z",
+    updated_at: "2026-10-03T17:02:09Z",
+    pushed_at: "2026-10-03T17:02:09Z",
     created_at: "2026-08-29T18:06:43Z",
     fork: false,
     homepage: "https://operonpro.vercel.app",
     topics: ["backend", "business-automation", "express", "multi-agent-ai", "nodejs", "reactjs"]
+  },
+  {
+    id: 1403829101,
+    name: "mausam_demo",
+    full_name: "codesbysayam/mausam_demo",
+    html_url: "https://github.com/codesbysayam/mausam_demo",
+    description: "🌦️ Environmental telemetry and weather dashboard demonstration build.",
+    language: null,
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: "2026-09-30T20:19:28Z",
+    pushed_at: "2026-09-30T20:19:28Z",
+    created_at: "2026-09-30T20:19:28Z",
+    fork: false,
+    homepage: "",
+    topics: ["weather", "dashboard", "telemetry"]
+  },
+  {
+    id: 1403759281,
+    name: "mausam_sample",
+    full_name: "codesbysayam/mausam_sample",
+    html_url: "https://github.com/codesbysayam/mausam_sample",
+    description: "🌦️ Sample implementation and API models for MAUSAM meteorological platform.",
+    language: "TypeScript",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: "2026-09-30T18:22:07Z",
+    pushed_at: "2026-09-30T18:22:07Z",
+    created_at: "2026-09-30T18:22:07Z",
+    fork: false,
+    homepage: "",
+    topics: ["weather", "react", "typescript"]
+  },
+  {
+    id: 1393521230,
+    name: "CAMPUSCONNECT_1273",
+    full_name: "codesbysayam/CAMPUSCONNECT_1273",
+    html_url: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
+    description: "🎓 A full-stack college event management platform that helps students discover and register for campus events.",
+    language: "TypeScript",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: "2026-09-28T18:11:59Z",
+    pushed_at: "2026-09-28T18:11:59Z",
+    created_at: "2026-09-28T18:11:59Z",
+    fork: false,
+    homepage: "https://campusconnect1273.vercel.app/",
+    topics: ["campus", "events", "react", "typescript"]
+  },
+  {
+    id: 1398291823,
+    name: "inkloom",
+    full_name: "codesbysayam/inkloom",
+    html_url: "https://github.com/codesbysayam/inkloom",
+    description: "Dynamic digital canvas and collaborative writing workspace platform.",
+    language: null,
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: "2026-09-26T13:29:22Z",
+    pushed_at: "2026-09-26T13:29:22Z",
+    created_at: "2026-09-26T13:29:22Z",
+    fork: false,
+    homepage: "",
+    topics: ["canvas", "writing", "workspace"]
+  },
+  {
+    id: 1358811824,
+    name: "Memory-in-Motion",
+    full_name: "codesbysayam/Memory-in-Motion",
+    html_url: "https://github.com/codesbysayam/Memory-in-Motion",
+    description: "Interactive mechanistic laboratory exploring recurrent memory, hidden-state dynamics, and the compression vs interference trade-off.",
+    language: "TypeScript",
+    stargazers_count: 1,
+    forks_count: 0,
+    updated_at: "2026-09-23T06:12:15Z",
+    pushed_at: "2026-09-23T06:12:15Z",
+    created_at: "2026-09-06T14:52:00Z",
+    fork: false,
+    homepage: "",
+    topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
+  },
+  {
+    id: 1358811826,
+    name: "sayam-solves",
+    full_name: "codesbysayam/sayam-solves",
+    html_url: "https://github.com/codesbysayam/sayam-solves",
+    description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice in C++.",
+    language: "C++",
+    stargazers_count: 1,
+    forks_count: 0,
+    updated_at: "2026-09-07T06:02:43Z",
+    pushed_at: "2026-09-07T06:02:43Z",
+    created_at: "2026-09-06T05:18:47Z",
+    fork: false,
+    homepage: "",
+    topics: ["dsa", "dsa-algorithm", "dsa-practice", "leetcode", "leetcode-solutions"]
   }
 ];
 
@@ -362,21 +394,21 @@ export async function loadGitHubSnapshot(force = false): Promise<GitHubRawSnapsh
     } catch {}
   }
 
-  // 3. Fetch candidate snapshot URLs in order of preference (preferring live dynamic API)
+  // 3. Fetch candidate snapshot URLs in order of preference
   const candidateUrls = [
-    `/api/github-data${force ? `?t=${now}` : ""}`,
-    `/github-data.json${force ? `?t=${now}` : ""}`,
     `/data/github.json${force ? `?t=${now}` : ""}`,
+    `/github-data.json${force ? `?t=${now}` : ""}`,
+    `/api/github-data${force ? `?force=true&t=${now}` : ""}`,
   ];
 
   for (const url of candidateUrls) {
     try {
       const res = await fetch(url);
       if (res.ok) {
-        const snapshot = (await res.json()) as GitHubRawSnapshot;
+        const json = await res.json();
+        const snapshot = (json && json.data ? json.data : json) as GitHubRawSnapshot;
         if (snapshot && typeof snapshot === "object") {
-          // Accept snapshot if it has explicit error status or valid repository array
-          if (snapshot.status === "error" || Array.isArray(snapshot.repositories)) {
+          if (Array.isArray(snapshot.repositories) && snapshot.repositories.length > 0) {
             memorySnapshot = { data: snapshot, timestamp: now };
             if (typeof window !== "undefined") {
               try {
@@ -443,21 +475,30 @@ export async function loadGitHubSnapshot(force = false): Promise<GitHubRawSnapsh
 export const github = {
   user: async (force = false): Promise<FetchResult<GitHubUser>> => {
     const snapshot = await loadGitHubSnapshot(force);
-    const p = snapshot.profile;
+    const p = snapshot.profile || {
+      login: (snapshot as any).username || GITHUB_USERNAME,
+      name: (snapshot as any).name || "Sayam Mukherjee",
+      avatar_url: (snapshot as any).avatarUrl || VERIFIED_USER_BASELINE.avatar_url,
+      html_url: (snapshot as any).profileUrl || `https://github.com/${GITHUB_USERNAME}`,
+      bio: (snapshot as any).bio || VERIFIED_USER_BASELINE.bio,
+      public_repos: (snapshot as any).publicRepos || VERIFIED_REPOS_BASELINE.length,
+      followers: (snapshot as any).followers || 1,
+      following: (snapshot as any).following || 0,
+    };
     const user: GitHubUser = {
       login: p.login || GITHUB_USERNAME,
       id: 85777731,
-      avatar_url: p.avatar_url || VERIFIED_USER_BASELINE.avatar_url,
-      html_url: p.html_url || `https://github.com/${GITHUB_USERNAME}`,
-      name: p.name || "Sayam Mukherjee",
-      bio: p.bio || VERIFIED_USER_BASELINE.bio,
+      avatar_url: p.avatar_url || (snapshot as any).avatarUrl || VERIFIED_USER_BASELINE.avatar_url,
+      html_url: p.html_url || (snapshot as any).profileUrl || `https://github.com/${GITHUB_USERNAME}`,
+      name: p.name || (snapshot as any).name || "Sayam Mukherjee",
+      bio: p.bio || (snapshot as any).bio || VERIFIED_USER_BASELINE.bio,
       location: "Kolkata, India",
-      public_repos: snapshot.repositories?.length || p.public_repos || 7,
+      public_repos: snapshot.repositories?.length || p.public_repos || 8,
       public_gists: 0,
-      followers: p.followers || 0,
+      followers: p.followers || 1,
       following: p.following || 0,
       created_at: "2021-06-12T04:55:46Z",
-      updated_at: snapshot.syncedAt || new Date().toISOString()
+      updated_at: snapshot.syncedAt || (snapshot as any).fetchedAt || new Date().toISOString()
     };
     return {
       data: user,
@@ -469,15 +510,30 @@ export const github = {
 
   repos: async (force = false): Promise<FetchResult<GitHubRepo[]>> => {
     const snapshot = await loadGitHubSnapshot(force);
-    if (snapshot.status === "error") {
-      return {
-        data: [],
-        fromCache: !force,
-        rateLimited: false,
-        timestamp: Date.now()
-      };
-    }
-    const repos = Array.isArray(snapshot.repositories) ? snapshot.repositories : VERIFIED_REPOS_BASELINE;
+    const rawRepos = (Array.isArray(snapshot.repositories) && snapshot.repositories.length > 0)
+      ? snapshot.repositories
+      : VERIFIED_REPOS_BASELINE;
+
+    const repos: GitHubRepo[] = rawRepos.map((r: any) => ({
+      id: r.id || 0,
+      name: r.name || "",
+      full_name: r.full_name || r.fullName || `codesbysayam/${r.name}`,
+      html_url: r.html_url || r.url || `https://github.com/codesbysayam/${r.name}`,
+      description: r.description || null,
+      language: r.language || null,
+      stargazers_count: typeof r.stargazers_count === "number" ? r.stargazers_count : (r.stars ?? 0),
+      forks_count: typeof r.forks_count === "number" ? r.forks_count : (r.forks ?? 0),
+      updated_at: r.updated_at || r.updatedAt || new Date().toISOString(),
+      pushed_at: r.pushed_at || r.pushedAt || r.updated_at || r.updatedAt || new Date().toISOString(),
+      created_at: r.created_at || r.createdAt || new Date().toISOString(),
+      fork: r.fork ?? r.isFork ?? false,
+      homepage: r.homepage || "",
+      topics: Array.isArray(r.topics) ? r.topics : [],
+      archived: r.archived ?? r.isArchived ?? false,
+      open_issues_count: r.open_issues_count ?? 0,
+      default_branch: r.default_branch || "main"
+    }));
+
     return {
       data: repos,
       fromCache: !force,
@@ -488,23 +544,24 @@ export const github = {
 
   events: async (force = false): Promise<FetchResult<GitHubEvent[]>> => {
     const snapshot = await loadGitHubSnapshot(force);
-    const rawEvents = snapshot.events || [];
+    const p = snapshot.profile;
+    const rawEvents = snapshot.events || (snapshot as any).recentActivity || [];
     const formattedEvents: GitHubEvent[] = rawEvents.map((ev: any) => ({
-      id: ev.id,
-      type: ev.type,
+      id: String(ev.id || Math.random()),
+      type: ev.type || "PushEvent",
       actor: {
         id: 85777731,
         login: GITHUB_USERNAME,
-        avatar_url: snapshot.profile?.avatar_url || VERIFIED_USER_BASELINE.avatar_url
+        avatar_url: p?.avatar_url || (snapshot as any).avatarUrl || VERIFIED_USER_BASELINE.avatar_url
       },
       repo: {
         id: 1368247830,
-        name: ev.repo || "codesbysayam/codesbysayam",
-        url: `https://github.com/${ev.repo || "codesbysayam/codesbysayam"}`
+        name: typeof ev.repo === "string" ? ev.repo : (ev.repo?.name || ev.repoName || "codesbysayam/codesbysayam"),
+        url: `https://github.com/${typeof ev.repo === "string" ? ev.repo : (ev.repo?.name || ev.repoName || "codesbysayam/codesbysayam")}`
       },
-      payload: ev.payload || {},
+      payload: ev.payload || { action: ev.actionLabel, message: ev.details },
       public: ev.public ?? true,
-      created_at: ev.created_at
+      created_at: ev.created_at || ev.createdAt || new Date().toISOString()
     }));
 
     const finalEvents = formattedEvents.length > 0 ? formattedEvents : VERIFIED_EVENTS_BASELINE;
@@ -791,10 +848,10 @@ export const VERIFIED_GITHUB_FALLBACK: GitHubStatsData = {
   avatarUrl: "https://avatars.githubusercontent.com/u/85777731?v=4",
   bio: "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
   location: "Kolkata, India",
-  publicRepos: 7,
+  publicRepos: 9,
   followers: 1,
   following: 0,
-  totalStars: 6,
+  totalStars: 5,
   totalForks: 0,
   commitsThisYear: null,
   totalContributionsThisYear: null,
@@ -813,28 +870,28 @@ export const VERIFIED_GITHUB_FALLBACK: GitHubStatsData = {
   })),
   recentCommits: [
     {
-      repo: "codesbysayam/codesbysayam",
-      message: "Update portfolio profile and repositories",
-      date: "2026-09-17T08:37:30Z",
-      sha: "8a71d2e"
-    },
-    {
-      repo: "codesbysayam/RouteLedger",
-      message: "feat: route optimization and compliance rules",
-      date: "2026-09-16T19:29:42Z",
-      sha: "3c91bf0"
-    },
-    {
       repo: "codesbysayam/Sayam-Mukherjee-Portfolio",
-      message: "refactor: update verified ecosystem telemetry",
-      date: "2026-09-16T19:28:41Z",
-      sha: "1e16335"
+      message: "Update portfolio assistant and journal layout",
+      date: "2026-10-04T19:35:30Z",
+      sha: "main"
     },
     {
-      repo: "codesbysayam/sayam-solves",
-      message: "Time: 14 ms (47.31%), Space: 9.3 MB (77.48%) - LeetHub",
-      date: "2026-09-14T17:53:36Z",
-      sha: "5739270"
+      repo: "codesbysayam/Operon",
+      message: "feat: autonomous workflow orchestration",
+      date: "2026-10-03T17:02:09Z",
+      sha: "main"
+    },
+    {
+      repo: "codesbysayam/mausam_sample",
+      message: "feat: meteorological telemetry data models",
+      date: "2026-09-30T18:22:07Z",
+      sha: "main"
+    },
+    {
+      repo: "codesbysayam/CAMPUSCONNECT_1273",
+      message: "feat: event management portal",
+      date: "2026-09-28T18:11:59Z",
+      sha: "main"
     }
   ],
   languages: [
@@ -959,11 +1016,16 @@ export async function fetchGitHubLanguages(force = false): Promise<GitHubLanguag
     const snapshot = await loadGitHubSnapshot(force);
     if (snapshot && snapshot.languages) {
       const aggregatedBytes: Record<string, number> = {};
-      for (const repoName of Object.keys(snapshot.languages)) {
-        const map = snapshot.languages[repoName] || {};
-        for (const [lang, bytes] of Object.entries(map)) {
-          if (typeof bytes === "number") {
-            aggregatedBytes[lang] = (aggregatedBytes[lang] || 0) + bytes;
+      for (const [key, val] of Object.entries(snapshot.languages)) {
+        if (typeof val === "number") {
+          // Flat map: { TypeScript: 145000, Python: 31000 }
+          aggregatedBytes[key] = (aggregatedBytes[key] || 0) + val;
+        } else if (val && typeof val === "object") {
+          // Nested map: { "codesbysayam/Operon": { TypeScript: 384000 } }
+          for (const [lang, bytes] of Object.entries(val)) {
+            if (typeof bytes === "number") {
+              aggregatedBytes[lang] = (aggregatedBytes[lang] || 0) + bytes;
+            }
           }
         }
       }

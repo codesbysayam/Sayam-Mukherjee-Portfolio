@@ -1,8 +1,9 @@
 import React, { useState, useMemo, memo } from "react";
-import { BookOpen, SearchX, Sparkles } from "lucide-react";
+import { BookOpen, SearchX, Clock } from "lucide-react";
 import { journalEntries } from "../../data/journal";
 import { JournalCard } from "./JournalCard";
 import { JournalFilters } from "./JournalFilters";
+import { calculateReadingTime, STANDARD_READING_SPEED_WPM } from "../../utils/readingTime";
 
 interface JournalListProps {
   onSelectEntry: (slug: string) => void;
@@ -80,10 +81,21 @@ export const JournalList = memo(function JournalList({
     setSelectedCategory("All");
   };
 
+  const totalReadingStats = useMemo(() => {
+    let totalMinutes = 0;
+    let totalWords = 0;
+    for (const entry of journalEntries) {
+      const s = calculateReadingTime(entry);
+      totalMinutes += s.minutes;
+      totalWords += s.words;
+    }
+    return { totalMinutes, totalWords };
+  }, []);
+
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       {/* Editorial Masthead Header */}
-      <header className="space-y-3 pt-2 sm:pt-4 border-b border-white/[0.08] pb-6">
+      <header className="space-y-3.5 pt-2 sm:pt-4 border-b border-white/[0.08] pb-6">
         <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-purple-400 uppercase">
           <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
           <span>Technical Field Notes &bull; Observations &bull; Systems Design</span>
@@ -99,6 +111,17 @@ export const JournalList = memo(function JournalList({
         <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
           Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations, not third-party publications.
         </p>
+
+        {/* Reading time metrics row */}
+        <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono text-zinc-400">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-zinc-300">
+            <Clock className="w-3.5 h-3.5 text-purple-400" aria-hidden="true" />
+            <span>~{totalReadingStats.totalMinutes} mins total reading time ({totalReadingStats.totalWords} words)</span>
+          </span>
+          <span className="text-zinc-500">
+            Estimated at standard {STANDARD_READING_SPEED_WPM} words per minute
+          </span>
+        </div>
       </header>
 
       {/* Filters and Search Bar */}

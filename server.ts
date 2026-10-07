@@ -716,107 +716,6 @@ async function getDynamicGitHubSnapshot(force = false): Promise<any> {
     return TELEMETRY_CACHE.github.data;
   }
 
-  try {
-    const headers: Record<string, string> = {
-      "User-Agent": "Sayam-Mukherjee-Portfolio-Engine",
-      "Accept": "application/vnd.github.v3+json",
-    };
-    if (process.env.GITHUB_TOKEN) {
-      headers["Authorization"] = `Bearer ${process.env.GITHUB_TOKEN}`;
-    }
-
-    const [userRes, reposRes, eventsRes] = await Promise.all([
-      fetch("https://api.github.com/users/codesbysayam", { headers, signal: AbortSignal.timeout(6000) }).catch(() => null),
-      fetch("https://api.github.com/users/codesbysayam/repos?sort=pushed&per_page=30", { headers, signal: AbortSignal.timeout(6000) }).catch(() => null),
-      fetch("https://api.github.com/users/codesbysayam/events/public?per_page=30", { headers, signal: AbortSignal.timeout(6000) }).catch(() => null),
-    ]);
-
-    if (userRes && userRes.ok && reposRes && reposRes.ok) {
-      const user = await userRes.json();
-      const repos = await reposRes.json();
-      let events: any[] = [];
-      if (eventsRes && eventsRes.ok) {
-        try {
-          events = await eventsRes.json();
-        } catch {}
-      }
-
-      const languages: Record<string, Record<string, number>> = {};
-      let totalStars = 0;
-      let totalForks = 0;
-
-      const formattedRepos = Array.isArray(repos)
-        ? repos.map((r: any) => {
-            totalStars += r.stargazers_count || 0;
-            totalForks += r.forks_count || 0;
-            if (r.language) {
-              languages[r.full_name || `codesbysayam/${r.name}`] = {
-                [r.language]: 10000,
-              };
-            }
-            return {
-              id: r.id,
-              name: r.name,
-              full_name: r.full_name || `codesbysayam/${r.name}`,
-              html_url: r.html_url || `https://github.com/codesbysayam/${r.name}`,
-              description: r.description,
-              language: r.language,
-              stargazers_count: r.stargazers_count || 0,
-              forks_count: r.forks_count || 0,
-              updated_at: r.updated_at,
-              pushed_at: r.pushed_at || r.updated_at,
-              created_at: r.created_at,
-              fork: r.fork || false,
-              topics: r.topics || [],
-            };
-          })
-        : VERIFIED_GITHUB_BASELINE.repositories;
-
-      const formattedEvents = Array.isArray(events)
-        ? events.map((ev: any) => ({
-            id: ev.id,
-            type: ev.type,
-            repo: ev.repo?.name || "codesbysayam/codesbysayam",
-            created_at: ev.created_at,
-            public: ev.public ?? true,
-            payload: ev.payload || {},
-          }))
-        : [];
-
-      const dynamicSnapshot = {
-        source: "github-live-api",
-        owner: "codesbysayam",
-        profile: {
-          login: user.login || "codesbysayam",
-          name: user.name || VERIFIED_GITHUB_BASELINE.name,
-          avatar_url: user.avatar_url || VERIFIED_GITHUB_BASELINE.avatarUrl,
-          html_url: user.html_url || "https://github.com/codesbysayam",
-          bio: user.bio || VERIFIED_GITHUB_BASELINE.bio,
-          public_repos: user.public_repos ?? formattedRepos.length,
-          followers: user.followers || 0,
-          following: user.following || 0,
-        },
-        totalStars,
-        totalForks,
-        repositories: formattedRepos,
-        events: formattedEvents,
-        languages: Object.keys(languages).length > 0 ? languages : (getLocalGitHubSnapshot()?.languages || {}),
-        syncedAt: new Date().toISOString(),
-        status: "ok",
-        isLive: true,
-      };
-
-      TELEMETRY_CACHE.github = {
-        timestamp: now,
-        data: dynamicSnapshot,
-      };
-      console.log(`[GitHub Telemetry] Dynamically updated: ${formattedRepos.length} repos, ${totalStars} stars`);
-      return dynamicSnapshot;
-    }
-  } catch (err: any) {
-    console.warn("[GitHub Telemetry] Dynamic fetch error:", err?.message || err);
-  }
-
   const local = getLocalGitHubSnapshot();
   if (local) {
     TELEMETRY_CACHE.github = {
@@ -854,10 +753,10 @@ const VERIFIED_GITHUB_BASELINE = {
   avatarUrl: "https://avatars.githubusercontent.com/u/85777731?v=4",
   bio: "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
   location: "Kolkata, India",
-  publicRepos: 7,
-  followers: 0,
+  publicRepos: 9,
+  followers: 1,
   following: 0,
-  totalStars: 0,
+  totalStars: 5,
   totalForks: 0,
   commitsThisYear: null,
   totalContributionsThisYear: null,
@@ -865,81 +764,103 @@ const VERIFIED_GITHUB_BASELINE = {
   longestStreak: null,
   repositories: [
     {
-      name: "sayam-solves",
-      fullName: "codesbysayam/sayam-solves",
-      description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice. 🧠 Exploring algorithms, sharpening problem-solving skills, and building consistency through LeetCode; one challenge at a time. 🚀",
-      stars: 0,
-      forks: 0,
-      language: "C++",
-      url: "https://github.com/codesbysayam/sayam-solves",
-      updatedAt: "2026-09-06T14:51:18Z",
-      topics: ["dsa", "dsa-algorithm", "dsa-practice", "dsalgo", "github", "github-config", "leetcode", "leetcode-java", "leetcode-python", "leetcode-solutions"]
-    },
-    {
-      name: "mausam",
-      fullName: "codesbysayam/mausam",
-      description: "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for everyone. 🌍 Covering diverse regions and cities across India with meaningful environmental insights. 💡 Making weather information easier to understand, explore and use in everyday decisions.",
-      stars: 0,
-      forks: 0,
-      language: "TypeScript",
-      url: "https://github.com/codesbysayam/mausam",
-      updatedAt: "2026-09-06T14:44:32Z",
-      topics: ["sih2026", "weather", "forecast", "react", "typescript"]
-    },
-    {
       name: "Sayam-Mukherjee-Portfolio",
       fullName: "codesbysayam/Sayam-Mukherjee-Portfolio",
-      description: "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      stars: 0,
+      description: "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey.",
+      stars: 1,
       forks: 0,
       language: "TypeScript",
       url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      updatedAt: "2026-09-05T20:48:35Z",
+      updatedAt: "2026-10-04T19:35:34Z",
       topics: ["portfolio", "react", "typescript", "tailwindcss", "vite", "full-stack"]
+    },
+    {
+      name: "codesbysayam",
+      fullName: "codesbysayam/codesbysayam",
+      description: "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, DSA, and ML.",
+      stars: 1,
+      forks: 0,
+      language: null,
+      url: "https://github.com/codesbysayam/codesbysayam",
+      updatedAt: "2026-10-04T09:44:33Z",
+      topics: ["config", "github-profile"]
     },
     {
       name: "Operon",
       fullName: "codesbysayam/Operon",
-      description: "🤖 Operon is an autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations. 🧠⚙️🔄 🚀 Combining multi-agent AI with human-in-the-loop governance to automate complex processes, improve efficiency, and keep critical decisions under human control. 🛡️👨‍💻✨ 🌐📊 Built for modern teams.",
-      stars: 0,
+      description: "🤖 Operon is an autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations.",
+      stars: 1,
       forks: 0,
       language: "TypeScript",
       url: "https://github.com/codesbysayam/Operon",
-      updatedAt: "2026-09-03T09:31:47Z",
+      updatedAt: "2026-10-03T17:02:09Z",
       topics: ["backend", "business-automation", "express", "multi-agent-ai", "nodejs", "reactjs"]
     },
     {
-      name: "yolo",
-      fullName: "codesbysayam/yolo",
-      description: "Autonomous edge vision and object detection experiments powered by YOLO architectures.",
+      name: "mausam_demo",
+      fullName: "codesbysayam/mausam_demo",
+      description: "🌦️ Environmental telemetry and weather dashboard demonstration build.",
       stars: 0,
       forks: 0,
-      language: "Python",
-      url: "https://github.com/codesbysayam/yolo",
-      updatedAt: "2026-09-02T11:20:00Z",
-      topics: ["computer-vision", "yolo", "python", "edge-ai"]
+      language: null,
+      url: "https://github.com/codesbysayam/mausam_demo",
+      updatedAt: "2026-09-30T20:19:28Z",
+      topics: ["weather", "dashboard", "telemetry"]
+    },
+    {
+      name: "mausam_sample",
+      fullName: "codesbysayam/mausam_sample",
+      description: "🌦️ Sample implementation and API models for MAUSAM meteorological platform.",
+      stars: 0,
+      forks: 0,
+      language: "TypeScript",
+      url: "https://github.com/codesbysayam/mausam_sample",
+      updatedAt: "2026-09-30T18:22:07Z",
+      topics: ["weather", "react", "typescript"]
+    },
+    {
+      name: "CAMPUSCONNECT_1273",
+      fullName: "codesbysayam/CAMPUSCONNECT_1273",
+      description: "🎓 A full-stack college event management platform that helps students discover, search, filter, and register for campus events.",
+      stars: 0,
+      forks: 0,
+      language: "TypeScript",
+      url: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
+      updatedAt: "2026-09-28T18:11:59Z",
+      topics: ["campus", "events", "react", "typescript"]
+    },
+    {
+      name: "inkloom",
+      fullName: "codesbysayam/inkloom",
+      description: "Dynamic digital canvas and collaborative writing workspace platform.",
+      stars: 0,
+      forks: 0,
+      language: null,
+      url: "https://github.com/codesbysayam/inkloom",
+      updatedAt: "2026-09-26T13:29:22Z",
+      topics: ["canvas", "writing", "workspace"]
     },
     {
       name: "Memory-in-Motion",
       fullName: "codesbysayam/Memory-in-Motion",
       description: "Interactive mechanistic laboratory exploring recurrent memory, hidden-state dynamics, and the compression vs interference trade-off.",
-      stars: 0,
+      stars: 1,
       forks: 0,
       language: "TypeScript",
       url: "https://github.com/codesbysayam/Memory-in-Motion",
-      updatedAt: "2026-09-14T00:00:00Z",
+      updatedAt: "2026-09-23T06:12:15Z",
       topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
     },
     {
-      name: "RouteLedger",
-      fullName: "codesbysayam/RouteLedger",
-      description: "Commercial Driver Route & Hours-of-Service Planner.",
-      stars: 0,
+      name: "sayam-solves",
+      fullName: "codesbysayam/sayam-solves",
+      description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice in C++.",
+      stars: 1,
       forks: 0,
-      language: "TypeScript",
-      url: "https://github.com/codesbysayam/RouteLedger",
-      updatedAt: "2026-09-14T00:00:00Z",
-      topics: ["route-planning", "logistics", "hours-of-service", "typescript", "react"]
+      language: "C++",
+      url: "https://github.com/codesbysayam/sayam-solves",
+      updatedAt: "2026-09-07T06:02:43Z",
+      topics: ["dsa", "dsa-algorithm", "dsa-practice", "leetcode", "leetcode-solutions"]
     }
   ],
   recentCommits: [
@@ -1040,18 +961,40 @@ const LANGUAGE_COLOR_MAP: Record<string, string> = {
 // 8. Static & Dynamic GitHub Snapshot Endpoints (Browser -> /github-data.json)
 app.get(["/github-data.json", "/data/github.json", "/api/github-data"], async (req, res) => {
   try {
-    const force = req.query.t !== undefined;
+    const force = req.query.t !== undefined || req.query.force !== undefined;
     const snapshot = await getDynamicGitHubSnapshot(force);
-    res.setHeader("Cache-Control", "public, max-age=180");
+    res.setHeader("Cache-Control", force ? "no-cache" : "public, max-age=180");
     return res.json(snapshot);
   } catch (err) {
     return res.json(getLocalGitHubSnapshot() || VERIFIED_GITHUB_BASELINE);
   }
 });
 
+// Explicit real-time sync trigger for client components
+app.all("/api/github/sync", async (req, res) => {
+  try {
+    const snapshot = await getDynamicGitHubSnapshot(true);
+    res.setHeader("Cache-Control", "no-cache");
+    return res.json({
+      success: true,
+      syncedAt: new Date().toISOString(),
+      publicRepos: snapshot?.profile?.public_repos ?? snapshot?.repositories?.length ?? 9,
+      totalStars: snapshot?.totalStars ?? 5,
+      totalForks: snapshot?.totalForks ?? 0,
+      data: snapshot,
+    });
+  } catch (err: any) {
+    return res.status(500).json({
+      success: false,
+      error: err?.message || "Real-time GitHub sync failed",
+    });
+  }
+});
+
 // 9. Live GitHub Profile and Telemetry Proxy
 app.get("/api/github/profile", async (req, res) => {
-  const snapshot = await getDynamicGitHubSnapshot();
+  const force = req.query.t !== undefined || req.query.force !== undefined;
+  const snapshot = await getDynamicGitHubSnapshot(force);
   if (snapshot) {
     const profile = snapshot.profile || {};
     const repos = snapshot.repositories || [];
@@ -1518,14 +1461,13 @@ async function run() {
   const httpServer = http.createServer(app);
 
   if (process.env.NODE_ENV !== "production") {
-    const isHmrDisabled = process.env.DISABLE_HMR === "true";
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: {
         middlewareMode: true,
         host: "0.0.0.0",
         port: PORT,
-        hmr: isHmrDisabled ? false : { server: httpServer },
+        hmr: false,
       },
       appType: "spa",
     });

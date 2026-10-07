@@ -34,6 +34,11 @@ export default function CertificateCard({
     track,
     team,
     date,
+    event,
+    venue,
+    format,
+    role,
+    associatedProjects,
     credentialId,
     credentialUrl,
     skills = [],
@@ -61,6 +66,24 @@ export default function CertificateCard({
     return parts.map((p) => p[0]).slice(0, 3).join("").toUpperCase();
   };
 
+  // Helper ensuring event/credential name is the primary title
+  const cleanTitle = (rawTitle: string) => {
+    if (!rawTitle) return "";
+    return rawTitle
+      .replace(/^Certificate of Participation\s*[-|:]\s*/i, "")
+      .replace(/^Certificate of Completion\s*[-|:]\s*/i, "")
+      .replace(/^Certificate of Participation$/i, "")
+      .replace(/^Certificate of Completion$/i, "")
+      .trim();
+  };
+
+  const displayTitle = (() => {
+    const cleaned = cleanTitle(title || "");
+    if (!cleaned && event) return event;
+    if (cleaned.toLowerCase() === "certificate of participation" && event) return event;
+    return cleaned || title;
+  })();
+
   return (
     <article
       id={`cert-card-${id}`}
@@ -72,26 +95,28 @@ export default function CertificateCard({
     >
       {/* Main Card Content */}
       <div className="p-6 flex flex-col flex-1">
-        {/* Top Hierarchy: Category & Year / Platform */}
+        {/* 1. small category/year (e.g. COMPETITION · 2026) */}
         <div className="flex items-center justify-between gap-3 text-xs mb-3">
           <span
             className={`font-semibold tracking-wide uppercase text-[11px] ${
               isLight ? "text-purple-600" : "text-purple-400"
             }`}
           >
-            {category}
+            {category.replace(/S$/, "")}
+            {issueDate || year ? ` · ${issueDate || year}` : ""}
           </span>
-          <span
-            className={`font-sans text-xs ${
-              isLight ? "text-slate-500" : "text-[#A7ADB8]"
-            }`}
-          >
-            {issueDate}
-            {platform ? ` · ${platform}` : ""}
-          </span>
+          {platform && (
+            <span
+              className={`font-sans text-xs ${
+                isLight ? "text-slate-500" : "text-[#A7ADB8]"
+              }`}
+            >
+              {platform}
+            </span>
+          )}
         </div>
 
-        {/* Certificate / Achievement Title */}
+        {/* 2. large event name (Primary visual focus) */}
         <h3
           onClick={() => onView(certificate)}
           className={`text-lg sm:text-xl font-bold tracking-tight leading-snug cursor-pointer transition-colors ${
@@ -101,19 +126,49 @@ export default function CertificateCard({
           }`}
           style={{ fontFeatureSettings: '"cv02", "cv03", "cv04", "cv11"' }}
         >
-          {title}
+          {displayTitle}
         </h3>
 
-        {/* Issuer Name */}
+        {/* 3. issuer / organizer */}
         <div
           className={`text-sm font-medium mt-1 ${
-            session ? "mb-1.5" : "mb-3.5"
+            format || (team && role) ? "mb-1.5" : session ? "mb-1.5" : "mb-3.5"
           } ${
             isLight ? "text-slate-700" : "text-[#C4C9D2]"
           }`}
         >
           {issuer}
         </div>
+
+        {/* 4. event type (e.g. 12-Hour Offline Hackathon) */}
+        {format && (
+          <div
+            className={`text-xs font-sans mb-1.5 ${
+              isLight ? "text-slate-600" : "text-[#A7ADB8]"
+            }`}
+          >
+            {format}
+          </div>
+        )}
+
+        {/* 5. team context (e.g. ALGNITE · Team Leader) */}
+        {team && role ? (
+          <div
+            className={`text-xs font-medium font-sans mb-3.5 ${
+              isLight ? "text-purple-700" : "text-purple-300"
+            }`}
+          >
+            {team} · {role}
+          </div>
+        ) : team ? (
+          <div
+            className={`text-xs font-medium font-sans mb-3.5 ${
+              isLight ? "text-purple-700" : "text-purple-300"
+            }`}
+          >
+            {team}
+          </div>
+        ) : null}
 
         {/* Academic Session / Record Context */}
         {session && (
@@ -188,8 +243,8 @@ export default function CertificateCard({
               </span>
             </div>
           </div>
-        ) : project || projectTheme || track ? (
-          /* Structured Project Highlight Box (e.g. Memory in Motion / Operon / DataForge) */
+        ) : project || projectTheme || (!team && track) || (associatedProjects && associatedProjects.length > 0) ? (
+          /* Structured Project Highlight Box (e.g. Memory in Motion / Operon / Associated Projects) */
           <div
             className={`rounded-xl border p-3.5 mb-4 space-y-1.5 ${
               isLight
@@ -226,7 +281,7 @@ export default function CertificateCard({
                 ) : null}
               </div>
             )}
-            {!project && track && (
+            {!project && track && !team && (
               <div className="text-xs font-semibold text-purple-700 dark:text-purple-300">
                 Track: {track}
               </div>
@@ -242,6 +297,16 @@ export default function CertificateCard({
                 </span>
                 {projectTheme}
               </p>
+            )}
+            {associatedProjects && associatedProjects.length > 0 && (
+              <div className="text-[11px] pt-0.5">
+                <span className={`font-semibold ${isLight ? "text-purple-600" : "text-purple-400"}`}>
+                  Team Projects:{" "}
+                </span>
+                <span className={`font-mono ${isLight ? "text-slate-700" : "text-zinc-300"}`}>
+                  {associatedProjects.map((p) => p.name).join(" · ")}
+                </span>
+              </div>
             )}
           </div>
         ) : credentialId ? (
@@ -330,7 +395,7 @@ export default function CertificateCard({
             target="_blank"
             rel="noopener noreferrer"
             className="flex-1 min-h-[44px] px-4 py-2.5 rounded-xl bg-[#A855F7] hover:bg-[#9333EA] text-white font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-2 transition-all duration-150 cursor-pointer shadow-sm hover:-translate-y-0.5"
-            aria-label={`View Credential for ${title}`}
+            aria-label={`View Credential for ${displayTitle}`}
           >
             <span>View Credential</span>
             <ExternalLink className="w-4 h-4 shrink-0" />
@@ -340,24 +405,24 @@ export default function CertificateCard({
             id={`btn-inspect-primary-${id}`}
             onClick={() => onView(certificate)}
             className="flex-1 min-h-[44px] px-4 py-2.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.14] text-white font-semibold text-xs sm:text-sm inline-flex items-center justify-center gap-2 transition-all duration-150 cursor-pointer border border-white/10"
-            aria-label={`Inspect Record for ${title}`}
+            aria-label={`Inspect Record for ${displayTitle}`}
           >
             <Eye className="w-4 h-4 text-purple-400" />
             <span>Inspect Record</span>
           </button>
         )}
 
-        {/* Secondary Action: Inspect Details Modal (Only when credentialUrl exists, so user can also inspect) */}
+        {/* Secondary Action: Inspect Details Modal (When credentialUrl exists) */}
         {credentialUrl && (
           <button
             id={`btn-view-${id}`}
             onClick={() => onView(certificate)}
-            className={`min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium inline-flex items-center justify-center gap-1.5 transition-all duration-150 cursor-pointer border shrink-0 ${
+            className={`flex-1 min-h-[44px] px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-1.5 transition-all duration-150 cursor-pointer border ${
               isLight
-                ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
-                : "bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 border-white/10"
+                ? "bg-slate-100 hover:bg-slate-200 text-slate-800 border-slate-200"
+                : "bg-white/[0.06] hover:bg-white/[0.12] text-zinc-200 border-white/10"
             }`}
-            aria-label={`Inspect Record for ${title}`}
+            aria-label={`Inspect Record for ${displayTitle}`}
             title="Inspect Record"
           >
             <Eye className="w-4 h-4 text-purple-400" />
@@ -370,7 +435,7 @@ export default function CertificateCard({
           <a
             id={`btn-download-${id}`}
             href={fileUrl}
-            download={`${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-certificate`}
+            download={`${displayTitle.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-certificate`}
             target="_blank"
             rel="noopener noreferrer"
             className={`min-h-[44px] w-11 rounded-xl inline-flex items-center justify-center transition-all duration-150 cursor-pointer border shrink-0 ${
@@ -379,7 +444,7 @@ export default function CertificateCard({
                 : "bg-white/[0.05] hover:bg-white/[0.1] text-zinc-300 border-white/10"
             }`}
             title="Download Document"
-            aria-label={`Download document for ${title}`}
+            aria-label={`Download document for ${displayTitle}`}
           >
             <Download className="w-4 h-4 text-zinc-400" />
           </a>

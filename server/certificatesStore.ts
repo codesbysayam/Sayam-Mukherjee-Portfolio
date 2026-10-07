@@ -92,6 +92,9 @@ class CertificatesStore {
         (c.team && c.team.toLowerCase().includes(q)) ||
         (c.contribution && c.contribution.toLowerCase().includes(q)) ||
         (c.session && c.session.toLowerCase().includes(q)) ||
+        (c.venue && c.venue.toLowerCase().includes(q)) ||
+        (Array.isArray(c.signatories) && c.signatories.some(s => s.toLowerCase().includes(q))) ||
+        (Array.isArray(c.associatedProjects) && c.associatedProjects.some(p => p.name.toLowerCase().includes(q) || (p.description && p.description.toLowerCase().includes(q)))) ||
         (c.credentialType && c.credentialType.toLowerCase().includes(q)) ||
         (Array.isArray(c.subjects) && c.subjects.some(s => s.toLowerCase().includes(q))) ||
         (Array.isArray(c.teamMembers) && c.teamMembers.some(m => m.toLowerCase().includes(q))) ||

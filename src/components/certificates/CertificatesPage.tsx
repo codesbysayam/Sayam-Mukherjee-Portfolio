@@ -153,6 +153,19 @@ export default function CertificatesPage() {
         const matchesCredentialType = cert.credentialType
           ? cert.credentialType.toLowerCase().includes(q)
           : false;
+        const matchesVenue = cert.venue
+          ? cert.venue.toLowerCase().includes(q)
+          : false;
+        const matchesSignatories = Array.isArray(cert.signatories)
+          ? cert.signatories.some((s) => s.toLowerCase().includes(q))
+          : false;
+        const matchesAssociatedProjects = Array.isArray(cert.associatedProjects)
+          ? cert.associatedProjects.some(
+              (p) =>
+                p.name.toLowerCase().includes(q) ||
+                (p.description && p.description.toLowerCase().includes(q))
+            )
+          : false;
         const matchesSubjects = cert.subjects
           ? cert.subjects.some((sub) => sub.toLowerCase().includes(q))
           : false;
@@ -180,7 +193,10 @@ export default function CertificatesPage() {
           !matchesId &&
           !matchesSession &&
           !matchesCredentialType &&
-          !matchesSubjects
+          !matchesSubjects &&
+          !matchesVenue &&
+          !matchesSignatories &&
+          !matchesAssociatedProjects
         ) {
           return false;
         }

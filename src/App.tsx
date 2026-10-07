@@ -41,6 +41,7 @@ const ResumeModal = lazyWithRetry(() => import("./components/ResumeModal"));
 const CommandMenu = lazyWithRetry(() => import("./components/CommandMenu"));
 const CertificatesPage = lazyWithRetry(() => import("./components/certificates/CertificatesPage"));
 const CredentialsHomePreview = lazyWithRetry(() => import("./components/certificates/CredentialsHomePreview"));
+const GitHubStats = lazyWithRetry(() => import("./components/GitHubStats"));
 import PrivacyPage from "./pages/Privacy";
 import TermsPage from "./pages/Terms";
 import NotFound from "./pages/NotFound";
@@ -283,7 +284,7 @@ function AppContent() {
     };
   }, []);
 
-  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms" | "404";
+  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms" | "github" | "404";
 
   const getInitialTab = (): TabType => {
     if (typeof window === "undefined") return "home";
@@ -295,6 +296,7 @@ function AppContent() {
     if (path === "/terms" || path.startsWith("/terms/")) return "terms";
     if (path === "/certificates" || path === "/certificate" || path.startsWith("/certificates/") || path.startsWith("/certificate/")) return "certificates";
     if (path === "/projects" || path === "/project" || path.startsWith("/projects/") || path.startsWith("/project/")) return "projects";
+    if (path === "/github" || path.startsWith("/github/")) return "github";
     if (path === "/about" || path.startsWith("/about/")) return "about";
     if (path === "/skills" || path.startsWith("/skills/")) return "skills";
     if (path === "/ecosystem" || path.startsWith("/ecosystem/")) return "ecosystem";
@@ -307,6 +309,7 @@ function AppContent() {
     if (hash === "terms") return "terms";
     if (hash === "certificates" || hash === "certificate") return "certificates";
     if (hash === "projects") return "projects";
+    if (hash === "github") return "github";
     if (hash === "about") return "about";
     if (hash === "skills") return "skills";
     if (hash === "ecosystem") return "ecosystem";
@@ -973,6 +976,16 @@ function AppContent() {
                       <div className="py-2 sm:py-4">
                         <ErrorBoundary sectionName="Certificates & Credentials">
                           <CertificatesPage />
+                        </ErrorBoundary>
+                      </div>
+                    )}
+
+                    {activeTab === "github" && (
+                      <div className="py-2 sm:py-4">
+                        <ErrorBoundary sectionName="GitHub Repositories & Telemetry">
+                          <Reveal delay={0}>
+                            <GitHubStats />
+                          </Reveal>
                         </ErrorBoundary>
                       </div>
                     )}

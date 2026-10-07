@@ -1,6 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export function useScrollFrame(callback: (scrollY: number) => void) {
+  const cbRef = useRef(callback);
+  cbRef.current = callback;
+
   useEffect(() => {
     let frame = 0;
     let latestScrollY = window.scrollY;
@@ -11,7 +14,7 @@ export function useScrollFrame(callback: (scrollY: number) => void) {
       if (frame) return;
 
       frame = requestAnimationFrame(() => {
-        callback(latestScrollY);
+        cbRef.current(latestScrollY);
         frame = 0;
       });
     };
@@ -25,5 +28,5 @@ export function useScrollFrame(callback: (scrollY: number) => void) {
         cancelAnimationFrame(frame);
       }
     };
-  }, [callback]);
+  }, []);
 }

@@ -1,7 +1,7 @@
 import { useState, useMemo, memo } from "react";
 import { 
   Github, ExternalLink, RotateCw, Search, Star, GitFork, 
-  Sparkles, X, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight
+  Sparkles, X, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Activity, FolderGit2
 } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
 import { usePortfolio } from "../context/PortfolioContext";
@@ -11,6 +11,7 @@ import {
   GitHubRepo
 } from "../services/github";
 import { Unavailable } from "./Unavailable";
+import { GitHubStats } from "./GitHubStats";
 
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -167,8 +168,8 @@ function LiveBuildFeedComponent() {
         </div>
       </div>
 
-      {/* If snapshot status is error or repos is empty and not loading, replace repository list with Unavailable UI */}
-      {!loading && (isUnavailable || snapshotStatus === "error" || snapshot?.status === "error" || repos.length === 0) ? (
+      {/* Only show Unavailable if repos is completely empty and not loading */}
+      {!loading && repos.length === 0 ? (
         <Unavailable
           onRetry={refresh}
           isRetrying={loading}

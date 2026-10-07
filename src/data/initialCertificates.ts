@@ -105,6 +105,65 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2026-08-09T00:00:00.000Z"
   },
   {
+    id: "ignithon-2-0-participation-2026",
+    title: "IGNITHON 2.0",
+    issuer: "K-1000 / KIIT & KSAC",
+    event: "IGNITHON 2.0",
+    format: "12-Hour Offline Hackathon",
+    role: "Team Leader",
+    participant: "Sayam Mukherjee",
+    organizer: "K-1000",
+    credentialType: "Certificate of Participation",
+    category: "COMPETITIONS",
+    issueDate: "2026",
+    date: "26th September 2026",
+    year: 2026,
+    venue: "KIIT Deemed to be University",
+    team: "ALGNITE",
+    teamMembers: [
+      "Sayam Mukherjee (Team Leader)",
+      "Shinibali Kumar"
+    ],
+    signatories: [
+      "Dr. Ajit Kumar Pasayat, Assoc. Dean - KSAC",
+      "Dr. Ayesha Dash, Faculty In-Charge (K-1000)"
+    ],
+    associatedProjects: [
+      {
+        name: "AlertSetu",
+        url: "https://alertsetu1273.vercel.app",
+        description: "Emergency alert and notification platform built by Team ALGNITE"
+      },
+      {
+        name: "CampusConnect",
+        url: "https://campusconnect1273.vercel.app",
+        description: "Campus networking and student community hub built by Team ALGNITE"
+      }
+    ],
+    description:
+      "12-Hour Offline Hackathon at KIIT Deemed to be University organized by K-1000 with KIIT and KSAC, recognizing participation involving dedication, creativity, teamwork, technical excellence, innovation, and problem-solving.",
+    fullDescription:
+      "Certificate of Participation awarded to Sayam Mukherjee for actively participating in IGNITHON 2.0, a 12-Hour Offline Hackathon organized by K-1000 in association with KIIT and KSAC at KIIT Deemed to be University on 26th September 2026. Recognizes participation demonstrating dedication, creativity, teamwork, technical excellence, innovation, and problem-solving with Team ALGNITE.",
+    skills: [
+      "12-Hour Hackathon",
+      "Team Leadership",
+      "Rapid Prototyping",
+      "Problem Solving",
+      "Technical Excellence"
+    ],
+    tags: [
+      "12-Hour Hackathon",
+      "Offline Hackathon",
+      "Team ALGNITE",
+      "KIIT & KSAC"
+    ],
+    credentialUrl: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
+    verificationStatus: "LINK AVAILABLE",
+    featured: true,
+    createdAt: "2026-09-26T00:00:00.000Z",
+    updatedAt: "2026-09-26T00:00:00.000Z"
+  },
+  {
     id: "comp-toycathon-2021",
     title: "National Finalist | Toycathon",
     issuer: "Ministry of Education & AICTE, Govt. of India",

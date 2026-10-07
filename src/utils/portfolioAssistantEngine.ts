@@ -84,10 +84,11 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       return `**सत्यापित प्रमाणपत्र एवं उपलब्धियां (Verified Credentials):**\n\n` +
         `१. **DataForge 2026** - KDAG, IIT Kharagpur (इन-कॉन्टेक्स्ट लर्निंग रिसर्च एक्ज़िबिट)\n` +
         `२. **Deploy or Die** - GDG on Campus KIIT (OPERON मुख्य वेब इंटरफेस निर्माता)\n` +
-        `३. **Toycathon 2021** - राष्ट्रीय फाइनलिस्ट, शिक्षा मंत्रालय व AICTE (आईडी: \`TC-2021-FIN\`)\n` +
-        `४. **Technex'26** - बहु-स्पर्धा फाइनलिस्ट (5/6 इवेंट्स), IIT (BHU) वाराणसी (आईडी: \`TX-2026-IITBHU\`)\n` +
-        `५. **KIIT ग्रेड रिपोर्ट** - प्रथम वर्ष CGPA: **9.06**\n` +
-        `६. **टेबल टेनिस चैम्पियन** - 3× अंतर-विद्यालय प्रथम स्थान विजेता।`;
+        `३. **IGNITHON 2.0** - K-1000, KIIT व KSAC (12-घंटे का ऑफलाइन हैकाथॉन, टीम ALGNITE भागीदारी प्रमाणपत्र)\n` +
+        `४. **Toycathon 2021** - राष्ट्रीय फाइनलिस्ट, शिक्षा मंत्रालय व AICTE (आईडी: \`TC-2021-FIN\`)\n` +
+        `५. **Technex'26** - बहु-स्पर्धा फाइनलिस्ट (5/6 इवेंट्स), IIT (BHU) वाराणसी (आईडी: \`TX-2026-IITBHU\`)\n` +
+        `६. **KIIT ग्रेड रिपोर्ट** - प्रथम वर्ष CGPA: **9.06**\n` +
+        `७. **टेबल टेनिस चैम्पियन** - 3× अंतर-विद्यालय प्रथम स्थान विजेता।`;
     }
 
     return `**सायम मुखर्जी के बारे में (About Sayam Mukherjee):**\n\n` +
@@ -334,6 +335,33 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Creative Media:** Adobe Photoshop, Adobe Premiere Pro, Figma, Visual User Psychology`;
   }
 
+  // 12.5 IGNITHON 2.0 & TEAM ALGNITE
+  if (
+    q.includes("ignithon") ||
+    q.includes("algnite") ||
+    q.includes("alertsetu") ||
+    q.includes("campusconnect") ||
+    q.includes("shinibali") ||
+    q.includes("k-1000") ||
+    q.includes("k1000") ||
+    q.includes("ksac")
+  ) {
+    if (q.includes("what certificate") || q.includes("which certificate")) {
+      return `He received a Certificate of Participation for IGNITHON 2.0, a 12-hour offline hackathon held at KIIT Deemed to be University on 26th September 2026.`;
+    }
+
+    return `Sayam participated in **IGNITHON 2.0**, a 12-hour offline hackathon held at KIIT Deemed to be University on 26th September 2026, organized by K-1000 in association with KIIT and KSAC. He participated as the Team Leader of ALGNITE alongside Shinibali Kumar.\n\n` +
+      `• **Event:** IGNITHON 2.0 (12-Hour Offline Hackathon)\n` +
+      `• **Credential Type:** Participation\n` +
+      `• **Date & Venue:** 26th September 2026 at KIIT Deemed to be University\n` +
+      `• **Team:** ALGNITE *(Distinct from Team Nexus, which built OPERON)*\n` +
+      `• **Role:** Team Leader (with teammate Shinibali Kumar)\n` +
+      `• **Associated Projects:** [AlertSetu](https://alertsetu1273.vercel.app) & [CampusConnect](https://campusconnect1273.vercel.app)\n` +
+      `• **Signatories:** Dr. Ajit Kumar Pasayat (Assoc. Dean - KSAC) & Dr. Ayesha Dash (Faculty In-Charge, K-1000)\n` +
+      `• **Credential Verification:** [View Record on EdgeOne](https://marked-aquamarine-cozz1tva.edgeone.dev/)\n\n` +
+      `*Note: The certificate establishes participation recognizing dedication, teamwork, creativity, and technical problem-solving.*`;
+  }
+
   // 13. COMPETITIONS & CERTIFICATES
   if (
     q.includes("certificate") ||
@@ -349,10 +377,11 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     return `**Verified Competitions & Credentials:**\n\n` +
       `1. **DataForge 2026 | Memory in Motion**: KDAG, IIT Kharagpur (In-Context Learning research exhibit under 'Explain the Frontier' pathway)\n` +
       `2. **Deploy or Die**: HowToAlgo × GDG on Campus KIIT (OPERON lead web interface builder, Track A)\n` +
-      `3. **Toycathon 2021**: National Grand Finalist, Ministry of Education & AICTE, Govt. of India (Credential ID: \`TC-2021-FIN\`)\n` +
-      `4. **Technex'26**: Multi-Event Finalist across 5 out of 6 challenges, IIT (BHU) Varanasi (Credential ID: \`TX-2026-IITBHU\`)\n` +
-      `5. **KIIT First-Year Grade Report**: 20 engineering coursework subjects completed at KIIT Bhubaneswar (CGPA: 9.06)\n` +
-      `6. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
+      `3. **IGNITHON 2.0**: 12-Hour Offline Hackathon at KIIT Deemed to be University (Participation credential, Team ALGNITE, 26th September 2026)\n` +
+      `4. **Toycathon 2021**: National Grand Finalist, Ministry of Education & AICTE, Govt. of India (Credential ID: \`TC-2021-FIN\`)\n` +
+      `5. **Technex'26**: Multi-Event Finalist across 5 out of 6 challenges, IIT (BHU) Varanasi (Credential ID: \`TX-2026-IITBHU\`)\n` +
+      `6. **KIIT First-Year Grade Report**: 20 engineering coursework subjects completed at KIIT Bhubaneswar (CGPA: 9.06)\n` +
+      `7. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
       `*School board examinations (Class 10 & 12) are academic records and classified under Academics, not as competition certificates.*`;
   }
 

@@ -1,10 +1,8 @@
-import React, { useRef, useEffect, memo } from "react";
+import React, { useState, useRef, useEffect, memo } from "react";
 import { ArrowUp, Square } from "lucide-react";
 
 interface AssistantComposerProps {
-  value: string;
-  onChange: (value: string) => void;
-  onSend: () => void;
+  onSend: (message: string) => void;
   onStop: () => void;
   isGenerating: boolean;
   disabled?: boolean;
@@ -12,14 +10,18 @@ interface AssistantComposerProps {
 
 const MAX_CHAR_LIMIT = 1000;
 
+/**
+ * AssistantComposer
+ * Completely isolates the text input state locally.
+ * Prevents re-rendering the parent PortfolioAssistant or the message history on every keystroke!
+ */
 export const AssistantComposer = memo(function AssistantComposer({
-  value,
-  onChange,
   onSend,
   onStop,
   isGenerating,
   disabled = false,
 }: AssistantComposerProps) {
+  const [text, setText] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Auto-resize textarea height up to 110px
@@ -29,25 +31,35 @@ export const AssistantComposer = memo(function AssistantComposer({
     el.style.height = "auto";
     const nextHeight = Math.min(el.scrollHeight, 110);
     el.style.height = `${Math.max(nextHeight, 38)}px`;
-  }, [value]);
+  }, [text]);
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      if (!isGenerating && value.trim().length > 0 && !disabled) {
-        onSend();
+      const trimmed = text.trim();
+      if (!isGenerating && trimmed.length > 0 && !disabled) {
+        setText("");
+        onSend(trimmed);
       }
+    }
+  };
+
+  const handleSendClick = () => {
+    const trimmed = text.trim();
+    if (!isGenerating && trimmed.length > 0 && !disabled) {
+      setText("");
+      onSend(trimmed);
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const next = e.target.value;
     if (next.length <= MAX_CHAR_LIMIT) {
-      onChange(next);
+      setText(next);
     }
   };
 
-  const isOverWarningThreshold = value.length > 800;
+  const isOverWarningThreshold = text.length > 800;
 
   return (
     <div className="assistant-composer-bar p-2.5 sm:p-3 border-t border-white/[0.08] bg-zinc-950/85 backdrop-blur-md">
@@ -55,7 +67,7 @@ export const AssistantComposer = memo(function AssistantComposer({
         <textarea
           ref={textareaRef}
           rows={1}
-          value={value}
+          value={text}
           disabled={disabled}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
@@ -67,7 +79,7 @@ export const AssistantComposer = memo(function AssistantComposer({
         <div className="flex items-center gap-1.5 shrink-0 pb-0.5">
           {isOverWarningThreshold && (
             <span className="text-[10px] font-mono text-amber-400/80 pr-1">
-              {value.length}/{MAX_CHAR_LIMIT}
+              {text.length}/{MAX_CHAR_LIMIT}
             </span>
           )}
 
@@ -84,8 +96,8 @@ export const AssistantComposer = memo(function AssistantComposer({
           ) : (
             <button
               type="button"
-              onClick={onSend}
-              disabled={value.trim().length === 0 || disabled}
+              onClick={handleSendClick}
+              disabled={text.trim().length === 0 || disabled}
               className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg flex items-center justify-center bg-white text-zinc-950 hover:bg-zinc-200 active:scale-95 disabled:opacity-30 disabled:pointer-events-none transition-all cursor-pointer shadow-xs focus:outline-hidden focus:ring-1 focus:ring-purple-400"
               title="Send message (Enter)"
               aria-label="Send message"
@@ -98,7 +110,10 @@ export const AssistantComposer = memo(function AssistantComposer({
 
       <div className="flex items-center justify-between px-1 pt-1.5 text-[10px] text-zinc-400 font-mono">
         <span>Enter = send &bull; Shift + Enter = new line</span>
+        <span className="text-zinc-500">Verified portfolio data</span>
       </div>
     </div>
   );
 });
+
+export default AssistantComposer;

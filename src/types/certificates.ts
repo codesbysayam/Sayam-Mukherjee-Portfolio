@@ -40,6 +40,18 @@ export interface Certificate {
   team?: string;
   teamMembers?: string[];
   contribution?: string;
+  venue?: string;
+  format?: string;
+  role?: string;
+  participant?: string;
+  organizer?: string;
+  signatories?: string[];
+  associatedProjects?: {
+    name: string;
+    url: string;
+    description?: string;
+    role?: string;
+  }[];
   metrics?: {
     developmentTime?: string;
     codeComplexityScore?: string;

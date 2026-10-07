@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Calendar, Clock, BookOpen, User, Check, Copy, Share2 } from "lucide-react";
 import { journalEntries } from "../data/journal";
+import { calculateReadingTime } from "../utils/readingTime";
 
 interface JournalDetailProps {
   slug: string;
@@ -14,6 +15,8 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
   const entry = useMemo(() => {
     return journalEntries.find((e) => e.slug === slug) || null;
   }, [slug]);
+
+  const readingStats = useMemo(() => (entry ? calculateReadingTime(entry) : null), [entry]);
 
   // Related entries: other entries excluding current
   const relatedEntries = useMemo(() => {
@@ -119,9 +122,15 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
             {entry.date}
           </span>
           <span className="text-zinc-600" aria-hidden="true">&bull;</span>
-          <span className="text-zinc-400 flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5" aria-hidden="true" />
-            {entry.readingTime}
+          <span
+            className="text-zinc-400 flex items-center gap-1"
+            title={`Estimated reading time based on standard average reading speed of 200 WPM (${readingStats?.words || 0} words)`}
+          >
+            <Clock className="w-3.5 h-3.5 text-purple-400" aria-hidden="true" />
+            <span>{readingStats?.formatted || entry.readingTime}</span>
+            {readingStats && (
+              <span className="text-zinc-500 text-[11px]">({readingStats.words} words)</span>
+            )}
           </span>
           <span className="text-zinc-600" aria-hidden="true">&bull;</span>
           <span className="text-zinc-400 flex items-center gap-1">

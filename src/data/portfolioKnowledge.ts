@@ -86,6 +86,22 @@ export interface PortfolioKnowledge {
     year: string;
     category: string;
     description: string;
+    date?: string;
+    venue?: string;
+    type?: string;
+    event?: string;
+    format?: string;
+    role?: string;
+    team?: string;
+    teamLeader?: string;
+    teamMember?: string;
+    signatories?: string[];
+    associatedProjects?: Array<{
+      name: string;
+      url: string;
+      description?: string;
+    }>;
+    note?: string;
     credentialId?: string;
     verificationLink?: string;
   }>;
@@ -397,6 +413,41 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       description:
         "Built OPERON under Track A (Business Process Automation). Developed the complete application interface and human-in-the-loop workflows.",
       verificationLink: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
+    },
+    {
+      title: "IGNITHON 2.0",
+      issuer: "K-1000, KIIT & KSAC",
+      year: "2026",
+      date: "26th September 2026",
+      venue: "KIIT Deemed to be University",
+      category: "COMPETITIONS",
+      type: "Certificate of Participation",
+      event: "IGNITHON 2.0",
+      format: "12-Hour Offline Hackathon",
+      team: "ALGNITE",
+      role: "Team Leader",
+      teamLeader: "Sayam Mukherjee",
+      teamMember: "Shinibali Kumar",
+      signatories: [
+        "Dr. Ajit Kumar Pasayat (Assoc. Dean - KSAC)",
+        "Dr. Ayesha Dash (Faculty In-Charge, K-1000)"
+      ],
+      associatedProjects: [
+        {
+          name: "AlertSetu",
+          url: "https://alertsetu1273.vercel.app",
+          description: "Emergency alert and notification platform built by Team ALGNITE"
+        },
+        {
+          name: "CampusConnect",
+          url: "https://campusconnect1273.vercel.app",
+          description: "Campus networking and student community hub built by Team ALGNITE"
+        }
+      ],
+      description:
+        "12-Hour Offline Hackathon at KIIT Deemed to be University organized by K-1000 with KIIT and KSAC, recognizing participation involving dedication, creativity, teamwork, technical excellence, innovation, and problem-solving.",
+      note: "Official Certificate of Participation. Sayam participated as Team Leader of Team ALGNITE alongside Shinibali Kumar. ALGNITE is distinct from Team Nexus (Nexus built OPERON). Sayam was an active participant (not winner or ranked finisher).",
+      verificationLink: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
     },
     {
       title: "National Finalist | Toycathon",

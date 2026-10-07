@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
+    "sync:github": "node scripts/sync-github.mjs",
     "manifest": "node scripts/generate_build_manifest.js",
     "validate:data": "python3 tools/python/portfolio_data_validator.py",
     "build:c": "gcc -O2 tools/c/portfolio_metrics.c -o tools/c/portfolio_metrics",

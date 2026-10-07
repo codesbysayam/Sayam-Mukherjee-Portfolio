@@ -2058,3 +2058,42 @@ body.has-legal-page .glass-card::after,
   }
 }
 
+/* ==========================================================================
+   GITHUB REPOSITORY GRID & CARDS (Official Responsive Telemetry Grid)
+   ========================================================================== */
+
+:root {
+  --motion-fast: 140ms;
+  --motion-normal: 200ms;
+  --motion-slow: 320ms;
+}
+
+.github-repository-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+@media (max-width: 1100px) {
+  .github-repository-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .github-repository-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.github-repository-card {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.github-repository-card h3 {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+

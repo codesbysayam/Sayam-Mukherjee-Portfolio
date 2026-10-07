@@ -425,6 +425,20 @@ export interface CertificateContent {
   track?: string;
   project?: string;
   team?: string;
+  date?: string;
+  venue?: string;
+  format?: string;
+  role?: string;
+  participant?: string;
+  organizer?: string;
+  credentialType?: string;
+  teamMembers?: readonly string[];
+  signatories?: readonly string[];
+  associatedProjects?: readonly {
+    readonly name: string;
+    readonly url: string;
+    readonly description?: string;
+  }[];
 }
 
 export const CERTIFICATES: readonly CertificateContent[] = [
@@ -466,6 +480,49 @@ export const CERTIFICATES: readonly CertificateContent[] = [
     skills: ["Agentic Systems", "Business Process Automation", "Multi-Agent Systems", "Human-in-the-Loop"],
     tags: ["Agentic Systems", "Business Process Automation", "Multi-Agent Systems", "Human-in-the-Loop"],
     event: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
+  },
+  {
+    id: "ignithon-2-0-participation-2026",
+    title: "IGNITHON 2.0",
+    issuer: "K-1000 / KIIT & KSAC",
+    category: "COMPETITIONS",
+    credentialType: "Certificate of Participation",
+    issueDate: "2026",
+    year: 2026,
+    date: "26th September 2026",
+    venue: "KIIT Deemed to be University",
+    format: "12-Hour Offline Hackathon",
+    role: "Team Leader",
+    participant: "Sayam Mukherjee",
+    organizer: "K-1000",
+    event: "IGNITHON 2.0",
+    team: "ALGNITE",
+    teamMembers: ["Sayam Mukherjee (Team Leader)", "Shinibali Kumar"],
+    signatories: [
+      "Dr. Ajit Kumar Pasayat, Assoc. Dean - KSAC",
+      "Dr. Ayesha Dash, Faculty In-Charge (K-1000)"
+    ],
+    associatedProjects: [
+      {
+        name: "AlertSetu",
+        url: "https://alertsetu1273.vercel.app",
+        description: "Emergency alert and notification platform built by Team ALGNITE"
+      },
+      {
+        name: "CampusConnect",
+        url: "https://campusconnect1273.vercel.app",
+        description: "Campus networking and student community hub built by Team ALGNITE"
+      }
+    ],
+    description:
+      "12-Hour Offline Hackathon at KIIT Deemed to be University organized by K-1000 with KIIT and KSAC, recognizing participation involving dedication, creativity, teamwork, technical excellence, innovation, and problem-solving.",
+    fullDescription:
+      "Certificate of Participation awarded to Sayam Mukherjee for actively participating in IGNITHON 2.0, a 12-Hour Offline Hackathon organized by K-1000 in association with KIIT and KSAC at KIIT Deemed to be University on 26th September 2026. Recognizes participation demonstrating dedication, creativity, teamwork, technical excellence, innovation, and problem-solving with Team ALGNITE.",
+    credentialUrl: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
+    verificationStatus: "LINK AVAILABLE",
+    featured: true,
+    skills: ["12-Hour Hackathon", "Team Leadership", "Rapid Prototyping", "Problem Solving", "Technical Excellence"],
+    tags: ["12-Hour Hackathon", "Offline Hackathon", "Team ALGNITE", "KIIT & KSAC"],
   },
   {
     id: "kiit-grade-report-2025-26",

@@ -1,6 +1,7 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import { ArrowUpRight, Clock, Calendar } from "lucide-react";
 import { JournalEntry } from "../../data/journal";
+import { calculateReadingTime } from "../../utils/readingTime";
 
 interface JournalCardProps {
   entry: JournalEntry;
@@ -16,6 +17,7 @@ export const JournalCard = memo(function JournalCard({
   index,
 }: JournalCardProps) {
   const indexFormatted = typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
+  const readingStats = useMemo(() => calculateReadingTime(entry), [entry]);
 
   if (featured) {
     return (
@@ -46,9 +48,13 @@ export const JournalCard = memo(function JournalCard({
                 {entry.date}
               </span>
               <span className="text-zinc-600" aria-hidden="true">&bull;</span>
-              <span className="text-zinc-400 flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5" aria-hidden="true" />
-                {entry.readingTime}
+              <span
+                className="text-zinc-400 flex items-center gap-1"
+                title={`Estimated reading time based on standard 200 WPM (${readingStats.words} words)`}
+              >
+                <Clock className="w-3.5 h-3.5 text-purple-400" aria-hidden="true" />
+                <span>{readingStats.formatted}</span>
+                <span className="text-zinc-500 text-[11px]">({readingStats.words} words)</span>
               </span>
             </div>
 
@@ -82,7 +88,7 @@ export const JournalCard = memo(function JournalCard({
       aria-label={`Journal Entry: ${entry.title}`}
     >
       <div className="space-y-3">
-        {/* Header: index number & category */}
+        {/* Header: index number, category, reading time */}
         <div className="flex items-center justify-between gap-2 text-[11px] font-mono tracking-wider">
           <div className="flex items-center gap-2">
             {indexFormatted && (
@@ -95,10 +101,16 @@ export const JournalCard = memo(function JournalCard({
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 text-zinc-400">
+          <div
+            className="flex items-center gap-1.5 text-zinc-400"
+            title={`Standard average reading speed of 200 WPM (${readingStats.words} words)`}
+          >
             <span>{entry.date}</span>
             <span className="text-zinc-600" aria-hidden="true">&bull;</span>
-            <span>{entry.readingTime}</span>
+            <span className="flex items-center gap-1 text-zinc-300">
+              <Clock className="w-3 h-3 text-purple-400" aria-hidden="true" />
+              {readingStats.formatted}
+            </span>
           </div>
         </div>
 
@@ -118,6 +130,9 @@ export const JournalCard = memo(function JournalCard({
         <span className="text-[11px] font-mono text-zinc-400 group-hover:text-purple-300 transition-colors inline-flex items-center gap-1">
           <span>Read Entry</span>
           <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+        </span>
+        <span className="text-[10px] font-mono text-zinc-500">
+          {readingStats.words} words
         </span>
       </div>
     </article>

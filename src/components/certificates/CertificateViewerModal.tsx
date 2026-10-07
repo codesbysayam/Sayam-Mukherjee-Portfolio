@@ -67,6 +67,32 @@ export default function CertificateViewerModal({
   );
   const fileUrl = certificate.imageUrl || certificate.pdfUrl;
 
+  const cleanModalTitle = (rawTitle: string) => {
+    if (!rawTitle) return "";
+    const cleaned = rawTitle
+      .replace(/^Certificate of Participation\s*[-|:]\s*/i, "")
+      .replace(/^Certificate of Completion\s*[-|:]\s*/i, "")
+      .replace(/^Certificate of Participation$/i, "")
+      .replace(/^Certificate of Completion$/i, "")
+      .trim();
+    if (!cleaned && certificate.event) return certificate.event;
+    return cleaned || rawTitle;
+  };
+
+  const formatCredentialTypeDisplay = (type?: string) => {
+    if (!type) return "";
+    if (type.toLowerCase() === "certificate of participation") return "Participation";
+    if (type.toLowerCase() === "certificate of completion") return "Completion";
+    return type.replace(/^Certificate of\s+/i, "");
+  };
+
+  const formatCredentialTypeBadge = (type?: string) => {
+    if (!type) return "";
+    if (type.toLowerCase() === "certificate of participation") return "PARTICIPATION";
+    if (type.toLowerCase() === "certificate of completion") return "COMPLETION";
+    return type.replace(/^Certificate of\s+/i, "").toUpperCase();
+  };
+
   const handleZoomIn = () => setZoom((prev) => Math.min(prev + 0.25, 3));
   const handleZoomOut = () => setZoom((prev) => Math.max(prev - 0.25, 0.5));
   const handleResetZoom = () => setZoom(1);
@@ -136,7 +162,7 @@ export default function CertificateViewerModal({
                 id="certificate-modal-title"
                 className="text-base sm:text-lg font-bold truncate leading-snug font-sans"
               >
-                {certificate.title}
+                {cleanModalTitle(certificate.title)}
               </h2>
               <p
                 className={`text-xs font-sans truncate ${
@@ -279,15 +305,28 @@ export default function CertificateViewerModal({
 
             {/* Structured Information Panel */}
             <div className="space-y-4">
-              {/* Category, Year, Platform Header */}
+              {/* Category, Year & Subtle Credential Type Pill */}
               <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-                <span
-                  className={`font-semibold uppercase tracking-wider text-[11px] ${
-                    isLight ? "text-purple-600" : "text-purple-400"
-                  }`}
-                >
-                  {certificate.category}
-                </span>
+                <div className="flex items-center gap-2">
+                  <span
+                    className={`font-semibold uppercase tracking-wider text-[11px] ${
+                      isLight ? "text-purple-600" : "text-purple-400"
+                    }`}
+                  >
+                    {certificate.category.replace(/S$/, "")}
+                  </span>
+                  {certificate.credentialType && (
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-md font-sans uppercase font-semibold ${
+                        isLight
+                          ? "bg-purple-100 text-purple-700"
+                          : "bg-purple-950/40 text-purple-300 border border-purple-800/40"
+                      }`}
+                    >
+                      {formatCredentialTypeBadge(certificate.credentialType)}
+                    </span>
+                  )}
+                </div>
 
                 <div
                   className={`flex items-center gap-2 ${
@@ -308,7 +347,7 @@ export default function CertificateViewerModal({
               {/* Title & Issuer */}
               <div>
                 <h3 className="text-xl sm:text-2xl font-bold tracking-tight">
-                  {certificate.title}
+                  {cleanModalTitle(certificate.title)}
                 </h3>
                 <p
                   className={`text-sm sm:text-base font-medium mt-1 ${
@@ -319,174 +358,332 @@ export default function CertificateViewerModal({
                 </p>
               </div>
 
-              {/* Project / Theme / Pathway / Track / Team Box (if present, e.g. Operon, DataForge) */}
-              {(certificate.project ||
-                certificate.theme ||
-                certificate.pathway ||
-                certificate.track ||
-                certificate.team ||
-                certificate.date ||
-                certificate.event) && (
-                <div
-                  className={`rounded-xl border p-4 space-y-2 text-xs ${
-                    isLight
-                      ? "bg-purple-50/40 border-purple-200"
-                      : "bg-white/[0.02] border-white/[0.08]"
-                  }`}
-                >
-                  {certificate.event && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-purple-400">
-                        Event:
-                      </span>
-                      <span className={`font-medium ${isLight ? "text-slate-800" : "text-zinc-200"}`}>
-                        {certificate.event}
-                      </span>
-                    </div>
-                  )}
-                  {certificate.date && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-purple-400">
-                        Date:
-                      </span>
-                      <span className={`font-medium ${isLight ? "text-slate-800" : "text-zinc-200"}`}>
-                        {certificate.date}
-                      </span>
-                    </div>
-                  )}
-                  {certificate.track && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-purple-400">
-                        Track:
-                      </span>
-                      <span className={`font-medium ${isLight ? "text-slate-800" : "text-zinc-200"}`}>
-                        {certificate.track}
-                      </span>
-                    </div>
-                  )}
-                  {certificate.project && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-purple-400">
-                        Project:
-                      </span>
-                      <span className={`font-medium ${isLight ? "text-slate-800" : "text-zinc-200"}`}>
-                        {certificate.project}
-                      </span>
-                    </div>
-                  )}
-                  {certificate.team && (
-                    <div className="flex items-center justify-between gap-2">
-                      <span className="font-semibold text-purple-400">
-                        Team:
-                      </span>
-                      <span className={`font-medium ${isLight ? "text-slate-800" : "text-zinc-200"}`}>
-                        {certificate.team}
-                      </span>
-                    </div>
-                  )}
-                  {certificate.theme && (
-                    <div>
-                      <span className="font-semibold text-purple-400">
-                        Theme:{" "}
-                      </span>
-                      <span
-                        className={
-                          isLight ? "text-slate-700" : "text-[#A7ADB8]"
-                        }
-                      >
-                        {certificate.theme}
-                      </span>
-                    </div>
-                  )}
-                  {certificate.pathway && (
-                    <div>
-                      <span className="font-semibold text-purple-400">
-                        Pathway:{" "}
-                      </span>
-                      <span
-                        className={
-                          isLight ? "text-slate-700" : "text-[#A7ADB8]"
-                        }
-                      >
-                        {certificate.pathway}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Academic Metadata Grid (Session, Year, Credential Type) */}
-              {(certificate.session || certificate.credentialType || (certificate.subjects && certificate.subjects.length > 0)) && (
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                  {certificate.session && (
-                    <div
-                      className={`p-3.5 rounded-xl border ${
-                        isLight
-                          ? "bg-purple-50/60 border-purple-200/80"
-                          : "bg-purple-950/20 border-purple-800/30"
-                      }`}
-                    >
-                      <span
-                        className={`text-[11px] font-semibold uppercase tracking-wider block ${
-                          isLight ? "text-purple-700" : "text-purple-400"
-                        }`}
-                      >
-                        Academic Session
-                      </span>
-                      <span
-                        className={`text-sm font-bold mt-1 block ${
-                          isLight ? "text-slate-900" : "text-white"
-                        }`}
-                      >
-                        {certificate.session}
-                      </span>
-                    </div>
-                  )}
-
+              {/* Structured Metadata Grid */}
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+                {certificate.credentialType && (
                   <div
-                    className={`p-3.5 rounded-xl border ${
+                    className={`p-3 rounded-xl border ${
                       isLight
                         ? "bg-slate-50 border-slate-200"
                         : "bg-white/[0.02] border-white/[0.08]"
                     }`}
                   >
                     <span
-                      className={`text-[11px] font-semibold uppercase tracking-wider block ${
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
                         isLight ? "text-slate-500" : "text-[#737A87]"
                       }`}
                     >
-                      Year
+                      Credential Type
                     </span>
                     <span
-                      className={`text-sm font-bold mt-1 block ${
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
                         isLight ? "text-slate-900" : "text-white"
                       }`}
                     >
-                      {certificate.year || certificate.issueDate}
+                      {formatCredentialTypeDisplay(certificate.credentialType)}
                     </span>
                   </div>
+                )}
 
-                  {certificate.credentialType && (
-                    <div
-                      className={`p-3.5 rounded-xl border ${
-                        isLight
-                          ? "bg-slate-50 border-slate-200"
-                          : "bg-white/[0.02] border-white/[0.08]"
+                {certificate.event && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
                       }`}
                     >
-                      <span
-                        className={`text-[11px] font-semibold uppercase tracking-wider block ${
-                          isLight ? "text-slate-500" : "text-[#737A87]"
-                        }`}
-                      >
-                        Credential Type
+                      Event
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.event}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.format && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Format
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.format}
+                    </span>
+                  </div>
+                )}
+
+                {(certificate.date || certificate.year || certificate.issueDate) && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Date
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.date || certificate.year || certificate.issueDate}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.venue && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Venue
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                      title={certificate.venue}
+                    >
+                      {certificate.venue}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.organizer && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Organizer
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.organizer}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.participant && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Participant
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.participant}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.team && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-purple-50/50 border-purple-200/80"
+                        : "bg-purple-950/20 border-purple-800/40"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-purple-700" : "text-purple-400"
+                      }`}
+                    >
+                      Team
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.team}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.role && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-purple-50/50 border-purple-200/80"
+                        : "bg-purple-950/20 border-purple-800/40"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-purple-700" : "text-purple-400"
+                      }`}
+                    >
+                      Role
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.role}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.project && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Project
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.project}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.track && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Track
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.track}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.session && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-purple-50/60 border-purple-200/80"
+                        : "bg-purple-950/20 border-purple-800/30"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-purple-700" : "text-purple-400"
+                      }`}
+                    >
+                      Academic Session
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                    >
+                      {certificate.session}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              {/* Research Theme / Pathway Highlight (e.g. for Memory in Motion) */}
+              {(certificate.theme || certificate.pathway) && (
+                <div
+                  className={`rounded-xl border p-3.5 space-y-1 text-xs ${
+                    isLight
+                      ? "bg-purple-50/40 border-purple-200"
+                      : "bg-white/[0.02] border-white/[0.08]"
+                  }`}
+                >
+                  {certificate.theme && (
+                    <div className="leading-relaxed">
+                      <span className="font-semibold text-purple-400">Theme: </span>
+                      <span className={isLight ? "text-slate-700" : "text-[#A7ADB8]"}>
+                        {certificate.theme}
                       </span>
-                      <span
-                        className={`text-sm font-bold mt-1 block ${
-                          isLight ? "text-slate-900" : "text-white"
-                        }`}
-                      >
-                        {certificate.credentialType}
+                    </div>
+                  )}
+                  {certificate.pathway && (
+                    <div className="leading-relaxed">
+                      <span className="font-semibold text-purple-400">Pathway: </span>
+                      <span className={isLight ? "text-slate-700" : "text-[#A7ADB8]"}>
+                        {certificate.pathway}
                       </span>
                     </div>
                   )}
@@ -568,6 +765,81 @@ export default function CertificateViewerModal({
                         <span className="w-1.5 h-1.5 rounded-full bg-purple-400" />
                         <span className="font-medium">{member}</span>
                       </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Authorized Signatories */}
+              {certificate.signatories && certificate.signatories.length > 0 && (
+                <div className="space-y-2 pt-1">
+                  <span
+                    className={`text-xs font-semibold uppercase tracking-wider block ${
+                      isLight ? "text-slate-500" : "text-[#737A87]"
+                    }`}
+                  >
+                    Authorized Signatories
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {certificate.signatories.map((sig, idx) => (
+                      <div
+                        key={idx}
+                        className={`flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs font-sans ${
+                          isLight
+                            ? "bg-slate-50 border-slate-200 text-slate-800"
+                            : "bg-white/[0.02] border-white/[0.07] text-zinc-200"
+                        }`}
+                      >
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                        <span className="font-medium">{sig}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Associated Team Projects */}
+              {certificate.associatedProjects && certificate.associatedProjects.length > 0 && (
+                <div className="space-y-2 pt-1">
+                  <span
+                    className={`text-xs font-semibold uppercase tracking-wider block ${
+                      isLight ? "text-purple-700" : "text-purple-400"
+                    }`}
+                  >
+                    Associated Team Projects ({certificate.team || "Team Project"})
+                  </span>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {certificate.associatedProjects.map((p, idx) => (
+                      <a
+                        key={idx}
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`p-3 rounded-xl border flex flex-col justify-between group transition-all duration-150 cursor-pointer ${
+                          isLight
+                            ? "bg-purple-50/40 hover:bg-purple-50/80 border-purple-200/80 hover:border-purple-300"
+                            : "bg-purple-950/20 hover:bg-purple-950/40 border-purple-800/30 hover:border-purple-700/50"
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span className={`font-semibold text-xs sm:text-sm ${
+                            isLight ? "text-purple-900 group-hover:text-purple-700" : "text-purple-200 group-hover:text-white"
+                          }`}>
+                            {p.name}
+                          </span>
+                          <ExternalLink className="w-3.5 h-3.5 text-purple-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+                        </div>
+                        {p.description && (
+                          <p className={`text-[11px] mt-1 leading-relaxed ${
+                            isLight ? "text-slate-600" : "text-zinc-400"
+                          }`}>
+                            {p.description}
+                          </p>
+                        )}
+                        <span className="text-[10px] font-mono text-purple-500 mt-2 truncate">
+                          {p.url.replace(/^https?:\/\//, "")}
+                        </span>
+                      </a>
                     ))}
                   </div>
                 </div>

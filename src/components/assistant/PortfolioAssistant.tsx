@@ -25,7 +25,6 @@ export function PortfolioAssistant() {
       timestamp: new Date().toISOString(),
     },
   ]);
-  const [input, setInput] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -72,8 +71,8 @@ export function PortfolioAssistant() {
   }, []);
 
   // Send query logic
-  const handleSend = async (queryText?: string) => {
-    const textToSend = (queryText ?? input).trim();
+  const handleSend = async (queryText: string) => {
+    const textToSend = (queryText || "").trim();
     if (!textToSend || isGenerating) return;
 
     // Reset user scroll lock when they ask a new question
@@ -98,7 +97,6 @@ export function PortfolioAssistant() {
     };
 
     setMessages((prev) => [...prev, userMsg, asstPlaceholder]);
-    setInput("");
     setIsGenerating(true);
 
     setTimeout(() => {
@@ -275,9 +273,7 @@ export function PortfolioAssistant() {
 
             {/* 4. Composer / Input (fixed at bottom, never scrolls away) */}
             <AssistantComposer
-              value={input}
-              onChange={setInput}
-              onSend={() => handleSend()}
+              onSend={handleSend}
               onStop={handleStop}
               isGenerating={isGenerating}
             />

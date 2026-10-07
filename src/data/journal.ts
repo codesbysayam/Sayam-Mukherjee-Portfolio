@@ -1,3 +1,5 @@
+import { calculateReadingTime } from "../utils/readingTime";
+
 export interface JournalSection {
   heading?: string;
   paragraphs: string[];
@@ -20,7 +22,7 @@ export interface JournalEntry {
  * Personal engineering reflections, architectural decisions, and learning notes by Sayam Mukherjee.
  * Written from an authentic, reflective student-engineer perspective without external publication claims.
  */
-export const journalEntries: JournalEntry[] = [
+const rawJournalEntries: Omit<JournalEntry, "readingTime">[] = [
   {
     id: "building-operon-from-the-interface-up",
     slug: "building-operon-from-the-interface-up",
@@ -28,7 +30,6 @@ export const journalEntries: JournalEntry[] = [
     title: "Building OPERON From the Interface Up",
     summary: "A look at what I learned while building the website and product interface for OPERON during the Deploy or Die challenge.",
     date: "Feb 2026",
-    readingTime: "4 min read",
     featured: true,
     content: [
       {
@@ -61,7 +62,6 @@ export const journalEntries: JournalEntry[] = [
     title: "What a 9.06 CGPA Actually Taught Me",
     summary: "Grades are useful, but the habits behind them have mattered more to me.",
     date: "Jan 2026",
-    readingTime: "5 min read",
     featured: false,
     content: [
       {
@@ -94,7 +94,6 @@ export const journalEntries: JournalEntry[] = [
     title: "When a Project Stops Being Just a Project",
     summary: "Working on different projects changed the way I think about learning and building.",
     date: "Jan 2026",
-    readingTime: "4 min read",
     featured: false,
     content: [
       {
@@ -126,7 +125,6 @@ export const journalEntries: JournalEntry[] = [
     title: "Thinking About Memory in Motion",
     summary: "Exploring what happens when useful context has to survive inside a fixed-size recurrent state.",
     date: "Dec 2025",
-    readingTime: "6 min read",
     featured: false,
     content: [
       {
@@ -158,7 +156,6 @@ export const journalEntries: JournalEntry[] = [
     title: "Why I Still Care About Making Things Look Good",
     summary: "Design is not separate from engineering. It changes how people understand what we build.",
     date: "Nov 2025",
-    readingTime: "4 min read",
     featured: false,
     content: [
       {
@@ -190,7 +187,6 @@ export const journalEntries: JournalEntry[] = [
     title: "Why I Wanted MAUSAM to Feel Useful",
     summary: "Building a weather platform made me think about the difference between showing data and helping someone use it.",
     date: "Oct 2025",
-    readingTime: "5 min read",
     featured: false,
     content: [
       {
@@ -217,5 +213,15 @@ export const journalEntries: JournalEntry[] = [
   }
 ];
 
+/**
+ * All journal entries with estimated reading time dynamically computed
+ * based on standard average reading speed (200 words per minute).
+ */
+export const journalEntries: JournalEntry[] = rawJournalEntries.map((entry) => ({
+  ...entry,
+  readingTime: calculateReadingTime(entry).formatted,
+}));
+
 // Backwards compatibility alias
 export const JOURNAL_ENTRIES = journalEntries;
+

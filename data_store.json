@@ -4596,6 +4596,87 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 63
+    },
+    {
+      "id": "visit_1791402501319_arfc",
+      "timestamp": "2026-10-07T19:48:21.319Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 89
+    },
+    {
+      "id": "visit_1791402501327_ccaj",
+      "timestamp": "2026-10-07T19:48:21.327Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 63
+    },
+    {
+      "id": "visit_1791402501332_qv06",
+      "timestamp": "2026-10-07T19:48:21.332Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 87
+    },
+    {
+      "id": "visit_1791402501338_68af",
+      "timestamp": "2026-10-07T19:48:21.338Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 69
+    },
+    {
+      "id": "visit_1791403617971_5p7r",
+      "timestamp": "2026-10-07T20:06:57.971Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 124
+    },
+    {
+      "id": "visit_1791403617978_byqy",
+      "timestamp": "2026-10-07T20:06:57.978Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 136
+    },
+    {
+      "id": "visit_1791403617981_fle5",
+      "timestamp": "2026-10-07T20:06:57.981Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 37
+    },
+    {
+      "id": "visit_1791403617988_qyj1",
+      "timestamp": "2026-10-07T20:06:57.988Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 107
+    },
+    {
+      "id": "visit_1791403715732_55k7",
+      "timestamp": "2026-10-07T20:08:35.732Z",
+      "page": "CERTIFICATES Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Google",
+      "duration": 61
     }
   ],
   "certificateVault": [
@@ -4649,8 +4730,13 @@
         "Aarush Roy"
       ],
       "description": "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
-      "fullDescription": "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A | Business Process Automation, the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
+      "fullDescription": "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
       "contribution": "Sayam Mukherjee developed the OPERON website from scratch, implementing the product interface and workflow into a usable application.",
+      "metrics": {
+        "developmentTime": "4 Weeks (Hackathon to MVP)",
+        "codeComplexityScore": "Low Coupling | High Cohesion (Multi-Agent)",
+        "linesOfCode": "4,200+ Lines"
+      },
       "skills": [
         "Agentic Systems",
         "Business Process Automation",
@@ -4670,53 +4756,61 @@
       "updatedAt": "2026-08-09T00:00:00.000Z"
     },
     {
-      "id": "kiit-grade-report-2025-26",
-      "title": "First-Year Grade Report",
-      "issuer": "Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar",
-      "category": "ACADEMIC RECORD",
-      "year": 2025,
-      "session": "2025–26",
-      "credentialType": "Grade Report",
-      "issueDate": "2025",
-      "description": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
-      "fullDescription": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
-      "subjects": [
-        "Chemistry",
-        "English",
-        "Basic Electronics",
-        "Chemistry Lab",
-        "Engineering Lab",
-        "Workshop",
-        "Communication Lab",
-        "Basic Electrical Engineering",
-        "Creativity,Innovation and Entreprneurship",
-        "Sports and Yoga",
-        "Transforms and Numerical Methods",
-        "Physics",
-        "Physics Lab",
-        "Differential Equations and Linear Algebra",
-        "Science of Living Systems",
-        "Environmental Science",
-        "Engineering Drawing and Graphics",
-        "Programming Lab",
-        "Basic Civil Engineering",
-        "Optimization Technique"
+      "id": "ignithon-2-0-participation-2026",
+      "title": "IGNITHON 2.0",
+      "issuer": "K-1000 / KIIT & KSAC",
+      "event": "IGNITHON 2.0",
+      "format": "12-Hour Offline Hackathon",
+      "role": "Team Leader",
+      "participant": "Sayam Mukherjee",
+      "organizer": "K-1000",
+      "credentialType": "Certificate of Participation",
+      "category": "COMPETITIONS",
+      "issueDate": "2026",
+      "date": "26th September 2026",
+      "year": 2026,
+      "venue": "KIIT Deemed to be University",
+      "team": "ALGNITE",
+      "teamMembers": [
+        "Sayam Mukherjee (Team Leader)",
+        "Shinibali Kumar"
       ],
-      "credentialUrl": "https://diverse-plum-xc5wzkru.edgeone.dev/",
+      "signatories": [
+        "Dr. Ajit Kumar Pasayat, Assoc. Dean - KSAC",
+        "Dr. Ayesha Dash, Faculty In-Charge (K-1000)"
+      ],
+      "associatedProjects": [
+        {
+          "name": "AlertSetu",
+          "url": "https://alertsetu1273.vercel.app",
+          "description": "Emergency alert and notification platform built by Team ALGNITE"
+        },
+        {
+          "name": "CampusConnect",
+          "url": "https://campusconnect1273.vercel.app",
+          "description": "Campus networking and student community hub built by Team ALGNITE"
+        }
+      ],
+      "description": "12-Hour Offline Hackathon at KIIT Deemed to be University organized by K-1000 with KIIT and KSAC, recognizing participation involving dedication, creativity, teamwork, technical excellence, innovation, and problem-solving.",
+      "fullDescription": "Certificate of Participation awarded to Sayam Mukherjee for actively participating in IGNITHON 2.0, a 12-Hour Offline Hackathon organized by K-1000 in association with KIIT and KSAC at KIIT Deemed to be University on 26th September 2026. Recognizes participation demonstrating dedication, creativity, teamwork, technical excellence, innovation, and problem-solving with Team ALGNITE.",
       "skills": [
-        "Engineering Sciences",
-        "Mathematics",
-        "Programming",
-        "Laboratory Work"
+        "12-Hour Hackathon",
+        "Team Leadership",
+        "Rapid Prototyping",
+        "Problem Solving",
+        "Technical Excellence"
       ],
       "tags": [
-        "20 Subjects",
-        "2025–26"
+        "12-Hour Hackathon",
+        "Offline Hackathon",
+        "Team ALGNITE",
+        "KIIT & KSAC"
       ],
+      "credentialUrl": "https://marked-aquamarine-cozz1tva.edgeone.dev/",
       "verificationStatus": "LINK AVAILABLE",
-      "featured": false,
-      "createdAt": "2025-06-01T00:00:00.000Z",
-      "updatedAt": "2025-06-01T00:00:00.000Z"
+      "featured": true,
+      "createdAt": "2026-09-26T00:00:00.000Z",
+      "updatedAt": "2026-09-26T00:00:00.000Z"
     },
     {
       "id": "comp-toycathon-2021",

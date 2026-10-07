@@ -198,8 +198,30 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "tell me about technex",
       "has he won any competitions"
     ],
-    answer: "Highlights include reaching the Top 15/finals of Toycathon 2021 and becoming a finalist in 5 of 6 competitions at Technex'26, IIT BHU.",
+    answer: "Highlights include reaching the National Grand Finale of Toycathon 2021, qualifying as a finalist in 5 of 6 competitions at Technex'26 (IIT BHU), participating in IGNITHON 2.0 (12-hour offline hackathon at KIIT as Team Leader of ALGNITE), and leading the web development of OPERON for Deploy or Die (GDG KIIT).",
     suggestions: ["⚡ Projects", "🎓 Education", "📩 Contact"],
+  },
+  {
+    id: "ignithon-algnite",
+    title: "IGNITHON 2.0 & Team ALGNITE",
+    keywords: [
+      "ignithon", "algnite", "alertsetu", "campusconnect", "shinibali",
+      "k-1000", "k1000", "ksac", "offline hackathon", "what certificate", "which certificate"
+    ],
+    phrases: [
+      "tell me about ignithon",
+      "what is ignithon",
+      "what did he do in ignithon",
+      "tell me about team algnite",
+      "who is in team algnite",
+      "what is alertsetu",
+      "what is campusconnect",
+      "has he attended offline hackathons",
+      "what certificate did sayam receive in ignithon",
+      "which certificate did he get for ignithon"
+    ],
+    answer: "Sayam participated in IGNITHON 2.0, a 12-hour offline hackathon held at KIIT Deemed to be University on 26th September 2026, organized by K-1000 in association with KIIT and KSAC. He participated as the Team Leader of ALGNITE alongside Shinibali Kumar. Team ALGNITE developed AlertSetu (emergency alert notification platform) and CampusConnect (campus community hub). Note: Team ALGNITE is separate from Team Nexus (which built OPERON). If asked specifically about the credential, he received a Certificate of Participation.",
+    suggestions: ["🏆 Achievements", "⚡ Projects", "💻 GitHub"],
   },
   {
     id: "coding",
