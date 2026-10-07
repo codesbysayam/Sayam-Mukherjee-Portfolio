@@ -421,6 +421,7 @@ export interface CertificateContent {
   skills: readonly string[];
   tags?: readonly string[];
   event?: string;
+  platform?: string;
   year?: number;
   track?: string;
   project?: string;
@@ -431,6 +432,7 @@ export interface CertificateContent {
   role?: string;
   participant?: string;
   organizer?: string;
+  coOrganizer?: string;
   credentialType?: string;
   teamMembers?: readonly string[];
   signatories?: readonly string[];
@@ -444,10 +446,31 @@ export interface CertificateContent {
 export const CERTIFICATES: readonly CertificateContent[] = [
   {
     id: "dataforge-2026-memory-in-motion",
-    title: "DataForge 2026 | Memory in Motion",
-    issuer: "Kharagpur Data Analytics Group (KDAG), IIT Kharagpur",
+    title: "DATAFORGE 2026",
+    issuer: "IIT Kharagpur / Unstop",
     category: "COMPETITIONS",
+    credentialType: "Research Exhibit",
     issueDate: "2026",
+    year: 2026,
+    event: "DATAFORGE 2026",
+    platform: "Unstop",
+    format: "Explain the Frontier",
+    track: "Explain the Frontier",
+    project: "Memory in Motion",
+    venue: "IIT Kharagpur",
+    organizer: "IIT Kharagpur",
+    participant: "Sayam Mukherjee",
+    team: "ALGNITE",
+    role: "Team Leader",
+    teamMembers: ["Sayam Mukherjee (Team Leader)", "Shinibali Kumar"],
+    associatedProjects: [
+      {
+        name: "Memory in Motion",
+        url: "https://memoryinmotion.vercel.app",
+        description:
+          "An interactive exploration of in-context learning with recurrent memory, demonstrating how fixed-size state can retain task-relevant information while compression introduces interference and forgetting.",
+      },
+    ],
     description:
       "An interactive exploration of in-context learning with recurrent memory, demonstrating how fixed-size state can retain task-relevant information while compression introduces interference and forgetting.",
     fullDescription:
@@ -455,21 +478,42 @@ export const CERTIFICATES: readonly CertificateContent[] = [
     credentialUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
     verificationStatus: "LINK AVAILABLE",
     featured: true,
-    skills: ["AI Research", "Machine Learning", "In-Context Learning", "Recurrent Memory"],
-    tags: ["AI Research", "Machine Learning", "In-Context Learning", "Recurrent Memory"],
-    event: "DataForge 2026",
-    project: "Memory in Motion",
+    skills: ["In-Context Learning", "Recurrent Memory", "Explain the Frontier", "AI Research", "Machine Learning"],
+    tags: ["In-Context Learning", "Recurrent Memory", "Explain the Frontier", "AI Research", "Machine Learning"],
   },
   {
     id: "gdg-kiit-operon-2026",
-    title: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
-    issuer: "GDG on Campus KIIT",
+    title: "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+    issuer: "GDG on Campus KIIT / HowToAlgo",
     category: "COMPETITIONS",
+    credentialType: "Hackathon",
+    event: "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+    format: "Agent-Driven Lifecycle Hackathon",
+    organizer: "GDG on Campus KIIT",
+    coOrganizer: "HowToAlgo",
     issueDate: "2026",
+    date: "8-9 August 2026",
+    venue: "KIIT Deemed to be University",
     year: 2026,
-    track: "Track A | Business Process Automation",
-    project: "OPERON | Autonomous Operations, Human-Controlled",
-    team: "Team Nexus",
+    track: "Track A - Business Process Automation",
+    project: "OPERON - Autonomous Operations, Human-Controlled",
+    participant: "Sayam Mukherjee",
+    team: "NEXUS",
+    role: "Team Member",
+    teamMembers: [
+      "Sayam Mukherjee",
+      "Sounak Chowdhury (Team Leader)",
+      "Aarush Roy",
+      "Jaydeep Dutta",
+    ],
+    associatedProjects: [
+      {
+        name: "OPERON",
+        url: "https://operonpro.vercel.app",
+        description:
+          "Autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations, combining multi-agent AI with human-in-the-loop governance.",
+      },
+    ],
     description:
       "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
     fullDescription:
@@ -477,9 +521,22 @@ export const CERTIFICATES: readonly CertificateContent[] = [
     credentialUrl: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
     verificationStatus: "LINK AVAILABLE",
     featured: true,
-    skills: ["Agentic Systems", "Business Process Automation", "Multi-Agent Systems", "Human-in-the-Loop"],
-    tags: ["Agentic Systems", "Business Process Automation", "Multi-Agent Systems", "Human-in-the-Loop"],
-    event: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
+    skills: [
+      "Agent-Driven Lifecycle",
+      "Business Process Automation",
+      "OPERON",
+      "Human-Controlled Operations",
+      "Multi-Agent Systems",
+      "Human-in-the-Loop",
+    ],
+    tags: [
+      "Agent-Driven Lifecycle",
+      "Business Process Automation",
+      "OPERON",
+      "Human-Controlled Operations",
+      "Multi-Agent Systems",
+      "Human-in-the-Loop",
+    ],
   },
   {
     id: "ignithon-2-0-participation-2026",

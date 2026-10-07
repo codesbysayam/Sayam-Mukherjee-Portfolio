@@ -169,8 +169,7 @@ export default function CertificateViewerModal({
                   isLight ? "text-slate-500" : "text-[#A7ADB8]"
                 }`}
               >
-                {certificate.issuer} · {certificate.issueDate}
-                {certificate.platform ? ` · ${certificate.platform}` : ""}
+                {certificate.issuer} · {certificate.year || certificate.issueDate}
               </p>
             </div>
 
@@ -334,13 +333,7 @@ export default function CertificateViewerModal({
                   }`}
                 >
                   <Calendar className="w-3.5 h-3.5" />
-                  <span>{certificate.issueDate}</span>
-                  {certificate.platform && (
-                    <>
-                      <span>·</span>
-                      <span>Platform: {certificate.platform}</span>
-                    </>
-                  )}
+                  <span>{certificate.issueDate || certificate.year}</span>
                 </div>
               </div>
 
@@ -586,56 +579,6 @@ export default function CertificateViewerModal({
                   </div>
                 )}
 
-                {certificate.project && (
-                  <div
-                    className={`p-3 rounded-xl border ${
-                      isLight
-                        ? "bg-slate-50 border-slate-200"
-                        : "bg-white/[0.02] border-white/[0.08]"
-                    }`}
-                  >
-                    <span
-                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
-                        isLight ? "text-slate-500" : "text-[#737A87]"
-                      }`}
-                    >
-                      Project
-                    </span>
-                    <span
-                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
-                        isLight ? "text-slate-900" : "text-white"
-                      }`}
-                    >
-                      {certificate.project}
-                    </span>
-                  </div>
-                )}
-
-                {certificate.track && (
-                  <div
-                    className={`p-3 rounded-xl border ${
-                      isLight
-                        ? "bg-slate-50 border-slate-200"
-                        : "bg-white/[0.02] border-white/[0.08]"
-                    }`}
-                  >
-                    <span
-                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
-                        isLight ? "text-slate-500" : "text-[#737A87]"
-                      }`}
-                    >
-                      Track
-                    </span>
-                    <span
-                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
-                        isLight ? "text-slate-900" : "text-white"
-                      }`}
-                    >
-                      {certificate.track}
-                    </span>
-                  </div>
-                )}
-
                 {certificate.session && (
                   <div
                     className={`p-3 rounded-xl border ${
@@ -662,8 +605,8 @@ export default function CertificateViewerModal({
                 )}
               </div>
 
-              {/* Research Theme / Pathway Highlight (e.g. for Memory in Motion) */}
-              {(certificate.theme || certificate.pathway) && (
+              {/* Research Theme / Pathway / Track Highlight */}
+              {(certificate.theme || certificate.pathway || (certificate.track && certificate.track !== certificate.format)) && (
                 <div
                   className={`rounded-xl border p-3.5 space-y-1 text-xs ${
                     isLight
@@ -671,6 +614,14 @@ export default function CertificateViewerModal({
                       : "bg-white/[0.02] border-white/[0.08]"
                   }`}
                 >
+                  {certificate.track && certificate.track !== certificate.format && (
+                    <div className="leading-relaxed">
+                      <span className="font-semibold text-purple-400">Track: </span>
+                      <span className={isLight ? "text-slate-700" : "text-[#A7ADB8]"}>
+                        {certificate.track}
+                      </span>
+                    </div>
+                  )}
                   {certificate.theme && (
                     <div className="leading-relaxed">
                       <span className="font-semibold text-purple-400">Theme: </span>

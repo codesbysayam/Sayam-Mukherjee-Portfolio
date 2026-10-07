@@ -397,21 +397,52 @@ export const portfolioKnowledge: PortfolioKnowledge = {
 
   competitionsAndHonors: [
     {
-      title: "DataForge 2026 | Memory in Motion",
-      issuer: "Kharagpur Data Analytics Group (KDAG), IIT Kharagpur",
+      title: "DATAFORGE 2026",
+      issuer: "IIT Kharagpur / Unstop",
       year: "2026",
       category: "COMPETITIONS",
+      type: "Research Exhibit",
+      event: "DATAFORGE 2026",
+      format: "Explain the Frontier",
+      team: "ALGNITE",
+      role: "Team Leader",
+      teamLeader: "Sayam Mukherjee",
+      teamMember: "Shinibali Kumar",
+      associatedProjects: [
+        {
+          name: "Memory in Motion",
+          url: "https://memoryinmotion.vercel.app",
+          description:
+            "Interactive exploration of in-context learning with recurrent memory under the 'Explain the Frontier' pathway."
+        }
+      ],
       description:
         "Interactive exploration of in-context learning with recurrent memory under the 'Explain the Frontier' pathway, demonstrating how bounded state retains task-relevant data without unbounded token growth.",
       verificationLink: "https://intact-black-0mk1uydx.edgeone.dev/",
     },
     {
-      title: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
-      issuer: "GDG on Campus KIIT",
+      title: "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+      issuer: "GDG on Campus KIIT / HowToAlgo",
       year: "2026",
+      date: "8-9 August 2026",
       category: "COMPETITIONS",
+      type: "Hackathon",
+      event: "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+      format: "Agent-Driven Lifecycle Hackathon",
+      role: "Team Member",
+      team: "NEXUS",
+      teamLeader: "Sounak Chowdhury",
+      teamMember: "Sayam Mukherjee, Aarush Roy, Jaydeep Dutta",
+      associatedProjects: [
+        {
+          name: "OPERON",
+          url: "https://operonpro.vercel.app",
+          description:
+            "Autonomous operations platform combining multi-agent AI with human-in-the-loop governance, built for Track A (Business Process Automation)."
+        }
+      ],
       description:
-        "Built OPERON under Track A (Business Process Automation). Developed the complete application interface and human-in-the-loop workflows.",
+        "Built OPERON under Track A (Business Process Automation). Developed the complete application interface and human-in-the-loop workflows as a Team Member of Team NEXUS (led by Sounak Chowdhury).",
       verificationLink: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
     },
     {

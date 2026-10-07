@@ -335,6 +335,64 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Creative Media:** Adobe Photoshop, Adobe Premiere Pro, Figma, Visual User Psychology`;
   }
 
+  // 12.4 SPECIFIC TEAM MEMBERSHIP & PROJECT ASSOCIATION QUERIES
+  if (
+    q.includes("which team did sayam lead") ||
+    q.includes("what team did sayam lead") ||
+    q.includes("team did sayam lead")
+  ) {
+    return `Sayam led **Team ALGNITE** (alongside teammate Shinibali Kumar) for both **IGNITHON 2.0** (12-hour offline hackathon at KIIT) and **DATAFORGE 2026** (Memory in Motion at IIT Kharagpur).\n\nIn **Team NEXUS** (OPERON for Deploy or Die), Sayam was a Team Member, while **Sounak Chowdhury** was the Team Leader.`;
+  }
+
+  if (
+    q.includes("who led team nexus") ||
+    q.includes("leader of team nexus") ||
+    q.includes("leader of nexus") ||
+    q.includes("who led nexus")
+  ) {
+    return `**Sounak Chowdhury** was the Team Leader of Team NEXUS. Sayam Mukherjee participated as a Team Member alongside teammates Aarush Roy and Jaydeep Dutta.`;
+  }
+
+  if (
+    q.includes("who was in team nexus") ||
+    q.includes("members of team nexus") ||
+    q.includes("team nexus members") ||
+    q.includes("who was in nexus")
+  ) {
+    return `Team NEXUS consisted of:\n• **Sounak Chowdhury** (Team Leader)\n• **Sayam Mukherjee** (Team Member)\n• **Aarush Roy**\n• **Jaydeep Dutta**\n\nThey built **OPERON** for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized by GDG on Campus KIIT and HowToAlgo (8-9 August 2026) under Track A (Business Process Automation).`;
+  }
+
+  if (
+    q.includes("which project was associated with dataforge") ||
+    q.includes("dataforge project") ||
+    q.includes("project associated with dataforge")
+  ) {
+    return `**Memory in Motion** (an interactive research exhibit on in-context learning with recurrent memory under the 'Explain the Frontier' pathway) was the project associated with DATAFORGE 2026. It was built by Team ALGNITE (led by Sayam Mukherjee).`;
+  }
+
+  if (
+    q.includes("which project was associated with the gdg") ||
+    q.includes("which project was associated with gdg") ||
+    q.includes("project associated with the gdg hackathon") ||
+    q.includes("gdg hackathon project")
+  ) {
+    return `**OPERON** (Autonomous Operations, Human-Controlled) was the project built for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized by GDG on Campus KIIT and HowToAlgo. It was built by Team NEXUS.`;
+  }
+
+  if (
+    q.includes("which team built memory in motion") ||
+    q.includes("who built memory in motion")
+  ) {
+    return `**Team ALGNITE** (led by Sayam Mukherjee alongside teammate Shinibali Kumar) built Memory in Motion for DATAFORGE 2026.`;
+  }
+
+  if (
+    q.includes("which team built operon") ||
+    q.includes("who built operon")
+  ) {
+    return `**Team NEXUS** (led by Sounak Chowdhury, with Sayam Mukherjee, Aarush Roy, and Jaydeep Dutta) built OPERON for Deploy or Die (GDG on Campus KIIT × HowToAlgo).`;
+  }
+
   // 12.5 IGNITHON 2.0 & TEAM ALGNITE
   if (
     q.includes("ignithon") ||

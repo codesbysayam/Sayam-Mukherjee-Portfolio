@@ -28,30 +28,55 @@ import { Certificate } from "../types/certificates";
 export const INITIAL_CERTIFICATES: Certificate[] = [
   {
     id: "dataforge-2026-memory-in-motion",
-    title: "DataForge 2026 | Memory in Motion",
-    issuer: "Kharagpur Data Analytics Group (KDAG), IIT Kharagpur",
-    event: "DataForge 2026",
+    title: "DATAFORGE 2026",
+    issuer: "IIT Kharagpur / Unstop",
+    event: "DATAFORGE 2026",
     platform: "Unstop",
     category: "COMPETITIONS",
+    credentialType: "Research Exhibit",
+    format: "Explain the Frontier",
+    track: "Explain the Frontier",
     project: "Memory in Motion",
     theme: "In-Context Learning with Recurrent Memory",
     pathway: "Explain the Frontier",
     issueDate: "2026",
-    description: "An interactive exploration of in-context learning with recurrent memory, demonstrating how fixed-size state can retain task-relevant information while compression introduces interference and forgetting.",
-    fullDescription: "Memory in Motion is an interactive research-exhibit project exploring in-context learning through recurrent memory. It demonstrates how a fixed-size recurrent state can carry task-relevant information forward without growing a token-by-token memory, while also exposing the trade-off: compressing information into a bounded state can introduce interference and forgetting.",
-    credentialUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
+    year: 2026,
+    venue: "IIT Kharagpur",
+    organizer: "IIT Kharagpur",
+    participant: "Sayam Mukherjee",
+    team: "ALGNITE",
+    role: "Team Leader",
+    teamMembers: [
+      "Sayam Mukherjee (Team Leader)",
+      "Shinibali Kumar"
+    ],
+    associatedProjects: [
+      {
+        name: "Memory in Motion",
+        url: "https://memoryinmotion.vercel.app",
+        description:
+          "An interactive exploration of in-context learning with recurrent memory, demonstrating how fixed-size state can retain task-relevant information while compression introduces interference and forgetting."
+      }
+    ],
+    description:
+      "An interactive exploration of in-context learning with recurrent memory, demonstrating how fixed-size state can retain task-relevant information while compression introduces interference and forgetting.",
+    fullDescription:
+      "Memory in Motion is an interactive research-exhibit project exploring in-context learning through recurrent memory. It demonstrates how a fixed-size recurrent state can carry task-relevant information forward without growing a token-by-token memory, while also exposing the trade-off: compressing information into a bounded state can introduce interference and forgetting.",
     skills: [
-      "AI Research",
-      "Machine Learning",
       "In-Context Learning",
-      "Recurrent Memory"
+      "Recurrent Memory",
+      "Explain the Frontier",
+      "AI Research",
+      "Machine Learning"
     ],
     tags: [
-      "AI Research",
-      "Machine Learning",
       "In-Context Learning",
-      "Recurrent Memory"
+      "Recurrent Memory",
+      "Explain the Frontier",
+      "AI Research",
+      "Machine Learning"
     ],
+    credentialUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
     verificationStatus: "LINK AVAILABLE",
     featured: true,
     createdAt: "2026-02-15T00:00:00.000Z",
@@ -60,41 +85,54 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
   {
     id: "gdg-kiit-operon-2026",
     category: "COMPETITIONS",
-    title: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
-    issuer: "GDG on Campus KIIT",
-    event: "Deploy or Die | HowToAlgo × GDG on Campus KIIT",
+    title: "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+    issuer: "GDG on Campus KIIT / HowToAlgo",
+    event: "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+    organizer: "GDG on Campus KIIT",
+    coOrganizer: "HowToAlgo",
+    associatedOrganizer: "HowToAlgo",
+    credentialType: "Hackathon",
+    format: "Agent-Driven Lifecycle Hackathon",
     year: 2026,
-    date: "8–9 August 2026",
+    date: "8-9 August 2026",
     issueDate: "2026",
-    track: "Track A | Business Process Automation",
-    project: "OPERON | Autonomous Operations, Human-Controlled",
-    team: "Team Nexus",
+    venue: "KIIT Deemed to be University",
+    track: "Track A - Business Process Automation",
+    project: "OPERON - Autonomous Operations, Human-Controlled",
+    participant: "Sayam Mukherjee",
+    team: "NEXUS",
+    role: "Team Member",
     teamMembers: [
       "Sayam Mukherjee",
-      "Sounak Chowdhury",
-      "Gourab Biswas",
-      "Aarush Roy"
+      "Sounak Chowdhury (Team Leader)",
+      "Aarush Roy",
+      "Jaydeep Dutta"
+    ],
+    associatedProjects: [
+      {
+        name: "OPERON",
+        url: "https://operonpro.vercel.app",
+        description:
+          "Autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations, combining multi-agent AI with human-in-the-loop governance."
+      }
     ],
     description:
       "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
     fullDescription:
       "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
-    contribution:
-      "Sayam Mukherjee developed the OPERON website from scratch, implementing the product interface and workflow into a usable application.",
-    metrics: {
-      developmentTime: "4 Weeks (Hackathon to MVP)",
-      codeComplexityScore: "Low Coupling | High Cohesion (Multi-Agent)",
-      linesOfCode: "4,200+ Lines"
-    },
     skills: [
-      "Agentic Systems",
+      "Agent-Driven Lifecycle",
       "Business Process Automation",
+      "OPERON",
+      "Human-Controlled Operations",
       "Multi-Agent Systems",
       "Human-in-the-Loop"
     ],
     tags: [
-      "Agentic Systems",
+      "Agent-Driven Lifecycle",
       "Business Process Automation",
+      "OPERON",
+      "Human-Controlled Operations",
       "Multi-Agent Systems",
       "Human-in-the-Loop"
     ],

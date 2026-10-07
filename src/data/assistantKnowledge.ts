@@ -224,6 +224,43 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
     suggestions: ["🏆 Achievements", "⚡ Projects", "💻 GitHub"],
   },
   {
+    id: "team-nexus-gdg",
+    title: "Team NEXUS & OPERON (GDG Deploy or Die)",
+    keywords: [
+      "nexus", "team nexus", "gdg", "deploy or die", "operon", "sounak",
+      "sounak chowdhury", "aarush", "jaydeep", "jaydeep dutta", "howtoalgo", "who led team nexus", "who was in team nexus"
+    ],
+    phrases: [
+      "who led team nexus",
+      "who was in team nexus",
+      "tell me about team nexus",
+      "who built operon",
+      "which team built operon",
+      "which project was associated with the gdg hackathon",
+      "what was sayam's role in team nexus"
+    ],
+    answer: "Team NEXUS was led by Sounak Chowdhury (Team Leader). The members of Team NEXUS were Sounak Chowdhury (Team Leader), Sayam Mukherjee (Team Member), Aarush Roy, and Jaydeep Dutta. They built OPERON (Autonomous Operations, Human-Controlled) for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized by GDG on Campus KIIT and HowToAlgo on 8-9 August 2026 under Track A (Business Process Automation). Sayam Mukherjee developed the complete application interface and workflows.",
+    suggestions: ["⚡ Projects", "🏆 Achievements", "💻 GitHub"],
+  },
+  {
+    id: "team-algnite-dataforge",
+    title: "Team ALGNITE & Memory in Motion (DataForge 2026)",
+    keywords: [
+      "dataforge", "memory in motion", "explain the frontier", "iit kharagpur",
+      "kdag", "unstop", "which team built memory in motion", "which project was associated with dataforge", "which team did sayam lead"
+    ],
+    phrases: [
+      "which team did sayam lead",
+      "which team built memory in motion",
+      "who built memory in motion",
+      "which project was associated with dataforge",
+      "tell me about dataforge",
+      "tell me about memory in motion"
+    ],
+    answer: "Sayam Mukherjee led Team ALGNITE (alongside teammate Shinibali Kumar). Team ALGNITE built Memory in Motion, an interactive research exhibit exploring in-context learning with recurrent memory, for DATAFORGE 2026 organized by IIT Kharagpur (KDAG) on Unstop under the 'Explain the Frontier' pathway. Team ALGNITE also participated in IGNITHON 2.0 at KIIT, building AlertSetu and CampusConnect.",
+    suggestions: ["⚡ Projects", "🏆 Achievements", "💻 GitHub"],
+  },
+  {
     id: "coding",
     title: "Coding & Problem Solving",
     keywords: [

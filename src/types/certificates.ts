@@ -45,6 +45,8 @@ export interface Certificate {
   role?: string;
   participant?: string;
   organizer?: string;
+  coOrganizer?: string;
+  associatedOrganizer?: string;
   signatories?: string[];
   associatedProjects?: {
     name: string;
