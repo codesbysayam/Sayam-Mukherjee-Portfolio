@@ -1,16 +1,6 @@
 {
   "source": "GitHub",
   "owner": "codesbysayam",
-  "username": "codesbysayam",
-  "profileUrl": "https://github.com/codesbysayam",
-  "avatarUrl": "https://avatars.githubusercontent.com/u/85777731?v=4",
-  "name": "Sayam Mukherjee",
-  "bio": "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
-  "publicRepos": 11,
-  "followers": 1,
-  "following": 0,
-  "publicGists": 0,
-  "accountCreatedAt": "2021-06-12T04:55:46Z",
   "profile": {
     "login": "codesbysayam",
     "name": "Sayam Mukherjee",
@@ -21,421 +11,204 @@
     "followers": 1,
     "following": 0
   },
-  "totalStars": 5,
-  "totalForks": 0,
   "repositories": [
     {
       "id": 1355576736,
       "name": "Sayam-Mukherjee-Portfolio",
       "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "fullName": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
       "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
       "homepage": "www.sayammukherjee.in",
       "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-03T06:02:37Z",
-      "createdAt": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-10-08T21:18:16Z",
-      "updatedAt": "2026-10-08T21:18:16Z",
-      "pushed_at": "2026-10-08T21:18:11Z",
-      "pushedAt": "2026-10-08T21:18:11Z",
-      "topics": [
-        "ai",
-        "ai-agent",
-        "ai-model",
-        "api",
-        "backend-api",
-        "frontend",
-        "full-stack",
-        "gemini-api",
-        "generative-ai",
-        "javascript",
-        "machine-learning",
-        "machinelearning-python",
-        "portfolio",
-        "portfolio-project",
-        "portfolio-website",
-        "react-native",
-        "reactjs",
-        "tailwindcss",
-        "vite"
-      ]
+      "updated_at": "2026-10-09T01:55:57Z",
+      "pushed_at": "2026-10-09T01:55:54Z"
     },
     {
       "id": 1368247830,
       "name": "codesbysayam",
       "full_name": "codesbysayam/codesbysayam",
-      "fullName": "codesbysayam/codesbysayam",
-      "html_url": "https://github.com/codesbysayam/codesbysayam",
-      "url": "https://github.com/codesbysayam/codesbysayam",
       "description": "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects. 🚀💻 | Code • Create • Learn • Build |",
+      "html_url": "https://github.com/codesbysayam/codesbysayam",
       "homepage": "",
       "language": null,
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-13T09:39:25Z",
-      "createdAt": "2026-09-13T09:39:25Z",
       "updated_at": "2026-10-08T10:32:16Z",
-      "updatedAt": "2026-10-08T10:32:16Z",
-      "pushed_at": "2026-10-08T10:32:12Z",
-      "pushedAt": "2026-10-08T10:32:12Z",
-      "topics": [
-        "artificial-intelligence",
-        "computer-science",
-        "data-structures",
-        "developer",
-        "developer-tools",
-        "full-stack-web-development",
-        "github-config",
-        "javascript",
-        "machine-learning",
-        "nextjs",
-        "open-source",
-        "portfolio",
-        "react",
-        "sayam-mukherjee",
-        "software-developer",
-        "tailwindcss",
-        "typescript",
-        "web-development"
-      ]
+      "pushed_at": "2026-10-08T10:32:12Z"
     },
     {
       "id": 1406277351,
       "name": "SightForge",
       "full_name": "codesbysayam/SightForge",
-      "fullName": "codesbysayam/SightForge",
-      "html_url": "https://github.com/codesbysayam/SightForge",
-      "url": "https://github.com/codesbysayam/SightForge",
       "description": "YOLOv8 Edge CV Pipeline",
-      "homepage": "",
+      "html_url": "https://github.com/codesbysayam/SightForge",
+      "homepage": null,
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-10-05T19:18:39Z",
-      "createdAt": "2026-10-05T19:18:39Z",
       "updated_at": "2026-10-06T19:54:25Z",
-      "updatedAt": "2026-10-06T19:54:25Z",
-      "pushed_at": "2026-10-06T19:54:21Z",
-      "pushedAt": "2026-10-06T19:54:21Z",
-      "topics": []
+      "pushed_at": "2026-10-06T19:54:21Z"
     },
     {
       "id": 1403521263,
       "name": "AXIOM",
       "full_name": "codesbysayam/AXIOM",
-      "fullName": "codesbysayam/AXIOM",
-      "html_url": "https://github.com/codesbysayam/AXIOM",
-      "url": "https://github.com/codesbysayam/AXIOM",
       "description": "Agentic AI",
+      "html_url": "https://github.com/codesbysayam/AXIOM",
       "homepage": "https://axiomwcc.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-10-03T18:28:37Z",
-      "createdAt": "2026-10-03T18:28:37Z",
       "updated_at": "2026-10-04T20:37:37Z",
-      "updatedAt": "2026-10-04T20:37:37Z",
-      "pushed_at": "2026-10-04T18:39:23Z",
-      "pushedAt": "2026-10-04T18:39:23Z",
-      "topics": []
+      "pushed_at": "2026-10-04T18:39:23Z"
     },
     {
       "id": 1404767583,
       "name": "inkloom",
       "full_name": "codesbysayam/inkloom",
-      "fullName": "codesbysayam/inkloom",
-      "html_url": "https://github.com/codesbysayam/inkloom",
-      "url": "https://github.com/codesbysayam/inkloom",
       "description": "Specialised AI models for logo design — a brand-analysis model turns a business into constraints, typography and symbol models construct the mark, and a composition engine produces real lockups and clear-space rules. Early access open.",
+      "html_url": "https://github.com/codesbysayam/inkloom",
       "homepage": "https://inkloom.art",
       "language": null,
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": true,
-      "isFork": true,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "master",
       "created_at": "2026-10-04T19:26:28Z",
-      "createdAt": "2026-10-04T19:26:28Z",
       "updated_at": "2026-10-04T19:26:28Z",
-      "updatedAt": "2026-10-04T19:26:28Z",
-      "pushed_at": "2026-09-26T13:29:22Z",
-      "pushedAt": "2026-09-26T13:29:22Z",
-      "topics": []
+      "pushed_at": "2026-09-26T13:29:22Z"
     },
     {
       "id": 1350807639,
       "name": "Operon",
       "full_name": "codesbysayam/Operon",
-      "fullName": "codesbysayam/Operon",
-      "html_url": "https://github.com/codesbysayam/Operon",
-      "url": "https://github.com/codesbysayam/Operon",
       "description": "🤖 Operon is an autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations. 🧠⚙️🔄 🚀 Combining multi-agent AI with human-in-the-loop governance to automate complex processes, improve efficiency, and keep critical decisions under human control. 🛡️👨‍💻✨ 🌐📊 Built for modern teams.",
+      "html_url": "https://github.com/codesbysayam/Operon",
       "homepage": "https://operonpro.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-08-29T18:06:43Z",
-      "createdAt": "2026-08-29T18:06:43Z",
       "updated_at": "2026-10-03T17:02:13Z",
-      "updatedAt": "2026-10-03T17:02:13Z",
-      "pushed_at": "2026-10-03T17:02:09Z",
-      "pushedAt": "2026-10-03T17:02:09Z",
-      "topics": [
-        "backend",
-        "business-automation",
-        "business-intelligence",
-        "express",
-        "frontend",
-        "full-system-export",
-        "gemini-api",
-        "human-in-the-loop",
-        "javascript",
-        "multi-agent-ai",
-        "nodejs",
-        "reactjs",
-        "tailwindcss",
-        "vercel",
-        "vite",
-        "workflow-automation"
-      ]
+      "pushed_at": "2026-10-03T17:02:09Z"
     },
     {
       "id": 1398703802,
       "name": "mausam_demo",
       "full_name": "codesbysayam/mausam_demo",
-      "fullName": "codesbysayam/mausam_demo",
-      "html_url": "https://github.com/codesbysayam/mausam_demo",
-      "url": "https://github.com/codesbysayam/mausam_demo",
       "description": "demo",
-      "homepage": "",
+      "html_url": "https://github.com/codesbysayam/mausam_demo",
+      "homepage": null,
       "language": null,
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-30T20:19:24Z",
-      "createdAt": "2026-09-30T20:19:24Z",
       "updated_at": "2026-09-30T20:19:32Z",
-      "updatedAt": "2026-09-30T20:19:32Z",
-      "pushed_at": "2026-09-30T20:19:28Z",
-      "pushedAt": "2026-09-30T20:19:28Z",
-      "topics": []
+      "pushed_at": "2026-09-30T20:19:28Z"
     },
     {
       "id": 1398584204,
       "name": "mausam_sample",
       "full_name": "codesbysayam/mausam_sample",
-      "fullName": "codesbysayam/mausam_sample",
-      "html_url": "https://github.com/codesbysayam/mausam_sample",
-      "url": "https://github.com/codesbysayam/mausam_sample",
       "description": "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for every.",
+      "html_url": "https://github.com/codesbysayam/mausam_sample",
       "homepage": "https://mausamgovt.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-30T18:20:33Z",
-      "createdAt": "2026-09-30T18:20:33Z",
       "updated_at": "2026-09-30T18:23:43Z",
-      "updatedAt": "2026-09-30T18:23:43Z",
-      "pushed_at": "2026-09-30T18:22:07Z",
-      "pushedAt": "2026-09-30T18:22:07Z",
-      "topics": []
+      "pushed_at": "2026-09-30T18:22:07Z"
     },
     {
       "id": 1393521230,
       "name": "CAMPUSCONNECT_1273",
       "full_name": "codesbysayam/CAMPUSCONNECT_1273",
-      "fullName": "codesbysayam/CAMPUSCONNECT_1273",
-      "html_url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
-      "url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
       "description": "🎓 A full-stack college event management platform that helps students discover, search, filter, and register for campus events while enabling organizers to create, manage, update, and monitor events through a dedicated dashboard. 📅 Built for a seamless, responsive campus experience.",
+      "html_url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
       "homepage": "https://campusconnect1273.vercel.app/",
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-28T18:08:23Z",
-      "createdAt": "2026-09-28T18:08:23Z",
       "updated_at": "2026-09-28T18:43:30Z",
-      "updatedAt": "2026-09-28T18:43:30Z",
-      "pushed_at": "2026-09-28T18:11:59Z",
-      "pushedAt": "2026-09-28T18:11:59Z",
-      "topics": [
-        "campus-connect",
-        "campus-platform",
-        "college-events",
-        "college-management",
-        "event-management",
-        "event-registration",
-        "full-stack",
-        "nextjs",
-        "react",
-        "student-platform",
-        "student-portal",
-        "student-portal-system",
-        "typescript",
-        "vercel",
-        "web-application"
-      ]
+      "pushed_at": "2026-09-28T18:11:59Z"
     },
     {
       "id": 1358811826,
       "name": "sayam-solves",
       "full_name": "codesbysayam/sayam-solves",
-      "fullName": "codesbysayam/sayam-solves",
-      "html_url": "https://github.com/codesbysayam/sayam-solves",
-      "url": "https://github.com/codesbysayam/sayam-solves",
       "description": "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice. 🧠 Exploring algorithms, sharpening problem-solving skills, and building consistency through LeetCode; one challenge at a time. 🚀",
+      "html_url": "https://github.com/codesbysayam/sayam-solves",
       "homepage": "",
       "language": "C++",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-06T05:18:47Z",
-      "createdAt": "2026-09-06T05:18:47Z",
       "updated_at": "2026-09-26T13:06:19Z",
-      "updatedAt": "2026-09-26T13:06:19Z",
-      "pushed_at": "2026-09-07T06:02:43Z",
-      "pushedAt": "2026-09-07T06:02:43Z",
-      "topics": [
-        "dsa",
-        "dsa-algorithm",
-        "dsa-practice",
-        "dsalgo",
-        "github",
-        "github-config",
-        "leetcode",
-        "leetcode-java",
-        "leetcode-python",
-        "leetcode-solutions"
-      ]
+      "pushed_at": "2026-09-07T06:02:43Z"
     },
     {
       "id": 1361090226,
       "name": "Memory-in-Motion",
       "full_name": "codesbysayam/Memory-in-Motion",
-      "fullName": "codesbysayam/Memory-in-Motion",
-      "html_url": "https://github.com/codesbysayam/Memory-in-Motion",
-      "url": "https://github.com/codesbysayam/Memory-in-Motion",
       "description": "demo",
+      "html_url": "https://github.com/codesbysayam/Memory-in-Motion",
       "homepage": "https://memoryinmotion.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-08T07:59:51Z",
-      "createdAt": "2026-09-08T07:59:51Z",
       "updated_at": "2026-09-26T13:06:17Z",
-      "updatedAt": "2026-09-26T13:06:17Z",
-      "pushed_at": "2026-09-23T06:12:15Z",
-      "pushedAt": "2026-09-23T06:12:15Z",
-      "topics": []
+      "pushed_at": "2026-09-23T06:12:15Z"
     }
   ],
   "events": [
@@ -444,444 +217,112 @@
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-10-07T21:04:21Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 45778840738,
-        "ref": "refs/heads/main",
-        "head": "9029ca3d0cd72e4a408340ef3ab618d2bd31e074",
-        "before": "8081ac4179c71b44d1daa01239fe6a717b292d7c"
-      }
+      "public": true
     },
     {
       "id": "23359891214",
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-10-07T20:29:37Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 45775856793,
-        "ref": "refs/heads/main",
-        "head": "b1af3782f956f392e1832f689c3980d171d9ef95",
-        "before": "cbb1711453cbd5459684b77122f044930b10b03a"
-      }
+      "public": true
     },
     {
       "id": "23201542156",
       "type": "PushEvent",
       "repo": "codesbysayam/SightForge",
       "created_at": "2026-10-06T19:54:21Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1406277351,
-        "push_id": 45657939212,
-        "ref": "refs/heads/main",
-        "head": "67d4ffea10be343e0d16c2c94fb56390dbe2055f",
-        "before": "e92f28a36160faed8f5105ecf120fd535f9fbec5"
-      }
+      "public": true
     },
     {
       "id": "23120967027",
       "type": "CreateEvent",
       "repo": "codesbysayam/SightForge",
       "created_at": "2026-10-05T19:18:45Z",
-      "public": true,
-      "payload": {
-        "ref": "main",
-        "ref_type": "branch",
-        "full_ref": "refs/heads/main",
-        "master_branch": "main",
-        "description": "YOLOv8 Edge CV Pipeline",
-        "pusher_type": "user"
-      }
+      "public": true
     },
     {
       "id": "23100001916",
       "type": "PushEvent",
       "repo": "codesbysayam/SightForge",
       "created_at": "2026-10-05T21:18:08Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1406277351,
-        "push_id": 45550123643,
-        "ref": "refs/heads/main",
-        "head": "e92f28a36160faed8f5105ecf120fd535f9fbec5",
-        "before": "2a2ef8a7e5b31f8b8f65a79a46a6b9af12d069b4"
-      }
+      "public": true
     },
     {
       "id": "23091637872",
       "type": "PushEvent",
       "repo": "codesbysayam/SightForge",
       "created_at": "2026-10-05T19:19:41Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1406277351,
-        "push_id": 45541154138,
-        "ref": "refs/heads/main",
-        "head": "2a2ef8a7e5b31f8b8f65a79a46a6b9af12d069b4",
-        "before": "815d985483a2c61610853944d6870d6433798352"
-      }
+      "public": true
     },
     {
       "id": "23014394680",
       "type": "PushEvent",
       "repo": "codesbysayam/Operon",
       "created_at": "2026-10-03T17:02:10Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1350807639,
-        "push_id": 45355650333,
-        "ref": "refs/heads/main",
-        "head": "55bd5c698e708d6458bb13fdeb8f6a872c6c11e4",
-        "before": "c16489309fd05e6789086ad3f3868a009ebf06c8"
-      }
+      "public": true
     },
     {
       "id": "16402625008",
       "type": "PublicEvent",
       "repo": "codesbysayam/AXIOM",
       "created_at": "2026-10-03T18:28:37Z",
-      "public": true,
-      "payload": {}
+      "public": true
     },
     {
       "id": "16400013726",
       "type": "WatchEvent",
       "repo": "Inkloom-art/inkloom",
       "created_at": "2026-10-04T19:26:24Z",
-      "public": true,
-      "payload": {
-        "action": "started"
-      }
+      "public": true
     },
     {
       "id": "22633470075",
       "type": "CreateEvent",
       "repo": "codesbysayam/mausam_demo",
       "created_at": "2026-09-30T20:19:29Z",
-      "public": true,
-      "payload": {
-        "ref": "main",
-        "ref_type": "branch",
-        "full_ref": "refs/heads/main",
-        "master_branch": "main",
-        "description": "demo",
-        "pusher_type": "user"
-      }
+      "public": true
     },
     {
       "id": "22614081237",
       "type": "CreateEvent",
       "repo": "codesbysayam/mausam_sample",
       "created_at": "2026-09-30T18:22:07Z",
-      "public": true,
-      "payload": {
-        "ref": "main",
-        "ref_type": "branch",
-        "full_ref": "refs/heads/main",
-        "master_branch": "main",
-        "description": "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for every.",
-        "pusher_type": "user"
-      }
+      "public": true
     },
     {
       "id": "22537129503",
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-09-29T17:50:20Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 44950864329,
-        "ref": "refs/heads/main",
-        "head": "bd24e7114abbb2489b59c71d343b7730daf2226f",
-        "before": "5f07e37fe541a29e06c5f91913254a02f8174ca8"
-      }
+      "public": true
     },
     {
       "id": "22536068493",
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-09-29T17:33:47Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 44949370416,
-        "ref": "refs/heads/main",
-        "head": "5f07e37fe541a29e06c5f91913254a02f8174ca8",
-        "before": "32ab0edc9b896edaf0c2c854e38e33eb9b5a3159"
-      }
+      "public": true
     },
     {
       "id": "22435145577",
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-09-28T19:54:13Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 44847895839,
-        "ref": "refs/heads/main",
-        "head": "d9ffde108db9b772150dbb6aea7583ab185499bf",
-        "before": "c4d81688dd2b0d3c0dcd27ba43cfbbbeec0b2946"
-      }
+      "public": true
     },
     {
       "id": "22427488661",
       "type": "CreateEvent",
       "repo": "codesbysayam/CAMPUSCONNECT_1273",
       "created_at": "2026-09-28T18:12:00Z",
-      "public": true,
-      "payload": {
-        "ref": "main",
-        "ref_type": "branch",
-        "full_ref": "refs/heads/main",
-        "master_branch": "main",
-        "description": "🎓 A full-stack college event management platform that helps students discover, search, filter, and register for campus events while enabling organizers to create, manage, update, and monitor events through a dedicated dashboard. 📅 Built for a seamless, responsive campus experience.",
-        "pusher_type": "user"
-      }
+      "public": true
     },
     {
       "id": "22303186525",
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-09-27T07:42:53Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 44703895110,
-        "ref": "refs/heads/main",
-        "head": "a6f35f4366066b86100693ecc27d5e3600b5e8cf",
-        "before": "924f0c2c40c00dfa99ac9f8dd1759a4f83a2d401"
-      }
-    }
-  ],
-  "recentActivity": [
-    {
-      "id": "23362215748",
-      "type": "PushEvent",
-      "createdAt": "2026-10-07T21:04:21Z",
-      "created_at": "2026-10-07T21:04:21Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "23359891214",
-      "type": "PushEvent",
-      "createdAt": "2026-10-07T20:29:37Z",
-      "created_at": "2026-10-07T20:29:37Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "23201542156",
-      "type": "PushEvent",
-      "createdAt": "2026-10-06T19:54:21Z",
-      "created_at": "2026-10-06T19:54:21Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "23120967027",
-      "type": "CreateEvent",
-      "createdAt": "2026-10-05T19:18:45Z",
-      "created_at": "2026-10-05T19:18:45Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Created branch 'main'"
-    },
-    {
-      "id": "23100001916",
-      "type": "PushEvent",
-      "createdAt": "2026-10-05T21:18:08Z",
-      "created_at": "2026-10-05T21:18:08Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "23091637872",
-      "type": "PushEvent",
-      "createdAt": "2026-10-05T19:19:41Z",
-      "created_at": "2026-10-05T19:19:41Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "23014394680",
-      "type": "PushEvent",
-      "createdAt": "2026-10-03T17:02:10Z",
-      "created_at": "2026-10-03T17:02:10Z",
-      "repoName": "Operon",
-      "repo": {
-        "id": 1350807639,
-        "name": "codesbysayam/Operon",
-        "url": "https://github.com/codesbysayam/Operon"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "16402625008",
-      "type": "PublicEvent",
-      "createdAt": "2026-10-03T18:28:37Z",
-      "created_at": "2026-10-03T18:28:37Z",
-      "repoName": "AXIOM",
-      "repo": {
-        "id": 1403521263,
-        "name": "codesbysayam/AXIOM",
-        "url": "https://github.com/codesbysayam/AXIOM"
-      },
-      "public": true,
-      "actionLabel": "Public"
-    },
-    {
-      "id": "16400013726",
-      "type": "WatchEvent",
-      "createdAt": "2026-10-04T19:26:24Z",
-      "created_at": "2026-10-04T19:26:24Z",
-      "repoName": "Inkloom-art/inkloom",
-      "repo": {
-        "id": 1378084143,
-        "name": "Inkloom-art/inkloom",
-        "url": "https://github.com/Inkloom-art/inkloom"
-      },
-      "public": true,
-      "actionLabel": "Starred repository"
-    },
-    {
-      "id": "22633470075",
-      "type": "CreateEvent",
-      "createdAt": "2026-09-30T20:19:29Z",
-      "created_at": "2026-09-30T20:19:29Z",
-      "repoName": "mausam_demo",
-      "repo": {
-        "id": 1398703802,
-        "name": "codesbysayam/mausam_demo",
-        "url": "https://github.com/codesbysayam/mausam_demo"
-      },
-      "public": true,
-      "actionLabel": "Created branch 'main'"
-    },
-    {
-      "id": "22614081237",
-      "type": "CreateEvent",
-      "createdAt": "2026-09-30T18:22:07Z",
-      "created_at": "2026-09-30T18:22:07Z",
-      "repoName": "mausam_sample",
-      "repo": {
-        "id": 1398584204,
-        "name": "codesbysayam/mausam_sample",
-        "url": "https://github.com/codesbysayam/mausam_sample"
-      },
-      "public": true,
-      "actionLabel": "Created branch 'main'"
-    },
-    {
-      "id": "22537129503",
-      "type": "PushEvent",
-      "createdAt": "2026-09-29T17:50:20Z",
-      "created_at": "2026-09-29T17:50:20Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "22536068493",
-      "type": "PushEvent",
-      "createdAt": "2026-09-29T17:33:47Z",
-      "created_at": "2026-09-29T17:33:47Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "22435145577",
-      "type": "PushEvent",
-      "createdAt": "2026-09-28T19:54:13Z",
-      "created_at": "2026-09-28T19:54:13Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "22427488661",
-      "type": "CreateEvent",
-      "createdAt": "2026-09-28T18:12:00Z",
-      "created_at": "2026-09-28T18:12:00Z",
-      "repoName": "CAMPUSCONNECT_1273",
-      "repo": {
-        "id": 1393521230,
-        "name": "codesbysayam/CAMPUSCONNECT_1273",
-        "url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273"
-      },
-      "public": true,
-      "actionLabel": "Created branch 'main'"
-    },
-    {
-      "id": "22303186525",
-      "type": "PushEvent",
-      "createdAt": "2026-09-27T07:42:53Z",
-      "created_at": "2026-09-27T07:42:53Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
+      "public": true
     }
   ],
   "languages": {
@@ -941,2072 +382,6 @@
       "HTML": 3089
     }
   },
-  "languageCounts": {
-    "TypeScript": 7,
-    "C++": 1
-  },
-  "languageBytes": {
-    "TypeScript": 10158839,
-    "CSS": 215425,
-    "JavaScript": 93072,
-    "C": 37466,
-    "Python": 281580,
-    "Jupyter Notebook": 19587,
-    "HTML": 44171,
-    "Makefile": 3842,
-    "Shell": 569,
-    "PLpgSQL": 3057,
-    "C++": 2037
-  },
-  "latestPush": "2026-10-08T21:18:11Z",
-  "contributionCalendar": {
-    "totalContributions": 201,
-    "weeks": [
-      {
-        "contributionDays": [
-          {
-            "date": "2025-10-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-11",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-10-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-18",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-10-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-25",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-10-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-01",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-08",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-15",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-22",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-29",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-06",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-13",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-20",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-27",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-03",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-10",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-17",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-24",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-31",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-07",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-14",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-21",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-28",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-07",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-14",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-21",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-28",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-04",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-11",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-18",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-25",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-02",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-09",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-16",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-23",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-30",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-06",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-13",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-20",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-27",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-04",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-11",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-18",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-25",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-01",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-08",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-15",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-22",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-26",
-            "count": 8,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-08-27",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-08-28",
-            "count": 3,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-08-29",
-            "count": 5,
-            "color": "#30a14e"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-30",
-            "count": 7,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-08-31",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-01",
-            "count": 3,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-09-03",
-            "count": 6,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-04",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-05",
-            "count": 3,
-            "color": "#40c463"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-06",
-            "count": 15,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-09-07",
-            "count": 5,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-08",
-            "count": 9,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-09-09",
-            "count": 5,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-10",
-            "count": 9,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-09-11",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-12",
-            "count": 3,
-            "color": "#40c463"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-13",
-            "count": 33,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-09-14",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-15",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-16",
-            "count": 5,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-09-18",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-19",
-            "count": 4,
-            "color": "#40c463"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-20",
-            "count": 6,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-21",
-            "count": 7,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-09-22",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-23",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-24",
-            "count": 5,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-09-26",
-            "count": 9,
-            "color": "#216e39"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-27",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-28",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-29",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-30",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-01",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-03",
-            "count": 3,
-            "color": "#40c463"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-10-04",
-            "count": 11,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-10-05",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-06",
-            "count": 3,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-10-07",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-08",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-09",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      }
-    ]
-  },
-  "fetchedAt": "2026-10-09T01:55:53.218Z",
-  "syncedAt": "2026-10-09T01:55:53.218Z",
+  "syncedAt": "2026-10-09T02:07:37.479Z",
   "status": "ok"
 }
