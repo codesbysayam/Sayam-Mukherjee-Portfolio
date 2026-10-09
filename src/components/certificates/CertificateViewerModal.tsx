@@ -125,7 +125,9 @@ export default function CertificateViewerModal({
       : certificate.skills || [];
 
   const displayDescription =
-    certificate.fullDescription || certificate.description;
+    certificate.overview ||
+    certificate.fullDescription ||
+    certificate.description;
 
   return (
     <ModalPortal>
@@ -157,7 +159,7 @@ export default function CertificateViewerModal({
                 : "bg-[#161920] border-white/10"
             }`}
           >
-            <div className="truncate pr-4">
+            <div className="min-w-0 pr-4">
               <h2
                 id="certificate-modal-title"
                 className="text-base sm:text-lg font-bold truncate leading-snug font-sans"
@@ -165,7 +167,7 @@ export default function CertificateViewerModal({
                 {cleanModalTitle(certificate.title)}
               </h2>
               <p
-                className={`text-xs font-sans truncate ${
+                className={`text-xs font-sans sm:truncate leading-normal mt-0.5 ${
                   isLight ? "text-slate-500" : "text-[#A7ADB8]"
                 }`}
               >
@@ -504,6 +506,32 @@ export default function CertificateViewerModal({
                   </div>
                 )}
 
+                {(certificate.coOrganizer || certificate.associatedOrganizer) && (
+                  <div
+                    className={`p-3 rounded-xl border ${
+                      isLight
+                        ? "bg-slate-50 border-slate-200"
+                        : "bg-white/[0.02] border-white/[0.08]"
+                    }`}
+                  >
+                    <span
+                      className={`text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider block ${
+                        isLight ? "text-slate-500" : "text-[#737A87]"
+                      }`}
+                    >
+                      Associated Organization
+                    </span>
+                    <span
+                      className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
+                        isLight ? "text-slate-900" : "text-white"
+                      }`}
+                      title={certificate.coOrganizer || certificate.associatedOrganizer}
+                    >
+                      {certificate.coOrganizer || certificate.associatedOrganizer}
+                    </span>
+                  </div>
+                )}
+
                 {certificate.participant && (
                   <div
                     className={`p-3 rounded-xl border ${
@@ -732,19 +760,39 @@ export default function CertificateViewerModal({
                     Authorized Signatories
                   </span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {certificate.signatories.map((sig, idx) => (
-                      <div
-                        key={idx}
-                        className={`flex items-center gap-2.5 px-3 py-2 rounded-xl border text-xs font-sans ${
-                          isLight
-                            ? "bg-slate-50 border-slate-200 text-slate-800"
-                            : "bg-white/[0.02] border-white/[0.07] text-zinc-200"
-                        }`}
-                      >
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                        <span className="font-medium">{sig}</span>
-                      </div>
-                    ))}
+                    {certificate.signatories.map((sig, idx) => {
+                      let name = typeof sig === "string" ? sig : (sig as any).name || "";
+                      let designation = typeof sig === "string" ? "" : (sig as any).designation || "";
+                      if (typeof sig === "string" && sig.includes(",")) {
+                        const parts = sig.split(/,\s*(.+)/);
+                        name = parts[0];
+                        designation = parts[1];
+                      }
+                      return (
+                        <div
+                          key={idx}
+                          className={`flex items-start gap-2.5 px-3 py-2 rounded-xl border text-xs font-sans ${
+                            isLight
+                              ? "bg-slate-50 border-slate-200 text-slate-800"
+                              : "bg-white/[0.02] border-white/[0.07] text-zinc-200"
+                          }`}
+                        >
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1 shrink-0" />
+                          <div className="flex flex-col min-w-0">
+                            <span className="font-medium truncate">{name}</span>
+                            {designation && (
+                              <span
+                                className={`text-[11px] truncate ${
+                                  isLight ? "text-slate-500" : "text-[#A7ADB8]"
+                                }`}
+                              >
+                                {designation}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}

@@ -17,6 +17,7 @@ export interface Certificate {
   category: Exclude<CertificateCategory, 'ALL'> | 'Academic Record';
   description?: string;
   fullDescription?: string;
+  overview?: string;
   issueDate: string; // e.g. "2026-02", "2025", "2024"
   year?: number;
   session?: string;
@@ -30,6 +31,7 @@ export interface Certificate {
   imageUrl?: string;
   pdfUrl?: string;
   verificationStatus: VerificationStatus;
+  verified?: boolean;
   featured: boolean;
   event?: string;
   platform?: string;
@@ -47,7 +49,7 @@ export interface Certificate {
   organizer?: string;
   coOrganizer?: string;
   associatedOrganizer?: string;
-  signatories?: string[];
+  signatories?: (string | { name: string; designation?: string })[];
   associatedProjects?: {
     name: string;
     url: string;

@@ -85,6 +85,7 @@ class CertificatesStore {
         c.title.toLowerCase().includes(q) ||
         c.issuer.toLowerCase().includes(q) ||
         (c.description && c.description.toLowerCase().includes(q)) ||
+        (c.overview && c.overview.toLowerCase().includes(q)) ||
         (c.fullDescription && c.fullDescription.toLowerCase().includes(q)) ||
         (c.event && c.event.toLowerCase().includes(q)) ||
         (c.project && c.project.toLowerCase().includes(q)) ||
@@ -93,7 +94,7 @@ class CertificatesStore {
         (c.contribution && c.contribution.toLowerCase().includes(q)) ||
         (c.session && c.session.toLowerCase().includes(q)) ||
         (c.venue && c.venue.toLowerCase().includes(q)) ||
-        (Array.isArray(c.signatories) && c.signatories.some(s => s.toLowerCase().includes(q))) ||
+        (Array.isArray(c.signatories) && c.signatories.some(s => typeof s === "string" ? s.toLowerCase().includes(q) : (s.name.toLowerCase().includes(q) || (s.designation ? s.designation.toLowerCase().includes(q) : false)))) ||
         (Array.isArray(c.associatedProjects) && c.associatedProjects.some(p => p.name.toLowerCase().includes(q) || (p.description && p.description.toLowerCase().includes(q)))) ||
         (c.credentialType && c.credentialType.toLowerCase().includes(q)) ||
         (Array.isArray(c.subjects) && c.subjects.some(s => s.toLowerCase().includes(q))) ||

@@ -95,6 +95,12 @@ export interface PortfolioKnowledge {
     team?: string;
     teamLeader?: string;
     teamMember?: string;
+    participant?: string;
+    organizer?: string;
+    coOrganizer?: string;
+    associatedOrganization?: string;
+    resourcePerson?: string;
+    counselor?: string;
     signatories?: string[];
     associatedProjects?: Array<{
       name: string;
@@ -479,6 +485,31 @@ export const portfolioKnowledge: PortfolioKnowledge = {
         "12-Hour Offline Hackathon at KIIT Deemed to be University organized by K-1000 with KIIT and KSAC, recognizing participation involving dedication, creativity, teamwork, technical excellence, innovation, and problem-solving.",
       note: "Official Certificate of Participation. Sayam participated as Team Leader of Team ALGNITE alongside Shinibali Kumar. ALGNITE is distinct from Team Nexus (Nexus built OPERON). Sayam was an active participant (not winner or ranked finisher).",
       verificationLink: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
+    },
+    {
+      title: "MATLAB Workshop",
+      issuer: "IEEE KIIT Student Branch / IEEE PES KIIT Student Branch Chapter",
+      year: "2026",
+      date: "25 September 2026",
+      venue: "KIIT Deemed to be University",
+      category: "WORKSHOPS",
+      type: "Participation",
+      event: "MATLAB Workshop",
+      format: "Workshop",
+      participant: "Sayam Mukherjee",
+      organizer: "IEEE KIIT Student Branch",
+      coOrganizer: "IEEE PES KIIT Student Branch Chapter",
+      associatedOrganization: "IEEE PES KIIT Student Branch Chapter",
+      resourcePerson: "Dr. Satya Ranjan Jena",
+      counselor: "Dr. Chinmoy Ku. Panigrahi",
+      signatories: [
+        "Dr. Satya Ranjan Jena, Resource Person",
+        "Dr. Chinmoy Ku. Panigrahi, Counselor, IEEE KIIT Student Branch"
+      ],
+      description:
+        "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
+      note: "Individual workshop participation record. No team, no team members, and no associated team projects. Recognized for active participation and successful completion.",
+      verificationLink: "https://increased-purple-oeuuxfwu.edgeone.dev/",
     },
     {
       title: "National Finalist | Toycathon",

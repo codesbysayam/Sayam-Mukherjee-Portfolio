@@ -414,9 +414,11 @@ export interface CertificateContent {
   issueDate: string;
   description: string;
   fullDescription?: string;
+  overview?: string;
   credentialUrl?: string;
   credentialId?: string;
   verificationStatus: "VERIFIED" | "LINK AVAILABLE" | "NO VERIFICATION LINK";
+  verified?: boolean;
   featured: boolean;
   skills: readonly string[];
   tags?: readonly string[];
@@ -435,7 +437,7 @@ export interface CertificateContent {
   coOrganizer?: string;
   credentialType?: string;
   teamMembers?: readonly string[];
-  signatories?: readonly string[];
+  signatories?: readonly (string | { readonly name: string; readonly designation?: string })[];
   associatedProjects?: readonly {
     readonly name: string;
     readonly url: string;
@@ -580,6 +582,43 @@ export const CERTIFICATES: readonly CertificateContent[] = [
     featured: true,
     skills: ["12-Hour Hackathon", "Team Leadership", "Rapid Prototyping", "Problem Solving", "Technical Excellence"],
     tags: ["12-Hour Hackathon", "Offline Hackathon", "Team ALGNITE", "KIIT & KSAC"],
+  },
+  {
+    id: "matlab-workshop-ieee-kiit-2026",
+    title: "MATLAB Workshop",
+    issuer: "IEEE KIIT Student Branch / IEEE PES KIIT Student Branch Chapter",
+    category: "WORKSHOPS",
+    credentialType: "Participation",
+    event: "MATLAB Workshop",
+    issueDate: "2026",
+    date: "25 September 2026",
+    year: 2026,
+    venue: "KIIT Deemed to be University",
+    organizer: "IEEE KIIT Student Branch",
+    coOrganizer: "IEEE PES KIIT Student Branch Chapter",
+    participant: "Sayam Mukherjee",
+    overview:
+      "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
+    description:
+      "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
+    fullDescription:
+      "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
+    credentialUrl: "https://increased-purple-oeuuxfwu.edgeone.dev/",
+    verificationStatus: "VERIFIED",
+    verified: true,
+    featured: true,
+    skills: ["MATLAB", "Engineering Simulation", "Numerical Computing"],
+    tags: ["MATLAB", "IEEE KIIT", "IEEE PES"],
+    signatories: [
+      {
+        name: "Dr. Satya Ranjan Jena",
+        designation: "Resource Person"
+      },
+      {
+        name: "Dr. Chinmoy Ku. Panigrahi",
+        designation: "Counselor, IEEE KIIT Student Branch"
+      }
+    ],
   },
   {
     id: "kiit-grade-report-2025-26",

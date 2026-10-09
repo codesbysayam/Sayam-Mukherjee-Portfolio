@@ -16,6 +16,7 @@ import {
   ArrowUpDown,
   BookOpen,
   GraduationCap,
+  Sparkles,
 } from "lucide-react";
 
 export default function CertificatesPage() {
@@ -103,7 +104,9 @@ export default function CertificatesPage() {
     const result = certificates.filter((cert) => {
       // Category filter
       if (selectedCategory !== "ALL") {
-        if (cert.category.toUpperCase() !== selectedCategory.toUpperCase()) {
+        const catA = cert.category.toUpperCase().replace(/S$/, "");
+        const catB = selectedCategory.toUpperCase().replace(/S$/, "");
+        if (catA !== catB) {
           return false;
         }
       }
@@ -125,6 +128,9 @@ export default function CertificatesPage() {
         const matchesIssuer = cert.issuer.toLowerCase().includes(q);
         const matchesDesc = cert.description
           ? cert.description.toLowerCase().includes(q)
+          : false;
+        const matchesOverview = cert.overview
+          ? cert.overview.toLowerCase().includes(q)
           : false;
         const matchesFullDesc = cert.fullDescription
           ? cert.fullDescription.toLowerCase().includes(q)
@@ -156,8 +162,25 @@ export default function CertificatesPage() {
         const matchesVenue = cert.venue
           ? cert.venue.toLowerCase().includes(q)
           : false;
+        const matchesOrganizer = cert.organizer
+          ? cert.organizer.toLowerCase().includes(q)
+          : false;
+        const matchesCoOrganizer = cert.coOrganizer || cert.associatedOrganizer
+          ? (cert.coOrganizer || cert.associatedOrganizer)!.toLowerCase().includes(q)
+          : false;
+        const matchesParticipant = cert.participant
+          ? cert.participant.toLowerCase().includes(q)
+          : false;
+        const matchesDate = cert.date
+          ? cert.date.toLowerCase().includes(q)
+          : false;
         const matchesSignatories = Array.isArray(cert.signatories)
-          ? cert.signatories.some((s) => s.toLowerCase().includes(q))
+          ? cert.signatories.some((s) =>
+              typeof s === "string"
+                ? s.toLowerCase().includes(q)
+                : ((s as any).name?.toLowerCase().includes(q) ||
+                   (s as any).designation?.toLowerCase().includes(q))
+            )
           : false;
         const matchesAssociatedProjects = Array.isArray(cert.associatedProjects)
           ? cert.associatedProjects.some(
@@ -181,6 +204,7 @@ export default function CertificatesPage() {
           !matchesTitle &&
           !matchesIssuer &&
           !matchesDesc &&
+          !matchesOverview &&
           !matchesFullDesc &&
           !matchesProject &&
           !matchesEvent &&
@@ -195,6 +219,10 @@ export default function CertificatesPage() {
           !matchesCredentialType &&
           !matchesSubjects &&
           !matchesVenue &&
+          !matchesOrganizer &&
+          !matchesCoOrganizer &&
+          !matchesParticipant &&
+          !matchesDate &&
           !matchesSignatories &&
           !matchesAssociatedProjects
         ) {
@@ -279,8 +307,20 @@ export default function CertificatesPage() {
       });
     }
 
+    const workshopsCount = certificates.filter(
+      (c) => c.category.toUpperCase() === "WORKSHOPS" || c.category.toUpperCase() === "WORKSHOP"
+    ).length;
+    if (workshopsCount > 0) {
+      items.push({
+        label: "Workshops",
+        count: workshopsCount,
+        icon: Sparkles,
+        category: "WORKSHOPS" as CertificateCategory,
+      });
+    }
+
     return items;
-  }, [certificates.length, stats.competitions, stats.achievements, stats.academic, stats.technical]);
+  }, [certificates, stats.competitions, stats.achievements, stats.academic, stats.technical]);
 
   const CATEGORIES: { id: CertificateCategory; label: string }[] = useMemo(() => {
     const list: { id: CertificateCategory; label: string }[] = [
@@ -288,6 +328,12 @@ export default function CertificatesPage() {
       { id: "COMPETITIONS", label: "Competitions" },
       { id: "ACHIEVEMENTS", label: "Achievements" },
     ];
+    const hasWorkshops = certificates.some(
+      (c) => c.category.toUpperCase() === "WORKSHOPS" || c.category.toUpperCase() === "WORKSHOP"
+    );
+    if (hasWorkshops) {
+      list.push({ id: "WORKSHOPS", label: "Workshops" });
+    }
     if (stats.academic && stats.academic > 0) {
       list.push({ id: "ACADEMIC RECORD", label: "Grade Reports" });
     }
@@ -295,7 +341,7 @@ export default function CertificatesPage() {
       list.push({ id: "CERTIFICATIONS", label: "Certifications" });
     }
     return list;
-  }, [stats.academic, stats.technical]);
+  }, [certificates, stats.academic, stats.technical]);
 
   return (
     <div

@@ -1,10 +1,11 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import { 
   Star, GitFork, ExternalLink, Github, ArrowRight, 
-  Sparkles, CheckCircle2, Award, Calendar, Layers 
+  Sparkles, CheckCircle2, Award, Calendar, Layers,
+  Share2, Check
 } from "lucide-react";
 
 interface FeaturedProjectProps {
@@ -38,6 +39,39 @@ function FeaturedProjectComponent({
   const lastUpdated = repo 
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
+
+  const [shared, setShared] = useState(false);
+
+  const handleShare = async () => {
+    const shareUrl = project.liveUrl || project.githubUrl;
+    const shareData = {
+      title: project.title,
+      text: `${project.title} - ${project.shortDescription}`,
+      url: shareUrl,
+    };
+
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      try {
+        await navigator.share(shareData);
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch (err: any) {
+        if (err?.name !== "AbortError") {
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            setShared(true);
+            setTimeout(() => setShared(false), 2000);
+          } catch {}
+        }
+      }
+    } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch {}
+    }
+  };
 
   return (
     <article className="featured-project p-6 sm:p-8 lg:p-10 relative overflow-hidden">
@@ -149,6 +183,21 @@ function FeaturedProjectComponent({
                 <span>Live Demo ↗</span>
               </a>
             )}
+
+            <button
+              type="button"
+              onClick={handleShare}
+              className="btn btn-secondary"
+              title="Share Project"
+              aria-label={`Share ${project.title}`}
+            >
+              {shared ? (
+                <Check className="w-3.5 h-3.5 text-emerald-500" />
+              ) : (
+                <Share2 className="w-3.5 h-3.5 text-zinc-400" />
+              )}
+              <span>{shared ? "Shared!" : "Share"}</span>
+            </button>
           </div>
         </div>
 

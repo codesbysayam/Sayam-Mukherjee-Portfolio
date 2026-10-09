@@ -23,15 +23,15 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
       .then((res) => res.json())
       .then((data: Certificate[]) => {
         if (Array.isArray(data) && data.length > 0) {
-          const featured = data.filter((c) => c.featured).slice(0, 3);
-          setFeaturedCerts(featured.length > 0 ? featured : data.slice(0, 3));
+          const featured = data.filter((c) => c.featured).slice(0, 4);
+          setFeaturedCerts(featured.length > 0 ? featured : data.slice(0, 4));
         } else {
-          setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 3));
+          setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 4));
         }
       })
       .catch((err) => {
         console.error("Error loading featured credentials:", err);
-        setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 3));
+        setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 4));
       })
       .finally(() => setLoading(false));
   }, []);

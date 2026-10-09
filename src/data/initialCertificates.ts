@@ -202,6 +202,46 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2026-09-26T00:00:00.000Z"
   },
   {
+    id: "matlab-workshop-ieee-kiit-2026",
+    title: "MATLAB Workshop",
+    issuer: "IEEE KIIT Student Branch / IEEE PES KIIT Student Branch Chapter",
+    event: "MATLAB Workshop",
+    category: "WORKSHOPS",
+    credentialType: "Participation",
+    year: 2026,
+    issueDate: "2026",
+    date: "25 September 2026",
+    venue: "KIIT Deemed to be University",
+    organizer: "IEEE KIIT Student Branch",
+    coOrganizer: "IEEE PES KIIT Student Branch Chapter",
+    associatedOrganizer: "IEEE PES KIIT Student Branch Chapter",
+    participant: "Sayam Mukherjee",
+    overview:
+      "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
+    description:
+      "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
+    fullDescription:
+      "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
+    skills: ["MATLAB", "Engineering Simulation", "Numerical Computing"],
+    tags: ["MATLAB", "IEEE KIIT", "IEEE PES"],
+    signatories: [
+      {
+        name: "Dr. Satya Ranjan Jena",
+        designation: "Resource Person"
+      },
+      {
+        name: "Dr. Chinmoy Ku. Panigrahi",
+        designation: "Counselor, IEEE KIIT Student Branch"
+      }
+    ],
+    credentialUrl: "https://increased-purple-oeuuxfwu.edgeone.dev/",
+    verificationStatus: "VERIFIED",
+    verified: true,
+    featured: true,
+    createdAt: "2026-09-25T00:00:00.000Z",
+    updatedAt: "2026-09-25T00:00:00.000Z"
+  },
+  {
     id: "comp-toycathon-2021",
     title: "National Finalist | Toycathon",
     issuer: "Ministry of Education & AICTE, Govt. of India",

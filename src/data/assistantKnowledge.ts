@@ -1,5 +1,5 @@
 export interface IntentAction {
-  type: "github" | "linkedin" | "leetcode" | "codolio" | "contact" | "resume" | "youtube";
+  type: "github" | "linkedin" | "leetcode" | "codolio" | "contact" | "resume" | "youtube" | "certificate";
   label: string;
   url: string;
   handle?: string;
@@ -259,6 +259,37 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
     ],
     answer: "Sayam Mukherjee led Team ALGNITE (alongside teammate Shinibali Kumar). Team ALGNITE built Memory in Motion, an interactive research exhibit exploring in-context learning with recurrent memory, for DATAFORGE 2026 organized by IIT Kharagpur (KDAG) on Unstop under the 'Explain the Frontier' pathway. Team ALGNITE also participated in IGNITHON 2.0 at KIIT, building AlertSetu and CampusConnect.",
     suggestions: ["⚡ Projects", "🏆 Achievements", "💻 GitHub"],
+  },
+  {
+    id: "matlab-workshop",
+    title: "MATLAB Workshop (IEEE KIIT & IEEE PES)",
+    keywords: [
+      "matlab", "matlab workshop", "ieee kiit", "ieee kiit student branch", "ieee pes",
+      "ieee pes kiit student branch chapter", "satya ranjan jena", "chinmoy ku panigrahi",
+      "workshop", "resource person", "counselor"
+    ],
+    phrases: [
+      "what is sayam's matlab workshop certificate",
+      "what is sayams matlab workshop certificate",
+      "when did sayam attend the matlab workshop",
+      "where was the matlab workshop held",
+      "who organized the matlab workshop",
+      "which organization was associated with the workshop",
+      "who was the resource person",
+      "who was the ieee kiit student branch counselor named on the certificate",
+      "show me the matlab workshop credential",
+      "tell me about the matlab workshop",
+      "matlab workshop certificate",
+      "who was in the team for matlab workshop",
+      "what was sayam's team in the matlab workshop"
+    ],
+    answer: "Sayam Mukherjee participated in and successfully completed the **MATLAB Workshop** organized by the **IEEE KIIT Student Branch** in association with the **IEEE PES KIIT Student Branch Chapter** on **25 September 2026** at **KIIT Deemed to be University**.\n\n• **Credential Type:** Participation (Official Certificate)\n• **Resource Person:** Dr. Satya Ranjan Jena\n• **Counselor (IEEE KIIT Student Branch):** Dr. Chinmoy Ku. Panigrahi\n• **Team Context:** This was an individual workshop participation record; there is no team, no team members, and no associated team project.\n• **Credential URL:** [View MATLAB Workshop Credential](https://increased-purple-oeuuxfwu.edgeone.dev/)",
+    action: {
+      type: "certificate",
+      label: "View Credential",
+      url: "https://increased-purple-oeuuxfwu.edgeone.dev/",
+    },
+    suggestions: ["🏆 Achievements", "⚡ Projects", "📜 Certificates"],
   },
   {
     id: "coding",

@@ -420,6 +420,48 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `*Note: The certificate establishes participation recognizing dedication, teamwork, creativity, and technical problem-solving.*`;
   }
 
+  // 12.6 MATLAB WORKSHOP (IEEE KIIT & IEEE PES)
+  if (
+    q.includes("matlab") ||
+    q.includes("satya ranjan") ||
+    q.includes("panigrahi") ||
+    q.includes("ieee kiit") ||
+    q.includes("ieee pes")
+  ) {
+    if (q.includes("team") || q.includes("who was in the team") || q.includes("members")) {
+      return `The MATLAB Workshop was an individual workshop participation record. There was no team, no team members, and no associated team project recorded for this certificate.`;
+    }
+    if (q.includes("resource person") || q.includes("who was the resource person")) {
+      return `**Dr. Satya Ranjan Jena** was the Resource Person for the MATLAB Workshop.`;
+    }
+    if (q.includes("counselor") || q.includes("ieee kiit student branch counselor")) {
+      return `**Dr. Chinmoy Ku. Panigrahi** (Counselor, IEEE KIIT Student Branch) was the counselor named on the certificate.`;
+    }
+    if (q.includes("when") || q.includes("date")) {
+      return `Sayam attended the MATLAB Workshop on **25 September 2026** at KIIT Deemed to be University.`;
+    }
+    if (q.includes("where") || q.includes("venue")) {
+      return `The MATLAB Workshop was held at **KIIT Deemed to be University** on 25 September 2026.`;
+    }
+    if (q.includes("who organized") || q.includes("organizer")) {
+      return `The MATLAB Workshop was organized by the **IEEE KIIT Student Branch** in association with the **IEEE PES KIIT Student Branch Chapter**.`;
+    }
+    if (q.includes("associated organization") || q.includes("which organization was associated")) {
+      return `The **IEEE PES KIIT Student Branch Chapter** was the associated organization for the MATLAB Workshop.`;
+    }
+
+    return `Sayam Mukherjee participated in and successfully completed the **MATLAB Workshop** organized by the **IEEE KIIT Student Branch** in association with the **IEEE PES KIIT Student Branch Chapter** on **25 September 2026** at **KIIT Deemed to be University**.\n\n` +
+      `• **Event / Certificate:** MATLAB Workshop\n` +
+      `• **Credential Type:** Participation\n` +
+      `• **Date & Venue:** 25 September 2026 at KIIT Deemed to be University\n` +
+      `• **Primary Organizer:** IEEE KIIT Student Branch\n` +
+      `• **Associated Organization:** IEEE PES KIIT Student Branch Chapter\n` +
+      `• **Resource Person:** Dr. Satya Ranjan Jena\n` +
+      `• **Counselor:** Dr. Chinmoy Ku. Panigrahi (Counselor, IEEE KIIT Student Branch)\n` +
+      `• **Team Context:** Individual workshop participation record (no team or team members recorded)\n` +
+      `• **Credential URL:** [View MATLAB Workshop Credential](https://increased-purple-oeuuxfwu.edgeone.dev/)`;
+  }
+
   // 13. COMPETITIONS & CERTIFICATES
   if (
     q.includes("certificate") ||
@@ -439,7 +481,8 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `4. **Toycathon 2021**: National Grand Finalist, Ministry of Education & AICTE, Govt. of India (Credential ID: \`TC-2021-FIN\`)\n` +
       `5. **Technex'26**: Multi-Event Finalist across 5 out of 6 challenges, IIT (BHU) Varanasi (Credential ID: \`TX-2026-IITBHU\`)\n` +
       `6. **KIIT First-Year Grade Report**: 20 engineering coursework subjects completed at KIIT Bhubaneswar (CGPA: 9.06)\n` +
-      `7. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
+      `7. **MATLAB Workshop**: Participation credential organized by IEEE KIIT Student Branch in association with IEEE PES KIIT Student Branch Chapter (25 September 2026 at KIIT)\n` +
+      `8. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
       `*School board examinations (Class 10 & 12) are academic records and classified under Academics, not as competition certificates.*`;
   }
 

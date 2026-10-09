@@ -4,7 +4,7 @@ import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { 
   Star, GitFork, ExternalLink, Github, ArrowRight, 
-  CheckCircle2, Clock, Code 
+  CheckCircle2, Clock, Code, Share2, Check 
 } from "lucide-react";
 
 interface ProjectCardProps {
@@ -40,6 +40,38 @@ function ProjectCardComponent({
   // Card reference and interaction capability detection
   const cardRef = useRef<HTMLDivElement>(null);
   const [canHover, setCanHover] = useState(false);
+  const [shared, setShared] = useState(false);
+
+  const handleShare = async () => {
+    const shareUrl = project.liveUrl || project.githubUrl;
+    const shareData = {
+      title: project.title,
+      text: `${project.title} - ${project.shortDescription}`,
+      url: shareUrl,
+    };
+
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+      try {
+        await navigator.share(shareData);
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch (err: any) {
+        if (err?.name !== "AbortError") {
+          try {
+            await navigator.clipboard.writeText(shareUrl);
+            setShared(true);
+            setTimeout(() => setShared(false), 2000);
+          } catch {}
+        }
+      }
+    } else if (typeof navigator !== "undefined" && navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        setShared(true);
+        setTimeout(() => setShared(false), 2000);
+      } catch {}
+    }
+  };
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -227,6 +259,22 @@ function ProjectCardComponent({
                   <span>Demo ↗</span>
                 </a>
               )}
+
+              {/* Native Web Share API trigger with fallback */}
+              <button
+                type="button"
+                onClick={handleShare}
+                className="btn btn-secondary !py-1.5 !px-3 !text-xs"
+                title="Share Project"
+                aria-label={`Share ${project.title}`}
+              >
+                {shared ? (
+                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                ) : (
+                  <Share2 className="w-3.5 h-3.5 text-zinc-400 group-hover:text-zinc-600 dark:group-hover:text-zinc-200" />
+                )}
+                <span>{shared ? "Shared!" : "Share"}</span>
+              </button>
             </div>
 
             <button
