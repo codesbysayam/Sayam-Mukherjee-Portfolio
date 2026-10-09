@@ -56,3 +56,10 @@ export function resetConsentPreferences(): void {
     } catch {}
   }
 }
+
+export function isAnalyticsAllowed(): boolean {
+  if (typeof window === "undefined") return false;
+  const consent = getConsentPreferences();
+  if (!consent) return true;
+  return consent.anonymousAnalytics;
+}
