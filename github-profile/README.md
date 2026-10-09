@@ -12,7 +12,7 @@ Bhubaneswar, India · KIIT University
   <a href="https://www.linkedin.com/in/sayammukherjee-portfolio/"><strong>👔 LinkedIn</strong></a> ·
   <a href="https://leetcode.com/u/codesbysayam/"><strong>🧠 LeetCode</strong></a> ·
   <a href="https://codolio.com/profile/codesbysayam"><strong>⚡ Codolio</strong></a> ·
-  <a href="https://youtube.com/@technicalaz"><strong>🎥 YouTube</strong></a>
+  <a href="https://www.youtube.com/@ObsidianOptics_in"><strong>🎥 YouTube</strong></a>
 </p>
 
 </div>
@@ -23,10 +23,10 @@ Bhubaneswar, India · KIIT University
 
 Computer Science Engineering student focused on Artificial Intelligence & Machine Learning, full-stack development, data structures, and building practical software systems.
 
-- 🎓 **Education:** B.Tech in Computer Science & Engineering (Specialization: Artificial Intelligence & Machine Learning) at **KIIT University**, Bhubaneswar (2024–2028).
+- 🎓 **Education:** B.Tech in Computer Science & Engineering (Specialization: Artificial Intelligence & Machine Learning) at **KIIT University**, Bhubaneswar (2025–2029).
 - 💡 **Core Interests:** Machine Learning, Deep Learning, Computer Vision, Full-Stack Web Development, and Algorithmic Problem Solving.
 - 🛠️ **Engineering Philosophy:** Building purposeful, evidence-backed software systems that solve concrete problems with clean architecture.
-- 🎥 **Content & Community:** Creating technology and programming tutorials on YouTube at **[@technicalaz](https://youtube.com/@technicalaz)**.
+- 🎥 **Content & Community:** Technical tutorials and engineering content at **[@ObsidianOptics_in](https://www.youtube.com/@ObsidianOptics_in)**.
 
 ---
 
