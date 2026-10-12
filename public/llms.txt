@@ -1,0 +1,68 @@
+# Sayam Mukherjee Portfolio
+
+> Official engineering portfolio and project repository index of Sayam Mukherjee, a Computer Science and Engineering undergraduate specializing in Artificial Intelligence and Machine Learning.
+
+## Canonical Identity & Online Presence
+
+- Website: https://sayammukherjee.in
+- GitHub: https://github.com/codesbysayam
+- LinkedIn: https://www.linkedin.com/in/sayammukherjee-portfolio/
+- LeetCode: https://leetcode.com/u/codesbysayam/
+- Codolio: https://codolio.com/profile/codesbysayam/
+- YouTube: https://www.youtube.com/@ObsidianOptics_in
+- Business & Collaborations Email: wrickbusiness@gmail.com
+- Contact & Internships Email: sayammukherjee1506@gmail.com
+
+## Academic Background & Discipline
+
+- Degree: Bachelor of Technology (B.Tech) in Computer Science and Engineering
+- Specialization: Artificial Intelligence and Machine Learning
+- University: KIIT University, Bhubaneswar
+- Expected Graduation: 2029
+- First-Year Academic Performance: 9.06 overall CGPA
+- Secondary Education: CBSE Class 12 (86.2%), CBSE Class 10 (92.6%)
+
+## Primary Software Engineering Projects
+
+1. OPERON
+   - Purpose: Operations platform exploring multi-agent business workflows across Support, Finance, and HR with human-in-the-loop checkpoints for critical decisions.
+   - Stack: TypeScript, Node.js, Express, React, Multi-Agent AI Architecture, REST API.
+   - Repository: https://github.com/codesbysayam/Operon
+   - Live Demo: https://operonpro.vercel.app
+
+2. SayamSolves
+   - Purpose: Open-source C++ repository documenting deliberate daily algorithmic problem solving across LeetCode, with time and space complexity notes.
+   - Stack: C++, Data Structures, Algorithms, LeetCode.
+   - Repository: https://github.com/codesbysayam/sayam-solves
+
+3. MAUSAM
+   - Purpose: Weather intelligence and localized climate analytics dashboard built for Smart India Hackathon (SIH 2026) by Team Algnite, unifying forecasts, AQI, UV index, soil moisture, and coastal tides.
+   - Stack: TypeScript, React, Tailwind CSS, Meteorological APIs, Python.
+   - Repository: https://github.com/codesbysayam/mausam
+   - Live Demo: https://mausamgovt.vercel.app
+
+4. Interactive Developer Portfolio
+   - Purpose: Full-stack developer portfolio and engineering showcase with pre-rendered GitHub activity telemetry, dark/light theme system, and verified credentials archive.
+   - Stack: React 19, TypeScript, Tailwind CSS, Express, Vite, Motion.
+   - Repository: https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio
+   - Live Site: https://sayammukherjee.in
+
+5. YOLO / YOLOv8 Edge Computer Vision
+   - Purpose: Edge computer vision pipeline combining lightweight YOLOv8 models with OpenCV frame processing to detect objects and compute spatial motion vectors on local hardware.
+   - Stack: Python, YOLOv8, OpenCV, PyTorch, Computer Vision.
+   - Repository: https://github.com/codesbysayam
+
+## Verified Credentials & Competition Milestones
+
+- Toycathon 2021: Top 15 / National Finalist (Ministry of Education & AICTE, Government of India)
+- Technex'26 (IIT BHU): Finalist across 5 of 6 technical competition categories
+- DataForge 2026 (IIT Kharagpur): Team Leader for Team ALGNITE, "Memory in Motion" research exhibit (Credential: https://intact-black-0mk1uydx.edgeone.dev/)
+- Deploy or Die (GDG on Campus KIIT × HowToAlgo): Team NEXUS (Sayam Mukherjee, Sounak Chowdhury, Aarush Roy, Jaydeep Dutta)
+- IGNITHON 2.0 (KIIT & KSAC): Team Leader for Team ALGNITE, 12-hour offline hackathon
+- MATLAB Workshop (IEEE KIIT & IEEE PES KIIT Student Branch Chapter): Verified Participation, September 2026
+
+## Website Architecture & Telemetry Principles
+
+- Pre-Rendered Telemetry: Repository stats and commit metrics are fetched via scheduled GitHub Actions into static JSON (`public/data/github.json`), preventing client-side API rate limits.
+- Privacy First: Zero tracking cookies; strictly optional cookieless telemetry; anonymized UTM attribution with user consent.
+- Liquid Glass Design: Restrained Apple/iOS-inspired translucent surfaces, keyboard navigation, and responsive typography.

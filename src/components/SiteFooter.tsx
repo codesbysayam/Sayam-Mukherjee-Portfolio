@@ -51,9 +51,11 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
           <p className="text-xs text-zinc-500 dark:text-zinc-400 tracking-normal font-sans">
             AI &amp; ML CSE Undergraduate · Developer Portfolio
           </p>
-          <p className="text-xs font-mono text-zinc-400 dark:text-zinc-500 mt-0.5">
-            © 2026 Sayam Mukherjee. All rights reserved.
-          </p>
+          <div className="flex flex-wrap items-center gap-x-2 text-xs font-mono text-zinc-400 dark:text-zinc-500 mt-0.5">
+            <span>© 2026 Sayam Mukherjee. All rights reserved.</span>
+            <span aria-hidden="true" className="select-none">·</span>
+            <span className="text-purple-600/80 dark:text-purple-400/80 font-medium">Last updated: October 2026</span>
+          </div>
         </div>
 
         {/* Right: Only Contact, Privacy Policy, Terms & Preserved Theme Switcher */}

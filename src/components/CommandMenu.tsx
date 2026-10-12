@@ -138,7 +138,7 @@ export default function CommandMenu({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-[min(100%,calc(100vw-2rem))] max-w-lg bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[min(480px,calc(100dvh-2rem))]"
+            className="relative w-full max-w-lg bg-zinc-950 border border-zinc-900 rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[min(480px,calc(100dvh-2rem))]"
           >
             {/* Corner Indicators */}
             <div className="absolute top-0 left-0 w-3 h-3 border-t border-l border-zinc-800 rounded-tl-lg" />

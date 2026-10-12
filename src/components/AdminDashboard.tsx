@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { 
   Lock, Mail, Key, ShieldCheck, BarChart3, Plus, Edit3, Trash2, 
   CheckCircle, RefreshCw, Send, Users, FileText, Settings, Award, 
-  Layers, Clock, HelpCircle, LogOut, Download, Archive, Eye, 
+  Layers, Clock, HelpCircle, LogOut, Download, Archive, Eye, EyeOff,
   Check, X, FileSpreadsheet, ArrowLeft, Github, Laptop, Smartphone, Tablet, AlertCircle
 } from "lucide-react";
 import { 
@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { usePortfolio } from "../context/PortfolioContext";
 import { Project, Blog, SkillGroup, ExperienceItem, Certification } from "../data";
+import ConfirmationModal from "./common/ConfirmationModal";
 
 export default function AdminDashboard() {
   const { 
@@ -20,9 +21,35 @@ export default function AdminDashboard() {
     deleteAdminSubscriber, actionAdminTestimonial, fetchAdminAnalytics, theme, toggleTheme 
   } = usePortfolio();
 
+  // Confirmation modal state
+  const [confirmModalState, setConfirmModalState] = useState<{
+    isOpen: boolean;
+    title: string;
+    message: string;
+    onConfirm: () => void;
+  }>({
+    isOpen: false,
+    title: "",
+    message: "",
+    onConfirm: () => {},
+  });
+
+  const triggerConfirm = (title: string, message: string, onConfirm: () => void) => {
+    setConfirmModalState({
+      isOpen: true,
+      title,
+      message,
+      onConfirm: () => {
+        setConfirmModalState((prev) => ({ ...prev, isOpen: false }));
+        onConfirm();
+      },
+    });
+  };
+
   // Authentication states
   const [emailInput, setEmailInput] = useState("");
   const [passInput, setPassInput] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [otpInput, setOtpInput] = useState("");
   const [otpSimulated, setOtpSimulated] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
@@ -169,10 +196,15 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteProject = async (id: string) => {
-    if (!confirm("Confirm deleting this project? This is irreversible.")) return;
-    const updated = portfolioData.projects.filter((p) => p.id !== id);
-    await updatePortfolioSection({ projects: updated });
+  const handleDeleteProject = (id: string) => {
+    triggerConfirm(
+      "Delete Project",
+      "Are you sure you want to delete this project? This change cannot be undone.",
+      async () => {
+        const updated = portfolioData.projects.filter((p) => p.id !== id);
+        await updatePortfolioSection({ projects: updated });
+      }
+    );
   };
 
   // Blogs CMS
@@ -204,10 +236,11 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteBlog = async (id: string) => {
-    if (!confirm("Delete this blog post?")) return;
-    const updated = portfolioData.blogs.filter((b) => b.id !== id);
-    await updatePortfolioSection({ blogs: updated });
+  const handleDeleteBlog = (id: string) => {
+    triggerConfirm("Delete Blog Post", "Are you sure you want to delete this blog post?", async () => {
+      const updated = portfolioData.blogs.filter((b) => b.id !== id);
+      await updatePortfolioSection({ blogs: updated });
+    });
   };
 
   // Skills CMS
@@ -233,11 +266,12 @@ export default function AdminDashboard() {
     setEditingSkillGroup(null);
   };
 
-  const handleDeleteSkill = async (gIdx: number, sIdx: number) => {
-    if (!confirm("Delete this skill node?")) return;
-    const groupList = [...portfolioData.skills];
-    groupList[gIdx].skills.splice(sIdx, 1);
-    await updatePortfolioSection({ skills: groupList });
+  const handleDeleteSkill = (gIdx: number, sIdx: number) => {
+    triggerConfirm("Delete Skill Node", "Are you sure you want to delete this skill node?", async () => {
+      const groupList = [...portfolioData.skills];
+      groupList[gIdx].skills.splice(sIdx, 1);
+      await updatePortfolioSection({ skills: groupList });
+    });
   };
 
   // Certifications CMS
@@ -266,10 +300,11 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteCert = async (idx: number) => {
-    if (!confirm("Delete this certificate node?")) return;
-    const updated = portfolioData.certifications.filter((_, i) => i !== idx);
-    await updatePortfolioSection({ certifications: updated });
+  const handleDeleteCert = (idx: number) => {
+    triggerConfirm("Delete Certificate", "Are you sure you want to delete this certificate node?", async () => {
+      const updated = portfolioData.certifications.filter((_, i) => i !== idx);
+      await updatePortfolioSection({ certifications: updated });
+    });
   };
 
   // Timeline Experience CMS
@@ -298,10 +333,11 @@ export default function AdminDashboard() {
     }
   };
 
-  const handleDeleteTimeline = async (idx: number) => {
-    if (!confirm("Delete this timeline milestone?")) return;
-    const updated = portfolioData.experience.filter((_, i) => i !== idx);
-    await updatePortfolioSection({ experience: updated });
+  const handleDeleteTimeline = (idx: number) => {
+    triggerConfirm("Delete Milestone", "Are you sure you want to delete this timeline milestone?", async () => {
+      const updated = portfolioData.experience.filter((_, i) => i !== idx);
+      await updatePortfolioSection({ experience: updated });
+    });
   };
 
   // Learning Dashboard Progress CMS
@@ -394,13 +430,22 @@ export default function AdminDashboard() {
                   <div className="relative">
                     <Key className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
                     <input
-                      type="password"
+                      type={showPassword ? "text" : "password"}
                       required
                       placeholder="••••••••"
                       value={passInput}
                       onChange={(e) => setPassInput(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl pl-10 pr-3.5 py-3 text-xs text-white placeholder-zinc-500 outline-none transition-all"
+                      className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl pl-10 pr-10 py-3 text-xs text-white placeholder-zinc-500 outline-none transition-all"
                     />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="absolute right-3 top-3 text-zinc-500 hover:text-zinc-300 focus:outline-none cursor-pointer"
+                      title={showPassword ? "Hide password" : "Show password"}
+                      aria-label={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    </button>
                   </div>
                 </div>
 
@@ -1667,10 +1712,15 @@ export default function AdminDashboard() {
                         <div key={sub.id} className="flex items-center justify-between gap-3 bg-zinc-900/30 p-2 rounded-lg border border-zinc-900/60">
                           <span className="truncate text-zinc-400">{sub.email}</span>
                           <button
-                            onClick={async () => {
-                              if (!confirm("Remove subscriber email?")) return;
-                              const updated = await deleteAdminSubscriber(sub.id);
-                              setSubscribers(updated);
+                            onClick={() => {
+                              triggerConfirm(
+                                "Remove Subscriber",
+                                `Are you sure you want to remove ${sub.email} from subscribers?`,
+                                async () => {
+                                  const updated = await deleteAdminSubscriber(sub.id);
+                                  setSubscribers(updated);
+                                }
+                              );
                             }}
                             className="text-red-500 hover:text-red-400 cursor-pointer"
                           >
@@ -1754,6 +1804,17 @@ export default function AdminDashboard() {
         </main>
 
       </div>
+
+      {/* Reusable Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={confirmModalState.isOpen}
+        title={confirmModalState.title}
+        message={confirmModalState.message}
+        confirmLabel="Confirm Delete"
+        isDestructive={true}
+        onConfirm={confirmModalState.onConfirm}
+        onCancel={() => setConfirmModalState((prev) => ({ ...prev, isOpen: false }))}
+      />
 
     </div>
   );

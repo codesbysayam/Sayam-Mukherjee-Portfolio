@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Calendar, Clock, BookOpen, User, Check, Copy, Share2 } from "lucide-react";
 import { journalEntries } from "../data/journal";
 import { calculateReadingTime } from "../utils/readingTime";
+import Breadcrumbs from "../components/common/Breadcrumbs";
 
 interface JournalDetailProps {
   slug: string;
@@ -78,6 +79,14 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
 
   return (
     <article className="max-w-3xl mx-auto space-y-8 sm:space-y-10 py-2 sm:py-4 font-sans text-zinc-200">
+      <Breadcrumbs
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Journal", href: "/journal", onClick: onBack },
+          { label: entry.title },
+        ]}
+      />
+
       {/* Top action navigation */}
       <nav aria-label="Journal Navigation" className="flex items-center justify-between gap-4">
         <button

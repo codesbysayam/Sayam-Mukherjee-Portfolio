@@ -47,7 +47,10 @@ import TermsPage from "./pages/Terms";
 import NotFound from "./pages/NotFound";
 import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary";
 import SiteFooter from "./components/SiteFooter";
+import BackToTop from "./components/BackToTop";
 const CookieConsent = lazyWithRetry(() => import("./components/CookieConsent"));
+const ExpandableFAQ = lazyWithRetry(() => import("./components/ExpandableFAQ"));
+const FloatingContactButton = lazyWithRetry(() => import("./components/FloatingContactButton"));
 
 export default function App() {
   return (
@@ -656,14 +659,14 @@ function AppContent() {
                   }`}>
                     Sayam Mukherjee
                   </span>
-                  <span className="text-xs text-zinc-500 font-mono tracking-wide mt-0.5 font-medium">
+                  <span className="text-xs text-zinc-500 font-mono tracking-wide mt-0.5 font-medium truncate max-w-[130px] sm:max-w-none">
                     Undergraduate · AI &amp; ML Dev
                   </span>
                 </div>
               </button>
 
               {/* Desktop Directory Menu (Capsule Tab Group - All 8 Sections) */}
-              <nav aria-label="Primary navigation" className={`hidden lg:flex items-center gap-0.5 xl:gap-1 p-1 rounded-full backdrop-blur-xl shrink-0 transition-all ${
+              <nav aria-label="Primary navigation" className={`hidden xl:flex items-center gap-0.5 xl:gap-1 p-1 rounded-full backdrop-blur-xl shrink-0 transition-all ${
                 theme === "dark" 
                   ? "bg-zinc-900/70 border border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]" 
                   : "bg-zinc-100/90 border border-zinc-200 shadow-sm"
@@ -759,7 +762,9 @@ function AppContent() {
                 {/* Mobile / Tablet Menu Toggle */}
                 <button
                   onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  className={`lg:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center border rounded-lg cursor-pointer shrink-0 transition-all ${
+                  aria-expanded={isMenuOpen}
+                  aria-controls="mobile-navigation-drawer"
+                  className={`xl:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center border rounded-lg cursor-pointer shrink-0 transition-all ${
                     theme === "dark"
                       ? "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white"
                       : "bg-white border-zinc-200 text-zinc-600 hover:text-zinc-950 shadow-xs"
@@ -775,11 +780,12 @@ function AppContent() {
             <AnimatePresence>
               {isMenuOpen && (
                 <motion.div
+                  id="mobile-navigation-drawer"
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
                   transition={{ duration: 0.2 }}
-                  className={`lg:hidden border-t py-4 px-5 sm:px-6 shadow-2xl overflow-hidden transition-colors ${
+                  className={`xl:hidden border-t py-4 px-5 sm:px-6 shadow-2xl max-h-[calc(100svh-4.5rem)] overflow-y-auto overscroll-contain transition-colors ${
                     theme === "dark"
                       ? "border-zinc-800 bg-[#0c0c0f]"
                       : "border-zinc-200 bg-white"
@@ -898,6 +904,13 @@ function AppContent() {
                       <ErrorBoundary sectionName="Credentials Spotlight">
                         <Suspense fallback={null}>
                           <CredentialsHomePreview onNavigateToCertificates={() => navigateToTab("certificates")} />
+                        </Suspense>
+                      </ErrorBoundary>
+
+                      {/* EXPANDABLE FAQ SECTION */}
+                      <ErrorBoundary sectionName="Expandable FAQ">
+                        <Suspense fallback={null}>
+                          <ExpandableFAQ />
                         </Suspense>
                       </ErrorBoundary>
                     </div>
@@ -1045,6 +1058,12 @@ function AppContent() {
                 />
               )}
               <CookieConsent />
+              {!isLegalPage && (
+                <>
+                  <FloatingContactButton onNavigateContact={() => navigateToTab("contact")} />
+                  <BackToTop />
+                </>
+              )}
             </Suspense>
           </ErrorBoundary>
 

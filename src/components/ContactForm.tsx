@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, FormEvent } from "react";
 import { Send, CheckCircle2, AlertCircle, Loader2, Sparkles, RefreshCw, Mail } from "lucide-react";
 import { validateContactForm, ContactFormData, ValidationErrors } from "../utils/validation";
 import { trackEvent } from "../services/analytics";
+import { getStoredUtmParameters } from "../utils/utm";
 
 interface ContactFormProps {
   onSuccess?: () => void;
@@ -104,6 +105,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           message: formData.message.trim(),
           honeypot: formData.honeypot,
           clientTimestamp: mountTimeRef.current,
+          utm: getStoredUtmParameters() || undefined,
         }),
       });
 

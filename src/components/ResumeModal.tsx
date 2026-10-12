@@ -249,24 +249,24 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.95, y: 20 }}
         transition={{ duration: 0.3 }}
-        className="relative bg-zinc-950 border border-zinc-800 rounded-2xl w-[min(100%,calc(100vw-2rem))] max-w-4xl shadow-2xl flex flex-col max-h-[min(90vh,calc(100dvh-2rem))] overflow-hidden"
+        className="relative bg-zinc-950 border border-zinc-800 rounded-2xl w-full max-w-4xl shadow-2xl flex flex-col max-h-[min(90vh,calc(100dvh-2rem))] overflow-hidden"
       >
         
         {/* Header Options */}
-        <div className="px-6 py-4.5 bg-zinc-950 border-b border-zinc-900 flex items-center justify-between z-10 shrink-0">
-          <div className="flex items-center gap-2">
-            <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse" />
-            <h2 className="text-base font-bold text-white font-display tracking-tight">Interactive Resume Viewer</h2>
+        <div className="px-4 sm:px-6 py-3.5 sm:py-4.5 bg-zinc-950 border-b border-zinc-900 flex items-center justify-between z-10 shrink-0">
+          <div className="flex items-center gap-2 min-w-0 pr-2">
+            <div className="w-2.5 h-2.5 rounded-full bg-cyan-400 animate-pulse shrink-0" />
+            <h2 className="text-sm sm:text-base font-bold text-white font-display tracking-tight truncate">Resume Viewer</h2>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 shrink-0">
             {/* Download Resume Link Button */}
             <button
               onClick={handleDownload}
-              className={`px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-1.5 cursor-pointer transition-all shadow-md bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-500 hover:to-indigo-600 text-white`}
+              className="px-3 sm:px-4 py-2 text-xs font-bold rounded-xl flex items-center gap-1.5 cursor-pointer transition-all shadow-md bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-500 hover:to-indigo-600 text-white"
             >
               <Download className="w-4 h-4" />
-              <span>Download Resume</span>
+              <span>Download<span className="hidden sm:inline"> Resume</span></span>
             </button>
 
             {/* Close Button */}

@@ -1,5 +1,5 @@
 :root {
-  --assistant-width: min(440px, calc(100vw - 24px));
+  --assistant-width: min(440px, calc(100dvw - 24px));
   --assistant-max-height: min(760px, calc(100dvh - 32px));
 
   --assistant-radius: 24px;

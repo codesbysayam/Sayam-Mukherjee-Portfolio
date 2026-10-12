@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { SEO_CONFIG, CANONICAL_DOMAIN, RouteSEO } from "../config/seo";
+import { getHomeStructuredData, getBreadcrumbSchema } from "../seo/structuredData";
 
 export interface SEOProps {
   routeKey?: string;
@@ -72,37 +73,21 @@ export function useRouteSEO(routeKey: string) {
     schemaScript.id = "structured-data-schema";
     schemaScript.type = "application/ld+json";
 
-    const schemaData = {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Sayam Mukherjee",
-      "jobTitle": "Undergraduate Student · AI & ML Developer",
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Kalinga Institute of Industrial Technology, Bhubaneswar"
-      },
-      "url": canonicalUrl,
-      "image": imageUrl,
-      "sameAs": [
-        "https://github.com/codesbysayam",
-        "https://www.linkedin.com/in/sayammukherjee-portfolio/",
-        "https://leetcode.com/u/sayammukherjee/",
-        "https://codolio.com/profile/codesbysayam"
-      ],
-      "knowsAbout": [
-        "Artificial Intelligence",
-        "Machine Learning",
-        "Computer Vision",
-        "React",
-        "TypeScript",
-        "C++",
-        "Python"
-      ]
-    };
+    const schemaData = routeKey === "home"
+      ? getHomeStructuredData(origin)
+      : {
+          "@context": "https://schema.org",
+          "@graph": [
+            ...getHomeStructuredData(origin)["@graph"],
+            getBreadcrumbSchema([
+              { name: "Home", url: `${origin}/` },
+              { name: config.title.split("|")[0].trim(), url: canonicalUrl },
+            ]),
+          ],
+        };
 
-    schemaScript.innerHTML = JSON.stringify(schemaData);
+    schemaScript.textContent = JSON.stringify(schemaData);
     document.head.appendChild(schemaScript);
-
   }, [routeKey]);
 }
 

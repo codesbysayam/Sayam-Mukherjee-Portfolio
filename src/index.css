@@ -56,6 +56,9 @@ html[data-theme="dark"] {
   --space-9: 6rem;
 
   --container: 1440px;
+  --content-max-width: 1440px;
+  --content-padding: clamp(0.75rem, 3.5vw, 3rem);
+  --section-space: clamp(2.5rem, 5.5vw, 5.5rem);
 
   /* Aliases & Semantic Accent Palette */
   --purple: var(--accent);
@@ -325,16 +328,29 @@ html[data-theme="light"] {
   box-sizing: border-box;
 }
 
-html, body, #root {
+html {
   width: 100%;
-  min-height: 100%;
-  margin: 0;
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
   overflow-x: clip;
 }
 
 body {
+  min-width: 0;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0;
+  overflow-wrap: anywhere;
   padding-left: env(safe-area-inset-left, 0px);
   padding-right: env(safe-area-inset-right, 0px);
+}
+
+#root {
+  min-width: 0;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 img, video, svg, canvas {
@@ -1799,7 +1815,7 @@ html[data-performance="reduced"] .hero-border-spinner {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(min(100%, 300px), 0.85fr);
   gap: clamp(2rem, 4vw, 4.5rem);
   align-items: center;
   min-width: 0;
@@ -1893,6 +1909,17 @@ html[data-theme="light"] .signal-card:hover {
   }
 }
 
+/* Short and Wide Screens Optimization */
+@media (min-aspect-ratio: 16/9) and (max-height: 800px) {
+  .hero {
+    padding-top: clamp(1rem, 3.5vh, 2.25rem) !important;
+    padding-bottom: clamp(1rem, 3.5vh, 2.25rem) !important;
+  }
+  .hero-grid {
+    gap: clamp(1.25rem, 2.5vw, 2.5rem) !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-title,
   .build-card,
@@ -1950,62 +1977,88 @@ html[data-theme="light"] .modal-backdrop {
 }
 
 .vault-dialog {
-  width: min(460px, calc(100vw - 2rem));
+  width: min(460px, 100%);
   max-height: min(720px, calc(100dvh - 2rem));
   overflow-y: auto;
   border-radius: 24px;
 }
 
 .vault-form-dialog {
-  width: min(680px, calc(100vw - 2rem));
+  width: min(680px, 100%);
   max-height: min(90dvh, 800px);
   overflow-y: auto;
   border-radius: 24px;
 }
 
-/* Print styles for high-fidelity resume export */
+/* Comprehensive Print Stylesheet */
 @media print {
   @page {
     size: A4 portrait;
-    margin: 0;
+    margin: 12mm;
   }
   
   html, body {
     background: #FFFFFF !important;
-    color: #000000 !important;
-    width: 210mm;
-    height: 297mm;
+    color: #111827 !important;
     margin: 0 !important;
     padding: 0 !important;
-    font-size: 13px !important;
+    font-size: 12pt !important;
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
 
-  body > * {
+  /* When printing resume modal export */
+  body:has(#resume-print-root) > *:not(#root) {
+    display: none !important;
+  }
+
+  body:has(#resume-print-root) #root > *:not(#resume-print-root) {
     display: none !important;
   }
 
   #resume-print-root {
     display: block !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    width: 210mm !important;
-    height: 297mm !important;
-    padding: 15mm !important;
-    box-sizing: border-box !important;
+    position: static !important;
+    width: 100% !important;
     background: #FFFFFF !important;
     color: #000000 !important;
   }
 
-  .text-zinc-900 { color: #09090B !important; }
-  .text-zinc-800 { color: #18181B !important; }
-  .text-zinc-700 { color: #27272A !important; }
-  .text-zinc-600 { color: #52525B !important; }
-  .text-zinc-500 { color: #71717A !important; }
-  .border-zinc-300 { border-color: #D4D4D8 !important; }
-  .border-zinc-200 { border-color: #E4E4E7 !important; }
+  /* Hide interactive/fixed chrome on print */
+  header,
+  nav,
+  button,
+  .no-print,
+  #cookie-consent-banner,
+  .reveal-toast,
+  [aria-label="Back to top"],
+  [aria-label="Direct contact and dispatch"],
+  [role="dialog"]:not(#resume-print-root),
+  .custom-cursor,
+  .fixed,
+  .absolute-bg-blob {
+    display: none !important;
+  }
+
+  /* Clean print typography and borders */
+  a {
+    color: #111827 !important;
+    text-decoration: underline !important;
+  }
+
+  .glass-card,
+  .rounded-2xl,
+  .rounded-3xl {
+    box-shadow: none !important;
+    border: 1px solid #E5E7EB !important;
+    background: #FFFFFF !important;
+    page-break-inside: avoid;
+  }
+
+  h1, h2, h3 {
+    page-break-after: avoid;
+    color: #000000 !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

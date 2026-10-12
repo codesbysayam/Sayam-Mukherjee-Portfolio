@@ -1,5 +1,6 @@
 import React from "react";
 import { ArrowLeft } from "lucide-react";
+import Breadcrumbs from "../common/Breadcrumbs";
 
 interface LegalHeaderProps {
   eyebrow?: string;
@@ -18,8 +19,15 @@ export const LegalHeader: React.FC<LegalHeaderProps> = ({
 }) => {
   return (
     <header className="pt-2 sm:pt-4 pb-8 sm:pb-12 border-b border-zinc-200/80 dark:border-zinc-800/80">
-      {onNavigateHome && (
-        <div className="mb-6 sm:mb-8">
+      <div className="mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-3">
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/", onClick: onNavigateHome },
+            { label: eyebrow, href: "/" },
+            { label: title },
+          ]}
+        />
+        {onNavigateHome && (
           <button
             onClick={onNavigateHome}
             className="group inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors cursor-pointer"
@@ -27,8 +35,8 @@ export const LegalHeader: React.FC<LegalHeaderProps> = ({
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />
             <span>Back to portfolio</span>
           </button>
-        </div>
-      )}
+        )}
+      </div>
 
       <div className="space-y-4 max-w-[780px]">
         <div className="text-[12px] sm:text-[13px] uppercase font-semibold tracking-[0.08em] text-zinc-500 dark:text-zinc-400 font-sans">
