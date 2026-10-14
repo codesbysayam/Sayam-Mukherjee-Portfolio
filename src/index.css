@@ -2138,4 +2138,36 @@ body.has-legal-page .glass-card::after,
   word-break: break-word;
 }
 
+/* ==========================================================================
+   MOBILE-FIRST ADAPTIVE & MULTI-DEVICE ENHANCEMENTS
+   ========================================================================== */
+
+/* Compact touch clearance for mobile navigation */
+@media (max-width: 1279px) {
+  body {
+    padding-bottom: clamp(60px, 11vh, 76px);
+  }
+}
+
+/* Fluid responsive media containment */
+img, svg, video, canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent unwanted callout / tap highlights on touch screens */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Safe area support for notched phones and foldable creases */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+  .safe-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+}
+
 

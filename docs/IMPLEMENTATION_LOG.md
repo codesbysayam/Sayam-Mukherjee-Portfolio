@@ -11,35 +11,31 @@
 
 ## Active task
 
-- Task ID: TASK-DEV-RECOVERY-001
-- Objective: Establish robust AI Studio Development Recovery System, document actual testing and architecture workflows, and audit reading-progress / reading-time features.
+- Task ID: TASK-DEV-RECOVERY-002
+- Objective: Implement centralized preflight health check script (`scripts/preflight.mjs`), add `npm run preflight` to package.json, and enhance mobile-first multi-device responsiveness with dedicated accessible mobile bottom navigation.
 - Status: COMPLETED
 - Files inspected:
   - `package.json`
-  - `server.ts`
-  - `metadata.json`
+  - `scripts/generate_build_manifest.js`
+  - `tools/python/portfolio_data_validator.py`
   - `src/App.tsx`
   - `src/index.css`
-  - `src/components/ScrollProgressBar.tsx`
-  - `src/components/common/ReadingProgressBar.tsx`
-  - `src/components/journal/JournalCard.tsx`
-  - `src/components/journal/JournalList.tsx`
-  - `src/pages/JournalDetail.tsx`
-  - `src/components/projects/ProjectCaseStudyModal.tsx`
-  - `src/utils/readingTime.ts`
-  - `tools/python/portfolio_data_validator.py`
-  - `docs/ARCHITECTURE.md`
-  - `docs/TASKS.md`
-  - `docs/MEMORY.md`
+  - `src/components/FloatingContactButton.tsx`
+  - `src/components/BackToTop.tsx`
+  - `docs/TESTING_GUIDE.md`
 - Files changed / created:
-  - `docs/AI_STUDIO_RECOVERY.md` (Created)
-  - `docs/IMPLEMENTATION_LOG.md` (Created)
-  - `docs/TESTING_GUIDE.md` (Created)
-  - `docs/ARCHITECTURE.md` (Updated & synchronized)
+  - `scripts/preflight.mjs` (Created centralized automated validation pipeline)
+  - `package.json` (Added `"preflight": "node scripts/preflight.mjs"`)
+  - `src/components/common/MobileBottomNav.tsx` (Created touch-friendly bottom navigation bar for compact screens)
+  - `src/App.tsx` (Integrated MobileBottomNav, preventing duplicate controls, safe-area layout padding)
+  - `src/components/FloatingContactButton.tsx` (Recomposed for responsive desktop/mobile display)
+  - `src/components/BackToTop.tsx` (Elevated above mobile bottom bar with safe-area spacing)
+  - `src/index.css` (Added safe-area insets, fluid media constraints, and touch target rules)
+  - `docs/TESTING_GUIDE.md` (Documented `npm run preflight`)
 - Implementation notes:
-  - Reading progress bars are integrated both globally in `App.tsx` (`ScrollProgressBar.tsx`) and in modal / detail views (`ReadingProgressBar.tsx` in `JournalDetail.tsx`, `ProjectCaseStudyModal.tsx`, `ResumeModal.tsx`).
-  - Reading time calculation is dynamically implemented in `src/utils/readingTime.ts` using the standard 200 WPM index, with badge indicators in `JournalCard.tsx`, `JournalList.tsx`, and `JournalDetail.tsx`.
-  - Comprehensive recovery guidelines and test procedures documented to ensure continuous safety.
+  - Centralized preflight pipeline runs Python data validation, TypeScript compilation (`tsc --noEmit`), build manifest generation, and production bundle check in sequence.
+  - Mobile bottom navigation conforms to the 15% viewport height budget, ensuring primary destinations (Home, Projects, Certs, Journal, Contact, Search) are reachable with one thumb tap without cluttering the viewport.
+  - Zero data lost: preserved all existing content, routes, and logic.
 
 ## Validation
 

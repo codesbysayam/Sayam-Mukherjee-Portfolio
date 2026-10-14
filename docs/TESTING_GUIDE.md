@@ -10,6 +10,21 @@ This project uses a layered testing and quality verification strategy across Typ
 
 The following commands are defined in `package.json` and verified in this environment:
 
+### Centralized Health Check Pipeline
+```bash
+npm run preflight
+```
+- **Command executed**: `node scripts/preflight.mjs`
+- **What it verifies**:
+  - Python static data validation (`portfolio_data_validator.py`)
+  - Full TypeScript type check (`tsc --noEmit`)
+  - Runtime build manifest generation (`generate_build_manifest.js`)
+  - Production asset compilation (`vite build`)
+- **Pass criteria**: Exits with code `0` and `All preflight checks passed successfully!`.
+- **Frequency**: Execute before pushing or concluding development sessions.
+
+---
+
 ### A. TypeScript Type Checking & Syntax Linting
 ```bash
 npm run lint

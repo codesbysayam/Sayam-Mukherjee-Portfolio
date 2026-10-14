@@ -51,6 +51,7 @@ import BackToTop from "./components/BackToTop";
 const CookieConsent = lazyWithRetry(() => import("./components/CookieConsent"));
 const ExpandableFAQ = lazyWithRetry(() => import("./components/ExpandableFAQ"));
 const FloatingContactButton = lazyWithRetry(() => import("./components/FloatingContactButton"));
+import MobileBottomNav from "./components/common/MobileBottomNav";
 
 export default function App() {
   return (
@@ -1062,6 +1063,11 @@ function AppContent() {
                 <>
                   <FloatingContactButton onNavigateContact={() => navigateToTab("contact")} />
                   <BackToTop />
+                  <MobileBottomNav
+                    activeTab={activeTab}
+                    onNavigate={(tab) => navigateToTab(tab as any)}
+                    onOpenSearch={() => setIsCommandMenuOpen(true)}
+                  />
                 </>
               )}
             </Suspense>
