@@ -44,7 +44,7 @@ export const BackToTop: React.FC = () => {
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 10 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-[max(4.5rem,calc(env(safe-area-inset-bottom,0px)+4.25rem))] xl:bottom-6 right-[max(1rem,calc(env(safe-area-inset-right,0px)+0.75rem))] sm:right-6 z-30 flex items-center justify-center w-10 h-10 rounded-full bg-white/90 dark:bg-zinc-900/90 text-zinc-700 dark:text-zinc-300 border border-zinc-200/80 dark:border-zinc-800 shadow-lg hover:shadow-xl backdrop-blur-md hover:border-purple-500/50 hover:text-purple-600 dark:hover:text-purple-400 active:scale-95 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+          className="fixed z-30 transition-all duration-200 bottom-[calc(clamp(56px,10vh,68px)+env(safe-area-inset-bottom,0px)+4.15rem)] right-[max(0.75rem,calc(env(safe-area-inset-right,0px)+0.5rem))] sm:right-5 xl:bottom-20 xl:right-6 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-zinc-900/90 text-zinc-200 border border-white/15 shadow-2xl backdrop-blur-md hover:border-purple-500/50 hover:text-purple-400 active:scale-95 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
           title="Scroll back to top"
           aria-label="Back to top"
         >

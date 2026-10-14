@@ -118,8 +118,7 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
 
             {/* Main Editorial Headline */}
             <h1 
-              className="font-extrabold tracking-tight font-display text-zinc-900 dark:text-white leading-[1.05] break-words"
-              style={{ fontSize: "clamp(2.15rem, 5.5vw, 5.5rem)" }}
+              className="hero-title font-extrabold tracking-tight font-display text-zinc-900 dark:text-white leading-[1.05] break-words"
             >
               {siteContent.hero.title}
             </h1>

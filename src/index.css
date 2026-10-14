@@ -119,7 +119,7 @@ html[data-theme="dark"] {
   --text-xl: clamp(1.25rem, 1.8vw, 1.5rem);   /* H3 fluid */
   --text-2xl: clamp(1.5rem, 2.6vw, 2.25rem);  /* H2 fluid */
   --text-3xl: clamp(2.25rem, 4.2vw, 3.5rem);  /* H1 fluid */
-  --text-4xl: clamp(2.75rem, 5.5vw, 5.5rem);  /* Hero display fluid */
+  --text-4xl: clamp(1.35rem, 5.5vw, 5.5rem);  /* Hero display fluid */
 }
 
 html.light,
@@ -221,7 +221,8 @@ html[data-theme="light"] {
    ========================================================================== */
 
 .btn {
-  min-height: 42px;
+  min-height: 44px;
+  min-width: 44px;
   padding: 0.65rem 1rem;
   display: inline-flex;
   align-items: center;
@@ -1255,7 +1256,9 @@ html[data-theme="light"] h6 {
 }
 
 html.light .hero-title,
-html[data-theme="light"] .hero-title {
+html.light .hero h1,
+html[data-theme="light"] .hero-title,
+html[data-theme="light"] .hero h1 {
   color: #0f172a !important;
 }
 
@@ -1792,13 +1795,16 @@ html[data-performance="reduced"] .hero-border-spinner {
   padding-bottom: clamp(1.25rem, 3vw, 2.5rem);
 }
 
-.hero-title {
+.hero-title,
+.hero h1 {
   max-width: 100%;
-  font-size: clamp(2.6rem, 5.5vw, 5.5rem);
+  font-size: clamp(1.4rem, 5.5vw, 5.5rem);
   line-height: .96;
   letter-spacing: -.05em;
   text-wrap: balance;
   overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
   margin: 0;
 }
 
@@ -1867,8 +1873,9 @@ html[data-theme="light"] .signal-card:hover {
   .signal-card {
     max-width: 100%;
   }
-  .hero-title {
-    font-size: clamp(2.4rem, 7.5vw, 4.2rem);
+  .hero-title,
+  .hero h1 {
+    font-size: clamp(1.35rem, 7.5vw, 4.2rem);
   }
 }
 
@@ -1881,9 +1888,28 @@ html[data-theme="light"] .signal-card:hover {
   .hero-grid {
     gap: 1.5rem;
   }
-  .hero-title {
-    font-size: clamp(2rem, 9.5vw, 3.2rem);
-    line-height: 1;
+  .hero-title,
+  .hero h1 {
+    font-size: clamp(1.25rem, 9.5vw, 3.2rem);
+    line-height: 1.02;
+  }
+}
+
+/* Ultra-narrow viewports below 320px (e.g. Galaxy Z Fold folded 280px, small wearables) */
+@media (max-width: 320px) {
+  .hero {
+    padding-inline: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 1.25rem;
+  }
+  .hero-grid {
+    gap: 1rem;
+  }
+  .hero-title,
+  .hero h1 {
+    font-size: clamp(1.1rem, 8.5vw, 1.55rem);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
   }
 }
 
@@ -1911,6 +1937,7 @@ html[data-theme="light"] .signal-card:hover {
 
 @media (prefers-reduced-motion: reduce) {
   .hero-title,
+  .hero h1,
   .build-card,
   .build-card:hover,
   .signal-card,
@@ -1921,8 +1948,9 @@ html[data-theme="light"] .signal-card:hover {
 }
 
 html, body, #root {
+  width: 100%;
   max-width: 100%;
-  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 /* ==========================================================================

@@ -11,33 +11,28 @@
 
 ## Active task
 
-- Task ID: TASK-DEV-RECOVERY-003
-- Objective: Extend reading time calculation and UI metadata display across all project cards, featured work, and case study modals, plus create docs/DEVICE_COMPATIBILITY_AUDIT.md.
+- Task ID: TASK-DEV-RECOVERY-005
+- Objective: Apply fluid typography scale for hero title in src/index.css using clamp() to prevent overflow on ultra-narrow viewports (below 320px) while preserving existing font-scaling logic.
 - Status: COMPLETED
 - Files inspected:
-  - `src/utils/readingTime.ts`
-  - `src/components/projects/ProjectCard.tsx`
-  - `src/components/projects/FeaturedProject.tsx`
-  - `src/components/projects/ProjectCaseStudyModal.tsx`
-  - `src/pages/JournalDetail.tsx`
-- Files changed / created:
-  - `src/utils/readingTime.ts` (Extended word extraction to handle `ProjectItem` fields: `shortDescription`, `longDescription`, `whyItExists`, `whatIBuilt`, `highlights`)
-  - `src/components/projects/ProjectCard.tsx` (Added estimated reading time badge with Clock icon alongside status pill in card header)
-  - `src/components/projects/FeaturedProject.tsx` (Added estimated reading time badge with Clock icon alongside category and award badges)
-  - `src/components/projects/ProjectCaseStudyModal.tsx` (Added estimated reading time badge alongside category and status in modal sticky header)
-  - `docs/DEVICE_COMPATIBILITY_AUDIT.md` (Created comprehensive multi-device compatibility, architecture, and responsive audit)
+  - `src/index.css`
+  - `src/components/HeroSection.tsx`
+  - `docs/DEVICE_COMPATIBILITY_AUDIT.md`
+- Files changed:
+  - `src/index.css`: Updated `--text-4xl` design token and `.hero-title`/`.hero h1` typography rules with fluid `clamp()`. Maintained desktop (`clamp(1.4rem, 5.5vw, 5.5rem)`), tablet 900px (`clamp(1.35rem, 7.5vw, 4.2rem)`), mobile 600px (`clamp(1.25rem, 9.5vw, 3.2rem)`), and added ultra-narrow `<320px` viewport scale (`clamp(1.1rem, 8.5vw, 1.55rem)`) with `word-break: break-word` and `hyphens: auto`.
+  - `src/components/HeroSection.tsx`: Attached `hero-title` class to headline `h1` and removed rigid inline `fontSize` clamp so stylesheet fluid typography takes effect across all display widths.
 - Implementation notes:
-  - Reading time is now consistently computed at standard 200 WPM across both long-form Journal articles and Project detail views/cards.
-  - Zero mock data introduced, and 100% of existing data preserved.
+  - On ultra-narrow viewports (280px–320px, like Samsung Galaxy Fold outer display), the title fluidly adapts without clipping, horizontal scrolling, or word-splitting artifacts.
+  - All original portfolio data, components, and animations preserved.
 
 ## Validation
 
-- Type check (`npm run lint` / `tsc --noEmit`): PASS (0 errors)
-- Applet compilation: PASS (clean build)
-- Recovery documentation updated.
-- Incomplete work: None for current task.
-- Known issues: AI Studio container does not initialize `.git` metadata; project relies on file system persistence, manifest tracking, and manual Git sync via remote.
-- Next safe action: Ready for any subsequent feature implementation following the atomic task workflow.
+- Type check (`npm run lint` / `tsc --noEmit`): Verified PASS (0 errors)
+- Applet compilation & Vite build: Verified PASS (clean build)
+- Full project preflight (`npm run preflight`): Verified PASS (Python data validation, TypeScript check, manifest generation, and production asset bundle all passed)
+- Incomplete work: None.
+- Known issues: None.
+- Next safe action: Ready for any subsequent feature or design iterations.
 
 ## Update rules
 

@@ -65,10 +65,10 @@ function MobileBottomNavComponent({
       }}
     >
       <div
-        className={`w-full border-t backdrop-blur-xl transition-all duration-200 px-2 py-1.5 flex items-center justify-around shadow-[0_-8px_24px_rgba(0,0,0,0.15)] ${
+        className={`w-full border-t backdrop-blur-xl transition-all duration-200 px-1.5 py-1.5 flex items-center justify-around shadow-[0_-8px_24px_rgba(0,0,0,0.20)] ${
           isDark
-            ? "bg-[#08080c]/90 border-zinc-800/80 text-zinc-400"
-            : "bg-white/92 border-zinc-200 text-zinc-600"
+            ? "bg-[#08080c]/95 border-zinc-800/80 text-zinc-300"
+            : "bg-white/95 border-zinc-200 text-zinc-700"
         }`}
       >
         {PRIMARY_DESTINATIONS.map((dest) => {
@@ -81,32 +81,32 @@ function MobileBottomNavComponent({
               type="button"
               onClick={() => onNavigate(dest.id)}
               aria-current={isActive ? "page" : undefined}
-              className={`relative flex flex-col items-center justify-center flex-1 min-h-[44px] py-1 px-1 rounded-xl transition-all duration-150 cursor-pointer ${
+              className={`relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-xl transition-all duration-150 cursor-pointer ${
                 isActive
                   ? isDark
                     ? "text-purple-400 font-bold"
                     : "text-purple-700 font-bold"
                   : isDark
-                    ? "hover:text-zinc-200 active:scale-95"
-                    : "hover:text-zinc-900 active:scale-95"
+                    ? "hover:text-zinc-100 active:scale-95 text-zinc-400"
+                    : "hover:text-zinc-950 active:scale-95 text-zinc-600"
               }`}
             >
               {/* Active Ambient Glow Background */}
               {isActive && (
                 <div
                   className={`absolute inset-0 rounded-xl -z-10 ${
-                    isDark ? "bg-purple-500/10" : "bg-purple-100/70"
+                    isDark ? "bg-purple-500/15" : "bg-purple-100/80"
                   }`}
                 />
               )}
 
               <Icon
-                className={`w-5 h-5 transition-transform duration-150 ${
+                className={`w-[18px] h-[18px] sm:w-5 sm:h-5 shrink-0 transition-transform duration-150 ${
                   isActive ? "scale-110" : "scale-100"
                 }`}
               />
 
-              <span className="text-[10px] tracking-tight leading-none mt-1 font-sans">
+              <span className="text-[11px] font-medium tracking-tight leading-tight mt-1 font-sans truncate max-w-full text-center">
                 {dest.label}
               </span>
 
@@ -123,14 +123,14 @@ function MobileBottomNavComponent({
           type="button"
           onClick={onOpenSearch}
           aria-label="Open command palette search"
-          className={`flex flex-col items-center justify-center flex-1 min-h-[44px] py-1 px-1 rounded-xl transition-all duration-150 cursor-pointer ${
+          className={`flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-xl transition-all duration-150 cursor-pointer ${
             isDark
-              ? "text-zinc-400 hover:text-zinc-200 active:scale-95"
-              : "text-zinc-600 hover:text-zinc-900 active:scale-95"
+              ? "text-zinc-400 hover:text-zinc-100 active:scale-95"
+              : "text-zinc-600 hover:text-zinc-950 active:scale-95"
           }`}
         >
-          <Search className="w-5 h-5" />
-          <span className="text-[10px] tracking-tight leading-none mt-1 font-sans">
+          <Search className="w-[18px] h-[18px] sm:w-5 sm:h-5 shrink-0" />
+          <span className="text-[11px] font-medium tracking-tight leading-tight mt-1 font-sans truncate max-w-full text-center">
             Search
           </span>
         </button>
