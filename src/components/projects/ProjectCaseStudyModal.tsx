@@ -1,12 +1,13 @@
-import { useEffect, useRef, memo } from "react";
+import { useEffect, useRef, useMemo, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import ReadingProgressBar from "../common/ReadingProgressBar";
+import { calculateReadingTime } from "../../utils/readingTime";
 import { 
   X, ExternalLink, Github, Star, GitFork, Check, 
-  Layers, Terminal, Cpu, Calendar, Code, CheckCircle2 
+  Layers, Terminal, Cpu, Calendar, Code, CheckCircle2, Clock 
 } from "lucide-react";
 
 interface ProjectCaseStudyModalProps {
@@ -53,6 +54,8 @@ function ProjectCaseStudyModalComponent({
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
 
+  const readingStats = useMemo(() => calculateReadingTime(project), [project]);
+
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 md:p-8">
       {/* Backdrop */}
@@ -80,6 +83,14 @@ function ProjectCaseStudyModalComponent({
             </span>
             <span className="text-[10px] bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-mono px-2 py-0.5 rounded-md border border-zinc-200 dark:border-zinc-700">
               {project.status}
+            </span>
+            <span 
+              className="text-[10px] text-zinc-600 dark:text-zinc-400 font-mono px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700 flex items-center gap-1"
+              title={`Estimated reading time based on standard 200 WPM (${readingStats.words} words)`}
+            >
+              <Clock className="w-3 h-3 text-purple-600 dark:text-purple-400" />
+              <span>{readingStats.formatted}</span>
+              <span className="text-zinc-400 dark:text-zinc-500 hidden sm:inline">({readingStats.words} words)</span>
             </span>
           </div>
 

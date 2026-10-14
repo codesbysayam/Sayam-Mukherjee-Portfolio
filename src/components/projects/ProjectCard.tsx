@@ -1,7 +1,8 @@
-import { memo, useRef, useState, useEffect } from "react";
+import { memo, useRef, useState, useEffect, useMemo } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
+import { calculateReadingTime } from "../../utils/readingTime";
 import { 
   Star, GitFork, ExternalLink, Github, ArrowRight, 
   CheckCircle2, Clock, Code, Share2, Check 
@@ -36,6 +37,8 @@ function ProjectCardComponent({
   const lastUpdated = repo 
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
+
+  const readingStats = useMemo(() => calculateReadingTime(project), [project]);
 
   // Card reference and interaction capability detection
   const cardRef = useRef<HTMLDivElement>(null);
@@ -153,6 +156,13 @@ function ProjectCardComponent({
                   : "bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-300"
               }`}>
                 {project.status}
+              </span>
+              <span 
+                className="text-xs font-mono px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-white/[0.04] text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-white/[0.06] flex items-center gap-1"
+                title={`Estimated reading time based on standard 200 WPM (${readingStats.words} words)`}
+              >
+                <Clock className="w-3 h-3 text-purple-600 dark:text-purple-400" />
+                <span>{readingStats.formatted}</span>
               </span>
             </div>
           </div>

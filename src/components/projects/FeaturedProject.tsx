@@ -1,11 +1,12 @@
-import { memo, useState } from "react";
+import { memo, useState, useMemo } from "react";
 import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
+import { calculateReadingTime } from "../../utils/readingTime";
 import { 
   Star, GitFork, ExternalLink, Github, ArrowRight, 
   Sparkles, CheckCircle2, Award, Calendar, Layers,
-  Share2, Check
+  Share2, Check, Clock
 } from "lucide-react";
 
 interface FeaturedProjectProps {
@@ -39,6 +40,8 @@ function FeaturedProjectComponent({
   const lastUpdated = repo 
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
+
+  const readingStats = useMemo(() => calculateReadingTime(project), [project]);
 
   const [shared, setShared] = useState(false);
 
@@ -92,6 +95,13 @@ function FeaturedProjectComponent({
               </span>
               <span className="px-2.5 py-0.5 rounded-full text-xs font-mono text-zinc-400 border border-zinc-700/50 bg-zinc-900/60 dark:bg-zinc-900/80">
                 {project.category}
+              </span>
+              <span 
+                className="px-2.5 py-0.5 rounded-full text-xs font-mono text-zinc-400 border border-zinc-700/50 bg-zinc-900/60 dark:bg-zinc-900/80 flex items-center gap-1.5"
+                title={`Estimated reading time based on standard 200 WPM (${readingStats.words} words)`}
+              >
+                <Clock className="w-3 h-3 text-cyan-400" />
+                <span>{readingStats.formatted}</span>
               </span>
               {project.id === "mausam" && (
                 <span className="px-2.5 py-0.5 rounded-full text-xs font-mono text-amber-300 border border-amber-500/30 bg-amber-500/10 flex items-center gap-1">

@@ -11,51 +11,30 @@
 
 ## Active task
 
-- Task ID: TASK-DEV-RECOVERY-002
-- Objective: Implement centralized preflight health check script (`scripts/preflight.mjs`), add `npm run preflight` to package.json, and enhance mobile-first multi-device responsiveness with dedicated accessible mobile bottom navigation.
+- Task ID: TASK-DEV-RECOVERY-003
+- Objective: Extend reading time calculation and UI metadata display across all project cards, featured work, and case study modals, plus create docs/DEVICE_COMPATIBILITY_AUDIT.md.
 - Status: COMPLETED
 - Files inspected:
-  - `package.json`
-  - `scripts/generate_build_manifest.js`
-  - `tools/python/portfolio_data_validator.py`
-  - `src/App.tsx`
-  - `src/index.css`
-  - `src/components/FloatingContactButton.tsx`
-  - `src/components/BackToTop.tsx`
-  - `docs/TESTING_GUIDE.md`
+  - `src/utils/readingTime.ts`
+  - `src/components/projects/ProjectCard.tsx`
+  - `src/components/projects/FeaturedProject.tsx`
+  - `src/components/projects/ProjectCaseStudyModal.tsx`
+  - `src/pages/JournalDetail.tsx`
 - Files changed / created:
-  - `scripts/preflight.mjs` (Created centralized automated validation pipeline)
-  - `package.json` (Added `"preflight": "node scripts/preflight.mjs"`)
-  - `src/components/common/MobileBottomNav.tsx` (Created touch-friendly bottom navigation bar for compact screens)
-  - `src/App.tsx` (Integrated MobileBottomNav, preventing duplicate controls, safe-area layout padding)
-  - `src/components/FloatingContactButton.tsx` (Recomposed for responsive desktop/mobile display)
-  - `src/components/BackToTop.tsx` (Elevated above mobile bottom bar with safe-area spacing)
-  - `src/index.css` (Added safe-area insets, fluid media constraints, and touch target rules)
-  - `docs/TESTING_GUIDE.md` (Documented `npm run preflight`)
+  - `src/utils/readingTime.ts` (Extended word extraction to handle `ProjectItem` fields: `shortDescription`, `longDescription`, `whyItExists`, `whatIBuilt`, `highlights`)
+  - `src/components/projects/ProjectCard.tsx` (Added estimated reading time badge with Clock icon alongside status pill in card header)
+  - `src/components/projects/FeaturedProject.tsx` (Added estimated reading time badge with Clock icon alongside category and award badges)
+  - `src/components/projects/ProjectCaseStudyModal.tsx` (Added estimated reading time badge alongside category and status in modal sticky header)
+  - `docs/DEVICE_COMPATIBILITY_AUDIT.md` (Created comprehensive multi-device compatibility, architecture, and responsive audit)
 - Implementation notes:
-  - Centralized preflight pipeline runs Python data validation, TypeScript compilation (`tsc --noEmit`), build manifest generation, and production bundle check in sequence.
-  - Mobile bottom navigation conforms to the 15% viewport height budget, ensuring primary destinations (Home, Projects, Certs, Journal, Contact, Search) are reachable with one thumb tap without cluttering the viewport.
-  - Zero data lost: preserved all existing content, routes, and logic.
+  - Reading time is now consistently computed at standard 200 WPM across both long-form Journal articles and Project detail views/cards.
+  - Zero mock data introduced, and 100% of existing data preserved.
 
 ## Validation
 
 - Type check (`npm run lint` / `tsc --noEmit`): PASS (0 errors)
-- Data validation (`npm run validate:data`): PASS (4 projects, 3 skills, 2 experiences, 0 broken references)
-- Production build (`npm run build`): PASS (Vite static bundle + esbuild Node server.cjs bundle)
-- Unit tests: No standalone jest/vitest harness present; validation achieved through TypeScript compiler strict checks and python portfolio data validator.
-- Browser verification: Clean build outputs in `dist/`.
-
-## Recovery notes
-
-- Last verified checkpoint: Post-recovery documentation checkpoint.
-- Completed work:
-  1. Complete inspection of codebase, build scripts, validation tools, and Git environment.
-  2. Scroll-synchronized reading progress indicator verified on long-form views (`JournalDetail`, `ProjectCaseStudyModal`, `ResumeModal`).
-  3. Reading time calculator verified across journal cards, header metadata, and detail pages.
-  4. Created `docs/AI_STUDIO_RECOVERY.md`.
-  5. Created `docs/IMPLEMENTATION_LOG.md`.
-  6. Created `docs/TESTING_GUIDE.md`.
-  7. Synchronized `docs/ARCHITECTURE.md`.
+- Applet compilation: PASS (clean build)
+- Recovery documentation updated.
 - Incomplete work: None for current task.
 - Known issues: AI Studio container does not initialize `.git` metadata; project relies on file system persistence, manifest tracking, and manual Git sync via remote.
 - Next safe action: Ready for any subsequent feature implementation following the atomic task workflow.

@@ -61,6 +61,23 @@ export function calculateReadingTime(
     if (content.summary) {
       wordsList.push(...extractWords(content.summary));
     }
+    if ((content as any).shortDescription) {
+      wordsList.push(...extractWords((content as any).shortDescription));
+    }
+    if ((content as any).longDescription) {
+      wordsList.push(...extractWords((content as any).longDescription));
+    }
+    if ((content as any).whyItExists) {
+      wordsList.push(...extractWords((content as any).whyItExists));
+    }
+    if ((content as any).whatIBuilt) {
+      wordsList.push(...extractWords((content as any).whatIBuilt));
+    }
+    if (Array.isArray((content as any).highlights)) {
+      for (const h of (content as any).highlights) {
+        if (typeof h === "string") wordsList.push(...extractWords(h));
+      }
+    }
     if (Array.isArray(content.content)) {
       for (const section of content.content) {
         if (section.heading) {
