@@ -163,36 +163,37 @@ export default function ContactSection() {
       {/* Component-scoped precise layout styles */}
       <style>{`
         .contact-section {
-          padding: clamp(48px, 6vw, 80px) clamp(16px, 4vw, 48px) !important;
+          padding: clamp(32px, 5vw, 64px) 0 !important;
         }
 
         .contact-heading {
-          font-size: clamp(3rem, 5.2vw, 5rem);
-          line-height: 0.95;
+          font-size: clamp(2.25rem, 5.2vw, 5rem);
+          line-height: 0.98;
           letter-spacing: -0.045em;
+          overflow-wrap: anywhere;
         }
 
         .contact-grid {
           display: grid;
-          grid-template-columns: minmax(280px, 0.85fr) minmax(380px, 1.15fr);
-          gap: clamp(28px, 5vw, 64px);
+          grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+          gap: clamp(24px, 4.5vw, 56px);
           align-items: start;
         }
 
-        @media (max-width: 900px) {
+        @media (max-width: 960px) {
           .contact-heading {
-            font-size: clamp(2.75rem, 8vw, 4rem);
-            line-height: 0.98;
+            font-size: clamp(2rem, 7.5vw, 3.75rem);
+            line-height: 1.02;
           }
           .contact-grid {
             grid-template-columns: 1fr !important;
-            gap: 32px !important;
+            gap: 28px !important;
           }
         }
 
         /* Right-Side Connect Card */
         .connect-card {
-          padding: clamp(28px, 4vw, 44px);
+          padding: clamp(20px, 3.5vw, 40px);
           border-radius: 28px;
           background: linear-gradient(
             145deg,

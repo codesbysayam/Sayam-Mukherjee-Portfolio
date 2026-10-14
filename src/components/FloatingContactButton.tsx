@@ -25,7 +25,7 @@ export const FloatingContactButton: React.FC<FloatingContactButtonProps> = ({
   };
 
   return (
-    <div className="fixed bottom-5 left-4 sm:left-6 z-30">
+    <div className="fixed bottom-[max(1.25rem,calc(env(safe-area-inset-bottom,0px)+0.75rem))] left-[max(1rem,calc(env(safe-area-inset-left,0px)+0.75rem))] sm:left-6 z-30">
       <motion.button
         type="button"
         onClick={handleClick}

@@ -1,7 +1,8 @@
 import { X, Printer, Download, Mail, Phone, MapPin, Calendar, GraduationCap, Briefcase, Award, Sparkles, Languages, Check } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { RESUME_URL } from "../config/links";
+import ReadingProgressBar from "./common/ReadingProgressBar";
 
 interface ResumeModalProps {
   isOpen: boolean;
@@ -10,6 +11,7 @@ interface ResumeModalProps {
 
 export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
   const [downloadSuccess, setDownloadSuccess] = useState(false);
+  const webBodyRef = useRef<HTMLDivElement>(null);
 
   if (!isOpen) return null;
 
@@ -280,8 +282,11 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
           </div>
         </div>
 
+        {/* Scroll-synchronized reading progress indicator */}
+        <ReadingProgressBar containerRef={webBodyRef} height={3} className="shrink-0" />
+
         {/* Scrollable Web Body */}
-        <div className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 custom-scrollbar">
+        <div ref={webBodyRef} className="flex-1 overflow-y-auto p-6 md:p-8 space-y-8 custom-scrollbar">
           
           {/* Header Card */}
           <div className="bg-zinc-900/40 border border-zinc-900/80 p-6 rounded-2xl flex flex-col md:flex-row items-center gap-6 relative overflow-hidden group">

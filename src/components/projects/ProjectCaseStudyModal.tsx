@@ -1,8 +1,9 @@
-import { useEffect, memo } from "react";
+import { useEffect, useRef, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ProjectItem } from "../../data/projects";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
+import ReadingProgressBar from "../common/ReadingProgressBar";
 import { 
   X, ExternalLink, Github, Star, GitFork, Check, 
   Layers, Terminal, Cpu, Calendar, Code, CheckCircle2 
@@ -28,6 +29,8 @@ function ProjectCaseStudyModalComponent({
   repo,
   onClose
 }: ProjectCaseStudyModalProps) {
+  const bodyRef = useRef<HTMLDivElement>(null);
+
   // ESC key listener
   useEffect(() => {
     if (!project) return;
@@ -89,8 +92,11 @@ function ProjectCaseStudyModalComponent({
           </button>
         </div>
 
+        {/* Scroll-synchronized reading progress indicator for case study */}
+        <ReadingProgressBar containerRef={bodyRef} height={3} className="shrink-0" />
+
         {/* Scrollable Modal Body */}
-        <div className="overflow-y-auto p-5 sm:p-8 space-y-6 flex-1 text-zinc-700 dark:text-zinc-300">
+        <div ref={bodyRef} className="overflow-y-auto p-5 sm:p-8 space-y-6 flex-1 text-zinc-700 dark:text-zinc-300">
           {/* Project Title and Subtitle */}
           <div className="space-y-1.5 border-b border-zinc-200 dark:border-zinc-800 pb-5">
             <h3 className="text-2xl sm:text-3xl font-extrabold text-zinc-900 dark:text-white font-display">

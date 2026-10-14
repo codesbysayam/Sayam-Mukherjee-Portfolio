@@ -215,7 +215,7 @@ export function PortfolioAssistant() {
             exit={{ scale: 0.85, opacity: 0 }}
             transition={{ duration: 0.18 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-5 right-5 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-zinc-900/90 text-white border border-white/15 shadow-2xl backdrop-blur-md hover:border-purple-500/50 hover:bg-zinc-850 active:scale-95 transition-all cursor-pointer group"
+            className="fixed bottom-[max(1.25rem,calc(env(safe-area-inset-bottom,0px)+0.75rem))] right-[max(1rem,calc(env(safe-area-inset-right,0px)+0.75rem))] sm:right-5 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-zinc-900/90 text-white border border-white/15 shadow-2xl backdrop-blur-md hover:border-purple-500/50 hover:bg-zinc-850 active:scale-95 transition-all cursor-pointer group"
             aria-label="Open Sayam's Agent"
           >
             <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-zinc-800 text-zinc-200 group-hover:text-purple-300 transition-colors">

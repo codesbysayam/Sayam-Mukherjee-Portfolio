@@ -634,7 +634,7 @@ function AppContent() {
                 ? "bg-white/95 border-zinc-200 shadow-md"
                 : "bg-white/90 border-zinc-200/80 shadow-sm"
           }`}>
-            <div className="w-full flex items-center justify-between gap-4" style={{ width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)", paddingBlock: "clamp(0.75rem, 1.5vw, 1rem)" }}>
+            <div className="w-full flex items-center justify-between gap-4" style={{ width: "min(100%, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3.5vw, 2.5rem)", paddingBlock: "clamp(0.75rem, 1.5vw, 1rem)" }}>
               
               {/* Logotype */}
               <button 
@@ -877,7 +877,7 @@ function AppContent() {
             style={
               isLegalPage
                 ? { width: "100%", marginInline: "auto", paddingInline: 0 }
-                : { width: "min(100% - 2rem, 1440px)", marginInline: "auto", paddingInline: "clamp(0.5rem, 2vw, 2rem)" }
+                : { width: "min(100%, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3.5vw, 2.5rem)" }
             }
           >
             <AnimatePresence mode="wait">

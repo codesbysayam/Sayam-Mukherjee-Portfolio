@@ -91,3 +91,47 @@ To eliminate browser rate-limiting, eliminate personal GitHub token exposure, an
 ## 6. Error Boundaries & Fallback Resilience
 - **LegalRouteErrorBoundary**: Wraps `/privacy` and `/terms` so legal documents render even if parent context or third-party libraries encounter an exception.
 - **Root ErrorBoundary**: Captures uncaught React exceptions, presenting a recovery interface without crashing the entire DOM.
+
+---
+
+## 7. Component Architecture & Core Modules
+- **Layout & Navigation**:
+  - `src/App.tsx`: Central state-driven router, theme switcher, command palette coordinator, floating actions.
+  - `src/components/SiteHeader.tsx`: Responsive navigation header with active indicator.
+  - `src/components/SiteFooter.tsx`: Streamlined footer with brand identity, contact, legal links.
+  - `src/components/CommandMenu.tsx`: Keyboard-driven (`Cmd+K` / `Ctrl+K`) command palette.
+- **Content Sections**:
+  - `src/components/HeroSection.tsx`: Hero introduction, primary action buttons, terminal overview.
+  - `src/components/AboutSection.tsx`: Biography, technical background, timeline.
+  - `src/components/ProjectsShowcase.tsx`: Featured projects, filtering, case study modals.
+  - `src/components/SkillsSection.tsx`: Core competencies, matrix views, technology stack.
+  - `src/components/ExperienceSection.tsx`: Career history, engineering milestones.
+  - `src/components/ContactSection.tsx`: Direct messaging form with anti-spam protections.
+- **Long-Form Reading & Post Views**:
+  - `src/pages/JournalDetail.tsx`: Dedicated reading experience for articles with progress indicator.
+  - `src/components/journal/JournalCard.tsx`: Article card with dynamic reading time estimates.
+  - `src/components/journal/JournalList.tsx`: Filterable list of technical writings with reading statistics.
+  - `src/components/projects/ProjectCaseStudyModal.tsx`: Comprehensive case study viewer.
+  - `src/components/ResumeModal.tsx`: Full-screen accessible resume preview.
+
+---
+
+## 8. Reading Utilities & Progress Indicators
+- **Standard Reading Speed**:
+  - `src/utils/readingTime.ts`: Calculates estimated reading time using the international benchmark of 200 words per minute (WPM).
+  - Normalizes markdown, code blocks, lists, and headings to provide accurate word counts and minute estimates.
+- **Scroll-Synchronized Progress**:
+  - `src/components/ScrollProgressBar.tsx`: Global viewport-level reading progress bar pinned to the top of the viewport.
+  - `src/components/common/ReadingProgressBar.tsx`: Container-aware reading progress bar with smooth CSS transforms (`will-change: transform`), used inside scrollable modal bodies and long-form article containers.
+
+---
+
+## 9. Build & Deployment Pipeline
+- **Build Pipeline**:
+  1. `scripts/generate_build_manifest.js` records build metadata.
+  2. Vite compiles client React code, CSS modules, and Tailwind v4 directives into `dist/`.
+  3. `esbuild` bundles `server.ts` into a standalone Node runtime at `dist/server.cjs`.
+- **Runtime Targets**:
+  - Edge/Static: Host `dist/` directly on Vercel/Netlify with rewrites configured in `vercel.json`.
+  - Full-Stack Node: Run `node dist/server.cjs` for containerized environments requiring Express API proxying.
+

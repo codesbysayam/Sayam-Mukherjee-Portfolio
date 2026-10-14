@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { ArrowLeft, Calendar, Clock, BookOpen, User, Check, Copy, Share2 } from "lucide-react";
 import { journalEntries } from "../data/journal";
 import { calculateReadingTime } from "../utils/readingTime";
 import Breadcrumbs from "../components/common/Breadcrumbs";
+import ReadingProgressBar from "../components/common/ReadingProgressBar";
 
 interface JournalDetailProps {
   slug: string;
@@ -12,6 +13,7 @@ interface JournalDetailProps {
 
 export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProps) {
   const [copied, setCopied] = useState(false);
+  const articleRef = useRef<HTMLElement>(null);
 
   const entry = useMemo(() => {
     return journalEntries.find((e) => e.slug === slug) || null;
@@ -78,14 +80,22 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
   }
 
   return (
-    <article className="max-w-3xl mx-auto space-y-8 sm:space-y-10 py-2 sm:py-4 font-sans text-zinc-200">
-      <Breadcrumbs
-        items={[
-          { label: "Home", href: "/" },
-          { label: "Journal", href: "/journal", onClick: onBack },
-          { label: entry.title },
-        ]}
+    <>
+      {/* Scroll-synchronized reading progress indicator pinned to top */}
+      <ReadingProgressBar
+        targetRef={articleRef}
+        height={3}
+        className="fixed top-0 left-0 right-0 z-50 pointer-events-none"
       />
+
+      <article ref={articleRef} className="max-w-3xl mx-auto space-y-8 sm:space-y-10 py-2 sm:py-4 font-sans text-zinc-200">
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Journal", href: "/journal", onClick: onBack },
+            { label: entry.title },
+          ]}
+        />
 
       {/* Top action navigation */}
       <nav aria-label="Journal Navigation" className="flex items-center justify-between gap-4">
@@ -221,7 +231,8 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
           </div>
         </aside>
       )}
-    </article>
+      </article>
+    </>
   );
 }
 

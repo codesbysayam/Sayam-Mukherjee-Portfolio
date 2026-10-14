@@ -35,8 +35,8 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
       <div
         className="w-full mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
         style={{
-          width: "min(100% - 2.5rem, 1200px)",
-          paddingInline: "clamp(0.25rem, 1.5vw, 1.5rem)",
+          width: "min(100%, 1440px)",
+          paddingInline: "clamp(1rem, 3.5vw, 2.5rem)",
         }}
       >
         {/* Left: Brand & Copyright Information */}
