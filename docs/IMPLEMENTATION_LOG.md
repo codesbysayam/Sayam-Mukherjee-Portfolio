@@ -11,19 +11,35 @@
 
 ## Active task
 
-- Task ID: TASK-DEV-RECOVERY-005
-- Objective: Apply fluid typography scale for hero title in src/index.css using clamp() to prevent overflow on ultra-narrow viewports (below 320px) while preserving existing font-scaling logic.
+- Task ID: TASK-CERT-001
+- Objective: Add WCC Launchpad 30 certificate record to the existing certificate system (initialCertificates, siteContent, data_store.json, portfolioKnowledge, assistantKnowledge, assistant engine, systemInstruction, llms.txt) preserving all existing records and reactive counts.
 - Status: COMPLETED
 - Files inspected:
-  - `src/index.css`
-  - `src/components/HeroSection.tsx`
-  - `docs/DEVICE_COMPATIBILITY_AUDIT.md`
+  - `src/types/certificates.ts`
+  - `src/data/initialCertificates.ts`
+  - `src/data/siteContent.ts`
+  - `src/components/CertificationsSection.tsx`
+  - `src/components/certificates/CertificatesPage.tsx`
+  - `src/components/certificates/CertificateViewerModal.tsx`
+  - `src/data/portfolioKnowledge.ts`
+  - `src/data/assistantKnowledge.ts`
+  - `src/utils/portfolioAssistantEngine.ts`
+  - `src/lib/assistant/systemInstruction.ts`
+  - `data_store.json`
+  - `public/llms.txt`
 - Files changed:
-  - `src/index.css`: Updated `--text-4xl` design token and `.hero-title`/`.hero h1` typography rules with fluid `clamp()`. Maintained desktop (`clamp(1.4rem, 5.5vw, 5.5rem)`), tablet 900px (`clamp(1.35rem, 7.5vw, 4.2rem)`), mobile 600px (`clamp(1.25rem, 9.5vw, 3.2rem)`), and added ultra-narrow `<320px` viewport scale (`clamp(1.1rem, 8.5vw, 1.55rem)`) with `word-break: break-word` and `hyphens: auto`.
-  - `src/components/HeroSection.tsx`: Attached `hero-title` class to headline `h1` and removed rigid inline `fontSize` clamp so stylesheet fluid typography takes effect across all display widths.
+  - `src/data/initialCertificates.ts`: Added authentic `wcc-launchpad-30-participation-2026` record (Team Leader of Team ALGNITE, 36-hour hackathon, AXIOM platform, Certificate ID: `L30-PTQXNX`, Credential URL: `https://heavy-sapphire-gc08crqu.edgeone.dev/`).
+  - `src/data/siteContent.ts`: Added matching certificate record to maintain symmetry in content stores.
+  - `data_store.json`: Added `wcc-launchpad-30-participation-2026` to `certificateVault` for server-side persistence and API endpoints (`/api/certificates`).
+  - `src/data/portfolioKnowledge.ts`: Added WCC Launchpad 30 entry under verified credentials.
+  - `src/data/assistantKnowledge.ts`: Added `wcc-launchpad-axiom` Q&A item for AI assistant.
+  - `src/utils/portfolioAssistantEngine.ts`: Updated Team ALGNITE descriptions, added Launchpad 30 query handler, and updated verified credentials summary list.
+  - `src/lib/assistant/systemInstruction.ts`: Added section 17 rules for WCC Launchpad 30 & Team ALGNITE (AXIOM).
+  - `public/llms.txt`: Added WCC Launchpad 30 under Verified Credentials.
 - Implementation notes:
-  - On ultra-narrow viewports (280px–320px, like Samsung Galaxy Fold outer display), the title fluidly adapts without clipping, horizontal scrolling, or word-splitting artifacts.
-  - All original portfolio data, components, and animations preserved.
+  - Preserved 100% of existing certificates (DataForge, GDG Deploy or Die, IGNITHON 2.0, MATLAB Workshop, Toycathon, Technex, Grade Report, Table Tennis).
+  - Reused existing CertificateViewerModal and CertificateCard components without duplicate UI designs.
+  - Certificate counts and filter tags dynamically and reactively update from data sources.
 
 ## Validation
 
@@ -32,7 +48,7 @@
 - Full project preflight (`npm run preflight`): Verified PASS (Python data validation, TypeScript check, manifest generation, and production asset bundle all passed)
 - Incomplete work: None.
 - Known issues: None.
-- Next safe action: Ready for any subsequent feature or design iterations.
+- Next safe action: Dev server restarted and running on port 3000. Ready for user interaction.
 
 ## Update rules
 

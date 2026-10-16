@@ -59,6 +59,8 @@
 - DataForge 2026 (IIT Kharagpur): Team Leader for Team ALGNITE, "Memory in Motion" research exhibit (Credential: https://intact-black-0mk1uydx.edgeone.dev/)
 - Deploy or Die (GDG on Campus KIIT × HowToAlgo): Team NEXUS (Sayam Mukherjee, Sounak Chowdhury, Aarush Roy, Jaydeep Dutta)
 - IGNITHON 2.0 (KIIT & KSAC): Team Leader for Team ALGNITE, 12-hour offline hackathon
+- WCC Launchpad 30 (We Code Coders & inkloom): Team Leader for Team ALGNITE, 36-hour hackathon, "AXIOM" Agentic AI platform across Frontend, Backend, AI/ML (Credential ID: L30-PTQXNX, Credential: https://heavy-sapphire-gc08crqu.edgeone.dev/)
+- WCC Launchpad 30 (We Code Coders & inkloom): Shinibali Kumar, Team Member for Team ALGNITE, 36-hour hackathon, "AXIOM" Agentic AI platform across Product / Research and Presentation / Demo (Credential ID: L30-F3RFRC, Verification: https://wecodecoders.in/verify/L30-F3RFRC)
 - MATLAB Workshop (IEEE KIIT & IEEE PES KIIT Student Branch Chapter): Verified Participation, September 2026
 
 ## Website Architecture & Telemetry Principles

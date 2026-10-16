@@ -100,7 +100,9 @@ class CertificatesStore {
         (Array.isArray(c.subjects) && c.subjects.some(s => s.toLowerCase().includes(q))) ||
         (Array.isArray(c.teamMembers) && c.teamMembers.some(m => m.toLowerCase().includes(q))) ||
         c.skills.some(s => s.toLowerCase().includes(q)) ||
-        (c.tags && c.tags.some(t => t.toLowerCase().includes(q))) ||
+        (c.participant && c.participant.toLowerCase().includes(q)) ||
+        (c.recipient && c.recipient.toLowerCase().includes(q)) ||
+        (c.role && c.role.toLowerCase().includes(q)) ||
         (c.credentialId && c.credentialId.toLowerCase().includes(q))
       );
     }
@@ -110,7 +112,7 @@ class CertificatesStore {
   }
 
   public getById(id: string): Certificate | undefined {
-    return this.certificates.find(c => c.id === id);
+    return this.certificates.find(c => c.id === id || c.credentialId === id);
   }
 
   public create(data: Omit<Certificate, "id" | "createdAt" | "updatedAt">): Certificate {

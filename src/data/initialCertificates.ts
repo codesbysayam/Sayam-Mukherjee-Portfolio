@@ -202,6 +202,134 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2026-09-26T00:00:00.000Z"
   },
   {
+    id: "wcc-launchpad-30-participation-2026",
+    title: "WCC Launchpad 30",
+    issuer: "We Code Coders / inkloom",
+    event: "WCC Launchpad 30",
+    format: "36-Hour Hackathon",
+    role: "Team Leader",
+    participant: "Sayam Mukherjee",
+    recipient: "Sayam Mukherjee",
+    organizer: "We Code Coders",
+    associatedOrganizer: "inkloom",
+    coOrganizer: "inkloom",
+    credentialType: "Certificate of Participation",
+    category: "COMPETITIONS",
+    issueDate: "2026",
+    date: "4–5 October 2026",
+    year: 2026,
+    team: "ALGNITE",
+    teamMembers: [
+      "Sayam Mukherjee (Team Leader)",
+      "Shinibali Kumar (Team Member)"
+    ],
+    track: "Frontend, Backend and AI / ML",
+    associatedProjects: [
+      {
+        name: "AXIOM",
+        url: "https://axiomwcc.vercel.app",
+        description: "Led the development of AXIOM as the team lead and built the primary React and TypeScript control plane interface, including the Command Center."
+      }
+    ],
+    description:
+      "Led the development of AXIOM as the team lead and built the primary architecture during WCC Launchpad 30, a 36-hour hackathon organized by We Code Coders with title sponsor inkloom across Frontend, Backend, and AI / ML categories.",
+    fullDescription:
+      "Certificate of Participation awarded to Sayam Mukherjee for actively participating in WCC Launchpad 30, a 36-Hour Hackathon organized by We Code Coders with title sponsor inkloom on 4–5 October 2026. Recognizes participation as Team Leader of Team ALGNITE across Frontend, Backend, and AI / ML tracks. Led the development of AXIOM as the team lead and built the primary architecture.",
+    skills: [
+      "36-Hour Hackathon",
+      "Team Leadership",
+      "Agentic AI",
+      "Frontend",
+      "Backend",
+      "AI / ML",
+      "System Architecture"
+    ],
+    tags: [
+      "36-Hour Hackathon",
+      "We Code Coders",
+      "inkloom",
+      "Team ALGNITE",
+      "Sayam Mukherjee",
+      "Team Leader",
+      "AXIOM",
+      "Frontend",
+      "Backend",
+      "AI / ML"
+    ],
+    credentialId: "L30-PTQXNX",
+    credentialUrl: "https://wecodecoders.in/verify/L30-PTQXNX",
+    pdfUrl: "https://heavy-sapphire-gc08crqu.edgeone.dev/",
+    imageAlt: "WCC Launchpad 30 certificate issued to Sayam Mukherjee, Team Leader of team ALGNITE, certificate ID L30-PTQXNX.",
+    verificationStatus: "LINK AVAILABLE",
+    featured: true,
+    createdAt: "2026-10-15T00:00:00.000Z",
+    updatedAt: "2026-10-15T00:00:00.000Z"
+  },
+  {
+    id: "wcc-launchpad-30-shinibali-kumar",
+    title: "WCC Launchpad 30",
+    issuer: "We Code Coders / inkloom",
+    event: "WCC Launchpad 30",
+    format: "36-Hour Hackathon",
+    role: "Team Member",
+    participant: "Shinibali Kumar",
+    recipient: "Shinibali Kumar",
+    organizer: "We Code Coders",
+    associatedOrganizer: "inkloom",
+    coOrganizer: "inkloom",
+    credentialType: "Certificate of Participation",
+    category: "COMPETITIONS",
+    issueDate: "2026",
+    date: "4–5 October 2026",
+    year: 2026,
+    team: "ALGNITE",
+    teamMembers: [
+      "Shinibali Kumar (Team Member)",
+      "Sayam Mukherjee (Team Leader)"
+    ],
+    track: "Product / Research and Presentation / Demo",
+    associatedProjects: [
+      {
+        name: "AXIOM",
+        url: "https://axiomwcc.vercel.app",
+        description: "Agentic AI platform built by Team ALGNITE during the 36-hour hackathon, contributing to workflow, agent execution logic, and policy validation."
+      }
+    ],
+    description:
+      "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
+    fullDescription:
+      "Certificate of Participation awarded to Shinibali Kumar for actively participating in WCC Launchpad 30, a 36-Hour National Online Hackathon organized by We Code Coders with title sponsor inkloom on 4–5 October 2026. Recognised as a participant in team ALGNITE as a team member on Product / Research and Presentation / Demo tracks. Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validating system behaviour across different execution scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.",
+    contribution:
+      "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
+    skills: [
+      "36-Hour Hackathon",
+      "Product / Research",
+      "Presentation / Demo",
+      "Agent Execution Logic",
+      "Workflow Validation",
+      "Multi-Agent AI",
+      "Policy Control"
+    ],
+    tags: [
+      "36-Hour Hackathon",
+      "We Code Coders",
+      "inkloom",
+      "Team ALGNITE",
+      "Shinibali Kumar",
+      "Team Member",
+      "AXIOM",
+      "Product / Research",
+      "Presentation / Demo"
+    ],
+    credentialId: "L30-F3RFRC",
+    credentialUrl: "https://wecodecoders.in/verify/L30-F3RFRC",
+    imageAlt: "WCC Launchpad 30 certificate issued to Shinibali Kumar, team ALGNITE, certificate ID L30-F3RFRC.",
+    verificationStatus: "LINK AVAILABLE",
+    featured: true,
+    createdAt: "2026-10-15T00:00:00.000Z",
+    updatedAt: "2026-10-15T00:00:00.000Z"
+  },
+  {
     id: "matlab-workshop-ieee-kiit-2026",
     title: "MATLAB Workshop",
     issuer: "IEEE KIIT Student Branch / IEEE PES KIIT Student Branch Chapter",

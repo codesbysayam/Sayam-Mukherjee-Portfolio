@@ -257,7 +257,7 @@ export default function CertificateViewerModal({
               >
                 <img
                   src={certificate.imageUrl}
-                  alt={`${certificate.title} credential document`}
+                  alt={certificate.imageAlt || `${certificate.title} credential document`}
                   style={{ transform: `scale(${zoom})`, transformOrigin: "center" }}
                   className="max-h-[380px] w-auto object-contain transition-transform duration-150"
                   onError={() => setImageError(true)}
@@ -532,7 +532,7 @@ export default function CertificateViewerModal({
                   </div>
                 )}
 
-                {certificate.participant && (
+                {(certificate.recipient || certificate.participant) && (
                   <div
                     className={`p-3 rounded-xl border ${
                       isLight
@@ -545,14 +545,14 @@ export default function CertificateViewerModal({
                         isLight ? "text-slate-500" : "text-[#737A87]"
                       }`}
                     >
-                      Participant
+                      Certificate Holder
                     </span>
                     <span
                       className={`text-xs sm:text-sm font-bold mt-1 block truncate ${
                         isLight ? "text-slate-900" : "text-white"
                       }`}
                     >
-                      {certificate.participant}
+                      {certificate.recipient || certificate.participant}
                     </span>
                   </div>
                 )}
@@ -689,7 +689,7 @@ export default function CertificateViewerModal({
                 </div>
               )}
 
-              {/* My Contribution (only in expanded details) */}
+              {/* Individual Contribution */}
               {certificate.contribution && (
                 <div className="space-y-1.5 pt-1">
                   <span
@@ -697,7 +697,10 @@ export default function CertificateViewerModal({
                       isLight ? "text-purple-700" : "text-purple-400"
                     }`}
                   >
-                    My Contribution
+                    {(certificate.recipient || certificate.participant) &&
+                    (certificate.recipient || certificate.participant) !== "Sayam Mukherjee"
+                      ? `${certificate.recipient || certificate.participant}'s Contribution`
+                      : "Individual Contribution"}
                   </span>
                   <div
                     className={`p-3.5 rounded-xl border text-sm leading-relaxed ${

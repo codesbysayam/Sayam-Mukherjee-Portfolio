@@ -85,10 +85,11 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
         `१. **DataForge 2026** - KDAG, IIT Kharagpur (इन-कॉन्टेक्स्ट लर्निंग रिसर्च एक्ज़िबिट)\n` +
         `२. **Deploy or Die** - GDG on Campus KIIT (OPERON मुख्य वेब इंटरफेस निर्माता)\n` +
         `३. **IGNITHON 2.0** - K-1000, KIIT व KSAC (12-घंटे का ऑफलाइन हैकाथॉन, टीम ALGNITE भागीदारी प्रमाणपत्र)\n` +
-        `४. **Toycathon 2021** - राष्ट्रीय फाइनलिस्ट, शिक्षा मंत्रालय व AICTE (आईडी: \`TC-2021-FIN\`)\n` +
-        `५. **Technex'26** - बहु-स्पर्धा फाइनलिस्ट (5/6 इवेंट्स), IIT (BHU) वाराणसी (आईडी: \`TX-2026-IITBHU\`)\n` +
-        `६. **KIIT ग्रेड रिपोर्ट** - प्रथम वर्ष CGPA: **9.06**\n` +
-        `७. **टेबल टेनिस चैम्पियन** - 3× अंतर-विद्यालय प्रथम स्थान विजेता।`;
+        `४. **WCC Launchpad 30** - We Code Coders व inkloom (36-घंटे का हैकाथॉन, टीम ALGNITE, AXIOM प्लेटफॉर्म, भागीदारी प्रमाणपत्र ID: \`L30-PTQXNX\`)\n` +
+        `५. **Toycathon 2021** - राष्ट्रीय फाइनलिस्ट, शिक्षा मंत्रालय व AICTE (आईडी: \`TC-2021-FIN\`)\n` +
+        `६. **Technex'26** - बहु-स्पर्धा फाइनलिस्ट (5/6 इवेंट्स), IIT (BHU) वाराणसी (आईडी: \`TX-2026-IITBHU\`)\n` +
+        `७. **KIIT ग्रेड रिपोर्ट** - प्रथम वर्ष CGPA: **9.06**\n` +
+        `८. **टेबल टेनिस चैम्पियन** - 3× अंतर-विद्यालय प्रथम स्थान विजेता।`;
     }
 
     return `**सायम मुखर्जी के बारे में (About Sayam Mukherjee):**\n\n` +
@@ -341,7 +342,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     q.includes("what team did sayam lead") ||
     q.includes("team did sayam lead")
   ) {
-    return `Sayam led **Team ALGNITE** (alongside teammate Shinibali Kumar) for both **IGNITHON 2.0** (12-hour offline hackathon at KIIT) and **DATAFORGE 2026** (Memory in Motion at IIT Kharagpur).\n\nIn **Team NEXUS** (OPERON for Deploy or Die), Sayam was a Team Member, while **Sounak Chowdhury** was the Team Leader.`;
+    return `Sayam led **Team ALGNITE** as Team Leader for **WCC Launchpad 30** (36-hour hackathon, building AXIOM across Frontend, Backend, and AI / ML), **IGNITHON 2.0** (12-hour offline hackathon at KIIT), and **DATAFORGE 2026** (Memory in Motion at IIT Kharagpur).\n\nIn **Team NEXUS** (OPERON for Deploy or Die), Sayam was a Team Member, while **Sounak Chowdhury** was the Team Leader.`;
   }
 
   if (
@@ -420,6 +421,49 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `*Note: The certificate establishes participation recognizing dedication, teamwork, creativity, and technical problem-solving.*`;
   }
 
+  // 12.54 SHINIBALI KUMAR - WCC LAUNCHPAD 30
+  if (
+    q.includes("shinibali") ||
+    q.includes("f3rfrc") ||
+    q.includes("l30-f3rfrc")
+  ) {
+    return `**Shinibali Kumar** was Sayam Mukherjee's teammate in **Team ALGNITE** during **WCC Launchpad 30** (36-Hour Hackathon on 4–5 October 2026, organized by We Code Coders with title sponsor inkloom).\n\n` +
+      `• **Recipient:** Shinibali Kumar\n` +
+      `• **Role:** Team Member (Team ALGNITE)\n` +
+      `• **Tracks:** Product / Research and Presentation / Demo\n` +
+      `• **Credential ID:** \`L30-F3RFRC\` (Issued 15 October 2026)\n` +
+      `• **Credential Type:** Certificate of Participation\n` +
+      `• **Contribution:** Contributed to the technical development and validation of AXIOM by working on the workflow and agent execution logic, supporting policy and evaluation design, validating system behaviour across scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.\n` +
+      `• **Associated Project:** [AXIOM](https://axiomwcc.vercel.app)\n` +
+      `• **Credential Verification:** [Verify at We Code Coders](https://wecodecoders.in/verify/L30-F3RFRC)`;
+  }
+
+  // 12.55 WCC LAUNCHPAD 30 & AXIOM (TEAM ALGNITE)
+  if (
+    q.includes("launchpad") ||
+    q.includes("wcc") ||
+    q.includes("we code coders") ||
+    q.includes("inkloom") ||
+    q.includes("axiom") ||
+    q.includes("ptqxnx") ||
+    q.includes("l30")
+  ) {
+    if (q.includes("what certificate") || q.includes("which certificate")) {
+      return `He received a Certificate of Participation for WCC Launchpad 30, a 36-hour hackathon held on 4–5 October 2026 organized by We Code Coders with title sponsor inkloom (Credential ID: \`L30-PTQXNX\`, issued 15 October 2026).`;
+    }
+
+    return `Sayam participated in **WCC Launchpad 30**, a 36-hour hackathon held on 4–5 October 2026, organized by We Code Coders with title sponsor inkloom. He led Team ALGNITE as Team Leader across Frontend, Backend, and AI / ML tracks.\n\n` +
+      `• **Event:** WCC Launchpad 30 (36-Hour Hackathon)\n` +
+      `• **Credential Type:** Participation\n` +
+      `• **Credential ID:** \`L30-PTQXNX\` (Issued 15 October 2026)\n` +
+      `• **Organizer:** We Code Coders | **Title Sponsor:** inkloom\n` +
+      `• **Team:** ALGNITE *(Role: Team Leader)*\n` +
+      `• **Tracks:** Frontend, Backend, and AI / ML\n` +
+      `• **Associated Project:** [AXIOM](https://axiomwcc.vercel.app) (Agentic AI platform - led development and built primary architecture)\n` +
+      `• **Credential Verification:** [View Record on EdgeOne](https://heavy-sapphire-gc08crqu.edgeone.dev/)\n\n` +
+      `*Note: The certificate establishes participation as Team Leader demonstrating technical leadership, full-stack architecture, and AI engineering.*`;
+  }
+
   // 12.6 MATLAB WORKSHOP (IEEE KIIT & IEEE PES)
   if (
     q.includes("matlab") ||
@@ -478,11 +522,12 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `1. **DataForge 2026 | Memory in Motion**: KDAG, IIT Kharagpur (In-Context Learning research exhibit under 'Explain the Frontier' pathway)\n` +
       `2. **Deploy or Die**: HowToAlgo × GDG on Campus KIIT (OPERON lead web interface builder, Track A)\n` +
       `3. **IGNITHON 2.0**: 12-Hour Offline Hackathon at KIIT Deemed to be University (Participation credential, Team ALGNITE, 26th September 2026)\n` +
-      `4. **Toycathon 2021**: National Grand Finalist, Ministry of Education & AICTE, Govt. of India (Credential ID: \`TC-2021-FIN\`)\n` +
-      `5. **Technex'26**: Multi-Event Finalist across 5 out of 6 challenges, IIT (BHU) Varanasi (Credential ID: \`TX-2026-IITBHU\`)\n` +
-      `6. **KIIT First-Year Grade Report**: 20 engineering coursework subjects completed at KIIT Bhubaneswar (CGPA: 9.06)\n` +
-      `7. **MATLAB Workshop**: Participation credential organized by IEEE KIIT Student Branch in association with IEEE PES KIIT Student Branch Chapter (25 September 2026 at KIIT)\n` +
-      `8. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
+      `4. **WCC Launchpad 30**: 36-Hour Hackathon by We Code Coders & inkloom (Participation credential, Team Leader of Team ALGNITE, AXIOM platform, 4–5 October 2026, ID: \`L30-PTQXNX\`)\n` +
+      `5. **Toycathon 2021**: National Grand Finalist, Ministry of Education & AICTE, Govt. of India (Credential ID: \`TC-2021-FIN\`)\n` +
+      `6. **Technex'26**: Multi-Event Finalist across 5 out of 6 challenges, IIT (BHU) Varanasi (Credential ID: \`TX-2026-IITBHU\`)\n` +
+      `7. **KIIT First-Year Grade Report**: 20 engineering coursework subjects completed at KIIT Bhubaneswar (CGPA: 9.06)\n` +
+      `8. **MATLAB Workshop**: Participation credential organized by IEEE KIIT Student Branch in association with IEEE PES KIIT Student Branch Chapter (25 September 2026 at KIIT)\n` +
+      `9. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
       `*School board examinations (Class 10 & 12) are academic records and classified under Academics, not as competition certificates.*`;
   }
 

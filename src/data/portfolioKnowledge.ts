@@ -487,6 +487,62 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       verificationLink: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
     },
     {
+      title: "WCC Launchpad 30",
+      issuer: "We Code Coders / inkloom",
+      year: "2026",
+      date: "4–5 October 2026",
+      category: "COMPETITIONS",
+      type: "Certificate of Participation",
+      event: "WCC Launchpad 30",
+      format: "36-Hour Hackathon",
+      team: "ALGNITE",
+      role: "Team Leader",
+      teamLeader: "Sayam Mukherjee",
+      organizer: "We Code Coders",
+      coOrganizer: "inkloom",
+      credentialId: "L30-PTQXNX",
+      associatedProjects: [
+        {
+          name: "AXIOM",
+          url: "https://axiomwcc.vercel.app",
+          description: "Led the development of AXIOM as the team lead and built the primary React and TypeScript control plane interface, including the Command Center."
+        }
+      ],
+      description:
+        "Led the development of AXIOM as the team lead and built the primary architecture during WCC Launchpad 30, a 36-hour hackathon organized by We Code Coders with title sponsor inkloom across Frontend, Backend, and AI / ML categories.",
+      note: "Official Certificate of Participation (Certificate ID: L30-PTQXNX, issued 15 October 2026). Sayam participated as Team Leader of Team ALGNITE across Frontend, Backend, and AI / ML tracks.",
+      verificationLink: "https://wecodecoders.in/verify/L30-PTQXNX",
+    },
+    {
+      title: "WCC Launchpad 30",
+      issuer: "We Code Coders / inkloom",
+      year: "2026",
+      date: "4–5 October 2026",
+      category: "COMPETITIONS",
+      type: "Certificate of Participation",
+      event: "WCC Launchpad 30",
+      format: "36-Hour Hackathon",
+      team: "ALGNITE",
+      role: "Team Member",
+      participant: "Shinibali Kumar",
+      teamLeader: "Sayam Mukherjee",
+      teamMember: "Shinibali Kumar",
+      organizer: "We Code Coders",
+      coOrganizer: "inkloom",
+      credentialId: "L30-F3RFRC",
+      associatedProjects: [
+        {
+          name: "AXIOM",
+          url: "https://axiomwcc.vercel.app",
+          description: "Agentic AI platform built by Team ALGNITE during the 36-hour hackathon, contributing to workflow, agent execution logic, and policy validation."
+        }
+      ],
+      description:
+        "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
+      note: "Official Certificate of Participation (Certificate ID: L30-F3RFRC, issued 15 October 2026) awarded to Shinibali Kumar as Team Member of Team ALGNITE on Product / Research and Presentation / Demo tracks.",
+      verificationLink: "https://wecodecoders.in/verify/L30-F3RFRC",
+    },
+    {
       title: "MATLAB Workshop",
       issuer: "IEEE KIIT Student Branch / IEEE PES KIIT Student Branch Chapter",
       year: "2026",

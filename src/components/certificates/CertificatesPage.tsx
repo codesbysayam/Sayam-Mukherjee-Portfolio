@@ -3,6 +3,7 @@ import { Certificate, CertificateCategory, CertificateStats } from "../../types/
 import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 import { usePortfolio } from "../../context/PortfolioContext";
 import CertificateCard from "./CertificateCard";
+import AchievementGrid from "./AchievementGrid";
 import CertificateViewerModal from "./CertificateViewerModal";
 import AcademicRecord from "../AcademicRecord";
 import {
@@ -171,6 +172,12 @@ export default function CertificatesPage() {
         const matchesParticipant = cert.participant
           ? cert.participant.toLowerCase().includes(q)
           : false;
+        const matchesRecipient = cert.recipient
+          ? cert.recipient.toLowerCase().includes(q)
+          : false;
+        const matchesRole = cert.role
+          ? cert.role.toLowerCase().includes(q)
+          : false;
         const matchesDate = cert.date
           ? cert.date.toLowerCase().includes(q)
           : false;
@@ -222,6 +229,8 @@ export default function CertificatesPage() {
           !matchesOrganizer &&
           !matchesCoOrganizer &&
           !matchesParticipant &&
+          !matchesRecipient &&
+          !matchesRole &&
           !matchesDate &&
           !matchesSignatories &&
           !matchesAssociatedProjects
@@ -629,62 +638,12 @@ export default function CertificatesPage() {
 
       {/* 4. PROFESSIONAL 2-COLUMN GRID (Desktop 2 cols, mobile 1 col) */}
       <div className="space-y-6">
-        {filteredCertificates.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {filteredCertificates.map((cert) => (
-              <CertificateCard
-                key={cert.id}
-                certificate={cert}
-                onView={(c) => setViewingCertificate(c)}
-              />
-            ))}
-          </div>
-        ) : (
-          /* Clean Empty State */
-          <div
-            className={`rounded-2xl border p-12 text-center max-w-lg mx-auto space-y-4 ${
-              isLight
-                ? "bg-white border-slate-200 text-slate-900"
-                : "bg-[#111318] border-white/10 text-white"
-            }`}
-          >
-            <div
-              className={`w-12 h-12 rounded-xl mx-auto flex items-center justify-center border ${
-                isLight
-                  ? "bg-slate-100 border-slate-200 text-slate-600"
-                  : "bg-white/[0.05] border-white/10 text-purple-400"
-              }`}
-            >
-              <Award className="w-6 h-6 opacity-80" />
-            </div>
-
-            <div className="space-y-1">
-              <h3 className="text-lg font-bold">
-                No matching credentials found
-              </h3>
-              <p
-                className={`text-xs leading-relaxed max-w-sm mx-auto ${
-                  isLight ? "text-slate-500" : "text-[#737A87]"
-                }`}
-              >
-                No certificates match your query. Try resetting your filters to
-                view all credentials in the archive.
-              </p>
-            </div>
-
-            <button
-              onClick={handleResetFilters}
-              className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold font-sans transition-all cursor-pointer border ${
-                isLight
-                  ? "bg-slate-900 hover:bg-slate-800 text-white border-slate-900"
-                  : "bg-white/[0.08] hover:bg-white/[0.14] text-white border-white/10"
-              }`}
-            >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span>Reset All Filters</span>
-            </button>
-          </div>
-        )}
+        <AchievementGrid
+          records={filteredCertificates}
+          onView={(c) => setViewingCertificate(c)}
+          onResetFilters={handleResetFilters}
+          columns={2}
+        />
       </div>
     </section>
 

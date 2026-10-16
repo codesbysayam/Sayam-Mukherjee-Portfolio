@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Certificate } from "../../types/certificates";
 import { usePortfolio } from "../../context/PortfolioContext";
 import CertificateCard from "./CertificateCard";
+import AchievementGrid from "./AchievementGrid";
 import CertificateViewerModal from "./CertificateViewerModal";
 import { Award, ArrowRight, Sparkles } from "lucide-react";
 import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
@@ -76,15 +77,11 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
           Loading credentials spotlight...
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {featuredCerts.map((cert) => (
-            <CertificateCard
-              key={cert.id}
-              certificate={cert}
-              onView={setViewingCert}
-            />
-          ))}
-        </div>
+        <AchievementGrid
+          records={featuredCerts}
+          onView={setViewingCert}
+          columns={3}
+        />
       )}
 
       {/* Modal viewer if clicked from home */}

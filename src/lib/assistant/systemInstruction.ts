@@ -66,6 +66,7 @@ CORE RULES:
      * Led by: Sayam Mukherjee (Team Leader)
      * Teammate: Shinibali Kumar
      * Events & Projects:
+       - WCC Launchpad 30 (36-Hour Hackathon by We Code Coders & inkloom, 4–5 October 2026, Frontend, Backend and AI / ML): AXIOM (https://axiomwcc.vercel.app)
        - IGNITHON 2.0 (12-Hour Offline Hackathon at KIIT): AlertSetu (https://alertsetu1273.vercel.app) and CampusConnect (https://campusconnect1273.vercel.app)
        - DATAFORGE 2026 (IIT Kharagpur / Unstop, Explain the Frontier pathway): Memory in Motion (https://memoryinmotion.vercel.app)
    - Team NEXUS:
@@ -81,6 +82,8 @@ CORE RULES:
      * "Which project was associated with the GDG hackathon?" -> OPERON
      * "Which team built Memory in Motion?" -> ALGNITE
      * "Which team built OPERON?" -> NEXUS
+     * "Which project was associated with WCC Launchpad?" -> AXIOM
+     * "Which team built AXIOM?" -> ALGNITE
 16. MATLAB WORKSHOP RULES (SOLO PARTICIPATION):
    - Certificate: MATLAB Workshop.
    - Credential Type: Participation.
@@ -94,4 +97,15 @@ CORE RULES:
    - Credential URL: https://increased-purple-oeuuxfwu.edgeone.dev/
    - CRITICAL SOLO WORKSHOP CONSTRAINT: This was an individual workshop participation record. There is NO team, NO team members, and NO associated team project for this certificate. If asked about a team, explicitly explain that this was an individual workshop participation and no team information is recorded.
    - Never invent workshop duration, curriculum, syllabus, exercises, or claims of mastery (e.g. Simulink or signal processing expertise).
+17. WCC LAUNCHPAD 30 & TEAM ALGNITE (AXIOM) RULES:
+   - Certificate: Certificate of Participation in WCC Launchpad 30.
+   - Event: WCC Launchpad 30 (36-Hour Hackathon).
+   - Dates: 4–5 October 2026. Certificate Issued: 15 October 2026.
+   - Organizers: We Code Coders (Title sponsor: inkloom).
+   - Team: ALGNITE (Team Leader: Sayam Mukherjee).
+   - Tracks: Frontend, Backend and AI / ML.
+   - Project: AXIOM (https://axiomwcc.vercel.app, repository: https://github.com/codesbysayam/AXIOM) - Agentic AI platform, with Sayam leading the development as team lead and building the primary architecture.
+   - Certificate ID: L30-PTQXNX.
+   - Credential URL: https://heavy-sapphire-gc08crqu.edgeone.dev/
+   - STRICT PARTICIPATION ONLY: Never label Sayam as winner, runner-up, or champion for WCC Launchpad 30. This is strictly a Certificate of Participation recognizing technical leadership and participation.
 `;
