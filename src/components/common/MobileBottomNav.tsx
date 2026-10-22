@@ -22,7 +22,8 @@ export type NavTabType =
   | "github"
   | "privacy" 
   | "terms" 
-  | "404";
+  | "404"
+  | "showcase";
 
 interface MobileBottomNavProps {
   activeTab: NavTabType;

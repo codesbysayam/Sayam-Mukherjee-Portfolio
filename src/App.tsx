@@ -288,7 +288,7 @@ function AppContent() {
     };
   }, []);
 
-  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms" | "github" | "404";
+  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms" | "github" | "404" | "showcase";
 
   const getInitialTab = (): TabType => {
     if (typeof window === "undefined") return "home";
@@ -296,6 +296,7 @@ function AppContent() {
     const path = rawPath.replace(/\/+$/, "");
 
     if (!path || path === "" || path === "/" || path === "/home") return "home";
+    if (path === "/video-showcase" || path === "/showcase" || path.startsWith("/video-showcase/") || path.startsWith("/showcase/") || path === "/creator-showcase") return "showcase";
     if (path === "/privacy" || path.startsWith("/privacy/")) return "privacy";
     if (path === "/terms" || path.startsWith("/terms/")) return "terms";
     if (path === "/certificates" || path === "/certificate" || path.startsWith("/certificates/") || path.startsWith("/certificate/")) return "certificates";
@@ -309,6 +310,7 @@ function AppContent() {
     if (path === "/404" || path.startsWith("/404/")) return "404";
 
     const hash = window.location.hash.toLowerCase().replace("#", "").replace(/\/+$/, "");
+    if (hash === "video-showcase" || hash === "showcase" || hash === "creator-showcase") return "showcase";
     if (hash === "privacy") return "privacy";
     if (hash === "terms") return "terms";
     if (hash === "certificates" || hash === "certificate") return "certificates";
@@ -951,7 +953,7 @@ function AppContent() {
                             <AboutSection />
                           </Reveal>
                           <Reveal delay={0.1}>
-                            <ExperienceSection />
+                            <ExperienceSection onNavigateToShowcase={() => navigateToTab("showcase")} />
                           </Reveal>
                           <Reveal delay={0.15}>
                             <CertificationsSection onNavigateToCertificates={() => navigateToTab("certificates")} />
@@ -1022,6 +1024,16 @@ function AppContent() {
                         <ErrorBoundary sectionName="Contact Section">
                           <Reveal delay={0}>
                             <ContactSection />
+                          </Reveal>
+                        </ErrorBoundary>
+                      </div>
+                    )}
+
+                    {activeTab === "showcase" && (
+                      <div className="w-full py-2 sm:py-4">
+                        <ErrorBoundary sectionName="YouTube Video Showcase">
+                          <Reveal delay={0}>
+                            <ContentCreatorSection onBack={() => navigateToTab("about")} />
                           </Reveal>
                         </ErrorBoundary>
                       </div>

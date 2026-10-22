@@ -2,12 +2,19 @@ import { useState, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EXTENDED_DATA } from "../data/extendedData";
 import { usePortfolio } from "../context/PortfolioContext";
+import { youtubeChannels } from "../data/channels";
+import { youtubeChannelAnalytics } from "../data/youtubeAnalytics";
+import { YouTubeAnalyticsCard } from "./YouTubeAnalyticsCard";
 import { 
-  Briefcase, Palette, Youtube, Users, GitBranch, Sparkles, 
-  ExternalLink, ArrowUpRight, Award, GraduationCap, CheckCircle2 
+  Briefcase, Youtube, Users, GitBranch, 
+  ExternalLink, ArrowUpRight, ArrowRight, History, Sparkles
 } from "lucide-react";
 
-function ExperienceSectionComponent() {
+interface ExperienceSectionProps {
+  onNavigateToShowcase?: () => void;
+}
+
+function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionProps) {
   const [activeTab, setActiveTab] = useState<'Freelancing' | 'Content Creation' | 'Volunteer' | 'Open Source'>('Freelancing');
   const { theme } = usePortfolio();
   const isLight = theme === "light";
@@ -20,6 +27,19 @@ function ExperienceSectionComponent() {
   ];
 
   const currentExperience = EXTENDED_DATA.experience.find(exp => exp.type === activeTab);
+
+  const handleShowcaseClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (onNavigateToShowcase) {
+      onNavigateToShowcase();
+    } else {
+      window.dispatchEvent(new CustomEvent("portfolio-navigate-tab", { detail: "showcase" }));
+      const target = document.getElementById("creator-showcase") || document.getElementById("video-showcase");
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
 
   return (
     <div className="space-y-8 font-sans" id="professional-experience">
@@ -141,17 +161,174 @@ function ExperienceSectionComponent() {
 
                   {/* Bullet description block */}
                   <ul className="space-y-3.5">
-                    {currentExperience.description.map((bullet, idx) => (
-                      <li key={idx} className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
-                        isLight ? "text-slate-700" : "text-zinc-200"
-                      }`}>
-                        <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
-                          isLight ? "bg-purple-600" : "bg-purple-400"
-                        }`} />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
+                    {activeTab === 'Content Creation' ? (
+                      <>
+                        <li className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
+                          isLight ? "text-slate-700" : "text-zinc-200"
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
+                            isLight ? "bg-purple-600" : "bg-purple-400"
+                          }`} />
+                          <span>
+                            Operating educational, technical, and entertainment YouTube channels with an organic reach spanning tutorials, algorithmic breakdowns, and dynamic video concepts.
+                          </span>
+                        </li>
+                        <li className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
+                          isLight ? "text-slate-700" : "text-zinc-200"
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
+                            isLight ? "bg-purple-600" : "bg-purple-400"
+                          }`} />
+                          <span>
+                            Applying viewer psychology, high-CTR thumbnail compositions, script pacing, and visual storytelling to communicate complex concepts with high signal clarity.
+                          </span>
+                        </li>
+                      </>
+                    ) : (
+                      currentExperience.description.map((bullet, idx) => (
+                        <li key={idx} className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
+                          isLight ? "text-slate-700" : "text-zinc-200"
+                        }`}>
+                          <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
+                            isLight ? "bg-purple-600" : "bg-purple-400"
+                          }`} />
+                          <span>{bullet}</span>
+                        </li>
+                      ))
+                    )}
                   </ul>
+
+                  {/* Integrated YouTube Channels Showcase inside Content Creation Track */}
+                  {activeTab === 'Content Creation' && (
+                    <div className="space-y-3 pt-3">
+                      <div className="flex items-center justify-between">
+                        <span className={`text-xs font-mono tracking-wider block font-semibold ${
+                          isLight ? "text-slate-600" : "text-zinc-400"
+                        }`}>
+                          YouTube Channels & Media Platforms ({youtubeChannels.length})
+                        </span>
+                        <span className="text-[10px] font-mono text-zinc-500">
+                          Historical figures marked accordingly
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {youtubeChannels.map((channel) => {
+                          const isHistorical = channel.status === "historical";
+                          const period = channel.startYear
+                            ? `${channel.startYear}–${channel.endYear || "Present"}`
+                            : null;
+
+                          return (
+                            <div
+                              key={channel.id}
+                              className={`p-3.5 rounded-xl border flex flex-col justify-between transition-all ${
+                                isLight
+                                  ? "bg-slate-50 border-slate-200/90 hover:border-slate-300"
+                                  : "bg-zinc-950/60 border-zinc-900 hover:border-zinc-800"
+                              }`}
+                            >
+                              <div className="space-y-1.5">
+                                <div className="flex items-center justify-between gap-2">
+                                  <div className="flex items-center gap-2 min-w-0">
+                                    <div className="w-7 h-7 rounded-lg bg-red-950/20 border border-red-900/30 flex items-center justify-center shrink-0">
+                                      <Youtube className="w-3.5 h-3.5 text-red-500" />
+                                    </div>
+                                    <div className="min-w-0">
+                                      <h4 className={`text-xs font-bold font-display truncate ${
+                                        isLight ? "text-slate-900" : "text-white"
+                                      }`}>
+                                        {channel.name}
+                                      </h4>
+                                      <span className="text-[10px] font-mono text-zinc-500 block truncate">
+                                        {channel.handle || "YouTube Channel"}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {isHistorical ? (
+                                    <span className="rounded border border-amber-900/40 bg-amber-950/30 px-1.5 py-0.5 font-mono text-[9px] text-amber-400 font-semibold uppercase shrink-0">
+                                      Historical
+                                    </span>
+                                  ) : channel.category ? (
+                                    <span className="rounded border border-zinc-850 bg-zinc-900 px-1.5 py-0.5 font-mono text-[9px] text-zinc-400 max-w-[100px] truncate shrink-0">
+                                      {channel.category}
+                                    </span>
+                                  ) : null}
+                                </div>
+
+                                {/* Metric & Activity summary */}
+                                <div className="flex items-center justify-between text-[10px] font-mono pt-1 text-zinc-400">
+                                  <span>
+                                    {isHistorical && channel.historicalSubscribers ? (
+                                      <span className="text-amber-400/90">
+                                        {channel.historicalSubscribers >= 1000 
+                                          ? `${(channel.historicalSubscribers / 1000).toFixed(1).replace(/\.0$/, "")}K+ historical subs`
+                                          : `${channel.historicalSubscribers} historical subs`}
+                                      </span>
+                                    ) : channel.currentSubscribers ? (
+                                      <span className="text-white">
+                                        {channel.currentSubscribers} subs
+                                      </span>
+                                    ) : (
+                                      <span className="text-zinc-500">Stats unverified</span>
+                                    )}
+                                  </span>
+
+                                  {period && (
+                                    <span className="text-zinc-500 flex items-center gap-1">
+                                      <History className="w-2.5 h-2.5" />
+                                      {period}
+                                    </span>
+                                  )}
+                                </div>
+                              </div>
+
+                              <div className="pt-2.5 mt-2 border-t border-zinc-900/60 flex justify-end">
+                                <a
+                                  href={channel.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-[10px] font-mono text-red-400 hover:text-red-300 font-medium flex items-center gap-1 transition-colors"
+                                >
+                                  <span>Visit Channel</span>
+                                  <ExternalLink className="w-2.5 h-2.5" />
+                                </a>
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+
+                      {/* Dedicated YouTube Channel Analytics Area */}
+                      <div className="space-y-3 pt-5 mt-4 border-t border-zinc-900/80">
+                        <div className="flex items-center justify-between flex-wrap gap-2">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-xs font-mono tracking-wider font-bold uppercase ${
+                              isLight ? "text-purple-700" : "text-purple-400"
+                            }`}>
+                              YouTube Channel Analytics Snapshots
+                            </span>
+                            <span className="text-[9px] font-mono px-2 py-0.5 rounded border border-purple-900/40 bg-purple-950/30 text-purple-300">
+                              Studio Dashboards
+                            </span>
+                          </div>
+                          <span className="text-[10px] font-mono text-zinc-500">
+                            Obsidian Optics & BEASTIFIED • Snapshot as of 21 Oct 2026
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {youtubeChannelAnalytics.map((analytics) => (
+                            <YouTubeAnalyticsCard
+                              key={analytics.channelId}
+                              channel={analytics}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className={`space-y-4 pt-4 border-t ${
@@ -163,15 +340,27 @@ function ExperienceSectionComponent() {
                     Core Competency Deployed
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {currentExperience.skills?.map((skill, sIdx) => (
-                      <span key={sIdx} className={`text-xs px-3 py-1 rounded-lg font-mono border ${
-                        isLight
-                          ? "bg-slate-100 border-slate-200 text-slate-800"
-                          : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
-                      }`}>
-                        {skill}
-                      </span>
-                    ))}
+                    {activeTab === 'Content Creation' ? (
+                      ["Video Editing", "Content Strategy", "Visual Psychology", "Audience Retention"].map((skill, sIdx) => (
+                        <span key={sIdx} className={`text-xs px-3 py-1 rounded-lg font-mono border ${
+                          isLight
+                            ? "bg-slate-100 border-slate-200 text-slate-800"
+                            : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
+                        }`}>
+                          {skill}
+                        </span>
+                      ))
+                    ) : (
+                      currentExperience.skills?.map((skill, sIdx) => (
+                        <span key={sIdx} className={`text-xs px-3 py-1 rounded-lg font-mono border ${
+                          isLight
+                            ? "bg-slate-100 border-slate-200 text-slate-800"
+                            : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
+                        }`}>
+                          {skill}
+                        </span>
+                      ))
+                    )}
                   </div>
                 </div>
 
@@ -196,19 +385,26 @@ function ExperienceSectionComponent() {
                 )}
 
                 {activeTab === 'Content Creation' && (
-                  <div className={`pt-4 flex items-center justify-between text-xs font-mono border-t ${
+                  <div className={`pt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono border-t ${
                     isLight ? "border-slate-100 text-slate-500" : "border-white/[0.06] text-zinc-400"
                   }`}>
-                    <span>Educational Hub: Technical Learning & AI</span>
-                    <a 
-                      href="#creator-showcase"
-                      className={`transition-colors flex items-center gap-1 font-semibold ${
-                        isLight ? "text-rose-600 hover:text-rose-800" : "text-red-400 hover:text-red-300"
+                    <span className="flex items-center gap-1.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                      Educational Hub: Technical Learning & AI Media
+                    </span>
+                    <button 
+                      type="button"
+                      onClick={handleShowcaseClick}
+                      className={`transition-all flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg border cursor-pointer ${
+                        isLight 
+                          ? "bg-rose-50 border-rose-200 text-rose-700 hover:bg-rose-100" 
+                          : "bg-red-950/30 border-red-900/40 text-red-400 hover:bg-red-900/40 hover:text-red-300"
                       }`}
+                      aria-label="View YouTube video showcase"
                     >
                       <span>View Video Showcase</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
-                    </a>
+                      <ArrowRight className="w-3.5 h-3.5 text-red-400" />
+                    </button>
                   </div>
                 )}
 

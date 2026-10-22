@@ -151,6 +151,8 @@ export interface PortfolioKnowledge {
     academicEmail?: string;
     youtube?: string;
     youtubeDailyDecipher?: string;
+    youtubeBeastified?: string;
+    youtubeObsidianOptics?: string;
   };
   navigationRoutes: Array<{
     tab: string;
@@ -626,6 +628,24 @@ export const portfolioKnowledge: PortfolioKnowledge = {
         description:
           "Educational channel scaled to an organic community of 10,000+ subscribers, focusing on distilling complex computer science concepts into clear visual narratives.",
       },
+      {
+        id: "obsidianoptics",
+        name: "Obsidian Optics",
+        url: "https://www.youtube.com/@ObsidianOptics_in",
+        subscribers: "Unverified (Not available)",
+        focus: "Visual storytelling, digital optics, and creative media production",
+        description:
+          "Official channel exploring visual arts, digital optics, and creative media production.",
+      },
+      {
+        id: "beastified",
+        name: "BEASTIFIED",
+        url: "https://www.youtube.com/@Beastified_in/",
+        subscribers: "Unverified (Not available)",
+        focus: "MrBeast-oriented content, challenges, and dynamic video entertainment",
+        description:
+          "Official channel for MrBeast-oriented high-energy challenges and entertainment formats. Statistics remain unverified until live API resolution.",
+      },
     ],
     categories: [
       "Technology",
@@ -677,6 +697,8 @@ export const portfolioKnowledge: PortfolioKnowledge = {
     academicEmail: "24051052@kiit.ac.in",
     youtube: "https://youtube.com/@technicalaz",
     youtubeDailyDecipher: "https://youtube.com/@dailydecipher",
+    youtubeBeastified: "https://www.youtube.com/@Beastified_in/",
+    youtubeObsidianOptics: "https://www.youtube.com/@ObsidianOptics_in",
   },
 
   navigationRoutes: [

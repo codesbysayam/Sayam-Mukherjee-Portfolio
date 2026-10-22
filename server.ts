@@ -9,6 +9,7 @@ import AdmZip from "adm-zip";
 import { SAYAM_DATA } from "./src/data.ts";
 import { certificatesStore } from "./server/certificatesStore.ts";
 import { assistantHandler } from "./server/routes/assistant.ts";
+import { getBeastifiedHandler, getAllChannelsHandler } from "./server/routes/youtube.ts";
 
 dotenv.config();
 
@@ -1445,6 +1446,10 @@ app.post("/api/gemini/chat", async (req, res) => {
   const responseText = generateDeterministicAnswer(query);
   res.json({ response: responseText, sources: [] });
 });
+
+// 13. YouTube Channel Telemetry & Ecosystem
+app.get("/api/youtube/beastified", getBeastifiedHandler);
+app.get("/api/youtube/channels", getAllChannelsHandler);
 
 // Unmatched API endpoint 404 handler (prevents falling through to SPA HTML)
 app.all("/api/*", (req, res) => {

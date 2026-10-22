@@ -16,6 +16,7 @@ export const LINKS = {
   leetcode: "https://leetcode.com/u/sayammukherjee/",
   codolio: "https://codolio.com/profile/codesbysayam",
   youtube: "https://youtube.com/@technicalaz",
+  youtubeBeastified: "https://www.youtube.com/@Beastified_in/",
   instagram: "https://www.instagram.com/_.wrick._/",
   fiverr: "https://www.fiverr.com/",
 

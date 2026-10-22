@@ -1,25 +1,42 @@
-import { useState, useEffect, useRef, memo } from "react";
-import { motion } from "motion/react";
+import { useState, useRef, memo, useMemo } from "react";
 import { EXTENDED_DATA } from "../data/extendedData";
 import { LINKS } from "../config/links";
+import { youtubeChannels } from "../data/channels";
+import { useBeastifiedChannel } from "../hooks/useBeastifiedChannel";
+import { YouTubeChannelCard } from "./YouTubeChannelCard";
+import { YouTubeChannelAnalyticsSection } from "./YouTubeAnalyticsCard";
 import { 
-  Youtube, Video, Users, Eye, Sparkles, Play, Clock, 
-  ArrowRight, Compass, HelpCircle, BarChart, TrendingUp, ChevronLeft, ChevronRight 
+  Youtube, Eye, Play, Compass, ArrowRight, ArrowLeft, ChevronLeft, ChevronRight 
 } from "lucide-react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 
-function ContentCreatorSection() {
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+interface ContentCreatorSectionProps {
+  onBack?: () => void;
+}
 
-  // Simulated live stats
+function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
+  const { channel: liveBeastified, loading: beastifiedLoading } = useBeastifiedChannel();
+  const [decipherNotice, setDecipherNotice] = useState<string | null>(null);
+
+  // Merge live BEASTIFIED telemetry with verified static channels
+  const channels = useMemo(() => {
+    return youtubeChannels.map((c) => {
+      if (c.id === "beastified" && liveBeastified) {
+        return liveBeastified;
+      }
+      return c;
+    });
+  }, [liveBeastified]);
+
+  // Overall creator stats
   const creatorStats = {
-    subscribers: "1.1K+",
+    subscribers: "12K+",
     views: "150K+",
     videosCount: "50+",
     frequency: "1–2 Weekly",
     categories: [
-      "Technology", "Artificial Intelligence", "Finance", 
-      "Psychology", "Sports", "Travel", "Current Affairs"
+      "Technology", "Artificial Intelligence", "Computer Science", 
+      "Visual Media", "Entertainment", "Visual Psychology"
     ]
   };
 
@@ -47,20 +64,37 @@ function ContentCreatorSection() {
   };
 
   return (
-    <div className="space-y-12 font-sans" id="creator-showcase">
+    <div className="space-y-12 font-sans py-2" id="creator-showcase">
+      {/* Anchor for video showcase links */}
+      <span id="video-showcase" className="block -mt-12 pt-12" aria-hidden="true" />
+
+      {/* Back button if opened as dedicated showcase view */}
+      {onBack && (
+        <div className="pt-2">
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-800 bg-zinc-900/80 text-xs font-mono text-zinc-300 hover:text-white hover:bg-zinc-850 hover:border-zinc-700 transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Back to Experience</span>
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="space-y-2">
         <span className="text-xs text-red-500 font-mono uppercase tracking-widest block font-bold">
-          MEDIA PLATFORM
+          MEDIA PLATFORM & VIDEO SHOWCASE
         </span>
         <h2 
           style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)" }} 
           className="font-bold tracking-tight text-white font-display"
         >
-          Content Creation
+          YouTube Video Showcase
         </h2>
         <p className="text-sm text-zinc-400 max-w-2xl leading-relaxed">
-          Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, personal finance, and deep-dive psychological breakdowns.
+          Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, algorithm breakdowns, and entertainment formats across dedicated YouTube channels.
         </p>
       </div>
 
@@ -76,17 +110,17 @@ function ContentCreatorSection() {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white font-display tracking-tight leading-none">CodesBySayam Media</h3>
-                <span className="text-[10px] text-zinc-500 font-mono tracking-wider mt-1 block">TECHNICAL EDUCATION & CS CONTENT</span>
+                <span className="text-[10px] text-zinc-500 font-mono tracking-wider mt-1 block">TECHNICAL EDUCATION & ENTERTAINMENT ECOSYSTEM</span>
               </div>
             </div>
 
             <p className="text-xs text-zinc-300 leading-relaxed max-w-2xl">
-              I established this academic channel as a technical hub to simplify dense software topics, explain algorithms and computer vision concepts, and share practical build guides with fellow developers.
+              I operate channels as educational and creative hubs to simplify dense software topics, explain algorithms and computer vision concepts, and build high-energy video content for diverse audiences.
             </p>
 
             <div className="flex flex-wrap gap-1.5 pt-2">
               {creatorStats.categories.map((cat, idx) => (
-                <span key={idx} className="text-[10px] bg-zinc-900 text-zinc-400 border border-zinc-850 px-2.5 py-1 rounded-full font-mono">
+                <span key={idx} className="text-[10px] bg-zinc-900 text-zinc-400 border border-zinc-800 px-2.5 py-1 rounded-md font-mono">
                   {cat}
                 </span>
               ))}
@@ -128,11 +162,18 @@ function ContentCreatorSection() {
             <p className="text-xs text-zinc-400 leading-relaxed">
               An interactive sub-category focusing on travel metrics, geographical culture, knowledge extraction, and dynamic landscape explorations. Translating global adventures into high-signal blog notes.
             </p>
+
+            {decipherNotice && (
+              <div className="rounded-lg border border-red-900/40 bg-red-950/30 p-2.5 text-xs text-red-300 font-mono">
+                {decipherNotice}
+              </div>
+            )}
           </div>
 
           <button 
-            onClick={() => alert("Launching localized geopolitical explorer module... Simulating culture records...")}
-            className="w-full mt-6 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-mono font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
+            type="button"
+            onClick={() => setDecipherNotice("Localized geopolitical explorer notes are currently archived. Visit @dailydecipher on YouTube for video releases.")}
+            className="w-full mt-6 bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 hover:border-zinc-700 text-zinc-200 text-xs font-mono font-bold py-2.5 rounded-xl flex items-center justify-center gap-2 cursor-pointer transition-all"
           >
             <span>Decipher Database</span>
             <ArrowRight className="w-3.5 h-3.5 text-red-400" />
@@ -140,6 +181,37 @@ function ContentCreatorSection() {
         </div>
 
       </div>
+
+      {/* Centralized Channels Ecosystem Grid */}
+      <div className="space-y-4">
+        <div className="flex items-center justify-between">
+          <div className="space-y-1">
+            <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-wider block">
+              OFFICIAL CREATOR CHANNELS
+            </span>
+            <h3 className="font-display text-lg font-bold tracking-tight text-white">
+              Channel Directory & Platforms
+            </h3>
+          </div>
+          <span className="font-mono text-xs text-zinc-500">
+            {channels.length} Channels Listed
+          </span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+          {channels.map((channel) => (
+            <YouTubeChannelCard
+              key={channel.id}
+              channel={channel}
+              loading={channel.id === "beastified" && beastifiedLoading}
+              featured={channel.id === "beastified"}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Verified YouTube Studio Analytics Section */}
+      <YouTubeChannelAnalyticsSection />
 
       {/* YouTube Video Carousel Gallery */}
       <div className="space-y-4">
@@ -151,13 +223,15 @@ function ContentCreatorSection() {
           <div className="flex gap-2">
             <button
               onClick={() => scrollCarousel('left')}
-              className="p-1.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg border border-zinc-850 cursor-pointer"
+              aria-label="Scroll left"
+              className="p-1.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg border border-zinc-800 cursor-pointer"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={() => scrollCarousel('right')}
-              className="p-1.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg border border-zinc-850 cursor-pointer"
+              aria-label="Scroll right"
+              className="p-1.5 bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg border border-zinc-800 cursor-pointer"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -192,7 +266,7 @@ function ContentCreatorSection() {
                 {/* Watch player hover */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-zinc-950/60 transition-opacity">
                   <a 
-                    href={LINKS.youtube}
+                    href={video.watchUrl || LINKS.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Watch ${video.title} on YouTube`}
@@ -215,7 +289,7 @@ function ContentCreatorSection() {
                   </span>
 
                   <a
-                    href={LINKS.youtube}
+                    href={video.watchUrl || LINKS.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="text-red-400 hover:text-red-300 transition-colors font-bold cursor-pointer"
@@ -239,7 +313,7 @@ function ContentCreatorSection() {
             Channel Analytics Dashboard
           </h3>
           <p className="text-xs text-zinc-400 leading-relaxed">
-            Auditing cumulative view growth against subcounts. Maintaining steady weekly trends.
+            Auditing cumulative view growth against subcounts across creator channels.
           </p>
         </div>
 
