@@ -24,7 +24,6 @@ export const PROFILE_LINKS = {
   youtubeTechnicalAZ: "https://youtube.com/@technicalaz",
   youtubeDailyDecipher: "https://youtube.com/@dailydecipher",
   youtubeObsidianOptics: "https://www.youtube.com/@ObsidianOptics_in",
-  youtubeBeastified: "https://www.youtube.com/@Beastified_in/",
   emailPrimary: "sayam.business@gmail.com",
   emailAcademic: "24051052@kiit.ac.in",
 } as const;
@@ -464,7 +463,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
     title: "Content Creation & YouTube",
     keywords: [
       "youtube", "content", "creator", "channel", "channels", "technical az",
-      "daily decipher", "beastified", "obsidian optics", "obsidianoptics", "video", "videos"
+      "daily decipher", "obsidian optics", "obsidianoptics", "video", "videos"
     ],
     phrases: [
       "tell me about youtube",
@@ -473,14 +472,14 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "tell me about content creation",
       "what channels does he run"
     ],
-    answer: "Sayam has worked as a content creator across YouTube channels including Daily Decipher (10K+ historical subs), Technical AZ (2.06K+ historical subs), Obsidian Optics (@ObsidianOptics_in), and BEASTIFIED (@Beastified_in).",
+    answer: "Sayam has worked as a content creator across YouTube channels including Daily Decipher (10K+ historical subs), Technical AZ (2.06K+ historical subs), and Obsidian Optics (@ObsidianOptics_in).",
     action: {
       type: "youtube",
       label: "View Video Showcase",
       url: "#showcase",
-      handle: "@Beastified_in",
+      handle: "@ObsidianOptics_in",
     },
-    suggestions: ["BEASTIFIED Channel", "Obsidian Optics", "About", "🏆 Achievements"],
+    suggestions: ["Obsidian Optics", "Content Creation", "About", "🏆 Achievements"],
   },
   {
     id: "obsidianoptics_channel",
@@ -501,30 +500,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       url: PROFILE_LINKS.youtubeObsidianOptics,
       handle: "@ObsidianOptics_in",
     },
-    suggestions: ["BEASTIFIED Channel", "Content Creation", "⚡ Projects"],
-  },
-  {
-    id: "beastified_channel",
-    title: "BEASTIFIED YouTube Channel",
-    keywords: [
-      "beastified", "@beastified_in", "beastified_in", "mrbeast", "mr beast"
-    ],
-    phrases: [
-      "tell me about beastified",
-      "what is beastified",
-      "who is beastified",
-      "beastified channel",
-      "show me beastified",
-      "tell me about the mrbeast channel"
-    ],
-    answer: "BEASTIFIED (@Beastified_in) is an official channel focusing on MrBeast-oriented content, challenges, and dynamic video entertainment. Its live subscriber and view statistics remain unverified in baseline records.",
-    action: {
-      type: "youtube",
-      label: "Visit BEASTIFIED",
-      url: PROFILE_LINKS.youtubeBeastified,
-      handle: "@Beastified_in",
-    },
-    suggestions: ["Content Creation", "⚡ Projects", "💻 GitHub"],
+    suggestions: ["Content Creation", "⚡ Projects", "About"],
   },
   {
     id: "sports",

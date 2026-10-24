@@ -1,8 +1,7 @@
-import { useState, useRef, memo, useMemo } from "react";
+import { useState, useRef, memo } from "react";
 import { EXTENDED_DATA } from "../data/extendedData";
 import { LINKS } from "../config/links";
 import { youtubeChannels } from "../data/channels";
-import { useBeastifiedChannel } from "../hooks/useBeastifiedChannel";
 import { YouTubeChannelCard } from "./YouTubeChannelCard";
 import { YouTubeChannelAnalyticsSection } from "./YouTubeAnalyticsCard";
 import { 
@@ -15,18 +14,8 @@ interface ContentCreatorSectionProps {
 }
 
 function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
-  const { channel: liveBeastified, loading: beastifiedLoading } = useBeastifiedChannel();
   const [decipherNotice, setDecipherNotice] = useState<string | null>(null);
-
-  // Merge live BEASTIFIED telemetry with verified static channels
-  const channels = useMemo(() => {
-    return youtubeChannels.map((c) => {
-      if (c.id === "beastified" && liveBeastified) {
-        return liveBeastified;
-      }
-      return c;
-    });
-  }, [liveBeastified]);
+  const channels = youtubeChannels;
 
   // Overall creator stats
   const creatorStats = {
@@ -203,8 +192,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
             <YouTubeChannelCard
               key={channel.id}
               channel={channel}
-              loading={channel.id === "beastified" && beastifiedLoading}
-              featured={channel.id === "beastified"}
+              featured={channel.id === "obsidianoptics"}
             />
           ))}
         </div>

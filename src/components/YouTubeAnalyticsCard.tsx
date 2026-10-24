@@ -262,7 +262,7 @@ export function YouTubeChannelAnalyticsSection() {
           YouTube Studio Analytics Snapshots
         </h3>
         <p className="text-xs sm:text-sm text-zinc-400 max-w-3xl leading-relaxed">
-          Ground-truth metrics from YouTube Studio dashboards for <strong>Obsidian Optics</strong> and <strong>BEASTIFIED</strong>. Distinguishing lifetime reach, selected-period watch time, and 48-hour realtime velocity.
+          Ground-truth metrics from YouTube Studio dashboard for <strong>Obsidian Optics</strong>. Distinguishing lifetime reach, selected-period watch time, and 48-hour realtime velocity.
         </p>
       </div>
 

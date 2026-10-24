@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { beastifiedChannel, youtubeChannels } from "../../src/data/channels.ts";
-import type { YouTubeChannel, YouTubeStatsResponse } from "../../src/types/youtube.ts";
+import { youtubeChannels } from "../../src/data/channels.ts";
+import type { YouTubeChannel } from "../../src/types/youtube.ts";
 
 interface CacheEntry {
   timestamp: number;
@@ -76,7 +76,7 @@ async function fetchChannelFromYouTubeApi(handle: string): Promise<Partial<YouTu
  * Resolves channel data by ID, merging live telemetry if available with default record.
  */
 export async function getResolvedChannel(channelId: string): Promise<YouTubeChannel> {
-  const defaultChannel = youtubeChannels.find((c) => c.id === channelId) || (channelId === "beastified" ? beastifiedChannel : null);
+  const defaultChannel = youtubeChannels.find((c) => c.id === channelId);
   
   if (!defaultChannel) {
     throw new Error(`Channel not found: ${channelId}`);
@@ -105,34 +105,6 @@ export async function getResolvedChannel(channelId: string): Promise<YouTubeChan
 
   channelCache.set(channelId, { timestamp: now, data: merged });
   return merged;
-}
-
-/**
- * Route handler: GET /api/youtube/beastified
- */
-export async function getBeastifiedHandler(req: Request, res: Response) {
-  try {
-    const channel = await getResolvedChannel("beastified");
-    const responsePayload: YouTubeStatsResponse = {
-      success: true,
-      channel,
-      source: channel.statisticsSource === "live-api" ? "live-api" : "unverified",
-      message: channel.statisticsSource === "live-api"
-        ? "Live statistics retrieved from YouTube API."
-        : "Statistics unverified. Public metrics unavailable or YouTube API key not configured.",
-      retrievedAt: new Date().toISOString(),
-    };
-    return res.json(responsePayload);
-  } catch (err: any) {
-    console.error("GET /api/youtube/beastified error:", err);
-    return res.status(500).json({
-      success: false,
-      channel: beastifiedChannel,
-      source: "unverified",
-      error: err?.message || "Internal server error resolving BEASTIFIED channel",
-      retrievedAt: new Date().toISOString(),
-    });
-  }
 }
 
 /**

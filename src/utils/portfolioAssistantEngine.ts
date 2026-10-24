@@ -559,41 +559,29 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
   }
 
   // 14b. CONTENT CREATION & YOUTUBE CHANNELS
-  // 14b. CONTENT CREATION & YOUTUBE CHANNELS
   if (
     q.includes("youtube") ||
     q.includes("channel") ||
     q.includes("creator") ||
     q.includes("video") ||
-    q.includes("beastified") ||
     q.includes("daily decipher") ||
     q.includes("technical az") ||
     q.includes("obsidian optics") ||
     q.includes("obsidianoptics")
   ) {
-    if (q.includes("beastified") || q.includes("mrbeast") || q.includes("mr beast")) {
-      return `**BEASTIFIED Official YouTube Channel:**\n\n` +
-        `• **Handle:** [@Beastified_in](https://www.youtube.com/@Beastified_in/)\n` +
-        `• **Category:** MrBeast-oriented content\n` +
-        `• **Focus:** High-energy challenge concepts, dynamic video formats, and interactive entertainment\n` +
-        `• **Verification Status:** Public metrics (subscribers and views) remain unverified in static baseline records without live YouTube API resolution.\n` +
-        `• **Channel Link:** [Visit BEASTIFIED on YouTube](https://www.youtube.com/@Beastified_in/)`;
-    }
-
     if (q.includes("obsidian") || q.includes("optics")) {
       return `**Obsidian Optics Official YouTube Channel:**\n\n` +
         `• **Handle:** [@ObsidianOptics_in](https://www.youtube.com/@ObsidianOptics_in)\n` +
         `• **Category:** Visual Storytelling & Media\n` +
         `• **Focus:** Cinematic visual narratives, creative editing, and modern digital storytelling\n` +
-        `• **Verification Status:** Public metrics remain unverified in static baseline records without live API resolution.\n` +
+        `• **Verification Status:** Verified studio snapshot analytics.\n` +
         `• **Channel Link:** [Visit Obsidian Optics on YouTube](https://www.youtube.com/@ObsidianOptics_in)`;
     }
 
-    return `**Sayam's YouTube Channels & Media Platforms (4 Channels):**\n\n` +
+    return `**Sayam's YouTube Channels & Media Platforms (3 Channels):**\n\n` +
       `1. **[Daily Decipher](https://youtube.com/@dailydecipher)** (@dailydecipher) - 10K+ historical subscribers (2023–2026). Distilling complex computer science concepts, algorithmic foundations, and educational visual deep-dives.\n` +
       `2. **[Technical AZ](https://youtube.com/@technicalaz)** (@technicalaz) - 2.06K+ historical subscribers (2021–2023). Technology tutorials, consumer software, and developer tool guides (founded at age 16).\n` +
-      `3. **[Obsidian Optics](https://www.youtube.com/@ObsidianOptics_in)** (@ObsidianOptics_in) - Visual storytelling, cinematic tech narratives, and media production.\n` +
-      `4. **[BEASTIFIED](https://www.youtube.com/@Beastified_in/)** (@Beastified_in) - MrBeast-oriented content, challenges, and dynamic entertainment (metrics unverified in baseline records).\n\n` +
+      `3. **[Obsidian Optics](https://www.youtube.com/@ObsidianOptics_in)** (@ObsidianOptics_in) - Visual storytelling, cinematic tech narratives, and media production.\n\n` +
       `Historical community reach exceeds **12K+ subscribers** across these platforms. You can also explore the dedicated **[Video Showcase](#showcase)** in the portfolio!`;
   }
 
@@ -626,7 +614,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **LeetCode:** [leetcode.com/u/codesbysayam](https://leetcode.com/u/codesbysayam/)\n` +
       `• **Codolio:** [codolio.com/profile/codesbysayam](https://codolio.com/profile/codesbysayam)\n` +
       `• **Resume:** [View Professional Resume PDF](https://homely-scarlet-j1yvfmgp.edgeone.dev/Resume-Professional.pdf)\n` +
-      `• **YouTube:** [Daily Decipher](https://youtube.com/@dailydecipher) · [Technical AZ](https://youtube.com/@technicalaz) · [Obsidian Optics](https://www.youtube.com/@ObsidianOptics_in) · [BEASTIFIED](https://www.youtube.com/@Beastified_in/)\n` +
+      `• **YouTube:** [Daily Decipher](https://youtube.com/@dailydecipher) · [Technical AZ](https://youtube.com/@technicalaz) · [Obsidian Optics](https://www.youtube.com/@ObsidianOptics_in)\n` +
       `• **Location:** Bhubaneswar, Odisha, India (Hometown: Hooghly, West Bengal)`;
   }
 
@@ -635,7 +623,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     return `**Portfolio Navigation & Sections:**\n\n` +
       `• **Home:** Overview, hero introduction, and engineering philosophy.\n` +
       `• **About / Experience:** Background, career tracks, content creation, disciplined routine, and complete academic record.\n` +
-      `• **Video Showcase:** Dedicated YouTube creator showcase featuring all 4 channels, analytics, and video library.\n` +
+      `• **Video Showcase:** Dedicated YouTube creator showcase featuring all 3 channels, analytics, and video library.\n` +
       `• **Skills:** Interactive technical stack matrix, languages, and live repository telemetry.\n` +
       `• **Ecosystem:** System architecture diagrams and engineering node graphs.\n` +
       `• **Projects:** All 5 verified projects (OPERON, SayamSolves, MAUSAM, Portfolio, YOLOv8).\n` +
@@ -657,7 +645,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
   ) {
     return `**About Sayam Mukherjee:**\n\n` +
       `Sayam is a 2nd-year B.Tech Computer Science and Engineering undergraduate specializing in **Artificial Intelligence & Machine Learning** at **Kalinga Institute of Industrial Technology (KIIT)**, Bhubaneswar (First-Year CGPA: **9.06**).\n\n` +
-      `He builds full-stack systems and AI pipelines, focusing on agent-driven platforms (like **OPERON**), meteorological telemetry (**MAUSAM** for SIH 2026), and algorithmic foundations in C++ (**SayamSolves**). He is also an educational and entertainment content creator across YouTube channels Daily Decipher, Technical AZ, Obsidian Optics, and BEASTIFIED (@Beastified_in).\n\n` +
+      `He builds full-stack systems and AI pipelines, focusing on agent-driven platforms (like **OPERON**), meteorological telemetry (**MAUSAM** for SIH 2026), and algorithmic foundations in C++ (**SayamSolves**). He is also an educational and creative content creator across YouTube channels Daily Decipher, Technical AZ, and Obsidian Optics (@ObsidianOptics_in).\n\n` +
       `You can ask me about his projects, education, skills, GitHub activity, content creation, or verified credentials!`;
   }
 
@@ -667,7 +655,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     `• **Education:** KIIT (9.06 CGPA), CBSE Class 12 (86.2% Science stream), CBSE Class 10 (92.6%)\n` +
     `• **Projects:** OPERON, SayamSolves, MAUSAM, Interactive Portfolio, YOLOv8 Edge Vision\n` +
     `• **Technical Stack:** C++, Python, TypeScript, React, Node.js, PyTorch\n` +
-    `• **Content Creation:** YouTube channels Daily Decipher (10K+ historical), Technical AZ (2.06K+ historical), Obsidian Optics, and BEASTIFIED (@Beastified_in)\n` +
+    `• **Content Creation:** YouTube channels Daily Decipher (10K+ historical), Technical AZ (2.06K+ historical), and Obsidian Optics (@ObsidianOptics_in)\n` +
     `• **Competitions:** DataForge 2026 (IIT KGP), Deploy or Die (GDG KIIT), Technex'26 (IIT BHU), Toycathon\n` +
     `• **Contact & Profiles:** GitHub, LinkedIn, Resume, Email`;
 }

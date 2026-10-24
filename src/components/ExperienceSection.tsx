@@ -314,7 +314,7 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                             </span>
                           </div>
                           <span className="text-[10px] font-mono text-zinc-500">
-                            Obsidian Optics & BEASTIFIED • Snapshot as of 21 Oct 2026
+                            Obsidian Optics • Snapshot as of 21 Oct 2026
                           </span>
                         </div>
 

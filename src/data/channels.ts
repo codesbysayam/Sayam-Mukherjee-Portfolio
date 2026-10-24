@@ -1,41 +1,7 @@
 import type { YouTubeChannel } from "../types/youtube";
 
 /**
- * BEASTIFIED Official Channel Record
- * Primary source: https://www.youtube.com/@Beastified_in/
- * Unverified statistics remain explicitly null and will display as "Not available".
- */
-export const beastifiedChannel: YouTubeChannel = {
-  id: "beastified",
-  name: "BEASTIFIED",
-  handle: "@Beastified_in",
-  url: "https://www.youtube.com/@Beastified_in/",
-
-  status: "active",
-  startYear: 2026,
-  endYear: null,
-
-  category: "MrBeast-oriented content",
-  description: "Official channel for MrBeast-oriented high-energy challenges, interactive concepts, and dynamic entertainment content.",
-
-  currentSubscribers: 1, // Realtime snapshot as of 21 Oct 2026
-  historicalSubscribers: null,
-  subscribers: 1,
-
-  totalViews: null, // Not displayed in 2026 selected period view; kept null
-  videoCount: null,
-
-  thumbnailUrl: null,
-  bannerUrl: null,
-  publishedAt: null,
-
-  statisticsSource: "YouTube Studio screenshot snapshot (21 Oct 2026)",
-  lastChecked: "2026-10-21",
-  isVerified: true,
-};
-
-/**
- * Existing Portfolio YouTube Channels
+ * Verified Portfolio YouTube Channels
  * Preserved from verified portfolio records.
  * Historical figures are explicitly labelled as historical, not live counts.
  */
@@ -104,9 +70,7 @@ export const existingYouTubeChannels: YouTubeChannel[] = [
 
 /**
  * Centralized list of all portfolio YouTube channels.
- * Deduplicates channels by ID to prevent repeated entries.
  */
 export const youtubeChannels: YouTubeChannel[] = [
-  ...existingYouTubeChannels.filter((c) => c.id !== beastifiedChannel.id),
-  beastifiedChannel,
+  ...existingYouTubeChannels,
 ];

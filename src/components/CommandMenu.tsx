@@ -183,7 +183,7 @@ export default function CommandMenu({
       category: "Navigation",
       icon: Youtube,
       action: () => { onNavigate("showcase"); onClose(); },
-      searchTarget: "youtube video showcase content creation channels media platform beastified technical az daily decipher obsidian optics"
+      searchTarget: "youtube video showcase content creation channels media platform technical az daily decipher obsidian optics"
     },
     {
       id: "nav-contact",

@@ -20,7 +20,6 @@ export const SOCIAL_LINKS = {
   linkedin: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
   instagram: "https://www.instagram.com/_.wrick._/",
   youtube: "https://www.youtube.com/@ObsidianOptics_in",
-  youtubeBeastified: "https://www.youtube.com/@Beastified_in/",
   leetcode: "https://leetcode.com/u/codesbysayam/",
   codolio: "https://codolio.com/profile/codesbysayam/",
   fiverr: "https://www.fiverr.com/wrickmukherjee/buying?source=avatar_menu_profile",

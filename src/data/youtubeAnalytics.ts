@@ -42,8 +42,7 @@ const SOURCE = "youtube-studio-screenshot" as const;
  * 
  * IMPORTANT INTEGRITY RULES:
  * 1. These are static historical snapshots, NOT live auto-updating API telemetry.
- * 2. Unobserved metrics (such as BEASTIFIED lifetime views or subscriber gains) remain strictly null
- *    and must never be fabricated or displayed as 0.
+ * 2. Unobserved metrics remain strictly null and must never be fabricated or displayed as 0.
  * 3. Rounded period figures (e.g. 1.5L) are kept as displayValue and not converted to arbitrary numbers.
  */
 export const youtubeChannelAnalytics: YouTubeChannelAnalytics[] = [
@@ -114,56 +113,6 @@ export const youtubeChannelAnalytics: YouTubeChannelAnalytics[] = [
       observedAt: OBSERVED_AT,
       source: SOURCE,
     },
-  },
-
-  {
-    channelId: "beastified",
-    name: "BEASTIFIED",
-    handle: "@Beastified_in",
-    url: "https://www.youtube.com/@Beastified_in/",
-
-    // Lifetime metrics not shown in the BEASTIFIED screenshot - must remain null
-    lifetimeViews: null,
-
-    periodViews: {
-      value: 85,
-      displayValue: "85",
-      metricType: "period",
-      periodStart: "2026-01-01",
-      periodEnd: "2026-10-21",
-      observedAt: OBSERVED_AT,
-      source: SOURCE,
-    },
-
-    watchTimeHours: {
-      value: 0.2,
-      displayValue: "0.2",
-      metricType: "period",
-      periodStart: "2026-01-01",
-      periodEnd: "2026-10-21",
-      observedAt: OBSERVED_AT,
-      source: SOURCE,
-    },
-
-    subscribersGained: null,
-
-    currentSubscribers: {
-      value: 1,
-      displayValue: "1",
-      metricType: "realtime",
-      observedAt: OBSERVED_AT,
-      source: SOURCE,
-    },
-
-    viewsLast48Hours: {
-      value: 91,
-      displayValue: "91",
-      metricType: "realtime",
-      observedAt: OBSERVED_AT,
-      source: SOURCE,
-    },
-
-    engagedViews: null,
   },
 ];
 
