@@ -1,16 +1,6 @@
 {
   "source": "GitHub",
   "owner": "codesbysayam",
-  "username": "codesbysayam",
-  "profileUrl": "https://github.com/codesbysayam",
-  "avatarUrl": "https://avatars.githubusercontent.com/u/85777731?v=4",
-  "name": "Sayam Mukherjee",
-  "bio": "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
-  "publicRepos": 11,
-  "followers": 1,
-  "following": 0,
-  "publicGists": 0,
-  "accountCreatedAt": "2021-06-12T04:55:46Z",
   "profile": {
     "login": "codesbysayam",
     "name": "Sayam Mukherjee",
@@ -21,421 +11,204 @@
     "followers": 1,
     "following": 0
   },
-  "totalStars": 5,
-  "totalForks": 0,
   "repositories": [
     {
       "id": 1355576736,
       "name": "Sayam-Mukherjee-Portfolio",
       "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "fullName": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
       "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
       "homepage": "www.sayammukherjee.in",
       "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-03T06:02:37Z",
-      "createdAt": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-10-28T12:49:58Z",
-      "updatedAt": "2026-10-28T12:49:58Z",
-      "pushed_at": "2026-10-28T12:49:53Z",
-      "pushedAt": "2026-10-28T12:49:53Z",
-      "topics": [
-        "ai",
-        "ai-agent",
-        "ai-model",
-        "api",
-        "backend-api",
-        "frontend",
-        "full-stack",
-        "gemini-api",
-        "generative-ai",
-        "javascript",
-        "machine-learning",
-        "machinelearning-python",
-        "portfolio",
-        "portfolio-project",
-        "portfolio-website",
-        "react-native",
-        "reactjs",
-        "tailwindcss",
-        "vite"
-      ]
+      "updated_at": "2026-10-28T15:53:11Z",
+      "pushed_at": "2026-10-28T15:53:06Z"
     },
     {
       "id": 1368247830,
       "name": "codesbysayam",
       "full_name": "codesbysayam/codesbysayam",
-      "fullName": "codesbysayam/codesbysayam",
-      "html_url": "https://github.com/codesbysayam/codesbysayam",
-      "url": "https://github.com/codesbysayam/codesbysayam",
       "description": "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects. 🚀💻 | Code • Create • Learn • Build |",
+      "html_url": "https://github.com/codesbysayam/codesbysayam",
       "homepage": "",
       "language": null,
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-13T09:39:25Z",
-      "createdAt": "2026-09-13T09:39:25Z",
       "updated_at": "2026-10-28T09:36:51Z",
-      "updatedAt": "2026-10-28T09:36:51Z",
-      "pushed_at": "2026-10-28T09:36:47Z",
-      "pushedAt": "2026-10-28T09:36:47Z",
-      "topics": [
-        "artificial-intelligence",
-        "computer-science",
-        "data-structures",
-        "developer",
-        "developer-tools",
-        "full-stack-web-development",
-        "github-config",
-        "javascript",
-        "machine-learning",
-        "nextjs",
-        "open-source",
-        "portfolio",
-        "react",
-        "sayam-mukherjee",
-        "software-developer",
-        "tailwindcss",
-        "typescript",
-        "web-development"
-      ]
+      "pushed_at": "2026-10-28T09:36:47Z"
     },
     {
       "id": 1361090226,
       "name": "Memory-in-Motion",
       "full_name": "codesbysayam/Memory-in-Motion",
-      "fullName": "codesbysayam/Memory-in-Motion",
-      "html_url": "https://github.com/codesbysayam/Memory-in-Motion",
-      "url": "https://github.com/codesbysayam/Memory-in-Motion",
       "description": "demo",
+      "html_url": "https://github.com/codesbysayam/Memory-in-Motion",
       "homepage": "https://memoryinmotion.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-08T07:59:51Z",
-      "createdAt": "2026-09-08T07:59:51Z",
       "updated_at": "2026-10-25T16:44:06Z",
-      "updatedAt": "2026-10-25T16:44:06Z",
-      "pushed_at": "2026-10-25T16:44:01Z",
-      "pushedAt": "2026-10-25T16:44:01Z",
-      "topics": []
+      "pushed_at": "2026-10-25T16:44:01Z"
     },
     {
       "id": 1406277351,
       "name": "SightForge",
       "full_name": "codesbysayam/SightForge",
-      "fullName": "codesbysayam/SightForge",
-      "html_url": "https://github.com/codesbysayam/SightForge",
-      "url": "https://github.com/codesbysayam/SightForge",
       "description": "YOLOv8 Edge CV Pipeline",
-      "homepage": "",
+      "html_url": "https://github.com/codesbysayam/SightForge",
+      "homepage": null,
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-10-05T19:18:39Z",
-      "createdAt": "2026-10-05T19:18:39Z",
       "updated_at": "2026-10-25T09:11:28Z",
-      "updatedAt": "2026-10-25T09:11:28Z",
-      "pushed_at": "2026-10-25T09:11:24Z",
-      "pushedAt": "2026-10-25T09:11:24Z",
-      "topics": []
+      "pushed_at": "2026-10-25T09:11:24Z"
     },
     {
       "id": 1403521263,
       "name": "AXIOM",
       "full_name": "codesbysayam/AXIOM",
-      "fullName": "codesbysayam/AXIOM",
-      "html_url": "https://github.com/codesbysayam/AXIOM",
-      "url": "https://github.com/codesbysayam/AXIOM",
       "description": "Agentic AI",
+      "html_url": "https://github.com/codesbysayam/AXIOM",
       "homepage": "https://axiomwcc.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-10-03T18:28:37Z",
-      "createdAt": "2026-10-03T18:28:37Z",
       "updated_at": "2026-10-04T20:37:37Z",
-      "updatedAt": "2026-10-04T20:37:37Z",
-      "pushed_at": "2026-10-04T18:39:23Z",
-      "pushedAt": "2026-10-04T18:39:23Z",
-      "topics": []
+      "pushed_at": "2026-10-04T18:39:23Z"
     },
     {
       "id": 1404767583,
       "name": "inkloom",
       "full_name": "codesbysayam/inkloom",
-      "fullName": "codesbysayam/inkloom",
-      "html_url": "https://github.com/codesbysayam/inkloom",
-      "url": "https://github.com/codesbysayam/inkloom",
       "description": "Specialised AI models for logo design — a brand-analysis model turns a business into constraints, typography and symbol models construct the mark, and a composition engine produces real lockups and clear-space rules. Early access open.",
+      "html_url": "https://github.com/codesbysayam/inkloom",
       "homepage": "https://inkloom.art",
       "language": null,
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": true,
-      "isFork": true,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "master",
       "created_at": "2026-10-04T19:26:28Z",
-      "createdAt": "2026-10-04T19:26:28Z",
       "updated_at": "2026-10-04T19:26:28Z",
-      "updatedAt": "2026-10-04T19:26:28Z",
-      "pushed_at": "2026-09-26T13:29:22Z",
-      "pushedAt": "2026-09-26T13:29:22Z",
-      "topics": []
+      "pushed_at": "2026-09-26T13:29:22Z"
     },
     {
       "id": 1350807639,
       "name": "Operon",
       "full_name": "codesbysayam/Operon",
-      "fullName": "codesbysayam/Operon",
-      "html_url": "https://github.com/codesbysayam/Operon",
-      "url": "https://github.com/codesbysayam/Operon",
       "description": "🤖 Operon is an autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations. 🧠⚙️🔄 🚀 Combining multi-agent AI with human-in-the-loop governance to automate complex processes, improve efficiency, and keep critical decisions under human control. 🛡️👨‍💻✨ 🌐📊 Built for modern teams.",
+      "html_url": "https://github.com/codesbysayam/Operon",
       "homepage": "https://operonpro.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-08-29T18:06:43Z",
-      "createdAt": "2026-08-29T18:06:43Z",
       "updated_at": "2026-10-03T17:02:13Z",
-      "updatedAt": "2026-10-03T17:02:13Z",
-      "pushed_at": "2026-10-03T17:02:09Z",
-      "pushedAt": "2026-10-03T17:02:09Z",
-      "topics": [
-        "backend",
-        "business-automation",
-        "business-intelligence",
-        "express",
-        "frontend",
-        "full-system-export",
-        "gemini-api",
-        "human-in-the-loop",
-        "javascript",
-        "multi-agent-ai",
-        "nodejs",
-        "reactjs",
-        "tailwindcss",
-        "vercel",
-        "vite",
-        "workflow-automation"
-      ]
+      "pushed_at": "2026-10-03T17:02:09Z"
     },
     {
       "id": 1398703802,
       "name": "mausam_demo",
       "full_name": "codesbysayam/mausam_demo",
-      "fullName": "codesbysayam/mausam_demo",
-      "html_url": "https://github.com/codesbysayam/mausam_demo",
-      "url": "https://github.com/codesbysayam/mausam_demo",
       "description": "demo",
-      "homepage": "",
+      "html_url": "https://github.com/codesbysayam/mausam_demo",
+      "homepage": null,
       "language": null,
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-30T20:19:24Z",
-      "createdAt": "2026-09-30T20:19:24Z",
       "updated_at": "2026-09-30T20:19:32Z",
-      "updatedAt": "2026-09-30T20:19:32Z",
-      "pushed_at": "2026-09-30T20:19:28Z",
-      "pushedAt": "2026-09-30T20:19:28Z",
-      "topics": []
+      "pushed_at": "2026-09-30T20:19:28Z"
     },
     {
       "id": 1398584204,
       "name": "mausam_sample",
       "full_name": "codesbysayam/mausam_sample",
-      "fullName": "codesbysayam/mausam_sample",
-      "html_url": "https://github.com/codesbysayam/mausam_sample",
-      "url": "https://github.com/codesbysayam/mausam_sample",
       "description": "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. 🇮🇳 Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place. 📊 Explore clear, location-based insights and make smarter, safer decisions. 🚀 Built to simplify weather data and improve awareness for every.",
+      "html_url": "https://github.com/codesbysayam/mausam_sample",
       "homepage": "https://mausamgovt.vercel.app",
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-30T18:20:33Z",
-      "createdAt": "2026-09-30T18:20:33Z",
       "updated_at": "2026-09-30T18:23:43Z",
-      "updatedAt": "2026-09-30T18:23:43Z",
-      "pushed_at": "2026-09-30T18:22:07Z",
-      "pushedAt": "2026-09-30T18:22:07Z",
-      "topics": []
+      "pushed_at": "2026-09-30T18:22:07Z"
     },
     {
       "id": 1393521230,
       "name": "CAMPUSCONNECT_1273",
       "full_name": "codesbysayam/CAMPUSCONNECT_1273",
-      "fullName": "codesbysayam/CAMPUSCONNECT_1273",
-      "html_url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
-      "url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
       "description": "🎓 A full-stack college event management platform that helps students discover, search, filter, and register for campus events while enabling organizers to create, manage, update, and monitor events through a dedicated dashboard. 📅 Built for a seamless, responsive campus experience.",
+      "html_url": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
       "homepage": "https://campusconnect1273.vercel.app/",
       "language": "TypeScript",
-      "stargazers_count": 0,
-      "stars": 0,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 0,
-      "watchers": 0,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 0,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-28T18:08:23Z",
-      "createdAt": "2026-09-28T18:08:23Z",
       "updated_at": "2026-09-28T18:43:30Z",
-      "updatedAt": "2026-09-28T18:43:30Z",
-      "pushed_at": "2026-09-28T18:11:59Z",
-      "pushedAt": "2026-09-28T18:11:59Z",
-      "topics": [
-        "campus-connect",
-        "campus-platform",
-        "college-events",
-        "college-management",
-        "event-management",
-        "event-registration",
-        "full-stack",
-        "nextjs",
-        "react",
-        "student-platform",
-        "student-portal",
-        "student-portal-system",
-        "typescript",
-        "vercel",
-        "web-application"
-      ]
+      "pushed_at": "2026-09-28T18:11:59Z"
     },
     {
       "id": 1358811826,
       "name": "sayam-solves",
       "full_name": "codesbysayam/sayam-solves",
-      "fullName": "codesbysayam/sayam-solves",
-      "html_url": "https://github.com/codesbysayam/sayam-solves",
-      "url": "https://github.com/codesbysayam/sayam-solves",
       "description": "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice. 🧠 Exploring algorithms, sharpening problem-solving skills, and building consistency through LeetCode; one challenge at a time. 🚀",
+      "html_url": "https://github.com/codesbysayam/sayam-solves",
       "homepage": "",
       "language": "C++",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
       "fork": false,
-      "isFork": false,
       "archived": false,
-      "isArchived": false,
+      "stargazers_count": 1,
+      "forks_count": 0,
       "open_issues_count": 0,
       "default_branch": "main",
       "created_at": "2026-09-06T05:18:47Z",
-      "createdAt": "2026-09-06T05:18:47Z",
       "updated_at": "2026-09-26T13:06:19Z",
-      "updatedAt": "2026-09-26T13:06:19Z",
-      "pushed_at": "2026-09-07T06:02:43Z",
-      "pushedAt": "2026-09-07T06:02:43Z",
-      "topics": [
-        "dsa",
-        "dsa-algorithm",
-        "dsa-practice",
-        "dsalgo",
-        "github",
-        "github-config",
-        "leetcode",
-        "leetcode-java",
-        "leetcode-python",
-        "leetcode-solutions"
-      ]
+      "pushed_at": "2026-09-07T06:02:43Z"
     }
   ],
   "events": [
@@ -444,842 +217,210 @@
       "type": "PushEvent",
       "repo": "codesbysayam/SightForge",
       "created_at": "2026-10-25T09:05:38Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1406277351,
-        "push_id": 47701039038,
-        "ref": "refs/heads/main",
-        "head": "4349936b8409231995bd1adc996f886e8c41aef7",
-        "before": "f18875fe739f5bb32aee32695d2357f543e88d0e"
-      }
+      "public": true
     },
     {
       "id": "25163580704",
       "type": "PushEvent",
       "repo": "codesbysayam/Memory-in-Motion",
       "created_at": "2026-10-25T16:44:02Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1361090226,
-        "push_id": 47732519512,
-        "ref": "refs/heads/main",
-        "head": "dd7ef22c0b9ca4e0668ecf54f99471d8bd9d4a63",
-        "before": "55b22a2565cc98f6727c9dcc111183aa889f51f0"
-      }
+      "public": true
     },
     {
       "id": "25132399110",
       "type": "PushEvent",
       "repo": "codesbysayam/SightForge",
       "created_at": "2026-10-25T09:03:31Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1406277351,
-        "push_id": 47700906559,
-        "ref": "refs/heads/main",
-        "head": "f18875fe739f5bb32aee32695d2357f543e88d0e",
-        "before": "7fa023e946b04b525e0cc1182dd8dbe0900e9ad4"
-      }
+      "public": true
     },
     {
       "id": "25112626988",
       "type": "PushEvent",
       "repo": "codesbysayam/SightForge",
       "created_at": "2026-10-25T09:11:25Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1406277351,
-        "push_id": 47701392381,
-        "ref": "refs/heads/main",
-        "head": "c1954c81c3ce97e1b36cd1ddf52a1eaccca67d61",
-        "before": "4349936b8409231995bd1adc996f886e8c41aef7"
-      }
+      "public": true
     },
     {
       "id": "25046297546",
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-10-24T13:50:10Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 47630168226,
-        "ref": "refs/heads/main",
-        "head": "4f83db255c753aba3bd8d744354ef75d9dac5256",
-        "before": "b3f929124dac0a8e751a898f26e36458ee0659a1"
-      }
+      "public": true
     },
     {
       "id": "24828574920",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:12:25Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47171120328,
-        "ref": "refs/heads/main",
-        "head": "0c238592ced780cce867cbc2f7cab1c5ab66dba3",
-        "before": "5339d5f69716161f02fe0247866fe7d998dd02ca"
-      }
+      "public": true
     },
     {
       "id": "24828506698",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:12:03Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47171082214,
-        "ref": "refs/heads/main",
-        "head": "aeaee286e62cc18bd7caabdd849a0c4738c4a6e2",
-        "before": "912fa0f401be297f4cd29ad4d4990a9f9d6d5462"
-      }
+      "public": true
     },
     {
       "id": "24828019664",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:09:10Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170797134,
-        "ref": "refs/heads/main",
-        "head": "2333a6ca250f26cd98b14abcf25587d3ba9f0943",
-        "before": "2e2a6f64b638db39798ef83ab00b45bc4035671b"
-      }
+      "public": true
     },
     {
       "id": "24827350455",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:05:28Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170426928,
-        "ref": "refs/heads/main",
-        "head": "1d8d2c4fd86d104f8d5194393da63330a0ff296a",
-        "before": "57a14042560edd12932c090759c4f675c1bde51d"
-      }
+      "public": true
     },
     {
       "id": "24826642183",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:09:07Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170792275,
-        "ref": "refs/heads/main",
-        "head": "2e2a6f64b638db39798ef83ab00b45bc4035671b",
-        "before": "f3cf9a7bcdb5efad10bbc60d2b9df1fc7b28c2f7"
-      }
+      "public": true
     },
     {
       "id": "24826623165",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:09:01Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170781992,
-        "ref": "refs/heads/main",
-        "head": "dfefe5ba481b906f133f8df1f1f7b46b1cb87798",
-        "before": "30af32494c72682c906630c313edfaa76ae6ce52"
-      }
+      "public": true
     },
     {
       "id": "24825673983",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:09:04Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170787074,
-        "ref": "refs/heads/main",
-        "head": "f3cf9a7bcdb5efad10bbc60d2b9df1fc7b28c2f7",
-        "before": "dfefe5ba481b906f133f8df1f1f7b46b1cb87798"
-      }
+      "public": true
     },
     {
       "id": "24825079921",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:05:38Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170443728,
-        "ref": "refs/heads/main",
-        "head": "7f0c7b4a780c7ab1a47a6dc9ceec73cf366f6d87",
-        "before": "0d1633d90ec0a20d60c7bb233f2c77731826ee20"
-      }
+      "public": true
     },
     {
       "id": "24823636343",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T18:56:57Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47169563608,
-        "ref": "refs/heads/main",
-        "head": "8acd63a0f3fd72a465279ddc5867c408b065244b",
-        "before": "ad96e6c1cd5204581ea6b8e0e75f43e6022bf822"
-      }
+      "public": true
     },
     {
       "id": "24818114429",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T18:24:04Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47166318511,
-        "ref": "refs/heads/main",
-        "head": "6832ea62cebbddc4360a15473791e19bf29eaf72",
-        "before": "3903b51faa143c481300d9af13456ca5e10d0383"
-      }
+      "public": true
     },
     {
       "id": "24816583074",
       "type": "PushEvent",
       "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
       "created_at": "2026-10-22T15:08:53Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 47405646955,
-        "ref": "refs/heads/main",
-        "head": "d18ec6546ec44b85307b1678abaf2be53eff441c",
-        "before": "b9dcde7e36ddf6444267faa85b112ff3c4159e0c"
-      }
+      "public": true
     },
     {
       "id": "24731482159",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:12:09Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47171093531,
-        "ref": "refs/heads/main",
-        "head": "2f992f201da04baf73b40b9b183b315e25f54861",
-        "before": "23280c07cefbe15971ef1b18fcb8c1eb164e84a0"
-      }
+      "public": true
     },
     {
       "id": "24730850367",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:05:31Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170432063,
-        "ref": "refs/heads/main",
-        "head": "64558c4403f5454a1f7a4d5dc7b5037b2a789d3b",
-        "before": "1d8d2c4fd86d104f8d5194393da63330a0ff296a"
-      }
+      "public": true
     },
     {
       "id": "24728512367",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T18:56:37Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47169530790,
-        "ref": "refs/heads/main",
-        "head": "40a1aca8922977fa11d1fcf4c937149f5dcaf0c7",
-        "before": "c88465ea9fd5465bedf7bda944c7650e9df0e245"
-      }
+      "public": true
     },
     {
       "id": "24725387710",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T18:24:24Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47166351863,
-        "ref": "refs/heads/main",
-        "head": "5ca7e7894c1b9b96d5bce354fa9b13e9482d2374",
-        "before": "f21c668b45cca965401ead2a60d9e91db7f2e560"
-      }
+      "public": true
     },
     {
       "id": "24721228952",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T18:24:10Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47166327335,
-        "ref": "refs/heads/main",
-        "head": "f21c668b45cca965401ead2a60d9e91db7f2e560",
-        "before": "6832ea62cebbddc4360a15473791e19bf29eaf72"
-      }
+      "public": true
     },
     {
       "id": "24647487742",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:12:29Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47171126784,
-        "ref": "refs/heads/main",
-        "head": "3bfd0cee63152cc1f446e2ff66b0994936565943",
-        "before": "0c238592ced780cce867cbc2f7cab1c5ab66dba3"
-      }
+      "public": true
     },
     {
       "id": "24647476598",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:12:19Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47171109851,
-        "ref": "refs/heads/main",
-        "head": "5339d5f69716161f02fe0247866fe7d998dd02ca",
-        "before": "39c758305dfcd230dc1459bc359f9efc9663284d"
-      }
+      "public": true
     },
     {
       "id": "24647472444",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:12:15Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47171103539,
-        "ref": "refs/heads/main",
-        "head": "39c758305dfcd230dc1459bc359f9efc9663284d",
-        "before": "bf54f2052981ae83126fda32d48b37dd02669918"
-      }
+      "public": true
     },
     {
       "id": "24647461701",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:12:06Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47171087877,
-        "ref": "refs/heads/main",
-        "head": "23280c07cefbe15971ef1b18fcb8c1eb164e84a0",
-        "before": "aeaee286e62cc18bd7caabdd849a0c4738c4a6e2"
-      }
+      "public": true
     },
     {
       "id": "24647263958",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:09:13Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170803166,
-        "ref": "refs/heads/main",
-        "head": "4992eb4c8304a1fd3a8729c17faa23e38b241473",
-        "before": "2333a6ca250f26cd98b14abcf25587d3ba9f0943"
-      }
+      "public": true
     },
     {
       "id": "24647245544",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:08:57Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170776413,
-        "ref": "refs/heads/main",
-        "head": "30af32494c72682c906630c313edfaa76ae6ce52",
-        "before": "c38d779a560c53a8c25a6c6be165bc4cc7ed7d28"
-      }
+      "public": true
     },
     {
       "id": "24647237748",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:08:50Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170764893,
-        "ref": "refs/heads/main",
-        "head": "378de36566a6a29c255dbdc496fb9fcbd2f0b3da",
-        "before": "61584a1ff5969465c12bb686adf891e179d7df58"
-      }
+      "public": true
     },
     {
       "id": "24647059656",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:06:13Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170503084,
-        "ref": "refs/heads/main",
-        "head": "0f14d6b9380b003eae2f4cf68d9bf56f6856d4c9",
-        "before": "b70ffae28479714826e5a955d771c8ab53f45249"
-      }
+      "public": true
     },
     {
       "id": "24647004823",
       "type": "PushEvent",
       "repo": "codesbysayam/codesbysayam",
       "created_at": "2026-10-20T19:05:24Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170420452,
-        "ref": "refs/heads/main",
-        "head": "57a14042560edd12932c090759c4f675c1bde51d",
-        "before": "0a7838d2e3c06b624b69b7770741e05d0404e02d"
-      }
-    }
-  ],
-  "recentActivity": [
-    {
-      "id": "25209572158",
-      "type": "PushEvent",
-      "createdAt": "2026-10-25T09:05:38Z",
-      "created_at": "2026-10-25T09:05:38Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "25163580704",
-      "type": "PushEvent",
-      "createdAt": "2026-10-25T16:44:02Z",
-      "created_at": "2026-10-25T16:44:02Z",
-      "repoName": "Memory-in-Motion",
-      "repo": {
-        "id": 1361090226,
-        "name": "codesbysayam/Memory-in-Motion",
-        "url": "https://github.com/codesbysayam/Memory-in-Motion"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "25132399110",
-      "type": "PushEvent",
-      "createdAt": "2026-10-25T09:03:31Z",
-      "created_at": "2026-10-25T09:03:31Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "25112626988",
-      "type": "PushEvent",
-      "createdAt": "2026-10-25T09:11:25Z",
-      "created_at": "2026-10-25T09:11:25Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "25046297546",
-      "type": "PushEvent",
-      "createdAt": "2026-10-24T13:50:10Z",
-      "created_at": "2026-10-24T13:50:10Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24828574920",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:12:25Z",
-      "created_at": "2026-10-20T19:12:25Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24828506698",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:12:03Z",
-      "created_at": "2026-10-20T19:12:03Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24828019664",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:09:10Z",
-      "created_at": "2026-10-20T19:09:10Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24827350455",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:05:28Z",
-      "created_at": "2026-10-20T19:05:28Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24826642183",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:09:07Z",
-      "created_at": "2026-10-20T19:09:07Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24826623165",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:09:01Z",
-      "created_at": "2026-10-20T19:09:01Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24825673983",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:09:04Z",
-      "created_at": "2026-10-20T19:09:04Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24825079921",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:05:38Z",
-      "created_at": "2026-10-20T19:05:38Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24823636343",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T18:56:57Z",
-      "created_at": "2026-10-20T18:56:57Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24818114429",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T18:24:04Z",
-      "created_at": "2026-10-20T18:24:04Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24816583074",
-      "type": "PushEvent",
-      "createdAt": "2026-10-22T15:08:53Z",
-      "created_at": "2026-10-22T15:08:53Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24731482159",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:12:09Z",
-      "created_at": "2026-10-20T19:12:09Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24730850367",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:05:31Z",
-      "created_at": "2026-10-20T19:05:31Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24728512367",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T18:56:37Z",
-      "created_at": "2026-10-20T18:56:37Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24725387710",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T18:24:24Z",
-      "created_at": "2026-10-20T18:24:24Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24721228952",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T18:24:10Z",
-      "created_at": "2026-10-20T18:24:10Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647487742",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:12:29Z",
-      "created_at": "2026-10-20T19:12:29Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647476598",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:12:19Z",
-      "created_at": "2026-10-20T19:12:19Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647472444",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:12:15Z",
-      "created_at": "2026-10-20T19:12:15Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647461701",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:12:06Z",
-      "created_at": "2026-10-20T19:12:06Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647263958",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:09:13Z",
-      "created_at": "2026-10-20T19:09:13Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647245544",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:08:57Z",
-      "created_at": "2026-10-20T19:08:57Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647237748",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:08:50Z",
-      "created_at": "2026-10-20T19:08:50Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647059656",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:06:13Z",
-      "created_at": "2026-10-20T19:06:13Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647004823",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:05:24Z",
-      "created_at": "2026-10-20T19:05:24Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
+      "public": true
     }
   ],
   "languages": {
@@ -1339,2072 +480,6 @@
       "C++": 2037
     }
   },
-  "languageCounts": {
-    "TypeScript": 7,
-    "C++": 1
-  },
-  "languageBytes": {
-    "TypeScript": 10595907,
-    "CSS": 232995,
-    "JavaScript": 99492,
-    "C": 37466,
-    "Python": 286374,
-    "Jupyter Notebook": 19587,
-    "HTML": 44171,
-    "Makefile": 3842,
-    "Shell": 569,
-    "PLpgSQL": 3057,
-    "C++": 2037
-  },
-  "latestPush": "2026-10-28T12:49:53Z",
-  "contributionCalendar": {
-    "totalContributions": 232,
-    "weeks": [
-      {
-        "contributionDays": [
-          {
-            "date": "2025-10-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-10-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-01",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-08",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-15",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-22",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-11-29",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-11-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-06",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-13",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-20",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-27",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2025-12-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2025-12-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-03",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-10",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-17",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-24",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-01-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-01-31",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-07",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-14",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-21",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-02-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-02-28",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-07",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-14",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-21",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-28",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-03-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-03-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-04",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-11",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-18",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-25",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-04-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-04-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-02",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-09",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-16",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-23",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-05-30",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-05-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-06",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-13",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-20",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-27",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-06-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-06-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-01",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-04",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-08",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-11",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-15",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-18",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-22",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-25",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-07-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-28",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-29",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-30",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-07-31",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-01",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-03",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-04",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-05",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-06",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-07",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-08",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-09",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-10",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-13",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-14",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-15",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-20",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-21",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-22",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-08-26",
-            "count": 8,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-08-27",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-08-28",
-            "count": 3,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-08-29",
-            "count": 5,
-            "color": "#40c463"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-08-30",
-            "count": 7,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-08-31",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-01",
-            "count": 3,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-09-03",
-            "count": 6,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-04",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-05",
-            "count": 3,
-            "color": "#9be9a8"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-06",
-            "count": 15,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-09-07",
-            "count": 5,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-08",
-            "count": 9,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-09",
-            "count": 5,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-10",
-            "count": 9,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-11",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-12",
-            "count": 3,
-            "color": "#9be9a8"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-13",
-            "count": 33,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-09-14",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-15",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-16",
-            "count": 5,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-17",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-09-18",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-19",
-            "count": 4,
-            "color": "#40c463"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-20",
-            "count": 6,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-21",
-            "count": 7,
-            "color": "#30a14e"
-          },
-          {
-            "date": "2026-09-22",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-23",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-24",
-            "count": 5,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-25",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-09-26",
-            "count": 9,
-            "color": "#30a14e"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-09-27",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-28",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-09-29",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-09-30",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-01",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-02",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-03",
-            "count": 3,
-            "color": "#9be9a8"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-10-04",
-            "count": 11,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-10-05",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-06",
-            "count": 3,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-07",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-08",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-09",
-            "count": 3,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-10",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-10-11",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-12",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-13",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-14",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-10-15",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-16",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-17",
-            "count": 1,
-            "color": "#9be9a8"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-10-18",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-19",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-20",
-            "count": 2,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-21",
-            "count": 13,
-            "color": "#216e39"
-          },
-          {
-            "date": "2026-10-22",
-            "count": 1,
-            "color": "#9be9a8"
-          },
-          {
-            "date": "2026-10-23",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-24",
-            "count": 1,
-            "color": "#9be9a8"
-          }
-        ]
-      },
-      {
-        "contributionDays": [
-          {
-            "date": "2026-10-25",
-            "count": 4,
-            "color": "#40c463"
-          },
-          {
-            "date": "2026-10-26",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-27",
-            "count": 0,
-            "color": "#ebedf0"
-          },
-          {
-            "date": "2026-10-28",
-            "count": 0,
-            "color": "#ebedf0"
-          }
-        ]
-      }
-    ]
-  },
-  "fetchedAt": "2026-10-28T15:53:04.816Z",
-  "syncedAt": "2026-10-28T15:53:04.816Z",
+  "syncedAt": "2026-10-28T18:50:34.995Z",
   "status": "ok"
 }
