@@ -43,7 +43,9 @@ export default function CertificatesPage() {
   useEffect(() => {
     fetch("/api/certificates")
       .then((res) => {
-        if (res.ok) return res.json();
+        if (res.ok && res.headers.get("content-type")?.includes("application/json")) {
+          return res.json();
+        }
         return null;
       })
       .then((data) => {

@@ -100,34 +100,57 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [simulatedOTP, setSimulatedOTP] = useState<string | null>(null);
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
-  // Load Portfolio Data
+  // Load Portfolio Data with resilient retry and content-type validation
   useEffect(() => {
+    let isMounted = true;
+
     const fetchData = async () => {
-      try {
-        const res = await fetch("/api/portfolio-data");
-        if (res.ok) {
-          const data = await res.json();
-          setPortfolioData({
-            projects: data.projects || [],
-            blogs: data.blogs || [],
-            certifications: data.certifications || [],
-            skills: data.skills || [],
-            experience: data.experience || [],
-            achievements: data.achievements || [],
-            learningDashboard: data.learningDashboard || SAYAM_DATA.learningDashboard,
-            stats: data.stats || SAYAM_DATA.stats,
-            socials: data.socials || SAYAM_DATA.socials,
-            testimonials: data.testimonials || [],
-          });
+      let attempts = 0;
+      const maxAttempts = 3;
+
+      while (attempts < maxAttempts && isMounted) {
+        try {
+          const res = await fetch("/api/portfolio-data");
+          if (res.ok) {
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+              const data = await res.json();
+              if (isMounted) {
+                setPortfolioData({
+                  projects: data.projects || [],
+                  blogs: data.blogs || [],
+                  certifications: data.certifications || [],
+                  skills: data.skills || [],
+                  experience: data.experience || [],
+                  achievements: data.achievements || [],
+                  learningDashboard: data.learningDashboard || SAYAM_DATA.learningDashboard,
+                  stats: data.stats || SAYAM_DATA.stats,
+                  socials: data.socials || SAYAM_DATA.socials,
+                  testimonials: data.testimonials || [],
+                });
+              }
+              return;
+            }
+          }
+        } catch {
+          // Server may be momentarily initializing
         }
-      } catch (err) {
-        console.error("Failed to fetch portfolio data, using defaults:", err);
-      } finally {
+
+        attempts++;
+        if (attempts < maxAttempts && isMounted) {
+          await new Promise((r) => setTimeout(r, 500 * attempts));
+        }
+      }
+
+      // If attempts exhausted, SAYAM_DATA initialized in useState serves as the guaranteed baseline
+      if (isMounted) {
         setIsLoading(false);
       }
     };
 
-    fetchData();
+    fetchData().finally(() => {
+      if (isMounted) setIsLoading(false);
+    });
 
     const savedTheme = (localStorage.getItem("sayam_theme") || localStorage.getItem("theme")) as "dark" | "light" | null;
     if (savedTheme) {
@@ -137,8 +160,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setTheme("light");
       applyTheme("light");
     } else {
+      setTheme("dark");
       applyTheme("dark");
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Set visual theme on document element
@@ -290,11 +318,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       });
       if (res.ok) {
         // Refresh data
-        const pRes = await fetch("/api/portfolio-data");
-        if (pRes.ok) {
-          const d = await pRes.json();
-          setPortfolioData((prev) => ({ ...prev, testimonials: d.testimonials }));
-        }
+        try {
+          const pRes = await fetch("/api/portfolio-data");
+          if (pRes.ok && pRes.headers.get("content-type")?.includes("application/json")) {
+            const d = await pRes.json();
+            setPortfolioData((prev) => ({ ...prev, testimonials: d.testimonials }));
+          }
+        } catch {}
         return true;
       }
     } catch (e) {
@@ -323,8 +353,14 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   const fetchAdminMessages = async () => {
-    const res = await fetch("/api/admin/messages");
-    return res.ok ? await res.json() : [];
+    try {
+      const res = await fetch("/api/admin/messages");
+      if (!res.ok) return [];
+      const ct = res.headers.get("content-type");
+      return ct && ct.includes("application/json") ? await res.json() : [];
+    } catch {
+      return [];
+    }
   };
 
   const actionAdminMessage = async (id: string, action: "archive" | "delete" | "reply") => {

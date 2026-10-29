@@ -9,9 +9,11 @@ import {
   formatGitHubEvent
 } from "../services/github";
 import { GitHubPulseSummary } from "./GitHubPulseSummary";
+import { ResumeSpotlight } from "./ResumeSpotlight";
 
 interface HeroSectionProps {
   onViewWork: () => void;
+  onOpenResume?: () => void;
 }
 
 const LANGUAGE_COLORS: Record<string, string> = {
@@ -28,7 +30,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
   Shell: "#89e051"
 };
 
-function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
+function HeroSectionComponent({ onViewWork, onOpenResume }: HeroSectionProps) {
   const { theme } = usePortfolio();
   const isLight = theme === "light";
 
@@ -155,6 +157,11 @@ function HeroSectionComponent({ onViewWork }: HeroSectionProps) {
                 <Github className="w-4 h-4" />
                 <span>{siteContent.hero.secondaryCta}</span>
               </a>
+            </div>
+
+            {/* Resume Spotlight Entry Point */}
+            <div className="pt-4 sm:pt-5 max-w-md w-full">
+              <ResumeSpotlight onOpenViewer={onOpenResume} />
             </div>
           </div>
 

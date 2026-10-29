@@ -25,6 +25,7 @@ import { PortfolioProvider, usePortfolio } from "./context/PortfolioContext";
 import CustomCursor from "./components/CustomCursor";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Toast from "./components/Toast";
+import { ResumeGlyph } from "./components/ResumeGlyph";
 import { NAVIGATION, RESUME_URL, SOCIAL_LINKS } from "./data/siteContent";
 import { lazyWithRetry, clearChunkReloadFlag } from "./utils/lazyWithRetry";
 
@@ -37,7 +38,7 @@ const BlogsSection = lazyWithRetry(() => import("./components/BlogsSection"));
 const ContentCreatorSection = lazyWithRetry(() => import("./components/ContentCreatorSection"));
 const TestimonialsSection = lazyWithRetry(() => import("./components/TestimonialsSection"));
 const AdminDashboard = lazyWithRetry(() => import("./components/AdminDashboard"));
-const ResumeModal = lazyWithRetry(() => import("./components/ResumeModal"));
+import ResumeModal from "./components/ResumeModal";
 const CommandMenu = lazyWithRetry(() => import("./components/CommandMenu"));
 const CertificatesPage = lazyWithRetry(() => import("./components/certificates/CertificatesPage"));
 const CredentialsHomePreview = lazyWithRetry(() => import("./components/certificates/CredentialsHomePreview"));
@@ -49,7 +50,7 @@ import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary"
 import SiteFooter from "./components/SiteFooter";
 import BackToTop from "./components/BackToTop";
 const CookieConsent = lazyWithRetry(() => import("./components/CookieConsent"));
-const ExpandableFAQ = lazyWithRetry(() => import("./components/ExpandableFAQ"));
+import ExpandableFAQ from "./components/ExpandableFAQ";
 const FloatingContactButton = lazyWithRetry(() => import("./components/FloatingContactButton"));
 import MobileBottomNav from "./components/common/MobileBottomNav";
 
@@ -552,12 +553,16 @@ function AppContent() {
   const [formLoading, setFormLoading] = useState(false);
 
   const triggerConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.8 },
-      colors: ["#8B5CF6", "#3B82F6", "#22D3EE"],
-    });
+    try {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.8 },
+        colors: ["#8B5CF6", "#3B82F6", "#22D3EE"],
+      });
+    } catch {
+      // Confetti fallback for iframe constraints
+    }
   };
 
   const handleContactSubmit = (e: React.FormEvent) => {
@@ -745,21 +750,22 @@ function AppContent() {
                   {theme === "dark" ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-500" />}
                 </button>
 
-                {/* Resume Button */}
+                {/* Redesigned Resume Header Action */}
                 <button
                   onClick={() => {
-                    triggerConfetti();
                     setIsResumeModalOpen(true);
                   }}
-                  className={`hidden sm:inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 border text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0 ${
+                  className={`hidden sm:inline-flex items-center gap-2 min-h-[40px] px-3.5 py-1.5 border text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0 group relative overflow-hidden ${
                     theme === "dark"
-                      ? "bg-zinc-900/90 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-200"
-                      : "bg-white hover:bg-zinc-100 border-zinc-200 hover:border-zinc-300 text-zinc-800 shadow-xs"
+                      ? "bg-zinc-900/90 hover:bg-zinc-850 border-zinc-750 hover:border-purple-500/40 text-zinc-100 shadow-[0_2px_10px_rgba(0,0,0,0.3)] hover:shadow-[0_2px_16px_rgba(168,85,247,0.18)]"
+                      : "bg-white hover:bg-zinc-50 border-zinc-250 hover:border-purple-400/50 text-zinc-850 shadow-xs hover:shadow-sm"
                   }`}
-                  title="View & Download Resume"
+                  title="View Official Interactive Resume (PDF Source)"
+                  aria-label="Open official verified resume viewer"
                 >
-                  <FileText className="w-3.5 h-3.5" />
-                  <span>Resume</span>
+                  <ResumeGlyph className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105" />
+                  <span className="tracking-wide">Resume</span>
+                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Authoritative Source Verified" />
                 </button>
 
                 {/* Mobile / Tablet Menu Toggle */}
@@ -838,18 +844,19 @@ function AppContent() {
                       </button>
                       <button
                         onClick={() => {
-                          triggerConfetti();
                           setIsMenuOpen(false);
                           setIsResumeModalOpen(true);
                         }}
-                        className={`flex-1 min-h-[44px] flex items-center justify-center gap-1.5 py-2 px-3 border rounded-lg text-xs font-semibold cursor-pointer ${
+                        className={`flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                           theme === "dark"
-                            ? "bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800"
-                            : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100"
+                            ? "bg-zinc-900/90 border-zinc-750 text-zinc-200 hover:bg-zinc-800 hover:text-white"
+                            : "bg-zinc-50 border-zinc-200 text-zinc-800 hover:bg-zinc-100"
                         }`}
+                        aria-label="Open official verified resume viewer"
                       >
-                        <FileText className="w-3.5 h-3.5" />
+                        <ResumeGlyph className="w-4 h-4 shrink-0" />
                         <span>Resume</span>
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                       </button>
                       <button
                         onClick={() => {
@@ -895,8 +902,13 @@ function AppContent() {
                 {activeTab === "home" && (
                   <ErrorBoundary sectionName="Home Overview">
                     <div className="space-y-8 sm:space-y-12">
-                      {/* REBUILT HERO SECTION */}
-                      <HeroSection onViewWork={() => navigateToTab("projects")} />
+                      {/* REBUILT HERO SECTION WITH RESUME SPOTLIGHT */}
+                      <HeroSection 
+                        onViewWork={() => navigateToTab("projects")} 
+                        onOpenResume={() => {
+                          setIsResumeModalOpen(true);
+                        }}
+                      />
 
                       {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
                       <section id="live-build-feed" className="w-full pt-1 pb-4">
@@ -912,9 +924,7 @@ function AppContent() {
 
                       {/* EXPANDABLE FAQ SECTION */}
                       <ErrorBoundary sectionName="Expandable FAQ">
-                        <Suspense fallback={null}>
-                          <ExpandableFAQ />
-                        </Suspense>
+                        <ExpandableFAQ />
                       </ErrorBoundary>
                     </div>
                   </ErrorBoundary>
@@ -1054,13 +1064,25 @@ function AppContent() {
             />
           )}
 
-          {/* Floating AI Representative Bot & Modals */}
+          {/* Floating AI Representative Bot */}
+          {!isLegalPage && (
+            <ErrorBoundary sectionName="AI Assistant">
+              <Suspense fallback={null}>
+                <AIChatBot />
+              </Suspense>
+            </ErrorBoundary>
+          )}
+
+          {/* Independent Zero-Delay Resume Modal (Never blocked by Suspense or chunk loading) */}
+          <ErrorBoundary sectionName="Resume Modal">
+            {isResumeModalOpen && (
+              <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
+            )}
+          </ErrorBoundary>
+
+          {/* Modal System & Global Overlays */}
           <ErrorBoundary sectionName="Modal System">
             <Suspense fallback={null}>
-              {!isLegalPage && <AIChatBot />}
-              {isResumeModalOpen && (
-                <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
-              )}
               {isCommandMenuOpen && (
                 <CommandMenu
                   isOpen={isCommandMenuOpen}

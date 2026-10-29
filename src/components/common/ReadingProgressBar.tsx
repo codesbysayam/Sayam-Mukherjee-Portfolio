@@ -35,24 +35,43 @@ export const ReadingProgressBar: React.FC<ReadingProgressBarProps> = ({
   const progressBarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
+
     // 1. Container-based scrolling (e.g. inside a modal dialog)
-    if (containerRef && containerRef.current) {
-      const container = containerRef.current;
-      const handleContainerScroll = () => {
-        const { scrollTop, scrollHeight, clientHeight } = container;
-        const maxScroll = scrollHeight - clientHeight;
-        if (maxScroll <= 0) {
-          setProgress(100);
+    if (containerRef) {
+      const attachToContainer = () => {
+        const container = containerRef.current;
+        if (!container) {
+          if (!cancelled) {
+            requestAnimationFrame(attachToContainer);
+          }
           return;
         }
-        const pct = Math.min(100, Math.max(0, (scrollTop / maxScroll) * 100));
-        setProgress(pct);
+
+        const handleContainerScroll = () => {
+          const { scrollTop, scrollHeight, clientHeight } = container;
+          const maxScroll = scrollHeight - clientHeight;
+          if (maxScroll <= 0) {
+            setProgress(100);
+            return;
+          }
+          const pct = Math.min(100, Math.max(0, (scrollTop / maxScroll) * 100));
+          setProgress(pct);
+        };
+
+        container.addEventListener("scroll", handleContainerScroll, { passive: true });
+        handleContainerScroll();
+        cleanup = () => {
+          container.removeEventListener("scroll", handleContainerScroll);
+        };
       };
 
-      container.addEventListener("scroll", handleContainerScroll, { passive: true });
-      handleContainerScroll();
+      attachToContainer();
+
       return () => {
-        container.removeEventListener("scroll", handleContainerScroll);
+        cancelled = true;
+        if (cleanup) cleanup();
       };
     }
 

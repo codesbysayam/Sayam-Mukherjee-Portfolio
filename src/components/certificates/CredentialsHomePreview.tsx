@@ -21,7 +21,12 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
 
   useEffect(() => {
     fetch("/api/certificates")
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const ct = res.headers.get("content-type");
+        if (!ct || !ct.includes("application/json")) throw new Error("Expected JSON");
+        return res.json();
+      })
       .then((data: Certificate[]) => {
         if (Array.isArray(data) && data.length > 0) {
           const featured = data.filter((c) => c.featured).slice(0, 4);
@@ -30,8 +35,7 @@ export default function CredentialsHomePreview({ onNavigateToCertificates }: Cre
           setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 4));
         }
       })
-      .catch((err) => {
-        console.error("Error loading featured credentials:", err);
+      .catch(() => {
         setFeaturedCerts(INITIAL_CERTIFICATES.filter((c) => c.featured).slice(0, 4));
       })
       .finally(() => setLoading(false));

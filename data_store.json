@@ -283,7 +283,7 @@
     "books": [
       {
         "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
-        "author": "Aurélien Géron",
+        "author": "Aur\u00e9lien G\u00e9ron",
         "progress": 65
       },
       {
@@ -349,7 +349,8 @@
     "instagramSecondary": "https://www.instagram.com/obsidianoptics.in/",
     "youtube": "https://www.youtube.com/@ObsidianOptics_in",
     "fiverr": "https://www.fiverr.com/",
-    "email": "wrickbusiness@gmail.com"
+    "email": "wrickbusiness@gmail.com",
+    "resume": "https://exciting-brown-6y14ojmv.edgeone.dev/"
   },
   "messages": [
     {
@@ -4952,9 +4953,9 @@
     {
       "id": "gdg-kiit-operon-2026",
       "category": "COMPETITIONS",
-      "title": "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+      "title": "Deploy or Die - HowToAlgo \u00d7 GDG on Campus KIIT",
       "issuer": "GDG on Campus KIIT / HowToAlgo",
-      "event": "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
+      "event": "Deploy or Die - HowToAlgo \u00d7 GDG on Campus KIIT",
       "organizer": "GDG on Campus KIIT",
       "coOrganizer": "HowToAlgo",
       "associatedOrganizer": "HowToAlgo",
@@ -4982,7 +4983,7 @@
         }
       ],
       "description": "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
-      "fullDescription": "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
+      "fullDescription": "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo \u00d7 GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
       "skills": [
         "Agent-Driven Lifecycle",
         "Business Process Automation",
@@ -5077,7 +5078,7 @@
       "credentialType": "Certificate of Participation",
       "category": "COMPETITIONS",
       "issueDate": "2026",
-      "date": "4–5 October 2026",
+      "date": "4\u20135 October 2026",
       "year": 2026,
       "team": "ALGNITE",
       "teamMembers": [
@@ -5093,7 +5094,7 @@
         }
       ],
       "description": "Led the development of AXIOM as the team lead and built the primary architecture during WCC Launchpad 30, a 36-hour hackathon organized by We Code Coders with title sponsor inkloom across Frontend, Backend, and AI / ML categories.",
-      "fullDescription": "Certificate of Participation awarded to Sayam Mukherjee for actively participating in WCC Launchpad 30, a 36-Hour Hackathon organized by We Code Coders with title sponsor inkloom on 4–5 October 2026. Recognizes participation as Team Leader of Team ALGNITE across Frontend, Backend, and AI / ML tracks. Led the development of AXIOM as the team lead and built the primary architecture.",
+      "fullDescription": "Certificate of Participation awarded to Sayam Mukherjee for actively participating in WCC Launchpad 30, a 36-Hour Hackathon organized by We Code Coders with title sponsor inkloom on 4\u20135 October 2026. Recognizes participation as Team Leader of Team ALGNITE across Frontend, Backend, and AI / ML tracks. Led the development of AXIOM as the team lead and built the primary architecture.",
       "skills": [
         "36-Hour Hackathon",
         "Team Leadership",
@@ -5140,7 +5141,7 @@
       "credentialType": "Certificate of Participation",
       "category": "COMPETITIONS",
       "issueDate": "2026",
-      "date": "4–5 October 2026",
+      "date": "4\u20135 October 2026",
       "year": 2026,
       "team": "ALGNITE",
       "teamMembers": [
@@ -5156,7 +5157,7 @@
         }
       ],
       "description": "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
-      "fullDescription": "Certificate of Participation awarded to Shinibali Kumar for actively participating in WCC Launchpad 30, a 36-Hour National Online Hackathon organized by We Code Coders with title sponsor inkloom on 4–5 October 2026. Recognised as a participant in team ALGNITE as a team member on Product / Research and Presentation / Demo tracks. Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validating system behaviour across different execution scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.",
+      "fullDescription": "Certificate of Participation awarded to Shinibali Kumar for actively participating in WCC Launchpad 30, a 36-Hour National Online Hackathon organized by We Code Coders with title sponsor inkloom on 4\u20135 October 2026. Recognised as a participant in team ALGNITE as a team member on Product / Research and Presentation / Demo tracks. Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validating system behaviour across different execution scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.",
       "contribution": "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
       "skills": [
         "36-Hour Hackathon",
@@ -5228,7 +5229,7 @@
       "issuer": "Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar",
       "category": "ACADEMIC RECORD",
       "year": 2025,
-      "session": "2025–26",
+      "session": "2025\u201326",
       "credentialType": "Grade Report",
       "issueDate": "2025",
       "description": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
@@ -5264,7 +5265,7 @@
       ],
       "tags": [
         "20 Subjects",
-        "2025–26"
+        "2025\u201326"
       ],
       "verificationStatus": "LINK AVAILABLE",
       "featured": false,

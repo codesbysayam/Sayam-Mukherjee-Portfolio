@@ -1,0 +1,183 @@
+{
+  "name": "Sayam Mukherjee",
+  "headline": "Computer Science Engineering Student | AI & Machine Learning | Software Development",
+  "contact": {
+    "location": "West Bengal, India",
+    "email": "sayammukherjee1506@gmail.com",
+    "phone": "+91-6290921813",
+    "linkedin": {
+      "display": "linkedin.com/in/sayammukherjee-portfolio",
+      "url": "https://www.linkedin.com/in/sayammukherjee-portfolio/"
+    },
+    "github": {
+      "display": "github.com/codesbysayam",
+      "url": "https://github.com/codesbysayam"
+    },
+    "portfolio": {
+      "display": "sayammukherjee.in",
+      "url": "https://sayammukherjee.in"
+    }
+  },
+  "summary": "Computer Science Engineering undergraduate at Kalinga Institute of Industrial Technology (KIIT) specializing in Artificial Intelligence (AI) and Machine Learning with a 9.06/10 first-year CGPA. Shipped 6 projects in React, Next.js, Node.js, and Python, including a multi-agent AI platform. Progressed from national finalist (Toycathon 2021, Technex'26) to team leader at DataForge 2026, Ignithon 2.0, and WCC Launchpad 30, with a working command of data structures and algorithms.",
+  "highlights": [
+    { "label": "Degree & Focus", "value": "B.Tech CSE (AI & ML)" },
+    { "label": "Institution", "value": "KIIT, Bhubaneswar" },
+    { "label": "First-Year CGPA", "value": "9.06 / 10" },
+    { "label": "Period", "value": "2025 – 2029" },
+    { "label": "Shipped Projects", "value": "6 Verified Apps" },
+    { "label": "Hackathon Leadership", "value": "Team Leader (ALGNITE & DataForge)" }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Technology (B.Tech.) in Computer Science Engineering (AI & Machine Learning)",
+      "institution": "Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar, India",
+      "period": "2025 – 2029",
+      "metricLabel": "First-Year CGPA",
+      "metricValue": "9.06/10",
+      "status": "Currently Pursuing"
+    },
+    {
+      "degree": "Senior Secondary (Class XII), Central Board of Secondary Education (CBSE)",
+      "institution": "Aditya Birla Vani Bharati",
+      "period": "2023 – 2025",
+      "metricLabel": "Percentage",
+      "metricValue": "86.2%",
+      "status": "Completed"
+    },
+    {
+      "degree": "Secondary (Class X), Central Board of Secondary Education (CBSE)",
+      "institution": "Aditya Birla Vani Bharati",
+      "period": "2023",
+      "metricLabel": "Percentage",
+      "metricValue": "92.6%",
+      "status": "Completed"
+    }
+  ],
+  "experience": [
+    {
+      "role": "Independent Software Projects",
+      "organization": "Self-Directed / Vercel & Contests",
+      "period": "2025 – Present",
+      "bullets": [
+        "Engineered and deployed 6 projects on Vercel with React, Next.js, Node.js, Tailwind CSS, and Gemini API integrations.",
+        "Collaborated with teammates across 5 hackathons and contests in 2026 to deliver working prototypes."
+      ],
+      "technologies": ["React", "Next.js", "Node.js", "Tailwind CSS", "Gemini API", "Vercel", "Git"]
+    }
+  ],
+  "projects": [
+    {
+      "id": "axiom",
+      "title": "AXIOM – WCC Launchpad 30",
+      "subtitle": "We Code Coders and inkloom (36-Hour Hackathon)",
+      "period": "Sep – Oct 2026",
+      "role": "Team Leader (ALGNITE)",
+      "description": "Led the ALGNITE team as team leader and designed the primary architecture of AXIOM during a 36-hour hackathon. Delivered frontend, backend, and AI / ML components within the 36-hour limit.",
+      "technologies": ["Agent Execution Logic", "Multi-Agent AI", "React", "Python", "Workflow Validation"],
+      "demoUrl": "https://axiomwcc.vercel.app"
+    },
+    {
+      "id": "memory-in-motion",
+      "title": "Memory in Motion – DataForge 2026",
+      "subtitle": "Indian Institute of Technology (IIT) Kharagpur",
+      "period": "Sep 2026",
+      "role": "Team Director / Lead",
+      "description": "Directed the team that created a React 18 learning tool with a 7-stage write/read pipeline inspector, interference heatmaps, and 5 experiments on overwrite collisions, context order, and capacity limits. Modeled fixed-size recurrent state (D = 4 to 32), O(1) memory versus O(T) for key-value (KV) caches.",
+      "technologies": ["React 18", "TypeScript", "Recurrent State", "Attention Heatmaps", "Vercel"],
+      "sourceUrl": "https://github.com/codesbysayam/Memory-in-Motion",
+      "demoUrl": "https://memoryinmotion.vercel.app"
+    },
+    {
+      "id": "edge-yolo-vision",
+      "title": "Edge Computer Vision – YOLOv8 Object Detection",
+      "subtitle": "Autonomous Edge Motion Tracking Pipeline",
+      "period": "Sep 2026",
+      "role": "Lead Engineer",
+      "description": "Implemented an edge vision pipeline pairing lightweight YOLOv8 models with OpenCV frame processing for object detection and motion vectors on local hardware, using Python and PyTorch.",
+      "technologies": ["Python", "PyTorch", "YOLOv8", "OpenCV", "Edge Computing"]
+    },
+    {
+      "id": "mausam",
+      "title": "Mausam – Smart India Hackathon (SIH) 2026",
+      "subtitle": "Weather & Climate Intelligence Dashboard",
+      "period": "Aug 2026",
+      "role": "Full Stack Architect",
+      "description": "Designed a weather and climate dashboard with location-based insights, state-level views, and map exploration.",
+      "technologies": ["React", "Tailwind CSS", "REST APIs", "Climate Analytics"],
+      "sourceUrl": "https://github.com/codesbysayam/mausam"
+    },
+    {
+      "id": "operon",
+      "title": "Operon – Multi-Agent Operations Platform",
+      "subtitle": "Google Developer Groups (GDG) KIIT",
+      "period": "Aug 2026",
+      "role": "Lead AI Architect",
+      "description": "Architected an AI platform automating 4 functions: Support, Finance, Human Resources, and Operations with human-in-the-loop review.",
+      "technologies": ["Multi-Agent AI", "React", "Node.js", "Gemini API", "TypeScript"],
+      "sourceUrl": "https://github.com/codesbysayam/Operon",
+      "demoUrl": "https://operonpro.vercel.app"
+    }
+  ],
+  "skills": {
+    "programmingLanguages": ["Python", "Java", "C", "C++", "JavaScript", "TypeScript"],
+    "webTechnologies": ["HTML", "CSS", "React", "Next.js", "Node.js", "Express.js", "Tailwind CSS", "Vite", "REST APIs"],
+    "databases": ["MongoDB", "SQL"],
+    "aiAndMachineLearning": ["Artificial Intelligence", "Machine Learning", "Deep Learning", "YOLOv8", "OpenCV", "PyTorch"],
+    "developerTools": ["Git", "GitHub", "GitHub Actions", "Vercel", "Visual Studio Code", "Vitest", "MATLAB", "Figma", "Canva"],
+    "csFundamentals": ["Data Structures and Algorithms", "Object-Oriented Programming"],
+    "softSkills": ["Team Leadership", "Collaboration", "Public Speaking", "Written Communication", "Time Management", "Adaptability"]
+  },
+  "certificationsAndAchievements": [
+    {
+      "id": "wcc-launchpad-30",
+      "title": "WCC Launchpad 30",
+      "issuer": "We Code Coders and inkloom",
+      "role": "Team Leader (ALGNITE)",
+      "date": "Oct 2026",
+      "badge": "LEADER",
+      "description": "Team leader of team ALGNITE in a 36-hour national hackathon, delivering the primary architecture and full-stack execution of AXIOM.",
+      "credentialUrl": "https://wecodecoders.in/verify/L30-PTQXNX"
+    },
+    {
+      "id": "dataforge-2026",
+      "title": "DataForge 2026",
+      "issuer": "Indian Institute of Technology (IIT) Kharagpur",
+      "role": "Pathway Track Lead",
+      "date": "Sep 2026",
+      "badge": "PATHWAY TRACK",
+      "description": "Led the Memory in Motion technical submission to the Pathway Track exploring recurrent state mechanics.",
+      "credentialUrl": "https://github.com/codesbysayam/Memory-in-Motion"
+    },
+    {
+      "id": "technex-2026",
+      "title": "Technex'26 Multi-Event Finalist",
+      "issuer": "IIT (BHU) Varanasi",
+      "role": "National Finalist",
+      "date": "Mar 2026",
+      "badge": "5/6 FINALS",
+      "description": "Advanced to the finals across 5 out of 6 competitive technical challenges in Technex annual tech festival."
+    },
+    {
+      "id": "toycathon-2021",
+      "title": "Toycathon 2021 National Finalist",
+      "issuer": "Ministry of Education & AICTE, Govt. of India",
+      "role": "Top 15 Finalist",
+      "date": "Jan 2021",
+      "badge": "NATIONAL TOP 15",
+      "description": "Placed among the top 15 national finalists in India's flagship innovation competition for hardware/software prototyping."
+    },
+    {
+      "id": "matlab-ieee-2026",
+      "title": "MATLAB Technical Workshop",
+      "issuer": "IEEE KIIT Student Branch",
+      "role": "Completed",
+      "date": "Sep 2026",
+      "badge": "IEEE CERTIFIED",
+      "description": "Completed technical computing and simulation workshop covering matrix computing, numerical methods, and algorithm design.",
+      "credentialUrl": "https://increased-purple-oeuuxfwu.edgeone.dev/"
+    }
+  ],
+  "hobbies": ["Table Tennis", "Photography", "Content Creation", "Stock Market"],
+  "authoritativeUrl": "https://exciting-brown-6y14ojmv.edgeone.dev/",
+  "lastVerified": "2026-10-24"
+}

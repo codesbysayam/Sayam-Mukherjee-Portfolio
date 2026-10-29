@@ -681,7 +681,7 @@ export const portfolioKnowledge: PortfolioKnowledge = {
     linkedin: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
     leetcode: "https://leetcode.com/u/codesbysayam/",
     codolio: "https://codolio.com/profile/codesbysayam",
-    resume: "https://homely-scarlet-j1yvfmgp.edgeone.dev/Resume-Professional.pdf",
+    resume: "https://exciting-brown-6y14ojmv.edgeone.dev/",
     instagram: "https://www.instagram.com/_.wrick._/",
     email: "wrickbusiness@gmail.com",
     academicEmail: "24051052@kiit.ac.in",

@@ -221,13 +221,13 @@ export default function CommandMenu({
     {
       id: "action-resume",
       type: "command",
-      title: "Download Technical Resume (PDF)",
-      subtitle: "EdgeOne verified document link",
+      title: "View Verified Resume (PDF)",
+      subtitle: "EdgeOne authoritative document",
       badge: "COMMAND",
       category: "Utility",
       icon: FileText,
       action: () => { onOpenResume(); onTriggerConfetti(); onClose(); },
-      searchTarget: "resume cv download curriculum vitae pdf"
+      searchTarget: "resume cv view download curriculum vitae pdf exciting-brown"
     },
     {
       id: "action-vault",

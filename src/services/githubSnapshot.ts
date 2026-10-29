@@ -222,7 +222,7 @@ export async function getGitHubSnapshot(): Promise<GitHubSnapshot> {
       cache: "no-store"
     });
 
-    if (response.ok) {
+    if (response.ok && response.headers.get("content-type")?.includes("application/json")) {
       const data = (await response.json()) as GitHubSnapshot;
       memoryCache = data;
       return data;

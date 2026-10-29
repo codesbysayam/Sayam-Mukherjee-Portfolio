@@ -25,8 +25,7 @@ export const SOCIAL_LINKS = {
   fiverr: "https://www.fiverr.com/wrickmukherjee/buying?source=avatar_menu_profile",
 } as const;
 
-export const RESUME_URL =
-  "https://homely-scarlet-j1yvfmgp.edgeone.dev/Resume-Professional.pdf";
+export { RESUME_URL } from "../config/resume.ts";
 
 export const CONTACT_INFO = {
   name: "Sayam Mukherjee",

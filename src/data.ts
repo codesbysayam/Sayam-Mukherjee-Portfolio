@@ -1,4 +1,4 @@
-import { RESUME_URL } from './config/links';
+import { RESUME_URL } from './config/resume.ts';
 
 export { RESUME_URL };
 
@@ -147,23 +147,24 @@ export const SAYAM_DATA = {
   },
   experience: [
     {
-      role: 'Intership at Tata Consultancy Services (TCS)',
-      company: 'Tata Consultancy Services (TCS)',
-      period: 'Duration: 2 Months',
+      role: 'Independent Software Projects',
+      company: 'Self-Directed / Vercel & Contests',
+      period: '2025 – Present',
       description: [
-        'Gained exposure to industry-level problem-solving approaches',
-        'Developed understanding of professional workflows and team collaboration'
+        'Engineered and deployed 6 projects on Vercel with React, Next.js, Node.js, Tailwind CSS, and Gemini API integrations.',
+        'Collaborated with teammates across 5 hackathons and contests in 2026 to deliver working prototypes.'
       ],
-      skills: ['Industry Experience', 'Workflow Management', 'Problem Solving', 'Team Collaboration']
+      skills: ['React', 'Next.js', 'Node.js', 'Tailwind CSS', 'Gemini API', 'Hackathons']
     }
   ] as ExperienceItem[],
   certifications: [] as Certification[],
   achievements: [
-    'B.Tech CSE (AI & ML) – Kalinga Institute of Industrial Technology, Bhubaneswar',
-    '1st Position – Inter-school Table Tennis (3x)',
-    'Finalist – Toycathon (Government of India)',
-    'Aagaz 2.0 – Physics Wallah Workshop',
-    'TED Talk Attendance – Benedetto Vigna (CEO of Ferrari)'
+    'B.Tech CSE (AI & ML) – Kalinga Institute of Industrial Technology, Bhubaneswar | First-Year CGPA: 9.06/10',
+    'WCC Launchpad 30 – Team Leader of ALGNITE in a 36-hour hackathon (Oct 2026)',
+    'DataForge 2026, IIT Kharagpur – Led Memory in Motion submission to the Pathway Track (Sep 2026)',
+    'Technex\'26, IIT (BHU) Varanasi – Advanced to the finals in 5 of 6 competitions (Mar 2026)',
+    'Toycathon 2021 – Placed among top 15 national finalists (Jan 2021)',
+    'MATLAB Workshop – Institute of Electrical and Electronics Engineers (IEEE) KIIT (Sep 2026)'
   ],
   blogs: [] as Blog[],
   services: []

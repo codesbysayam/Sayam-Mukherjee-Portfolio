@@ -25,7 +25,7 @@ export async function loadGitHubSnapshot(force = false): Promise<GitHubStats> {
         cache: force ? "no-store" : "default",
       });
 
-      if (response.ok) {
+      if (response.ok && response.headers.get("content-type")?.includes("application/json")) {
         const payload: unknown = await response.json();
         if (payload && typeof payload === "object") {
           const raw = ((payload as Record<string, unknown>).data || payload) as Record<string, unknown>;

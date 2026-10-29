@@ -15,7 +15,16 @@ dotenv.config();
 
 const app = express();
 export default app;
-const PORT = 3000;
+
+function parsePort(): number {
+  const portArgIndex = process.argv.indexOf("--port");
+  if (portArgIndex !== -1 && process.argv[portArgIndex + 1]) {
+    const val = parseInt(process.argv[portArgIndex + 1], 10);
+    if (!isNaN(val) && val > 0) return val;
+  }
+  return Number(process.env.PORT) || 3000;
+}
+const PORT = parsePort();
 
 app.use(express.json({ limit: "25mb" }));
 
@@ -1494,6 +1503,14 @@ async function run() {
   setInterval(() => {
     getDynamicGitHubSnapshot(true).catch((e) => console.warn("Periodic GitHub sync error:", e));
   }, CACHE_TTL_MS);
+
+  httpServer.on("error", (err: any) => {
+    if (err.code === "EADDRINUSE") {
+      console.warn(`[Server] Port ${PORT} already bound or transitioning. Dev server process remains resilient.`);
+    } else {
+      console.error("[Server] HTTP server encountered an error:", err);
+    }
+  });
 
   httpServer.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);

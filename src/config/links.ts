@@ -3,11 +3,12 @@
  * All URLs and social handles must be referenced from this registry to prevent dead links.
  */
 
-export const RESUME_URL =
-  "https://homely-scarlet-j1yvfmgp.edgeone.dev/Resume-Professional.pdf";
+import { RESUME_URL, RESUME_CONFIG } from "./resume";
+
+export { RESUME_URL, RESUME_CONFIG };
 
 export const LINKS = {
-  // Resume / CV Document
+  // Resume / CV Document (Authoritative destination)
   resume: RESUME_URL,
 
   // Primary Developer Profiles

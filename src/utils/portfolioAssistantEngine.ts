@@ -595,14 +595,23 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **LeetCode Practice:** 4 fundamental problems solved deliberately`;
   }
 
-  // 15. CONTACT & SOCIAL LINKS / RESUME
+  // 15. DEDICATED RESUME & CV INTENT
+  if (q.includes("resume") || q.includes("cv") || q.includes("curriculum vitae")) {
+    return `**Sayam Mukherjee's Verified Resume:**\n\n` +
+      `• **Headline:** Computer Science Engineering Student | AI & Machine Learning | Software Development\n` +
+      `• **Degree & CGPA:** B.Tech in CSE (AI & ML) at KIIT University, Bhubaneswar (2025–2029) | First-Year CGPA: 9.06/10\n` +
+      `• **Featured Projects:** AXIOM (WCC Launchpad 30, Team Leader), Memory in Motion (DataForge 2026, IIT Kharagpur), Edge Computer Vision (YOLOv8), Mausam (SIH 2026), Operon (Multi-Agent Operations Platform, GDG KIIT)\n` +
+      `• **Hard Skills:** Python, Java, C, C++, JavaScript, TypeScript, React, Next.js, Node.js, Express.js, Tailwind CSS, Vite, PyTorch, OpenCV, YOLOv8, MongoDB, SQL\n` +
+      `• **Certifications:** WCC Launchpad 30 (Team Leader), DataForge 2026, Technex'26 (IIT BHU), Toycathon 2021, MATLAB Workshop (IEEE KIIT)\n\n` +
+      `📄 **View Complete Document:** [Open Verified Resume PDF](https://exciting-brown-6y14ojmv.edgeone.dev/)`;
+  }
+
+  // 16. CONTACT & SOCIAL LINKS
   if (
     q.includes("contact") ||
     q.includes("email") ||
     q.includes("reach") ||
     q.includes("linkedin") ||
-    q.includes("resume") ||
-    q.includes("cv") ||
     q.includes("social") ||
     q.includes("codolio")
   ) {
@@ -613,7 +622,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **GitHub:** [github.com/codesbysayam](https://github.com/codesbysayam)\n` +
       `• **LeetCode:** [leetcode.com/u/codesbysayam](https://leetcode.com/u/codesbysayam/)\n` +
       `• **Codolio:** [codolio.com/profile/codesbysayam](https://codolio.com/profile/codesbysayam)\n` +
-      `• **Resume:** [View Professional Resume PDF](https://homely-scarlet-j1yvfmgp.edgeone.dev/Resume-Professional.pdf)\n` +
+      `• **Resume:** [View Professional Resume PDF](https://exciting-brown-6y14ojmv.edgeone.dev/)\n` +
       `• **YouTube:** [Daily Decipher](https://youtube.com/@dailydecipher) · [Technical AZ](https://youtube.com/@technicalaz) · [Obsidian Optics](https://www.youtube.com/@ObsidianOptics_in)\n` +
       `• **Location:** Bhubaneswar, Odisha, India (Hometown: Hooghly, West Bengal)`;
   }
