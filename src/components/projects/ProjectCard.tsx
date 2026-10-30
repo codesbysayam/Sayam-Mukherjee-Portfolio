@@ -13,6 +13,8 @@ interface ProjectCardProps {
   repo: GitHubRepo | null;
   onSelectCaseStudy: (project: ProjectItem) => void;
   isFeaturedCandidate?: boolean;
+  onSelectTech?: (tech: string) => void;
+  selectedTech?: string;
 }
 
 const LANGUAGE_COLORS: Record<string, string> = {
@@ -28,7 +30,9 @@ function ProjectCardComponent({
   project,
   repo,
   onSelectCaseStudy,
-  isFeaturedCandidate = false
+  isFeaturedCandidate = false,
+  onSelectTech,
+  selectedTech = "ALL"
 }: ProjectCardProps) {
   const language = repo?.language || project.techStack[0];
   const langColor = LANGUAGE_COLORS[language] || "#38bdf8";
@@ -199,16 +203,31 @@ function ProjectCardComponent({
 
         {/* Card Lower Section: Tech Stack, Live Telemetry & Actions */}
         <div className="pt-4 mt-4 border-t border-zinc-200/80 dark:border-white/[0.06] space-y-3.5">
-          {/* Actual tech stack tags (clean pills, max 4-6) */}
+          {/* Actual tech stack tags (interactive pills, max 5 shown) */}
           <div className="flex flex-wrap gap-1.5">
-            {project.techStack.slice(0, 5).map((tech, idx) => (
-              <span
-                key={idx}
-                className="text-xs font-mono px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-white/[0.04] text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-white/[0.06]"
-              >
-                {tech}
-              </span>
-            ))}
+            {project.techStack.slice(0, 5).map((tech, idx) => {
+              const isActive = selectedTech !== "ALL" && selectedTech?.toLowerCase() === tech.toLowerCase();
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    if (onSelectTech) {
+                      onSelectTech(isActive ? "ALL" : tech);
+                    }
+                  }}
+                  title={onSelectTech ? `Filter projects by ${tech}` : tech}
+                  className={`text-xs font-mono px-2 py-0.5 rounded-md transition-colors cursor-pointer ${
+                    isActive
+                      ? "bg-purple-600 text-white font-medium border border-purple-500 shadow-xs"
+                      : "bg-zinc-100 hover:bg-zinc-200/80 dark:bg-white/[0.04] dark:hover:bg-white/[0.08] text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-white/[0.06]"
+                  }`}
+                >
+                  {tech}
+                </button>
+              );
+            })}
             {project.techStack.length > 5 && (
               <span className="text-xs font-mono px-1.5 py-0.5 rounded-md bg-zinc-100 dark:bg-white/[0.04] text-zinc-500 border border-zinc-200 dark:border-white/[0.06]">
                 +{project.techStack.length - 5}

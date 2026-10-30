@@ -15,6 +15,8 @@ interface FeaturedProjectProps {
   onSelectCaseStudy: (project: ProjectItem) => void;
   onToggleCandidate?: () => void;
   candidateTitle?: string;
+  onSelectTech?: (tech: string) => void;
+  selectedTech?: string;
 }
 
 const LANGUAGE_COLORS: Record<string, string> = {
@@ -31,7 +33,9 @@ function FeaturedProjectComponent({
   repo,
   onSelectCaseStudy,
   onToggleCandidate,
-  candidateTitle
+  candidateTitle,
+  onSelectTech,
+  selectedTech = "ALL"
 }: FeaturedProjectProps) {
   const language = repo?.language || project.techStack[0];
   const langColor = LANGUAGE_COLORS[language] || "#38bdf8";
@@ -143,20 +147,34 @@ function FeaturedProjectComponent({
             <ProjectMetricsSummary metrics={project.metrics} projectName={project.title} />
           )}
 
-          {/* Technology Badges */}
+          {/* Technology Badges (interactive) */}
           <div className="space-y-2">
             <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold block">
               Technologies Used
             </span>
             <div className="flex flex-wrap gap-1.5">
-              {project.techStack.map((tech, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs px-2.5 py-1 rounded-lg bg-zinc-100 dark:bg-[#151824] text-zinc-800 dark:text-zinc-200 border border-zinc-300/80 dark:border-white/[0.08] font-mono shadow-sm"
-                >
-                  {tech}
-                </span>
-              ))}
+              {project.techStack.map((tech, idx) => {
+                const isActive = selectedTech !== "ALL" && selectedTech?.toLowerCase() === tech.toLowerCase();
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => {
+                      if (onSelectTech) {
+                        onSelectTech(isActive ? "ALL" : tech);
+                      }
+                    }}
+                    title={onSelectTech ? `Filter projects by ${tech}` : tech}
+                    className={`text-xs px-2.5 py-1 rounded-lg font-mono shadow-sm transition-all cursor-pointer ${
+                      isActive
+                        ? "bg-purple-600 text-white font-medium border border-purple-500 shadow-purple-500/20"
+                        : "bg-zinc-100 hover:bg-zinc-200/80 dark:bg-[#151824] dark:hover:bg-[#1d2133] text-zinc-800 dark:text-zinc-200 border border-zinc-300/80 dark:border-white/[0.08]"
+                    }`}
+                  >
+                    {tech}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

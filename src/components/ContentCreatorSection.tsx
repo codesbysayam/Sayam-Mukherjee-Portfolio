@@ -4,10 +4,11 @@ import { LINKS } from "../config/links";
 import { youtubeChannels } from "../data/channels";
 import { YouTubeChannelCard } from "./YouTubeChannelCard";
 import { YouTubeChannelAnalyticsSection } from "./YouTubeAnalyticsCard";
+import { getCreatorSummary } from "../utils/contentCreatorStats";
 import { 
-  Youtube, Eye, Play, Compass, ArrowRight, ArrowLeft, ChevronLeft, ChevronRight 
+  Youtube, Eye, Play, Compass, ArrowRight, ArrowLeft, ChevronLeft, ChevronRight,
+  ShieldCheck, Calendar, Clock, Users, Sparkles, Activity
 } from "lucide-react";
-import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip } from "recharts";
 
 interface ContentCreatorSectionProps {
   onBack?: () => void;
@@ -16,27 +17,14 @@ interface ContentCreatorSectionProps {
 function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
   const [decipherNotice, setDecipherNotice] = useState<string | null>(null);
   const channels = youtubeChannels;
+  const creatorSummary = getCreatorSummary(channels);
 
-  // Overall creator stats
-  const creatorStats = {
-    subscribers: "12K+",
-    views: "150K+",
-    videosCount: "50+",
-    frequency: "1–2 Weekly",
-    categories: [
-      "Technology", "Artificial Intelligence", "Computer Science", 
-      "Visual Media", "Entertainment", "Visual Psychology"
-    ]
-  };
-
-  // Channel growth analytics coordinates
-  const analyticsData = [
-    { month: "Jan", subscribers: 240, views: 18000 },
-    { month: "Feb", subscribers: 380, views: 29000 },
-    { month: "Mar", subscribers: 550, views: 48000 },
-    { month: "Apr", subscribers: 720, views: 78000 },
-    { month: "May", subscribers: 910, views: 110000 },
-    { month: "Jun", subscribers: 1100, views: 150000 }
+  // Verified categories representing actual channel areas
+  const documentedCategories = [
+    "Technology & Tutorials",
+    "Computer Science",
+    "Visual Media & Optics",
+    "Algorithmic Explanations"
   ];
 
   // Carousel scroll handling
@@ -74,7 +62,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
       {/* Header */}
       <div className="space-y-2">
         <span className="text-xs text-red-500 font-mono uppercase tracking-widest block font-bold">
-          MEDIA PLATFORM & VIDEO SHOWCASE
+          MEDIA PLATFORM &amp; VIDEO SHOWCASE
         </span>
         <h2 
           style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)" }} 
@@ -83,11 +71,11 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
           YouTube Video Showcase
         </h2>
         <p className="text-sm text-zinc-400 max-w-2xl leading-relaxed">
-          Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, algorithm breakdowns, and entertainment formats across dedicated YouTube channels.
+          Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, algorithm breakdowns, and creative media formats across dedicated YouTube channels.
         </p>
       </div>
 
-      {/* Brand card & Key Metrics */}
+      {/* Brand card & Key Verified Summary */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
         
         {/* Content Brand details card */}
@@ -99,16 +87,16 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-white font-display tracking-tight leading-none">CodesBySayam Media</h3>
-                <span className="text-[10px] text-zinc-500 font-mono tracking-wider mt-1 block">TECHNICAL EDUCATION & ENTERTAINMENT ECOSYSTEM</span>
+                <span className="text-[10px] text-zinc-500 font-mono tracking-wider mt-1 block">TECHNICAL EDUCATION &amp; CREATIVE MEDIA PRODUCTION</span>
               </div>
             </div>
 
             <p className="text-xs text-zinc-300 leading-relaxed max-w-2xl">
-              I operate channels as educational and creative hubs to simplify dense software topics, explain algorithms and computer vision concepts, and build high-energy video content for diverse audiences.
+              I operate and maintain channels as educational and creative hubs to explain software concepts, document algorithms, and build visual narrative content for diverse audiences. Historical channel audiences are catalogued transparently without misleading combined aggregate figures.
             </p>
 
             <div className="flex flex-wrap gap-1.5 pt-2">
-              {creatorStats.categories.map((cat, idx) => (
+              {documentedCategories.map((cat, idx) => (
                 <span key={idx} className="text-[10px] bg-zinc-900 text-zinc-400 border border-zinc-800 px-2.5 py-1 rounded-md font-mono">
                   {cat}
                 </span>
@@ -116,24 +104,24 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
             </div>
           </div>
 
-          {/* Core counts grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-zinc-900 pt-6">
-            <div className="space-y-1 text-center sm:text-left">
-              <span className="text-[9px] text-zinc-500 font-mono block">SUBSCRIBERS</span>
-              <span className="text-xl font-bold text-white font-display block">{creatorStats.subscribers}</span>
-            </div>
-            <div className="space-y-1 text-center sm:text-left">
-              <span className="text-[9px] text-zinc-500 font-mono block">COMBINED VIEWS</span>
-              <span className="text-xl font-bold text-white font-display block">{creatorStats.views}</span>
-            </div>
-            <div className="space-y-1 text-center sm:text-left">
-              <span className="text-[9px] text-zinc-500 font-mono block">VIDEOS UPLOADED</span>
-              <span className="text-xl font-bold text-white font-display block">{creatorStats.videosCount}</span>
-            </div>
-            <div className="space-y-1 text-center sm:text-left">
-              <span className="text-[9px] text-zinc-500 font-mono block">UPLOAD FREQUENCY</span>
-              <span className="text-xs font-semibold text-red-400 mt-1 block font-mono uppercase">{creatorStats.frequency}</span>
-            </div>
+          {/* Evidence-based Summary Metrics */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-zinc-900 pt-6">
+            {creatorSummary.map((metric) => (
+              <article
+                key={metric.label}
+                className="min-w-0 rounded-xl border border-zinc-900 bg-zinc-900/30 p-4 transition-colors hover:border-purple-500/40"
+              >
+                <p className="text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+                  {metric.label}
+                </p>
+                <p className="mt-2 break-words text-2xl font-bold text-white font-display">
+                  {metric.value}
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-zinc-500 font-mono">
+                  {metric.detail}
+                </p>
+              </article>
+            ))}
           </div>
         </div>
 
@@ -146,10 +134,10 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
             </div>
 
             <h3 className="text-lg font-bold text-white font-display tracking-tight">
-              Exploring Travel & Culture
+              Exploring Travel &amp; Culture
             </h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              An interactive sub-category focusing on travel metrics, geographical culture, knowledge extraction, and dynamic landscape explorations. Translating global adventures into high-signal blog notes.
+              An educational channel focused on travel metrics, geographical culture, knowledge extraction, and dynamic landscape explorations. Scaled organically to an archive of 10,000+ subscribers (2023–2026).
             </p>
 
             {decipherNotice && (
@@ -179,7 +167,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               OFFICIAL CREATOR CHANNELS
             </span>
             <h3 className="font-display text-lg font-bold tracking-tight text-white">
-              Channel Directory & Platforms
+              Channel Directory &amp; Platforms
             </h3>
           </div>
           <span className="font-mono text-xs text-zinc-500">
@@ -187,7 +175,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
           {channels.map((channel) => (
             <YouTubeChannelCard
               key={channel.id}
@@ -198,7 +186,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
         </div>
       </div>
 
-      {/* Verified YouTube Studio Analytics Section */}
+      {/* Verified YouTube Studio Analytics Section (Obsidian Optics 21 Oct 2026 Snapshot) */}
       <YouTubeChannelAnalyticsSection />
 
       {/* YouTube Video Carousel Gallery */}
@@ -291,48 +279,67 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
         </div>
       </div>
 
-      {/* Channel Growth Analytics Area Graphs */}
-      <div className="bg-zinc-950/40 border border-zinc-900 rounded-2xl p-6 md:p-8 space-y-6">
-        <div className="space-y-1">
-          <span className="text-[10px] text-zinc-500 font-mono tracking-widest uppercase block">
-            AUDIENCE INSIGHTS & TELEMETRY
+      {/* Verified YouTube Studio Analytics Overview Strip */}
+      <div className="bg-zinc-950/40 border border-zinc-900 rounded-2xl p-6 md:p-8 space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-zinc-900 pb-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
+              <span className="text-[10px] text-zinc-400 font-mono tracking-widest uppercase">
+                HISTORICAL STUDIO AUDIT
+              </span>
+            </div>
+            <h3 className="text-lg font-bold text-white font-display tracking-tight">
+              Obsidian Optics · Recorded Milestone Telemetry
+            </h3>
+          </div>
+          <span className="text-xs font-mono text-zinc-400 bg-zinc-900 border border-zinc-800 px-3 py-1 rounded-lg">
+            Snapshot Date: 21 October 2026
           </span>
-          <h3 className="text-lg font-bold text-white font-display tracking-tight">
-            Channel Analytics Dashboard
-          </h3>
-          <p className="text-xs text-zinc-400 leading-relaxed">
-            Auditing cumulative view growth against subcounts across creator channels.
-          </p>
         </div>
 
-        <div className="h-64 w-full pt-4">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={analyticsData}>
-              <defs>
-                <linearGradient id="creatorSubscribers" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#ef4444" stopOpacity={0.2}/>
-                  <stop offset="95%" stopColor="#ef4444" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <XAxis dataKey="month" stroke="#52525b" fontSize={10} fontFamily="monospace" />
-              <YAxis stroke="#52525b" fontSize={10} fontFamily="monospace" />
-              <Tooltip 
-                contentStyle={{ backgroundColor: '#09090b', borderColor: '#1f1f23', borderRadius: '12px' }}
-                labelStyle={{ color: '#fff', fontSize: '11px', fontWeight: 'bold' }}
-                itemStyle={{ fontSize: '11px', fontFamily: 'monospace' }}
-              />
-              <Area 
-                type="monotone" 
-                dataKey="subscribers" 
-                stroke="#ef4444" 
-                fillOpacity={1} 
-                fill="url(#creatorSubscribers)" 
-                name="Subscribers Count"
-                isAnimationActive={false}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+        {/* 6 Verified Snapshot Metrics */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
+          <div className="p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-900">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase block">Lifetime Views</span>
+            <span className="text-base sm:text-lg font-bold text-white font-display block mt-1">153,049</span>
+            <span className="text-[10px] font-mono text-zinc-500 mt-0.5 block">Overview Header</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-900">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase block">Subscribers</span>
+            <span className="text-base sm:text-lg font-bold text-white font-display block mt-1">1,305</span>
+            <span className="text-[10px] font-mono text-zinc-500 mt-0.5 block">Realtime Panel</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-900">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase block">Watch Time</span>
+            <span className="text-base sm:text-lg font-bold text-white font-display block mt-1">3.5K hrs</span>
+            <span className="text-[10px] font-mono text-zinc-500 mt-0.5 block">13 Jan – 21 Oct</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-900">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase block">Subs Gained</span>
+            <span className="text-base sm:text-lg font-bold text-emerald-400 font-display block mt-1">+1.1K</span>
+            <span className="text-[10px] font-mono text-zinc-500 mt-0.5 block">Selected Period</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-900">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase block">Views (48h)</span>
+            <span className="text-base sm:text-lg font-bold text-white font-display block mt-1">1,967</span>
+            <span className="text-[10px] font-mono text-zinc-500 mt-0.5 block">Realtime Metric</span>
+          </div>
+
+          <div className="p-3.5 rounded-xl bg-zinc-900/40 border border-zinc-900">
+            <span className="text-[10px] font-mono text-zinc-500 uppercase block">Engaged Views</span>
+            <span className="text-base sm:text-lg font-bold text-cyan-400 font-display block mt-1">1,200</span>
+            <span className="text-[10px] font-mono text-zinc-500 mt-0.5 block">Realtime Panel</span>
+          </div>
         </div>
+
+        <p className="text-xs leading-relaxed text-zinc-500 font-mono pt-2">
+          Note: These figures reflect a recorded YouTube Studio snapshot from 21 October 2026 and may not represent current channel analytics. Historical channel figures are preserved separately.
+        </p>
       </div>
     </div>
   );

@@ -78,8 +78,7 @@ export const SAYAM_DATA = {
     focus: ['C++', 'DSA', 'Computer Vision', 'Full Stack'],
     githubCommits: 'Live GitHub Activity',
     codingStreak: 'Active Routine',
-    projectsCompleted: '5 Verified Projects',
-    happyClients: '10'
+    projectsCompleted: '5 Verified Projects'
   },
   socials: {
     linkedin: 'https://www.linkedin.com/in/sayammukherjee-portfolio/',

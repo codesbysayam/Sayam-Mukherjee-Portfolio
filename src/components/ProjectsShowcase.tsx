@@ -71,16 +71,34 @@ function ProjectsShowcaseComponent() {
   // Helper to match technology accurately across verified projects
   const matchTech = (project: ProjectItem, tech: string): boolean => {
     if (tech === "ALL") return true;
-    const techLower = tech.toLowerCase();
-    if (techLower === "ai/ml" || techLower === "ai / ml") {
+    const techLower = tech.toLowerCase().trim();
+    if (techLower === "ai/ml" || techLower === "ai / ml" || techLower === "ai") {
       return (
         project.id === "operon" ||
         project.id === "yolo" ||
-        project.techStack.some((t) => /ai|ml|yolo|pytorch|vision|agent/i.test(t))
+        project.techStack.some((t) => /ai|ml|yolo|pytorch|vision|agent|ollama|gemini/i.test(t))
       );
     }
+    if (techLower === "c++" || techLower === "c++ / dsa" || techLower === "dsa") {
+      return (
+        project.id === "sayam-solves" ||
+        project.techStack.some((t) => /c\+\+|dsa|algorithm|data structure|leetcode/i.test(t))
+      );
+    }
+    if (techLower === "computer vision" || techLower === "vision") {
+      return (
+        project.id === "yolo" ||
+        project.techStack.some((t) => /vision|yolo|opencv|image/i.test(t))
+      );
+    }
+    if (techLower === "node.js" || techLower === "node") {
+      return project.techStack.some((t) => /node|express/i.test(t));
+    }
+    if (techLower === "tailwind css" || techLower === "tailwind") {
+      return project.techStack.some((t) => /tailwind/i.test(t));
+    }
     return (
-      project.techStack.some((t) => t.toLowerCase().includes(techLower)) ||
+      project.techStack.some((t) => t.toLowerCase().includes(techLower) || techLower.includes(t.toLowerCase())) ||
       (project.tags && project.tags.some((t) => t.toLowerCase().includes(techLower))) ||
       project.subtitle.toLowerCase().includes(techLower)
     );
@@ -113,11 +131,13 @@ function ProjectsShowcaseComponent() {
     const techs = [
       { id: "ALL", label: "All Tech" },
       { id: "React", label: "React" },
-      { id: "Python", label: "Python" },
-      { id: "AI/ML", label: "AI/ML" },
-      { id: "TypeScript", label: "TypeScript" },
       { id: "Node.js", label: "Node.js" },
-      { id: "C++", label: "C++" },
+      { id: "AI / ML", label: "AI / ML" },
+      { id: "TypeScript", label: "TypeScript" },
+      { id: "Python", label: "Python" },
+      { id: "C++ / DSA", label: "C++ / DSA" },
+      { id: "Computer Vision", label: "Computer Vision" },
+      { id: "Tailwind CSS", label: "Tailwind CSS" },
     ];
     return techs.map((t) => ({
       ...t,
@@ -222,6 +242,8 @@ function ProjectsShowcaseComponent() {
             onSelectCaseStudy={setSelectedCaseStudy}
             onToggleCandidate={toggleFeaturedCandidate}
             candidateTitle={alternativeFeaturedCandidate}
+            onSelectTech={setSelectedTech}
+            selectedTech={selectedTech}
           />
         </section>
       )}
@@ -342,6 +364,53 @@ function ProjectsShowcaseComponent() {
           </div>
         </div>
 
+        {/* Active Filter Indicator Bar */}
+        {(selectedTech !== "ALL" || selectedCategory !== "ALL" || searchQuery) && (
+          <div className="flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20 text-xs font-mono">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-purple-700 dark:text-purple-300 font-semibold">Active Filter:</span>
+              {selectedCategory !== "ALL" && (
+                <span className="px-2 py-0.5 rounded-md bg-purple-600 text-white font-medium">
+                  Domain: {selectedCategory}
+                </span>
+              )}
+              {selectedTech !== "ALL" && (
+                <span className="px-2 py-0.5 rounded-md bg-purple-600 text-white font-medium flex items-center gap-1">
+                  <span>Tech: {selectedTech}</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedTech("ALL")}
+                    className="hover:opacity-75 cursor-pointer ml-0.5"
+                    title="Clear tech filter"
+                  >
+                    ×
+                  </button>
+                </span>
+              )}
+              {searchQuery && (
+                <span className="px-2 py-0.5 rounded-md bg-zinc-800 text-white dark:bg-zinc-700">
+                  Query: &ldquo;{searchQuery}&rdquo;
+                </span>
+              )}
+              <span className="text-zinc-500 dark:text-zinc-400">
+                ({filteredProjects.length} {filteredProjects.length === 1 ? "project" : "projects"} found)
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedCategory("ALL");
+                setSelectedTech("ALL");
+                setSearchQuery("");
+              }}
+              className="text-purple-700 dark:text-purple-400 hover:underline shrink-0 font-medium cursor-pointer"
+            >
+              Reset all
+            </button>
+          </div>
+        )}
+
         {/* Explorer Project Cards Grid */}
         {filteredProjects.length === 0 ? (
           <div className="card p-12 text-center space-y-4">
@@ -378,6 +447,8 @@ function ProjectsShowcaseComponent() {
                   project={project}
                   repo={repo}
                   onSelectCaseStudy={setSelectedCaseStudy}
+                  onSelectTech={(tech) => setSelectedTech(tech)}
+                  selectedTech={selectedTech}
                   isFeaturedCandidate={isLead}
                 />
               );
