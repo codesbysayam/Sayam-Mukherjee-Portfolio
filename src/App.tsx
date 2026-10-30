@@ -755,17 +755,16 @@ function AppContent() {
                   onClick={() => {
                     setIsResumeModalOpen(true);
                   }}
-                  className={`hidden sm:inline-flex items-center gap-2 min-h-[40px] px-3.5 py-1.5 border text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0 group relative overflow-hidden ${
+                  className={`hidden sm:inline-flex items-center gap-1.5 min-h-[38px] px-3.5 py-1.5 border text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0 group ${
                     theme === "dark"
-                      ? "bg-zinc-900/90 hover:bg-zinc-850 border-zinc-750 hover:border-purple-500/40 text-zinc-100 shadow-[0_2px_10px_rgba(0,0,0,0.3)] hover:shadow-[0_2px_16px_rgba(168,85,247,0.18)]"
-                      : "bg-white hover:bg-zinc-50 border-zinc-250 hover:border-purple-400/50 text-zinc-850 shadow-xs hover:shadow-sm"
+                      ? "bg-zinc-900/90 hover:bg-zinc-800 border-zinc-800 hover:border-purple-500/50 text-zinc-200 hover:text-white shadow-xs"
+                      : "bg-white hover:bg-zinc-50 border-zinc-250 hover:border-purple-400 text-zinc-800 shadow-xs"
                   }`}
                   title="View Official Interactive Resume (PDF Source)"
                   aria-label="Open official verified resume viewer"
                 >
-                  <ResumeGlyph className="w-4 h-4 shrink-0 transition-transform duration-200 group-hover:scale-105" />
+                  <ResumeGlyph className="w-3.5 h-3.5 shrink-0 text-purple-400 transition-transform duration-200 group-hover:scale-105" />
                   <span className="tracking-wide">Resume</span>
-                  <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" title="Authoritative Source Verified" />
                 </button>
 
                 {/* Mobile / Tablet Menu Toggle */}
@@ -849,14 +848,13 @@ function AppContent() {
                         }}
                         className={`flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
                           theme === "dark"
-                            ? "bg-zinc-900/90 border-zinc-750 text-zinc-200 hover:bg-zinc-800 hover:text-white"
+                            ? "bg-zinc-900/90 border-zinc-800 text-zinc-200 hover:bg-zinc-800 hover:text-white hover:border-purple-500/40"
                             : "bg-zinc-50 border-zinc-200 text-zinc-800 hover:bg-zinc-100"
                         }`}
                         aria-label="Open official verified resume viewer"
                       >
-                        <ResumeGlyph className="w-4 h-4 shrink-0" />
+                        <ResumeGlyph className="w-3.5 h-3.5 shrink-0 text-purple-400" />
                         <span>Resume</span>
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
                       </button>
                       <button
                         onClick={() => {

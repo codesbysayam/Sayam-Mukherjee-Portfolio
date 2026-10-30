@@ -315,7 +315,7 @@ export const ExpandableFAQ: React.FC = () => {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   onClick={() => toggleItem(item.id)}
-                  className="w-full text-left p-4 sm:p-5 flex items-start sm:items-center justify-between gap-3.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-2xl group transition-colors"
+                  className="w-full text-left min-h-[52px] p-4 sm:p-5 flex items-start sm:items-center justify-between gap-3.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-2xl group transition-colors"
                 >
                   <div className="flex items-start sm:items-center gap-3 min-w-0">
                     {/* Category Icon Badge */}

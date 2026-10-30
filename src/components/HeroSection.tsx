@@ -138,8 +138,8 @@ function HeroSectionComponent({ onViewWork, onOpenResume }: HeroSectionProps) {
               {siteContent.hero.description}
             </p>
 
-            {/* Two Actions Only: Primary & Secondary */}
-            <div className="flex flex-wrap items-center gap-3.5 pt-6 sm:pt-7">
+            {/* Hero Actions Row: Primary, Secondary, and Resume CTA */}
+            <div className="flex flex-wrap items-center gap-3 pt-6 sm:pt-7">
               <button
                 type="button"
                 onClick={onViewWork}
@@ -157,10 +157,6 @@ function HeroSectionComponent({ onViewWork, onOpenResume }: HeroSectionProps) {
                 <Github className="w-4 h-4" />
                 <span>{siteContent.hero.secondaryCta}</span>
               </a>
-            </div>
-
-            {/* Resume Spotlight Entry Point */}
-            <div className="pt-4 sm:pt-5 max-w-md w-full">
               <ResumeSpotlight onOpenViewer={onOpenResume} />
             </div>
           </div>
