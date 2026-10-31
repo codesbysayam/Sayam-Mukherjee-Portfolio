@@ -25,6 +25,56 @@
   "totalForks": 0,
   "repositories": [
     {
+      "id": 1355576736,
+      "name": "Sayam-Mukherjee-Portfolio",
+      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "fullName": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "homepage": "www.sayammukherjee.in",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "stars": 1,
+      "forks_count": 0,
+      "forks": 0,
+      "watchers_count": 1,
+      "watchers": 1,
+      "fork": false,
+      "isFork": false,
+      "archived": false,
+      "isArchived": false,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-03T06:02:37Z",
+      "createdAt": "2026-09-03T06:02:37Z",
+      "updated_at": "2026-10-31T12:04:40Z",
+      "updatedAt": "2026-10-31T12:04:40Z",
+      "pushed_at": "2026-10-31T12:04:36Z",
+      "pushedAt": "2026-10-31T12:04:36Z",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-model",
+        "api",
+        "backend-api",
+        "frontend",
+        "full-stack",
+        "gemini-api",
+        "generative-ai",
+        "javascript",
+        "machine-learning",
+        "machinelearning-python",
+        "portfolio",
+        "portfolio-project",
+        "portfolio-website",
+        "react-native",
+        "reactjs",
+        "tailwindcss",
+        "vite"
+      ]
+    },
+    {
       "id": 1368247830,
       "name": "codesbysayam",
       "full_name": "codesbysayam/codesbysayam",
@@ -71,56 +121,6 @@
         "tailwindcss",
         "typescript",
         "web-development"
-      ]
-    },
-    {
-      "id": 1355576736,
-      "name": "Sayam-Mukherjee-Portfolio",
-      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "fullName": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      "homepage": "www.sayammukherjee.in",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
-      "fork": false,
-      "isFork": false,
-      "archived": false,
-      "isArchived": false,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-03T06:02:37Z",
-      "createdAt": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-10-31T05:10:34Z",
-      "updatedAt": "2026-10-31T05:10:34Z",
-      "pushed_at": "2026-10-31T05:10:31Z",
-      "pushedAt": "2026-10-31T05:10:31Z",
-      "topics": [
-        "ai",
-        "ai-agent",
-        "ai-model",
-        "api",
-        "backend-api",
-        "frontend",
-        "full-stack",
-        "gemini-api",
-        "generative-ai",
-        "javascript",
-        "machine-learning",
-        "machinelearning-python",
-        "portfolio",
-        "portfolio-project",
-        "portfolio-website",
-        "react-native",
-        "reactjs",
-        "tailwindcss",
-        "vite"
       ]
     },
     {
@@ -1283,7 +1283,6 @@
     }
   ],
   "languages": {
-    "codesbysayam/codesbysayam": {},
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
       "TypeScript": 1638218,
       "CSS": 72251,
@@ -1293,6 +1292,7 @@
       "Jupyter Notebook": 5438,
       "HTML": 3030
     },
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/Memory-in-Motion": {
       "TypeScript": 1707304,
       "CSS": 29731,
@@ -1356,7 +1356,7 @@
     "PLpgSQL": 3057,
     "C++": 2037
   },
-  "latestPush": "2026-10-31T09:34:58Z",
+  "latestPush": "2026-10-31T12:04:36Z",
   "contributionCalendar": {
     "totalContributions": 236,
     "weeks": [
@@ -3404,7 +3404,7 @@
       }
     ]
   },
-  "fetchedAt": "2026-10-31T12:04:35.857Z",
-  "syncedAt": "2026-10-31T12:04:35.857Z",
+  "fetchedAt": "2026-10-31T17:36:33.944Z",
+  "syncedAt": "2026-10-31T17:36:33.944Z",
   "status": "ok"
 }
