@@ -25,56 +25,6 @@
   "totalForks": 0,
   "repositories": [
     {
-      "id": 1355576736,
-      "name": "Sayam-Mukherjee-Portfolio",
-      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "fullName": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
-      "homepage": "www.sayammukherjee.in",
-      "language": "TypeScript",
-      "stargazers_count": 1,
-      "stars": 1,
-      "forks_count": 0,
-      "forks": 0,
-      "watchers_count": 1,
-      "watchers": 1,
-      "fork": false,
-      "isFork": false,
-      "archived": false,
-      "isArchived": false,
-      "open_issues_count": 0,
-      "default_branch": "main",
-      "created_at": "2026-09-03T06:02:37Z",
-      "createdAt": "2026-09-03T06:02:37Z",
-      "updated_at": "2026-11-01T00:54:42Z",
-      "updatedAt": "2026-11-01T00:54:42Z",
-      "pushed_at": "2026-11-01T00:54:39Z",
-      "pushedAt": "2026-11-01T00:54:39Z",
-      "topics": [
-        "ai",
-        "ai-agent",
-        "ai-model",
-        "api",
-        "backend-api",
-        "frontend",
-        "full-stack",
-        "gemini-api",
-        "generative-ai",
-        "javascript",
-        "machine-learning",
-        "machinelearning-python",
-        "portfolio",
-        "portfolio-project",
-        "portfolio-website",
-        "react-native",
-        "reactjs",
-        "tailwindcss",
-        "vite"
-      ]
-    },
-    {
       "id": 1368247830,
       "name": "codesbysayam",
       "full_name": "codesbysayam/codesbysayam",
@@ -98,10 +48,10 @@
       "default_branch": "main",
       "created_at": "2026-09-13T09:39:25Z",
       "createdAt": "2026-09-13T09:39:25Z",
-      "updated_at": "2026-10-31T09:35:02Z",
-      "updatedAt": "2026-10-31T09:35:02Z",
-      "pushed_at": "2026-11-01T06:06:45Z",
-      "pushedAt": "2026-11-01T06:06:45Z",
+      "updated_at": "2026-11-01T10:24:26Z",
+      "updatedAt": "2026-11-01T10:24:26Z",
+      "pushed_at": "2026-11-01T10:24:22Z",
+      "pushedAt": "2026-11-01T10:24:22Z",
       "topics": [
         "artificial-intelligence",
         "computer-science",
@@ -121,6 +71,56 @@
         "tailwindcss",
         "typescript",
         "web-development"
+      ]
+    },
+    {
+      "id": 1355576736,
+      "name": "Sayam-Mukherjee-Portfolio",
+      "full_name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "fullName": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "html_url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      "description": "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey. 🚀🧠📂 🌐 A living digital ecosystem combining modern web technology, AI, creativity, and personal branding into one immersive portfolio experience. 🎨⚡✨ 🔗 Discover, explore, and connect with my work. 🚀🌟",
+      "homepage": "www.sayammukherjee.in",
+      "language": "TypeScript",
+      "stargazers_count": 1,
+      "stars": 1,
+      "forks_count": 0,
+      "forks": 0,
+      "watchers_count": 1,
+      "watchers": 1,
+      "fork": false,
+      "isFork": false,
+      "archived": false,
+      "isArchived": false,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-09-03T06:02:37Z",
+      "createdAt": "2026-09-03T06:02:37Z",
+      "updated_at": "2026-11-01T07:18:10Z",
+      "updatedAt": "2026-11-01T07:18:10Z",
+      "pushed_at": "2026-11-01T07:18:06Z",
+      "pushedAt": "2026-11-01T07:18:06Z",
+      "topics": [
+        "ai",
+        "ai-agent",
+        "ai-model",
+        "api",
+        "backend-api",
+        "frontend",
+        "full-stack",
+        "gemini-api",
+        "generative-ai",
+        "javascript",
+        "machine-learning",
+        "machinelearning-python",
+        "portfolio",
+        "portfolio-project",
+        "portfolio-website",
+        "react-native",
+        "reactjs",
+        "tailwindcss",
+        "vite"
       ]
     },
     {
@@ -439,6 +439,48 @@
     }
   ],
   "events": [
+    {
+      "id": "25829333932",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-10-30T19:03:29Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 48404818538,
+        "ref": "refs/heads/main",
+        "head": "afe617b2156ef2e71a29709683163809d2019534",
+        "before": "367081db1ccaf7dd7a049684594d6cee935e1309"
+      }
+    },
+    {
+      "id": "25827028162",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-10-30T20:19:33Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 48411992893,
+        "ref": "refs/heads/main",
+        "head": "d150c3ec5c22d40881399d28b317e086a098fd6d",
+        "before": "02346e93a223b36ef7e873ee127266fb6bbebcb6"
+      }
+    },
+    {
+      "id": "25820009129",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-10-30T20:09:33Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 48411128472,
+        "ref": "refs/heads/main",
+        "head": "02346e93a223b36ef7e873ee127266fb6bbebcb6",
+        "before": "4b2e57cac7fd6191fba03dd7dd177a00a02f1996"
+      }
+    },
     {
       "id": "25755868593",
       "type": "PushEvent",
@@ -816,51 +858,51 @@
         "head": "4992eb4c8304a1fd3a8729c17faa23e38b241473",
         "before": "2333a6ca250f26cd98b14abcf25587d3ba9f0943"
       }
-    },
-    {
-      "id": "24647245544",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-10-20T19:08:57Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170776413,
-        "ref": "refs/heads/main",
-        "head": "30af32494c72682c906630c313edfaa76ae6ce52",
-        "before": "c38d779a560c53a8c25a6c6be165bc4cc7ed7d28"
-      }
-    },
-    {
-      "id": "24647237748",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-10-20T19:08:50Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170764893,
-        "ref": "refs/heads/main",
-        "head": "378de36566a6a29c255dbdc496fb9fcbd2f0b3da",
-        "before": "61584a1ff5969465c12bb686adf891e179d7df58"
-      }
-    },
-    {
-      "id": "24647059656",
-      "type": "PushEvent",
-      "repo": "codesbysayam/codesbysayam",
-      "created_at": "2026-10-20T19:06:13Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1368247830,
-        "push_id": 47170503084,
-        "ref": "refs/heads/main",
-        "head": "0f14d6b9380b003eae2f4cf68d9bf56f6856d4c9",
-        "before": "b70ffae28479714826e5a955d771c8ab53f45249"
-      }
     }
   ],
   "recentActivity": [
+    {
+      "id": "25829333932",
+      "type": "PushEvent",
+      "createdAt": "2026-10-30T19:03:29Z",
+      "created_at": "2026-10-30T19:03:29Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "25827028162",
+      "type": "PushEvent",
+      "createdAt": "2026-10-30T20:19:33Z",
+      "created_at": "2026-10-30T20:19:33Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "25820009129",
+      "type": "PushEvent",
+      "createdAt": "2026-10-30T20:09:33Z",
+      "created_at": "2026-10-30T20:09:33Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
     {
       "id": "25755868593",
       "type": "PushEvent",
@@ -1238,51 +1280,10 @@
       },
       "public": true,
       "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647245544",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:08:57Z",
-      "created_at": "2026-10-20T19:08:57Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647237748",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:08:50Z",
-      "created_at": "2026-10-20T19:08:50Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "24647059656",
-      "type": "PushEvent",
-      "createdAt": "2026-10-20T19:06:13Z",
-      "created_at": "2026-10-20T19:06:13Z",
-      "repoName": "codesbysayam",
-      "repo": {
-        "id": 1368247830,
-        "name": "codesbysayam/codesbysayam",
-        "url": "https://github.com/codesbysayam/codesbysayam"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
     }
   ],
   "languages": {
+    "codesbysayam/codesbysayam": {},
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
       "TypeScript": 1638218,
       "CSS": 72251,
@@ -1292,7 +1293,6 @@
       "Jupyter Notebook": 5438,
       "HTML": 3030
     },
-    "codesbysayam/codesbysayam": {},
     "codesbysayam/Memory-in-Motion": {
       "TypeScript": 1707304,
       "CSS": 29731,
@@ -1356,7 +1356,7 @@
     "PLpgSQL": 3057,
     "C++": 2037
   },
-  "latestPush": "2026-11-01T06:06:45Z",
+  "latestPush": "2026-11-01T10:24:22Z",
   "contributionCalendar": {
     "totalContributions": 236,
     "weeks": [
@@ -3399,7 +3399,7 @@
       }
     ]
   },
-  "fetchedAt": "2026-11-01T07:18:05.889Z",
-  "syncedAt": "2026-11-01T07:18:05.889Z",
+  "fetchedAt": "2026-11-01T14:54:59.532Z",
+  "syncedAt": "2026-11-01T14:54:59.532Z",
   "status": "ok"
 }
