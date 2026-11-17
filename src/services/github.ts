@@ -934,7 +934,7 @@ export async function fetchGitHubStats(force = false): Promise<GitHubStatsData> 
         name,
         bytes,
         percent: totalLangBytes > 0 ? Number(((bytes / totalLangBytes) * 100).toFixed(1)) : 0,
-        color: LANGUAGE_COLOR_MAP[name] || "#a855f7"
+        color: LANGUAGE_COLOR_MAP[name] || "#69734A"
       }))
       .sort((a, b) => b.bytes - a.bytes);
 
@@ -1035,7 +1035,7 @@ export async function fetchGitHubLanguages(force = false): Promise<GitHubLanguag
           language,
           bytes: value,
           percentage: totalBytes > 0 ? Number(((value / totalBytes) * 100).toFixed(1)) : 0,
-          color: LANGUAGE_COLOR_MAP[language] || "#a855f7"
+          color: LANGUAGE_COLOR_MAP[language] || "#69734A"
         }))
         .sort((a, b) => b.bytes - a.bytes);
 

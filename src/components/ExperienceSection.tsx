@@ -1,13 +1,13 @@
 import { useState, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EXTENDED_DATA } from "../data/extendedData";
-import { usePortfolio } from "../context/PortfolioContext";
+import { SOCIAL_LINKS } from "../data/siteContent";
 import { youtubeChannels } from "../data/channels";
 import { youtubeChannelAnalytics } from "../data/youtubeAnalytics";
 import { YouTubeAnalyticsCard } from "./YouTubeAnalyticsCard";
-import { 
-  Briefcase, Youtube, Users, GitBranch, 
-  ExternalLink, ArrowUpRight, ArrowRight, History, Sparkles
+import {
+  Briefcase, Youtube, Users, GitBranch,
+  ExternalLink, ArrowUpRight, ArrowRight, History
 } from "lucide-react";
 
 interface ExperienceSectionProps {
@@ -15,18 +15,16 @@ interface ExperienceSectionProps {
 }
 
 function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionProps) {
-  const [activeTab, setActiveTab] = useState<'Freelancing' | 'Content Creation' | 'Volunteer' | 'Open Source'>('Freelancing');
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
+  const [activeTab, setActiveTab] = useState<"Freelancing" | "Content Creation" | "Volunteer" | "Open Source">("Freelancing");
 
   const tabs = [
-    { id: 'Freelancing', label: 'Freelancing', icon: Briefcase, color: isLight ? 'text-purple-600' : 'text-purple-400' },
-    { id: 'Content Creation', label: 'Content Creation', icon: Youtube, color: isLight ? 'text-rose-600' : 'text-red-400' },
-    { id: 'Volunteer', label: 'Volunteer Labs', icon: Users, color: isLight ? 'text-cyan-600' : 'text-cyan-400' },
-    { id: 'Open Source', label: 'Open Source Map', icon: GitBranch, color: isLight ? 'text-emerald-600' : 'text-emerald-400' }
-  ];
+    { id: "Freelancing", label: "Freelancing", icon: Briefcase },
+    { id: "Content Creation", label: "Content Creation", icon: Youtube },
+    { id: "Volunteer", label: "Volunteer Labs", icon: Users },
+    { id: "Open Source", label: "Open Source Map", icon: GitBranch }
+  ] as const;
 
-  const currentExperience = EXTENDED_DATA.experience.find(exp => exp.type === activeTab);
+  const currentExperience = EXTENDED_DATA.experience.find((exp) => exp.type === activeTab);
 
   const handleShowcaseClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -43,38 +41,26 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
 
   return (
     <div className="space-y-8 font-sans" id="professional-experience">
-      {/* Section title */}
-      <div className="space-y-2">
-        <span className={`text-xs font-mono tracking-wide block font-semibold ${
-          isLight ? "text-purple-700" : "text-purple-400"
-        }`}>
-          Journey Timeline
+      {/* Section Header */}
+      <div className="space-y-2 border-b border-[var(--border)] pb-6">
+        <span className="text-xs font-mono tracking-wider uppercase block font-semibold text-[var(--accent)]">
+          Experience Ledger
         </span>
-        <h2 
-          style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)" }} 
-          className={`font-bold tracking-tight font-display ${
-            isLight ? "text-slate-900" : "text-white"
-          }`}
+        <h2
+          style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
+          className="font-extrabold tracking-tight font-display text-[var(--text)] leading-[1.06]"
         >
           Experience
         </h2>
-        <p className={`text-sm max-w-2xl leading-relaxed ${
-          isLight ? "text-slate-600" : "text-zinc-400"
-        }`}>
-          Learning by building, collaborating, and continuously improving, while organizing my work across visual editing, tech content, and community initiatives.
+        <p className="text-sm max-w-2xl leading-relaxed text-[var(--text-secondary)]">
+          Learning by building, collaborating, and continuously improving — organizing hands-on work across visual editing, technical content creation, and community initiatives.
         </p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left Interactive Tabs Controller */}
-        <div className={`lg:col-span-4 flex flex-col gap-2 p-3 rounded-2xl border transition-all ${
-          isLight 
-            ? "bg-white border-slate-200/90 shadow-sm" 
-            : "bg-[#11131c]/90 border-white/[0.08] shadow-[0_16px_40px_-10px_rgba(0,0,0,0.5)]"
-        }`}>
-          <span className={`text-xs font-mono tracking-wider px-3 py-1 block ${
-            isLight ? "text-slate-500" : "text-zinc-400"
-          }`}>
+        {/* Left Interactive Track Selector */}
+        <div className="lg:col-span-4 card p-3 flex flex-col gap-1.5" role="tablist" aria-label="Experience tracks">
+          <span className="text-[11px] font-mono uppercase tracking-wider px-3 py-1.5 block text-[var(--text-muted)]">
             Select Track
           </span>
           {tabs.map((tab) => {
@@ -83,132 +69,105 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`w-full flex items-center justify-between p-3.5 rounded-xl border text-left transition-all duration-300 cursor-pointer group ${
+                type="button"
+                role="tab"
+                aria-selected={isSelected}
+                onClick={() => setActiveTab(tab.id)}
+                className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-all duration-200 cursor-pointer group ${
                   isSelected
-                    ? isLight
-                      ? "bg-slate-100 border-slate-300 text-slate-900 shadow-sm"
-                      : "bg-white/[0.08] border-white/10 text-white shadow-md"
-                    : isLight
-                    ? "bg-transparent border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
-                    : "bg-transparent border-transparent text-zinc-400 hover:text-white hover:bg-white/[0.04]"
+                    ? "bg-[#20231D] dark:bg-[#C7E34A] border-[#20231D] dark:border-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D]"
+                    : "bg-transparent border-transparent text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg border ${
-                    isLight 
-                      ? "bg-slate-50 border-slate-200" 
-                      : "bg-zinc-950/80 border-white/[0.08]"
-                  }`}>
-                    <IconComponent className={`w-4 h-4 ${tab.color}`} />
+                  <div
+                    className={`p-2 rounded-[6px] border ${
+                      isSelected
+                        ? "bg-white/10 dark:bg-[#20231D]/15 border-white/15 dark:border-[#20231D]/20"
+                        : "bg-[var(--surface)] border-[var(--border)]"
+                    }`}
+                  >
+                    <IconComponent className="w-4 h-4" aria-hidden="true" />
                   </div>
-                  <span className="text-xs font-bold font-display">{tab.label}</span>
+                  <span className="text-xs sm:text-sm font-bold font-display">{tab.label}</span>
                 </div>
-                <ArrowUpRight className={`w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity ${tab.color}`} />
+                <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
               </button>
             );
           })}
         </div>
 
-        {/* Right Tab Content Viewer */}
+        {/* Right Track Details Viewer */}
         <div className="lg:col-span-8">
           <AnimatePresence mode="wait">
             {currentExperience && (
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, x: 20 }}
+                initial={{ opacity: 0, x: 16 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                transition={{ duration: 0.3 }}
-                className={`p-6 md:p-8 rounded-2xl space-y-6 min-h-[380px] flex flex-col justify-between border transition-all ${
-                  isLight
-                    ? "bg-white border-slate-200/90 shadow-sm"
-                    : "bg-[#11131c]/90 border-white/[0.08] shadow-[0_16px_40px_-10px_rgba(0,0,0,0.5)]"
-                }`}
+                exit={{ opacity: 0, x: -16 }}
+                transition={{ duration: 0.2 }}
+                className="card p-6 md:p-8 space-y-6 min-h-[380px] flex flex-col justify-between"
               >
-                <div className="space-y-4">
+                <div className="space-y-5">
                   {/* Title Bar */}
-                  <div className={`flex flex-wrap items-start justify-between gap-4 border-b pb-4 ${
-                    isLight ? "border-slate-100" : "border-white/[0.06]"
-                  }`}>
+                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-[var(--border)] pb-4">
                     <div>
-                      <h3 className={`text-xl font-bold font-display tracking-tight leading-tight ${
-                        isLight ? "text-slate-900" : "text-white"
-                      }`}>
+                      <h3 className="text-xl font-bold font-display tracking-tight leading-tight text-[var(--text)]">
                         {currentExperience.role}
                       </h3>
-                      <p className={`text-xs mt-1.5 font-mono flex items-center gap-1.5 ${
-                        isLight ? "text-purple-700" : "text-purple-400"
-                      }`}>
+                      <p className="text-xs mt-1.5 font-mono flex items-center gap-1.5 text-[var(--accent)] font-semibold">
                         <span>{currentExperience.company}</span>
                         {currentExperience.platform && (
                           <>
-                            <span className={isLight ? "text-slate-300" : "text-zinc-600"}>•</span>
-                            <span className={isLight ? "text-slate-500" : "text-zinc-400"}>{currentExperience.platform}</span>
+                            <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>
+                            <span className="text-[var(--text-muted)] font-normal">{currentExperience.platform}</span>
                           </>
                         )}
                       </p>
                     </div>
 
-                    <span className={`text-xs px-3 py-1 rounded-full font-mono font-medium border ${
-                      isLight
-                        ? "bg-slate-100 border-slate-200 text-slate-700"
-                        : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
-                    }`}>
+                    <span className="text-xs font-mono font-medium text-[var(--text-secondary)] tabular-nums">
                       {currentExperience.period}
                     </span>
                   </div>
 
-                  {/* Bullet description block */}
+                  {/* Bullet descriptions */}
                   <ul className="space-y-3.5">
-                    {activeTab === 'Content Creation' ? (
+                    {activeTab === "Content Creation" ? (
                       <>
-                        <li className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
-                          isLight ? "text-slate-700" : "text-zinc-200"
-                        }`}>
-                          <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
-                            isLight ? "bg-purple-600" : "bg-purple-400"
-                          }`} />
+                        <li className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
+                          <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[var(--accent)]" aria-hidden="true" />
                           <span>
-                            Operating educational, technical, and entertainment YouTube channels with an organic reach spanning tutorials, algorithmic breakdowns, and dynamic video concepts.
+                            Operating educational, technical, and entertainment YouTube channels with organic reach spanning tutorials, algorithmic breakdowns, and visual essays.
                           </span>
                         </li>
-                        <li className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
-                          isLight ? "text-slate-700" : "text-zinc-200"
-                        }`}>
-                          <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
-                            isLight ? "bg-purple-600" : "bg-purple-400"
-                          }`} />
+                        <li className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
+                          <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[var(--accent)]" aria-hidden="true" />
                           <span>
-                            Applying viewer psychology, high-CTR thumbnail compositions, script pacing, and visual storytelling to communicate complex concepts with high signal clarity.
+                            Applying viewer psychology, high-CTR thumbnail compositions, script pacing, and visual storytelling to communicate complex concepts cleanly.
                           </span>
                         </li>
                       </>
                     ) : (
                       currentExperience.description.map((bullet, idx) => (
-                        <li key={idx} className={`text-xs sm:text-sm flex items-start gap-3 leading-relaxed ${
-                          isLight ? "text-slate-700" : "text-zinc-200"
-                        }`}>
-                          <span className={`w-1.5 h-1.5 rounded-full shrink-0 mt-2 ${
-                            isLight ? "bg-purple-600" : "bg-purple-400"
-                          }`} />
+                        <li key={idx} className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
+                          <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[var(--accent)]" aria-hidden="true" />
                           <span>{bullet}</span>
                         </li>
                       ))
                     )}
                   </ul>
 
-                  {/* Integrated YouTube Channels Showcase inside Content Creation Track */}
-                  {activeTab === 'Content Creation' && (
-                    <div className="space-y-3 pt-3">
-                      <div className="flex items-center justify-between">
-                        <span className={`text-xs font-mono tracking-wider block font-semibold ${
-                          isLight ? "text-slate-600" : "text-zinc-400"
-                        }`}>
-                          YouTube Channels & Media Platforms ({youtubeChannels.length})
+                  {/* Integrated YouTube Channels & Analytics Showcase */}
+                  {activeTab === "Content Creation" && (
+                    <div className="space-y-4 pt-3 border-t border-[var(--border)]">
+                      <div className="flex items-center justify-between flex-wrap gap-2">
+                        <span className="text-xs font-mono tracking-wider font-semibold text-[var(--text)]">
+                          YouTube Channels &amp; Media Platforms ({youtubeChannels.length})
                         </span>
-                        <span className="text-[10px] font-mono text-zinc-500">
-                          Historical figures marked accordingly
+                        <span className="text-[11px] font-mono text-[var(--text-muted)]">
+                          Historical records clearly labeled
                         </span>
                       </div>
 
@@ -222,77 +181,70 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                           return (
                             <div
                               key={channel.id}
-                              className={`p-3.5 rounded-xl border flex flex-col justify-between transition-all ${
-                                isLight
-                                  ? "bg-slate-50 border-slate-200/90 hover:border-slate-300"
-                                  : "bg-zinc-950/60 border-zinc-900 hover:border-zinc-800"
-                              }`}
+                              className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] flex flex-col justify-between transition-colors hover:border-[var(--border-strong)]"
                             >
-                              <div className="space-y-1.5">
+                              <div className="space-y-2">
                                 <div className="flex items-center justify-between gap-2">
-                                  <div className="flex items-center gap-2 min-w-0">
-                                    <div className="w-7 h-7 rounded-lg bg-red-950/20 border border-red-900/30 flex items-center justify-center shrink-0">
-                                      <Youtube className="w-3.5 h-3.5 text-red-500" />
+                                  <div className="flex items-center gap-2.5 min-w-0">
+                                    <div className="w-7 h-7 rounded-[6px] bg-red-600/10 border border-red-600/20 flex items-center justify-center shrink-0">
+                                      <Youtube className="w-3.5 h-3.5 text-red-600 dark:text-red-400" aria-hidden="true" />
                                     </div>
                                     <div className="min-w-0">
-                                      <h4 className={`text-xs font-bold font-display truncate ${
-                                        isLight ? "text-slate-900" : "text-white"
-                                      }`}>
+                                      <h4 className="text-xs font-bold font-display truncate text-[var(--text)]">
                                         {channel.name}
                                       </h4>
-                                      <span className="text-[10px] font-mono text-zinc-500 block truncate">
+                                      <span className="text-[11px] font-mono text-[var(--text-muted)] block truncate">
                                         {channel.handle || "YouTube Channel"}
                                       </span>
                                     </div>
                                   </div>
 
                                   {isHistorical ? (
-                                    <span className="rounded border border-amber-900/40 bg-amber-950/30 px-1.5 py-0.5 font-mono text-[9px] text-amber-400 font-semibold uppercase shrink-0">
+                                    <span className="text-[10px] font-mono text-[var(--accent)] font-semibold uppercase shrink-0">
                                       Historical
                                     </span>
                                   ) : channel.category ? (
-                                    <span className="rounded border border-zinc-850 bg-zinc-900 px-1.5 py-0.5 font-mono text-[9px] text-zinc-400 max-w-[100px] truncate shrink-0">
+                                    <span className="text-[10px] font-mono text-[var(--text-muted)] max-w-[110px] truncate shrink-0">
                                       {channel.category}
                                     </span>
                                   ) : null}
                                 </div>
 
-                                {/* Metric & Activity summary */}
-                                <div className="flex items-center justify-between text-[10px] font-mono pt-1 text-zinc-400">
+                                <div className="flex items-center justify-between text-[11px] font-mono pt-1 text-[var(--text-secondary)]">
                                   <span>
                                     {isHistorical && channel.historicalSubscribers ? (
-                                      <span className="text-amber-400/90">
-                                        {channel.historicalSubscribers >= 1000 
+                                      <span>
+                                        {channel.historicalSubscribers >= 1000
                                           ? `${(channel.historicalSubscribers / 1000).toFixed(1).replace(/\.0$/, "")}K+ historical subs`
                                           : `${channel.historicalSubscribers} historical subs`}
                                       </span>
                                     ) : channel.currentSubscribers ? (
-                                      <span className="text-white">
+                                      <span className="text-[var(--text)] font-semibold">
                                         {channel.currentSubscribers} subs
                                       </span>
                                     ) : (
-                                      <span className="text-zinc-500">Stats unverified</span>
+                                      <span className="text-[var(--text-muted)]">Stats unverified</span>
                                     )}
                                   </span>
 
                                   {period && (
-                                    <span className="text-zinc-500 flex items-center gap-1">
-                                      <History className="w-2.5 h-2.5" />
+                                    <span className="text-[var(--text-muted)] flex items-center gap-1 tabular-nums">
+                                      <History className="w-3 h-3" aria-hidden="true" />
                                       {period}
                                     </span>
                                   )}
                                 </div>
                               </div>
 
-                              <div className="pt-2.5 mt-2 border-t border-zinc-900/60 flex justify-end">
+                              <div className="pt-2.5 mt-3 border-t border-[var(--border)] flex justify-end">
                                 <a
                                   href={channel.url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="text-[10px] font-mono text-red-400 hover:text-red-300 font-medium flex items-center gap-1 transition-colors"
+                                  className="text-[11px] font-mono text-[var(--text)] hover:text-[var(--accent)] font-semibold flex items-center gap-1 transition-colors"
                                 >
                                   <span>Visit Channel</span>
-                                  <ExternalLink className="w-2.5 h-2.5" />
+                                  <ExternalLink className="w-3 h-3" aria-hidden="true" />
                                 </a>
                               </div>
                             </div>
@@ -300,21 +252,14 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                         })}
                       </div>
 
-                      {/* Dedicated YouTube Channel Analytics Area */}
-                      <div className="space-y-3 pt-5 mt-4 border-t border-zinc-900/80">
-                        <div className="flex items-center justify-between flex-wrap gap-2">
-                          <div className="flex items-center gap-2">
-                            <span className={`text-xs font-mono tracking-wider font-bold uppercase ${
-                              isLight ? "text-purple-700" : "text-purple-400"
-                            }`}>
-                              YouTube Channel Analytics Snapshots
-                            </span>
-                            <span className="text-[9px] font-mono px-2 py-0.5 rounded border border-purple-900/40 bg-purple-950/30 text-purple-300">
-                              Studio Dashboards
-                            </span>
-                          </div>
-                          <span className="text-[10px] font-mono text-zinc-500">
-                            Obsidian Optics • Snapshot as of 21 Oct 2026
+                      {/* YouTube Channel Analytics Snapshots */}
+                      <div className="space-y-3 pt-4 border-t border-[var(--border)]">
+                        <div className="flex items-center justify-between flex-wrap gap-2 text-xs font-mono">
+                          <span className="tracking-wider font-bold uppercase text-[var(--accent)]">
+                            YouTube Studio Snapshots
+                          </span>
+                          <span className="text-[11px] text-[var(--text-muted)]">
+                            Obsidian Optics · Snapshot as of 21 Oct 2026
                           </span>
                         </div>
 
@@ -331,100 +276,66 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                   )}
                 </div>
 
-                <div className={`space-y-4 pt-4 border-t ${
-                  isLight ? "border-slate-100" : "border-white/[0.06]"
-                }`}>
-                  <span className={`text-xs font-mono tracking-wider block ${
-                    isLight ? "text-slate-500" : "text-zinc-400"
-                  }`}>
+                {/* Core Competencies */}
+                <div className="space-y-3 pt-4 border-t border-[var(--border)]">
+                  <span className="text-xs font-mono tracking-wider block text-[var(--text-muted)] uppercase">
                     Core Competency Deployed
                   </span>
                   <div className="flex flex-wrap gap-2">
-                    {activeTab === 'Content Creation' ? (
-                      ["Video Editing", "Content Strategy", "Visual Psychology", "Audience Retention"].map((skill, sIdx) => (
-                        <span key={sIdx} className={`text-xs px-3 py-1 rounded-lg font-mono border ${
-                          isLight
-                            ? "bg-slate-100 border-slate-200 text-slate-800"
-                            : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
-                        }`}>
-                          {skill}
-                        </span>
-                      ))
-                    ) : (
-                      currentExperience.skills?.map((skill, sIdx) => (
-                        <span key={sIdx} className={`text-xs px-3 py-1 rounded-lg font-mono border ${
-                          isLight
-                            ? "bg-slate-100 border-slate-200 text-slate-800"
-                            : "bg-white/[0.04] border-white/[0.08] text-zinc-300"
-                        }`}>
-                          {skill}
-                        </span>
-                      ))
-                    )}
+                    {(activeTab === "Content Creation"
+                      ? ["Video Editing", "Content Strategy", "Visual Psychology", "Audience Retention"]
+                      : currentExperience.skills || []
+                    ).map((skill, sIdx) => (
+                      <span
+                        key={sIdx}
+                        className="text-xs px-2.5 py-1 rounded-[4px] font-mono border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)]"
+                      >
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
 
-                {/* Additional custom links/widgets based on tab type */}
-                {activeTab === 'Freelancing' && (
-                  <div className={`pt-4 flex items-center justify-between text-xs font-mono border-t ${
-                    isLight ? "border-slate-100 text-slate-500" : "border-white/[0.06] text-zinc-400"
-                  }`}>
-                    <span>Fiverr Global Rating: 🟢 5.0 (25+ orders)</span>
-                    <a 
-                      href="https://fiverr.com/sayam-mukherjee-placeholder"
+                {/* Bottom Action Links */}
+                {activeTab === "Freelancing" && (
+                  <div className="pt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono border-t border-[var(--border)] text-[var(--text-muted)]">
+                    <span>Fiverr Track · 5.0 Client Rating (25+ orders delivered)</span>
+                    <a
+                      href={SOCIAL_LINKS.fiverr}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`transition-colors flex items-center gap-1 font-semibold ${
-                        isLight ? "text-purple-700 hover:text-purple-900" : "text-purple-400 hover:text-cyan-300"
-                      }`}
+                      className="transition-colors flex items-center gap-1.5 font-semibold text-[var(--text)] hover:text-[var(--accent)]"
                     >
-                      <span>Hire Me on Fiverr</span>
-                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>View Fiverr Profile</span>
+                      <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                     </a>
                   </div>
                 )}
 
-                {activeTab === 'Content Creation' && (
-                  <div className={`pt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono border-t ${
-                    isLight ? "border-slate-100 text-slate-500" : "border-white/[0.06] text-zinc-400"
-                  }`}>
-                    <span className="flex items-center gap-1.5">
-                      <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                      Educational Hub: Technical Learning & AI Media
-                    </span>
-                    <button 
+                {activeTab === "Content Creation" && (
+                  <div className="pt-4 flex flex-wrap items-center justify-between gap-3 text-xs font-mono border-t border-[var(--border)] text-[var(--text-muted)]">
+                    <span>Educational Hub · Technical Learning &amp; AI Media</span>
+                    <button
                       type="button"
                       onClick={handleShowcaseClick}
-                      className={`transition-all flex items-center gap-1.5 font-semibold px-3 py-1.5 rounded-lg border cursor-pointer ${
-                        isLight 
-                          ? "bg-rose-50 border-rose-200 text-rose-700 hover:bg-rose-100" 
-                          : "bg-red-950/30 border-red-900/40 text-red-400 hover:bg-red-900/40 hover:text-red-300"
-                      }`}
+                      className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3.5 !text-xs"
                       aria-label="View YouTube video showcase"
                     >
                       <span>View Video Showcase</span>
-                      <ArrowRight className="w-3.5 h-3.5 text-red-400" />
+                      <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                     </button>
                   </div>
                 )}
 
-                {activeTab === 'Open Source' && (
-                  <div className={`p-4 rounded-xl flex items-start gap-3 mt-4 border ${
-                    isLight
-                      ? "bg-emerald-50 border-emerald-200 text-emerald-950"
-                      : "bg-emerald-500/10 border-emerald-500/20 text-zinc-200"
-                  }`}>
-                    <GitBranch className={`w-5 h-5 shrink-0 mt-0.5 ${
-                      isLight ? "text-emerald-700" : "text-emerald-400"
-                    }`} />
+                {activeTab === "Open Source" && (
+                  <div className="p-4 rounded-[8px] flex items-start gap-3 border border-[var(--border)] bg-[var(--surface)]">
+                    <GitBranch className="w-5 h-5 shrink-0 mt-0.5 text-[var(--accent)]" aria-hidden="true" />
                     <div className="space-y-1">
-                      <h4 className={`text-xs font-bold font-display ${
-                        isLight ? "text-emerald-900" : "text-white"
-                      }`}>Hacktoberfest preparation Roadmap</h4>
-                      <p className={`text-[10px] leading-relaxed ${
-                        isLight ? "text-emerald-800" : "text-zinc-400"
-                      }`}>
-                        Setting weekly goals to identify open-source repositories matching PyTorch CV pipelines and custom React utility libraries to make certified contributions in Oct 2026.
+                      <h4 className="text-xs font-bold font-display text-[var(--text)]">
+                        Hacktoberfest Preparation Roadmap
+                      </h4>
+                      <p className="text-xs leading-relaxed text-[var(--text-secondary)]">
+                        Setting weekly goals to identify open-source repositories matching PyTorch CV pipelines and React utility libraries for certified contributions.
                       </p>
                     </div>
                   </div>

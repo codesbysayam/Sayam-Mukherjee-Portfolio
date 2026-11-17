@@ -8,16 +8,16 @@ interface GitHubLanguageBreakdownProps {
 
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
+  JavaScript: "#d4b429",
   Python: "#3572A5",
-  "C++": "#f34b7d",
-  C: "#555555",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Shell: "#89e051",
-  Rust: "#dea584",
-  Go: "#00ADD8",
-  Java: "#b07219",
+  "C++": "#b94a48",
+  C: "#585B52",
+  HTML: "#d65d3b",
+  CSS: "#69734A",
+  Shell: "#A9C52F",
+  Rust: "#c47d58",
+  Go: "#2b8a9c",
+  Java: "#9a6621",
 };
 
 export const GitHubLanguageBreakdown = memo(function GitHubLanguageBreakdown({
@@ -30,7 +30,6 @@ export const GitHubLanguageBreakdown = memo(function GitHubLanguageBreakdown({
 
   const hasByteData = totalBytes > 0;
 
-  // Fallback: Primary repository language counts
   const totalReposWithLang = useMemo(() => {
     return Object.values(languageCounts).reduce((sum, val) => sum + val, 0);
   }, [languageCounts]);
@@ -42,13 +41,12 @@ export const GitHubLanguageBreakdown = memo(function GitHubLanguageBreakdown({
         name,
         count,
         percentage: Number(((count / totalReposWithLang) * 100).toFixed(1)),
-        color: LANGUAGE_COLORS[name] || "#888888",
+        color: LANGUAGE_COLORS[name] || "#69734A",
       }))
       .filter((item) => item.percentage > 0)
       .sort((a, b) => b.count - a.count);
   }, [languageCounts, totalReposWithLang]);
 
-  // If byte data exists, calculate exact byte percentages
   const byteStats = useMemo(() => {
     if (!hasByteData) return [];
     return Object.entries(languageBytes)
@@ -56,7 +54,7 @@ export const GitHubLanguageBreakdown = memo(function GitHubLanguageBreakdown({
         name,
         bytes,
         percentage: Number(((bytes / totalBytes) * 100).toFixed(1)),
-        color: LANGUAGE_COLORS[name] || "#888888",
+        color: LANGUAGE_COLORS[name] || "#69734A",
       }))
       .filter((item) => item.percentage > 0)
       .sort((a, b) => b.bytes - a.bytes);
@@ -69,24 +67,36 @@ export const GitHubLanguageBreakdown = memo(function GitHubLanguageBreakdown({
   }
 
   return (
-    <div className="p-5 sm:p-6 rounded-2xl bg-zinc-900/40 border border-white/[0.08] space-y-4">
+    <div
+      className="card p-5 sm:p-6 space-y-4"
+      style={{
+        backgroundColor: "var(--surface-2)",
+        borderColor: "var(--border)",
+      }}
+    >
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
-          <Code2 className="w-4 h-4 text-purple-400" />
-          <h4 className="text-sm font-bold text-white font-display">
+          <Code2 className="w-4 h-4 text-[var(--accent)]" />
+          <h4 className="text-sm font-bold text-[var(--text)] font-display">
             {hasByteData ? "Codebase Language Distribution" : "Repositories by primary language"}
           </h4>
         </div>
 
-        <span className="text-[11px] font-mono text-zinc-400">
+        <span className="text-[11px] font-mono text-[var(--text-muted)] tabular-nums">
           {hasByteData
             ? `${(totalBytes / 1024).toFixed(0)} KB indexed`
             : `${totalReposWithLang} repositories tracked`}
         </span>
       </div>
 
-      {/* Proportional Multi-Segment Bar */}
-      <div className="w-full h-2.5 rounded-full bg-zinc-800/80 overflow-hidden flex">
+      {/* Multi-Segment Bar */}
+      <div
+        className="w-full h-2.5 rounded-[4px] overflow-hidden flex border"
+        style={{
+          backgroundColor: "var(--surface)",
+          borderColor: "var(--border)",
+        }}
+      >
         {activeStats.map((item) => (
           <div
             key={item.name}
@@ -105,15 +115,15 @@ export const GitHubLanguageBreakdown = memo(function GitHubLanguageBreakdown({
         {activeStats.map((item) => (
           <div key={item.name} className="flex items-start gap-2 text-xs font-mono">
             <span
-              className="w-2 h-2 rounded-full mt-1.5 shrink-0"
+              className="w-2.5 h-2.5 rounded-[2px] mt-1 shrink-0"
               style={{ backgroundColor: item.color }}
             />
             <div className="min-w-0">
-              <div className="text-zinc-200 font-medium truncate">{item.name}</div>
-              <div className="text-[11px] text-zinc-400">
+              <div className="text-[var(--text)] font-semibold truncate">{item.name}</div>
+              <div className="text-[11px] text-[var(--text-muted)] tabular-nums">
                 {item.percentage}%
                 {"count" in item && (
-                  <span className="text-zinc-400 ml-1">
+                  <span className="text-[var(--text-faint)] ml-1">
                     ({item.count} {item.count === 1 ? "repo" : "repos"})
                   </span>
                 )}

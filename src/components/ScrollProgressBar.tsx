@@ -14,7 +14,8 @@ export default function ScrollProgressBar() {
   return (
     <div
       ref={barRef}
-      className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-purple-500 via-cyan-400 to-emerald-400 z-[100] origin-left pointer-events-none"
+      aria-hidden="true"
+      className="fixed top-0 left-0 right-0 h-[2px] bg-[#C7E34A] z-[100] origin-left pointer-events-none"
       style={{ transform: "scaleX(0)", willChange: "transform" }}
     />
   );

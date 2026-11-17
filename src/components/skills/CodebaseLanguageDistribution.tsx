@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Code2, GitBranch, ExternalLink, Terminal, Cpu, FileSpreadsheet, Layers, Palette, FileCode2, ShieldCheck } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ExternalLink, Terminal, Cpu, Layers, Palette, FileCode2, ShieldCheck } from "lucide-react";
 import { fetchGitHubLanguages, LanguageStat } from "../../services/github";
-import { usePortfolio } from "../../context/PortfolioContext";
 
-const LANGUAGE_COLORS: Record<string, { bar: string; dot: string; text: string; border: string }> = {
-  TypeScript: { bar: "bg-sky-400", dot: "bg-sky-400", text: "text-sky-400", border: "border-sky-500/20" },
-  JavaScript: { bar: "bg-amber-400", dot: "bg-amber-400", text: "text-amber-400", border: "border-amber-500/20" },
-  CSS: { bar: "bg-indigo-400", dot: "bg-indigo-400", text: "text-indigo-400", border: "border-indigo-500/20" },
-  HTML: { bar: "bg-rose-400", dot: "bg-rose-400", text: "text-rose-400", border: "border-rose-500/20" },
-  Python: { bar: "bg-emerald-400", dot: "bg-emerald-400", text: "text-emerald-400", border: "border-emerald-500/20" },
-  "C++": { bar: "bg-blue-400", dot: "bg-blue-400", text: "text-blue-400", border: "border-blue-500/20" },
-  C: { bar: "bg-blue-400", dot: "bg-blue-400", text: "text-blue-400", border: "border-blue-500/20" },
-  "Jupyter Notebook": { bar: "bg-orange-400", dot: "bg-orange-400", text: "text-orange-400", border: "border-orange-500/20" }
+const LANGUAGE_SWATCH: Record<string, string> = {
+  TypeScript: "#69734A",
+  Python: "#3E4A35",
+  CSS: "#8D947E",
+  JavaScript: "#A9C52F",
+  HTML: "#585B52",
+  "C++": "#C7E34A",
+  C: "#777A70",
+  "Jupyter Notebook": "#B5B8AA"
 };
 
 interface LanguageRole {
@@ -68,16 +67,13 @@ const LANGUAGE_ROLES: LanguageRole[] = [
 ];
 
 export function CodebaseLanguageDistribution() {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
-
   const [languageStats, setLanguageStats] = useState<LanguageStat[]>([
-    { language: "TypeScript", bytes: 6955191, percentage: 94.1, color: "#3178c6" },
-    { language: "Python", bytes: 181108, percentage: 2.4, color: "#3572A5" },
-    { language: "CSS", bytes: 106236, percentage: 1.4, color: "#563d7c" },
-    { language: "JavaScript", bytes: 55813, percentage: 0.8, color: "#f1e05a" },
-    { language: "HTML", bytes: 32368, percentage: 0.4, color: "#e34c26" },
-    { language: "C++", bytes: 2037, percentage: 0.1, color: "#f43f5e" }
+    { language: "TypeScript", bytes: 6955191, percentage: 94.1, color: "#69734A" },
+    { language: "Python", bytes: 181108, percentage: 2.4, color: "#3E4A35" },
+    { language: "CSS", bytes: 106236, percentage: 1.4, color: "#8D947E" },
+    { language: "JavaScript", bytes: 55813, percentage: 0.8, color: "#A9C52F" },
+    { language: "HTML", bytes: 32368, percentage: 0.4, color: "#585B52" },
+    { language: "C++", bytes: 2037, percentage: 0.1, color: "#C7E34A" }
   ]);
   const [totalBytes, setTotalBytes] = useState<number>(7392863);
   const [lastSyncedTime, setLastSyncedTime] = useState<string>("Verified GitHub API Baseline");
@@ -111,64 +107,56 @@ export function CodebaseLanguageDistribution() {
     <section id="language-distribution" className="space-y-5">
       {/* Section Header */}
       <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-purple-700 dark:text-purple-400">
-            GITHUB REPOSITORY LANGUAGE DISTRIBUTION
+        <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
+          <span className="font-semibold uppercase tracking-wider text-[var(--accent)]">
+            Repository Language Distribution
           </span>
-          <span className="h-px w-8 bg-zinc-300 dark:border-white/[0.08]" />
-          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
-            Aggregated Multi-Repo Byte Distribution
-          </span>
+          <span className="hidden sm:inline" aria-hidden="true">/</span>
+          <span className="hidden sm:inline uppercase tracking-wider">Aggregated Multi-Repo Bytes</span>
         </div>
 
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text)] font-display">
             Repository Byte Distribution
           </h2>
-          <span className="text-xs font-mono text-zinc-500">
-            {sourceType}
-          </span>
+          <span className="text-xs font-mono text-[var(--text-muted)]">{sourceType}</span>
         </div>
 
-        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans leading-relaxed">
-          Aggregated bytes calculated directly from Sayam&apos;s verified public repositories on GitHub (<span className="font-mono text-zinc-700 dark:text-zinc-300">mausam</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">operon</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">sayam-solves</span>, <span className="font-mono text-zinc-700 dark:text-zinc-300">yolo</span>, and portfolio).
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
+          Aggregated bytes calculated directly from verified public repositories on GitHub (<span className="font-mono text-[var(--text)]">mausam</span>, <span className="font-mono text-[var(--text)]">operon</span>, <span className="font-mono text-[var(--text)]">sayam-solves</span>, <span className="font-mono text-[var(--text)]">yolo</span>, and portfolio).
         </p>
       </div>
 
-      {/* Main Container */}
+      {/* Main Card */}
       <div className="card p-5 sm:p-6 space-y-6">
-        {/* Dynamic Proportional Distribution Bar */}
-        <div className="space-y-2.5">
-          <div className="flex items-center justify-between text-xs font-mono text-zinc-500 dark:text-zinc-400">
-            <span className="font-medium text-zinc-700 dark:text-zinc-300">Multi-Repository Composition</span>
-            <span className="text-[11px]">
-              {(totalBytes / 1024).toLocaleString(undefined, { maximumFractionDigits: 1 })} KB Total Verified Source
-            </span>
+        <div className="space-y-3">
+          <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)] tabular-nums">
+            <span className="font-semibold text-[var(--text)]">Multi-Repository Composition</span>
+            <span>{(totalBytes / 1024).toLocaleString(undefined, { maximumFractionDigits: 1 })} KB Verified Source</span>
           </div>
 
-          <div className="h-3 w-full rounded-full bg-zinc-200 dark:bg-zinc-900 overflow-hidden flex p-0.5 border border-zinc-300 dark:border-zinc-800/80">
+          <div className="h-3.5 w-full rounded-[4px] bg-[var(--surface)] overflow-hidden flex border border-[var(--border-strong)]">
             {languageStats.map((item) => {
-              const color = LANGUAGE_COLORS[item.language] || { bar: "bg-zinc-500" };
+              const fill = LANGUAGE_SWATCH[item.language] || "#69734A";
               return (
                 <div
                   key={item.language}
-                  style={{ width: `${Math.max(item.percentage, 0.8)}%` }}
-                  className={`${color.bar} h-full first:rounded-l-full last:rounded-r-full transition-all duration-300`}
+                  style={{ width: `${Math.max(item.percentage, 0.8)}%`, backgroundColor: fill }}
+                  className="h-full transition-all duration-300"
                   title={`${item.language}: ${item.percentage}% (${(item.bytes / 1024).toFixed(1)} KB)`}
                 />
               );
             })}
           </div>
 
-          {/* Dynamic Compact Language Tags */}
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2 pt-1 text-xs font-mono">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1 text-xs font-mono tabular-nums">
             {languageStats.map((item) => {
-              const color = LANGUAGE_COLORS[item.language] || { dot: "bg-zinc-400", text: "text-zinc-600 dark:text-zinc-300" };
+              const fill = LANGUAGE_SWATCH[item.language] || "#69734A";
               return (
                 <div key={item.language} className="flex items-center gap-1.5">
-                  <span className={`w-2 h-2 rounded-full ${color.dot}`} />
-                  <span className="text-zinc-800 dark:text-zinc-200 font-medium">{item.language}</span>
-                  <span className="text-[11px] text-zinc-500 font-normal">{item.percentage}%</span>
+                  <span className="w-2.5 h-2.5 rounded-[2px] inline-block" style={{ backgroundColor: fill }} />
+                  <span className="text-[var(--text)] font-semibold">{item.language}</span>
+                  <span className="text-[var(--text-muted)]">{item.percentage}%</span>
                 </div>
               );
             })}
@@ -176,17 +164,15 @@ export function CodebaseLanguageDistribution() {
         </div>
 
         {/* Language Roles Grid */}
-        <div className="space-y-3 pt-4 border-t border-zinc-200 dark:border-zinc-850/80">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs font-mono font-medium uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+        <div className="space-y-3 pt-4 border-t border-[var(--border)]">
+          <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+            <h3 className="uppercase tracking-wider font-semibold">
               Languages in Practice &amp; Engineering Roles
             </h3>
-            <span className="text-[11px] font-mono text-zinc-500 hidden sm:inline">
-              Verified Repositories · Authentic Artifacts
-            </span>
+            <span className="hidden sm:inline">Verified Repositories</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {LANGUAGE_ROLES.map((roleItem) => {
               const Icon = roleItem.icon;
               const detected = languageStats.find((l) => l.language.toLowerCase() === roleItem.language.toLowerCase());
@@ -194,41 +180,29 @@ export function CodebaseLanguageDistribution() {
               return (
                 <div
                   key={roleItem.language}
-                  className={`p-3.5 rounded-xl border transition-colors flex flex-col justify-between space-y-2.5 ${
-                    isLight 
-                      ? "bg-slate-50/80 border-slate-200/90 hover:border-slate-300" 
-                      : "bg-zinc-900/40 border-zinc-850 hover:border-zinc-800"
-                  }`}
+                  className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] transition-colors flex flex-col justify-between space-y-2.5"
                 >
                   <div className="space-y-1.5">
                     <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center gap-2">
-                        <Icon className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                        <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-200">
-                          {roleItem.language}
-                        </span>
+                        <Icon className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />
+                        <span className="text-sm font-bold text-[var(--text)]">{roleItem.language}</span>
                       </div>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-400">
-                        {roleItem.category}
-                      </span>
+                      <span className="text-[11px] font-mono text-[var(--text-muted)]">{roleItem.category}</span>
                     </div>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                    <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
                       {roleItem.role}
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800/40 flex items-center justify-between text-[10px] font-mono text-zinc-500">
+                  <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] tabular-nums">
                     <span className="truncate max-w-[170px]" title={roleItem.sourcePath}>
                       {roleItem.sourcePath}
                     </span>
                     {detected ? (
-                      <span className="text-cyan-600 dark:text-cyan-400 shrink-0 font-medium">
-                        {detected.percentage}% share
-                      </span>
+                      <span className="text-[var(--accent)] shrink-0 font-semibold">{detected.percentage}% share</span>
                     ) : (
-                      <span className="text-zinc-500 shrink-0">
-                        Core algorithm
-                      </span>
+                      <span className="shrink-0">Core algorithm</span>
                     )}
                   </div>
                 </div>
@@ -237,46 +211,37 @@ export function CodebaseLanguageDistribution() {
           </div>
         </div>
 
-        {/* Principle Banner: Distinction between Codebase Composition and Skills */}
-        <div className={`p-3.5 rounded-xl border flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans ${
-          isLight 
-            ? "bg-slate-50 border-slate-200 text-slate-700" 
-            : "bg-zinc-900/30 border-zinc-800/60 text-zinc-400"
-        }`}>
-          <div className="flex items-start sm:items-center gap-2.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-500 shrink-0 mt-1.5 sm:mt-0" />
-            <p className="text-[12px] leading-relaxed">
-              <strong className="text-zinc-900 dark:text-zinc-200 font-medium">Core Principle:</strong> Repository language percentages describe physical code composition, not human capability. High TypeScript volume stems from full-stack system architecture, while high-signal algorithmic C++ solutions are compact by design.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 shrink-0 text-[11px] font-mono">
-            <span className="px-2 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800/90 text-zinc-700 dark:text-zinc-300">
-              Composition ≠ Capability
-            </span>
-          </div>
+        {/* Principle Banner */}
+        <div className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-sans text-[var(--text-secondary)]">
+          <p className="leading-relaxed">
+            <strong className="text-[var(--text)] font-semibold">Core Principle:</strong> Repository language percentages describe physical code composition, not human capability. High TypeScript volume stems from full-stack system architecture, while algorithmic C++ solutions are compact by design.
+          </p>
+          <span className="font-mono text-[11px] text-[var(--accent)] font-semibold shrink-0">
+            Composition ≠ Capability
+          </span>
         </div>
 
-        {/* Data Source Label */}
-        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-850/80 flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono text-zinc-500">
+        {/* Footer Attribution */}
+        <div className="pt-3 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-y-2 text-[11px] font-mono text-[var(--text-muted)]">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
             <span>
-              <strong className="text-zinc-700 dark:text-zinc-400">SOURCE:</strong> GitHub Languages API across 6 verified repos
+              <strong className="text-[var(--text)]">SOURCE:</strong> GitHub Languages API across verified repos
             </span>
             <span>
-              <strong className="text-zinc-700 dark:text-zinc-400">PROFILE:</strong>{" "}
+              <strong className="text-[var(--text)]">PROFILE:</strong>{" "}
               <a
                 href="https://github.com/codesbysayam"
                 target="_blank"
                 rel="noreferrer"
-                className="text-zinc-700 dark:text-zinc-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors inline-flex items-center gap-1"
+                className="text-[var(--text)] hover:text-[var(--accent)] underline inline-flex items-center gap-1"
               >
                 github.com/codesbysayam
-                <ExternalLink className="w-2.5 h-2.5" />
+                <ExternalLink className="w-3 h-3" aria-hidden="true" />
               </a>
             </span>
           </div>
           <div>
-            <strong className="text-zinc-700 dark:text-zinc-400">LAST SYNCED:</strong> {lastSyncedTime}
+            <strong className="text-[var(--text)]">LAST SYNCED:</strong> {lastSyncedTime}
           </div>
         </div>
       </div>

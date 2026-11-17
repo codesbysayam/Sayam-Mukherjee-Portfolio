@@ -20,7 +20,7 @@ export const LegalFooter: React.FC<LegalFooterProps> = ({
   };
 
   return (
-    <footer className="mt-16 pt-8 pb-12 border-t border-zinc-200/80 dark:border-zinc-800/80 text-zinc-600 dark:text-zinc-400 font-sans">
+    <footer className="mt-16 pt-8 pb-12 border-t border-[var(--border)] text-[var(--text-muted)] font-sans">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div className="flex flex-col items-start gap-1 text-left">
           {onNavigateHome ? (
@@ -30,19 +30,19 @@ export const LegalFooter: React.FC<LegalFooterProps> = ({
                 e.preventDefault();
                 handleNav("home");
               }}
-              className="font-display font-semibold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+              className="font-display font-bold text-sm tracking-tight text-[var(--text)] hover:text-[var(--accent)] transition-colors"
             >
               Sayam Mukherjee
             </a>
           ) : (
-            <span className="font-display font-semibold text-sm tracking-tight text-zinc-900 dark:text-zinc-100">
+            <span className="font-display font-bold text-sm tracking-tight text-[var(--text)]">
               Sayam Mukherjee
             </span>
           )}
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 tracking-normal font-sans">
-            AI &amp; ML CSE Undergraduate · Developer Portfolio
+          <p className="text-xs text-[var(--text-muted)] tracking-normal font-sans">
+            AI &amp; ML CSE Undergraduate · Engineering Portfolio
           </p>
-          <p className="text-[11px] font-mono text-zinc-400 dark:text-zinc-500 mt-0.5">
+          <p className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5 tabular-nums">
             © 2026 Sayam Mukherjee. All rights reserved.
           </p>
         </div>
@@ -57,11 +57,11 @@ export const LegalFooter: React.FC<LegalFooterProps> = ({
               e.preventDefault();
               handleNav("contact");
             }}
-            className="inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:underline underline-offset-4 transition-colors"
+            className="inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:underline underline-offset-4 transition-colors"
           >
             Contact
           </a>
-          <span className="text-zinc-300 dark:text-zinc-700 select-none text-xs px-0.5" aria-hidden="true">
+          <span className="text-[var(--text-faint)] select-none text-xs px-0.5" aria-hidden="true">
             ·
           </span>
           <a
@@ -70,11 +70,11 @@ export const LegalFooter: React.FC<LegalFooterProps> = ({
               e.preventDefault();
               handleNav("privacy");
             }}
-            className="inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:underline underline-offset-4 transition-colors"
+            className="inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:underline underline-offset-4 transition-colors"
           >
             Privacy Policy
           </a>
-          <span className="text-zinc-300 dark:text-zinc-700 select-none text-xs px-0.5" aria-hidden="true">
+          <span className="text-[var(--text-faint)] select-none text-xs px-0.5" aria-hidden="true">
             ·
           </span>
           <a
@@ -83,7 +83,7 @@ export const LegalFooter: React.FC<LegalFooterProps> = ({
               e.preventDefault();
               handleNav("terms");
             }}
-            className="inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:underline underline-offset-4 transition-colors"
+            className="inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:underline underline-offset-4 transition-colors"
           >
             Terms
           </a>

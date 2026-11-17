@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EXTENDED_DATA } from "../data/extendedData";
-import { Quote, ChevronLeft, ChevronRight, MessageSquare, Star } from "lucide-react";
+import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
 
 export default function TestimonialsSection() {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Auto-slide every 6 seconds
   useEffect(() => {
     const slideInterval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % EXTENDED_DATA.testimonials.length);
@@ -14,9 +13,13 @@ export default function TestimonialsSection() {
     return () => clearInterval(slideInterval);
   }, []);
 
-  const handleManualSlide = (direction: 'prev' | 'next') => {
-    if (direction === 'prev') {
-      setCurrentIndex((prev) => (prev - 1 + EXTENDED_DATA.testimonials.length) % EXTENDED_DATA.testimonials.length);
+  const handleManualSlide = (direction: "prev" | "next") => {
+    if (direction === "prev") {
+      setCurrentIndex(
+        (prev) =>
+          (prev - 1 + EXTENDED_DATA.testimonials.length) %
+          EXTENDED_DATA.testimonials.length
+      );
     } else {
       setCurrentIndex((prev) => (prev + 1) % EXTENDED_DATA.testimonials.length);
     }
@@ -26,59 +29,82 @@ export default function TestimonialsSection() {
 
   return (
     <div className="space-y-8 font-sans" id="testimonials-directory">
-      {/* Header */}
       <div className="text-center max-w-xl mx-auto space-y-2">
-        <span className="text-xs text-purple-400 font-mono uppercase tracking-widest block font-bold">
+        <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-widest block font-semibold">
           PARTNER FEEDBACK
         </span>
-        <h2 
-          style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)" }} 
-          className="font-bold tracking-tight text-white font-display"
+        <h2
+          style={{ fontSize: "clamp(1.6rem, 3.4vw, 3rem)" }}
+          className="font-extrabold tracking-tight text-[var(--text)] font-display"
         >
-          What Collaborators Say
+          What Collaborators{" "}
+          <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+            Say
+          </span>
         </h2>
-        <p className="text-sm text-zinc-400 leading-relaxed">
+        <p className="text-sm text-[var(--text-muted)] leading-relaxed">
           Feedback and recommendations from peers, project teammates, and clients.
         </p>
       </div>
 
-      {/* Main Glass Testimony Box */}
       <div className="relative max-w-3xl mx-auto">
         <AnimatePresence mode="wait">
           {activeTestimony && (
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.4 }}
-              className="glass-card rounded-2xl border border-zinc-850 p-6 md:p-10 relative overflow-hidden flex flex-col justify-between min-h-[250px] space-y-6"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.35 }}
+              className="card rounded-[10px] p-6 md:p-10 relative overflow-hidden flex flex-col justify-between min-h-[240px] space-y-6"
+              style={{
+                backgroundColor: "var(--surface-2)",
+                borderColor: "var(--border)",
+              }}
             >
-              <div className="absolute top-6 right-8 text-zinc-800 pointer-events-none select-none">
-                <Quote className="w-16 h-16 opacity-30 shrink-0" />
+              <div
+                className="absolute top-6 right-8 pointer-events-none select-none"
+                style={{ color: "var(--border)" }}
+              >
+                <Quote className="w-14 h-14 opacity-60 shrink-0" />
               </div>
 
               <div className="space-y-4 relative z-10">
-                {/* Score badge */}
-                <div className="flex gap-0.5 text-yellow-400">
+                <div className="flex gap-1 text-[var(--accent)]">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-current" />
                   ))}
                 </div>
 
-                <p className="text-sm md:text-base text-zinc-200 leading-relaxed italic font-sans font-medium">
-                  "{activeTestimony.content}"
+                <p className="text-base md:text-lg text-[var(--text)] leading-relaxed font-serif-editorial italic">
+                  &ldquo;{activeTestimony.content}&rdquo;
                 </p>
               </div>
 
-              {/* Author Info */}
-              <div className="flex items-center justify-between pt-4 border-t border-zinc-900/60 relative z-10">
+              <div
+                className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t relative z-10"
+                style={{ borderColor: "var(--border)" }}
+              >
                 <div>
-                  <h3 className="text-sm font-bold text-white font-display leading-tight">{activeTestimony.name}</h3>
-                  <p className="text-xs text-zinc-400 font-mono mt-0.5">{activeTestimony.role} • <span className="text-purple-400 font-bold">{activeTestimony.organization}</span></p>
+                  <h3 className="text-sm font-bold text-[var(--text)] font-display leading-tight">
+                    {activeTestimony.name}
+                  </h3>
+                  <p className="text-xs text-[var(--text-muted)] font-mono mt-0.5">
+                    {activeTestimony.role} &bull;{" "}
+                    <span className="text-[var(--accent)] font-semibold">
+                      {activeTestimony.organization}
+                    </span>
+                  </p>
                 </div>
 
-                <span className="text-xs font-mono tracking-wider bg-purple-950/20 text-purple-400 border border-purple-800/20 px-2.5 py-1 rounded-full uppercase font-bold">
+                <span
+                  className="text-[11px] font-mono tracking-wider px-2.5 py-1 rounded-[4px] border uppercase font-semibold"
+                  style={{
+                    backgroundColor: "var(--surface)",
+                    borderColor: "var(--border)",
+                    color: "var(--accent)",
+                  }}
+                >
                   {activeTestimony.type}
                 </span>
               </div>
@@ -86,35 +112,41 @@ export default function TestimonialsSection() {
           )}
         </AnimatePresence>
 
-        {/* Manual Slide Controls */}
+        {/* Controls */}
         <div className="flex justify-center items-center gap-4 mt-6">
           <button
-            onClick={() => handleManualSlide('prev')}
-            className="p-2 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white rounded-full border border-zinc-850 cursor-pointer"
+            type="button"
+            onClick={() => handleManualSlide("prev")}
+            className="btn btn-secondary min-h-[38px] min-w-[38px] p-2"
             title="Previous testimony"
+            aria-label="Previous testimony"
           >
             <ChevronLeft className="w-4 h-4" />
           </button>
 
-          {/* Indicators bullet points */}
           <div className="flex gap-2">
             {EXTENDED_DATA.testimonials.map((_, idx) => (
               <button
                 key={idx}
+                type="button"
                 onClick={() => setCurrentIndex(idx)}
-                className={`w-2 h-2 rounded-full transition-all cursor-pointer ${
-                  currentIndex === idx 
-                    ? "bg-purple-500 w-4" 
-                    : "bg-zinc-800 hover:bg-zinc-700"
-                }`}
+                aria-label={`Show testimonial ${idx + 1}`}
+                className="h-2 rounded-[2px] transition-all cursor-pointer"
+                style={{
+                  width: currentIndex === idx ? "24px" : "8px",
+                  backgroundColor:
+                    currentIndex === idx ? "#C7E34A" : "var(--border-strong)",
+                }}
               />
             ))}
           </div>
 
           <button
-            onClick={() => handleManualSlide('next')}
-            className="p-2 bg-zinc-950 hover:bg-zinc-900 text-zinc-400 hover:text-white rounded-full border border-zinc-850 cursor-pointer"
+            type="button"
+            onClick={() => handleManualSlide("next")}
+            className="btn btn-secondary min-h-[38px] min-w-[38px] p-2"
             title="Next testimony"
+            aria-label="Next testimony"
           >
             <ChevronRight className="w-4 h-4" />
           </button>

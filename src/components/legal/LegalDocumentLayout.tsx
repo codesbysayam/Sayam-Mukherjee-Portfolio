@@ -35,7 +35,6 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
   const [isMobileTocExpanded, setIsMobileTocExpanded] = useState<boolean>(false);
   const [showBackToTop, setShowBackToTop] = useState<boolean>(false);
 
-  // URL Hash support on mount & hashchange for direct linking
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.replace(/^#/, "");
@@ -59,7 +58,6 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
     return () => window.removeEventListener("hashchange", handleHash);
   }, [sections]);
 
-  // Active section tracking via IntersectionObserver
   useEffect(() => {
     if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
       return;
@@ -67,7 +65,6 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find visible section closest to top of viewport
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort(
@@ -94,7 +91,6 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
     return () => observer.disconnect();
   }, [sections]);
 
-  // Scroll listener for "Back to top" button
   useEffect(() => {
     const handleScroll = () => {
       setShowBackToTop(window.scrollY > 400);
@@ -132,73 +128,64 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
   };
 
   return (
-    <div className="w-full min-h-screen select-text font-sans bg-[#FAFAFC] dark:bg-[#09090B] text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
+    <div className="w-full min-h-screen select-text font-sans bg-[var(--bg)] text-[var(--text)] transition-colors duration-200">
       <div
         className="w-full mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-20"
         style={{ maxWidth: "min(100% - 2rem, 920px)" }}
       >
-        {/* Navigation Breadcrumb / Return */}
         {onNavigateHome && (
           <div className="mb-6 sm:mb-8">
             <button
               type="button"
               onClick={onNavigateHome}
-              className="group inline-flex items-center gap-2 min-h-[44px] px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-50 hover:bg-zinc-100 dark:hover:bg-zinc-850 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+              className="btn btn-ghost px-3 -ml-3 text-xs sm:text-sm"
               aria-label="Return to portfolio home"
             >
-              <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
+              <ArrowLeft className="w-4 h-4 shrink-0" />
               <span>Back to Portfolio</span>
             </button>
           </div>
         )}
 
-        {/* Editorial Document Header */}
-        <header className="pb-8 sm:pb-10 border-b border-zinc-200/80 dark:border-zinc-800/80">
+        <header className="pb-8 sm:pb-10 border-b border-[var(--border)]">
           <div className="space-y-4 max-w-[780px]">
-            <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-purple-600 dark:text-purple-400">
+            <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
               <span>{eyebrow}</span>
-              <span className="text-zinc-300 dark:text-zinc-700 select-none">·</span>
-              <span className="text-zinc-500 dark:text-zinc-400 font-sans normal-case tracking-normal">
+              <span className="text-[var(--text-faint)] select-none" aria-hidden="true">/</span>
+              <span className="text-[var(--text-muted)] font-sans normal-case tracking-normal font-medium">
                 Official Document
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-zinc-950 dark:text-zinc-50 font-display leading-[1.12]">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-[var(--text)] font-display leading-[1.08]">
               {title}
             </h1>
 
-            <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 pt-1">
+            <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-[var(--text-muted)] font-mono pt-1">
               <span>Last updated: {lastUpdated}</span>
-              <span className="select-none text-zinc-300 dark:text-zinc-700">·</span>
-              <span>Direct Link Support</span>
-              <span className="select-none text-zinc-300 dark:text-zinc-700">·</span>
-              <span>Fully Synchronous</span>
+              <span className="select-none text-[var(--text-faint)]" aria-hidden="true">/</span>
+              <span>Direct Section Anchors</span>
             </div>
 
-            <p className="text-base sm:text-lg leading-relaxed text-zinc-700 dark:text-zinc-300 pt-2 font-sans">
+            <p className="text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] pt-2 font-sans">
               {intro}
             </p>
           </div>
         </header>
 
-        {/* Professional Editorial Table of Contents */}
         <section
           aria-label="Table of contents"
-          className="my-8 sm:my-10 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-white/90 dark:bg-zinc-900/60 p-5 sm:p-7 shadow-xs backdrop-blur-xs transition-colors"
+          className="card my-8 sm:my-10 p-5 sm:p-7"
         >
-          {/* Header & Mobile Toggle */}
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 font-mono">
-                Contents ({sections.length} Sections)
-              </span>
-            </div>
+            <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)] font-mono tabular-nums">
+              Contents ({sections.length} Sections)
+            </span>
 
-            {/* Mobile Expand / Collapse Trigger */}
             <button
               type="button"
               onClick={() => setIsMobileTocExpanded(!isMobileTocExpanded)}
-              className="sm:hidden inline-flex items-center gap-1.5 text-xs font-medium text-purple-600 dark:text-purple-400 p-1 min-h-[44px] cursor-pointer"
+              className="sm:hidden inline-flex items-center gap-1.5 text-xs font-semibold text-[var(--accent)] p-1 min-h-[44px] cursor-pointer"
               aria-expanded={isMobileTocExpanded}
             >
               <span>{isMobileTocExpanded ? "Hide" : "Show All"}</span>
@@ -210,10 +197,9 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
             </button>
           </div>
 
-          {/* Table of Contents Grid */}
           <nav
             aria-label="On this page quick links"
-            className={`mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/80 ${
+            className={`mt-4 pt-4 border-t border-[var(--border)] ${
               isMobileTocExpanded ? "block" : "hidden sm:block"
             }`}
           >
@@ -228,18 +214,18 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
                         e.preventDefault();
                         handleSelectSection(section.id);
                       }}
-                      className={`group flex items-baseline gap-2.5 py-1.5 px-2 -mx-2 rounded-lg text-xs sm:text-[13px] transition-colors cursor-pointer min-h-[40px] ${
+                      className={`group flex items-baseline gap-2.5 py-1.5 px-2.5 -mx-2 rounded-[6px] text-xs sm:text-[13px] transition-colors cursor-pointer min-h-[40px] ${
                         isActive
-                          ? "bg-purple-50/80 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300 font-semibold"
-                          : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100/60 dark:hover:bg-zinc-800/40"
+                          ? "bg-[var(--surface)] text-[var(--text)] font-bold"
+                          : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]/70"
                       }`}
                     >
                       {section.number && (
                         <span
-                          className={`font-mono text-[11px] shrink-0 select-none ${
+                          className={`font-mono text-[11px] shrink-0 select-none tabular-nums ${
                             isActive
-                              ? "text-purple-600 dark:text-purple-400 font-bold"
-                              : "text-zinc-400 dark:text-zinc-500 group-hover:text-purple-600 dark:group-hover:text-purple-400"
+                              ? "text-[var(--accent)] font-bold"
+                              : "text-[var(--text-faint)] group-hover:text-[var(--accent)]"
                           }`}
                         >
                           {section.number}
@@ -256,24 +242,21 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
           </nav>
         </section>
 
-        {/* Editorial Document Body */}
         <article className="min-w-0 w-full space-y-8 sm:space-y-12">
           {children}
         </article>
 
-        {/* Stationary Editorial Legal Footer */}
         <LegalFooter
           onNavigateHome={onNavigateHome}
           onNavigateTab={onNavigateTab}
         />
       </div>
 
-      {/* Floating Back to Top Button */}
       {showBackToTop && (
         <button
           type="button"
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-40 p-3 rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 text-zinc-700 dark:text-zinc-200 shadow-lg hover:bg-zinc-50 dark:hover:bg-zinc-750 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+          className="fixed bottom-6 right-6 z-40 p-3 rounded-[6px] bg-[var(--surface-2)] border border-[var(--border-strong)] text-[var(--text)] shadow-md hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A]"
           title="Scroll back to top"
           aria-label="Scroll back to top"
         >

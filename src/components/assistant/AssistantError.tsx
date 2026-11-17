@@ -12,17 +12,17 @@ export const AssistantError = memo(function AssistantError({
 }: AssistantErrorProps) {
   return (
     <div className="flex flex-col items-start w-full my-1.5 animate-fadeIn">
-      <div className="max-w-[90%] rounded-2xl rounded-tl-xs px-3.5 py-3 text-xs sm:text-sm bg-rose-950/40 border border-rose-900/60 text-rose-200/90 shadow-xs backdrop-blur-xs space-y-2">
+      <div className="max-w-[90%] rounded-[10px] rounded-tl-[4px] px-3.5 py-3 text-xs sm:text-sm bg-[var(--surface)] border border-[var(--danger)]/40 text-[var(--text)] space-y-2">
         <div className="flex items-start gap-2">
-          <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
-          <p className="leading-relaxed font-sans">{message}</p>
+          <AlertCircle className="w-4 h-4 text-[var(--danger)] shrink-0 mt-0.5" />
+          <p className="leading-relaxed font-sans text-xs sm:text-sm">{message}</p>
         </div>
         {onRetry && (
           <div className="pt-1 pl-6">
             <button
               type="button"
               onClick={onRetry}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono text-rose-300 hover:text-white bg-rose-900/40 hover:bg-rose-900/60 border border-rose-800/60 transition-all cursor-pointer focus:outline-hidden focus:ring-1 focus:ring-rose-400"
+              className="btn btn-secondary !min-h-[30px] !min-w-0 !px-2.5 !py-1 text-[11px] font-mono"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Retry Query</span>

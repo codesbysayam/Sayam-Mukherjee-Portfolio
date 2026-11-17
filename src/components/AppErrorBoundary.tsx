@@ -34,24 +34,23 @@ export class AppErrorBoundary extends React.Component<Props, State> {
 
     return (
       <main className="app-error-state min-h-[40vh] flex items-center justify-center p-6">
-        <div className="app-error-card max-w-md w-full p-6 sm:p-8 rounded-2xl bg-zinc-900/90 border border-zinc-800 text-center space-y-4 shadow-xl">
-          <span className="app-error-eyebrow text-[10px] font-mono font-bold tracking-widest text-purple-400 uppercase">
-            PAGE ERROR
+        <div className="card max-w-md w-full p-6 sm:p-8 text-center space-y-4">
+          <span className="text-[11px] font-mono font-semibold tracking-[0.14em] text-[var(--accent)] uppercase block">
+            Page Error
           </span>
 
-          <h1 className="text-xl font-bold text-white font-display">
+          <h1 className="text-xl font-bold text-[var(--text)] font-display">
             Something went wrong
           </h1>
 
-          <p className="text-xs text-zinc-400 leading-relaxed">
-            This section could not be loaded correctly.
-            The rest of the portfolio is still safe.
+          <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
+            This section could not be loaded correctly. The rest of the portfolio remains unaffected.
           </p>
 
           <button
             type="button"
             onClick={this.handleReload}
-            className="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold cursor-pointer transition-all shadow-md active:scale-95"
+            className="btn btn-primary text-xs"
           >
             Reload Page
           </button>

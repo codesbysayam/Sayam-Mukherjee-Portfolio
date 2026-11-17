@@ -35,7 +35,6 @@ export const GitHubStats = memo(function GitHubStats({ stats }: GitHubStatsProps
       value: metrics.publicRepos,
       subtext: `${metrics.originalRepos} original repositories`,
       icon: FolderGit2,
-      accent: "text-blue-400",
     },
     {
       id: "original",
@@ -43,7 +42,6 @@ export const GitHubStats = memo(function GitHubStats({ stats }: GitHubStatsProps
       value: metrics.originalRepos,
       subtext: "Authored by codesbysayam",
       icon: CheckCircle2,
-      accent: "text-emerald-400",
     },
     {
       id: "stars",
@@ -51,7 +49,6 @@ export const GitHubStats = memo(function GitHubStats({ stats }: GitHubStatsProps
       value: metrics.totalStars,
       subtext: "Across original repositories",
       icon: Star,
-      accent: "text-amber-400",
     },
     {
       id: "forks",
@@ -59,7 +56,6 @@ export const GitHubStats = memo(function GitHubStats({ stats }: GitHubStatsProps
       value: metrics.totalForks,
       subtext: "Community forks of original code",
       icon: GitFork,
-      accent: "text-purple-400",
     },
     ...(typeof metrics.contributions === "number"
       ? [
@@ -69,7 +65,6 @@ export const GitHubStats = memo(function GitHubStats({ stats }: GitHubStatsProps
             value: metrics.contributions,
             subtext: "GitHub contribution graph total",
             icon: Activity,
-            accent: "text-cyan-400",
           },
         ]
       : []),
@@ -82,20 +77,24 @@ export const GitHubStats = memo(function GitHubStats({ stats }: GitHubStatsProps
         return (
           <div
             key={card.id}
-            className="p-4 sm:p-5 rounded-2xl bg-zinc-900/40 border border-white/[0.08] hover:border-white/[0.16] transition-all flex flex-col justify-between"
+            className="card p-4 sm:p-5 flex flex-col justify-between"
+            style={{
+              backgroundColor: "var(--surface-2)",
+              borderColor: "var(--border)",
+            }}
           >
             <div className="flex items-center justify-between pb-3">
-              <span className="text-xs font-mono text-zinc-400">
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
                 {card.label}
               </span>
-              <Icon className={`w-4 h-4 ${card.accent}`} />
+              <Icon className="w-4 h-4 text-[var(--accent)] shrink-0" />
             </div>
 
             <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl font-bold text-white font-mono tracking-tight">
+              <div className="text-2xl sm:text-3xl font-extrabold text-[var(--text)] font-display tabular-nums tracking-tight">
                 {card.value}
               </div>
-              <div className="text-[11px] text-zinc-400 font-sans truncate">
+              <div className="text-[11px] text-[var(--text-muted)] font-sans truncate">
                 {card.subtext}
               </div>
             </div>

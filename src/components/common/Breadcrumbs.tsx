@@ -13,7 +13,6 @@ export interface BreadcrumbsProps {
 }
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = "" }) => {
-  // Inject or update BreadcrumbList Schema.org structured data
   useEffect(() => {
     if (typeof window === "undefined" || items.length === 0) return;
 
@@ -47,7 +46,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = "" 
   return (
     <nav
       aria-label="Breadcrumb"
-      className={`flex items-center text-xs font-mono text-zinc-500 dark:text-zinc-400 py-2.5 ${className}`}
+      className={`flex items-center text-xs font-mono text-[var(--text-muted)] py-2.5 ${className}`}
     >
       <ol className="flex flex-wrap items-center gap-1.5 list-none p-0 m-0">
         {items.map((item, index) => {
@@ -56,11 +55,11 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = "" 
           return (
             <li key={`${item.label}-${index}`} className="flex items-center gap-1.5">
               {index > 0 && (
-                <ChevronRight className="w-3 h-3 text-zinc-400 dark:text-zinc-600 shrink-0 select-none" aria-hidden="true" />
+                <ChevronRight className="w-3 h-3 text-[var(--text-faint)] shrink-0 select-none" aria-hidden="true" />
               )}
 
               {index === 0 && (
-                <Home className="w-3.5 h-3.5 mr-0.5 text-zinc-400 dark:text-zinc-500 shrink-0 select-none" aria-hidden="true" />
+                <Home className="w-3.5 h-3.5 mr-0.5 text-[var(--text-faint)] shrink-0 select-none" aria-hidden="true" />
               )}
 
               {item.href && !isLast ? (
@@ -72,14 +71,14 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, className = "" 
                       item.onClick();
                     }
                   }}
-                  className="hover:text-purple-600 dark:hover:text-purple-400 transition-colors cursor-pointer underline-offset-4 hover:underline"
+                  className="hover:text-[var(--accent)] transition-colors cursor-pointer underline-offset-4 hover:underline"
                 >
                   {item.label}
                 </a>
               ) : (
                 <span
                   aria-current={isLast ? "page" : undefined}
-                  className={isLast ? "font-semibold text-zinc-900 dark:text-zinc-100 truncate" : ""}
+                  className={isLast ? "font-semibold text-[var(--text)] truncate" : ""}
                 >
                   {item.label}
                 </span>

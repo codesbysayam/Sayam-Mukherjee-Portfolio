@@ -1,4 +1,3 @@
-import React from "react";
 import { ArrowRight } from "lucide-react";
 
 interface WorkflowStep {
@@ -44,31 +43,29 @@ const TOOLCHAIN_STEPS: WorkflowStep[] = [
 export function EngineeringToolchain() {
   return (
     <div className="space-y-8">
-      {/* Section Header */}
       <div className="space-y-2">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-semibold uppercase tracking-[0.14em] text-cyan-400">
+          <span className="text-xs font-mono font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
             09 · ENGINEERING TOOLCHAIN
           </span>
-          <span className="h-px w-12 bg-zinc-800" />
-          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider">
+          <span className="h-px w-12 bg-[var(--border)]" />
+          <span className="text-xs font-mono text-[var(--text-faint)] uppercase tracking-wider">
             Standard Workflow
           </span>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white font-display">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--text)] font-display">
             Engineering Toolchain &amp; Delivery Flow
           </h2>
-          <span className="text-xs font-mono text-zinc-500 hidden sm:inline">
+          <span className="text-xs font-mono text-[var(--text-faint)] hidden sm:inline">
             Ideation → Design → Development → Version Control → Deployment
           </span>
         </div>
-        <p className="text-sm sm:text-base text-zinc-400 max-w-2xl font-sans">
+        <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-2xl font-sans">
           A disciplined five-stage development lifecycle guaranteeing clean architecture, verifiable history, and reproducible delivery.
         </p>
       </div>
 
-      {/* Minimalist 5-Stage Flow */}
       <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
         {TOOLCHAIN_STEPS.map((stage, idx) => {
           const isLast = idx === TOOLCHAIN_STEPS.length - 1;
@@ -76,28 +73,28 @@ export function EngineeringToolchain() {
           return (
             <div
               key={stage.name}
-              className="p-5 rounded-2xl bg-zinc-950/40 border border-zinc-850 flex flex-col justify-between space-y-4 hover:border-zinc-750 transition-colors"
+              className="card p-5 flex flex-col justify-between space-y-4"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-zinc-500">
+                  <span className="text-xs font-mono font-bold text-[var(--text-faint)] tabular-nums">
                     {stage.step}
                   </span>
                   {!isLast && (
-                    <ArrowRight className="w-3.5 h-3.5 text-zinc-600 hidden md:block" />
+                    <ArrowRight className="w-3.5 h-3.5 text-[var(--text-faint)] hidden md:block" />
                   )}
                 </div>
 
-                <h3 className="text-base font-bold text-white font-display">
+                <h3 className="text-base font-bold text-[var(--text)] font-display">
                   {stage.name}
                 </h3>
 
-                <p className="text-xs text-zinc-400 leading-relaxed font-sans">
+                <p className="text-xs text-[var(--text-muted)] leading-relaxed font-sans">
                   {stage.summary}
                 </p>
               </div>
 
-              <div className="pt-2 border-t border-zinc-850/80 text-[11px] font-mono text-cyan-400/90">
+              <div className="pt-2 border-t border-[var(--border)] text-[11px] font-mono text-[var(--accent)]">
                 {stage.tools}
               </div>
             </div>

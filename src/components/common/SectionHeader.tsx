@@ -26,41 +26,38 @@ export function SectionHeader({
   return (
     <div id={id} className={`space-y-3 ${className}`}>
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-        <div className="space-y-2 max-w-3xl">
+        <div className="space-y-2.5 max-w-3xl">
           {(eyebrow || badge) && (
-            <div className="flex items-center gap-2 flex-wrap">
+            <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono">
               {eyebrow && (
-                <span className="text-xs font-mono font-semibold tracking-wide text-purple-700 dark:text-purple-400">
+                <span className="font-semibold tracking-wider uppercase text-[var(--accent)]">
                   {eyebrow}
                 </span>
               )}
               {badge && (
-                <span className="text-xs font-mono px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 text-purple-700 dark:text-purple-300 font-medium">
-                  {badge}
-                </span>
+                <>
+                  <span className="text-[var(--text-faint)]" aria-hidden="true">/</span>
+                  <span className="text-[var(--text-muted)] font-medium">{badge}</span>
+                </>
               )}
             </div>
           )}
 
-          <HeadingTag 
-            className="font-extrabold text-zinc-900 dark:text-white font-display tracking-tight leading-[1.12]"
-            style={{ fontSize: "clamp(2rem, 3.2vw, 3rem)" }}
+          <HeadingTag
+            className="font-extrabold text-[var(--text)] font-display tracking-tight leading-[1.06] text-balance"
+            style={{ fontSize: "clamp(2rem, 3.6vw, 3.35rem)" }}
           >
             {title}
           </HeadingTag>
 
           {description && (
-            <div className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 font-sans leading-relaxed pt-0.5">
+            <div className="text-sm sm:text-base text-[var(--text-secondary)] font-sans leading-relaxed pt-0.5 max-w-2xl">
               {description}
             </div>
           )}
         </div>
 
-        {action && (
-          <div className="shrink-0 pt-1 sm:pt-0">
-            {action}
-          </div>
-        )}
+        {action && <div className="shrink-0 pt-1 sm:pt-0">{action}</div>}
       </div>
     </div>
   );

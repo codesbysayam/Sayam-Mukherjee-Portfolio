@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { CheckCircle2, Info, AlertCircle, X } from "lucide-react";
-import { usePortfolio } from "../context/PortfolioContext";
 
 export type ToastType = "success" | "info" | "error";
 
@@ -14,9 +13,6 @@ export interface ToastItem {
 
 const TOAST_EVENT_NAME = "app:show-toast";
 
-/**
- * Global helper to trigger a toast notification from anywhere in the app
- */
 export function showToast(message: string, type: ToastType = "success", duration: number = 3200) {
   if (typeof window !== "undefined") {
     const event = new CustomEvent(TOAST_EVENT_NAME, {
@@ -32,8 +28,6 @@ export function showToast(message: string, type: ToastType = "success", duration
 }
 
 export default function Toast() {
-  const { theme } = usePortfolio();
-  const isDark = theme === "dark";
   const [toasts, setToasts] = useState<ToastItem[]>([]);
 
   useEffect(() => {
@@ -42,7 +36,7 @@ export default function Toast() {
       if (!customEvent.detail) return;
 
       const newToast = customEvent.detail;
-      setToasts((prev) => [...prev.slice(-2), newToast]); // keep max 3 visible toasts
+      setToasts((prev) => [...prev.slice(-2), newToast]);
 
       const timer = setTimeout(() => {
         setToasts((prev) => prev.filter((t) => t.id !== newToast.id));
@@ -70,37 +64,33 @@ export default function Toast() {
         {toasts.map((toast) => (
           <motion.div
             key={toast.id}
-            initial={{ opacity: 0, y: 20, scale: 0.94 }}
+            initial={{ opacity: 0, y: 16, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 12, scale: 0.94 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: 10, scale: 0.96 }}
+            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             role="status"
             aria-live="polite"
-            className={`pointer-events-auto flex items-center justify-between gap-3 px-4 py-3 rounded-2xl border shadow-xl backdrop-blur-2xl transition-colors w-full sm:w-auto min-w-[280px] max-w-full ${
-              isDark
-                ? "bg-zinc-950/90 text-white border-zinc-800 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
-                : "bg-white/95 text-zinc-900 border-zinc-200/80 shadow-[0_16px_40px_rgba(20,20,40,0.12)]"
-            }`}
+            className="pointer-events-auto card flex items-center justify-between gap-3 px-4 py-3 shadow-xl w-full sm:w-auto min-w-[280px] max-w-full bg-[var(--surface-2)] border-[var(--border-strong)]"
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="shrink-0">
                 {toast.type === "success" && (
-                  <div className="w-6 h-6 rounded-full bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-500">
+                  <div className="w-6 h-6 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--success)]">
                     <CheckCircle2 className="w-3.5 h-3.5" />
                   </div>
                 )}
                 {toast.type === "info" && (
-                  <div className="w-6 h-6 rounded-full bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+                  <div className="w-6 h-6 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--accent)]">
                     <Info className="w-3.5 h-3.5" />
                   </div>
                 )}
                 {toast.type === "error" && (
-                  <div className="w-6 h-6 rounded-full bg-rose-500/15 border border-rose-500/30 flex items-center justify-center text-rose-400">
+                  <div className="w-6 h-6 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center text-[var(--danger)]">
                     <AlertCircle className="w-3.5 h-3.5" />
                   </div>
                 )}
               </div>
-              <p className="text-xs font-mono font-medium truncate leading-relaxed">
+              <p className="text-xs font-mono font-medium text-[var(--text)] truncate leading-relaxed">
                 {toast.message}
               </p>
             </div>
@@ -108,11 +98,7 @@ export default function Toast() {
             <button
               type="button"
               onClick={() => removeToast(toast.id)}
-              className={`p-1 rounded-lg transition-colors cursor-pointer shrink-0 ${
-                isDark
-                  ? "text-zinc-400 hover:text-white hover:bg-zinc-800/60"
-                  : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100"
-              }`}
+              className="p-1 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer shrink-0"
               aria-label="Close notification"
             >
               <X className="w-3.5 h-3.5" />

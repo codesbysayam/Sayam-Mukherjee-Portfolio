@@ -2,7 +2,6 @@ import React from "react";
 import { AchievementRecord, Certificate } from "../../types/certificates";
 import { AchievementCard } from "./AchievementCard";
 import { Award, RotateCcw } from "lucide-react";
-import { usePortfolio } from "../../context/PortfolioContext";
 
 export interface AchievementGridProps {
   records?: (AchievementRecord | Certificate)[];
@@ -27,49 +26,37 @@ export function AchievementGrid({
   emptyTitle = "No matching credentials found",
   emptyMessage = "No certificates match your query. Try resetting your filters to view all credentials in the archive.",
 }: AchievementGridProps) {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
-
   const items = (records || certificates || []) as (AchievementRecord | Certificate)[];
 
   if (items.length === 0) {
     return (
       <div
-        className={`achievement-grid__empty rounded-2xl border p-12 text-center max-w-lg mx-auto space-y-4 ${
-          isLight
-            ? "bg-white border-slate-200 text-slate-900"
-            : "bg-[#111318] border-white/10 text-white"
-        } ${className}`}
+        className={`card p-10 sm:p-12 text-center max-w-lg mx-auto space-y-4 ${className}`}
+        style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
       >
         <div
-          className={`w-12 h-12 rounded-xl mx-auto flex items-center justify-center border ${
-            isLight
-              ? "bg-slate-100 border-slate-200 text-slate-600"
-              : "bg-white/[0.05] border-white/10 text-purple-400"
-          }`}
+          className="w-12 h-12 rounded-[10px] mx-auto flex items-center justify-center border"
+          style={{
+            backgroundColor: "var(--surface)",
+            borderColor: "var(--border)",
+            color: "var(--accent)",
+          }}
         >
-          <Award className="w-6 h-6 opacity-80" />
+          <Award className="w-6 h-6" />
         </div>
 
-        <div className="space-y-1">
-          <h3 className="text-lg font-bold">{emptyTitle}</h3>
-          <p
-            className={`text-xs leading-relaxed max-w-sm mx-auto ${
-              isLight ? "text-slate-500" : "text-[#737A87]"
-            }`}
-          >
+        <div className="space-y-1.5">
+          <h3 className="text-lg font-bold text-[var(--text)] font-display">{emptyTitle}</h3>
+          <p className="text-xs leading-relaxed max-w-sm mx-auto text-[var(--text-muted)]">
             {emptyMessage}
           </p>
         </div>
 
         {onResetFilters && (
           <button
+            type="button"
             onClick={onResetFilters}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold font-sans transition-all cursor-pointer border ${
-              isLight
-                ? "bg-slate-900 hover:bg-slate-800 text-white border-slate-900"
-                : "bg-white/[0.08] hover:bg-white/[0.14] text-white border-white/10"
-            }`}
+            className="btn btn-primary text-xs"
           >
             <RotateCcw className="w-3.5 h-3.5" />
             <span>Reset All Filters</span>

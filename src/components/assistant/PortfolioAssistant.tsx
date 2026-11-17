@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Sparkles, Bot } from "lucide-react";
+import { Bot } from "lucide-react";
 import { AssistantHeader } from "./AssistantHeader";
 import { AssistantConversation } from "./AssistantConversation";
 import { AssistantSuggestions } from "./AssistantSuggestions";
@@ -9,7 +9,7 @@ import { ChatMessage } from "./AssistantMessage";
 import { streamAssistantMessage, AssistantMessage as ApiMessage } from "../../lib/assistant/client";
 import "./assistant.css";
 
-const INITIAL_GREETING = `Hi, I’m Sayam’s Portfolio Assistant.
+const INITIAL_GREETING = `Hi, I’m Sayam’s Portfolio Guide.
 
 I can help you explore his projects, education, skills, GitHub activity, certificates, journal entries and other verified portfolio information.
 
@@ -33,12 +33,10 @@ export function PortfolioAssistant() {
   const abortControllerRef = useRef<AbortController | null>(null);
   const launcherRef = useRef<HTMLButtonElement>(null);
 
-  // Check if user is scrolled up before auto-scrolling
   const handleScroll = useCallback(() => {
     const el = scrollContainerRef.current;
     if (!el) return;
     const distanceToBottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-    // If user is more than 80px away from bottom, preserve scroll position
     isUserScrolledUp.current = distanceToBottom > 80;
   }, []);
 
@@ -47,7 +45,6 @@ export function PortfolioAssistant() {
     messagesEndRef.current?.scrollIntoView({ behavior });
   }, []);
 
-  // Keyboard accessibility: Escape closes panel
   useEffect(() => {
     if (isOpen) {
       const handleKeyDown = (e: KeyboardEvent) => {
@@ -61,7 +58,6 @@ export function PortfolioAssistant() {
     }
   }, [isOpen]);
 
-  // Clean up ongoing requests on unmount
   useEffect(() => {
     return () => {
       if (abortControllerRef.current) {
@@ -70,12 +66,10 @@ export function PortfolioAssistant() {
     };
   }, []);
 
-  // Send query logic
   const handleSend = async (queryText: string) => {
     const textToSend = (queryText || "").trim();
     if (!textToSend || isGenerating) return;
 
-    // Reset user scroll lock when they ask a new question
     isUserScrolledUp.current = false;
 
     const userMessageId = `user-${Date.now()}`;
@@ -192,10 +186,8 @@ export function PortfolioAssistant() {
   };
 
   const handleRetry = () => {
-    // Find preceding user question
     const lastUserMsg = [...messages].reverse().find((m) => m.role === "user");
     if (lastUserMsg) {
-      // Remove last failed message
       setMessages((prev) => prev.filter((m) => !m.error));
       handleSend(lastUserMsg.content);
     }
@@ -205,55 +197,44 @@ export function PortfolioAssistant() {
 
   return (
     <>
-      {/* Floating launcher button */}
       <AnimatePresence>
         {!isOpen && (
           <motion.button
             ref={launcherRef}
-            initial={{ scale: 0.85, opacity: 0 }}
+            initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.85, opacity: 0 }}
+            exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.18 }}
             onClick={() => setIsOpen(true)}
-            className="fixed z-40 transition-all duration-200 bottom-[calc(clamp(56px,10vh,68px)+env(safe-area-inset-bottom,0px)+0.75rem)] right-[max(0.75rem,calc(env(safe-area-inset-right,0px)+0.5rem))] sm:right-5 xl:bottom-6 xl:right-6 flex items-center gap-2 min-h-[44px] h-11 px-3.5 sm:px-4 py-2.5 rounded-full bg-zinc-900/90 text-white border border-white/15 shadow-2xl backdrop-blur-md hover:border-purple-500/50 hover:bg-zinc-850 active:scale-95 transition-all cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
-            aria-label="Open Sayam's Agent"
+            className="fixed z-40 bottom-[calc(clamp(56px,10vh,68px)+env(safe-area-inset-bottom,0px)+0.75rem)] right-[max(0.75rem,calc(env(safe-area-inset-right,0px)+0.5rem))] sm:right-5 xl:bottom-6 xl:right-6 flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-[6px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] shadow-lg hover:bg-[#151713] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A]"
+            aria-label="Open Portfolio Guide"
           >
-            <div className="relative flex items-center justify-center w-6 h-6 rounded-full bg-zinc-800 text-zinc-200 group-hover:text-purple-300 transition-colors">
-              <Bot className="w-4 h-4" />
-              <span
-                className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-zinc-900"
-                aria-hidden="true"
-              />
-            </div>
-            <span className="text-xs font-semibold font-display tracking-tight pr-0.5">
-              Sayam's Agent
+            <Bot className="w-4 h-4 text-[#C7E34A] shrink-0" />
+            <span className="text-xs font-bold font-display tracking-tight">
+              Ask Portfolio
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-zinc-400 group-hover:text-amber-300 transition-colors" />
           </motion.button>
         )}
       </AnimatePresence>
 
-      {/* Main Assistant Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 16, scale: 0.96 }}
+            initial={{ opacity: 0, y: 16, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.96 }}
-            transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            exit={{ opacity: 0, y: 16, scale: 0.97 }}
+            transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="assistant-window"
             role="dialog"
             aria-modal="true"
             aria-labelledby="assistant-panel-title"
           >
-            {/* 1. Header (fixed height, never scrolls) */}
             <AssistantHeader
               onClear={handleClear}
               onClose={() => setIsOpen(false)}
               isGenerating={isGenerating}
             />
 
-            {/* 2. Conversation (only vertically scrolling region) */}
             <AssistantConversation
               messages={messages}
               isGenerating={isGenerating}
@@ -263,7 +244,6 @@ export function PortfolioAssistant() {
               onScroll={handleScroll}
             />
 
-            {/* 3. Suggestions (rigid bar above composer when relevant) */}
             {showSuggestions && (
               <AssistantSuggestions
                 onSelect={handleSend}
@@ -271,7 +251,6 @@ export function PortfolioAssistant() {
               />
             )}
 
-            {/* 4. Composer / Input (fixed at bottom, never scrolls away) */}
             <AssistantComposer
               onSend={handleSend}
               onStop={handleStop}

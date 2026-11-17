@@ -70,8 +70,8 @@ export const Terms: React.FC<TermsPageProps> = ({
         <p>
           When accessing this website, you agree not to:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
-          <li>Attempt to disrupt, compromise, or impair the website's infrastructure, servers, or networks</li>
+        <ul className="list-disc pl-6 space-y-1.5 text-[var(--text-secondary)]">
+          <li>Attempt to disrupt, compromise, or impair the website&apos;s infrastructure, servers, or networks</li>
           <li>Circumvent security, rate limits, or access controls implemented on the website</li>
           <li>Scrape or extract website data at abusive volumes that degrade system performance for other visitors</li>
           <li>Use the website or its contact channels for unlawful, harassing, defamatory, or fraudulent purposes</li>
@@ -101,9 +101,9 @@ export const Terms: React.FC<TermsPageProps> = ({
         </p>
         <p>
           Where a specific repository provides an open-source license (such as MIT, Apache 2.0, or
-          similar), that license governs your use, reproduction, and modification of that repository's
+          similar), that license governs your use, reproduction, and modification of that repository&apos;s
           source code. The portfolio presentation itself does not grant broader rights than those
-          expressly stated in each respective project's license file.
+          expressly stated in each respective project&apos;s license file.
         </p>
       </LegalSection>
 
@@ -126,7 +126,7 @@ export const Terms: React.FC<TermsPageProps> = ({
           When submitting messages through the contact form or sending direct emails, you agree that your
           submissions:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-[var(--text-secondary)]">
           <li>Do not contain malicious scripts, viruses, or harmful payloads</li>
           <li>Do not infringe on third-party intellectual property or confidentiality agreements</li>
           <li>Do not include unsolicited commercial spam, unlawful threats, or harassing messages</li>
@@ -177,7 +177,7 @@ export const Terms: React.FC<TermsPageProps> = ({
         </p>
         <p>
           The availability, speed, and continuous delivery of the site may be influenced by these
-          providers' operations and maintenance schedules.
+          providers&apos; operations and maintenance schedules.
         </p>
       </LegalSection>
 
@@ -209,25 +209,25 @@ export const Terms: React.FC<TermsPageProps> = ({
         </p>
 
         <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/40">
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-mono">
+          <div className="card p-4">
+            <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1 font-mono">
               General Inquiries &amp; Questions
             </div>
             <a
               href="mailto:sayammukherjee1506@gmail.com"
-              className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline break-all"
+              className="text-sm font-semibold text-[var(--accent)] hover:underline underline-offset-4 break-all"
             >
               sayammukherjee1506@gmail.com
             </a>
           </div>
 
-          <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/40">
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-mono">
+          <div className="card p-4">
+            <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1 font-mono">
               Formal, Legal &amp; Collaboration
             </div>
             <a
               href="mailto:wrickbusiness@gmail.com"
-              className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline break-all"
+              className="text-sm font-semibold text-[var(--accent)] hover:underline underline-offset-4 break-all"
             >
               wrickbusiness@gmail.com
             </a>

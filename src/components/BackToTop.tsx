@@ -40,11 +40,11 @@ export const BackToTop: React.FC = () => {
         <motion.button
           type="button"
           onClick={scrollToTop}
-          initial={{ opacity: 0, scale: 0.8, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.8, y: 10 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
           transition={{ duration: 0.2 }}
-          className="fixed z-30 transition-all duration-200 bottom-[calc(clamp(56px,10vh,68px)+env(safe-area-inset-bottom,0px)+4.15rem)] right-[max(0.75rem,calc(env(safe-area-inset-right,0px)+0.5rem))] sm:right-5 xl:bottom-20 xl:right-6 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-full bg-zinc-900/90 text-zinc-200 border border-white/15 shadow-2xl backdrop-blur-md hover:border-purple-500/50 hover:text-purple-400 active:scale-95 transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
+          className="fixed z-30 bottom-[calc(clamp(56px,10vh,68px)+env(safe-area-inset-bottom,0px)+4.15rem)] right-[max(0.75rem,calc(env(safe-area-inset-right,0px)+0.5rem))] sm:right-5 xl:bottom-20 xl:right-6 flex items-center justify-center w-11 h-11 min-w-[44px] min-h-[44px] rounded-[6px] bg-[#20231D] text-[#F4F4ED] dark:bg-[#F4F4ED] dark:text-[#20231D] border border-[#41443A] dark:border-[#D6D7CC] shadow-lg hover:bg-[#C7E34A] hover:text-[#20231D] hover:border-[#C7E34A] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A]"
           title="Scroll back to top"
           aria-label="Back to top"
         >

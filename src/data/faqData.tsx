@@ -56,7 +56,7 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Sayam Mukherjee is pursuing a Bachelor of Technology (B.Tech) in Computer Science & Engineering with specialization in Artificial Intelligence and Machine Learning at Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar (expected graduation: 2029). He maintained an overall first-year CGPA of 9.06 / 10.0.",
     keywords: ["degree", "university", "KIIT", "B.Tech", "computer science", "AI/ML", "CGPA", "GPA", "education", "graduation"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>
           Sayam Mukherjee is pursuing a Bachelor of Technology (<strong>B.Tech</strong>) in{" "}
           <strong>Computer Science &amp; Engineering</strong> with a specialization in{" "}
@@ -65,9 +65,10 @@ export const FAQ_ITEMS: FAQItem[] = [
           <strong>2029</strong>).
         </p>
         <p>
-          He maintained an overall first-year CGPA of <strong>9.06 / 10.0</strong>, with fundamental coursework in{" "}
+          He maintained an overall first-year CGPA of <strong className="tabular-nums">9.06 / 10.0</strong>, with fundamental coursework in{" "}
           <em>Data Structures &amp; Algorithms</em>, <em>Object-Oriented Programming in C++</em>,{" "}
-          <em>Computer Organization</em>, and <em>Discrete Mathematics</em>. Prior to university, he completed his CBSE Class 12 (Science) with <strong>86.2%</strong> and Class 10 with <strong>92.6%</strong> at Aditya Birla Vani Bharati.
+          <em>Computer Organization</em>, and <em>Discrete Mathematics</em>. Prior to university, he completed his CBSE Class 12 (Science) with{" "}
+          <strong className="tabular-nums">86.2%</strong> and Class 10 with <strong className="tabular-nums">92.6%</strong> at Aditya Birla Vani Bharati.
         </p>
       </div>
     ),
@@ -81,11 +82,11 @@ export const FAQ_ITEMS: FAQItem[] = [
       "First-year 9.06 CGPA in B.Tech CSE (AI & ML), qualification in the Smart India Hackathon (SIH 2026) for Project MAUSAM with Team Algnite, and an active algorithmic problem-solving repository on LeetCode (SayamSolves) documenting daily data structure solutions in C++.",
     keywords: ["achievements", "milestones", "CGPA", "honors", "hackathon", "SIH 2026", "academics", "LeetCode"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>Key documented milestones and academic honors include:</p>
-        <ul className="list-disc list-inside space-y-1 pl-1">
+        <ul className="list-disc list-inside space-y-1.5 pl-1">
           <li>
-            <strong>First-Year Academic Distinction:</strong> Maintained a <strong>9.06 / 10.0 CGPA</strong> across rigorous engineering, mathematics, and computing foundation semesters.
+            <strong>First-Year Academic Distinction:</strong> Maintained a <strong className="tabular-nums">9.06 / 10.0 CGPA</strong> across foundational computing, mathematics, and engineering coursework.
           </li>
           <li>
             <strong>Smart India Hackathon (SIH 2026):</strong> Qualified team member with <em>Team Algnite</em>, engineering the frontend architecture and real-time telemetry visualizer for <strong>Project MAUSAM</strong>.
@@ -108,42 +109,38 @@ export const FAQ_ITEMS: FAQItem[] = [
       "The portfolio features five verified projects: OPERON (autonomous multi-agent workflow engine), MAUSAM (SIH 2026 climate and weather dashboard), SayamSolves (open-source C++ algorithmic problem-solving repository), Edge Computer Vision (real-time YOLOv8 OpenCV spatial pipeline), and the full-stack Engineering Portfolio itself.",
     keywords: ["projects", "OPERON", "MAUSAM", "SayamSolves", "YOLO", "portfolio", "codebase", "features"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
-        <p>The portfolio showcases five verified software engineering systems backed by live GitHub repositories:</p>
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
+        <p>The portfolio showcases verified software engineering systems backed by live GitHub repositories:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
-          <div className="p-3 rounded-xl bg-zinc-100/80 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.06]">
-            <div className="font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-              OPERON
+          <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
+              01 · OPERON
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--text-muted)] mt-1">
               Autonomous operations platform coordinating specialized agents with human-in-the-loop checkpoint gates and audit tracking.
             </p>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-100/80 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.06]">
-            <div className="font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-cyan-500" />
-              MAUSAM
+          <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
+              02 · MAUSAM
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--text-muted)] mt-1">
               SIH 2026 localized climate telemetry and severe weather prediction dashboard engineered by Team Algnite.
             </p>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-100/80 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.06]">
-            <div className="font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-              SayamSolves
+          <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
+              03 · SayamSolves
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--text-muted)] mt-1">
               Documented algorithmic repository with clean C++ solutions and complexity analyses for LeetCode problem patterns.
             </p>
           </div>
-          <div className="p-3 rounded-xl bg-zinc-100/80 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.06]">
-            <div className="font-semibold text-zinc-900 dark:text-zinc-100 font-mono text-xs flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
-              Edge Computer Vision
+          <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
+              04 · Edge Computer Vision
             </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
+            <p className="text-xs text-[var(--text-muted)] mt-1">
               Real-time spatial motion detection and object tracking pipeline utilizing YOLOv8 and OpenCV on constrained edge camera hardware.
             </p>
           </div>
@@ -160,11 +157,11 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Key engineering hurdles addressed include multi-agent race conditions and safety checkpoints in OPERON, edge-constrained real-time inference latency in OpenCV YOLOv8, and zero-rate-limit client-side caching for live GitHub API telemetry.",
     keywords: ["challenges", "architecture", "tradeoffs", "concurrency", "rate limits", "inference", "optimization"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>Across these projects, several non-trivial engineering trade-offs were solved:</p>
         <ul className="list-disc list-inside space-y-1.5 pl-1">
           <li>
-            <strong>Autonomous Multi-Agent Boundaries (OPERON):</strong> Preventing runaway agent execution by architecting an immutable state transition machine where financial and HR decisions pause at strict human authorization gates.
+            <strong>Autonomous Multi-Agent Boundaries (OPERON):</strong> Preventing runaway agent execution by architecting an immutable state transition machine where sensitive decisions pause at strict human authorization gates.
           </li>
           <li>
             <strong>Edge Inference Latency (YOLO / Vision):</strong> Overcoming frame drops on edge micro-hardware by quantizing YOLO weights and stripping non-essential visual channels before running spatial vector calculations.
@@ -185,7 +182,7 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Applications are structured in modular TypeScript and React with strict type safety, tested with automated type checking (tsc --noEmit) and Vite production builds, and deployed via modern edge platforms like EdgeOne, Cloudflare, and Node production runtimes.",
     keywords: ["structure", "testing", "deployment", "CI/CD", "TypeScript", "build", "Vite", "esbuild"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>
           Codebases adhere to strict separation of concerns: modular UI components in React 19, strongly typed domain schemas in TypeScript, and minimal external dependencies.
         </p>
@@ -209,24 +206,24 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Languages: Python, C++, TypeScript, JavaScript, SQL. Frontend: React 19, Vite, Tailwind CSS, Motion, Recharts. Backend: Node.js, Express, REST APIs. AI/ML: PyTorch, OpenCV, YOLOv8, Google GenAI SDK. Tooling: Git, GitHub Actions, Linux CLI.",
     keywords: ["languages", "stack", "Python", "C++", "TypeScript", "React", "Node.js", "PyTorch", "OpenCV", "Tailwind"],
     answer: (
-      <div className="space-y-2.5 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>Sayam&apos;s technical toolkit is verified by concrete project implementations:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
-          <div className="p-2.5 rounded-lg bg-zinc-100/60 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/[0.05]">
-            <span className="text-purple-600 dark:text-purple-400 font-semibold block uppercase">Languages</span>
-            <span className="text-zinc-800 dark:text-zinc-200">Python · C++ (Modern) · TypeScript · JavaScript · SQL</span>
+          <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Languages</span>
+            <span className="text-[var(--text)]">Python · C++ (Modern) · TypeScript · JavaScript · SQL</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-zinc-100/60 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/[0.05]">
-            <span className="text-purple-600 dark:text-purple-400 font-semibold block uppercase">Frontend &amp; UI</span>
-            <span className="text-zinc-800 dark:text-zinc-200">React 19 · Vite · Tailwind CSS 4 · Motion · Recharts</span>
+          <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Frontend &amp; UI</span>
+            <span className="text-[var(--text)]">React 19 · Vite · Tailwind CSS 4 · Motion · Recharts</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-zinc-100/60 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/[0.05]">
-            <span className="text-purple-600 dark:text-purple-400 font-semibold block uppercase">Backend &amp; Systems</span>
-            <span className="text-zinc-800 dark:text-zinc-200">Node.js · Express · RESTful APIs · Linux CLI · Bash</span>
+          <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Backend &amp; Systems</span>
+            <span className="text-[var(--text)]">Node.js · Express · RESTful APIs · Linux CLI · Bash</span>
           </div>
-          <div className="p-2.5 rounded-lg bg-zinc-100/60 dark:bg-white/[0.02] border border-zinc-200 dark:border-white/[0.05]">
-            <span className="text-purple-600 dark:text-purple-400 font-semibold block uppercase">AI / ML &amp; Vision</span>
-            <span className="text-zinc-800 dark:text-zinc-200">PyTorch · OpenCV · YOLOv8 · Google GenAI SDK · Multi-Agent</span>
+          <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">AI / ML &amp; Vision</span>
+            <span className="text-[var(--text)]">PyTorch · OpenCV · YOLOv8 · Google GenAI SDK · Multi-Agent</span>
           </div>
         </div>
       </div>
@@ -241,7 +238,7 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Sayam is actively exploring multi-agent orchestration architectures, autonomous workflow safety boundaries, edge computer vision optimization, and advanced C++ algorithmic problem-solving for systems-level efficiency.",
     keywords: ["exploration", "learning", "AI/ML", "agents", "edge computing", "computer vision", "algorithms", "systems"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>
           Beyond standard web engineering, Sayam focuses on three foundational engineering disciplines:
         </p>
@@ -270,7 +267,7 @@ export const FAQ_ITEMS: FAQItem[] = [
       "The portfolio utilizes a pre-rendered static snapshot pipeline. A scheduled GitHub Action (sync-github.yml) runs hourly using authenticated credentials to fetch repository stats and language breakdowns, saving them into public/github-data.json. The web client loads this local static file, completely eliminating visitor rate limits and API token requirements.",
     keywords: ["GitHub", "telemetry", "rate limit", "API key", "Actions", "sync", "snapshot", "SWR", "caching"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2 text-[var(--text-secondary)]">
         <p>
           Visitors never need personal GitHub tokens, nor do they encounter GitHub&apos;s standard unauthenticated limit of 60 requests per hour.
         </p>
@@ -292,7 +289,7 @@ export const FAQ_ITEMS: FAQItem[] = [
       "The portfolio employs a resilient three-tier fallback architecture: primary cached static JSON snapshot, secondary in-memory immutable FALLBACK_DATA, and transparent syncedAt timestamps ensuring the UI never crashes or misleads visitors.",
     keywords: ["fallback", "resilience", "stale data", "error handling", "offline", "caching", "reliability"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2 text-[var(--text-secondary)]">
         <p>The application implements a resilient three-tier fallback strategy:</p>
         <ol className="list-decimal list-inside space-y-1.5 pl-1">
           <li>
@@ -317,11 +314,11 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Only two essential external touchpoints are used: GitHub REST API (executed asynchronously in background CI/CD) and the authoritative resume distribution CDN (EdgeOne). All UI rendering, charts, and routing operate client-side without third-party tracking scripts.",
     keywords: ["external services", "APIs", "privacy", "EdgeOne", "CDN", "tracking", "telemetry"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2 text-[var(--text-secondary)]">
         <p>
           External dependencies are kept minimal to protect privacy and maintain maximum uptime:
         </p>
-        <ul className="list-disc list-inside space-y-1 pl-1">
+        <ul className="list-disc list-inside space-y-1.5 pl-1">
           <li>
             <strong>GitHub REST API:</strong> Queried exclusively in the background by automated GitHub Actions, keeping browser execution independent of GitHub server status.
           </li>
@@ -346,9 +343,9 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Sayam is actively seeking Software Engineering Internships (Summer / Fall / Off-cycle), AI/ML Engineering & Research Internships, Full-Stack Developer Roles, and Competitive Hackathon Team Collaborations.",
     keywords: ["internship", "career", "roles", "software engineer", "hiring", "opportunities", "SWE intern", "AI engineer"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2 text-[var(--text-secondary)]">
         <p>Sayam is actively seeking professional and collaborative opportunities including:</p>
-        <ul className="list-disc list-inside space-y-1 pl-1">
+        <ul className="list-disc list-inside space-y-1.5 pl-1">
           <li>
             <strong>Software Engineering Internships:</strong> Summer, Fall, and off-cycle internships focusing on backend systems, full-stack web applications, or core C++ engineering.
           </li>
@@ -374,7 +371,7 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Yes. Sayam is available for upcoming 2025/2026 internships, technical collaborations on cutting-edge software and AI systems, and competitive hackathon challenges.",
     keywords: ["availability", "collaborate", "freelance", "hackathon", "partnership", "hire"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2 text-[var(--text-secondary)]">
         <p>
           <strong>Yes.</strong> Sayam welcomes serious inquiries regarding upcoming internships, technical hackathon partnerships, and research collaborations.
         </p>
@@ -395,35 +392,35 @@ export const FAQ_ITEMS: FAQItem[] = [
       "Contact Sayam via email at wrickbusiness@gmail.com (business, hackathons, and collaborations) or sayammukherjee1506@gmail.com (internships and academic inquiries), or connect on LinkedIn (linkedin.com/in/codesbysayam) and GitHub (github.com/codesbysayam).",
     keywords: ["contact", "email", "LinkedIn", "GitHub", "reach out", "recruiter", "message"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>Direct communication channels for recruiters, hiring managers, and engineers:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs">
           <a
             href="mailto:wrickbusiness@gmail.com"
-            className="p-3 rounded-xl bg-purple-500/10 hover:bg-purple-500/15 border border-purple-500/20 text-purple-700 dark:text-purple-300 transition-colors flex flex-col gap-0.5"
+            className="p-3 rounded-[8px] bg-[var(--surface)] hover:border-[var(--border-strong)] border border-[var(--border)] text-[var(--text)] transition-colors flex flex-col gap-0.5"
           >
-            <span className="font-mono font-semibold uppercase text-[10px] text-purple-600 dark:text-purple-400">
+            <span className="font-mono font-semibold uppercase text-[10px] text-[var(--accent)]">
               Business &amp; Collaborations
             </span>
             <span className="font-mono break-all font-medium">wrickbusiness@gmail.com ↗</span>
           </a>
           <a
             href="mailto:sayammukherjee1506@gmail.com"
-            className="p-3 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/15 border border-emerald-500/20 text-emerald-700 dark:text-emerald-300 transition-colors flex flex-col gap-0.5"
+            className="p-3 rounded-[8px] bg-[var(--surface)] hover:border-[var(--border-strong)] border border-[var(--border)] text-[var(--text)] transition-colors flex flex-col gap-0.5"
           >
-            <span className="font-mono font-semibold uppercase text-[10px] text-emerald-600 dark:text-emerald-400">
+            <span className="font-mono font-semibold uppercase text-[10px] text-[var(--accent)]">
               Direct &amp; Internship Inquiries
             </span>
             <span className="font-mono break-all font-medium">sayammukherjee1506@gmail.com ↗</span>
           </a>
         </div>
-        <p className="text-xs text-zinc-500 dark:text-zinc-400 pt-1">
+        <p className="text-xs text-[var(--text-muted)] pt-1">
           Professional profiles:{" "}
           <a
             href="https://linkedin.com/in/codesbysayam"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-purple-600 dark:text-purple-400 hover:underline font-mono"
+            className="text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] font-mono font-medium"
           >
             LinkedIn ↗
           </a>{" "}
@@ -432,7 +429,7 @@ export const FAQ_ITEMS: FAQItem[] = [
             href="https://github.com/codesbysayam"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-purple-600 dark:text-purple-400 hover:underline font-mono"
+            className="text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] font-mono font-medium"
           >
             GitHub ↗
           </a>
@@ -449,20 +446,20 @@ export const FAQ_ITEMS: FAQItem[] = [
       "The authoritative resume is hosted at https://exciting-brown-6y14ojmv.edgeone.dev/ and can be accessed directly through the Resume Spotlight button in the hero section or the portfolio's dedicated resume viewer.",
     keywords: ["resume", "CV", "curriculum vitae", "PDF", "download", "official resume", "verification"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>
           The authoritative single source of truth for Sayam&apos;s latest verified resume is hosted at:
         </p>
-        <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.08] flex items-center justify-between gap-3 flex-wrap">
+        <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex items-center justify-between gap-3 flex-wrap">
           <div className="space-y-0.5">
-            <span className="text-[11px] font-mono uppercase tracking-wider text-purple-600 dark:text-purple-400 font-semibold block">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--accent)] font-semibold block">
               Authoritative Destination
             </span>
             <a
               href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs text-zinc-800 dark:text-zinc-200 hover:text-purple-600 dark:hover:text-purple-300 underline break-all"
+              className="font-mono text-xs text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] break-all"
             >
               {RESUME_URL} ↗
             </a>
@@ -471,13 +468,13 @@ export const FAQ_ITEMS: FAQItem[] = [
             href={RESUME_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary !py-1.5 !px-3.5 !text-xs font-mono shrink-0"
+            className="btn btn-primary !py-2 !px-3.5 !text-xs font-mono shrink-0"
           >
             Open Official Resume ↗
           </a>
         </div>
-        <p className="text-xs text-zinc-500 dark:text-zinc-400">
-          You can also click the <strong>Explore My Resume</strong> spotlight in the hero section for a modal summary and direct download.
+        <p className="text-xs text-[var(--text-muted)]">
+          You can also open the <strong>Résumé</strong> spotlight in the hero section for a summary and direct PDF access.
         </p>
       </div>
     ),
@@ -491,27 +488,27 @@ export const FAQ_ITEMS: FAQItem[] = [
       "All featured projects are public on GitHub at github.com/codesbysayam. Each card in the Projects Showcase provides direct GitHub repository links, live interactive demos where deployed, and deep-dive technical case study modals.",
     keywords: ["source code", "GitHub", "live demo", "case study", "repository", "open source", "explore"],
     answer: (
-      <div className="space-y-2 text-zinc-600 dark:text-zinc-300">
+      <div className="space-y-2 text-[var(--text-secondary)]">
         <p>
           Every project featured in this portfolio is backed by public source code and verifiable commits:
         </p>
-        <ul className="list-disc list-inside space-y-1 pl-1">
+        <ul className="list-disc list-inside space-y-1.5 pl-1">
           <li>
             <strong>GitHub Profile:</strong> Explore public repositories, commit histories, and pull requests directly at{" "}
             <a
               href="https://github.com/codesbysayam"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-purple-600 dark:text-purple-400 font-mono underline hover:text-purple-500"
+              className="text-[var(--text)] font-mono underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)]"
             >
               github.com/codesbysayam ↗
             </a>.
           </li>
           <li>
-            <strong>Projects Showcase:</strong> Use the interactive technology tags and domain filters in the <em>Engineering Projects &amp; Software Systems</em> section to filter by React, Python, AI/ML, C++, or Node.js.
+            <strong>Projects Showcase:</strong> Use the interactive technology filters and domain tabs in the <em>Engineering Projects &amp; Software Systems</em> archive to filter by React, Python, AI/ML, C++, or Node.js.
           </li>
           <li>
-            <strong>Case Studies &amp; Demos:</strong> Click &ldquo;Case Study&rdquo; on any project card to inspect architecture diagrams, problem statements, and implementation trade-offs, or click &ldquo;Demo ↗&rdquo; to launch live production deployments.
+            <strong>Case Studies &amp; Demos:</strong> Click &ldquo;Case Study&rdquo; on any project card to inspect architecture breakdowns, problem statements, and implementation trade-offs, or click &ldquo;Demo ↗&rdquo; to launch live deployments.
           </li>
         </ul>
       </div>

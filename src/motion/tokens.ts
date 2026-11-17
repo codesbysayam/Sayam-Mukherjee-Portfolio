@@ -1,0 +1,69 @@
+import { useEffect, useState } from "react";
+
+export const MOTION_DURATION = {
+  fast: 0.16,
+  normal: 0.26,
+  enter: 0.62,
+  scene: 0.82,
+} as const;
+
+export const MOTION_EASE = {
+  standard: [0.2, 0.7, 0.2, 1] as [number, number, number, number],
+  out: [0.22, 1, 0.36, 1] as [number, number, number, number],
+  emphasis: [0.76, 0, 0.24, 1] as [number, number, number, number],
+};
+
+export const MOTION_VIEWPORT = {
+  once: true,
+  amount: 0.15 as const,
+};
+
+export type DeviceCapabilityTier = "high" | "standard" | "low";
+
+export function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+
+    const onChange = (event: MediaQueryListEvent) => setReduced(event.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return reduced;
+}
+
+export function useDeviceCapability(): DeviceCapabilityTier {
+  const prefersReduced = usePrefersReducedMotion();
+  const [tier, setTier] = useState<DeviceCapabilityTier>("standard");
+
+  useEffect(() => {
+    if (prefersReduced) {
+      setTier("low");
+      return;
+    }
+    if (typeof window === "undefined") return;
+
+    const nav = navigator as Navigator & { deviceMemory?: number };
+    const cores = nav.hardwareConcurrency || 4;
+    const memory = nav.deviceMemory || 4;
+    const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    const isSmallScreen = window.innerWidth < 640;
+
+    if (cores <= 2 || memory <= 2) {
+      setTier("low");
+    } else if (isCoarsePointer || isSmallScreen || cores <= 4) {
+      setTier("standard");
+    } else {
+      setTier("high");
+    }
+  }, [prefersReduced]);
+
+  return tier;
+}

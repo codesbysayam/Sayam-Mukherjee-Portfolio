@@ -1,11 +1,9 @@
 import { memo } from "react";
 import { Layers, Terminal, Cpu, Wrench } from "lucide-react";
-import { usePortfolio } from "../../context/PortfolioContext";
 
 interface TechGroup {
   category: string;
   icon: React.ElementType;
-  color: string;
   items: {
     name: string;
     usedIn: string;
@@ -16,7 +14,6 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "Frontend & Interface",
     icon: Layers,
-    color: "text-cyan-500",
     items: [
       { name: "React", usedIn: "Mausam, Operon, Portfolio" },
       { name: "TypeScript", usedIn: "Mausam, Operon, Portfolio" },
@@ -28,7 +25,6 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "Backend & Systems",
     icon: Terminal,
-    color: "text-emerald-500",
     items: [
       { name: "Node.js", usedIn: "Operon, Portfolio proxy" },
       { name: "Express.js", usedIn: "Operon backend, API proxy" },
@@ -40,7 +36,6 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "AI, ML & Computer Vision",
     icon: Cpu,
-    color: "text-purple-500",
     items: [
       { name: "YOLOv8", usedIn: "Edge Computer Vision pipeline" },
       { name: "OpenCV", usedIn: "Spatial motion & frame processing" },
@@ -52,7 +47,6 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
     category: "Tools & Infrastructure",
     icon: Wrench,
-    color: "text-amber-500",
     items: [
       { name: "Git & GitHub", usedIn: "Version control across all 5 repos" },
       { name: "Vercel", usedIn: "Mausam, Operon, Portfolio deployment" },
@@ -63,66 +57,45 @@ const VERIFIED_LANDSCAPE: TechGroup[] = [
 ];
 
 function TechnologyLandscapeComponent() {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
-
   return (
-    <div className={`glass-card rounded-2xl p-6 sm:p-7 border space-y-6 transition-colors ${
-      isLight ? "bg-white/80 border-slate-200 shadow-sm" : "border-zinc-850 bg-zinc-950/70"
-    }`}>
-      {/* Section Header */}
-      <div className={`space-y-1 border-b pb-4 ${
-        isLight ? "border-slate-200" : "border-zinc-900"
-      }`}>
+    <div className="card p-6 sm:p-7 space-y-6">
+      <div className="space-y-1 border-b border-[var(--border)] pb-4">
         <div className="flex items-center gap-2">
-          <Layers className="w-4 h-4 text-cyan-500" />
-          <h3 className={`text-sm sm:text-base font-bold font-display uppercase tracking-wider ${
-            isLight ? "text-slate-900" : "text-white"
-          }`}>
+          <Layers className="w-4 h-4 text-[var(--accent)]" />
+          <h3 className="text-sm sm:text-base font-bold font-display uppercase tracking-wider text-[var(--text)]">
             TECHNOLOGY LANDSCAPE
           </h3>
         </div>
-        <p className={`text-xs font-sans ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
-          Taxonomy of verified technologies used across Sayam's 5 systems. No generic skill bars.
+        <p className="text-xs font-sans text-[var(--text-muted)]">
+          Taxonomy of verified technologies used across Sayam&apos;s 5 systems. No generic skill bars.
         </p>
       </div>
 
-      {/* Grid of Verified Technology Constellations */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {VERIFIED_LANDSCAPE.map((group, gIdx) => {
           const Icon = group.icon;
           return (
-            <div 
-              key={gIdx} 
-              className={`p-4 rounded-xl border space-y-3 transition-colors ${
-                isLight 
-                  ? "bg-slate-50/80 border-slate-200" 
-                  : "bg-zinc-900/40 border-zinc-850/80"
-              }`}
+            <div
+              key={gIdx}
+              className="p-4 rounded-[8px] border bg-[var(--surface)] border-[var(--border)] space-y-3"
             >
               <div className="flex items-center gap-2">
-                <Icon className={`w-3.5 h-3.5 ${group.color}`} />
-                <h4 className={`text-xs font-mono font-bold uppercase tracking-wider ${
-                  isLight ? "text-slate-800" : "text-zinc-200"
-                }`}>
+                <Icon className="w-3.5 h-3.5 text-[var(--accent)]" />
+                <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
                   {group.category}
                 </h4>
               </div>
 
               <div className="space-y-2">
                 {group.items.map((item, iIdx) => (
-                  <div 
-                    key={iIdx} 
+                  <div
+                    key={iIdx}
                     className="flex items-center justify-between gap-2 text-xs"
                   >
-                    <span className={`font-mono font-semibold ${
-                      isLight ? "text-slate-700" : "text-zinc-300"
-                    }`}>
+                    <span className="font-mono font-semibold text-[var(--text-secondary)]">
                       {item.name}
                     </span>
-                    <span className={`text-[10px] font-mono truncate text-right ${
-                      isLight ? "text-slate-500" : "text-zinc-500"
-                    }`}>
+                    <span className="text-[10px] font-mono truncate text-right text-[var(--text-faint)]">
                       {item.usedIn}
                     </span>
                   </div>

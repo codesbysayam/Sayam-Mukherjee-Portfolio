@@ -98,7 +98,13 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const [otpRequired, setOtpRequired] = useState(false);
   const [tempToken, setTempToken] = useState<string | null>(null);
   const [simulatedOTP, setSimulatedOTP] = useState<string | null>(null);
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("sayam_theme") || localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") return saved;
+    }
+    return "light";
+  });
 
   // Load Portfolio Data with resilient retry and content-type validation
   useEffect(() => {
@@ -153,16 +159,9 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     });
 
     const savedTheme = (localStorage.getItem("sayam_theme") || localStorage.getItem("theme")) as "dark" | "light" | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-      applyTheme(savedTheme);
-    } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
-      setTheme("light");
-      applyTheme("light");
-    } else {
-      setTheme("dark");
-      applyTheme("dark");
-    }
+    const resolvedTheme = savedTheme === "dark" ? "dark" : "light";
+    setTheme(resolvedTheme);
+    applyTheme(resolvedTheme);
 
     return () => {
       isMounted = false;
@@ -181,6 +180,10 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       root.classList.remove("light");
       root.classList.add("dark");
       root.style.colorScheme = "dark";
+    }
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute("content", t === "light" ? "#F4F4ED" : "#20231D");
     }
   };
 

@@ -31,7 +31,6 @@ export function ResumeSectionNav({
 }: ResumeSectionNavProps) {
   const [activeSection, setActiveSection] = useState("resume-overview");
 
-  // Track active section as modal container scrolls
   useEffect(() => {
     let cleanup: (() => void) | undefined;
     let cancelled = false;
@@ -100,8 +99,7 @@ export function ResumeSectionNav({
   };
 
   return (
-    <div className={`sticky top-0 z-20 backdrop-blur-md bg-zinc-950/90 border-b border-zinc-900/80 px-4 sm:px-6 py-2.5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 ${className}`}>
-      {/* Horizontally scrollable navigation tabs */}
+    <div className={`sticky top-0 z-20 bg-[var(--surface-2)] border-b border-[var(--border)] px-4 sm:px-6 py-2.5 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 ${className}`}>
       <nav
         aria-label="Resume interactive sections"
         className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5"
@@ -114,10 +112,10 @@ export function ResumeSectionNav({
               type="button"
               onClick={() => navigateToSection(section.id)}
               aria-current={isActive ? "location" : undefined}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-150 cursor-pointer shrink-0 border ${
+              className={`px-3 py-1.5 rounded-[6px] text-xs whitespace-nowrap transition-colors duration-150 cursor-pointer shrink-0 border ${
                 isActive
-                  ? "bg-purple-500/15 text-purple-300 border-purple-500/40 shadow-xs font-semibold"
-                  : "bg-zinc-900/50 hover:bg-zinc-850 text-zinc-400 hover:text-zinc-200 border-zinc-800/60"
+                  ? "bg-[#C7E34A] text-[#20231D] border-[#C7E34A] font-bold"
+                  : "bg-[var(--surface)] hover:bg-[var(--surface-3)] text-[var(--text-muted)] hover:text-[var(--text)] border-[var(--border)] font-medium"
               }`}
             >
               {section.label}
@@ -126,22 +124,21 @@ export function ResumeSectionNav({
         })}
       </nav>
 
-      {/* In-viewer fast filter/search input */}
       {onSearchChange && (
         <div className="relative shrink-0 w-full md:w-56">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search resume (e.g. React, AI)..."
+            placeholder="Search resume (React, AI)..."
             aria-label="Filter resume content"
-            className="w-full bg-zinc-900/80 border border-zinc-800 rounded-lg px-2.5 py-1 text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 transition-all"
+            className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-1.5 text-xs text-[var(--text)] placeholder-[var(--text-faint)] focus:outline-none focus:border-[var(--accent)] transition-colors"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => onSearchChange("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white text-xs px-1"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text)] text-xs px-1 cursor-pointer"
               aria-label="Clear filter"
             >
               ✕

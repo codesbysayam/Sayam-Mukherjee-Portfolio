@@ -1,5 +1,4 @@
 import React from "react";
-import { usePortfolio } from "../../context/PortfolioContext";
 
 interface AchievementTagsProps {
   tags?: string[];
@@ -16,9 +15,6 @@ export function AchievementTags({
   onInspect,
   className = "",
 }: AchievementTagsProps) {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
-
   const allTags = tags.length > 0 ? tags : skills;
   if (!allTags || allTags.length === 0) return null;
 
@@ -33,11 +29,12 @@ export function AchievementTags({
       {visibleTags.map((tag, idx) => (
         <li
           key={`${tag}-${idx}`}
-          className={`px-2.5 py-1 rounded-full text-xs font-sans max-w-full truncate transition-colors ${
-            isLight
-              ? "bg-slate-100 text-slate-700 border border-slate-200"
-              : "bg-white/[0.04] text-zinc-300 border border-white/10"
-          }`}
+          className="px-2.5 py-1 rounded-[4px] border text-[11px] font-mono max-w-full truncate"
+          style={{
+            backgroundColor: "var(--surface)",
+            borderColor: "var(--border)",
+            color: "var(--text-secondary)",
+          }}
           title={tag}
         >
           {tag}
@@ -52,11 +49,12 @@ export function AchievementTags({
               e.stopPropagation();
               onInspect?.();
             }}
-            className={`achievement-card__more px-2 py-1 rounded-full text-xs font-sans transition-colors cursor-pointer border ${
-              isLight
-                ? "text-purple-700 hover:text-purple-900 border-purple-200 bg-purple-50/50"
-                : "text-purple-400 hover:text-purple-300 border-purple-800/40 bg-purple-950/20"
-            }`}
+            className="achievement-card__more px-2 py-1 rounded-[4px] border text-[11px] font-mono font-semibold transition-colors cursor-pointer hover:border-[var(--border-strong)]"
+            style={{
+              backgroundColor: "var(--surface-2)",
+              borderColor: "var(--border)",
+              color: "var(--accent)",
+            }}
             title="Inspect record to view all tags"
             aria-label={`View ${remainingCount} additional tags`}
           >
@@ -67,4 +65,5 @@ export function AchievementTags({
     </ul>
   );
 }
+
 export default AchievementTags;

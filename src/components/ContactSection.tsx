@@ -1,73 +1,67 @@
 import { useState, useEffect, useRef } from "react";
-import { 
-  Mail, ArrowRight, Check, Copy, ExternalLink,
-  Github, Linkedin, Award, Youtube, Sparkles,
-  Share2
+import {
+  Mail,
+  ArrowRight,
+  Check,
+  Copy,
+  Github,
+  Linkedin,
+  Award,
+  Youtube,
+  Sparkles,
+  Share2,
 } from "lucide-react";
 import { showToast } from "./Toast";
 import { ContactForm } from "./ContactForm";
+import ClosingFluidCanvas from "./motion/ClosingFluidCanvas";
+import { EditorialReveal } from "../motion/Reveal";
 
-// Opportunities Sayam is actively open to
 const OPEN_ROLES = [
   "Internships",
   "Freelance work",
   "Collaborations",
   "Research",
-  "Hackathons"
+  "Hackathons",
 ];
 
-// Verified Social & Professional Connections
 const SOCIAL_PROFILES = [
   {
     name: "LinkedIn",
     description: "Connect professionally",
     url: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
     icon: Linkedin,
-    bgClass: "bg-cyan-500/10 border-cyan-500/20 text-cyan-400",
-    hoverBorder: "hover:border-cyan-500/40"
   },
   {
     name: "GitHub",
     description: "Explore my code",
     url: "https://github.com/codesbysayam",
     icon: Github,
-    bgClass: "bg-purple-500/10 border-purple-500/20 text-purple-300",
-    hoverBorder: "hover:border-purple-500/40"
   },
   {
     name: "Codolio",
     description: "View coding profile",
     url: "https://codolio.com/profile/codesbysayam",
     icon: Award,
-    bgClass: "bg-amber-500/10 border-amber-500/20 text-amber-400",
-    hoverBorder: "hover:border-amber-500/40"
   },
   {
     name: "YouTube",
     description: "Explore my content",
     url: "https://youtube.com/@technicalaz",
     icon: Youtube,
-    bgClass: "bg-rose-500/10 border-rose-500/20 text-rose-400",
-    hoverBorder: "hover:border-rose-500/40"
-  }
+  },
 ];
 
 export default function ContactSection() {
-  // Verified dual email channels & social links
   const businessEmail = "wrickbusiness@gmail.com";
   const contactEmail = "sayammukherjee1506@gmail.com";
-  const primaryEmail = businessEmail;
   const verifiedLinkedin = "https://www.linkedin.com/in/sayammukherjee-portfolio/";
   const verifiedGithub = "https://github.com/codesbysayam";
   const verifiedCodolio = "https://codolio.com/profile/codesbysayam";
 
-  // Copy email feedback states
   const [copiedBusiness, setCopiedBusiness] = useState(false);
   const [copiedContact, setCopiedContact] = useState(false);
   const copyBusinessTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const copyContactTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  // Native share support detection
   const [canShare, setCanShare] = useState(false);
 
   useEffect(() => {
@@ -76,7 +70,6 @@ export default function ContactSection() {
     }
   }, []);
 
-  // Cleanup timeouts on unmount
   useEffect(() => {
     return () => {
       if (copyBusinessTimeoutRef.current) clearTimeout(copyBusinessTimeoutRef.current);
@@ -85,7 +78,11 @@ export default function ContactSection() {
   }, []);
 
   const copyTextToClipboard = async (text: string) => {
-    if (typeof navigator !== "undefined" && navigator.clipboard && navigator.clipboard.writeText) {
+    if (
+      typeof navigator !== "undefined" &&
+      navigator.clipboard &&
+      navigator.clipboard.writeText
+    ) {
       await navigator.clipboard.writeText(text);
     } else {
       const textarea = document.createElement("textarea");
@@ -99,14 +96,13 @@ export default function ContactSection() {
     }
   };
 
-  // Copy business email handler
   const handleCopyBusiness = async (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     try {
       await copyTextToClipboard(businessEmail);
       setCopiedBusiness(true);
       showToast(`Copied ${businessEmail} for business & hackathons!`, "success");
-      
+
       if (copyBusinessTimeoutRef.current) clearTimeout(copyBusinessTimeoutRef.current);
       copyBusinessTimeoutRef.current = setTimeout(() => {
         setCopiedBusiness(false);
@@ -116,14 +112,13 @@ export default function ContactSection() {
     }
   };
 
-  // Copy contact email handler
   const handleCopyContact = async (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     try {
       await copyTextToClipboard(contactEmail);
       setCopiedContact(true);
       showToast(`Copied ${contactEmail} for contact & internships!`, "success");
-      
+
       if (copyContactTimeoutRef.current) clearTimeout(copyContactTimeoutRef.current);
       copyContactTimeoutRef.current = setTimeout(() => {
         setCopiedContact(false);
@@ -133,283 +128,163 @@ export default function ContactSection() {
     }
   };
 
-  const handleCopyEmail = handleCopyBusiness;
-
-  // Direct quick conversation action
   const handleStartConversation = () => {
     window.location.href = `mailto:${businessEmail}?subject=Business%20%2F%20Collaboration%20Inquiry`;
   };
 
-  // Optional Web Share action
   const handleSharePortfolio = async () => {
     if (typeof navigator !== "undefined" && navigator.share) {
       try {
         await navigator.share({
           title: "Sayam Mukherjee | Portfolio",
           text: "Explore Sayam Mukherjee's portfolio.",
-          url: window.location.href
+          url: window.location.href,
         });
       } catch {
-        // User dismiss or abort is non-breaking
+        // Abort ignored
       }
     }
   };
 
   return (
-    <section 
-      id="contact" 
-      className="contact-section relative w-full max-w-7xl mx-auto font-sans text-zinc-100"
+    <section
+      id="contact"
+      className="relative w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-sans text-[var(--text)] overflow-hidden rounded-[12px]"
     >
-      {/* Component-scoped precise layout styles */}
-      <style>{`
-        .contact-section {
-          padding: clamp(32px, 5vw, 64px) 0 !important;
-        }
+      <ClosingFluidCanvas tone="adaptive" />
 
-        .contact-heading {
-          font-size: clamp(2.25rem, 5.2vw, 5rem);
-          line-height: 0.98;
-          letter-spacing: -0.045em;
-          overflow-wrap: anywhere;
-        }
+      {/* Editorial Hero Header */}
+      <EditorialReveal>
+        <header className="relative z-10 space-y-4 mb-10 sm:mb-14">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent)] font-semibold">
+              Contact &amp; Inquiries
+            </span>
+            <span className="text-[var(--text-faint)]">&bull;</span>
+            <span
+              className="text-xs font-mono font-medium text-[var(--text-muted)]"
+              role="status"
+              aria-label="Available for opportunities"
+            >
+              Available for opportunities
+            </span>
 
-        .contact-grid {
-          display: grid;
-          grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
-          gap: clamp(24px, 4.5vw, 56px);
-          align-items: start;
-        }
-
-        @media (max-width: 960px) {
-          .contact-heading {
-            font-size: clamp(2rem, 7.5vw, 3.75rem);
-            line-height: 1.02;
-          }
-          .contact-grid {
-            grid-template-columns: 1fr !important;
-            gap: 28px !important;
-          }
-        }
-
-        /* Right-Side Connect Card */
-        .connect-card {
-          padding: clamp(20px, 3.5vw, 40px);
-          border-radius: 28px;
-          background: linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.055),
-            rgba(255, 255, 255, 0.018)
-          );
-          border: 1px solid rgba(255, 255, 255, 0.10);
-          box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
-        }
-
-        .contact-card-interactive {
-          transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease, background-color 0.2s ease;
-        }
-
-        .contact-card-interactive:hover {
-          transform: translateY(-2px);
-        }
-
-        .contact-btn-hover {
-          transition: transform 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .contact-btn-hover:hover {
-          filter: brightness(1.08);
-          transform: translateY(-1px);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .contact-card-interactive:hover,
-          .contact-btn-hover:hover {
-            transform: none !important;
-          }
-        }
-
-        /* Light Mode Adaptations */
-        html.light .contact-section,
-        html[data-theme="light"] .contact-section {
-          color: #18181b !important;
-        }
-
-        html.light .contact-heading,
-        html[data-theme="light"] .contact-heading,
-        html.light .contact-section h3,
-        html[data-theme="light"] .contact-section h3 {
-          color: #09090b !important;
-        }
-
-        html.light .contact-section p,
-        html[data-theme="light"] .contact-section p {
-          color: #52525b !important;
-        }
-
-        html.light .connect-card,
-        html[data-theme="light"] .connect-card {
-          background: linear-gradient(
-            145deg,
-            rgba(255, 255, 255, 0.95),
-            rgba(244, 244, 248, 0.98)
-          ) !important;
-          border: 1px solid rgba(0, 0, 0, 0.09) !important;
-          box-shadow: 0 24px 70px rgba(0, 0, 0, 0.06), inset 0 1px rgba(255, 255, 255, 1) !important;
-          color: #18181b !important;
-        }
-
-        html.light .contact-card-interactive,
-        html[data-theme="light"] .contact-card-interactive {
-          background: rgba(255, 255, 255, 0.8) !important;
-          border-color: rgba(0, 0, 0, 0.08) !important;
-          color: #18181b !important;
-        }
-
-        html.light .contact-card-interactive:hover,
-        html[data-theme="light"] .contact-card-interactive:hover {
-          background: rgba(255, 255, 255, 0.98) !important;
-          border-color: rgba(168, 85, 247, 0.4) !important;
-        }
-
-        html.light .contact-card-interactive span.text-white,
-        html[data-theme="light"] .contact-card-interactive span.text-white {
-          color: #09090b !important;
-        }
-      `}</style>
-
-      {/* Subtle Ambient Glows */}
-      <div 
-        className="absolute top-12 left-1/4 w-[400px] h-[400px] bg-purple-600/[0.04] rounded-full blur-[140px] pointer-events-none -z-10" 
-        aria-hidden="true" 
-      />
-      <div 
-        className="absolute bottom-12 right-1/4 w-[400px] h-[400px] bg-cyan-600/[0.04] rounded-full blur-[140px] pointer-events-none -z-10" 
-        aria-hidden="true" 
-      />
-
-      {/* ==================================================
-          1. HERO / HEADER AREA
-          ================================================== */}
-      <header 
-        className="space-y-4"
-        style={{ marginBottom: "clamp(32px, 4.5vw, 56px)" }}
-      >
-        {/* Availability Status Pill */}
-        <div className="flex flex-wrap items-center gap-3">
-          <div 
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-semibold tracking-wider border border-emerald-500/25 bg-emerald-950/20 text-emerald-400 backdrop-blur-sm select-none"
-            role="status"
-            aria-label="Available for opportunities"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Available for opportunities</span>
+            {canShare && (
+              <button
+                type="button"
+                onClick={handleSharePortfolio}
+                className="btn btn-secondary min-h-[36px] px-3 py-1 text-xs font-mono ml-auto"
+                aria-label="Share Sayam's Portfolio"
+              >
+                <Share2 className="w-3.5 h-3.5" />
+                <span>Share Portfolio</span>
+              </button>
+            )}
           </div>
 
-          <span className="text-xs font-mono tracking-widest text-purple-400 font-semibold">
-            Contact
-          </span>
+          <h1
+            className="font-display font-extrabold text-[var(--text)] tracking-tight leading-[0.98]"
+            style={{ fontSize: "clamp(2.4rem, 5.2vw, 4.75rem)", maxWidth: "820px" }}
+          >
+            Let&rsquo;s build
+            <br />
+            something{" "}
+            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+              meaningful.
+            </span>
+          </h1>
 
-          {/* Optional Native Share button if supported by browser */}
-          {canShare && (
-            <button
-              type="button"
-              onClick={handleSharePortfolio}
-              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono text-zinc-400 hover:text-white bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 transition-colors cursor-pointer ml-auto"
-              aria-label="Share Sayam's Portfolio"
-            >
-              <Share2 className="w-3.5 h-3.5 text-purple-400" />
-              <span>Share Portfolio</span>
-            </button>
-          )}
-        </div>
+          <p
+            className="text-sm md:text-base text-[var(--text-muted)] leading-relaxed"
+            style={{ maxWidth: "660px" }}
+          >
+            Whether it&rsquo;s an internship, freelance build, research collaboration,
+            hackathon, or technical conversation, reach out through whichever channel
+            works best.
+          </p>
+        </header>
+      </EditorialReveal>
 
-        {/* Heading */}
-        <h1 
-          className="contact-heading font-display font-extrabold text-white"
-          style={{ maxWidth: "800px" }}
-        >
-          Let’s build<br />
-          something<br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400">
-            meaningful.
-          </span>
-        </h1>
-
-        {/* Subtitle */}
-        <p 
-          className="text-sm md:text-base text-zinc-400 leading-relaxed font-normal"
-          style={{ maxWidth: "680px" }}
-        >
-          Whether it’s an internship, freelance project, research collaboration, hackathon or technical conversation, reach out through whichever channel works best.
-        </p>
-      </header>
-
-      {/* ==================================================
-          2-COLUMN CONTACT GRID
-          ================================================== */}
-      <div className="contact-grid">
-        
-        {/* ==================================================
-            LEFT COLUMN: CURRENTLY OPEN TO & DIRECT CHANNELS
-            ================================================== */}
-        <div className="space-y-6">
-
-          {/* Currently Open To Card */}
-          <div className="rounded-2xl p-5 md:p-6 bg-white/[0.03] border border-white/10 backdrop-blur-md space-y-3">
-            <span className="text-xs font-mono tracking-wider text-zinc-400 font-semibold flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-purple-400" />
-              Currently open to
+      {/* 2-Column Editorial Grid */}
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        {/* Left Column: Open Roles & Direct Channels */}
+        <div className="lg:col-span-5 space-y-6">
+          <div
+            className="card p-5 md:p-6 space-y-3"
+            style={{
+              backgroundColor: "var(--surface-2)",
+              borderColor: "var(--border)",
+            }}
+          >
+            <span className="text-xs font-mono tracking-wider uppercase text-[var(--accent)] font-semibold flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5" />
+              Currently Open To
             </span>
 
             <div className="flex flex-wrap gap-2 pt-1">
               {OPEN_ROLES.map((role) => (
                 <span
                   key={role}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-mono text-zinc-300 bg-white/[0.04] border border-white/[0.08] select-none hover:border-purple-500/30 hover:text-white transition-colors"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border text-xs font-mono text-[var(--text-secondary)]"
+                  style={{
+                    backgroundColor: "var(--surface)",
+                    borderColor: "var(--border)",
+                  }}
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                   {role}
                 </span>
               ))}
             </div>
           </div>
 
-          {/* "Get in touch" Header and Channels */}
           <div className="space-y-3 pt-1">
             <div>
-              <h3 className="text-xl md:text-2xl font-bold font-display text-white tracking-tight">
-                Get in touch
-              </h3>
-              <p className="text-xs md:text-sm text-zinc-400 mt-1 leading-relaxed">
-                Direct links to reach out or explore my active engineering work.
+              <h2 className="text-xl md:text-2xl font-bold font-display text-[var(--text)] tracking-tight">
+                Direct Channels
+              </h2>
+              <p className="text-xs md:text-sm text-[var(--text-muted)] mt-1 leading-relaxed">
+                Copy an address directly or inspect active engineering profiles.
               </p>
             </div>
 
-            {/* Contact Cards Container */}
             <div className="space-y-2.5 pt-1">
-              
-              {/* CARD 1: BUSINESS & HACKATHONS EMAIL */}
-              <div 
+              {/* Business & Hackathons Email */}
+              <div
                 onClick={() => handleCopyBusiness()}
-                className="contact-card-interactive group cursor-pointer p-4 rounded-2xl bg-white/[0.035] border border-white/10 hover:border-purple-500/40 hover:bg-white/[0.05] flex items-center justify-between gap-4"
+                className="card group cursor-pointer p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: "var(--surface-2)",
+                  borderColor: "var(--border)",
+                }}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleCopyBusiness(); } }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleCopyBusiness();
+                  }
+                }}
                 aria-label={`Copy business email: ${businessEmail}`}
               >
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div
+                    className="w-10 h-10 rounded-[8px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
+                    style={{
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
+                    }}
+                  >
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs font-mono tracking-wider text-purple-300 block font-semibold">
-                      Business & Hackathons
+                    <span className="text-[11px] font-mono tracking-wider uppercase text-[var(--accent)] block font-semibold">
+                      Business &amp; Hackathons
                     </span>
-                    <span className="text-xs md:text-sm font-mono text-white font-medium truncate block mt-0.5 select-all">
+                    <span className="text-xs md:text-sm font-mono text-[var(--text)] font-medium truncate block mt-0.5 select-all">
                       {businessEmail}
                     </span>
-                    <span className="text-xs text-zinc-400 font-sans block truncate">
-                      Collaborations, hackathons & business
+                    <span className="text-xs text-[var(--text-muted)] block truncate">
+                      Collaborations, hackathons &amp; business
                     </span>
                   </div>
                 </div>
@@ -417,45 +292,60 @@ export default function ContactSection() {
                 <button
                   type="button"
                   onClick={handleCopyBusiness}
-                  className="contact-btn-hover shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.04] text-zinc-300 group-hover:text-white group-hover:border-purple-500/40 flex items-center gap-1.5 cursor-pointer"
+                  className="btn btn-secondary min-h-[36px] px-3 py-1.5 text-xs font-mono shrink-0"
                   aria-label="Copy business email address"
                 >
                   {copiedBusiness ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-400 font-semibold">Copied ✓</span>
+                      <Check className="w-3.5 h-3.5 text-[var(--accent)]" />
+                      <span>Copied</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5 text-zinc-400" />
-                      <span>Copy →</span>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy</span>
                     </>
                   )}
                 </button>
               </div>
 
-              {/* CARD 2: CONTACT & INTERNSHIPS EMAIL */}
-              <div 
+              {/* Contact & Internships Email */}
+              <div
                 onClick={() => handleCopyContact()}
-                className="contact-card-interactive group cursor-pointer p-4 rounded-2xl bg-white/[0.035] border border-white/10 hover:border-emerald-500/40 hover:bg-white/[0.05] flex items-center justify-between gap-4"
+                className="card group cursor-pointer p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: "var(--surface-2)",
+                  borderColor: "var(--border)",
+                }}
                 role="button"
                 tabIndex={0}
-                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleCopyContact(); } }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleCopyContact();
+                  }
+                }}
                 aria-label={`Copy contact email: ${contactEmail}`}
               >
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div
+                    className="w-10 h-10 rounded-[8px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
+                    style={{
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
+                    }}
+                  >
                     <Mail className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-xs font-mono tracking-wider text-emerald-300 block font-semibold">
-                      Contact & Internships
+                    <span className="text-[11px] font-mono tracking-wider uppercase text-[var(--accent)] block font-semibold">
+                      Contact &amp; Internships
                     </span>
-                    <span className="text-xs md:text-sm font-mono text-white font-medium truncate block mt-0.5 select-all">
+                    <span className="text-xs md:text-sm font-mono text-[var(--text)] font-medium truncate block mt-0.5 select-all">
                       {contactEmail}
                     </span>
-                    <span className="text-xs text-zinc-400 font-sans block truncate">
-                      Internships, student outreach & queries
+                    <span className="text-xs text-[var(--text-muted)] block truncate">
+                      Internships, student outreach &amp; queries
                     </span>
                   </div>
                 </div>
@@ -463,257 +353,220 @@ export default function ContactSection() {
                 <button
                   type="button"
                   onClick={handleCopyContact}
-                  className="contact-btn-hover shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.04] text-zinc-300 group-hover:text-white group-hover:border-emerald-500/40 flex items-center gap-1.5 cursor-pointer"
+                  className="btn btn-secondary min-h-[36px] px-3 py-1.5 text-xs font-mono shrink-0"
                   aria-label="Copy contact email address"
                 >
                   {copiedContact ? (
                     <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-400 font-semibold">Copied ✓</span>
+                      <Check className="w-3.5 h-3.5 text-[var(--accent)]" />
+                      <span>Copied</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3 h-3 text-zinc-400" />
-                      <span>Copy →</span>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copy</span>
                     </>
                   )}
                 </button>
               </div>
 
-              {/* CARD 2: LINKEDIN */}
+              {/* Quick Social Cards */}
               <a
                 href={verifiedLinkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contact-card-interactive group p-4 rounded-2xl bg-white/[0.035] border border-white/10 hover:border-cyan-500/40 hover:bg-white/[0.05] flex items-center justify-between gap-4 block"
+                className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: "var(--surface-2)",
+                  borderColor: "var(--border)",
+                }}
                 aria-label="Open Sayam Mukherjee's LinkedIn profile in new tab"
               >
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div
+                    className="w-10 h-10 rounded-[8px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
+                    style={{
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
+                    }}
+                  >
                     <Linkedin className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block font-semibold">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block font-semibold">
                       LINKEDIN
                     </span>
-                    <span className="text-xs md:text-sm font-sans text-white font-medium truncate block mt-0.5">
+                    <span className="text-xs md:text-sm text-[var(--text)] font-medium truncate block mt-0.5">
                       Connect professionally
                     </span>
                   </div>
                 </div>
-
-                <div className="contact-btn-hover shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.04] text-zinc-300 group-hover:text-white group-hover:border-cyan-500/40 flex items-center gap-1">
-                  <span>Open</span>
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-                </div>
+                <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
               </a>
 
-              {/* CARD 3: GITHUB */}
               <a
                 href={verifiedGithub}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contact-card-interactive group p-4 rounded-2xl bg-white/[0.035] border border-white/10 hover:border-purple-500/40 hover:bg-white/[0.05] flex items-center justify-between gap-4 block"
+                className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: "var(--surface-2)",
+                  borderColor: "var(--border)",
+                }}
                 aria-label="Open Sayam Mukherjee's GitHub profile in new tab"
               >
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-300 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div
+                    className="w-10 h-10 rounded-[8px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
+                    style={{
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
+                    }}
+                  >
                     <Github className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block font-semibold">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block font-semibold">
                       GITHUB
                     </span>
-                    <span className="text-xs md:text-sm font-sans text-white font-medium truncate block mt-0.5">
+                    <span className="text-xs md:text-sm text-[var(--text)] font-medium truncate block mt-0.5">
                       Explore my code
                     </span>
                   </div>
                 </div>
-
-                <div className="contact-btn-hover shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.04] text-zinc-300 group-hover:text-white group-hover:border-purple-500/40 flex items-center gap-1">
-                  <span>Open</span>
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-                </div>
+                <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
               </a>
 
-              {/* CARD 4: CODOLIO */}
               <a
                 href={verifiedCodolio}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contact-card-interactive group p-4 rounded-2xl bg-white/[0.035] border border-white/10 hover:border-amber-500/40 hover:bg-white/[0.05] flex items-center justify-between gap-4 block"
+                className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                style={{
+                  backgroundColor: "var(--surface-2)",
+                  borderColor: "var(--border)",
+                }}
                 aria-label="Open Sayam Mukherjee's Codolio profile in new tab"
               >
                 <div className="flex items-center gap-3.5 min-w-0">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div
+                    className="w-10 h-10 rounded-[8px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
+                    style={{
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
+                    }}
+                  >
                     <Award className="w-4 h-4" />
                   </div>
                   <div className="min-w-0">
-                    <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block font-semibold">
+                    <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block font-semibold">
                       CODOLIO
                     </span>
-                    <span className="text-xs md:text-sm font-sans text-white font-medium truncate block mt-0.5">
+                    <span className="text-xs md:text-sm text-[var(--text)] font-medium truncate block mt-0.5">
                       View coding profile
                     </span>
                   </div>
                 </div>
-
-                <div className="contact-btn-hover shrink-0 px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.04] text-zinc-300 group-hover:text-white group-hover:border-amber-500/40 flex items-center gap-1">
-                  <span>Open</span>
-                  <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-                </div>
+                <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
               </a>
-
             </div>
           </div>
-
         </div>
 
-        {/* ==================================================
-            RIGHT COLUMN: "LET’S CONNECT" DIRECT-CONTACT HUB
-            ================================================== */}
-        <div className="connect-card space-y-6">
-          
-          {/* Header */}
-          <div className="border-b border-white/10 pb-4 space-y-1.5">
+        {/* Right Column: Let's Connect Hub */}
+        <div
+          className="lg:col-span-7 card p-5 sm:p-8 space-y-6"
+          style={{
+            backgroundColor: "var(--surface-2)",
+            borderColor: "var(--border)",
+          }}
+        >
+          <div className="border-b pb-4 space-y-1.5" style={{ borderColor: "var(--border)" }}>
             <div className="flex items-center justify-between">
-              <h3 className="text-xl md:text-2xl font-bold font-display text-white tracking-tight">
-                Let’s connect
-              </h3>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              <h2 className="text-xl md:text-2xl font-bold font-display text-[var(--text)] tracking-tight">
+                Let&rsquo;s connect
+              </h2>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--accent)] font-semibold">
+                Response &lt; 24h
+              </span>
             </div>
-            <p className="text-xs md:text-sm text-zinc-300 leading-relaxed font-normal">
-              Have an opportunity, project or idea? Send a direct dispatch below or reach out via email.
+            <p className="text-xs md:text-sm text-[var(--text-muted)] leading-relaxed">
+              Have an opportunity, project, or idea? Send a direct dispatch below or reach out via email.
             </p>
           </div>
 
-          {/* Interactive Validated Contact Form */}
           <ContactForm />
 
-          {/* ==================================================
-              DUAL EMAIL BLOCKS
-              ================================================== */}
-          <div className="space-y-3">
-            {/* Block 1: Business & Hackathons */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5 hover:border-purple-500/30 transition-colors">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-purple-300 font-semibold">
-                  <Mail className="w-3.5 h-3.5 text-purple-400" />
-                  <span>Business & Hackathons</span>
-                </div>
-                <span className="text-xs font-mono text-zinc-400 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
-                  Collaborations & Inquiries
-                </span>
+          {/* Dual Email Action Blocks */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+            <div
+              className="p-4 rounded-[8px] border space-y-2.5"
+              style={{
+                backgroundColor: "var(--surface)",
+                borderColor: "var(--border)",
+              }}
+            >
+              <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[var(--accent)] font-semibold">
+                <Mail className="w-3.5 h-3.5" />
+                <span>Business &amp; Hackathons</span>
               </div>
-
-              <div className="font-mono text-sm sm:text-base text-white font-semibold select-text break-all">
+              <div className="font-mono text-xs sm:text-sm text-[var(--text)] font-semibold select-text break-all">
                 {businessEmail}
               </div>
-
-              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              <div className="flex items-center gap-2 pt-1">
                 <button
                   type="button"
                   onClick={handleCopyBusiness}
-                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.06] hover:bg-white/[0.12] text-zinc-200 hover:text-white flex items-center gap-2 cursor-pointer transition-colors"
-                  aria-label="Copy business email address"
+                  className="btn btn-secondary min-h-[34px] px-3 py-1 text-xs font-mono"
                 >
-                  {copiedBusiness ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-400">Copied ✓</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5 text-zinc-400" />
-                      <span>Copy Email</span>
-                    </>
-                  )}
+                  {copiedBusiness ? "Copied" : "Copy"}
                 </button>
-
                 <a
                   href={`mailto:${businessEmail}?subject=Business%20%2F%20Collaboration%20Inquiry`}
-                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium bg-purple-600 hover:bg-purple-500 text-white flex items-center gap-1.5 transition-colors shadow-[0_2px_12px_rgba(168,85,247,0.3)]"
-                  aria-label="Email Sayam Mukherjee for business or hackathons"
+                  className="btn btn-primary min-h-[34px] px-3 py-1 text-xs font-mono"
                 >
-                  <span>Business / Hackathons →</span>
+                  Email
                 </a>
               </div>
             </div>
 
-            {/* Block 2: Contact & Internships */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5 hover:border-emerald-500/30 transition-colors">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-emerald-300 font-semibold">
-                  <Mail className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>Contact & Internships</span>
-                </div>
-                <span className="text-xs font-mono text-zinc-400 px-2 py-0.5 rounded bg-white/[0.04] border border-white/[0.06]">
-                  Direct & Student Outreach
-                </span>
+            <div
+              className="p-4 rounded-[8px] border space-y-2.5"
+              style={{
+                backgroundColor: "var(--surface)",
+                borderColor: "var(--border)",
+              }}
+            >
+              <div className="flex items-center gap-2 text-xs font-mono tracking-wider text-[var(--accent)] font-semibold">
+                <Mail className="w-3.5 h-3.5" />
+                <span>Contact &amp; Internships</span>
               </div>
-
-              <div className="font-mono text-sm sm:text-base text-white font-semibold select-text break-all">
+              <div className="font-mono text-xs sm:text-sm text-[var(--text)] font-semibold select-text break-all">
                 {contactEmail}
               </div>
-
-              <div className="flex flex-wrap items-center gap-2.5 pt-1">
+              <div className="flex items-center gap-2 pt-1">
                 <button
                   type="button"
                   onClick={handleCopyContact}
-                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium border border-white/10 bg-white/[0.06] hover:bg-white/[0.12] text-zinc-200 hover:text-white flex items-center gap-2 cursor-pointer transition-colors"
-                  aria-label="Copy contact email address"
+                  className="btn btn-secondary min-h-[34px] px-3 py-1 text-xs font-mono"
                 >
-                  {copiedContact ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-400">Copied ✓</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5 text-zinc-400" />
-                      <span>Copy Email</span>
-                    </>
-                  )}
+                  {copiedContact ? "Copied" : "Copy"}
                 </button>
-
                 <a
                   href={`mailto:${contactEmail}?subject=Internship%20%2F%20Contact%20Inquiry`}
-                  className="contact-btn-hover px-3.5 py-1.5 rounded-xl text-xs font-mono font-medium bg-emerald-600 hover:bg-emerald-500 text-white flex items-center gap-1.5 transition-colors shadow-[0_2px_12px_rgba(16,185,129,0.3)]"
-                  aria-label="Email Sayam Mukherjee for internships or inquiries"
+                  className="btn btn-primary min-h-[34px] px-3 py-1 text-xs font-mono"
                 >
-                  <span>Internship / Direct →</span>
+                  Email
                 </a>
               </div>
             </div>
           </div>
 
-          {/* ==================================================
-              "BEST FOR" PILLS
-              ================================================== */}
-          <div className="space-y-2">
-            <span className="text-xs font-mono tracking-wider text-zinc-400 font-semibold block">
-              Best for
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {OPEN_ROLES.map((role) => (
-                <span
-                  key={role}
-                  className="px-2.5 py-1 rounded-full text-xs font-mono text-zinc-300 bg-white/[0.04] border border-white/[0.08]"
-                >
-                  {role}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* ==================================================
-              SOCIAL / PROFESSIONAL CONNECTIONS (2x2 GRID)
-              ================================================== */}
+          {/* 2x2 Social Grid */}
           <div className="space-y-2.5 pt-1">
-            <span className="text-xs font-mono tracking-wider text-zinc-400 font-semibold block">
+            <span className="text-xs font-mono tracking-wider text-[var(--text-muted)] uppercase font-semibold block">
               Profiles
             </span>
-            
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {SOCIAL_PROFILES.map((profile) => {
                 const IconComponent = profile.icon;
@@ -723,52 +576,56 @@ export default function ContactSection() {
                     href={profile.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`contact-card-interactive group p-3.5 rounded-2xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/10 ${profile.hoverBorder} transition-all flex flex-col justify-between gap-3 text-left`}
+                    className="group p-3.5 rounded-[8px] border hover:border-[var(--border-strong)] transition-colors flex items-center justify-between gap-3"
+                    style={{
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border)",
+                    }}
                     aria-label={`Open Sayam Mukherjee's ${profile.name} profile in new tab`}
                   >
-                    <div className="flex items-center justify-between">
-                      <div className={`w-8 h-8 rounded-xl flex items-center justify-center border ${profile.bgClass}`}>
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className="w-8 h-8 rounded-[6px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
+                        style={{
+                          backgroundColor: "var(--surface-2)",
+                          borderColor: "var(--border)",
+                        }}
+                      >
                         <IconComponent className="w-4 h-4" />
                       </div>
-                      <span className="inline-flex items-center gap-1 text-xs font-mono text-zinc-400 group-hover:text-white transition-colors">
-                        <span>Open</span>
-                        <ArrowRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
-                      </span>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block font-semibold">
+                          {profile.name}
+                        </span>
+                        <span className="text-xs text-[var(--text)] font-medium block truncate">
+                          {profile.description}
+                        </span>
+                      </div>
                     </div>
-
-                    <div>
-                      <span className="text-xs font-mono tracking-wider text-zinc-400 block font-semibold">
-                        {profile.name}
-                      </span>
-                      <span className="text-xs text-zinc-200 group-hover:text-white font-medium block mt-0.5">
-                        {profile.description}
-                      </span>
-                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
                   </a>
                 );
               })}
             </div>
           </div>
 
-          {/* ==================================================
-              QUICK CONTACT ACTION CTA
-              ================================================== */}
-          <div className="space-y-2 pt-2 border-t border-white/10">
+          <div
+            className="space-y-2 pt-3 border-t"
+            style={{ borderColor: "var(--border)" }}
+          >
             <button
               type="button"
               onClick={handleStartConversation}
-              className="contact-btn-hover w-full py-3.5 px-6 rounded-xl font-mono text-xs font-bold tracking-wider text-white bg-gradient-to-r from-purple-600 via-indigo-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 shadow-[0_4px_24px_rgba(168,85,247,0.25)] flex items-center justify-center gap-2 cursor-pointer transition-all"
+              className="btn btn-primary w-full py-3 text-xs font-mono"
               aria-label="Start a conversation via email"
             >
-              <span>Start a conversation →</span>
+              <span>Start a conversation &rarr;</span>
             </button>
-            <p className="text-xs font-mono text-zinc-400 text-center">
-              Opens your email app
+            <p className="text-xs font-mono text-[var(--text-faint)] text-center">
+              Opens your default email client
             </p>
           </div>
-
         </div>
-
       </div>
     </section>
   );

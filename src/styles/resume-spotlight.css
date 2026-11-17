@@ -1,6 +1,5 @@
 /* src/styles/resume-spotlight.css
- * Premium Minimalist Resume CTA Button
- * Replaces oversized pill/card layout with a restrained, modern engineer CTA.
+ * Editorial Resume Control matching DESIGN.md Hairline Secondary CTA
  */
 
 .resume-btn {
@@ -10,57 +9,44 @@
   justify-content: center;
   gap: 8px;
 
-  height: 46px;
-  min-height: 46px;
+  height: 44px;
+  min-height: 44px;
   padding: 0 18px;
 
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: linear-gradient(180deg, #181622 0%, #100f17 100%);
-  color: #f4f4f5;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  background: transparent;
+  color: var(--text);
 
-  font-family: inherit;
+  font-family: var(--font-sans);
   font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-weight: 700;
+  letter-spacing: 0.01em;
   text-decoration: none;
   cursor: pointer;
   user-select: none;
   white-space: nowrap;
 
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-
   transition:
-    transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 180ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 180ms ease,
     border-color 180ms ease,
-    box-shadow 180ms ease,
     color 180ms ease;
 }
 
 .resume-btn:hover {
-  transform: translateY(-1.5px);
-  background: linear-gradient(180deg, #201d2d 0%, #15131f 100%);
-  border-color: rgba(168, 85, 247, 0.45);
-  color: #ffffff;
-  box-shadow:
-    0 6px 18px rgba(0, 0, 0, 0.35),
-    0 0 16px rgba(168, 85, 247, 0.14),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+  background-color: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
 }
 
 .resume-btn:active {
-  transform: translateY(0) scale(0.985);
-  background: #121019;
-  box-shadow:
-    0 2px 6px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(0, 0, 0, 0.4);
+  transform: translateY(0);
 }
 
 .resume-btn:focus-visible {
-  outline: 2px solid #a855f7;
+  outline: 2px solid #C7E34A;
   outline-offset: 2px;
 }
 
@@ -68,17 +54,16 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #c084fc;
+  color: var(--accent);
   transition: transform 180ms ease, color 180ms ease;
 }
 
 .resume-btn:hover .resume-btn__icon {
-  transform: scale(1.05);
-  color: #d8b4fe;
+  color: #C7E34A;
 }
 
 .resume-btn__label {
-  font-weight: 600;
+  font-weight: 700;
   color: inherit;
   line-height: 1;
 }
@@ -87,58 +72,15 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: #71717a;
-  font-size: 0.85rem;
+  color: var(--text-muted);
   transition: transform 180ms ease, color 180ms ease;
 }
 
 .resume-btn:hover .resume-btn__arrow {
-  color: #c084fc;
+  color: #C7E34A;
   transform: translate(1px, -1px);
 }
 
-/* Light Mode Overrides */
-html.light .resume-btn,
-html[data-theme="light"] .resume-btn {
-  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  border-color: rgba(15, 23, 42, 0.12);
-  color: #1e1b4b;
-  box-shadow:
-    0 2px 6px rgba(15, 23, 42, 0.05),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-}
-
-html.light .resume-btn:hover,
-html[data-theme="light"] .resume-btn:hover {
-  background: #ffffff;
-  border-color: rgba(124, 58, 237, 0.4);
-  color: #581c87;
-  box-shadow:
-    0 6px 16px rgba(124, 58, 237, 0.08),
-    0 2px 6px rgba(15, 23, 42, 0.04);
-}
-
-html.light .resume-btn__icon,
-html[data-theme="light"] .resume-btn__icon {
-  color: #7c3aed;
-}
-
-html.light .resume-btn:hover .resume-btn__icon,
-html[data-theme="light"] .resume-btn:hover .resume-btn__icon {
-  color: #6d28d9;
-}
-
-html.light .resume-btn__arrow,
-html[data-theme="light"] .resume-btn__arrow {
-  color: #94a3b8;
-}
-
-html.light .resume-btn:hover .resume-btn__arrow,
-html[data-theme="light"] .resume-btn:hover .resume-btn__arrow {
-  color: #7c3aed;
-}
-
-/* Reduced Motion Safety */
 @media (prefers-reduced-motion: reduce) {
   .resume-btn,
   .resume-btn__icon,

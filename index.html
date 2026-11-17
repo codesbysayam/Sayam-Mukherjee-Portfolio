@@ -5,7 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>Sayam Mukherjee | Engineering Portfolio &amp; Ecosystem</title>
     <meta name="description" content="An evidence-based engineering portfolio and ecosystem showcasing verified projects, technologies, repository telemetry, and system architecture by Sayam Mukherjee." />
-    <meta name="theme-color" content="#09090b" />
+    <meta name="theme-color" content="#F4F4ED" />
+
+    <!-- Editorial Typography: Manrope, DM Serif Display, IBM Plex Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     
     <!-- Favicon & Touch Icons -->
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -36,7 +44,8 @@
           document.documentElement.dataset.performance = mode;
 
           var savedTheme = localStorage.getItem("sayam_theme") || localStorage.getItem("theme");
-          if (savedTheme === "light" || (!savedTheme && window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches)) {
+          var initialTheme = savedTheme === "dark" ? "dark" : "light";
+          if (initialTheme === "light") {
             document.documentElement.classList.add("light");
             document.documentElement.classList.remove("dark");
             document.documentElement.setAttribute("data-theme", "light");

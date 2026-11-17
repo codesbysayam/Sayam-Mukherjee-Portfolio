@@ -21,34 +21,50 @@ export interface GitHubStatsProps {
 
 function GitHubStatsSkeleton({ compact }: { compact?: boolean }) {
   return (
-    <div className="space-y-6 animate-pulse" aria-label="Loading GitHub data">
-      {/* Status Bar Skeleton */}
-      <div className="h-12 bg-zinc-900/60 rounded-2xl border border-white/[0.06]" />
+    <div className="space-y-6" aria-label="Loading GitHub data">
+      <div
+        className="h-12 rounded-[10px] border"
+        style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+      />
 
-      {/* Overview Skeleton */}
-      <div className="p-6 rounded-2xl bg-zinc-900/40 border border-white/[0.06] flex items-center gap-4">
-        <div className="w-16 h-16 rounded-2xl bg-zinc-800 shrink-0" />
+      <div
+        className="p-6 rounded-[10px] border flex items-center gap-4"
+        style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
+      >
+        <div
+          className="w-16 h-16 rounded-[10px] shrink-0"
+          style={{ backgroundColor: "var(--surface)" }}
+        />
         <div className="space-y-2 flex-1">
-          <div className="h-5 w-40 bg-zinc-800 rounded" />
-          <div className="h-3 w-64 bg-zinc-800/60 rounded" />
-          <div className="h-3 w-48 bg-zinc-800/40 rounded" />
+          <div className="h-5 w-40 rounded" style={{ backgroundColor: "var(--surface)" }} />
+          <div className="h-3 w-64 rounded" style={{ backgroundColor: "var(--surface)" }} />
+          <div className="h-3 w-48 rounded" style={{ backgroundColor: "var(--surface)" }} />
         </div>
       </div>
 
-      {/* Metrics Grid Skeleton */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-24 rounded-2xl bg-zinc-900/50 border border-white/[0.06] p-4 space-y-2">
-            <div className="h-3 w-20 bg-zinc-800 rounded" />
-            <div className="h-6 w-12 bg-zinc-700 rounded" />
+          <div
+            key={i}
+            className="h-24 rounded-[10px] border p-4 space-y-2"
+            style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
+          >
+            <div className="h-3 w-20 rounded" style={{ backgroundColor: "var(--surface)" }} />
+            <div className="h-6 w-12 rounded" style={{ backgroundColor: "var(--surface)" }} />
           </div>
         ))}
       </div>
 
       {!compact && (
         <>
-          <div className="h-44 rounded-2xl bg-zinc-900/40 border border-white/[0.06]" />
-          <div className="h-32 rounded-2xl bg-zinc-900/40 border border-white/[0.06]" />
+          <div
+            className="h-44 rounded-[10px] border"
+            style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
+          />
+          <div
+            className="h-32 rounded-[10px] border"
+            style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
+          />
         </>
       )}
     </div>
@@ -85,15 +101,20 @@ export const GitHubStats = memo(function GitHubStats({
 
   if (!data || !isValidGitHubStats(data)) {
     return (
-      <div className={`p-8 text-center rounded-2xl bg-zinc-900/40 border border-white/[0.08] space-y-3 ${className}`}>
-        <p className="text-sm font-mono text-zinc-300">GitHub repositories are temporarily unavailable.</p>
-        <p className="text-xs text-zinc-500 max-w-sm mx-auto">
+      <div
+        className={`card p-8 text-center space-y-3 ${className}`}
+        style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
+      >
+        <p className="text-sm font-mono text-[var(--text)]">
+          GitHub repositories are temporarily unavailable.
+        </p>
+        <p className="text-xs text-[var(--text-muted)] max-w-sm mx-auto">
           Could not establish connection to the GitHub API. Click below to retry.
         </p>
         <button
           type="button"
           onClick={() => refresh()}
-          className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-mono text-white transition-colors cursor-pointer"
+          className="btn btn-primary text-xs font-mono"
         >
           Try Again
         </button>
@@ -103,7 +124,6 @@ export const GitHubStats = memo(function GitHubStats({
 
   return (
     <div className={`space-y-6 ${className}`}>
-      {/* 1. Telemetry Data Source Status Indicator */}
       <GitHubDataStatus
         source={source}
         lastSyncedLabel={lastUpdated || "Latest synced data"}
@@ -114,20 +134,17 @@ export const GitHubStats = memo(function GitHubStats({
         error={error}
       />
 
-      {/* 2. Public Profile Overview */}
       <GitHubOverview stats={data} />
 
-      {/* 3. Core Verified Metrics Cards */}
       <GitHubMetricsCards stats={data} />
 
-      {/* 4. Active Repositories List with Live Search, Tabs & Sorting */}
       {showRepositories && (
         <div className="space-y-3">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
-            <h4 className="text-base font-bold text-white font-display tracking-tight">
+            <h4 className="text-base font-bold text-[var(--text)] font-display tracking-tight">
               Public Repositories ({data.repositories.length})
             </h4>
-            <span className="text-xs font-mono text-zinc-400">
+            <span className="text-xs font-mono text-[var(--text-muted)]">
               Direct official inventory from github.com/{data.username}
             </span>
           </div>
@@ -139,7 +156,6 @@ export const GitHubStats = memo(function GitHubStats({
         </div>
       )}
 
-      {/* 5. Language Breakdown */}
       {showLanguages && (
         <GitHubLanguageBreakdown
           languageBytes={data.languageBytes}
@@ -147,17 +163,12 @@ export const GitHubStats = memo(function GitHubStats({
         />
       )}
 
-      {/* 6. Contribution Calendar (from GraphQL snapshot) */}
       {!compact && data.contributionCalendar && (
         <GitHubContributionGraph calendar={data.contributionCalendar} />
       )}
 
-      {/* 7. Recent Public Activity Timeline */}
       {showActivity && data.recentActivity && data.recentActivity.length > 0 && (
-        <GitHubActivity
-          activity={data.recentActivity}
-          limit={limitEvents}
-        />
+        <GitHubActivity activity={data.recentActivity} limit={limitEvents} />
       )}
     </div>
   );

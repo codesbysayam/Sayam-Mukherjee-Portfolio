@@ -1,19 +1,12 @@
-import { useState, useEffect, useRef, lazy, Suspense } from "react";
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
+import { useState, useEffect, useRef, Suspense } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import confetti from "canvas-confetti";
-import { 
-  Brain, Cpu, Layers, Server, Palette, TrendingUp, Sparkles, 
-  Github, Linkedin, Instagram, Youtube, Mail, FileText, MapPin, 
-  Calendar, GraduationCap, Award, CheckCircle2, ArrowUp, 
-  Send, Clock, Briefcase, Code, Flame, Menu, X, Check, Sun, Moon, Search, BookOpen, Download,
-  AlertTriangle, RotateCcw
-} from "lucide-react";
+import { Menu, X, Sun, Moon, Search } from "lucide-react";
 
-import { SAYAM_DATA } from "./data";
-import Loader from "./components/Loader";
 import AboutSection from "./components/AboutSection";
 import ExperienceSection from "./components/ExperienceSection";
 import HeroSection from "./components/HeroSection";
+import HomeEditorialChapters from "./components/HomeEditorialChapters";
 import LiveBuildFeed from "./components/LiveBuildFeed";
 import CertificationsSection from "./components/CertificationsSection";
 import ContactSection from "./components/ContactSection";
@@ -26,10 +19,11 @@ import CustomCursor from "./components/CustomCursor";
 import ScrollProgressBar from "./components/ScrollProgressBar";
 import Toast from "./components/Toast";
 import { ResumeGlyph } from "./components/ResumeGlyph";
-import { NAVIGATION, RESUME_URL, SOCIAL_LINKS } from "./data/siteContent";
+import { NAVIGATION } from "./data/siteContent";
 import { lazyWithRetry, clearChunkReloadFlag } from "./utils/lazyWithRetry";
+import ScrollStoryThread from "./components/motion/ScrollStoryThread";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "./motion/tokens";
 
-// Code-split heavy interactive components with resilient retries
 const ProjectsShowcase = lazyWithRetry(() => import("./components/ProjectsShowcase"));
 const AIChatBot = lazyWithRetry(() => import("./components/AssistantChat"));
 const SkillsSection = lazyWithRetry(() => import("./components/SkillsSection"));
@@ -66,16 +60,15 @@ export default function App() {
   );
 }
 
-// Single-trigger IntersectionObserver reveal component - zero scroll calculations, zero continuous work
-function Reveal({ 
-  children, 
-  delay = 0, 
+function Reveal({
+  children,
+  delay = 0,
   className = "",
-}: { 
-  children: React.ReactNode; 
-  delay?: number; 
-  direction?: "left" | "right" | "up" | "down" | "none"; 
-  distance?: number; 
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  direction?: "left" | "right" | "up" | "down" | "none";
+  distance?: number;
   stagger?: number;
   lazy?: boolean;
   height?: string;
@@ -92,7 +85,6 @@ function Reveal({
       return;
     }
 
-    // Safety fallback: guaranteed visibility even in iframe / quick tab switches
     const safetyTimer = setTimeout(() => {
       if (el && !el.classList.contains("visible")) {
         el.classList.add("visible");
@@ -133,59 +125,29 @@ function Reveal({
   );
 }
 
-// Isolated Live Indian Standard Time Clock (does not re-render entire page)
-function LiveISTClock() {
-  const [time, setTime] = useState("");
-
-  useEffect(() => {
-    const tickTime = () => {
-      const options: Intl.DateTimeFormatOptions = {
-        timeZone: "Asia/Kolkata",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-      };
-      setTime(new Date().toLocaleTimeString("en-US", options));
-    };
-    tickTime();
-    const clockInterval = setInterval(tickTime, 1000);
-    return () => clearInterval(clockInterval);
-  }, []);
-
-  return (
-    <div className="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-zinc-900/50 border border-zinc-900 rounded-xl text-[10px] text-zinc-400 font-mono tracking-wide">
-      <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
-      <span>{time || "12:00:00 AM"} IST</span>
-    </div>
-  );
-}
-
 function AppContent() {
   const { theme, toggleTheme, trackVisit } = usePortfolio();
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     trackVisit("Home Portfolio");
     clearChunkReloadFlag();
   }, []);
 
-  const [loadingComplete, setLoadingComplete] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [isCommandMenuOpen, setIsCommandMenuOpen] = useState(false);
-  const [readingMode, setReadingMode] = useState(false);
   const [isCommandPaletteHintsVisible, setIsCommandPaletteHintsVisible] = useState(false);
 
-  // Listen for global open-resume-modal event (e.g. triggered from chatbot)
+  const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
+  const topSentinelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleOpenResume = () => setIsResumeModalOpen(true);
     window.addEventListener("open-resume-modal", handleOpenResume);
     return () => window.removeEventListener("open-resume-modal", handleOpenResume);
   }, []);
-
-  // Sentinel ref for zero-CPU scroll threshold detection
-  const topSentinelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const el = topSentinelRef.current;
@@ -200,20 +162,36 @@ function AppContent() {
     return () => observer.disconnect();
   }, []);
 
-  // Track Cmd/Ctrl key state for showing the Command Palette Hints
+  // Accessible mobile drawer body-scroll lock + Escape key close with focus return
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsMenuOpen(false);
+        mobileMenuButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleEsc);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [isMenuOpen]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Control" || e.key === "Meta") {
         setIsCommandPaletteHintsVisible(true);
       }
     };
-
     const handleKeyUp = (e: KeyboardEvent) => {
       if (e.key === "Control" || e.key === "Meta") {
         setIsCommandPaletteHintsVisible(false);
       }
     };
-
     const handleBlur = () => {
       setIsCommandPaletteHintsVisible(false);
     };
@@ -221,7 +199,6 @@ function AppContent() {
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
     window.addEventListener("blur", handleBlur);
-
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
@@ -229,67 +206,31 @@ function AppContent() {
     };
   }, []);
 
-  // Command Menu Cmd+K Shortcut
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === "k") {
         e.preventDefault();
-        setIsCommandMenuOpen(prev => !prev);
+        setIsCommandMenuOpen((prev) => !prev);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  // Throttled mouse coordinates over glass cards with requestAnimationFrame
-  useEffect(() => {
-    let activeCard: HTMLElement | null = null;
-    let cachedRect: DOMRect | null = null;
-    let rafId: number | null = null;
-    let lastEvent: MouseEvent | null = null;
-
-    const updateGlow = () => {
-      if (!lastEvent) {
-        rafId = null;
-        return;
-      }
-      const target = lastEvent.target as HTMLElement;
-      if (target) {
-        const card = target.closest(".glass-card") as HTMLElement | null;
-        if (!card) {
-          activeCard = null;
-          cachedRect = null;
-        } else {
-          if (card !== activeCard) {
-            activeCard = card;
-            cachedRect = card.getBoundingClientRect();
-          }
-          if (cachedRect) {
-            const x = lastEvent.clientX - cachedRect.left;
-            const y = lastEvent.clientY - cachedRect.top;
-            card.style.setProperty("--mouse-x", `${x}px`);
-            card.style.setProperty("--mouse-y", `${y}px`);
-          }
-        }
-      }
-      rafId = null;
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      lastEvent = e;
-      if (rafId === null) {
-        rafId = requestAnimationFrame(updateGlow);
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove, { passive: true });
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    };
-  }, []);
-
-  type TabType = "home" | "about" | "skills" | "ecosystem" | "projects" | "certificates" | "journal" | "contact" | "privacy" | "terms" | "github" | "404" | "showcase";
+  type TabType =
+    | "home"
+    | "about"
+    | "skills"
+    | "ecosystem"
+    | "projects"
+    | "certificates"
+    | "journal"
+    | "contact"
+    | "privacy"
+    | "terms"
+    | "github"
+    | "404"
+    | "showcase";
 
   const getInitialTab = (): TabType => {
     if (typeof window === "undefined") return "home";
@@ -297,21 +238,47 @@ function AppContent() {
     const path = rawPath.replace(/\/+$/, "");
 
     if (!path || path === "" || path === "/" || path === "/home") return "home";
-    if (path === "/video-showcase" || path === "/showcase" || path.startsWith("/video-showcase/") || path.startsWith("/showcase/") || path === "/creator-showcase") return "showcase";
+    if (
+      path === "/video-showcase" ||
+      path === "/showcase" ||
+      path.startsWith("/video-showcase/") ||
+      path.startsWith("/showcase/") ||
+      path === "/creator-showcase"
+    )
+      return "showcase";
     if (path === "/privacy" || path.startsWith("/privacy/")) return "privacy";
     if (path === "/terms" || path.startsWith("/terms/")) return "terms";
-    if (path === "/certificates" || path === "/certificate" || path.startsWith("/certificates/") || path.startsWith("/certificate/")) return "certificates";
-    if (path === "/projects" || path === "/project" || path.startsWith("/projects/") || path.startsWith("/project/")) return "projects";
+    if (
+      path === "/certificates" ||
+      path === "/certificate" ||
+      path.startsWith("/certificates/") ||
+      path.startsWith("/certificate/")
+    )
+      return "certificates";
+    if (
+      path === "/projects" ||
+      path === "/project" ||
+      path.startsWith("/projects/") ||
+      path.startsWith("/project/")
+    )
+      return "projects";
     if (path === "/github" || path.startsWith("/github/")) return "github";
     if (path === "/about" || path.startsWith("/about/")) return "about";
     if (path === "/skills" || path.startsWith("/skills/")) return "skills";
     if (path === "/ecosystem" || path.startsWith("/ecosystem/")) return "ecosystem";
-    if (path === "/journal" || path === "/blog" || path.startsWith("/journal/") || path.startsWith("/blog/")) return "journal";
+    if (
+      path === "/journal" ||
+      path === "/blog" ||
+      path.startsWith("/journal/") ||
+      path.startsWith("/blog/")
+    )
+      return "journal";
     if (path === "/contact" || path.startsWith("/contact/")) return "contact";
     if (path === "/404" || path.startsWith("/404/")) return "404";
 
     const hash = window.location.hash.toLowerCase().replace("#", "").replace(/\/+$/, "");
-    if (hash === "video-showcase" || hash === "showcase" || hash === "creator-showcase") return "showcase";
+    if (hash === "video-showcase" || hash === "showcase" || hash === "creator-showcase")
+      return "showcase";
     if (hash === "privacy") return "privacy";
     if (hash === "terms") return "terms";
     if (hash === "certificates" || hash === "certificate") return "certificates";
@@ -324,15 +291,12 @@ function AppContent() {
     if (hash === "contact") return "contact";
     if (hash === "404") return "404";
 
-    // Any unrecognized path routes to the custom 404 page
     return "404";
   };
 
-  // Categorical Page Router State with direct URL resolution
   const [activeTab, setActiveTab] = useState<TabType>(getInitialTab);
   const isLegalPage = activeTab === "privacy" || activeTab === "terms";
 
-  // Toggle body class for legal pages to suppress cursor effects
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.body.classList.toggle("has-legal-page", isLegalPage);
@@ -348,7 +312,6 @@ function AppContent() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Synchronize browser history back/forward
   useEffect(() => {
     const handlePopState = () => {
       setActiveTab(getInitialTab());
@@ -357,16 +320,20 @@ function AppContent() {
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
 
-  // Quick Switch Keyboard Shortcuts ('h', 'a', 's', 'e', 'p', 'c', 'j', 'm' or Arrow keys)
   useEffect(() => {
     const tabsList: TabType[] = [
-      "home", "about", "skills", "ecosystem", "projects", "certificates", "journal", "contact"
+      "home",
+      "about",
+      "skills",
+      "ecosystem",
+      "projects",
+      "certificates",
+      "journal",
+      "contact",
     ];
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Avoid intercepting shortcuts on legal reading pages
       if (isLegalPage) return;
-      // Ignore if user is typing in form fields, search inputs, or other text boxes
       const target = e.target as HTMLElement;
       if (
         !target ||
@@ -374,19 +341,14 @@ function AppContent() {
         target.tagName === "TEXTAREA" ||
         target.isContentEditable ||
         target.closest('[role="textbox"]') ||
-        target.closest('.chat-input-container')
+        target.closest(".chat-input-container")
       ) {
         return;
       }
 
-      // Ignore standard shortcut key combinations to avoid breaking browser/OS controls (e.g. Ctrl+S, Cmd+A, etc.)
-      if (e.altKey || e.ctrlKey || e.metaKey) {
-        return;
-      }
+      if (e.altKey || e.ctrlKey || e.metaKey) return;
 
       const key = e.key.toLowerCase();
-
-      // Navigation shortcuts map
       const keyToTabMap: Record<string, TabType> = {
         h: "home",
         a: "about",
@@ -395,7 +357,7 @@ function AppContent() {
         p: "projects",
         c: "certificates",
         j: "journal",
-        m: "contact"
+        m: "contact",
       };
 
       if (keyToTabMap[key]) {
@@ -404,7 +366,6 @@ function AppContent() {
         return;
       }
 
-      // Arrow keys to cycle left/right through sections
       if (e.key === "ArrowRight") {
         e.preventDefault();
         setActiveTab((prev) => {
@@ -434,151 +395,39 @@ function AppContent() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isLegalPage]);
 
-  // Global tab navigation event listener
   useEffect(() => {
-    const handleTabNavigate = (e: any) => {
+    const handleTabNavigate = (e: CustomEvent<string>) => {
       if (e.detail && typeof e.detail === "string") {
         navigateToTab(e.detail as TabType);
       }
     };
-    window.addEventListener("portfolio-navigate-tab", handleTabNavigate);
-    return () => window.removeEventListener("portfolio-navigate-tab", handleTabNavigate);
+    window.addEventListener("portfolio-navigate-tab", handleTabNavigate as EventListener);
+    return () =>
+      window.removeEventListener("portfolio-navigate-tab", handleTabNavigate as EventListener);
   }, []);
 
-  // Close mobile menu on tab change
   useEffect(() => {
     setIsMenuOpen(false);
   }, [activeTab]);
 
-  // Swipe-to-navigate gestures for mobile view (allows swiping left/right to cycle tabs)
-  useEffect(() => {
-    let touchStartX = 0;
-    let touchStartY = 0;
-    let touchEndX = 0;
-    let touchEndY = 0;
-
-    const tabsList: TabType[] = [
-      "home", "about", "skills", "ecosystem", "projects", "certificates", "journal", "contact"
-    ];
-
-    const isInteractiveElement = (target: HTMLElement | null): boolean => {
-      if (!target) return false;
-      return (
-        target.tagName === "INPUT" ||
-        target.tagName === "TEXTAREA" ||
-        target.tagName === "SELECT" ||
-        target.tagName === "BUTTON" ||
-        target.tagName === "A" ||
-        target.isContentEditable ||
-        target.closest("input") !== null ||
-        target.closest("textarea") !== null ||
-        target.closest("button") !== null ||
-        target.closest("a") !== null ||
-        target.closest(".no-swipe") !== null ||
-        target.closest(".recharts-wrapper") !== null ||
-        target.closest(".interactive-console") !== null ||
-        target.closest("#chat-container") !== null ||
-        target.closest(".chat-input-container") !== null ||
-        target.closest('[role="slider"]') !== null ||
-        target.closest('[role="textbox"]') !== null
-      );
-    };
-
-    const handleTouchStart = (e: TouchEvent) => {
-      const target = e.target as HTMLElement;
-      if (isInteractiveElement(target)) {
-        return;
-      }
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-    };
-
-    const handleTouchEnd = (e: TouchEvent) => {
-      const target = e.target as HTMLElement;
-      if (isInteractiveElement(target)) {
-        return;
-      }
-      touchEndX = e.changedTouches[0].clientX;
-      touchEndY = e.changedTouches[0].clientY;
-
-      // Only enable gestures for mobile widths (less than 768px)
-      if (window.innerWidth >= 768) {
-        return;
-      }
-
-      const diffX = touchEndX - touchStartX;
-      const diffY = touchEndY - touchStartY;
-
-      // Minimum horizontal swipe distance of 60px
-      // Also ensure the swipe is primarily horizontal (horizontal diff is at least 1.5x vertical diff)
-      if (Math.abs(diffX) > 60 && Math.abs(diffX) > Math.abs(diffY) * 1.5) {
-        if (diffX < 0) {
-          // Swiped left -> navigate to next tab
-          setActiveTab((prev) => {
-            const currentIndex = tabsList.indexOf(prev);
-            const nextIndex = (currentIndex + 1) % tabsList.length;
-            return tabsList[nextIndex];
-          });
-        } else {
-          // Swiped right -> navigate to previous tab
-          setActiveTab((prev) => {
-            const currentIndex = tabsList.indexOf(prev);
-            const prevIndex = (currentIndex - 1 + tabsList.length) % tabsList.length;
-            return tabsList[prevIndex];
-          });
-        }
-      }
-    };
-
-    window.addEventListener("touchstart", handleTouchStart, { passive: true });
-    window.addEventListener("touchend", handleTouchEnd, { passive: true });
-
-    return () => {
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, []);
-
-  // Scroll back to absolute coordinate on category transition
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
     trackVisit(`${activeTab.toUpperCase()} Page`);
   }, [activeTab]);
 
-  // Contact Form State
-  const [formData, setFormData] = useState({ name: "", email: "", service: "Full-Stack Web Engineering", message: "" });
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formLoading, setFormLoading] = useState(false);
-
   const triggerConfetti = () => {
     try {
       confetti({
-        particleCount: 100,
-        spread: 70,
+        particleCount: 80,
+        spread: 65,
         origin: { y: 0.8 },
-        colors: ["#8B5CF6", "#3B82F6", "#22D3EE"],
+        colors: ["#C7E34A", "#69734A", "#20231D", "#F4F4ED"],
       });
     } catch {
-      // Confetti fallback for iframe constraints
+      // Confetti fallback for constrained frames
     }
-  };
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-
-    setFormLoading(true);
-    setTimeout(() => {
-      setFormLoading(false);
-      setFormSubmitted(true);
-      triggerConfetti();
-      setTimeout(() => {
-        setFormSubmitted(false);
-        setFormData({ name: "", email: "", service: "Full-Stack Web Engineering", message: "" });
-      }, 5000);
-    }, 1200);
   };
 
   if (window.location.pathname === "/admin") {
@@ -589,612 +438,506 @@ function AppContent() {
     <>
       <SEO routeKey={activeTab} />
 
-      <AnimatePresence mode="wait">
-        {!loadingComplete && (
-          <Loader onComplete={() => setLoadingComplete(true)} />
-        )}
-      </AnimatePresence>
+      <div className="min-h-screen relative font-sans bg-[var(--bg)] text-[var(--text)] transition-colors duration-200 flex flex-col">
+        <ScrollProgressBar />
+        <CustomCursor disabled={isLegalPage} />
 
-      {loadingComplete && (
-        <div className={`min-h-screen relative font-sans selection:bg-purple-500/30 selection:text-cyan-200 transition-all duration-700 ${
-          theme === "dark" ? "bg-[#05050a] text-white" : "bg-[#f8f9fc] text-[#17151f]"
-        } ${readingMode ? "sepia-[.4] contrast-90 brightness-95" : ""}`}>
-          
-          {/* Ambient Background Grid and Floating Nodes */}
-          <div className="absolute inset-0 page-background-grid tech-grid-bg pointer-events-none z-0" />
-          
-          {/* Hardware-accelerated Scroll Progress Bar and Fluid Cursor */}
-          <ScrollProgressBar />
-          <CustomCursor disabled={isLegalPage} />
+        {/* Sentinel for sticky header state */}
+        <div
+          ref={topSentinelRef}
+          className="absolute top-0 left-0 w-full h-6 pointer-events-none opacity-0"
+          aria-hidden="true"
+        />
 
-          {/* Zero-CPU Sentinel Element for Scrolled Header detection */}
-          <div ref={topSentinelRef} className="absolute top-0 left-0 w-full h-10 pointer-events-none opacity-0" aria-hidden="true" />
+        {/* Skip Link */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#C7E34A] focus:text-[#20231D] focus:rounded-[6px] focus:font-mono focus:text-xs focus:font-bold"
+        >
+          Skip to main content
+        </a>
 
-          {!isLegalPage && (
-            <>
-              <div className="absolute top-1/4 left-1/4 w-4 h-4 text-purple-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-              <div className="absolute top-1/4 right-1/4 w-4 h-4 text-cyan-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-              <div className="absolute bottom-1/4 left-1/3 w-4 h-4 text-indigo-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-              <div className="absolute bottom-1/3 right-1/3 w-4 h-4 text-pink-500/10 pointer-events-none select-none z-0 hidden lg:block font-mono text-sm">+</div>
-              {/* Glowing Animated Ambient iOS 27 Liquid Glass Blobs */}
-              <div className="absolute top-[8%] left-[2%] liquid-blob liquid-blob-1 pointer-events-none select-none" />
-              <div className="absolute top-[28%] right-[4%] liquid-blob liquid-blob-2 pointer-events-none select-none" />
-              <div className="absolute bottom-[22%] left-[5%] liquid-blob liquid-blob-3 pointer-events-none select-none" />
-              <div className="absolute bottom-[38%] right-[3%] liquid-blob liquid-blob-4 pointer-events-none select-none" />
-            </>
-          )}
-
-          {/* Skip to main content for screen reader & keyboard accessibility */}
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-purple-600 focus:text-white focus:rounded-xl focus:shadow-2xl focus:outline-none focus:ring-2 focus:ring-purple-400 font-mono text-xs font-semibold"
+        {/* STICKY EDITORIAL TOP NAVIGATION */}
+        <header
+          className={`sticky top-0 w-full z-50 border-b transition-colors duration-200 backdrop-blur-md ${
+            isScrolled
+              ? "bg-[var(--bg)]/95 border-[var(--border-strong)]"
+              : "bg-[var(--bg)]/90 border-[var(--border)]"
+          }`}
+        >
+          <div
+            className="w-full flex items-center justify-between gap-4"
+            style={{
+              width: "min(100%, 1280px)",
+              marginInline: "auto",
+              paddingInline: "clamp(1rem, 4vw, 3rem)",
+              minHeight: "74px",
+            }}
           >
-            Skip to main content
-          </a>
+            {/* Left Wordmark */}
+            <button
+              type="button"
+              onClick={() => navigateToTab("home")}
+              className="flex flex-col items-start text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] py-1"
+              aria-label="Sayam Mukherjee Home"
+            >
+              <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none">
+                Sayam Mukherjee
+              </span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--text-muted)] mt-1 hidden sm:block">
+                CSE · AI &amp; ML · KIIT
+              </span>
+            </button>
 
-          {/* Fixed / Sticky Top Header (Remains static and pinned at the top while page content scrolls) */}
-          <header className={`sticky top-0 w-full z-50 border-b transition-all duration-300 backdrop-blur-xl ${
-            theme === "dark"
-              ? isScrolled
-                ? "bg-[#050508]/95 border-zinc-800 shadow-[0_8px_30px_rgba(0,0,0,0.6)]"
-                : "bg-[#050508]/90 border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.4)]"
-              : isScrolled
-                ? "bg-white/95 border-zinc-200 shadow-md"
-                : "bg-white/90 border-zinc-200/80 shadow-sm"
-          }`}>
-            <div className="w-full flex items-center justify-between gap-4" style={{ width: "min(100%, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3.5vw, 2.5rem)", paddingBlock: "clamp(0.75rem, 1.5vw, 1rem)" }}>
-              
-              {/* Logotype */}
-              <button 
-                onClick={() => navigateToTab("home")}
-                className="flex items-center gap-3 shrink-0 relative group cursor-pointer text-left focus:outline-none"
-                aria-label="Sayam Mukherjee Home"
+            {/* Center Typographic Nav Links */}
+            <nav
+              aria-label="Primary navigation"
+              className="hidden xl:flex items-center gap-5 shrink-0"
+            >
+              {NAVIGATION.filter((tab) => tab.id !== "contact").map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => navigateToTab(tab.id as TabType)}
+                    title={`${tab.label} (Press '${tab.shortcut}')`}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`relative py-2 text-[13px] font-semibold tracking-wide transition-colors cursor-pointer whitespace-nowrap select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] ${
+                      isActive
+                        ? "text-[var(--text)]"
+                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    }`}
+                  >
+                    <span>{tab.label}</span>
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeNavUnderline"
+                        className="absolute left-0 right-0 bottom-0 h-[2px] bg-[#C7E34A]"
+                        transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+
+            {/* Right Controls */}
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setIsCommandMenuOpen(true)}
+                className="hidden sm:flex items-center gap-2 min-h-[40px] px-2.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--text)] transition-colors cursor-pointer"
+                title="Search Workspace (Ctrl+K or ⌘K)"
+                aria-label="Search Workspace"
               >
-                <div className="w-9 h-9 rounded-full overflow-hidden border border-zinc-800 bg-zinc-900 flex items-center justify-center shadow-md shrink-0 group-hover:border-purple-500/50 transition-colors">
-                  <img 
-                    src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                    alt="Sayam Mukherjee - Portfolio Home" 
-                    width={36}
-                    height={36}
-                    loading="eager"
-                    decoding="async"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex flex-col">
-                  <span className={`text-sm font-bold tracking-tight font-sans leading-none transition-colors group-hover:text-purple-400 ${
-                    theme === "dark" ? "text-zinc-100" : "text-zinc-900"
-                  }`}>
-                    Sayam Mukherjee
-                  </span>
-                  <span className="text-xs text-zinc-500 font-mono tracking-wide mt-0.5 font-medium truncate max-w-[130px] sm:max-w-none">
-                    Undergraduate · AI &amp; ML Dev
-                  </span>
-                </div>
+                <Search className="w-3.5 h-3.5" />
+                <span className="hidden lg:inline">⌘K</span>
               </button>
 
-              {/* Desktop Directory Menu (Capsule Tab Group - All 8 Sections) */}
-              <nav aria-label="Primary navigation" className={`hidden xl:flex items-center gap-0.5 xl:gap-1 p-1 rounded-full backdrop-blur-xl shrink-0 transition-all ${
-                theme === "dark" 
-                  ? "bg-zinc-900/70 border border-zinc-800/80 shadow-[0_4px_20px_rgba(0,0,0,0.3)]" 
-                  : "bg-zinc-100/90 border border-zinc-200 shadow-sm"
-              }`}>
-                {NAVIGATION.map((tab) => {
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => navigateToTab(tab.id as any)}
-                      title={`${tab.label} (Press '${tab.shortcut}')`}
-                      aria-current={isActive ? "page" : undefined}
-                      className={`relative px-2.5 xl:px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all duration-200 cursor-pointer whitespace-nowrap select-none ${
-                        isActive 
-                          ? theme === "dark" ? "text-white" : "text-zinc-950"
-                          : theme === "dark" ? "text-zinc-400 hover:text-zinc-100" : "text-zinc-500 hover:text-zinc-900"
-                      }`}
-                    >
-                      {isActive && (
-                        <motion.div
-                          layoutId="activeTabIndicator"
-                          className={`absolute inset-0 rounded-full -z-10 ${
-                            theme === "dark"
-                              ? "bg-zinc-800 border border-zinc-700/60 shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_2px_8px_rgba(0,0,0,0.3)]"
-                              : "bg-white border border-zinc-200/90 shadow-[0_1px_4px_rgba(0,0,0,0.06)]"
-                          }`}
-                          transition={{ type: "spring", stiffness: 420, damping: 32 }}
-                        />
-                      )}
-                      {tab.label}
-                    </button>
-                  );
-                })}
-              </nav>
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="min-h-[40px] min-w-[40px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer"
+                title={theme === "dark" ? "Switch to Paper theme" : "Switch to Ink theme"}
+                aria-label="Toggle visual theme"
+              >
+                {theme === "dark" ? (
+                  <Sun className="w-4 h-4 text-[#C7E34A]" />
+                ) : (
+                  <Moon className="w-4 h-4 text-[var(--text)]" />
+                )}
+              </button>
 
-              {/* Right Action Controls */}
-              <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
-                {/* Raycast Quick Search Pill */}
-                <button 
-                  onClick={() => setIsCommandMenuOpen(true)}
-                  className={`hidden sm:flex items-center gap-2 min-h-[40px] px-2.5 py-1.5 border rounded-lg text-xs transition-all cursor-pointer select-none ${
-                    theme === "dark"
-                      ? "bg-zinc-900/80 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-zinc-200"
-                      : "bg-white hover:bg-zinc-100 border-zinc-200 hover:border-zinc-300 text-zinc-600 hover:text-zinc-950 shadow-xs"
-                  }`}
-                  title="Search Workspace (Ctrl+K or ⌘K)"
-                >
-                  <Search className="w-3.5 h-3.5" />
-                  <span className="hidden xl:inline text-xs">Search</span>
-                  <span className={`text-xs font-mono border px-1.5 py-0.5 rounded uppercase ${
-                    theme === "dark"
-                      ? "bg-zinc-800/80 border-zinc-750 text-zinc-400"
-                      : "bg-zinc-100 border-zinc-250 text-zinc-600"
-                  }`}>⌘K</span>
-                </button>
+              <button
+                type="button"
+                onClick={() => setIsResumeModalOpen(true)}
+                className="hidden sm:inline-flex items-center gap-1.5 min-h-[40px] px-3.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
+                aria-label="Open official verified resume viewer"
+              >
+                <ResumeGlyph className="w-3.5 h-3.5 shrink-0" />
+                <span>Résumé</span>
+              </button>
 
-                {/* Live IST Clock */}
-                <div className="hidden xl:block shrink-0">
-                  <LiveISTClock />
-                </div>
+              <button
+                type="button"
+                onClick={() => navigateToTab("contact")}
+                className={`hidden sm:inline-flex items-center justify-center min-h-[40px] px-4 rounded-[6px] text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                  activeTab === "contact"
+                    ? "bg-[#20231D] text-[#C7E34A] dark:bg-[#F4F4ED] dark:text-[#20231D]"
+                    : "bg-[#C7E34A] text-[#20231D] hover:bg-[#A9C52F]"
+                }`}
+              >
+                Contact
+              </button>
 
-                {/* Visual Theme Toggle */}
-                <button
-                  onClick={toggleTheme}
-                  className={`p-2 min-h-[40px] min-w-[40px] flex items-center justify-center border rounded-lg transition-all cursor-pointer shrink-0 ${
-                    theme === "dark"
-                      ? "bg-zinc-900 hover:bg-zinc-800 border-zinc-800 hover:border-zinc-700 text-zinc-400 hover:text-white"
-                      : "bg-white hover:bg-zinc-100 border-zinc-200 hover:border-zinc-300 text-zinc-600 hover:text-zinc-950 shadow-xs"
-                  }`}
-                  title="Toggle Visual Theme"
-                  aria-label="Toggle Theme"
-                >
-                  {theme === "dark" ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5 text-indigo-500" />}
-                </button>
-
-                {/* Redesigned Resume Header Action */}
-                <button
-                  onClick={() => {
-                    setIsResumeModalOpen(true);
-                  }}
-                  className={`hidden sm:inline-flex items-center gap-1.5 min-h-[38px] px-3.5 py-1.5 border text-xs font-semibold rounded-xl transition-all duration-200 cursor-pointer shrink-0 group ${
-                    theme === "dark"
-                      ? "bg-zinc-900/90 hover:bg-zinc-800 border-zinc-800 hover:border-purple-500/50 text-zinc-200 hover:text-white shadow-xs"
-                      : "bg-white hover:bg-zinc-50 border-zinc-250 hover:border-purple-400 text-zinc-800 shadow-xs"
-                  }`}
-                  title="View Official Interactive Resume (PDF Source)"
-                  aria-label="Open official verified resume viewer"
-                >
-                  <ResumeGlyph className="w-3.5 h-3.5 shrink-0 text-purple-400 transition-transform duration-200 group-hover:scale-105" />
-                  <span className="tracking-wide">Resume</span>
-                </button>
-
-                {/* Mobile / Tablet Menu Toggle */}
-                <button
-                  onClick={() => setIsMenuOpen(!isMenuOpen)}
-                  aria-expanded={isMenuOpen}
-                  aria-controls="mobile-navigation-drawer"
-                  className={`xl:hidden p-2 min-h-[44px] min-w-[44px] flex items-center justify-center border rounded-lg cursor-pointer shrink-0 transition-all ${
-                    theme === "dark"
-                      ? "bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-white"
-                      : "bg-white border-zinc-200 text-zinc-600 hover:text-zinc-950 shadow-xs"
-                  }`}
-                  aria-label="Toggle navigation menu"
-                >
-                  {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-                </button>
-              </div>
+              <button
+                ref={mobileMenuButtonRef}
+                type="button"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                aria-expanded={isMenuOpen}
+                aria-controls="mobile-navigation-drawer"
+                className="xl:hidden min-h-[44px] min-w-[44px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] cursor-pointer transition-colors"
+                aria-label="Toggle navigation menu"
+              >
+                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
             </div>
+          </div>
 
-            {/* Mobile Expandable Drawer Menu (statically positioned under header) */}
-            <AnimatePresence>
-              {isMenuOpen && (
-                <motion.div
-                  id="mobile-navigation-drawer"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className={`xl:hidden border-t py-4 px-5 sm:px-6 shadow-2xl max-h-[calc(100svh-4.5rem)] overflow-y-auto overscroll-contain transition-colors ${
-                    theme === "dark"
-                      ? "border-zinc-800 bg-[#0c0c0f]"
-                      : "border-zinc-200 bg-white"
-                  }`}
-                >
-                  <div className="flex flex-col gap-1 text-sm font-medium">
-                    {NAVIGATION.map((tab) => {
-                      const isActive = activeTab === tab.id;
-                      return (
-                        <button
-                          key={tab.id}
-                          onClick={() => {
-                            navigateToTab(tab.id as any);
-                            setIsMenuOpen(false);
-                          }}
-                          aria-current={isActive ? "page" : undefined}
-                          className={`text-left min-h-[44px] py-2 px-3 rounded-lg transition-colors flex items-center justify-between cursor-pointer ${
-                            isActive
-                              ? "bg-purple-500/10 text-purple-600 dark:text-purple-400 font-bold border border-purple-500/20"
-                              : theme === "dark"
-                                ? "text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200"
-                                : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-950"
-                          }`}
-                        >
-                          <span>{tab.label}</span>
-                          {isActive && <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />}
-                        </button>
-                      );
-                    })}
-                    
-                    <div className={`flex items-center gap-2 pt-3 mt-1 border-t ${
-                      theme === "dark" ? "border-zinc-800" : "border-zinc-200"
-                    }`}>
-                      <button
-                        onClick={() => {
-                          setIsMenuOpen(false);
-                          setIsCommandMenuOpen(true);
-                        }}
-                        className={`flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border rounded-lg text-xs cursor-pointer ${
-                          theme === "dark"
-                            ? "bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800"
-                            : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100"
-                        }`}
-                      >
-                        <Search className="w-3.5 h-3.5" />
-                        <span>Search (⌘K)</span>
-                      </button>
-                      <button
-                        onClick={() => {
-                          setIsMenuOpen(false);
-                          setIsResumeModalOpen(true);
-                        }}
-                        className={`flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border rounded-xl text-xs font-semibold cursor-pointer transition-colors ${
-                          theme === "dark"
-                            ? "bg-zinc-900/90 border-zinc-800 text-zinc-200 hover:bg-zinc-800 hover:text-white hover:border-purple-500/40"
-                            : "bg-zinc-50 border-zinc-200 text-zinc-800 hover:bg-zinc-100"
-                        }`}
-                        aria-label="Open official verified resume viewer"
-                      >
-                        <ResumeGlyph className="w-3.5 h-3.5 shrink-0 text-purple-400" />
-                        <span>Resume</span>
-                      </button>
-                      <button
-                        onClick={() => {
-                          toggleTheme();
-                          setIsMenuOpen(false);
-                        }}
-                        className={`p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center border rounded-lg cursor-pointer ${
-                          theme === "dark"
-                            ? "bg-zinc-900 border-zinc-800 text-zinc-300 hover:bg-zinc-800"
-                            : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:bg-zinc-100"
-                        }`}
-                        aria-label="Toggle visual theme"
-                      >
-                        {theme === "dark" ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-indigo-500" />}
-                      </button>
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </header>
-
-          {/* Main Content Layout with Framer Motion tab transition routing */}
-          <main 
-            id="main-content" 
-            tabIndex={-1} 
-            className="relative z-10 w-full pt-3 sm:pt-4 pb-16 overflow-x-clip focus:outline-none" 
-            style={
-              isLegalPage
-                ? { width: "100%", marginInline: "auto", paddingInline: 0 }
-                : { width: "min(100%, 1440px)", marginInline: "auto", paddingInline: "clamp(1rem, 3.5vw, 2.5rem)" }
-            }
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTab}
-                initial={{ opacity: 0, y: 15, scale: 0.99 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -15, scale: 0.99 }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                className="w-full min-h-[60vh]"
-              >
-                {activeTab === "home" && (
-                  <ErrorBoundary sectionName="Home Overview">
-                    <div className="space-y-8 sm:space-y-12">
-                      {/* REBUILT HERO SECTION WITH RESUME SPOTLIGHT */}
-                      <HeroSection 
-                        onViewWork={() => navigateToTab("projects")} 
-                        onOpenResume={() => {
-                          setIsResumeModalOpen(true);
-                        }}
-                      />
-
-                      {/* LIVE BUILD FEED SECTION (BELOW HERO) */}
-                      <section id="live-build-feed" className="w-full pt-1 pb-4">
-                        <LiveBuildFeed />
-                      </section>
-
-                      {/* CREDENTIALS / CERTIFICATES PREVIEW SPOTLIGHT */}
-                      <ErrorBoundary sectionName="Credentials Spotlight">
-                        <Suspense fallback={null}>
-                          <CredentialsHomePreview onNavigateToCertificates={() => navigateToTab("certificates")} />
-                        </Suspense>
-                      </ErrorBoundary>
-
-                      {/* EXPANDABLE FAQ SECTION */}
-                      <ErrorBoundary sectionName="Expandable FAQ">
-                        <ExpandableFAQ />
-                      </ErrorBoundary>
-                    </div>
-                  </ErrorBoundary>
-                )}
-
-                {/* Instantaneous Static Legal Routes (Zero-delay, No Suspense) */}
-                {activeTab === "privacy" && (
-                  <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
-                    <PrivacyPage 
-                      onNavigateHome={() => navigateToTab("home")} 
-                      onNavigateTab={(tab) => navigateToTab(tab as TabType)}
-                    />
-                  </LegalRouteErrorBoundary>
-                )}
-
-                {activeTab === "terms" && (
-                  <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
-                    <TermsPage 
-                      onNavigateHome={() => navigateToTab("home")} 
-                      onNavigateTab={(tab) => navigateToTab(tab as TabType)}
-                    />
-                  </LegalRouteErrorBoundary>
-                )}
-
-                {/* Instantaneous Custom 404 View */}
-                {activeTab === "404" && (
-                  <NotFound onNavigateTab={(tab) => navigateToTab(tab as TabType)} />
-                )}
-
-                <ErrorBoundary sectionName="Main Tab View">
-                  <Suspense fallback={<PageLoading />}>
-                    {activeTab === "about" && (
-                      <ErrorBoundary sectionName="About Section">
-                        <div className="space-y-10 sm:space-y-14 py-2">
-                          <Reveal delay={0}>
-                            <AboutSection />
-                          </Reveal>
-                          <Reveal delay={0.1}>
-                            <ExperienceSection onNavigateToShowcase={() => navigateToTab("showcase")} />
-                          </Reveal>
-                          <Reveal delay={0.15}>
-                            <CertificationsSection onNavigateToCertificates={() => navigateToTab("certificates")} />
-                          </Reveal>
-                        </div>
-                      </ErrorBoundary>
-                    )}
-
-                    {activeTab === "skills" && (
-                      <div className="py-2">
-                        <ErrorBoundary sectionName="Skills & Technical Stack">
-                          <SkillsSection onNavigateToProject={(id: string) => navigateToTab("projects")} />
-                        </ErrorBoundary>
-                      </div>
-                    )}
-
-                    {activeTab === "ecosystem" && (
-                      <div className="py-2">
-                        <ErrorBoundary sectionName="Engineering Ecosystem">
-                          <EcosystemSection />
-                        </ErrorBoundary>
-                      </div>
-                    )}
-
-                    {activeTab === "projects" && (
-                      <div className="py-2 sm:py-4">
-                        <ErrorBoundary sectionName="Projects Showcase">
-                          <Reveal delay={0}>
-                            <ProjectsShowcase />
-                          </Reveal>
-                        </ErrorBoundary>
-                      </div>
-                    )}
-
-                    {activeTab === "certificates" && (
-                      <div className="py-2 sm:py-4">
-                        <ErrorBoundary sectionName="Certificates & Credentials">
-                          <CertificatesPage />
-                        </ErrorBoundary>
-                      </div>
-                    )}
-
-                    {activeTab === "github" && (
-                      <div className="py-2 sm:py-4">
-                        <ErrorBoundary sectionName="GitHub Repositories & Telemetry">
-                          <Reveal delay={0}>
-                            <GitHubStats />
-                          </Reveal>
-                        </ErrorBoundary>
-                      </div>
-                    )}
-
-                    {activeTab === "journal" && (
-                      <div className="space-y-10 sm:space-y-14 py-2">
-                        <ErrorBoundary sectionName="Journal & Engineering Reflections">
-                          <Reveal delay={0}>
-                            <BlogsSection />
-                          </Reveal>
-                          <Reveal delay={0.1}>
-                            <TestimonialsSection />
-                          </Reveal>
-                        </ErrorBoundary>
-                      </div>
-                    )}
-
-                    {activeTab === "contact" && (
-                      <div className="w-full py-2">
-                        <ErrorBoundary sectionName="Contact Section">
-                          <Reveal delay={0}>
-                            <ContactSection />
-                          </Reveal>
-                        </ErrorBoundary>
-                      </div>
-                    )}
-
-                    {activeTab === "showcase" && (
-                      <div className="w-full py-2 sm:py-4">
-                        <ErrorBoundary sectionName="YouTube Video Showcase">
-                          <Reveal delay={0}>
-                            <ContentCreatorSection onBack={() => navigateToTab("about")} />
-                          </Reveal>
-                        </ErrorBoundary>
-                      </div>
-                    )}
-                  </Suspense>
-                </ErrorBoundary>
-              </motion.div>
-            </AnimatePresence>
-          </main>
-
-          {/* REBUILT MINIMAL MASTER FOOTER */}
-          {!isLegalPage && (
-            <SiteFooter
-              onNavigateTab={(tab) => navigateToTab(tab as any)}
-              activeTab={activeTab}
-              theme={theme}
-              toggleTheme={toggleTheme}
-            />
-          )}
-
-          {/* Floating AI Representative Bot */}
-          {!isLegalPage && (
-            <ErrorBoundary sectionName="AI Assistant">
-              <Suspense fallback={null}>
-                <AIChatBot />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-
-          {/* Independent Zero-Delay Resume Modal (Never blocked by Suspense or chunk loading) */}
-          <ErrorBoundary sectionName="Resume Modal">
-            {isResumeModalOpen && (
-              <ResumeModal isOpen={isResumeModalOpen} onClose={() => setIsResumeModalOpen(false)} />
-            )}
-          </ErrorBoundary>
-
-          {/* Modal System & Global Overlays */}
-          <ErrorBoundary sectionName="Modal System">
-            <Suspense fallback={null}>
-              {isCommandMenuOpen && (
-                <CommandMenu
-                  isOpen={isCommandMenuOpen}
-                  onClose={() => setIsCommandMenuOpen(false)}
-                  onNavigate={(tab) => navigateToTab(tab)}
-                  onOpenResume={() => setIsResumeModalOpen(true)}
-                  onTriggerConfetti={triggerConfetti}
-                />
-              )}
-              <CookieConsent />
-              {!isLegalPage && (
-                <>
-                  <FloatingContactButton onNavigateContact={() => navigateToTab("contact")} />
-                  <BackToTop />
-                  <MobileBottomNav
-                    activeTab={activeTab}
-                    onNavigate={(tab) => navigateToTab(tab as any)}
-                    onOpenSearch={() => setIsCommandMenuOpen(true)}
-                  />
-                </>
-              )}
-            </Suspense>
-          </ErrorBoundary>
-
-          {/* Reusable Global Toast Notifications */}
-          <Toast />
-
-          {/* Command Palette Hints (appearing when holding Cmd/Ctrl) */}
+          {/* Mobile Drawer Menu */}
           <AnimatePresence>
-            {isCommandPaletteHintsVisible && (
+            {isMenuOpen && (
               <motion.div
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 15, scale: 0.95 }}
-                transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                className="fixed bottom-6 left-6 z-[60] w-72 rounded-2xl glass-card border border-zinc-850/60 p-4 shadow-2xl hidden sm:flex flex-col gap-3 font-sans select-none pointer-events-none"
+                id="mobile-navigation-drawer"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: MOTION_EASE.out }}
+                className="xl:hidden border-t border-[var(--border)] bg-[var(--bg)] py-5 px-5 sm:px-6 shadow-xl max-h-[calc(100svh-4.75rem)] overflow-y-auto overscroll-contain"
               >
-                <div className="flex items-center gap-2 pb-2 border-b border-zinc-900">
-                  <div className="w-2 h-2 rounded-full bg-purple-500 animate-pulse" />
-                  <span className="text-[10px] font-bold tracking-[0.15em] text-white font-mono uppercase">
-                    Navigation Shortcuts
-                  </span>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-2 text-[11px]">
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Palette</span>
-                    <div className="flex items-center gap-0.5">
-                      <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">⌘</kbd>
-                      <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">K</kbd>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Home</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">H</kbd>
-                  </div>
+                <div className="flex flex-col gap-1.5 text-base font-semibold">
+                  {NAVIGATION.map((tab, idx) => {
+                    const isActive = activeTab === tab.id;
+                    return (
+                      <motion.button
+                        key={tab.id}
+                        type="button"
+                        initial={prefersReducedMotion ? false : { opacity: 0, x: -8 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{
+                          duration: prefersReducedMotion ? 0 : MOTION_DURATION.fast,
+                          delay: prefersReducedMotion ? 0 : Math.min(idx * 0.02, 0.16),
+                          ease: MOTION_EASE.out,
+                        }}
+                        onClick={() => {
+                          navigateToTab(tab.id as TabType);
+                          setIsMenuOpen(false);
+                        }}
+                        aria-current={isActive ? "page" : undefined}
+                        className={`text-left min-h-[48px] py-2.5 px-3.5 rounded-[6px] transition-colors flex items-center justify-between cursor-pointer ${
+                          isActive
+                            ? "bg-[#C7E34A] text-[#20231D] font-bold"
+                            : "text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text)]"
+                        }`}
+                      >
+                        <span>{tab.label}</span>
+                        <span className="font-mono text-xs opacity-70">{tab.shortcut}</span>
+                      </motion.button>
+                    );
+                  })}
 
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">About</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">A</kbd>
-                  </div>
+                  <div className="flex items-center gap-2 pt-4 mt-2 border-t border-[var(--border)]">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsCommandMenuOpen(true);
+                      }}
+                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text)] cursor-pointer"
+                    >
+                      <Search className="w-3.5 h-3.5" />
+                      <span>Search (⌘K)</span>
+                    </button>
 
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Skills</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">S</kbd>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsMenuOpen(false);
+                        setIsResumeModalOpen(true);
+                      }}
+                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] cursor-pointer"
+                    >
+                      <ResumeGlyph className="w-3.5 h-3.5 shrink-0" />
+                      <span>Résumé</span>
+                    </button>
                   </div>
-
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Ecosys</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">E</kbd>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Proj</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">P</kbd>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Certs</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">C</kbd>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Journal</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">J</kbd>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-1.5 p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50">
-                    <span className="text-zinc-400 font-medium">Contact</span>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">M</kbd>
-                  </div>
-                </div>
-
-                <div className="flex items-center justify-between p-1.5 bg-zinc-950/20 rounded-lg border border-zinc-900/50 text-[11px]">
-                  <span className="text-zinc-400 font-medium">Next / Prev Section</span>
-                  <div className="flex items-center gap-1">
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">←</kbd>
-                    <kbd className="px-1 py-0.5 font-mono text-[9px] bg-zinc-900 border border-zinc-800 rounded text-zinc-300">→</kbd>
-                  </div>
-                </div>
-
-                <div className="text-[9px] font-mono text-zinc-500 text-center uppercase tracking-wider">
-                  Release Cmd / Ctrl to hide
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
+        </header>
 
-          {/* Clean minimal baseline spacer */}
-          <div className="h-8" />
+        {/* MAIN CONTENT AREA */}
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="relative z-10 w-full flex-1 pt-6 sm:pt-8 pb-16 sm:pb-24 overflow-x-clip focus:outline-none"
+          style={
+            isLegalPage
+              ? { width: "100%", marginInline: "auto", paddingInline: 0 }
+              : {
+                  width: "min(100%, 1280px)",
+                  marginInline: "auto",
+                  paddingInline: "clamp(1rem, 4vw, 3rem)",
+                }
+          }
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -10 }}
+              transition={{ duration: prefersReducedMotion ? 0 : MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+              className="w-full min-h-[60vh]"
+            >
+              {activeTab === "home" && (
+                <ErrorBoundary sectionName="Home Overview">
+                  <ScrollStoryThread />
+                  <div className="space-y-10 sm:space-y-14">
+                    <HeroSection
+                      onViewWork={() => navigateToTab("projects")}
+                      onOpenResume={() => setIsResumeModalOpen(true)}
+                      onNavigateContact={() => navigateToTab("contact")}
+                    />
 
-        </div>
-      )}
+                    <HomeEditorialChapters
+                      onNavigateTab={(tab) => navigateToTab(tab)}
+                    />
+
+                    <LiveBuildFeed />
+
+                    <ErrorBoundary sectionName="Credentials Spotlight">
+                      <Suspense fallback={null}>
+                        <CredentialsHomePreview
+                          onNavigateToCertificates={() => navigateToTab("certificates")}
+                        />
+                      </Suspense>
+                    </ErrorBoundary>
+
+                    <ErrorBoundary sectionName="Expandable FAQ">
+                      <ExpandableFAQ />
+                    </ErrorBoundary>
+                  </div>
+                </ErrorBoundary>
+              )}
+
+              {activeTab === "privacy" && (
+                <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
+                  <PrivacyPage
+                    onNavigateHome={() => navigateToTab("home")}
+                    onNavigateTab={(tab) => navigateToTab(tab as TabType)}
+                  />
+                </LegalRouteErrorBoundary>
+              )}
+
+              {activeTab === "terms" && (
+                <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
+                  <TermsPage
+                    onNavigateHome={() => navigateToTab("home")}
+                    onNavigateTab={(tab) => navigateToTab(tab as TabType)}
+                  />
+                </LegalRouteErrorBoundary>
+              )}
+
+              {activeTab === "404" && (
+                <NotFound onNavigateTab={(tab) => navigateToTab(tab as TabType)} />
+              )}
+
+              <ErrorBoundary sectionName="Main Tab View">
+                <Suspense fallback={<PageLoading />}>
+                  {activeTab === "about" && (
+                    <ErrorBoundary sectionName="About Section">
+                      <div className="space-y-12 py-2">
+                        <Reveal delay={0}>
+                          <AboutSection />
+                        </Reveal>
+                        <Reveal delay={0.08}>
+                          <ExperienceSection
+                            onNavigateToShowcase={() => navigateToTab("showcase")}
+                          />
+                        </Reveal>
+                        <Reveal delay={0.12}>
+                          <CertificationsSection
+                            onNavigateToCertificates={() => navigateToTab("certificates")}
+                          />
+                        </Reveal>
+                      </div>
+                    </ErrorBoundary>
+                  )}
+
+                  {activeTab === "skills" && (
+                    <div className="py-2">
+                      <ErrorBoundary sectionName="Skills & Technical Stack">
+                        <SkillsSection onNavigateToProject={() => navigateToTab("projects")} />
+                      </ErrorBoundary>
+                    </div>
+                  )}
+
+                  {activeTab === "ecosystem" && (
+                    <div className="py-2">
+                      <ErrorBoundary sectionName="Engineering Ecosystem">
+                        <EcosystemSection />
+                      </ErrorBoundary>
+                    </div>
+                  )}
+
+                  {activeTab === "projects" && (
+                    <div className="py-2">
+                      <ErrorBoundary sectionName="Projects Showcase">
+                        <Reveal delay={0}>
+                          <ProjectsShowcase />
+                        </Reveal>
+                      </ErrorBoundary>
+                    </div>
+                  )}
+
+                  {activeTab === "certificates" && (
+                    <div className="py-2">
+                      <ErrorBoundary sectionName="Certificates & Credentials">
+                        <CertificatesPage />
+                      </ErrorBoundary>
+                    </div>
+                  )}
+
+                  {activeTab === "github" && (
+                    <div className="py-2">
+                      <ErrorBoundary sectionName="GitHub Repositories & Telemetry">
+                        <Reveal delay={0}>
+                          <GitHubStats />
+                        </Reveal>
+                      </ErrorBoundary>
+                    </div>
+                  )}
+
+                  {activeTab === "journal" && (
+                    <div className="space-y-12 py-2">
+                      <ErrorBoundary sectionName="Journal & Engineering Reflections">
+                        <Reveal delay={0}>
+                          <BlogsSection />
+                        </Reveal>
+                        <Reveal delay={0.08}>
+                          <TestimonialsSection />
+                        </Reveal>
+                      </ErrorBoundary>
+                    </div>
+                  )}
+
+                  {activeTab === "contact" && (
+                    <div className="w-full py-2">
+                      <ErrorBoundary sectionName="Contact Section">
+                        <Reveal delay={0}>
+                          <ContactSection />
+                        </Reveal>
+                      </ErrorBoundary>
+                    </div>
+                  )}
+
+                  {activeTab === "showcase" && (
+                    <div className="w-full py-2">
+                      <ErrorBoundary sectionName="YouTube Video Showcase">
+                        <Reveal delay={0}>
+                          <ContentCreatorSection onBack={() => navigateToTab("about")} />
+                        </Reveal>
+                      </ErrorBoundary>
+                    </div>
+                  )}
+                </Suspense>
+              </ErrorBoundary>
+            </motion.div>
+          </AnimatePresence>
+        </main>
+
+        {!isLegalPage && (
+          <SiteFooter
+            onNavigateTab={(tab) => navigateToTab(tab as TabType)}
+            activeTab={activeTab}
+            theme={theme}
+            toggleTheme={toggleTheme}
+          />
+        )}
+
+        {!isLegalPage && (
+          <ErrorBoundary sectionName="AI Assistant">
+            <Suspense fallback={null}>
+              <AIChatBot />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+
+        <ErrorBoundary sectionName="Resume Modal">
+          {isResumeModalOpen && (
+            <ResumeModal
+              isOpen={isResumeModalOpen}
+              onClose={() => setIsResumeModalOpen(false)}
+            />
+          )}
+        </ErrorBoundary>
+
+        <ErrorBoundary sectionName="Modal System">
+          <Suspense fallback={null}>
+            {isCommandMenuOpen && (
+              <CommandMenu
+                isOpen={isCommandMenuOpen}
+                onClose={() => setIsCommandMenuOpen(false)}
+                onNavigate={(tab) => navigateToTab(tab)}
+                onOpenResume={() => setIsResumeModalOpen(true)}
+                onTriggerConfetti={triggerConfetti}
+              />
+            )}
+            <CookieConsent />
+            {!isLegalPage && (
+              <>
+                <FloatingContactButton
+                  onNavigateContact={() => navigateToTab("contact")}
+                />
+                <BackToTop />
+                <MobileBottomNav
+                  activeTab={activeTab}
+                  onNavigate={(tab) => navigateToTab(tab)}
+                  onOpenSearch={() => setIsCommandMenuOpen(true)}
+                />
+              </>
+            )}
+          </Suspense>
+        </ErrorBoundary>
+
+        <Toast />
+
+        {/* Command Palette Hints on Ctrl/Meta hold */}
+        <AnimatePresence>
+          {isCommandPaletteHintsVisible && (
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 12 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed bottom-6 left-6 z-[60] w-72 rounded-[10px] border border-[#41443A] bg-[#20231D] text-[#F4F4ED] p-4 shadow-2xl hidden sm:flex flex-col gap-3 font-sans select-none pointer-events-none"
+            >
+              <div className="flex items-center justify-between pb-2 border-b border-[#41443A]">
+                <span className="text-[11px] font-bold tracking-[0.12em] font-mono uppercase text-[#C7E34A]">
+                  Navigation Shortcuts
+                </span>
+                <span className="text-[10px] font-mono text-[#B5B8AA]">⌘ / CTRL</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
+                {[
+                  ["Palette", "⌘K"],
+                  ["Home", "H"],
+                  ["About", "A"],
+                  ["Skills", "S"],
+                  ["Ecosystem", "E"],
+                  ["Projects", "P"],
+                  ["Certs", "C"],
+                  ["Journal", "J"],
+                  ["Contact", "M"],
+                  ["Cycle", "← →"],
+                ].map(([label, shortcut]) => (
+                  <div
+                    key={label}
+                    className="flex items-center justify-between gap-1.5 px-2 py-1 rounded bg-[#151713] border border-[#41443A]"
+                  >
+                    <span className="text-[#D4D6CA]">{label}</span>
+                    <kbd className="text-[10px] text-[#C7E34A]">{shortcut}</kbd>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
     </>
   );
 }

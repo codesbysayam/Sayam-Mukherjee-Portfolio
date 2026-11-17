@@ -4,55 +4,68 @@ import { ProjectMetrics } from "../../data/projects";
 interface ProjectMetricsSummaryProps {
   metrics: ProjectMetrics;
   projectName?: string;
+  darkSurface?: boolean;
 }
 
-export function ProjectMetricsSummary({ metrics, projectName }: ProjectMetricsSummaryProps) {
+export function ProjectMetricsSummary({ metrics, projectName, darkSurface = false }: ProjectMetricsSummaryProps) {
+  const outerClass = darkSurface
+    ? "p-4 rounded-[8px] bg-[#151713] border border-[#41443A] space-y-3"
+    : "p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-3";
+
+  const tileClass = darkSurface
+    ? "p-3 rounded-[6px] bg-[#20231D] border border-[#41443A] space-y-1"
+    : "p-3 rounded-[6px] bg-[var(--surface-2)] border border-[var(--border)] space-y-1";
+
+  const labelClass = darkSurface
+    ? "text-[11px] font-mono text-[#B5B8AA] flex items-center gap-1"
+    : "text-[11px] font-mono text-[var(--text-muted)] flex items-center gap-1";
+
+  const valueClass = darkSurface
+    ? "text-sm font-bold text-[#F4F4ED] font-mono block tabular-nums"
+    : "text-sm font-bold text-[var(--text)] font-mono block tabular-nums";
+
+  const headingAccent = darkSurface ? "text-[#C7E34A]" : "text-[var(--accent)]";
+
   return (
-    <div className="p-4 rounded-xl bg-purple-50/60 dark:bg-white/[0.03] border border-purple-200/80 dark:border-white/[0.08] space-y-3">
-      <div className="flex items-center justify-between">
-        <h4 className="text-xs font-mono uppercase tracking-widest text-purple-700 dark:text-purple-400 font-semibold flex items-center gap-1.5">
-          <Cpu className="w-3.5 h-3.5" />
+    <div className={outerClass}>
+      <div className="flex items-center justify-between gap-2 flex-wrap">
+        <h4 className={`text-xs font-mono uppercase tracking-widest font-semibold flex items-center gap-1.5 ${headingAccent}`}>
+          <Cpu className="w-3.5 h-3.5" aria-hidden="true" />
           Technical Effort &amp; Metrics Summary
         </h4>
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/40">
+        <span className={`text-[11px] font-mono ${darkSurface ? "text-[#B5B8AA]" : "text-[var(--text-muted)]"}`}>
           {projectName || "Engineering Telemetry"}
         </span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
         {metrics.developmentTime && (
-          <div className="p-3 rounded-lg bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 space-y-1">
-            <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
-              <Clock className="w-3 h-3 text-purple-500 shrink-0" />
+          <div className={tileClass}>
+            <span className={labelClass}>
+              <Clock className={`w-3 h-3 shrink-0 ${headingAccent}`} aria-hidden="true" />
               Development Time
             </span>
-            <span className="text-sm font-bold text-zinc-900 dark:text-white font-mono block">
-              {metrics.developmentTime}
-            </span>
+            <span className={valueClass}>{metrics.developmentTime}</span>
           </div>
         )}
 
         {metrics.codeComplexityScore && (
-          <div className="p-3 rounded-lg bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 space-y-1">
-            <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
-              <Cpu className="w-3 h-3 text-cyan-500 shrink-0" />
-              Code Complexity Score
+          <div className={tileClass}>
+            <span className={labelClass}>
+              <Cpu className={`w-3 h-3 shrink-0 ${headingAccent}`} aria-hidden="true" />
+              Complexity Profile
             </span>
-            <span className="text-sm font-bold text-zinc-900 dark:text-white font-mono block">
-              {metrics.codeComplexityScore}
-            </span>
+            <span className={valueClass}>{metrics.codeComplexityScore}</span>
           </div>
         )}
 
         {metrics.linesOfCode && (
-          <div className="p-3 rounded-lg bg-white dark:bg-zinc-900/90 border border-zinc-200 dark:border-zinc-800 space-y-1">
-            <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400 flex items-center gap-1">
-              <Code2 className="w-3 h-3 text-emerald-500 shrink-0" />
+          <div className={tileClass}>
+            <span className={labelClass}>
+              <Code2 className={`w-3 h-3 shrink-0 ${headingAccent}`} aria-hidden="true" />
               Lines of Code
             </span>
-            <span className="text-sm font-bold text-zinc-900 dark:text-white font-mono block">
-              {metrics.linesOfCode}
-            </span>
+            <span className={valueClass}>{metrics.linesOfCode}</span>
           </div>
         )}
       </div>

@@ -8,73 +8,65 @@ interface EngineeringStackSectionProps {
 }
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
-  languages: <Code2 className="w-4 h-4 text-purple-600 dark:text-purple-400" />,
-  frontend: <Layout className="w-4 h-4 text-sky-600 dark:text-sky-400" />,
-  "backend-data": <Database className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />,
-  "ai-ml": <Brain className="w-4 h-4 text-violet-600 dark:text-violet-400" />,
-  tools: <Wrench className="w-4 h-4 text-amber-600 dark:text-amber-400" />,
-  "core-engineering": <Cpu className="w-4 h-4 text-rose-600 dark:text-rose-400" />
+  languages: <Code2 className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />,
+  frontend: <Layout className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />,
+  "backend-data": <Database className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />,
+  "ai-ml": <Brain className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />,
+  tools: <Wrench className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />,
+  "core-engineering": <Cpu className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />
 };
 
 export function EngineeringStackSection({ selectedTech, onSelectTech }: EngineeringStackSectionProps) {
   return (
     <section id="engineering-stack" className="space-y-6">
-      {/* Section Header */}
       <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-semibold uppercase tracking-wider text-purple-700 dark:text-purple-400">
-            ENGINEERING STACK
+        <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
+          <span className="font-semibold uppercase tracking-wider text-[var(--accent)]">
+            Engineering Stack
           </span>
-          <span className="h-px w-8 bg-zinc-300 dark:border-white/[0.08]" />
-          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider hidden sm:inline">
-            Verified Technologies &amp; Foundations
-          </span>
+          <span className="hidden sm:inline" aria-hidden="true">/</span>
+          <span className="hidden sm:inline uppercase tracking-wider">Verified Technologies &amp; Foundations</span>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text)] font-display">
             Core Technologies &amp; Domains
           </h2>
-          <span className="text-xs font-mono text-zinc-500">
+          <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
             6 Disciplines · 29 Technologies
           </span>
         </div>
-        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans leading-relaxed">
-          A technology overview organized by discipline. These represent verified tools and concepts actively applied across projects, algorithmic problem-solving, and coursework.
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
+          Technology ledger organized by discipline — verified tools and fundamentals applied across shipped projects and coursework.
         </p>
       </div>
 
-      {/* 6-Category Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {ENGINEERING_STACK_CATEGORIES.map((group) => {
-          const icon = CATEGORY_ICONS[group.id] || <Code2 className="w-4 h-4 text-purple-600 dark:text-purple-400" />;
+          const icon = CATEGORY_ICONS[group.id] || <Code2 className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
 
           return (
-            <div
-              key={group.id}
-              className="card p-5 flex flex-col justify-between space-y-4"
-            >
+            <div key={group.id} className="card p-5 flex flex-col justify-between space-y-4">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-lg bg-zinc-100 dark:bg-white/[0.04] border border-zinc-250/70 dark:border-white/[0.06]">
+                    <div className="p-2 rounded-[6px] bg-[var(--surface)] border border-[var(--border)]">
                       {icon}
                     </div>
-                    <h3 className="text-xs font-mono font-semibold tracking-wider text-zinc-900 dark:text-zinc-100 uppercase">
+                    <h3 className="text-xs font-mono font-bold tracking-wider text-[var(--text)] uppercase">
                       {group.category}
                     </h3>
                   </div>
-                  <span className="text-xs font-mono text-zinc-500">
-                    {group.skills.length} items
+                  <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
+                    {group.skills.length}
                   </span>
                 </div>
 
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed min-h-[32px] font-sans">
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed min-h-[32px] font-sans">
                   {group.description}
                 </p>
               </div>
 
-              {/* Skills Tags */}
-              <div className="pt-3 border-t border-zinc-250/60 dark:border-white/[0.06] flex flex-wrap gap-1.5">
+              <div className="pt-3 border-t border-[var(--border)] flex flex-wrap gap-1.5">
                 {group.skills.map((skillName) => {
                   const isSelected = selectedTech?.toLowerCase() === skillName.toLowerCase();
 
@@ -83,14 +75,14 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
                       key={skillName}
                       type="button"
                       onClick={() => onSelectTech?.(isSelected ? null : skillName)}
-                      className={`px-2.5 py-1 rounded-md text-xs font-mono transition-all text-left flex items-center gap-1 cursor-pointer ${
+                      className={`px-2.5 py-1 rounded-[4px] text-xs font-mono transition-colors text-left flex items-center gap-1 cursor-pointer border ${
                         isSelected
-                          ? "bg-purple-600 text-white font-medium shadow-sm"
-                          : "bg-zinc-100 dark:bg-white/[0.04] text-zinc-700 dark:text-zinc-300 border border-zinc-250/70 dark:border-white/[0.06] hover:text-black dark:hover:text-white"
+                          ? "bg-[#20231D] dark:bg-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D] border-[#20231D] dark:border-[#C7E34A] font-semibold"
+                          : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
                       }`}
                     >
                       <span>{skillName}</span>
-                      {isSelected && <CheckCircle2 className="w-3 h-3 text-white shrink-0" />}
+                      {isSelected && <CheckCircle2 className="w-3 h-3 shrink-0" aria-hidden="true" />}
                     </button>
                   );
                 })}

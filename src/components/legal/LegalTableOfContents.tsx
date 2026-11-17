@@ -18,9 +18,9 @@ export const LegalTableOfContents: React.FC<LegalTableOfContentsProps> = ({
   return (
     <nav
       aria-label="On this page navigation"
-      className="w-full my-8 sm:my-10 p-5 sm:p-7 rounded-2xl border border-zinc-200/80 dark:border-zinc-800/80 bg-zinc-50/70 dark:bg-zinc-900/40 select-none transition-colors"
+      className="card w-full my-8 sm:my-10 p-5 sm:p-7 select-none"
     >
-      <div className="text-[11px] font-semibold uppercase tracking-[0.08em] text-zinc-400 dark:text-zinc-500 mb-4 font-sans">
+      <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--text-muted)] mb-4 font-mono">
         On this page
       </div>
 
@@ -33,10 +33,10 @@ export const LegalTableOfContents: React.FC<LegalTableOfContentsProps> = ({
                 e.preventDefault();
                 onSelectSection(section.id);
               }}
-              className="group flex items-baseline gap-2.5 py-1 text-xs sm:text-[13px] text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 transition-colors cursor-pointer"
+              className="group flex items-baseline gap-2.5 py-1 text-xs sm:text-[13px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
             >
               {section.number && (
-                <span className="font-mono text-[11px] text-zinc-400 dark:text-zinc-500 shrink-0 select-none group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                <span className="font-mono text-[11px] text-[var(--text-faint)] shrink-0 select-none tabular-nums group-hover:text-[var(--accent)] transition-colors">
                   {section.number}
                 </span>
               )}

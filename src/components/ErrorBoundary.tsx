@@ -14,10 +14,6 @@ interface State {
   error: Error | null;
 }
 
-/**
- * Section-level Error Boundary that catches component exceptions
- * and prevents whole-page unmounting / black screen.
- */
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
     hasError: false,
@@ -52,30 +48,32 @@ export class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="w-full p-6 sm:p-8 my-4 rounded-2xl bg-zinc-950/90 dark:bg-zinc-950/90 border border-zinc-800 text-center space-y-4 shadow-xl">
-          <div className="w-12 h-12 mx-auto rounded-xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
+        <div className="card w-full p-6 sm:p-8 my-4 text-center space-y-4">
+          <div className="w-12 h-12 mx-auto rounded-[8px] bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)] flex items-center justify-center">
             <AlertTriangle className="w-6 h-6" />
           </div>
           <div className="space-y-1">
-            <h3 className="text-sm sm:text-base font-bold text-white font-mono uppercase tracking-wider">
+            <h3 className="text-sm sm:text-base font-bold text-[var(--text)] font-display">
               {this.props.fallbackTitle || (this.props.sectionName ? `${this.props.sectionName} Temporarily Unavailable` : "Component Temporarily Unavailable")}
             </h3>
-            <p className="text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">
               {this.props.fallbackDescription ||
                 "A temporary network or rendering delay occurred while loading this section. You can retry or continue browsing other sections."}
             </p>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+          <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
             <button
+              type="button"
               onClick={this.handleReset}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold font-mono cursor-pointer transition-all shadow-md active:scale-95"
+              className="btn btn-primary min-h-[38px] px-4 py-2 text-xs"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Try Again</span>
             </button>
             <button
+              type="button"
               onClick={this.handleReload}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white cursor-pointer transition-colors active:scale-95"
+              className="btn btn-secondary min-h-[38px] px-4 py-2 text-xs"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Reload Page</span>
@@ -89,9 +87,6 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 }
 
-/**
- * Top-level application root Error Boundary to prevent any full-screen blackouts.
- */
 export class RootErrorBoundary extends Component<{ children: ReactNode }, State> {
   public state: State = {
     hasError: false,
@@ -108,7 +103,6 @@ export class RootErrorBoundary extends Component<{ children: ReactNode }, State>
 
   private handleReload = () => {
     if (typeof window !== "undefined") {
-      // Clear potential stale reload keys and reload cleanly
       try {
         sessionStorage.clear();
       } catch {}
@@ -125,30 +119,32 @@ export class RootErrorBoundary extends Component<{ children: ReactNode }, State>
   public render() {
     if (this.state.hasError) {
       return (
-        <div className="min-h-screen w-full bg-[#05050a] text-white flex flex-col items-center justify-center p-6 text-center">
-          <div className="max-w-md w-full p-8 rounded-3xl bg-zinc-950 border border-zinc-800/80 shadow-2xl space-y-6">
-            <div className="w-14 h-14 mx-auto rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
+        <div className="min-h-screen w-full bg-[var(--bg)] text-[var(--text)] flex flex-col items-center justify-center p-6 text-center">
+          <div className="card max-w-md w-full p-8 shadow-2xl space-y-6">
+            <div className="w-14 h-14 mx-auto rounded-[10px] bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)] flex items-center justify-center">
               <AlertTriangle className="w-7 h-7" />
             </div>
             <div className="space-y-2">
-              <h1 className="text-xl font-bold font-display text-white">
-                Sayam Mukherjee | Portfolio
+              <h1 className="text-xl font-bold font-display text-[var(--text)]">
+                Sayam Mukherjee · Portfolio
               </h1>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                The application encountered a temporary display issue during reload. Your session is safe, and reloading will refresh the latest code bundle.
+              <p className="text-xs sm:text-sm text-[var(--text-muted)] leading-relaxed">
+                The application encountered a temporary display issue during reload. Your session is safe, and reloading will refresh the latest bundle.
               </p>
             </div>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
               <button
+                type="button"
                 onClick={this.handleReload}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold font-mono cursor-pointer transition-all shadow-lg active:scale-95"
+                className="btn btn-primary w-full sm:w-auto text-xs"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Reload Website</span>
               </button>
               <button
+                type="button"
                 onClick={this.handleGoHome}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs font-mono text-zinc-300 hover:text-white cursor-pointer transition-colors active:scale-95"
+                className="btn btn-secondary w-full sm:w-auto text-xs"
               >
                 <Home className="w-4 h-4" />
                 <span>Return to Home</span>

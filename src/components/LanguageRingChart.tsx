@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState, useMemo, memo } from "react";
 import * as d3 from "d3";
-import { motion, AnimatePresence } from "motion/react";
-import { Code2, GitFork, Sparkles, Layers, Info } from "lucide-react";
+import { Code2 } from "lucide-react";
 import { fetchGitHubStats, GitHubLanguageShare } from "../services/github";
 import { usePortfolio } from "../context/PortfolioContext";
 
@@ -9,7 +8,6 @@ export interface LanguageDatum {
   name: string;
   percentage: number;
   color: string;
-  glowColor: string;
   description: string;
 }
 
@@ -20,7 +18,7 @@ interface LanguageRingChartProps {
 
 function LanguageRingChartComponent({
   className = "",
-  showLegend = true
+  showLegend = true,
 }: LanguageRingChartProps) {
   const { theme } = usePortfolio();
   const isDark = theme === "dark";
@@ -29,7 +27,6 @@ function LanguageRingChartComponent({
 
   const [hoveredLang, setHoveredLang] = useState<LanguageDatum | null>(null);
   const [selectedLang, setSelectedLang] = useState<LanguageDatum | null>(null);
-  const [isInView, setIsInView] = useState<boolean>(false);
   const [rawLanguages, setRawLanguages] = useState<GitHubLanguageShare[]>([]);
 
   useEffect(() => {
@@ -45,79 +42,62 @@ function LanguageRingChartComponent({
       }
     }
     loadLangs();
-    return () => { isMounted = false; };
-  }, []);
-
-  // Viewport IntersectionObserver
-  useEffect(() => {
-    const node = containerRef.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(node);
-        }
-      },
-      {
-        threshold: 0.2,
-        rootMargin: "0px 0px -50px 0px"
-      }
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const languagesData: LanguageDatum[] = useMemo(() => {
+    const palette: Record<string, string> = {
+      TypeScript: "#3178c6",
+      "C++": "#b94a48",
+      JavaScript: "#d4b429",
+      CSS: "#69734A",
+      HTML: "#d65d3b",
+      Python: "#3572A5",
+    };
+
     if (rawLanguages.length > 0) {
       const descriptions: Record<string, string> = {
-        TypeScript: "Primary language for full-stack architecture, React frontend, and type-safe systems.",
-        "C++": "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves).",
-        JavaScript: "Modern ES6+ scripting, Node.js runtime operations, and dynamic UI interactions.",
-        CSS: "Tailwind CSS styling, custom animations, and responsive visual design.",
+        TypeScript:
+          "Primary language for full-stack architecture, React frontend, and type-safe systems.",
+        "C++":
+          "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves).",
+        JavaScript:
+          "Modern ES6+ scripting, Node.js runtime operations, and dynamic UI interactions.",
+        CSS: "Tailwind CSS styling, custom transitions, and responsive visual design.",
         HTML: "Semantic web structure, DOM hierarchies, and accessibility standards.",
-        Python: "Computer vision research (YOLOv8/OpenCV) and systems programming."
-      };
-      const colors: Record<string, string> = {
-        TypeScript: "#38bdf8",
-        "C++": "#f43f5e",
-        JavaScript: "#facc15",
-        CSS: "#c084fc",
-        HTML: "#fb923c",
-        Python: "#a855f7"
+        Python: "Computer vision research (YOLOv8/OpenCV) and systems programming.",
       };
 
-      return rawLanguages.map(l => ({
+      return rawLanguages.map((l) => ({
         name: l.name,
         percentage: l.percent,
-        color: colors[l.name] || l.color || "#94a3b8",
-        glowColor: `${colors[l.name] || l.color || "#94a3b8"}66`,
-        description: descriptions[l.name] || `Verified codebase share across public repositories.`
+        color: palette[l.name] || l.color || "#69734A",
+        description:
+          descriptions[l.name] ||
+          "Verified codebase share across public repositories.",
       }));
     }
 
-    // Default verified baseline matching real 4 public repositories
     return [
       {
         name: "TypeScript",
         percentage: 75,
-        color: "#38bdf8",
-        glowColor: "rgba(56, 189, 248, 0.4)",
-        description: "Primary language across public repositories (Mausam, Portfolio, Operon)."
+        color: "#3178c6",
+        description:
+          "Primary language across public repositories (Mausam, Portfolio, Operon).",
       },
       {
         name: "C++",
         percentage: 25,
-        color: "#f43f5e",
-        glowColor: "rgba(244, 63, 94, 0.4)",
-        description: "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves)."
-      }
+        color: "#b94a48",
+        description:
+          "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves).",
+      },
     ];
   }, [rawLanguages]);
 
-  // Render D3 Donut Ring
   useEffect(() => {
     if (!svgRef.current || languagesData.length === 0) return;
 
@@ -132,46 +112,50 @@ function LanguageRingChartComponent({
     const cornerRadius = 4;
     const padAngle = 0.04;
 
-    const g = svg.append("g")
+    const g = svg
+      .append("g")
       .attr("transform", `translate(${width / 2}, ${height / 2})`);
 
-    const pie = d3.pie<LanguageDatum>()
-      .value(d => d.percentage)
+    const pie = d3
+      .pie<LanguageDatum>()
+      .value((d) => d.percentage)
       .sort(null)
       .padAngle(padAngle);
 
-    const arc = d3.arc<d3.PieArcDatum<LanguageDatum>>()
+    const arc = d3
+      .arc<d3.PieArcDatum<LanguageDatum>>()
       .innerRadius(innerRadius)
       .outerRadius(radius)
       .cornerRadius(cornerRadius);
 
-    const arcHover = d3.arc<d3.PieArcDatum<LanguageDatum>>()
+    const arcHover = d3
+      .arc<d3.PieArcDatum<LanguageDatum>>()
       .innerRadius(innerRadius - 2)
       .outerRadius(radius + 5)
       .cornerRadius(cornerRadius + 1);
 
-    // Background track ring
     g.append("circle")
       .attr("r", (radius + innerRadius) / 2)
       .attr("fill", "none")
-      .attr("stroke", isDark ? "rgba(255, 255, 255, 0.03)" : "rgba(20, 20, 35, 0.05)")
+      .attr("stroke", isDark ? "rgba(244, 244, 237, 0.06)" : "rgba(32, 35, 29, 0.08)")
       .attr("stroke-width", radius - innerRadius);
 
-    const segmentStroke = isDark ? "#09090b" : "#ffffff";
-    const segmentHoverStroke = isDark ? "#ffffff" : "#4338ca";
+    const segmentStroke = isDark ? "#20231D" : "#FFFFFF";
+    const segmentHoverStroke = isDark ? "#C7E34A" : "#20231D";
 
-    const pathGroup = g.selectAll<SVGPathElement, d3.PieArcDatum<LanguageDatum>>(".arc-path")
+    const pathGroup = g
+      .selectAll<SVGPathElement, d3.PieArcDatum<LanguageDatum>>(".arc-path")
       .data(pie(languagesData))
       .enter()
       .append("path")
       .attr("class", "arc-path cursor-pointer")
-      .attr("fill", d => d.data.color)
+      .attr("fill", (d) => d.data.color)
       .attr("stroke", segmentStroke)
       .attr("stroke-width", "2")
       .attr("d", arc as any);
 
     pathGroup
-      .on("mouseenter", function(_, d) {
+      .on("mouseenter", function (_, d) {
         d3.select(this)
           .transition()
           .duration(150)
@@ -179,7 +163,7 @@ function LanguageRingChartComponent({
           .attr("stroke", segmentHoverStroke);
         setHoveredLang(d.data);
       })
-      .on("mouseleave", function(_, d) {
+      .on("mouseleave", function () {
         d3.select(this)
           .transition()
           .duration(150)
@@ -187,52 +171,63 @@ function LanguageRingChartComponent({
           .attr("stroke", segmentStroke);
         setHoveredLang(null);
       })
-      .on("click", function(_, d) {
+      .on("click", function (_, d) {
         setSelectedLang(d.data);
       });
-
   }, [languagesData, isDark]);
 
   const activeDisplay = hoveredLang || selectedLang || languagesData[0];
 
   return (
     <div ref={containerRef} className={`space-y-4 font-sans ${className}`}>
-      <div className="flex items-center justify-between border-b border-zinc-900 pb-3">
-        <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-1.5">
-          <Code2 className="w-3.5 h-3.5 text-cyan-400" />
+      <div
+        className="flex items-center justify-between border-b pb-3"
+        style={{ borderColor: "var(--border)" }}
+      >
+        <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
+          <Code2 className="w-3.5 h-3.5 text-[var(--accent)]" />
           Codebase Language Breakdown
         </span>
-        <span className="text-[9px] font-mono text-zinc-500">Live Git Distribution</span>
+        <span className="text-[10px] font-mono text-[var(--text-faint)]">
+          Live Git Distribution
+        </span>
       </div>
 
       <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-        {/* Donut Ring Canvas */}
         <div className="relative shrink-0">
           <svg ref={svgRef} width={220} height={220} className="overflow-visible" />
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-1">
-            <span className="text-base font-bold text-white font-display leading-tight">
+            <span className="text-base font-extrabold text-[var(--text)] font-display tabular-nums leading-tight">
               {activeDisplay?.percentage}%
             </span>
-            <span className="text-[9px] text-zinc-400 font-mono tracking-tight mt-0.5 truncate max-w-[90px]">
+            <span className="text-[10px] text-[var(--text-muted)] font-mono tracking-tight mt-0.5 truncate max-w-[90px]">
               {activeDisplay?.name}
             </span>
           </div>
         </div>
 
-        {/* Legend */}
         {showLegend && (
-          <div className="space-y-2.5 w-full sm:w-auto">
+          <div className="space-y-2 w-full sm:w-auto">
             {languagesData.map((lang, idx) => (
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 onClick={() => setSelectedLang(lang)}
-                className="flex items-center justify-between gap-4 p-2 rounded-xl bg-zinc-950/40 border border-zinc-900/60 hover:border-zinc-800 transition-colors cursor-pointer text-xs font-mono"
+                className="flex items-center justify-between gap-4 p-2.5 rounded-[6px] border hover:border-[var(--border-strong)] transition-colors cursor-pointer text-xs font-mono"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
+                }}
               >
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: lang.color }} />
-                  <span className="text-zinc-200 font-medium">{lang.name}</span>
+                  <span
+                    className="w-2.5 h-2.5 rounded-[2px]"
+                    style={{ backgroundColor: lang.color }}
+                  />
+                  <span className="text-[var(--text)] font-medium">{lang.name}</span>
                 </div>
-                <span className="text-zinc-400 font-bold">{lang.percentage}%</span>
+                <span className="text-[var(--text-muted)] font-bold tabular-nums">
+                  {lang.percentage}%
+                </span>
               </div>
             ))}
           </div>
@@ -240,8 +235,17 @@ function LanguageRingChartComponent({
       </div>
 
       {activeDisplay && (
-        <p className="text-[11px] text-zinc-400 leading-relaxed font-mono bg-zinc-950/50 p-3 rounded-xl border border-zinc-900">
-          <span className="text-white font-semibold">{activeDisplay.name}:</span> {activeDisplay.description}
+        <p
+          className="text-[11px] text-[var(--text-muted)] leading-relaxed font-mono p-3 rounded-[8px] border"
+          style={{
+            backgroundColor: "var(--surface)",
+            borderColor: "var(--border)",
+          }}
+        >
+          <span className="text-[var(--text)] font-semibold">
+            {activeDisplay.name}:
+          </span>{" "}
+          {activeDisplay.description}
         </p>
       )}
     </div>

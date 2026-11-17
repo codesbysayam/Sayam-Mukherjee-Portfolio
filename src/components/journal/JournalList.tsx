@@ -25,11 +25,9 @@ export const JournalList = memo(function JournalList({
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
 
-  // Filter & Search Logic
   const filteredEntries = useMemo(() => {
     let result = [...journalEntries];
 
-    // Category filter
     if (selectedCategory !== "All") {
       result = result.filter(
         (entry) =>
@@ -38,7 +36,6 @@ export const JournalList = memo(function JournalList({
       );
     }
 
-    // Search query
     const q = searchQuery.toLowerCase().trim();
     if (q) {
       result = result.filter((entry) => {
@@ -56,7 +53,6 @@ export const JournalList = memo(function JournalList({
       });
     }
 
-    // Sort order
     if (sortOrder === "oldest") {
       result.reverse();
     }
@@ -93,38 +89,52 @@ export const JournalList = memo(function JournalList({
   }, []);
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
+    <div className="space-y-8 max-w-5xl mx-auto px-4 sm:px-6">
       {/* Editorial Masthead Header */}
-      <header className="space-y-3.5 pt-2 sm:pt-4 border-b border-white/[0.08] pb-6">
-        <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-purple-400 uppercase">
+      <header
+        className="space-y-3.5 pt-2 sm:pt-4 border-b pb-6"
+        style={{ borderColor: "var(--border)" }}
+      >
+        <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[var(--accent)] uppercase font-semibold">
           <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
           <span>Technical Field Notes &bull; Observations &bull; Systems Design</span>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display tracking-tight text-white">
-            Journal
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[var(--text)]">
+            Engineering{" "}
+            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+              Journal
+            </span>
           </h1>
-          <span className="text-xs font-mono text-zinc-400">
+          <span className="text-xs font-mono text-[var(--text-muted)]">
             Written by Sayam Mukherjee
           </span>
         </div>
-        <p className="text-sm sm:text-base text-zinc-300 max-w-2xl leading-relaxed">
-          Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations, not third-party publications.
+        <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-2xl leading-relaxed">
+          Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations written directly from practice.
         </p>
 
-        {/* Reading time metrics row */}
-        <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono text-zinc-400">
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/[0.04] border border-white/[0.08] text-zinc-300">
-            <Clock className="w-3.5 h-3.5 text-purple-400" aria-hidden="true" />
-            <span>~{totalReadingStats.totalMinutes} mins total reading time ({totalReadingStats.totalWords} words)</span>
+        {/* Reading stats */}
+        <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono text-[var(--text-muted)]">
+          <span
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border text-[var(--text-secondary)] tabular-nums"
+            style={{
+              backgroundColor: "var(--surface)",
+              borderColor: "var(--border)",
+            }}
+          >
+            <Clock className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
+            <span>
+              ~{totalReadingStats.totalMinutes} mins total reading time (
+              {totalReadingStats.totalWords} words)
+            </span>
           </span>
-          <span className="text-zinc-500">
-            Estimated at standard {STANDARD_READING_SPEED_WPM} words per minute
+          <span className="text-[var(--text-faint)]">
+            Estimated at standard {STANDARD_READING_SPEED_WPM} WPM
           </span>
         </div>
       </header>
 
-      {/* Filters and Search Bar */}
       <JournalFilters
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -136,30 +146,33 @@ export const JournalList = memo(function JournalList({
         totalResults={filteredEntries.length}
       />
 
-      {/* Main Content Area */}
       {filteredEntries.length === 0 ? (
-        /* Empty State */
-        <div className="py-16 text-center space-y-4 rounded-2xl bg-white/[0.02] border border-white/[0.08] p-8">
-          <SearchX className="w-8 h-8 text-zinc-500 mx-auto" aria-hidden="true" />
+        <div
+          className="card py-16 text-center space-y-4 p-8"
+          style={{
+            backgroundColor: "var(--surface-2)",
+            borderColor: "var(--border)",
+          }}
+        >
+          <SearchX className="w-8 h-8 text-[var(--text-faint)] mx-auto" aria-hidden="true" />
           <div className="space-y-1">
-            <h3 className="text-base font-semibold text-white font-display">
+            <h3 className="text-base font-semibold text-[var(--text)] font-display">
               No journal entries match your search.
             </h3>
-            <p className="text-xs text-zinc-400 font-mono">
+            <p className="text-xs text-[var(--text-muted)] font-mono">
               Try adjusting your query or resetting category filters.
             </p>
           </div>
           <button
             type="button"
             onClick={handleClearFilters}
-            className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono text-zinc-200 bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.1] hover:border-white/20 transition-all cursor-pointer"
+            className="btn btn-primary text-xs font-mono"
           >
-            <span>Clear Search</span>
+            Clear Search
           </button>
         </div>
       ) : (
         <div className="space-y-6">
-          {/* Featured Entry Card */}
           {featuredEntry && (
             <div className="mb-2">
               <JournalCard
@@ -170,7 +183,6 @@ export const JournalList = memo(function JournalList({
             </div>
           )}
 
-          {/* Responsive Editorial Grid */}
           {gridEntries.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {gridEntries.map((entry, idx) => (

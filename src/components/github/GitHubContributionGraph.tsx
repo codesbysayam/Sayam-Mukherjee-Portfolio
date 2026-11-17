@@ -1,6 +1,7 @@
 import React, { useState, useMemo, memo } from "react";
-import { Activity, Info, Calendar } from "lucide-react";
-import { GitHubContributionWeek, GitHubContributionDay } from "../../data/githubTypes";
+import { Activity } from "lucide-react";
+import { GitHubContributionWeek } from "../../data/githubTypes";
+import { usePortfolio } from "../../context/PortfolioContext";
 
 interface GitHubContributionGraphProps {
   calendar: {
@@ -12,6 +13,9 @@ interface GitHubContributionGraphProps {
 export const GitHubContributionGraph = memo(function GitHubContributionGraph({
   calendar,
 }: GitHubContributionGraphProps) {
+  const { theme } = usePortfolio();
+  const isDark = theme === "dark";
+
   const [hoveredDay, setHoveredDay] = useState<{
     date: string;
     count: number;
@@ -34,35 +38,13 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
     }
   }, [hoveredDay]);
 
-  // Color mapper based on count
-  const getDayColor = (count: number, defaultColor?: string) => {
-    if (count === 0) return "bg-zinc-900 border border-zinc-800/60";
-    if (count <= 2) return "bg-emerald-950 border border-emerald-900/60";
-    if (count <= 5) return "bg-emerald-800 border border-emerald-700/60";
-    if (count <= 8) return "bg-emerald-600 border border-emerald-500/60";
-    return "bg-emerald-400 border border-emerald-300/80 shadow-sm shadow-emerald-500/20";
-  };
+  const weeks = useMemo(() => calendar?.weeks || [], [calendar]);
 
-  if (!calendar || !calendar.weeks || calendar.weeks.length === 0) {
-    return (
-      <div className="p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 text-center space-y-3">
-        <div className="w-10 h-10 mx-auto rounded-xl bg-zinc-800/80 flex items-center justify-center text-zinc-400">
-          <Activity className="w-5 h-5 text-emerald-400" />
-        </div>
-        <h4 className="text-sm font-bold text-white font-display">Contribution Calendar</h4>
-        <p className="text-xs text-zinc-400 max-w-md mx-auto leading-relaxed">
-          The verified 365-day contribution calendar requires GitHub GraphQL API telemetry, which runs securely via GitHub Actions background sync to protect API credentials.
-        </p>
-      </div>
-    );
-  }
-
-  // Calculate month labels across the 52 weeks
   const monthLabels = useMemo(() => {
     const labels: Array<{ name: string; weekIndex: number }> = [];
     let currentMonth = -1;
 
-    calendar.weeks.forEach((week, index) => {
+    weeks.forEach((week, index) => {
       const firstDay = week.contributionDays[0];
       if (firstDay) {
         const d = new Date(firstDay.date);
@@ -78,39 +60,107 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
     });
 
     return labels;
-  }, [calendar.weeks]);
+  }, [weeks]);
+
+  // Signal / Moss / Paper contribution ramp
+  const getDayStyle = (count: number): React.CSSProperties => {
+    if (count === 0) {
+      return {
+        backgroundColor: isDark ? "#262922" : "#EAEAE1",
+        borderColor: isDark ? "#41443A" : "#D6D7CC",
+      };
+    }
+    if (count <= 2) {
+      return {
+        backgroundColor: isDark ? "#3B4229" : "#D2D7BD",
+        borderColor: isDark ? "#4F5936" : "#B5BC98",
+      };
+    }
+    if (count <= 5) {
+      return {
+        backgroundColor: isDark ? "#5C683B" : "#9BA86F",
+        borderColor: isDark ? "#69734A" : "#7F8E52",
+      };
+    }
+    if (count <= 8) {
+      return {
+        backgroundColor: isDark ? "#879E36" : "#69734A",
+        borderColor: isDark ? "#A9C52F" : "#4E5834",
+      };
+    }
+    return {
+      backgroundColor: "#C7E34A",
+      borderColor: isDark ? "#D9EE74" : "#8FA924",
+    };
+  };
+
+  if (!calendar || weeks.length === 0) {
+    return (
+      <div
+        className="card p-6 text-center space-y-3"
+        style={{
+          backgroundColor: "var(--surface-2)",
+          borderColor: "var(--border)",
+        }}
+      >
+        <div
+          className="w-10 h-10 mx-auto rounded-[8px] border flex items-center justify-center"
+          style={{
+            backgroundColor: "var(--surface)",
+            borderColor: "var(--border)",
+            color: "var(--accent)",
+          }}
+        >
+          <Activity className="w-5 h-5" />
+        </div>
+        <h4 className="text-sm font-bold text-[var(--text)] font-display">
+          Contribution Calendar
+        </h4>
+        <p className="text-xs text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">
+          The verified 365-day contribution calendar requires GitHub GraphQL API telemetry, which runs securely via GitHub Actions background sync to protect API credentials.
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="p-5 sm:p-6 rounded-2xl bg-zinc-900/40 border border-zinc-800/80 space-y-4">
+    <div
+      className="card p-5 sm:p-6 space-y-4"
+      style={{
+        backgroundColor: "var(--surface-2)",
+        borderColor: "var(--border)",
+      }}
+    >
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2.5">
-          <Activity className="w-4 h-4 text-emerald-400" />
-          <h4 className="text-sm font-bold text-white font-display">
+          <Activity className="w-4 h-4 text-[var(--accent)]" />
+          <h4 className="text-sm font-bold text-[var(--text)] font-display">
             Contribution Calendar
           </h4>
-          <span className="text-xs font-mono text-zinc-400">
+          <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
             · {calendar.totalContributions} contributions in the last year
           </span>
         </div>
 
-        <div className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-500">
+        <div className="flex items-center gap-1.5 text-[11px] font-mono text-[var(--text-muted)]">
           <span>Less</span>
-          <span className="w-2.5 h-2.5 rounded-sm bg-zinc-900 border border-zinc-800/60" />
-          <span className="w-2.5 h-2.5 rounded-sm bg-emerald-950 border border-emerald-900/60" />
-          <span className="w-2.5 h-2.5 rounded-sm bg-emerald-800 border border-emerald-700/60" />
-          <span className="w-2.5 h-2.5 rounded-sm bg-emerald-600 border border-emerald-500/60" />
-          <span className="w-2.5 h-2.5 rounded-sm bg-emerald-400 border border-emerald-300/80" />
+          {[0, 1, 3, 6, 10].map((sample) => (
+            <span
+              key={sample}
+              className="w-2.5 h-2.5 rounded-[2px] border"
+              style={getDayStyle(sample)}
+            />
+          ))}
           <span>More</span>
         </div>
       </div>
 
-      {/* Relative Tooltip floating area */}
+      {/* Heatmap Matrix */}
       <div className="relative overflow-x-auto pb-2 scrollbar-thin">
         <div className="min-w-[720px] select-none">
-          {/* Month Labels */}
-          <div className="flex text-[10px] font-mono text-zinc-500 mb-1.5 pl-7">
-            {calendar.weeks.map((_, i) => {
+          <div className="flex text-[10px] font-mono text-[var(--text-muted)] mb-1.5 pl-7">
+            {weeks.map((_, i) => {
               const label = monthLabels.find((m) => m.weekIndex === i);
               return (
                 <div key={i} className="w-[12px] mr-[3px] text-left shrink-0">
@@ -120,10 +170,8 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
             })}
           </div>
 
-          {/* Matrix: Days of Week + 52 Week Columns */}
           <div className="flex gap-[3px]">
-            {/* Days Column */}
-            <div className="flex flex-col justify-between text-[9px] font-mono text-zinc-500 pr-1 select-none">
+            <div className="flex flex-col justify-between text-[9px] font-mono text-[var(--text-faint)] pr-1 select-none">
               <span className="h-[12px] leading-[12px]">Mon</span>
               <span className="h-[12px] leading-[12px] opacity-0">Tue</span>
               <span className="h-[12px] leading-[12px]">Wed</span>
@@ -133,8 +181,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
               <span className="h-[12px] leading-[12px] opacity-0">Sun</span>
             </div>
 
-            {/* Weeks */}
-            {calendar.weeks.map((week, wIdx) => (
+            {weeks.map((week, wIdx) => (
               <div key={wIdx} className="flex flex-col gap-[3px]">
                 {week.contributionDays.map((day, dIdx) => (
                   <div
@@ -149,10 +196,8 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
                       });
                     }}
                     onMouseLeave={() => setHoveredDay(null)}
-                    className={`w-[12px] h-[12px] rounded-sm transition-transform hover:scale-125 cursor-pointer ${getDayColor(
-                      day.count,
-                      day.color
-                    )}`}
+                    className="w-[12px] h-[12px] rounded-[2px] border transition-transform hover:scale-125 cursor-pointer"
+                    style={getDayStyle(day.count)}
                     title={`${day.count} contributions on ${day.date}`}
                   />
                 ))}
@@ -161,20 +206,21 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
           </div>
         </div>
 
-        {/* Hover summary */}
         <div className="h-6 mt-2 flex items-center justify-between text-xs font-mono">
           {hoveredDay ? (
-            <span className="text-zinc-300">
-              <strong className="text-emerald-400 font-semibold">{hoveredDay.count}</strong>{" "}
+            <span className="text-[var(--text-secondary)]">
+              <strong className="text-[var(--accent)] font-semibold tabular-nums">
+                {hoveredDay.count}
+              </strong>{" "}
               {hoveredDay.count === 1 ? "contribution" : "contributions"} on{" "}
-              <span className="text-zinc-200">{formattedTooltipDate}</span>
+              <span className="text-[var(--text)]">{formattedTooltipDate}</span>
             </span>
           ) : (
-            <span className="text-zinc-500 text-[11px]">
+            <span className="text-[var(--text-faint)] text-[11px]">
               Hover over squares to inspect daily contribution counts
             </span>
           )}
-          <span className="text-zinc-400 text-[10px]">
+          <span className="text-[var(--text-muted)] text-[10px]">
             GraphQL sync telemetry
           </span>
         </div>
@@ -182,3 +228,5 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
     </div>
   );
 });
+
+export default GitHubContributionGraph;

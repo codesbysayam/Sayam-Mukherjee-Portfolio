@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { 
-  Cpu, Layers, GitBranch, ArrowRight, ShieldCheck, 
-  Database, CheckCircle2, CloudRain, Binary, Users, 
-  ExternalLink, Eye, Globe
+import {
+  Cpu, GitBranch, Users, ExternalLink, Eye, Globe, CloudRain, Binary, CheckCircle2
 } from "lucide-react";
 import { SectionHeader } from "../common/SectionHeader";
-import { Card } from "../common/Card";
 
 type BlueprintId = "operon" | "sayamsolves" | "mausam" | "yolo" | "portfolio";
 
@@ -196,7 +193,7 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
     repoUrl: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
     liveUrl: "https://sayammukherjee.in",
     stats: [
-      { label: "Frontend", value: "React 18 / Tailwind" },
+      { label: "Frontend", value: "React 19 / Tailwind" },
       { label: "Backend", value: "Express API Proxy" },
       { label: "Data Integrity", value: "Live GitHub Telemetry" }
     ]
@@ -209,91 +206,88 @@ export function EcosystemPage() {
 
   return (
     <div className="w-full space-y-12 sm:space-y-16 pb-12">
-      {/* 1. EDITORIAL SYSTEM ARCHITECTURE HEADER */}
-      <header className="space-y-4 pt-2">
+      {/* 1. HEADER */}
+      <header className="space-y-4 pt-2 pb-6 border-b border-[var(--border)]">
         <SectionHeader
           level="h1"
-          eyebrow="System Architecture · Process &amp; Relationships"
-          title={<>Engineering Ecosystem <br /><span className="text-zinc-400 dark:text-zinc-500 font-normal">&amp; System Blueprints</span></>}
-          description="Software is rarely built in isolation; it works best as an interconnected system of state machines, telemetry pipelines, mathematical invariants, and clear human oversight."
+          eyebrow="04 · System Architecture"
+          badge="Process & Blueprints"
+          title={
+            <>
+              Engineering Ecosystem{" "}
+              <span className="font-serif-editorial italic font-normal text-[var(--text-secondary)]">
+                &amp; system blueprints.
+              </span>
+            </>
+          }
+          description="Software works best as an interconnected system of state machines, telemetry pipelines, mathematical invariants, and explicit human oversight."
         />
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-zinc-500 pt-1">
-          <span className="font-semibold text-zinc-800 dark:text-zinc-200">5 Verified Architectures</span>
-          <span>·</span>
+        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-[var(--text-muted)]">
+          <span className="font-semibold text-[var(--text)]">5 Verified Architectures</span>
+          <span aria-hidden="true">·</span>
           <span>End-to-End Delivery Lifecycle</span>
-          <span>·</span>
-          <span className="text-purple-700 dark:text-purple-400 font-medium">SIH 2026 Collaboration Case Study</span>
+          <span aria-hidden="true">·</span>
+          <span className="text-[var(--accent)] font-semibold">SIH 2026 Collaboration Case Study</span>
         </div>
       </header>
 
-      {/* 2. THE 5-STAGE ENGINEERING DELIVERY LIFECYCLE */}
+      {/* 2. DELIVERY LIFECYCLE */}
       <section className="space-y-6">
         <div className="space-y-2">
-          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 tracking-wide">
+          <span className="text-xs font-mono font-semibold text-[var(--accent)] tracking-wider uppercase">
             Phase 01 · Delivery Lifecycle
           </span>
-          <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
+          <h2 className="text-2xl font-bold font-display text-[var(--text)]">
             The Engineering Pipeline
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans">
-            How I progress an abstract requirement into a verified, resilient production system.
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
+            How abstract requirements progress into verified, resilient production software.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
           {[
             {
               step: "01",
               name: "Constraint Modeling",
               focus: "Scope & Invariants",
-              desc: "Deconstruct the core problem into boundary conditions, rate limits, and failure modes before writing any code."
+              desc: "Deconstruct core requirements into boundary conditions, rate limits, and failure modes before writing code."
             },
             {
               step: "02",
               name: "Schema & Architecture",
               focus: "Type Contracts & DAGs",
-              desc: "Define strict TypeScript interfaces, REST contracts, state machine transitions, and database schemas."
+              desc: "Define strict TypeScript interfaces, REST contracts, state machine transitions, and data models."
             },
             {
               step: "03",
               name: "Edge Prototyping",
               focus: "Micro-benchmarks",
-              desc: "Validate algorithmic bottlenecks, API response latencies, and critical paths in isolated test harnesses."
+              desc: "Validate algorithmic bottlenecks, API latencies, and critical execution paths in isolated harnesses."
             },
             {
               step: "04",
               name: "Production Hardening",
               focus: "Resilience & Zero CLS",
-              desc: "Wrap network calls with exponential backoffs, enforce sub-100ms cached views, and guarantee fluid responsive layout."
+              desc: "Wrap network calls with exponential backoffs, enforce sub-100ms cached views, and guarantee stable responsive UI."
             },
             {
               step: "05",
               name: "Telemetry & Audit",
               focus: "Observability",
-              desc: "Expose real-time health checkpoints, live GitHub commit logs, and auditable execution journals."
+              desc: "Expose health checkpoints, commit logs, and auditable execution ledgers."
             }
           ].map((phase, idx) => (
-            <div
-              key={phase.step}
-              className="card p-4 flex flex-col justify-between space-y-3"
-            >
+            <div key={phase.step} className="card p-4 flex flex-col justify-between space-y-3">
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs font-mono font-bold text-purple-700 dark:text-purple-400">
-                    STEP {phase.step}
-                  </span>
-                  <span className="text-xs font-mono text-zinc-400">
-                    {idx < 4 ? "→" : "✔"}
-                  </span>
+                <div className="flex items-center justify-between text-xs font-mono tabular-nums">
+                  <span className="font-bold text-[var(--accent)]">STEP {phase.step}</span>
+                  <span className="text-[var(--text-muted)]">{idx < 4 ? "→" : "✔"}</span>
                 </div>
-                <h3 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 font-display">
-                  {phase.name}
-                </h3>
-                <span className="text-xs font-mono text-zinc-500 block">
-                  {phase.focus}
-                </span>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans pt-1">
+                <h3 className="text-sm font-bold text-[var(--text)] font-display">{phase.name}</h3>
+                <span className="text-xs font-mono text-[var(--text-muted)] block">{phase.focus}</span>
+                <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans pt-1">
                   {phase.desc}
                 </p>
               </div>
@@ -302,27 +296,27 @@ export function EcosystemPage() {
         </div>
       </section>
 
-      {/* 3. INTERACTIVE SYSTEM BLUEPRINTS (THE 4 VERIFIED SYSTEMS) */}
+      {/* 3. INTERACTIVE SYSTEM BLUEPRINTS */}
       <section className="space-y-6">
         <div className="space-y-2">
-          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-            PHASE 02 · ARCHITECTURAL BLUEPRINTS
+          <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+            Phase 02 · Architectural Blueprints
           </span>
           <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-            <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
+            <h2 className="text-2xl font-bold font-display text-[var(--text)]">
               Core System Blueprints
             </h2>
-            <span className="text-xs font-mono text-zinc-500">
-              Interactive architectural exploration
+            <span className="text-xs font-mono text-[var(--text-muted)]">
+              Interactive architecture explorer
             </span>
           </div>
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans">
-            Deep-dive into the architectural mechanics, node flows, and mathematical invariants of my five flagship platforms.
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
+            Inspect the processing stages, data handshakes, and formal invariants across all five documented platforms.
           </p>
         </div>
 
-        {/* Blueprint Selector Tabs */}
-        <div className="flex flex-wrap gap-2 pt-1">
+        {/* Selector Tabs */}
+        <div className="flex flex-wrap gap-2 pt-1" role="tablist" aria-label="System blueprints">
           {[
             { id: "operon", label: "Operon: Multi-Agent AI", icon: Cpu },
             { id: "sayamsolves", label: "SayamSolves: C++ Algorithms", icon: Binary },
@@ -336,14 +330,14 @@ export function EcosystemPage() {
               <button
                 key={tab.id}
                 type="button"
+                role="tab"
+                aria-selected={isSelected}
                 onClick={() => setActiveBlueprint(tab.id as BlueprintId)}
-                className={`px-3.5 py-2 rounded-lg text-xs font-mono flex items-center gap-2 transition-all cursor-pointer ${
-                  isSelected
-                    ? "btn-primary !py-2 !px-3.5"
-                    : "btn-secondary !py-2 !px-3.5"
+                className={`btn !min-h-[40px] !py-2 !px-3.5 !text-xs font-mono ${
+                  isSelected ? "btn-primary" : "btn-secondary"
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{tab.label}</span>
               </button>
             );
@@ -352,35 +346,33 @@ export function EcosystemPage() {
 
         {/* Active Blueprint Detail Card */}
         <div className="card p-6 sm:p-8 space-y-8">
-          {/* Header & Meta */}
-          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-6 border-b border-zinc-250/70 dark:border-white/[0.08]">
+          <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-6 border-b border-[var(--border)]">
             <div className="space-y-2 max-w-2xl">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-xs font-mono px-2.5 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 font-semibold border border-purple-200 dark:border-purple-800/40">
+              <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono">
+                <span className="text-[var(--accent)] font-semibold uppercase tracking-wider">
                   {blueprint.category}
                 </span>
-                <span className="text-xs font-mono text-zinc-500">
-                  {blueprint.status}
-                </span>
+                <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>
+                <span className="text-[var(--text-muted)]">{blueprint.status}</span>
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold font-display text-zinc-900 dark:text-white">
+              <h3 className="text-xl sm:text-2xl font-bold font-display text-[var(--text)]">
                 {blueprint.title}
               </h3>
-              <p className="text-sm text-zinc-600 dark:text-zinc-400 font-sans leading-relaxed">
+              <p className="text-sm text-[var(--text-secondary)] font-sans leading-relaxed">
                 {blueprint.purpose}
               </p>
             </div>
 
-            <div className="flex items-center gap-2.5 shrink-0">
+            <div className="flex items-center gap-2.5 shrink-0 flex-wrap">
               <a
                 href={blueprint.repoUrl}
                 target="_blank"
                 rel="noreferrer"
                 className="btn btn-secondary !py-2 !px-3.5 !text-xs font-mono"
               >
-                <GitBranch className="w-3.5 h-3.5" />
+                <GitBranch className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Source Code</span>
-                <ExternalLink className="w-3 h-3 opacity-60" />
+                <ExternalLink className="w-3 h-3 opacity-60" aria-hidden="true" />
               </a>
               {blueprint.liveUrl && (
                 <a
@@ -390,104 +382,82 @@ export function EcosystemPage() {
                   className="btn btn-primary !py-2 !px-3.5 !text-xs font-mono"
                 >
                   <span>Live App</span>
-                  <ExternalLink className="w-3 h-3" />
+                  <ExternalLink className="w-3 h-3" aria-hidden="true" />
                 </a>
               )}
             </div>
           </div>
 
-          {/* Key Metric Indicators */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
             {blueprint.stats.map((st) => (
-              <div
-                key={st.label}
-                className="p-3.5 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-0.5"
-              >
-                <span className="text-[10px] font-mono text-zinc-500 block uppercase tracking-wider">
+              <div key={st.label} className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-0.5">
+                <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase tracking-wider">
                   {st.label}
                 </span>
-                <span className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 font-sans">
+                <span className="text-sm font-semibold text-[var(--text)] font-sans">
                   {st.value}
                 </span>
               </div>
             ))}
           </div>
 
-          {/* Architectural Nodes & Visual Flow */}
+          {/* Architectural Nodes */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
-                System Topology &amp; Discrete Processing Stages
+            <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+              <h4 className="uppercase tracking-wider font-semibold">
+                System Topology &amp; Processing Stages
               </h4>
-              <span className="text-xs font-mono text-zinc-500">
-                Left-to-Right Execution Pipeline
-              </span>
+              <span>Left-to-Right Pipeline</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-              {blueprint.nodes.map((node, i) => {
-                const typeColors = {
-                  input: "bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 border-sky-200 dark:border-sky-800/40",
-                  process: "bg-purple-50 dark:bg-purple-950/30 text-purple-700 dark:text-purple-400 border-purple-200 dark:border-purple-800/40",
-                  decision: "bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800/40",
-                  storage: "bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800/40",
-                  output: "bg-rose-50 dark:bg-rose-950/30 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-800/40"
-                }[node.type];
-
-                return (
-                  <div
-                    key={node.name}
-                    className="p-3.5 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] flex flex-col justify-between space-y-2"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-mono text-zinc-400 font-bold">
-                          STAGE 0{i + 1}
-                        </span>
-                        <span className={`text-[9px] font-mono px-1.5 py-0.5 rounded border uppercase font-semibold ${typeColors}`}>
-                          {node.type}
-                        </span>
-                      </div>
-                      <h5 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 font-sans">
-                        {node.name}
-                      </h5>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              {blueprint.nodes.map((node, i) => (
+                <div
+                  key={node.name}
+                  className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2"
+                >
+                  <div className="space-y-1">
+                    <div className="flex items-center justify-between text-[11px] font-mono tabular-nums">
+                      <span className="text-[var(--text-muted)] font-bold">STAGE 0{i + 1}</span>
+                      <span className="text-[var(--accent)] uppercase font-semibold">{node.type}</span>
                     </div>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400 font-sans leading-relaxed">
-                      {node.description}
-                    </p>
+                    <h5 className="text-sm font-bold text-[var(--text)] font-sans">{node.name}</h5>
                   </div>
-                );
-              })}
+                  <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+                    {node.description}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Data Flow Chains */}
           <div className="space-y-3 pt-2">
-            <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+            <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold">
               Data Flow Transitions &amp; State Handshakes
             </h4>
-            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2 text-xs font-mono text-zinc-700 dark:text-zinc-300">
+            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2 text-xs font-mono text-[var(--text-secondary)]">
               {blueprint.connections.map((conn, idx) => (
                 <div key={idx} className="flex items-start gap-2.5">
-                  <span className="text-purple-600 dark:text-purple-400 font-bold mt-0.5">↳</span>
+                  <span className="text-[var(--accent)] font-bold mt-0.5">↳</span>
                   <span className="leading-relaxed">{conn}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Architectural Invariants & Guarantees */}
+          {/* Invariants */}
           <div className="space-y-3 pt-2">
-            <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+            <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold">
               Architectural Invariants &amp; Safety Guarantees
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
               {blueprint.invariants.map((inv, idx) => (
                 <div
                   key={idx}
-                  className="p-3.5 rounded-xl bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-200/80 dark:border-emerald-800/30 text-emerald-900 dark:text-emerald-300 flex items-start gap-2.5 text-xs font-sans leading-relaxed"
+                  className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border-strong)] text-[var(--text)] flex items-start gap-2.5 text-xs font-sans leading-relaxed"
                 >
-                  <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-600 dark:text-emerald-400 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 shrink-0 text-[var(--accent)] mt-0.5" aria-hidden="true" />
                   <span>{inv}</span>
                 </div>
               ))}
@@ -499,14 +469,14 @@ export function EcosystemPage() {
       {/* 4. RELATIONAL INTERCONNECT MATRIX */}
       <section className="space-y-6">
         <div className="space-y-2">
-          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-            PHASE 03 · INTERDISCIPLINARY COUPLING
+          <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+            Phase 03 · Interdisciplinary Coupling
           </span>
-          <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
+          <h2 className="text-2xl font-bold font-display text-[var(--text)]">
             Relational Interconnect Matrix
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans">
-            How disparate technical layers communicate across my software systems.
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
+            How distinct engineering layers coordinate across my software systems.
           </p>
         </div>
 
@@ -516,40 +486,35 @@ export function EcosystemPage() {
               domainA: "AI & Computer Vision",
               domainB: "Full-Stack Web Platforms",
               relation: "Edge Vector Streaming",
-              details: "OpenCV and YOLO detection bounding boxes in Python are converted to standardized coordinate payloads and rendered via low-latency Canvas overlays in React."
+              details: "OpenCV and YOLO bounding boxes in Python are normalized to compact coordinate payloads and rendered smoothly in React."
             },
             {
               domainA: "Algorithmic Foundations (C++)",
               domainB: "State Machine Ledgers",
               relation: "Asymptotic Complexity Bounds",
-              details: "Optimal space-time recurrence relations and graph traversals proven in algorithmic practice are embedded directly into state machine execution routines to prevent latency spikes."
+              details: "Optimal space-time recurrence relations and graph traversals proven in algorithmic practice inform state transition routines."
             },
             {
               domainA: "Multi-Agent Systems",
               domainB: "Human-in-the-Loop Safeguards",
-              relation: "Cryptographic Decision Gates",
-              details: "Autonomous LLM workers plan and synthesize actions, but critical database writes are halted until authenticated human operators approve the state transition."
+              relation: "Approval Decision Gates",
+              details: "Autonomous LLM workers plan and draft actions, while critical mutations pause until authenticated human operators sign off."
             },
             {
               domainA: "Geospatial Telemetry",
               domainB: "Resilient Offline Caching",
               relation: "Sub-100ms Hydration",
-              details: "Multi-provider weather APIs are normalized through resilient edge workers and cached in client storage to provide instant responsiveness even in rural connectivity zones."
+              details: "Multi-provider weather APIs are normalized via worker layers and cached locally for reliable low-bandwidth responsiveness."
             }
           ].map((item, idx) => (
-            <div
-              key={idx}
-              className="card p-5 space-y-3"
-            >
+            <div key={idx} className="card p-5 space-y-3">
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-purple-700 dark:text-purple-400 font-semibold">{item.domainA}</span>
-                <span className="text-zinc-400">↔</span>
-                <span className="text-emerald-700 dark:text-emerald-400 font-semibold">{item.domainB}</span>
+                <span className="text-[var(--accent)] font-semibold">{item.domainA}</span>
+                <span className="text-[var(--text-muted)]">↔</span>
+                <span className="text-[var(--text)] font-semibold">{item.domainB}</span>
               </div>
-              <h4 className="text-base font-bold font-display text-zinc-900 dark:text-white">
-                {item.relation}
-              </h4>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+              <h4 className="text-base font-bold font-display text-[var(--text)]">{item.relation}</h4>
+              <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
                 {item.details}
               </p>
             </div>
@@ -557,65 +522,65 @@ export function EcosystemPage() {
         </div>
       </section>
 
-      {/* 5. TEAM COLLABORATION CASE STUDY: SIH 2026 */}
+      {/* 5. SIH 2026 CASE STUDY */}
       <section className="space-y-6">
         <div className="space-y-2">
-          <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-            PHASE 04 · RAPID COLLABORATION CASE STUDY
+          <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+            Phase 04 · Team Collaboration Case Study
           </span>
-          <h2 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
+          <h2 className="text-2xl font-bold font-display text-[var(--text)]">
             Smart India Hackathon (SIH 2026) Architecture
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans">
-            How Team Algnite coordinated rapid-fire full-stack system delivery under competition deadlines.
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
+            How Team Algnite coordinated rapid full-stack delivery under competition constraints.
           </p>
         </div>
 
         <div className="card p-6 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-zinc-250/70 dark:border-white/[0.08]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[var(--border)]">
             <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-xl bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800/40 text-purple-700 dark:text-purple-300">
-                <Users className="w-5 h-5" />
+              <div className="p-2.5 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)]">
+                <Users className="w-5 h-5" aria-hidden="true" />
               </div>
               <div>
-                <h3 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
+                <h3 className="text-lg font-bold font-display text-[var(--text)]">
                   Team Algnite Collaboration Mechanics
                 </h3>
-                <span className="text-xs font-mono text-zinc-500">
-                  SIH 2026 Verified National Hackathon Entry
+                <span className="text-xs font-mono text-[var(--text-muted)]">
+                  SIH 2026 National Hackathon Qualification
                 </span>
               </div>
             </div>
-            <span className="text-xs font-mono px-3 py-1 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20 font-semibold self-start sm:self-auto">
+            <span className="text-xs font-mono px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold self-start sm:self-auto">
               Verified Submission
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
+            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text)] font-bold">
                 01. Contract-First API Mocking
               </h4>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
-                Defined strict TypeScript interfaces for meteorological payloads in hour 1. This allowed frontend UI development to proceed simultaneously with data ingestion pipelines without blocking.
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
+                Defined strict TypeScript interfaces for meteorological payloads in hour one, letting UI development proceed in parallel with data ingestion.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
+            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text)] font-bold">
                 02. Feature Isolation &amp; Git Hygiene
               </h4>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
-                Used scoped branch naming (<span className="font-mono text-purple-700 dark:text-purple-400">feat/aqi-thresholds</span>, <span className="font-mono text-purple-700 dark:text-purple-400">feat/tide-chart</span>) and pull request peer reviews to ensure atomic commits and zero merge conflicts during deadline crunches.
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
+                Used scoped branch naming (<span className="font-mono text-[var(--accent)]">feat/aqi-thresholds</span>, <span className="font-mono text-[var(--accent)]">feat/tide-chart</span>) and pull request reviews for conflict-free shipping.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-zinc-50 dark:bg-white/[0.02] border border-zinc-250/70 dark:border-white/[0.06] space-y-2">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-bold">
+            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text)] font-bold">
                 03. Automated Edge CI/CD
               </h4>
-              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
-                Every push triggered preview deployments on Vercel with automated TypeScript type checking, ensuring the judging panel always accessed a pristine, operational live build.
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
+                Continuous preview deployments on Vercel with strict TypeScript checking ensured judges always accessed a working live build.
               </p>
             </div>
           </div>

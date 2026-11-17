@@ -59,7 +59,7 @@ export const AssistantSuggestions = memo(function AssistantSuggestions({
   return (
     <div className="assistant-suggestions-bar">
       <div className="flex items-center justify-between pb-1.5 px-0.5">
-        <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold">
+        <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--text-faint)] font-semibold">
           Explore
         </span>
       </div>
@@ -77,9 +77,9 @@ export const AssistantSuggestions = memo(function AssistantSuggestions({
               type="button"
               disabled={disabled}
               onClick={() => onSelect(item.query)}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-medium text-zinc-300 bg-white/[0.04] border border-white/[0.08] hover:border-white/20 hover:text-white hover:bg-white/[0.08] active:scale-97 transition-all cursor-pointer disabled:opacity-40 disabled:pointer-events-none shrink-0"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] text-xs font-medium text-[var(--text-secondary)] bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-strong)] hover:text-[var(--text)] hover:bg-[var(--surface-2)] active:scale-97 transition-all cursor-pointer disabled:opacity-40 disabled:pointer-events-none shrink-0"
             >
-              <Icon className="w-3.5 h-3.5 text-zinc-400" />
+              <Icon className="w-3.5 h-3.5 text-[var(--accent)]" />
               <span>{item.label}</span>
             </button>
           );

@@ -1,57 +1,53 @@
 import { useState, useMemo, memo } from "react";
-import { 
-  Github, ExternalLink, RotateCw, Search, Star, GitFork, 
-  Sparkles, X, ArrowRight, ArrowUpRight, ChevronLeft, ChevronRight, Activity, FolderGit2
+import {
+  Github,
+  RotateCw,
+  Search,
+  Star,
+  GitFork,
+  X,
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
-import { usePortfolio } from "../context/PortfolioContext";
-import { 
-  formatRelativeTime, 
-  formatSyncAge,
-  GitHubRepo
-} from "../services/github";
+import { formatRelativeTime, formatSyncAge } from "../services/github";
 import { Unavailable } from "./Unavailable";
-import { GitHubStats } from "./GitHubStats";
+import { EditorialReveal } from "../motion/Reveal";
 
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
-  JavaScript: "#f7df1e",
+  JavaScript: "#ca8a04",
   Python: "#3572A5",
   HTML: "#e34c26",
   CSS: "#563d7c",
   Java: "#b07219",
-  "C++": "#f34b7d",
+  "C++": "#be185d",
   C: "#555555",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  Shell: "#89e051"
+  Go: "#0284c7",
+  Rust: "#b45309",
+  Shell: "#4d7c0f",
 };
 
-const GITHUB_PROFILE_REPOS_URL = "https://github.com/codesbysayam?tab=repositories";
+const GITHUB_PROFILE_REPOS_URL =
+  "https://github.com/codesbysayam?tab=repositories";
 
 function LiveBuildFeedComponent() {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
-
-  const { 
-    repos, 
-    loading, 
-    error, 
-    syncedAt, 
-    usingCache, 
+  const {
+    repos,
+    loading,
+    syncedAt,
     refresh,
     snapshotStatus,
     snapshot,
-    isUnavailable
   } = useGithub();
 
-  // Search and language filter state
   const [query, setQuery] = useState<string>("");
   const [selectedLanguage, setSelectedLanguage] = useState<string>("ALL");
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number | "ALL">(6);
 
-  // Dynamically compute available languages from the actual fetched repos
   const availableLanguages = useMemo(() => {
     const langs = new Set<string>();
     repos.forEach((repo) => {
@@ -62,26 +58,23 @@ function LiveBuildFeedComponent() {
     return ["ALL", ...Array.from(langs)];
   }, [repos]);
 
-  // Color dot helper
   const getLanguageColor = (lang: string | null) => {
-    if (!lang) return "#71717a";
-    return LANGUAGE_COLORS[lang] || "#a1a1aa";
+    if (!lang) return "#777A70";
+    return LANGUAGE_COLORS[lang] || "#69734A";
   };
 
-  // Filtered repositories based on search and language filter
   const filteredRepos = useMemo(() => {
     return repos.filter((repo) => {
-      // Language filter
       if (selectedLanguage !== "ALL" && repo.language !== selectedLanguage) {
         return false;
       }
-      // Search filter
       if (query.trim().length > 0) {
         const q = query.toLowerCase();
         const matchesName = repo.name.toLowerCase().includes(q);
         const matchesDesc = (repo.description ?? "").toLowerCase().includes(q);
         const matchesLang = (repo.language ?? "").toLowerCase().includes(q);
-        const matchesTopics = repo.topics?.some(t => t.toLowerCase().includes(q)) ?? false;
+        const matchesTopics =
+          repo.topics?.some((t) => t.toLowerCase().includes(q)) ?? false;
         if (!matchesName && !matchesDesc && !matchesLang && !matchesTopics) {
           return false;
         }
@@ -90,7 +83,6 @@ function LiveBuildFeedComponent() {
     });
   }, [repos, query, selectedLanguage]);
 
-  // Pagination calculation
   const totalFiltered = filteredRepos.length;
   const isViewAll = pageSize === "ALL" || totalFiltered <= 6;
   const effectivePageSize = isViewAll ? totalFiltered : (pageSize as number);
@@ -98,9 +90,7 @@ function LiveBuildFeedComponent() {
   const safeCurrentPage = Math.min(currentPage, totalPages);
 
   const displayedRepos = useMemo(() => {
-    if (isViewAll) {
-      return filteredRepos;
-    }
+    if (isViewAll) return filteredRepos;
     const start = (safeCurrentPage - 1) * (pageSize as number);
     return filteredRepos.slice(start, start + (pageSize as number));
   }, [filteredRepos, isViewAll, safeCurrentPage, pageSize]);
@@ -116,381 +106,295 @@ function LiveBuildFeedComponent() {
   };
 
   return (
-    <section 
-      id="live-build-feed" 
-      className={`relative w-full rounded-3xl overflow-hidden font-sans select-none border transition-all p-5 sm:p-7 md:p-8 ${
-        isLight
-          ? "bg-white border-slate-200/90 shadow-[0_20px_50px_-15px_rgba(15,23,42,0.08)] text-slate-800"
-          : "bg-[#11131c]/90 border-white/[0.08] shadow-[0_24px_60px_-15px_rgba(0,0,0,0.6)] text-zinc-100"
-      }`}
+    <section
+      id="live-build-feed"
+      className="relative w-full rounded-[12px] overflow-hidden font-sans border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] p-5 sm:p-8 lg:p-10"
       aria-label="Live Build Feed from GitHub"
     >
-      {/* ==================================================
-          TOP CONTROLS & HEADER
-          ================================================== */}
-      <div className={`flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b ${
-        isLight ? "border-slate-200/80" : "border-white/[0.08]"
-      }`}>
-        <div>
-          <div className="flex flex-wrap items-center gap-2 mb-1.5">
-            <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-mono font-semibold tracking-wide border ${
-              isLight
-                ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                : "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
-            }`}>
-              <span className={`w-1.5 h-1.5 rounded-full animate-pulse shrink-0 ${isLight ? "bg-emerald-600" : "bg-emerald-400"}`} />
-              <span>Live from GitHub</span>
-            </span>
-            <span className={`px-2 py-0.5 rounded-full text-xs font-mono border ${
-              isLight
-                ? "bg-violet-50 text-violet-800 border-violet-200"
-                : "bg-purple-500/10 text-purple-300 border-purple-500/20"
-            }`}>
-              {repos.length} Public {repos.length === 1 ? "Repository" : "Repositories"}
-            </span>
-            <span className={`text-xs font-mono hidden sm:inline ${
-              isLight ? "text-slate-500" : "text-zinc-400"
-            }`}>
-              {formatSyncAge(syncedAt)}
-            </span>
-          </div>
-          <h2 className={`text-xl sm:text-2xl font-bold font-display tracking-tight flex items-center gap-2 ${
-            isLight ? "text-slate-900" : "text-white"
-          }`}>
-            <Github className={`w-5 h-5 ${isLight ? "text-violet-600" : "text-purple-400"}`} />
-            <span>Repository Explorer</span>
-          </h2>
-          <p className={`text-xs sm:text-sm mt-0.5 ${
-            isLight ? "text-slate-600" : "text-zinc-400"
-          }`}>
-            Real public code repositories synced directly from github.com/codesbysayam.
-          </p>
-        </div>
-      </div>
+      {/* TOP HEADER */}
+      <EditorialReveal>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[var(--border)]">
+          <div className="space-y-1.5">
+            <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[var(--text-muted)]">
+              <span className="uppercase tracking-[0.12em] font-semibold text-[var(--accent)]">
+                04 / Live Telemetry · GitHub Sync
+              </span>
+              <span aria-hidden="true">·</span>
+              <span className="tabular-nums font-semibold text-[var(--text)]">
+                {repos.length} Public {repos.length === 1 ? "Repository" : "Repositories"}
+              </span>
+              <span className="hidden sm:inline" aria-hidden="true">·</span>
+              <span className="hidden sm:inline">{formatSyncAge(syncedAt)}</span>
+            </div>
 
-      {/* Only show Unavailable if repos is completely empty and not loading */}
-      {!loading && repos.length === 0 ? (
-        <Unavailable
-          onRetry={refresh}
-          isRetrying={loading}
-          status={snapshotStatus === "error" || snapshot?.status === "error" ? "error" : "empty"}
-          profileUrl="https://github.com/codesbysayam"
-        />
-      ) : (
-        <>
-          {/* Unified Repository Controls Toolbar (Search, Filter, View All, Refresh) */}
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-5 pb-2">
-        {/* Left: Language filter pills */}
-        {availableLanguages.length > 1 && (
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className={`text-xs font-mono tracking-wider font-semibold mr-1 ${
-              isLight ? "text-slate-500" : "text-zinc-400"
-            }`}>
-              Language:
-            </span>
-            {availableLanguages.map((lang) => {
-              const isSelected = selectedLanguage === lang;
-              return (
-                <button
-                  key={lang}
-                  type="button"
-                  onClick={() => handleLanguageChange(lang)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 ${
-                    isSelected
-                      ? isLight
-                        ? "bg-violet-600 text-white font-semibold shadow-xs"
-                        : "bg-purple-600 text-white font-semibold shadow-xs border border-purple-400/30"
-                      : isLight
-                        ? "bg-slate-100 hover:bg-slate-200/70 text-slate-700 border border-slate-200/80"
-                        : "bg-white/[0.035] hover:bg-white/[0.07] text-zinc-400 hover:text-zinc-200 border border-white/10"
-                  }`}
-                >
-                  {lang !== "ALL" && (
-                    <span
-                      className="w-1.5 h-1.5 rounded-full shrink-0"
-                      style={{ backgroundColor: getLanguageColor(lang) }}
-                    />
-                  )}
-                  <span>{lang}</span>
-                </button>
-              );
-            })}
+            <h2 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight flex items-center gap-2.5 text-[var(--text)]">
+              <Github className="w-6 h-6 text-[var(--accent)]" />
+              <span>Repository Explorer</span>
+            </h2>
+            <p className="text-sm text-[var(--text-secondary)]">
+              Public open-source repositories synced directly from github.com/codesbysayam.
+            </p>
           </div>
-        )}
-
-        {/* Right: Consolidated Search, View All & Refresh */}
-        <div className="flex flex-wrap items-center gap-2.5">
-          <div className="relative min-w-[200px] sm:min-w-[240px]">
-            <Search className={`w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none ${
-              isLight ? "text-slate-400" : "text-zinc-400"
-            }`} />
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => handleQueryChange(e.target.value)}
-              placeholder="Search repositories..."
-              aria-label="Search repositories"
-              className={`w-full pl-8 pr-8 py-2 rounded-xl text-xs font-mono transition-all focus:outline-none ${
-                isLight
-                  ? "bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 focus:border-violet-500 focus:bg-white"
-                  : "bg-white/[0.04] border border-white/10 text-white placeholder-zinc-500 focus:border-purple-500/50"
-              }`}
-            />
-            {query && (
-              <button
-                type="button"
-                onClick={() => handleQueryChange("")}
-                className={`absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 ${
-                  isLight ? "text-slate-400 hover:text-slate-700" : "text-zinc-400 hover:text-white"
-                }`}
-              >
-                <X className="w-3 h-3" />
-              </button>
-            )}
-          </div>
-
-          {/* View All / Paginated Toggle */}
-          {totalFiltered > 6 && (
-            <button
-              type="button"
-              onClick={() => setPageSize(isViewAll ? 6 : "ALL")}
-              className={`px-3 py-2 text-xs font-mono rounded-xl border transition-colors cursor-pointer ${
-                isLight
-                  ? "bg-slate-100 hover:bg-slate-200/70 text-slate-700 border-slate-200"
-                  : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white border-white/10"
-              }`}
-            >
-              {isViewAll ? "Show Paginated (6/page)" : `View All (${totalFiltered})`}
-            </button>
-          )}
 
           <button
             type="button"
             onClick={() => refresh()}
             disabled={loading}
             title="Refresh repositories"
-            className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-mono border transition-colors disabled:opacity-40 cursor-pointer ${
-              isLight
-                ? "bg-slate-100/80 hover:bg-slate-200/80 text-slate-700 hover:text-slate-950 border-slate-200"
-                : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white border-white/10"
-            }`}
+            className="inline-flex items-center gap-2 min-h-[40px] px-4 py-2 rounded-[6px] text-xs font-mono font-semibold border border-[var(--border-strong)] bg-transparent hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors disabled:opacity-40 cursor-pointer self-start md:self-auto"
           >
-            <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-purple-400" : ""}`} />
-            <span className="hidden sm:inline">Refresh</span>
+            <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+            <span>Sync Feed</span>
           </button>
         </div>
-      </div>
+      </EditorialReveal>
 
-      {/* ==================================================
-          REPOSITORY CARDS GRID (Displays all public repos)
-          ================================================== */}
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4 pt-4">
-        {loading && repos.length === 0 ? (
-          /* Skeletons */
-          Array.from({ length: 3 }).map((_, idx) => (
-            <div
-              key={idx}
-              className={`rounded-2xl p-5 animate-pulse space-y-3 min-w-0 border ${
-                isLight ? "bg-slate-100 border-slate-200" : "bg-white/[0.02] border-white/10"
-              }`}
-            >
-              <div className={`h-4 w-24 rounded ${isLight ? "bg-slate-200" : "bg-white/10"}`} />
-              <div className={`h-6 w-3/4 rounded ${isLight ? "bg-slate-200" : "bg-white/10"}`} />
-              <div className={`h-10 w-full rounded ${isLight ? "bg-slate-200/60" : "bg-white/5"}`} />
-              <div className={`h-4 w-1/2 rounded pt-2 ${isLight ? "bg-slate-200" : "bg-white/10"}`} />
-            </div>
-          ))
-        ) : displayedRepos.length > 0 ? (
-          displayedRepos.map((repo, idx) => {
-            const isLatest = idx === 0 && selectedLanguage === "ALL" && !query && safeCurrentPage === 1;
-            return (
-              <div
-                key={repo.id || repo.name}
-                className={`flex flex-col justify-between rounded-2xl p-5 border transition-all duration-200 hover:-translate-y-0.5 select-text min-w-0 w-full ${
-                  isLight
-                    ? "bg-slate-50/70 border-slate-200/90 hover:bg-white hover:border-violet-400/60 hover:shadow-md"
-                    : "bg-white/[0.025] border-white/[0.07] hover:bg-white/[0.05] hover:border-purple-500/30 hover:shadow-[0_10px_30px_rgba(0,0,0,0.3)]"
-                }`}
-              >
-                <div className="space-y-2.5 min-w-0">
-                  {/* Top Badge Row */}
-                  <div className="flex items-center justify-between gap-2 text-[10px] font-mono">
-                    {isLatest ? (
-                      <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-semibold tracking-wider border ${
-                        isLight
-                          ? "bg-violet-50 text-violet-800 border-violet-200"
-                          : "bg-purple-500/15 text-purple-300 border-purple-500/30"
-                      }`}>
-                        <Sparkles className={`w-2.5 h-2.5 ${isLight ? "text-violet-600" : "text-purple-400"}`} />
-                        <span>LATEST</span>
-                      </span>
-                    ) : (
-                      <span className={isLight ? "text-slate-500" : "text-zinc-500"}>Repository</span>
-                    )}
-                    <span className={isLight ? "text-slate-500" : "text-zinc-400"}>
-                      Updated {formatRelativeTime(repo.updated_at)}
-                    </span>
-                  </div>
-
-                  {/* Repository Title */}
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block group min-w-0"
-                  >
-                    <h4 className={`text-base font-bold font-sans transition-colors flex items-center justify-between gap-2 min-w-0 ${
-                      isLight ? "text-slate-900 group-hover:text-violet-700" : "text-white group-hover:text-purple-300"
-                    }`}>
-                      <span className="break-all overflow-wrap-anywhere min-w-0">{repo.name}</span>
-                      <ArrowUpRight className={`w-4 h-4 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 ${
-                        isLight ? "text-slate-400 group-hover:text-violet-700" : "text-zinc-500 group-hover:text-purple-300"
-                      }`} />
-                    </h4>
-                  </a>
-
-                  {/* Description */}
-                  <p className={`text-xs leading-relaxed line-clamp-2 break-words ${
-                    isLight ? "text-slate-600" : "text-zinc-300/85"
-                  }`}>
-                    {repo.description || "Public open-source repository."}
-                  </p>
-
-                  {/* Topic Tags */}
-                  {repo.topics && repo.topics.length > 0 && (
-                    <div className="flex flex-wrap gap-1 pt-1">
-                      {repo.topics.slice(0, 3).map((topic) => (
+      {!loading && repos.length === 0 ? (
+        <Unavailable
+          onRetry={refresh}
+          isRetrying={loading}
+          status={
+            snapshotStatus === "error" || snapshot?.status === "error"
+              ? "error"
+              : "empty"
+          }
+          profileUrl="https://github.com/codesbysayam"
+        />
+      ) : (
+        <>
+          {/* CONTROLS TOOLBAR */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pt-5 pb-2">
+            {availableLanguages.length > 1 && (
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="text-xs font-mono uppercase tracking-wider font-semibold text-[var(--text-faint)] mr-1">
+                  Lang:
+                </span>
+                {availableLanguages.map((lang) => {
+                  const isSelected = selectedLanguage === lang;
+                  return (
+                    <button
+                      key={lang}
+                      type="button"
+                      onClick={() => handleLanguageChange(lang)}
+                      className={`px-3 py-1.5 min-h-[34px] rounded-[6px] text-xs font-mono transition-colors cursor-pointer flex items-center gap-1.5 border ${
+                        isSelected
+                          ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D] font-bold"
+                          : "bg-transparent hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] border-[var(--border)]"
+                      }`}
+                    >
+                      {lang !== "ALL" && (
                         <span
-                          key={topic}
-                          className={`px-1.5 py-0.5 text-[9px] font-mono rounded border ${
-                            isLight
-                              ? "bg-slate-100 text-slate-700 border-slate-200"
-                              : "bg-white/[0.04] text-zinc-400 border-white/5"
-                          }`}
-                        >
-                          #{topic}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                {/* Footer: Language, Stars, Forks, Link */}
-                <div className={`mt-4 pt-3 border-t flex items-center justify-between text-xs font-mono ${
-                  isLight ? "border-slate-200/80 text-slate-600" : "border-white/[0.08] text-zinc-400"
-                }`}>
-                  <div className="flex items-center gap-3">
-                    {repo.language && (
-                      <span className={`flex items-center gap-1.5 ${isLight ? "text-slate-800 font-medium" : "text-zinc-200"}`}>
-                        <span
-                          className="w-2 h-2 rounded-full shrink-0"
-                          style={{ backgroundColor: getLanguageColor(repo.language) }}
+                          className="w-1.5 h-1.5 rounded-full shrink-0"
+                          style={{ backgroundColor: getLanguageColor(lang) }}
                         />
-                        <span>{repo.language}</span>
-                      </span>
-                    )}
-                    <span className="flex items-center gap-1">
-                      <Star className={`w-3 h-3 ${isLight ? "text-amber-500" : "text-amber-400"}`} />
-                      <span>{repo.stargazers_count}</span>
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <GitFork className={`w-3 h-3 ${isLight ? "text-slate-400" : "text-zinc-400"}`} />
-                      <span>{repo.forks_count}</span>
-                    </span>
-                  </div>
-
-                  <a
-                    href={repo.html_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`font-semibold inline-flex items-center gap-0.5 transition-colors ${
-                      isLight ? "text-violet-700 hover:text-violet-900" : "text-purple-400 hover:text-purple-300"
-                    }`}
-                  >
-                    <span>Open ↗</span>
-                  </a>
-                </div>
+                      )}
+                      <span>{lang}</span>
+                    </button>
+                  );
+                })}
               </div>
-            );
-          })
-        ) : (
-          <div className="col-span-full py-10 text-center space-y-2">
-            <p className={`text-sm font-mono ${isLight ? "text-slate-600" : "text-zinc-400"}`}>No repositories matching your filter.</p>
-            <button
-              type="button"
-              onClick={() => {
-                handleQueryChange("");
-                handleLanguageChange("ALL");
-              }}
-              className={`text-xs font-mono underline cursor-pointer ${
-                isLight ? "text-violet-700 hover:text-violet-900" : "text-purple-400 hover:text-purple-300"
-              }`}
-            >
-              Reset filters
-            </button>
-          </div>
-        )}
-      </div>
+            )}
 
-      {/* ==================================================
-          PAGINATION & FOOTER
-          ================================================== */}
-      <div className={`mt-6 pt-4 border-t flex flex-wrap items-center justify-between gap-3 text-xs font-mono ${
-        isLight ? "border-slate-200/80 text-slate-600" : "border-white/[0.08] text-zinc-400"
-      }`}>
-        <div>
-          Showing {displayedRepos.length} of {totalFiltered} {totalFiltered === 1 ? "repository" : "repositories"}
-          {totalFiltered !== repos.length && ` (${repos.length} total on profile)`}
-        </div>
+            <div className="flex flex-wrap items-center gap-2.5">
+              <div className="relative min-w-[200px] sm:min-w-[250px]">
+                <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-faint)]" />
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(e) => handleQueryChange(e.target.value)}
+                  placeholder="Filter repositories..."
+                  aria-label="Search repositories"
+                  className="w-full pl-8 pr-8 py-2 rounded-[6px] text-xs font-mono bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] placeholder-[var(--text-faint)] focus:outline-none focus:border-[var(--text)]"
+                />
+                {query && (
+                  <button
+                    type="button"
+                    onClick={() => handleQueryChange("")}
+                    aria-label="Clear repository filter"
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-[var(--text-faint)] hover:text-[var(--text)]"
+                  >
+                    <X className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
 
-        <div className="flex items-center gap-3">
-          {!isViewAll && totalPages > 1 && (
-            <div className="flex items-center gap-1.5">
-              <button
-                type="button"
-                disabled={safeCurrentPage <= 1}
-                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                className={`px-2 py-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed border transition-colors flex items-center gap-1 cursor-pointer ${
-                  isLight
-                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
-                    : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border-white/10"
-                }`}
-              >
-                <ChevronLeft className="w-3 h-3" />
-                <span>Prev</span>
-              </button>
-              <span className={`text-[11px] px-1 ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
-                {safeCurrentPage} / {totalPages}
-              </span>
-              <button
-                type="button"
-                disabled={safeCurrentPage >= totalPages}
-                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                className={`px-2 py-1 rounded-md disabled:opacity-30 disabled:cursor-not-allowed border transition-colors flex items-center gap-1 cursor-pointer ${
-                  isLight
-                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200"
-                    : "bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 border-white/10"
-                }`}
-              >
-                <span>Next</span>
-                <ChevronRight className="w-3 h-3" />
-              </button>
+              {totalFiltered > 6 && (
+                <button
+                  type="button"
+                  onClick={() => setPageSize(isViewAll ? 6 : "ALL")}
+                  className="px-3 py-2 min-h-[36px] text-xs font-mono font-semibold rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] transition-colors cursor-pointer"
+                >
+                  {isViewAll ? "Show 6 / page" : `View All (${totalFiltered})`}
+                </button>
+              )}
             </div>
-          )}
+          </div>
 
-          <a
-            href={GITHUB_PROFILE_REPOS_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-flex items-center gap-1 font-semibold transition-colors ${
-              isLight ? "text-violet-700 hover:text-violet-900" : "text-purple-400 hover:text-purple-300"
-            }`}
-          >
-            <span>View All on GitHub</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </a>
-        </div>
-      </div>
+          {/* REPOSITORY CARDS GRID */}
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4 pt-4">
+            {loading && repos.length === 0 ? (
+              Array.from({ length: 3 }).map((_, idx) => (
+                <div
+                  key={idx}
+                  className="rounded-[10px] p-5 space-y-3 min-w-0 border border-[var(--border)] bg-[var(--surface)]"
+                >
+                  <div className="h-4 w-24 rounded bg-[var(--border)]" />
+                  <div className="h-6 w-3/4 rounded bg-[var(--border)]" />
+                  <div className="h-10 w-full rounded bg-[var(--border)]" />
+                  <div className="h-4 w-1/2 rounded pt-2 bg-[var(--border)]" />
+                </div>
+              ))
+            ) : displayedRepos.length > 0 ? (
+              displayedRepos.map((repo, idx) => {
+                const isLatest =
+                  idx === 0 &&
+                  selectedLanguage === "ALL" &&
+                  !query &&
+                  safeCurrentPage === 1;
+                return (
+                  <div
+                    key={repo.id || repo.name}
+                    className="flex flex-col justify-between rounded-[10px] p-5 border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] transition-colors select-text min-w-0 w-full"
+                  >
+                    <div className="space-y-2.5 min-w-0">
+                      <div className="flex items-center justify-between gap-2 text-[11px] font-mono">
+                        {isLatest ? (
+                          <span className="px-2 py-0.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold tracking-wider uppercase">
+                            Latest Push
+                          </span>
+                        ) : (
+                          <span className="text-[var(--text-faint)] uppercase tracking-wider">
+                            Repository
+                          </span>
+                        )}
+                        <span className="text-[var(--text-muted)]">
+                          {formatRelativeTime(repo.updated_at)}
+                        </span>
+                      </div>
+
+                      <a
+                        href={repo.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block group min-w-0"
+                      >
+                        <h3 className="text-base font-bold font-sans text-[var(--text)] group-hover:underline flex items-center justify-between gap-2 min-w-0">
+                          <span className="break-all min-w-0">{repo.name}</span>
+                          <ArrowUpRight className="w-4 h-4 shrink-0 text-[var(--text-muted)] group-hover:text-[var(--text)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                        </h3>
+                      </a>
+
+                      <p className="text-xs leading-relaxed text-[var(--text-secondary)] line-clamp-2 break-words">
+                        {repo.description || "Public open-source repository."}
+                      </p>
+
+                      {repo.topics && repo.topics.length > 0 && (
+                        <div className="flex flex-wrap gap-x-2.5 gap-y-1 pt-1 text-[11px] font-mono text-[var(--text-faint)]">
+                          {repo.topics.slice(0, 3).map((topic) => (
+                            <span key={topic}>#{topic}</span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-4 pt-3 border-t border-[var(--border)] flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+                      <div className="flex items-center gap-3">
+                        {repo.language && (
+                          <span className="flex items-center gap-1.5 text-[var(--text)] font-medium">
+                            <span
+                              className="w-2 h-2 rounded-full shrink-0"
+                              style={{ backgroundColor: getLanguageColor(repo.language) }}
+                            />
+                            <span>{repo.language}</span>
+                          </span>
+                        )}
+                        <span className="flex items-center gap-1 tabular-nums">
+                          <Star className="w-3 h-3 text-[var(--accent)]" />
+                          <span>{repo.stargazers_count}</span>
+                        </span>
+                        <span className="flex items-center gap-1 tabular-nums">
+                          <GitFork className="w-3 h-3" />
+                          <span>{repo.forks_count}</span>
+                        </span>
+                      </div>
+
+                      <a
+                        href={repo.html_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-semibold text-[var(--text)] hover:underline inline-flex items-center gap-0.5"
+                      >
+                        <span>Open ↗</span>
+                      </a>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="col-span-full py-10 text-center space-y-2">
+                <p className="text-sm font-mono text-[var(--text-muted)]">
+                  No repositories matching your filter.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleQueryChange("");
+                    handleLanguageChange("ALL");
+                  }}
+                  className="text-xs font-mono underline font-semibold text-[var(--text)] cursor-pointer"
+                >
+                  Reset filters
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* PAGINATION & FOOTER */}
+          <div className="mt-6 pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[var(--text-muted)]">
+            <div className="tabular-nums">
+              Showing {displayedRepos.length} of {totalFiltered}{" "}
+              {totalFiltered === 1 ? "repository" : "repositories"}
+              {totalFiltered !== repos.length && ` (${repos.length} total)`}
+            </div>
+
+            <div className="flex items-center gap-3">
+              {!isViewAll && totalPages > 1 && (
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    disabled={safeCurrentPage <= 1}
+                    onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                    className="px-2.5 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] flex items-center gap-1 cursor-pointer"
+                  >
+                    <ChevronLeft className="w-3 h-3" />
+                    <span>Prev</span>
+                  </button>
+                  <span className="text-xs px-1 tabular-nums">
+                    {safeCurrentPage} / {totalPages}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={safeCurrentPage >= totalPages}
+                    onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                    className="px-2.5 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] flex items-center gap-1 cursor-pointer"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </button>
+                </div>
+              )}
+
+              <a
+                href={GITHUB_PROFILE_REPOS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 font-semibold text-[var(--text)] hover:underline"
+              >
+                <span>View All on GitHub</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </a>
+            </div>
+          </div>
         </>
       )}
     </section>
@@ -498,4 +402,3 @@ function LiveBuildFeedComponent() {
 }
 
 export default memo(LiveBuildFeedComponent);
-

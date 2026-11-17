@@ -10,22 +10,19 @@ interface ResumeSpotlightProps {
 }
 
 /**
- * Premium Minimal Resume CTA Button
- * Compact, restrained button with refined typography, purple accent,
- * accessible interactive touch targets, and zero unnecessary visual clutter.
+ * Editorial Secondary Resume CTA Button
+ * Follows DESIGN.md: clean 6px rectangular geometry, hairline border, crisp invert hover.
  */
 export function ResumeSpotlight({
   className = "",
   onOpenViewer,
-  label = "Resume",
+  label = "View Résumé",
 }: ResumeSpotlightProps) {
   const handleClick = (e: React.MouseEvent) => {
-    // If viewer callback is provided, prioritize opening the interactive in-app resume viewer
     if (onOpenViewer) {
       e.preventDefault();
       onOpenViewer();
     } else {
-      // Fallback: direct secure new-tab navigation to authoritative CDN URL
       window.open(RESUME_CONFIG.url, "_blank", "noopener,noreferrer");
     }
   };

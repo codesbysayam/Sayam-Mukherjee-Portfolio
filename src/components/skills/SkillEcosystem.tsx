@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { 
-  ExternalLink, CheckCircle2, ArrowUpRight, 
-  X, Code2, FolderGit2, Compass, Sparkles, Layers
+import { useState, useEffect } from "react";
+import {
+  ExternalLink,
+  CheckCircle2,
+  ArrowUpRight,
+  X,
+  FolderGit2,
+  Compass,
 } from "lucide-react";
 import { SkillItem, SkillStatus } from "../../data/skills";
 import { PROJECTS, ProjectItem } from "../../data/projects";
@@ -14,39 +18,31 @@ interface SkillEcosystemProps {
   onSkillSelect?: (skillId: string) => void;
 }
 
-function getStatusBadge(status: SkillStatus) {
+function getStatusMeta(status: SkillStatus) {
   switch (status) {
     case "building":
       return {
-        label: "BUILDING",
-        color: "text-emerald-400",
-        bg: "bg-emerald-500/10",
-        border: "border-emerald-500/20",
-        dot: "bg-emerald-400"
+        label: "Building",
+        color: "text-[var(--success)]",
+        marker: "bg-[var(--success)]",
       };
     case "practicing":
       return {
-        label: "PRACTICING",
-        color: "text-cyan-400",
-        bg: "bg-cyan-500/10",
-        border: "border-cyan-500/20",
-        dot: "bg-cyan-400"
+        label: "Practicing",
+        color: "text-[var(--accent)]",
+        marker: "bg-[var(--accent)]",
       };
     case "learning":
       return {
-        label: "LEARNING",
-        color: "text-purple-400",
-        bg: "bg-purple-500/10",
-        border: "border-purple-500/20",
-        dot: "bg-purple-400"
+        label: "Learning",
+        color: "text-[var(--warning)]",
+        marker: "bg-[var(--warning)]",
       };
     case "exploring":
       return {
-        label: "EXPLORING",
-        color: "text-amber-400",
-        bg: "bg-amber-500/10",
-        border: "border-amber-500/20",
-        dot: "bg-amber-400"
+        label: "Exploring",
+        color: "text-[var(--text-secondary)]",
+        marker: "bg-[var(--text-muted)]",
       };
   }
 }
@@ -60,11 +56,12 @@ export function SkillEcosystem({
 }: SkillEcosystemProps) {
   const [activeSkill, setActiveSkill] = useState<SkillItem | null>(null);
 
-  // Sync external selection if any
   useEffect(() => {
     if (selectedSkillId) {
       const match = (skills || []).find(
-        (s) => s.id.toLowerCase() === selectedSkillId.toLowerCase() || s.name.toLowerCase() === selectedSkillId.toLowerCase()
+        (s) =>
+          s.id.toLowerCase() === selectedSkillId.toLowerCase() ||
+          s.name.toLowerCase() === selectedSkillId.toLowerCase()
       );
       if (match) {
         setActiveSkill(match);
@@ -74,7 +71,6 @@ export function SkillEcosystem({
 
   const handleCardClick = (skill: SkillItem) => {
     if (activeSkill?.id === skill.id) {
-      // Toggle off
       setActiveSkill(null);
       onClearSelection?.();
     } else {
@@ -88,7 +84,6 @@ export function SkillEcosystem({
     onClearSelection?.();
   };
 
-  // Resolve projects for active inspection
   const resolvedProjects: ProjectItem[] = activeSkill
     ? (activeSkill.relatedProjects || [])
         .map((pid) => (PROJECTS || []).find((p) => p.id === pid))
@@ -99,92 +94,90 @@ export function SkillEcosystem({
     <div className="space-y-8">
       {/* Section Header */}
       <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-semibold uppercase tracking-[0.14em] text-cyan-400">
-            03 · SKILL ECOSYSTEM
+        <div className="flex items-center gap-3 text-xs font-mono">
+          <span className="font-semibold text-[var(--accent)]">
+            03. Skill Ecosystem
           </span>
-          <span className="h-px w-12 bg-zinc-800" />
-          <span className="text-xs font-mono text-zinc-500 uppercase tracking-wider">
-            Interactive Centerpiece
+          <span className="h-px w-10 bg-[var(--border)]" />
+          <span className="text-[var(--text-muted)]">
+            Interactive Explorer
           </span>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-white font-display">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[var(--text)] font-display">
             Interactive Skill &amp; Architecture Explorer
           </h2>
-          <span className="text-xs font-mono text-zinc-500">
-            Click any skill to inspect architectural evidence
+          <span className="text-xs font-mono text-[var(--text-muted)]">
+            Select any skill to inspect architectural evidence
           </span>
         </div>
-        <p className="text-sm sm:text-base text-zinc-400 max-w-2xl font-sans">
-          Inspect concrete evidence, related technologies, and repository links for each engineering competency. 
+        <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
+          Inspect concrete evidence, related technologies, and repository links for each engineering competency.
           Selecting a skill highlights its architectural context while peripheral items visually recede.
         </p>
       </div>
 
-      {/* ACTIVE SKILL DETAIL INSPECTOR PANEL (Appears seamlessly when a skill is active) */}
+      {/* Active Skill Detail Inspector Panel */}
       {activeSkill && (
-        <div className="p-6 sm:p-8 rounded-2xl bg-zinc-900/90 border border-zinc-700/80 shadow-2xl relative space-y-6 animate-in fade-in slide-in-from-top-2 duration-200">
-          {/* Close button */}
+        <div className="card p-6 sm:p-8 relative space-y-6 border-[var(--border-strong)]">
           <button
             type="button"
             onClick={handleClear}
-            className="absolute top-5 right-5 p-2 rounded-lg text-zinc-400 hover:text-white bg-zinc-800/80 hover:bg-zinc-750 border border-zinc-700 transition-colors cursor-pointer"
+            className="absolute top-5 right-5 p-2 rounded-[6px] text-[var(--text-secondary)] hover:text-[var(--text)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] border border-[var(--border)] transition-colors cursor-pointer"
             title="Clear inspection view"
+            aria-label="Clear inspection view"
           >
             <X className="w-4 h-4" />
           </button>
 
           {/* Top metadata row */}
-          <div className="space-y-2 pr-10">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-mono text-cyan-400 uppercase tracking-wider font-semibold">
+          <div className="space-y-2 pr-12">
+            <div className="flex items-center gap-2 flex-wrap text-xs font-mono">
+              <span className="text-[var(--accent)] font-semibold">
                 {activeSkill.category}
               </span>
-              <span className="text-zinc-600">·</span>
+              <span className="text-[var(--text-muted)]" aria-hidden="true">·</span>
               {(() => {
-                const b = getStatusBadge(activeSkill.status);
+                const status = getStatusMeta(activeSkill.status);
                 return (
-                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono ${b.bg} ${b.border} ${b.color} border`}>
-                    <span className={`w-1.5 h-1.5 rounded-full ${b.dot}`} />
-                    <span>{b.label}</span>
+                  <span className={`inline-flex items-center gap-1.5 font-medium ${status.color}`}>
+                    <span className={`w-1.5 h-1.5 rounded-[2px] ${status.marker}`} />
+                    <span>{status.label}</span>
                   </span>
                 );
               })()}
             </div>
 
-            <h3 className="text-2xl sm:text-3xl font-bold text-white font-display">
+            <h3 className="text-2xl sm:text-3xl font-bold text-[var(--text)] font-display tracking-tight">
               {activeSkill.name}
             </h3>
 
-            <p className="text-sm sm:text-base text-zinc-300 leading-relaxed font-sans max-w-3xl">
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans max-w-3xl">
               {activeSkill.description}
             </p>
           </div>
 
-          {/* Evidence Grid: Implementation details & Codebase link */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Where It Is Used / Evidence */}
-            <div className="p-5 rounded-xl bg-zinc-950/60 border border-zinc-800 space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-mono text-cyan-300 font-semibold uppercase tracking-wider">
-                <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
+          {/* Evidence Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-[var(--border)]">
+            <div className="p-5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2.5">
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--accent)] font-semibold">
+                <CheckCircle2 className="w-4 h-4 shrink-0" />
                 <span>Architectural Implementation &amp; Evidence</span>
               </div>
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-sans">
+              <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
                 {activeSkill.evidenceSummary}
               </p>
               {activeSkill.repoEvidence && (
-                <div className="pt-2 border-t border-zinc-850 text-xs font-mono text-zinc-400">
-                  <span className="text-zinc-500">Repository Evidence: </span>
-                  <span className="text-zinc-200">{activeSkill.repoEvidence}</span>
+                <div className="pt-2.5 border-t border-[var(--border)] text-xs font-mono text-[var(--text-muted)]">
+                  <span>Repository Evidence: </span>
+                  <span className="text-[var(--text)]">{activeSkill.repoEvidence}</span>
                 </div>
               )}
             </div>
 
-            {/* Verified Linked Projects */}
-            <div className="p-5 rounded-xl bg-zinc-950/60 border border-zinc-850 space-y-2.5">
-              <div className="flex items-center gap-2 text-xs font-mono text-zinc-400 font-semibold uppercase tracking-wider">
-                <FolderGit2 className="w-4 h-4 text-zinc-400 shrink-0" />
+            <div className="p-5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2.5">
+              <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-secondary)] font-semibold tabular-nums">
+                <FolderGit2 className="w-4 h-4 text-[var(--text-muted)] shrink-0" />
                 <span>Verified Codebases ({resolvedProjects.length})</span>
               </div>
 
@@ -193,13 +186,13 @@ export function SkillEcosystem({
                   {resolvedProjects.map((p) => (
                     <div
                       key={p.id}
-                      className="p-3 rounded-lg bg-zinc-900/80 border border-zinc-800 flex items-center justify-between gap-3"
+                      className="p-3 rounded-[6px] bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-between gap-3"
                     >
                       <div className="min-w-0">
-                        <div className="text-xs font-bold text-white truncate font-sans">
+                        <div className="text-xs font-semibold text-[var(--text)] truncate font-sans">
                           {p.title}
                         </div>
-                        <div className="text-[11px] text-zinc-400 truncate font-sans">
+                        <div className="text-[11px] text-[var(--text-muted)] truncate font-sans">
                           {p.subtitle}
                         </div>
                       </div>
@@ -210,7 +203,7 @@ export function SkillEcosystem({
                             href={p.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-1.5 rounded-md bg-zinc-800 hover:bg-zinc-750 text-zinc-300 hover:text-white border border-zinc-700 transition-colors"
+                            className="p-1.5 rounded-[6px] bg-[var(--surface)] hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] hover:text-[var(--text)] border border-[var(--border)] transition-colors"
                             title="View GitHub Repository"
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
@@ -220,7 +213,7 @@ export function SkillEcosystem({
                           <button
                             type="button"
                             onClick={() => onSelectProject(p.id)}
-                            className="px-2.5 py-1 rounded-md bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-mono transition-colors cursor-pointer"
+                            className="btn btn-primary px-2.5 py-1 text-xs font-mono rounded-[6px] whitespace-nowrap shrink-0 cursor-pointer"
                           >
                             Explore
                           </button>
@@ -230,7 +223,7 @@ export function SkillEcosystem({
                   ))}
                 </div>
               ) : (
-                <p className="text-xs text-zinc-500 italic font-mono pt-1">
+                <p className="text-xs text-[var(--text-muted)] italic font-mono pt-1">
                   Practiced in foundational algorithmic problem solving and core engineering coursework.
                 </p>
               )}
@@ -238,22 +231,23 @@ export function SkillEcosystem({
           </div>
 
           {/* Related Skills & Documentation Row */}
-          <div className="pt-2 border-t border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
-            {/* Related chips */}
+          <div className="pt-3 border-t border-[var(--border)] flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs font-mono">
             {activeSkill.relatedSkills && activeSkill.relatedSkills.length > 0 ? (
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-zinc-500">Related:</span>
+                <span className="text-[var(--text-muted)]">Related:</span>
                 {activeSkill.relatedSkills.map((rel) => (
                   <button
                     key={rel}
                     type="button"
                     onClick={() => {
                       const match = (skills || []).find(
-                        (s) => s.name.toLowerCase() === rel.toLowerCase() || s.id.toLowerCase() === rel.toLowerCase()
+                        (s) =>
+                          s.name.toLowerCase() === rel.toLowerCase() ||
+                          s.id.toLowerCase() === rel.toLowerCase()
                       );
                       if (match) setActiveSkill(match);
                     }}
-                    className="px-2.5 py-1 rounded-md bg-zinc-800 hover:bg-zinc-750 text-zinc-300 hover:text-white border border-zinc-700 transition-colors cursor-pointer"
+                    className="px-2.5 py-1 rounded-[6px] bg-[var(--surface)] hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] hover:text-[var(--text)] border border-[var(--border)] hover:border-[var(--border-strong)] transition-colors cursor-pointer whitespace-nowrap shrink-0"
                   >
                     {rel}
                   </button>
@@ -263,13 +257,12 @@ export function SkillEcosystem({
               <div />
             )}
 
-            {/* Documentation Reference */}
             {activeSkill.docsUrl && (
               <a
                 href={activeSkill.docsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-cyan-300 transition-colors shrink-0"
+                className="inline-flex items-center gap-1.5 text-[var(--accent)] hover:underline transition-colors shrink-0 whitespace-nowrap"
               >
                 <span>Documentation Reference</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -279,65 +272,68 @@ export function SkillEcosystem({
         </div>
       )}
 
-      {/* Empty State if filter returned 0 */}
-      {(!skills || skills.length === 0) ? (
-        <div className="p-8 rounded-2xl bg-zinc-950/40 border border-zinc-850 text-center space-y-3">
-          <div className="w-10 h-10 mx-auto rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-500 flex items-center justify-center">
+      {/* Empty State */}
+      {!skills || skills.length === 0 ? (
+        <div className="card p-8 text-center space-y-3">
+          <div className="w-10 h-10 mx-auto rounded-[6px] bg-[var(--surface)] border border-[var(--border)] text-[var(--text-muted)] flex items-center justify-center">
             <Compass className="w-5 h-5" />
           </div>
-          <h3 className="text-sm font-semibold text-white font-mono">No matching skills found</h3>
-          <p className="text-xs text-zinc-400 max-w-sm mx-auto">
+          <h3 className="text-sm font-semibold text-[var(--text)] font-mono">
+            No matching skills found
+          </h3>
+          <p className="text-xs text-[var(--text-secondary)] max-w-sm mx-auto">
             Try adjusting your search terms or selecting another category filter above.
           </p>
         </div>
       ) : (
-        /* Skills Grid */
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
           {skills.map((skill) => {
-            const badge = getStatusBadge(skill.status);
+            const status = getStatusMeta(skill.status);
             const isSelected = activeSkill?.id === skill.id;
             const isDimmed = activeSkill !== null && !isSelected;
 
             return (
-              <div
+              <button
                 key={skill.id}
+                type="button"
                 onClick={() => handleCardClick(skill)}
-                className={`group p-4 rounded-xl transition-all duration-200 cursor-pointer flex flex-col justify-between space-y-3 border ${
+                className={`group text-left p-4 rounded-[10px] transition-all duration-150 cursor-pointer flex flex-col justify-between space-y-3 border ${
                   isSelected
-                    ? "bg-zinc-900 border-cyan-500/80 shadow-lg shadow-cyan-500/10 scale-[1.01]"
+                    ? "bg-[var(--surface-2)] border-[var(--accent)] ring-1 ring-[var(--accent)]"
                     : isDimmed
-                    ? "bg-zinc-950/30 border-zinc-850/60 opacity-45 hover:opacity-100 hover:border-zinc-750"
-                    : "bg-zinc-950/40 hover:bg-zinc-900/60 border-zinc-850 hover:border-zinc-750"
+                    ? "bg-[var(--surface)] border-[var(--border)] opacity-55 hover:opacity-100 hover:border-[var(--border-strong)]"
+                    : "bg-[var(--surface-2)] border-[var(--border)] hover:border-[var(--border-strong)]"
                 }`}
               >
-                {/* Top Row: Name + Status Badge */}
-                <div className="flex items-start justify-between gap-2">
+                <div className="flex items-start justify-between gap-2 w-full">
                   <div className="min-w-0">
-                    <h3 className={`text-sm font-semibold transition-colors truncate font-sans ${
-                      isSelected ? "text-cyan-300" : "text-white group-hover:text-zinc-200"
-                    }`}>
+                    <h3
+                      className={`text-sm font-semibold transition-colors truncate font-sans ${
+                        isSelected
+                          ? "text-[var(--accent)]"
+                          : "text-[var(--text)] group-hover:text-[var(--accent)]"
+                      }`}
+                    >
                       {skill.name}
                     </h3>
-                    <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-wider block mt-0.5">
+                    <span className="text-[11px] font-mono text-[var(--text-muted)] block mt-0.5 truncate">
                       {skill.category}
                     </span>
                   </div>
 
                   <span
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-medium shrink-0 ${badge.bg} ${badge.border} ${badge.color} border`}
+                    className={`inline-flex items-center gap-1.5 text-[11px] font-mono font-medium shrink-0 whitespace-nowrap ${status.color}`}
                   >
-                    <span className={`w-1 h-1 rounded-full ${badge.dot}`} />
-                    <span>{badge.label}</span>
+                    <span className={`w-1.5 h-1.5 rounded-[2px] ${status.marker}`} />
+                    <span>{status.label}</span>
                   </span>
                 </div>
 
-                {/* Evidence snippet */}
-                <p className="text-xs text-zinc-400 line-clamp-2 leading-relaxed font-sans">
+                <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed font-sans">
                   {skill.evidenceSummary}
                 </p>
 
-                {/* Bottom Row: Project Count & Link indicator */}
-                <div className="pt-2 border-t border-zinc-850/80 flex items-center justify-between text-[11px] font-mono text-zinc-500">
+                <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] w-full tabular-nums">
                   <span className="truncate">
                     {skill.relatedProjects && skill.relatedProjects.length > 0
                       ? `${skill.relatedProjects.length} verified project${
@@ -345,14 +341,18 @@ export function SkillEcosystem({
                         }`
                       : "Coursework practice"}
                   </span>
-                  <span className={`flex items-center gap-0.5 transition-colors ${
-                    isSelected ? "text-cyan-400" : "text-zinc-500 group-hover:text-zinc-300"
-                  }`}>
+                  <span
+                    className={`flex items-center gap-0.5 transition-colors shrink-0 ${
+                      isSelected
+                        ? "text-[var(--accent)] font-medium"
+                        : "text-[var(--text-muted)] group-hover:text-[var(--text)]"
+                    }`}
+                  >
                     <span>{isSelected ? "Inspecting" : "Inspect"}</span>
                     <ArrowUpRight className="w-3 h-3" />
                   </span>
                 </div>
-              </div>
+              </button>
             );
           })}
         </div>
@@ -362,3 +362,4 @@ export function SkillEcosystem({
 }
 
 export default SkillEcosystem;
+

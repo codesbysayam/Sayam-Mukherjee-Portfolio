@@ -59,7 +59,7 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
         <p>
           We differentiate between two basic categories of data:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-2 text-[var(--text-secondary)]">
           <li>
             <strong>Information you provide voluntarily:</strong> Data you choose to send when
             submitting a message through the contact form or sending an email directly.
@@ -80,7 +80,7 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
         <p>
           When you use the contact form on this website or reach out by email, you may share:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-[var(--text-secondary)]">
           <li>Your full or professional name</li>
           <li>Your contact email address</li>
           <li>The subject or project service of interest</li>
@@ -99,7 +99,7 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
           Like virtually all web applications, hosting infrastructure and edge delivery networks (such
           as Vercel) process standard HTTP request headers and access logs. These may include:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-[var(--text-secondary)]">
           <li>Internet Protocol (IP) address (frequently truncated or anonymized at edge gateways)</li>
           <li>Browser user agent, browser engine version, and operating system</li>
           <li>Requested URL, HTTP status code, and referral source</li>
@@ -131,10 +131,10 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
         <p>
           This portfolio emphasizes transparent, minimal client-side storage:
         </p>
-        <ul className="list-disc pl-6 space-y-2 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-2 text-[var(--text-secondary)]">
           <li>
-            <strong>Theme Preference (localStorage):</strong> We use your browser's standard{" "}
-            <code className="px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-xs font-mono text-zinc-800 dark:text-zinc-200">
+            <strong>Theme Preference (localStorage):</strong> We use your browser&apos;s standard{" "}
+            <code className="px-1.5 py-0.5 rounded-[4px] bg-[var(--surface)] border border-[var(--border)] text-xs font-mono text-[var(--text)]">
               localStorage
             </code>{" "}
             to remember your Dark or Light display mode preference across visits.
@@ -150,7 +150,7 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
           </li>
         </ul>
         <p>
-          You can clear your browser's local storage and cookies at any time via your browser
+          You can clear your browser&apos;s local storage and cookies at any time via your browser
           settings without impairing core document reading or portfolio viewing.
         </p>
       </LegalSection>
@@ -160,7 +160,7 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
         <p>
           This portfolio contains outbound links to external third-party platforms, including:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-[var(--text-secondary)]">
           <li>GitHub (source code repositories and issue trackers)</li>
           <li>LinkedIn (professional profile and network)</li>
           <li>Codolio and LeetCode (coding activity and problem solutions)</li>
@@ -179,7 +179,7 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
           Any information processed through this website is used strictly for legitimate,
           transparent purposes:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-[var(--text-secondary)]">
           <li>To display portfolio content, project documentation, and system architecture cleanly</li>
           <li>To respond to correspondence, inquiries, and collaboration opportunities</li>
           <li>To monitor system availability, maintain uptime, and defend against abusive traffic</li>
@@ -219,7 +219,7 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
           Depending on your location and applicable privacy laws, you may have rights regarding your
           personal communications, including:
         </p>
-        <ul className="list-disc pl-6 space-y-1.5 text-zinc-700 dark:text-zinc-300">
+        <ul className="list-disc pl-6 space-y-1.5 text-[var(--text-secondary)]">
           <li>The right to request access to the personal information you previously submitted</li>
           <li>The right to request correction or deletion of your communication records</li>
           <li>The right to clear local browser preferences at any time</li>
@@ -256,25 +256,25 @@ export const Privacy: React.FC<PrivacyPageProps> = ({
         </p>
 
         <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/40">
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-mono">
+          <div className="card p-4">
+            <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1 font-mono">
               General Inquiries &amp; Questions
             </div>
             <a
               href="mailto:sayammukherjee1506@gmail.com"
-              className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline break-all"
+              className="text-sm font-semibold text-[var(--accent)] hover:underline underline-offset-4 break-all"
             >
               sayammukherjee1506@gmail.com
             </a>
           </div>
 
-          <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white/70 dark:bg-zinc-900/40">
-            <div className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1 font-mono">
+          <div className="card p-4">
+            <div className="text-xs font-semibold uppercase tracking-wider text-[var(--text-muted)] mb-1 font-mono">
               Formal, Legal &amp; Collaboration
             </div>
             <a
               href="mailto:wrickbusiness@gmail.com"
-              className="text-sm font-medium text-purple-600 dark:text-purple-400 hover:underline break-all"
+              className="text-sm font-semibold text-[var(--accent)] hover:underline underline-offset-4 break-all"
             >
               wrickbusiness@gmail.com
             </a>

@@ -1,12 +1,14 @@
-import { memo, useState, useMemo } from "react";
+import { memo, useState, useMemo, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { ProjectItem } from "../../data/projects";
+import { getProjectMedia } from "../../data/projectMedia";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import { calculateReadingTime } from "../../utils/readingTime";
-import { 
-  Star, GitFork, ExternalLink, Github, ArrowRight, 
-  Sparkles, CheckCircle2, Award, Calendar, Layers,
-  Share2, Check, Clock
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
+import {
+  Star, GitFork, ExternalLink, Github, ArrowRight,
+  CheckCircle2, Calendar, Layers, Share2, Check, Clock, ArrowLeftRight
 } from "lucide-react";
 
 interface FeaturedProjectProps {
@@ -21,9 +23,9 @@ interface FeaturedProjectProps {
 
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
-  JavaScript: "#f7df1e",
+  JavaScript: "#ca8a04",
   Python: "#3572A5",
-  "C++": "#f34b7d",
+  "C++": "#be123c",
   HTML: "#e34c26",
   CSS: "#563d7c",
 };
@@ -38,16 +40,22 @@ function FeaturedProjectComponent({
   selectedTech = "ALL"
 }: FeaturedProjectProps) {
   const language = repo?.language || project.techStack[0];
-  const langColor = LANGUAGE_COLORS[language] || "#38bdf8";
+  const langColor = LANGUAGE_COLORS[language] || "#69734A";
   const starsCount = repo ? repo.stargazers_count : 0;
   const forksCount = repo ? repo.forks_count : 0;
-  const lastUpdated = repo 
+  const lastUpdated = repo
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
 
   const readingStats = useMemo(() => calculateReadingTime(project), [project]);
-
+  const media = useMemo(() => getProjectMedia(project.id), [project.id]);
   const [shared, setShared] = useState(false);
+  const [imgError, setImgError] = useState(false);
+  const reduced = usePrefersReducedMotion();
+
+  useEffect(() => {
+    setImgError(false);
+  }, [project.id]);
 
   const handleShare = async () => {
     const shareUrl = project.liveUrl || project.githubUrl;
@@ -81,75 +89,86 @@ function FeaturedProjectComponent({
   };
 
   return (
-    <article className="featured-project p-6 sm:p-8 lg:p-10 relative overflow-hidden">
-      {/* Decorative ambient subtle radial glow */}
-      <div className="absolute -top-12 -right-12 w-96 h-96 bg-cyan-500/10 rounded-full blur-[110px] pointer-events-none -z-10" />
-      <div className="absolute -bottom-16 -left-16 w-80 h-80 bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10" />
+    <article className="featured-project rounded-[14px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] p-6 sm:p-8 lg:p-10">
+      {/* Top Lead Meta Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-6 mb-7 border-b border-[#41443A]">
+        <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono text-[#B5B8AA]">
+          <span className="px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold uppercase tracking-wider text-[11px]">
+            Featured Exhibit
+          </span>
+          <span aria-hidden="true">·</span>
+          <span className="text-[#F4F4ED]">{project.category}</span>
+          <span aria-hidden="true">·</span>
+          <span
+            className="inline-flex items-center gap-1"
+            title={`Estimated reading time (${readingStats.words} words)`}
+          >
+            <Clock className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
+            <span>{readingStats.formatted}</span>
+          </span>
+          {project.id === "mausam" && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span className="text-[#C7E34A] font-semibold">SIH 2026 Qualification</span>
+            </>
+          )}
+        </div>
 
-      {/* Main 2-Column Responsive Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* LEFT COLUMN: Identity, Story, Technology, and Primary Actions (7 cols) */}
-        <div className="lg:col-span-7 space-y-5">
-          {/* Eyebrow & Badges */}
-          <div className="flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 flex items-center gap-1.5 shadow-sm">
-                <Sparkles className="w-3 h-3 text-cyan-400" />
-                Featured Work
-              </span>
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono text-zinc-400 border border-zinc-700/50 bg-zinc-900/60 dark:bg-zinc-900/80">
-                {project.category}
-              </span>
-              <span 
-                className="px-2.5 py-0.5 rounded-full text-xs font-mono text-zinc-400 border border-zinc-700/50 bg-zinc-900/60 dark:bg-zinc-900/80 flex items-center gap-1.5"
-                title={`Estimated reading time based on standard 200 WPM (${readingStats.words} words)`}
-              >
-                <Clock className="w-3 h-3 text-cyan-400" />
-                <span>{readingStats.formatted}</span>
-              </span>
-              {project.id === "mausam" && (
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono text-amber-300 border border-amber-500/30 bg-amber-500/10 flex items-center gap-1">
-                  <Award className="w-3 h-3 text-amber-400" />
-                  SIH 2026
-                </span>
+        {onToggleCandidate && candidateTitle && (
+          <button
+            type="button"
+            onClick={onToggleCandidate}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border border-[#41443A] hover:border-[#C7E34A] text-xs font-mono text-[#F4F4ED] transition-colors cursor-pointer"
+          >
+            <ArrowLeftRight className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
+            <span>Compare: {candidateTitle}</span>
+          </button>
+        )}
+      </div>
+
+      {/* Main 2-Column Layout */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+        {/* LEFT COLUMN (7 cols) */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={project.id}
+            initial={reduced ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduced ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+            className="lg:col-span-7 space-y-5"
+          >
+            <div className="space-y-2">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#F4F4ED] font-display tracking-tight leading-tight">
+                {project.title}
+              </h2>
+              {project.subtitle && (
+                <p className="text-xs sm:text-sm font-mono text-[#C7E34A] font-medium">
+                  {project.subtitle}
+                </p>
               )}
-            </div>
-          </div>
-
-          {/* Project Title & Subtitle */}
-          <div className="space-y-1.5">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-zinc-900 dark:text-white font-display tracking-tight leading-tight">
-              {project.title}
-            </h2>
-            {project.subtitle && (
-              <p className="text-xs sm:text-sm font-mono text-cyan-600 dark:text-cyan-400 font-medium">
-                {project.subtitle}
+              <p className="text-sm text-[#EAEAE1]/85 leading-relaxed font-sans pt-1">
+                {project.longDescription}
               </p>
-            )}
-            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans pt-1">
-              {project.longDescription}
-            </p>
-          </div>
+            </div>
 
-          {/* Why It Exists */}
-          <div className="p-3.5 rounded-xl bg-zinc-900/30 dark:bg-white/[0.03] border border-zinc-800/80 dark:border-white/[0.07] space-y-1">
-            <span className="text-xs font-mono uppercase tracking-wider text-cyan-600 dark:text-cyan-400 font-semibold flex items-center gap-1.5">
-              <Layers className="w-3 h-3" />
+          <div className="p-4 rounded-[8px] bg-[#151713] border border-[#41443A] space-y-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#C7E34A] font-semibold flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5" aria-hidden="true" />
               Why I Built This
             </span>
-            <p className="text-xs text-zinc-600 dark:text-zinc-300 leading-relaxed font-sans">
+            <p className="text-xs sm:text-sm text-[#EAEAE1]/85 leading-relaxed font-sans">
               {project.whyItExists}
             </p>
           </div>
 
-          {/* Technical Effort & Metrics Summary (e.g. for OPERON) */}
           {project.metrics && (
-            <ProjectMetricsSummary metrics={project.metrics} projectName={project.title} />
+            <ProjectMetricsSummary metrics={project.metrics} projectName={project.title} darkSurface />
           )}
 
-          {/* Technology Badges (interactive) */}
+          {/* Stack */}
           <div className="space-y-2">
-            <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold block">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[#B5B8AA] font-semibold block">
               Technologies Used
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -159,16 +178,12 @@ function FeaturedProjectComponent({
                   <button
                     key={idx}
                     type="button"
-                    onClick={() => {
-                      if (onSelectTech) {
-                        onSelectTech(isActive ? "ALL" : tech);
-                      }
-                    }}
+                    onClick={() => onSelectTech && onSelectTech(isActive ? "ALL" : tech)}
                     title={onSelectTech ? `Filter projects by ${tech}` : tech}
-                    className={`text-xs px-2.5 py-1 rounded-lg font-mono shadow-sm transition-all cursor-pointer ${
+                    className={`text-xs px-2.5 py-1 rounded-[4px] font-mono transition-colors cursor-pointer border ${
                       isActive
-                        ? "bg-purple-600 text-white font-medium border border-purple-500 shadow-purple-500/20"
-                        : "bg-zinc-100 hover:bg-zinc-200/80 dark:bg-[#151824] dark:hover:bg-[#1d2133] text-zinc-800 dark:text-zinc-200 border border-zinc-300/80 dark:border-white/[0.08]"
+                        ? "bg-[#C7E34A] text-[#20231D] border-[#C7E34A] font-bold"
+                        : "bg-[#151713] hover:border-[#C7E34A]/60 text-[#EAEAE1] border-[#41443A]"
                     }`}
                   >
                     {tech}
@@ -178,24 +193,25 @@ function FeaturedProjectComponent({
             </div>
           </div>
 
-          {/* Action Links */}
+          {/* Primary Actions */}
           <div className="pt-2 flex items-center gap-2.5 flex-wrap">
             <button
+              type="button"
               onClick={() => onSelectCaseStudy(project)}
               className="btn btn-primary"
             >
               <span>View Case Study</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
 
             <a
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-secondary"
+              className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] !text-[#F4F4ED]"
               title="Open Repository on GitHub"
             >
-              <Github className="w-3.5 h-3.5" />
+              <Github className="w-3.5 h-3.5" aria-hidden="true" />
               <span>GitHub ↗</span>
             </a>
 
@@ -204,10 +220,10 @@ function FeaturedProjectComponent({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-secondary"
+                className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] !text-[#F4F4ED]"
                 title="Launch Live Deployment"
               >
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>Live Demo ↗</span>
               </a>
             )}
@@ -215,94 +231,123 @@ function FeaturedProjectComponent({
             <button
               type="button"
               onClick={handleShare}
-              className="btn btn-secondary"
+              className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] !text-[#F4F4ED]"
               title="Share Project"
               aria-label={`Share ${project.title}`}
             >
               {shared ? (
-                <Check className="w-3.5 h-3.5 text-emerald-500" />
+                <Check className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
               ) : (
-                <Share2 className="w-3.5 h-3.5 text-zinc-400" />
+                <Share2 className="w-3.5 h-3.5 text-[#B5B8AA]" aria-hidden="true" />
               )}
-              <span>{shared ? "Shared!" : "Share"}</span>
+              <span>{shared ? "Copied!" : "Share"}</span>
             </button>
           </div>
-        </div>
+        </motion.div>
+        </AnimatePresence>
 
-        {/* RIGHT COLUMN: Real Repository Telemetry & Verified Solution (5 cols) */}
+        {/* RIGHT COLUMN: Artwork Preview & Repository Telemetry (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          {/* Engineering Solution Card */}
-          <div className="card p-4 sm:p-5 space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-mono uppercase tracking-wider text-emerald-600 dark:text-emerald-400 font-semibold flex items-center gap-1.5">
-                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                Engineering Implementation
-              </span>
-              <span className="text-xs font-mono text-zinc-500">Production Code</span>
+          <div className="rounded-[10px] overflow-hidden border border-[#41443A] bg-[#151713]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={project.id}
+                initial={
+                  reduced
+                    ? false
+                    : { clipPath: "inset(0 100% 0 0)", scale: 1.035, opacity: 0.7 }
+                }
+                animate={{
+                  clipPath: "inset(0 0% 0 0)",
+                  scale: 1,
+                  opacity: 1,
+                }}
+                exit={
+                  reduced
+                    ? undefined
+                    : { clipPath: "inset(0 0 0 100%)", opacity: 0.6 }
+                }
+                transition={{
+                  duration: MOTION_DURATION.enter,
+                  ease: MOTION_EASE.emphasis,
+                }}
+              >
+                {!imgError ? (
+                  <img
+                    src={media.src}
+                    alt={media.alt}
+                    referrerPolicy="no-referrer"
+                    onError={() => setImgError(true)}
+                    className="w-full aspect-[16/10] object-cover"
+                  />
+                ) : (
+                  <div className="w-full aspect-[16/10] flex items-center justify-center p-6 text-center bg-[#151713]">
+                    <span className="font-mono text-xs text-[#B5B8AA]">{project.title}</span>
+                  </div>
+                )}
+              </motion.div>
+            </AnimatePresence>
+            <div className="px-4 py-2.5 border-t border-[#41443A] text-[11px] font-mono text-[#B5B8AA]">
+              {media.caption}
             </div>
-            <p className="text-xs sm:text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+          </div>
+
+          <div className="p-4 sm:p-5 rounded-[10px] bg-[#151713] border border-[#41443A] space-y-2">
+            <div className="flex items-center justify-between text-xs font-mono">
+              <span className="uppercase tracking-wider text-[#C7E34A] font-semibold flex items-center gap-1.5">
+                <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
+                Implementation
+              </span>
+              <span className="text-[#B5B8AA]">Production Code</span>
+            </div>
+            <p className="text-xs sm:text-sm text-[#EAEAE1]/85 leading-relaxed font-sans">
               {project.whatIBuilt}
             </p>
           </div>
 
-          {/* GitHub Telemetry Panel */}
-          <div className="card p-4 sm:p-5 space-y-3">
-            <div className="flex items-center justify-between border-b border-zinc-200 dark:border-white/[0.06] pb-2.5">
-              <span className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+          <div className="p-4 sm:p-5 rounded-[10px] bg-[#151713] border border-[#41443A] space-y-3">
+            <div className="flex items-center justify-between border-b border-[#41443A] pb-2.5 text-xs font-mono">
+              <span className="uppercase tracking-wider text-[#B5B8AA] font-semibold">
                 Repository Metrics
               </span>
-              <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold">Verified</span>
-              </div>
+              <span className="text-[#C7E34A] font-semibold">Verified Sync</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-3">
-              <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-xs font-mono text-zinc-500 block">PRIMARY STACK</span>
+            <div className="grid grid-cols-2 gap-3 tabular-nums">
+              <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
+                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Primary Stack</span>
                 <div className="flex items-center gap-1.5 pt-1">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0 inline-block"
                     style={{ backgroundColor: langColor }}
                   />
-                  <span className="text-xs font-mono font-bold text-zinc-900 dark:text-white truncate">
-                    {language}
-                  </span>
+                  <span className="text-xs font-mono font-bold text-[#F4F4ED] truncate">{language}</span>
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-xs font-mono text-zinc-500 block">LAST CODE SYNC</span>
-                <div className="flex items-center gap-1 pt-1 text-xs font-mono text-zinc-800 dark:text-zinc-200">
-                  <Calendar className="w-3 h-3 text-cyan-400 shrink-0" />
+              <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
+                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Last Push</span>
+                <div className="flex items-center gap-1.5 pt-1 text-xs font-mono text-[#EAEAE1]">
+                  <Calendar className="w-3 h-3 text-[#C7E34A] shrink-0" aria-hidden="true" />
                   <span className="truncate">{lastUpdated}</span>
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-xs font-mono text-zinc-500 block">STARS</span>
+              <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
+                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Stars</span>
                 <div className="flex items-center gap-1.5 pt-1">
-                  <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400/20" />
-                  <span className="text-xs font-mono font-bold text-zinc-900 dark:text-white">
-                    {starsCount}
-                  </span>
+                  <Star className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
+                  <span className="text-xs font-mono font-bold text-[#F4F4ED]">{starsCount}</span>
                 </div>
               </div>
 
-              <div className="p-3 rounded-xl bg-zinc-100 dark:bg-white/[0.03] border border-zinc-200 dark:border-white/[0.05]">
-                <span className="text-xs font-mono text-zinc-500 block">FORKS</span>
+              <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
+                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Forks</span>
                 <div className="flex items-center gap-1.5 pt-1">
-                  <GitFork className="w-3.5 h-3.5 text-cyan-400" />
-                  <span className="text-xs font-mono font-bold text-zinc-900 dark:text-white">
-                    {forksCount}
-                  </span>
+                  <GitFork className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
+                  <span className="text-xs font-mono font-bold text-[#F4F4ED]">{forksCount}</span>
                 </div>
               </div>
-            </div>
-
-            <div className="text-[11px] font-mono text-zinc-500 flex items-center justify-between pt-1">
-              <span>Repo: {project.githubRepoName || "codesbysayam"}</span>
-              <span className="text-purple-600 dark:text-purple-400">Public Codebase</span>
             </div>
           </div>
         </div>

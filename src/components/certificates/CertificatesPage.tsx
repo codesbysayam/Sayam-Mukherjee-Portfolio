@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Certificate, CertificateCategory, CertificateStats } from "../../types/certificates";
 import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
-import { usePortfolio } from "../../context/PortfolioContext";
 import CertificateCard from "./CertificateCard";
 import AchievementGrid from "./AchievementGrid";
 import CertificateViewerModal from "./CertificateViewerModal";
@@ -21,25 +20,15 @@ import {
 } from "lucide-react";
 
 export default function CertificatesPage() {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
+  const [certificates, setCertificates] = useState<Certificate[]>(() => INITIAL_CERTIFICATES);
 
-  // Initial Data from clean local archive, with optional background sync
-  const [certificates, setCertificates] = useState<Certificate[]>(() => {
-    return INITIAL_CERTIFICATES;
-  });
-
-  // Filters State
   const [selectedCategory, setSelectedCategory] = useState<CertificateCategory>("ALL");
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYear, setSelectedYear] = useState<string>("ALL");
   const [selectedIssuer, setSelectedIssuer] = useState<string>("ALL");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "title">("newest");
-
-  // Modal State for inspecting certificates
   const [viewingCertificate, setViewingCertificate] = useState<Certificate | null>(null);
 
-  // Background sync if /api/certificates is available
   useEffect(() => {
     fetch("/api/certificates")
       .then((res) => {
@@ -56,7 +45,6 @@ export default function CertificatesPage() {
       .catch(() => {});
   }, []);
 
-  // Reactive Stats derived directly from current certificate data
   const stats: CertificateStats = useMemo(
     () => ({
       total: certificates.length,
@@ -72,7 +60,6 @@ export default function CertificatesPage() {
     [certificates]
   );
 
-  // Extract unique filter options from data
   const availableYears = useMemo(() => {
     const years = new Set<string>();
     certificates.forEach((c) => {
@@ -92,7 +79,6 @@ export default function CertificatesPage() {
     return Array.from(issuers).sort();
   }, [certificates]);
 
-  // Category Counts
   const categoryCounts = useMemo(() => {
     const counts: Record<string, number> = { ALL: certificates.length };
     certificates.forEach((c) => {
@@ -102,93 +88,53 @@ export default function CertificatesPage() {
     return counts;
   }, [certificates]);
 
-  // Filtered & Sorted Certificates
   const filteredCertificates = useMemo(() => {
     const result = certificates.filter((cert) => {
-      // Category filter
       if (selectedCategory !== "ALL") {
         const catA = cert.category.toUpperCase().replace(/S$/, "");
         const catB = selectedCategory.toUpperCase().replace(/S$/, "");
-        if (catA !== catB) {
-          return false;
-        }
+        if (catA !== catB) return false;
       }
-      // Year filter
       if (selectedYear !== "ALL" && !cert.issueDate.includes(selectedYear)) {
         return false;
       }
-      // Issuer filter
       if (
         selectedIssuer !== "ALL" &&
         cert.issuer.toLowerCase() !== selectedIssuer.toLowerCase()
       ) {
         return false;
       }
-      // Search query
       if (searchQuery.trim() !== "") {
         const q = searchQuery.toLowerCase().trim();
         const matchesTitle = cert.title.toLowerCase().includes(q);
         const matchesIssuer = cert.issuer.toLowerCase().includes(q);
-        const matchesDesc = cert.description
-          ? cert.description.toLowerCase().includes(q)
-          : false;
-        const matchesOverview = cert.overview
-          ? cert.overview.toLowerCase().includes(q)
-          : false;
-        const matchesFullDesc = cert.fullDescription
-          ? cert.fullDescription.toLowerCase().includes(q)
-          : false;
-        const matchesProject = cert.project
-          ? cert.project.toLowerCase().includes(q)
-          : false;
-        const matchesEvent = cert.event
-          ? cert.event.toLowerCase().includes(q)
-          : false;
-        const matchesTrack = cert.track
-          ? cert.track.toLowerCase().includes(q)
-          : false;
-        const matchesTeam = cert.team
-          ? cert.team.toLowerCase().includes(q)
-          : false;
-        const matchesContribution = cert.contribution
-          ? cert.contribution.toLowerCase().includes(q)
-          : false;
-        const matchesTheme = cert.theme
-          ? cert.theme.toLowerCase().includes(q)
-          : false;
-        const matchesSession = cert.session
-          ? cert.session.toLowerCase().includes(q)
-          : false;
-        const matchesCredentialType = cert.credentialType
-          ? cert.credentialType.toLowerCase().includes(q)
-          : false;
-        const matchesVenue = cert.venue
-          ? cert.venue.toLowerCase().includes(q)
-          : false;
-        const matchesOrganizer = cert.organizer
-          ? cert.organizer.toLowerCase().includes(q)
-          : false;
-        const matchesCoOrganizer = cert.coOrganizer || cert.associatedOrganizer
-          ? (cert.coOrganizer || cert.associatedOrganizer)!.toLowerCase().includes(q)
-          : false;
-        const matchesParticipant = cert.participant
-          ? cert.participant.toLowerCase().includes(q)
-          : false;
-        const matchesRecipient = cert.recipient
-          ? cert.recipient.toLowerCase().includes(q)
-          : false;
-        const matchesRole = cert.role
-          ? cert.role.toLowerCase().includes(q)
-          : false;
-        const matchesDate = cert.date
-          ? cert.date.toLowerCase().includes(q)
-          : false;
+        const matchesDesc = cert.description ? cert.description.toLowerCase().includes(q) : false;
+        const matchesOverview = cert.overview ? cert.overview.toLowerCase().includes(q) : false;
+        const matchesFullDesc = cert.fullDescription ? cert.fullDescription.toLowerCase().includes(q) : false;
+        const matchesProject = cert.project ? cert.project.toLowerCase().includes(q) : false;
+        const matchesEvent = cert.event ? cert.event.toLowerCase().includes(q) : false;
+        const matchesTrack = cert.track ? cert.track.toLowerCase().includes(q) : false;
+        const matchesTeam = cert.team ? cert.team.toLowerCase().includes(q) : false;
+        const matchesContribution = cert.contribution ? cert.contribution.toLowerCase().includes(q) : false;
+        const matchesTheme = cert.theme ? cert.theme.toLowerCase().includes(q) : false;
+        const matchesSession = cert.session ? cert.session.toLowerCase().includes(q) : false;
+        const matchesCredentialType = cert.credentialType ? cert.credentialType.toLowerCase().includes(q) : false;
+        const matchesVenue = cert.venue ? cert.venue.toLowerCase().includes(q) : false;
+        const matchesOrganizer = cert.organizer ? cert.organizer.toLowerCase().includes(q) : false;
+        const matchesCoOrganizer =
+          cert.coOrganizer || cert.associatedOrganizer
+            ? (cert.coOrganizer || cert.associatedOrganizer)!.toLowerCase().includes(q)
+            : false;
+        const matchesParticipant = cert.participant ? cert.participant.toLowerCase().includes(q) : false;
+        const matchesRecipient = cert.recipient ? cert.recipient.toLowerCase().includes(q) : false;
+        const matchesRole = cert.role ? cert.role.toLowerCase().includes(q) : false;
+        const matchesDate = cert.date ? cert.date.toLowerCase().includes(q) : false;
         const matchesSignatories = Array.isArray(cert.signatories)
           ? cert.signatories.some((s) =>
               typeof s === "string"
                 ? s.toLowerCase().includes(q)
-                : ((s as any).name?.toLowerCase().includes(q) ||
-                   (s as any).designation?.toLowerCase().includes(q))
+                : (s as any).name?.toLowerCase().includes(q) ||
+                  (s as any).designation?.toLowerCase().includes(q)
             )
           : false;
         const matchesAssociatedProjects = Array.isArray(cert.associatedProjects)
@@ -206,9 +152,8 @@ export default function CertificatesPage() {
           : false;
         const allTags = cert.tags || cert.skills || [];
         const matchesSkill = allTags.some((s) => s.toLowerCase().includes(q));
-        const matchesId = cert.credentialId
-          ? cert.credentialId.toLowerCase().includes(q)
-          : false;
+        const matchesId = cert.credentialId ? cert.credentialId.toLowerCase().includes(q) : false;
+
         if (
           !matchesTitle &&
           !matchesIssuer &&
@@ -243,27 +188,13 @@ export default function CertificatesPage() {
       return true;
     });
 
-    // Sorting
     return result.sort((a, b) => {
-      if (sortBy === "newest") {
-        return (b.issueDate || "").localeCompare(a.issueDate || "");
-      }
-      if (sortBy === "oldest") {
-        return (a.issueDate || "").localeCompare(b.issueDate || "");
-      }
-      if (sortBy === "title") {
-        return a.title.localeCompare(b.title);
-      }
+      if (sortBy === "newest") return (b.issueDate || "").localeCompare(a.issueDate || "");
+      if (sortBy === "oldest") return (a.issueDate || "").localeCompare(b.issueDate || "");
+      if (sortBy === "title") return a.title.localeCompare(b.title);
       return 0;
     });
-  }, [
-    certificates,
-    selectedCategory,
-    selectedYear,
-    selectedIssuer,
-    searchQuery,
-    sortBy,
-  ]);
+  }, [certificates, selectedCategory, selectedYear, selectedIssuer, searchQuery, sortBy]);
 
   const hasActiveFilters =
     selectedCategory !== "ALL" ||
@@ -342,9 +273,7 @@ export default function CertificatesPage() {
     const hasWorkshops = certificates.some(
       (c) => c.category.toUpperCase() === "WORKSHOPS" || c.category.toUpperCase() === "WORKSHOP"
     );
-    if (hasWorkshops) {
-      list.push({ id: "WORKSHOPS", label: "Workshops" });
-    }
+    if (hasWorkshops) list.push({ id: "WORKSHOPS", label: "Workshops" });
     if (stats.academic && stats.academic > 0) {
       list.push({ id: "ACADEMIC RECORD", label: "Grade Reports" });
     }
@@ -356,67 +285,67 @@ export default function CertificatesPage() {
 
   return (
     <div
-      className="space-y-12 font-sans pb-20 max-w-[1240px] mx-auto px-4 sm:px-6"
+      className="space-y-12 font-sans pb-20 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8"
       id="certificates-page"
     >
-      {/* 1. EDITORIAL HEADER SECTION */}
+      {/* 1. Editorial Header */}
       <header
-        className={`rounded-2xl border p-6 sm:p-10 transition-colors ${
-          isLight
-            ? "bg-white border-slate-200/90 shadow-sm"
-            : "bg-[#111318]/90 border-white/10"
-        }`}
+        className="card p-6 sm:p-10"
+        style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
       >
-        <div className="max-w-3xl space-y-3">
-          <div className="flex items-center gap-2 text-xs font-sans font-medium text-purple-400">
-            <Award className="w-4 h-4 text-purple-500" />
-            <span className="tracking-wide uppercase text-[11px] font-semibold">
-              Credentials &amp; Milestones
-            </span>
+        <div className="max-w-3xl space-y-4">
+          <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+            <Award className="w-4 h-4 shrink-0" />
+            <span>Credentials &amp; Milestones</span>
           </div>
 
-          <h1
-            className={`text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.1] ${
-              isLight ? "text-slate-900" : "text-[#F5F7FA]"
-            }`}
-          >
-            Certificates &amp; Achievements
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.06] text-[var(--text)] font-display">
+            Certificates &amp;{" "}
+            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+              Achievements
+            </span>
           </h1>
 
-          <p
-            className={`text-sm sm:text-base leading-relaxed ${
-              isLight ? "text-slate-600" : "text-[#A7ADB8]"
-            }`}
-          >
-            A verified record of technical certifications, national competition
-            honours, academic milestones, and demonstrated engineering
-            competencies.
+          <p className="text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
+            A verified ledger of technical certifications, national competition
+            honours, academic transcripts, and documented engineering milestones.
           </p>
         </div>
       </header>
 
-      {/* 2. DEDICATED ACADEMIC RECORD WIDGET (UNIFIED ACADEMICS) */}
+      {/* 2. Academic Record */}
       <div id="academics-section" className="space-y-4">
         <AcademicRecord />
       </div>
 
-      {/* 3. COMPETITION HONOURS & CREDENTIALS VAULT */}
-      <section className="space-y-6 pt-6 border-t border-zinc-200 dark:border-zinc-800" id="credentials-vault">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs font-mono font-bold tracking-widest text-purple-600 dark:text-purple-400 uppercase">
-            <Trophy className="w-4 h-4 text-purple-500" />
-            <span>COMPETITIONS &amp; VERIFIED CREDENTIALS</span>
+      {/* 3. Credentials Vault */}
+      <section
+        className="space-y-6 pt-8 border-t"
+        style={{ borderColor: "var(--border)" }}
+        id="credentials-vault"
+      >
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+            <Trophy className="w-4 h-4 shrink-0" />
+            <span>Competitions &amp; Verified Credentials</span>
           </div>
-          <h2 className={`text-2xl sm:text-3xl font-bold tracking-tight ${isLight ? "text-slate-900" : "text-white"} font-display`}>
-            Competitions &amp; Milestones
+          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)] font-display">
+            Competitions &amp;{" "}
+            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+              Milestones
+            </span>
           </h2>
-          <p className={`text-xs sm:text-sm ${isLight ? "text-slate-600" : "text-zinc-400"}`}>
+          <p className="text-sm text-[var(--text-muted)]">
             Verified national hackathons, research pathways, and athletic achievements.
           </p>
         </div>
 
-        {/* 4. REFINED STATISTICS STRIP */}
-        <div className={`grid grid-cols-2 sm:grid-cols-3 ${statCards.length >= 4 ? "lg:grid-cols-4" : ""} gap-3 sm:gap-4`}>
+        {/* Stat Filter Cards */}
+        <div
+          className={`grid grid-cols-2 sm:grid-cols-3 ${
+            statCards.length >= 4 ? "lg:grid-cols-4" : ""
+          } gap-3 sm:gap-4`}
+        >
           {statCards.map((item, idx) => {
             const Icon = item.icon;
             const isSelected = selectedCategory === item.category;
@@ -424,232 +353,199 @@ export default function CertificatesPage() {
             return (
               <button
                 key={idx}
+                type="button"
                 onClick={() => setSelectedCategory(item.category)}
-                className={`rounded-xl p-4 sm:p-5 flex flex-col justify-between space-y-2 transition-all text-left border cursor-pointer ${
-                  isSelected
-                    ? isLight
-                      ? "bg-purple-50 border-purple-300 ring-1 ring-purple-300"
-                      : "bg-purple-950/20 border-purple-500/40 ring-1 ring-purple-500/30"
-                    : isLight
-                    ? "bg-white hover:bg-slate-50 border-slate-200"
-                    : "bg-[#111318] hover:bg-[#161920] border-white/10"
-                }`}
+                className="rounded-[10px] p-4 sm:p-5 flex flex-col justify-between space-y-2.5 transition-all text-left border cursor-pointer"
+                style={{
+                  backgroundColor: isSelected ? "#20231D" : "var(--surface-2)",
+                  borderColor: isSelected ? "#C7E34A" : "var(--border)",
+                  color: isSelected ? "#F4F4ED" : "var(--text)",
+                }}
               >
-              <div className="flex items-center justify-between w-full">
-                <span
-                  className={`text-xs font-sans font-medium ${
-                    isLight ? "text-slate-500" : "text-[#737A87]"
-                  }`}
-                >
-                  {item.label}
-                </span>
-                <Icon
-                  className={`w-4 h-4 ${
-                    isSelected
-                      ? "text-purple-500"
-                      : isLight
-                      ? "text-slate-400"
-                      : "text-zinc-500"
-                  }`}
-                />
-              </div>
-              <div
-                className={`text-2xl sm:text-3xl font-bold tracking-tight ${
-                  isLight ? "text-slate-900" : "text-[#F5F7FA]"
-                }`}
-              >
-                {item.count}
-              </div>
-            </button>
-          );
-        })}
-      </div>
-
-      {/* 3. RESTRAINED FILTER CONTROLS */}
-      <div
-        className={`rounded-2xl p-4 sm:p-5 border space-y-4 ${
-          isLight
-            ? "bg-white border-slate-200 shadow-sm"
-            : "bg-[#111318] border-white/10"
-        }`}
-      >
-        {/* Category Tabs */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
-          {CATEGORIES.map((cat) => {
-            const count = categoryCounts[cat.id] || 0;
-            const isSelected = selectedCategory === cat.id;
-
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-sans font-medium whitespace-nowrap cursor-pointer flex items-center gap-2 transition-all ${
-                  isSelected
-                    ? "bg-[#A855F7] text-white"
-                    : isLight
-                    ? "bg-slate-100 hover:bg-slate-200 text-slate-700"
-                    : "bg-white/[0.05] hover:bg-white/[0.08] text-zinc-300"
-                }`}
-              >
-                <span>{cat.label}</span>
-                <span
-                  className={`text-[11px] px-1.5 py-0.5 rounded-md ${
-                    isSelected
-                      ? "bg-white/20 text-white font-semibold"
-                      : isLight
-                      ? "bg-slate-200 text-slate-600"
-                      : "bg-white/[0.06] text-zinc-400"
-                  }`}
-                >
-                  {count}
-                </span>
+                <div className="flex items-center justify-between w-full">
+                  <span
+                    className="text-xs font-mono uppercase tracking-wider"
+                    style={{ color: isSelected ? "#D4D6CA" : "var(--text-muted)" }}
+                  >
+                    {item.label}
+                  </span>
+                  <Icon
+                    className="w-4 h-4 shrink-0"
+                    style={{ color: isSelected ? "#C7E34A" : "var(--accent)" }}
+                  />
+                </div>
+                <div className="text-2xl sm:text-3xl font-extrabold tracking-tight tabular-nums font-display">
+                  {item.count}
+                </div>
               </button>
             );
           })}
         </div>
 
-        {/* Search and Secondary Filter Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          {/* Search Input */}
-          <div className="relative sm:col-span-2 lg:col-span-2">
-            <Search
-              className={`absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 ${
-                isLight ? "text-slate-400" : "text-[#737A87]"
-              }`}
-            />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search credentials, projects, issuers..."
-              className={`w-full rounded-xl pl-10 pr-9 py-2.5 text-xs font-sans border transition-colors focus:outline-none ${
-                isLight
-                  ? "bg-slate-50 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-purple-500 focus:bg-white"
-                  : "bg-[#161920] border-white/10 text-white placeholder-[#737A87] focus:border-purple-500/50"
-              }`}
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-white"
-                title="Clear search"
+        {/* Filter Controls */}
+        <div
+          className="card p-4 sm:p-5 space-y-4"
+          style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
+        >
+          {/* Category Tabs */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+            {CATEGORIES.map((cat) => {
+              const count = categoryCounts[cat.id] || 0;
+              const isSelected = selectedCategory === cat.id;
+
+              return (
+                <button
+                  key={cat.id}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat.id)}
+                  className="px-3.5 py-2 rounded-[6px] text-xs font-sans font-semibold whitespace-nowrap cursor-pointer flex items-center gap-2 transition-colors border"
+                  style={{
+                    backgroundColor: isSelected ? "#C7E34A" : "var(--surface)",
+                    borderColor: isSelected ? "#C7E34A" : "var(--border)",
+                    color: isSelected ? "#20231D" : "var(--text-secondary)",
+                  }}
+                >
+                  <span>{cat.label}</span>
+                  <span
+                    className="text-[11px] px-1.5 py-0.5 rounded-[4px] font-mono tabular-nums"
+                    style={{
+                      backgroundColor: isSelected ? "rgba(32,35,29,0.12)" : "var(--surface-2)",
+                      color: isSelected ? "#20231D" : "var(--text-muted)",
+                    }}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Search & Secondary Filters */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            <div className="relative sm:col-span-2 lg:col-span-2">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-faint)]" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search credentials, projects, issuers..."
+                className="w-full rounded-[6px] pl-10 pr-9 py-2.5 text-xs font-sans border transition-colors focus:outline-none"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
+                  color: "var(--text)",
+                }}
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+                  title="Clear search"
+                  aria-label="Clear search"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              )}
+            </div>
+
+            <div className="relative">
+              <select
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className="w-full rounded-[6px] px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer border focus:outline-none"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
+                  color: "var(--text)",
+                }}
+                aria-label="Filter by year"
               >
-                <X className="w-3.5 h-3.5" />
+                <option value="ALL">All Years</option>
+                {availableYears.map((yr) => (
+                  <option key={yr} value={yr}>
+                    Year: {yr}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[var(--text-muted)]" />
+            </div>
+
+            <div className="relative">
+              <select
+                value={selectedIssuer}
+                onChange={(e) => setSelectedIssuer(e.target.value)}
+                className="w-full rounded-[6px] px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
+                  color: "var(--text)",
+                }}
+                aria-label="Filter by issuer"
+              >
+                <option value="ALL">All Issuers</option>
+                {availableIssuers.map((iss) => (
+                  <option key={iss} value={iss}>
+                    {iss}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[var(--text-muted)]" />
+            </div>
+
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as "newest" | "oldest" | "title")}
+                className="w-full rounded-[6px] px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
+                  color: "var(--text)",
+                }}
+                aria-label="Sort credentials"
+              >
+                <option value="newest">Sort: Newest First</option>
+                <option value="oldest">Sort: Oldest First</option>
+                <option value="title">Sort: Title (A-Z)</option>
+              </select>
+              <ArrowUpDown className="absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none text-[var(--text-muted)]" />
+            </div>
+          </div>
+
+          {/* Active Filters Summary */}
+          {hasActiveFilters && (
+            <div
+              className="flex items-center justify-between gap-3 pt-3 text-xs border-t"
+              style={{ borderColor: "var(--border)" }}
+            >
+              <div className="font-mono text-[11px] text-[var(--text-muted)]">
+                Showing {filteredCertificates.length} matching credential
+                {filteredCertificates.length === 1 ? "" : "s"}
+              </div>
+              <button
+                type="button"
+                onClick={handleResetFilters}
+                className="flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset Filters</span>
               </button>
-            )}
-          </div>
-
-          {/* Year Filter */}
-          <div className="relative">
-            <select
-              value={selectedYear}
-              onChange={(e) => setSelectedYear(e.target.value)}
-              className={`w-full rounded-xl px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer border focus:outline-none ${
-                isLight
-                  ? "bg-slate-50 border-slate-200 text-slate-800 focus:border-purple-500"
-                  : "bg-[#161920] border-white/10 text-zinc-200 focus:border-purple-500/50"
-              }`}
-            >
-              <option value="ALL">All Years</option>
-              {availableYears.map((yr) => (
-                <option key={yr} value={yr}>
-                  Year: {yr}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              className={`absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none ${
-                isLight ? "text-slate-400" : "text-[#737A87]"
-              }`}
-            />
-          </div>
-
-          {/* Issuer Filter */}
-          <div className="relative">
-            <select
-              value={selectedIssuer}
-              onChange={(e) => setSelectedIssuer(e.target.value)}
-              className={`w-full rounded-xl px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none ${
-                isLight
-                  ? "bg-slate-50 border-slate-200 text-slate-800 focus:border-purple-500"
-                  : "bg-[#161920] border-white/10 text-zinc-200 focus:border-purple-500/50"
-              }`}
-            >
-              <option value="ALL">All Issuers</option>
-              {availableIssuers.map((iss) => (
-                <option key={iss} value={iss}>
-                  {iss}
-                </option>
-              ))}
-            </select>
-            <ChevronDown
-              className={`absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none ${
-                isLight ? "text-slate-400" : "text-[#737A87]"
-              }`}
-            />
-          </div>
-
-          {/* Sort By Dropdown */}
-          <div className="relative">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as any)}
-              className={`w-full rounded-xl px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none ${
-                isLight
-                  ? "bg-slate-50 border-slate-200 text-slate-800 focus:border-purple-500"
-                  : "bg-[#161920] border-white/10 text-zinc-200 focus:border-purple-500/50"
-              }`}
-            >
-              <option value="newest">Sort: Newest First</option>
-              <option value="oldest">Sort: Oldest First</option>
-              <option value="title">Sort: Title (A-Z)</option>
-            </select>
-            <ArrowUpDown
-              className={`absolute right-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 pointer-events-none ${
-                isLight ? "text-slate-400" : "text-[#737A87]"
-              }`}
-            />
-          </div>
+            </div>
+          )}
         </div>
 
-        {/* Active Filters Summary */}
-        {hasActiveFilters && (
-          <div
-            className={`flex items-center justify-between gap-3 pt-2 text-xs border-t ${
-              isLight ? "border-slate-200" : "border-white/[0.08]"
-            }`}
-          >
-            <div
-              className={`text-[11px] ${
-                isLight ? "text-slate-600" : "text-[#A7ADB8]"
-              }`}
-            >
-              Showing {filteredCertificates.length} matching credential
-              {filteredCertificates.length === 1 ? "" : "s"}
-            </div>
-            <button
-              onClick={handleResetFilters}
-              className="flex items-center gap-1.5 text-purple-400 hover:text-purple-300 transition-colors font-sans cursor-pointer text-[11px] font-semibold"
-            >
-              <RotateCcw className="w-3 h-3" />
-              <span>Reset Filters</span>
-            </button>
-          </div>
-        )}
-      </div>
+        {/* 2-Column Grid */}
+        <div className="space-y-6">
+          <AchievementGrid
+            records={filteredCertificates}
+            onView={(c) => setViewingCertificate(c)}
+            onResetFilters={handleResetFilters}
+            columns={2}
+          />
+        </div>
+      </section>
 
-      {/* 4. PROFESSIONAL 2-COLUMN GRID (Desktop 2 cols, mobile 1 col) */}
-      <div className="space-y-6">
-        <AchievementGrid
-          records={filteredCertificates}
-          onView={(c) => setViewingCertificate(c)}
-          onResetFilters={handleResetFilters}
-          columns={2}
-        />
-      </div>
-    </section>
-
-      {/* 5. REFINED MODAL VIEWER */}
       <CertificateViewerModal
         certificate={viewingCertificate}
         onClose={() => setViewingCertificate(null)}

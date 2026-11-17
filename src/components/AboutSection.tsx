@@ -1,12 +1,13 @@
-import { useState, memo } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { usePortfolio } from "../context/PortfolioContext";
+import { useState, useRef, memo } from "react";
+import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import AcademicRecord from "./AcademicRecord";
-import { 
-  GraduationCap, Award, MapPin, Calendar, Heart, Shield, Compass, 
-  Sparkles, CheckCircle2, BookOpen, User, Target, Cpu,
+import { EditorialReveal } from "../motion/Reveal";
+import { usePrefersReducedMotion } from "../motion/tokens";
+import {
+  GraduationCap, Award, Calendar, Shield, Compass,
+  Sparkles, CheckCircle2, BookOpen, User, Target,
   Trophy, Medal, Video, Briefcase, Youtube, Code, Building2, Star, Rocket,
-  Flame, Quote, Dumbbell
+  Flame, Quote, Camera
 } from "lucide-react";
 
 interface JourneyMilestone {
@@ -20,11 +21,18 @@ interface JourneyMilestone {
 
 function AboutSectionComponent() {
   const [activeTab, setActiveTab] = useState<"narrative" | "timeline" | "education">("narrative");
-  const [activeValueIndex, setActiveValueIndex] = useState<number>(0);
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
+  const reduced = usePrefersReducedMotion();
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start 80%", "end 65%"],
+  });
+  const spineScaleY = useSpring(scrollYProgress, {
+    stiffness: 160,
+    damping: 28,
+    restDelta: 0.001,
+  });
 
-  // Operating Values
   const values = [
     { name: "Continuous Learning", desc: "A disciplined commitment to expand domain mastery daily.", icon: BookOpen },
     { name: "Integrity", desc: "Honesty and alignment between architecture, actions, and ethics.", icon: Shield },
@@ -34,7 +42,6 @@ function AboutSectionComponent() {
     { name: "Collaboration", desc: "Empowering engineering peers and succeeding as a cohesive unit.", icon: Sparkles }
   ];
 
-  // Self-Reflective Strengths
   const strengths = [
     { title: "Rapid System Synthesis", desc: "Turns documentation, technical papers, and API specifications into clean, working prototypes." },
     { title: "Rigorous Algorithmic Discipline", desc: "Approaches data structures with space-time bounds awareness, focusing on understanding core principles rather than memorizing solutions." },
@@ -42,38 +49,31 @@ function AboutSectionComponent() {
     { title: "Resilience Under Pressure", desc: "Proven under high-stakes hackathon deadlines (SIH 2026, Technex'26 IIT BHU) without compromising architecture or team morale." }
   ];
 
-  // Areas of Continuous Improvement (Honest & Self-Aware)
   const improvements = [
-    { 
-      title: "Over-Polishing & Perfectionism", 
-      area: "Time Management", 
-      desc: "Prone to spending extra hours obsessing over micro-spacing or aesthetic details. Actively mitigated by establishing strict MVP timeboxes before refactoring." 
+    {
+      title: "Over-Polishing & Perfectionism",
+      area: "Time Management",
+      desc: "Prone to spending extra hours obsessing over micro-spacing or aesthetic details. Actively mitigated by establishing strict MVP timeboxes before refactoring."
     },
-    { 
-      title: "Breadth vs. Depth Scheduling", 
-      area: "Cognitive Load", 
-      desc: "Desire to master AI theory, market mechanics, and web systems simultaneously can fracture focus. Managed through structured priority sprints." 
+    {
+      title: "Breadth vs. Depth Scheduling",
+      area: "Cognitive Load",
+      desc: "Desire to master AI theory, market mechanics, and web systems simultaneously can fracture focus. Managed through structured priority sprints."
     },
-    { 
-      title: "Enterprise Scale Exposure", 
-      area: "Industry Experience", 
-      desc: "While skilled at building and shipping standalone full-stack apps, still expanding hands-on familiarity with multi-team legacy enterprise codebases." 
+    {
+      title: "Enterprise Scale Exposure",
+      area: "Industry Experience",
+      desc: "While skilled at building and shipping standalone full-stack apps, still expanding hands-on familiarity with multi-team legacy enterprise codebases."
     }
   ];
 
-  // Extracurriculars
   const extracurriculars = [
     { name: "Competitive Table Tennis", desc: "District-level representative; trains agility, reflex speed, and mental composure under rally pressure.", icon: Trophy },
     { name: "Content Creation (YouTube)", desc: "Grew Daily Decipher to 10K+ subscribers and Technical AZ to 2.06K+, distilling complex ideas into clear narratives.", icon: Youtube },
     { name: "Financial Markets & Analysis", desc: "Studies quantitative market trends, macroeconomic liquidity cycles, and algorithmic trading foundations.", icon: Briefcase },
-    { name: "Nature & Urban Photography", desc: "Cultivates observational patience, composition geometry, and lighting discipline outside the terminal.", icon: CameraIcon }
+    { name: "Nature & Urban Photography", desc: "Cultivates observational patience, composition geometry, and lighting discipline outside the terminal.", icon: Camera }
   ];
 
-  function CameraIcon(props: { className?: string }) {
-    return <Sparkles {...props} />;
-  }
-
-  // Engineering Journey Timeline Data (Strictly Chronological & Exact)
   const engineeringJourney: JourneyMilestone[] = [
     {
       period: "2011",
@@ -101,7 +101,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2021",
-      title: "Toycathon National Finals | Top 15",
+      title: "Toycathon National Finals · Top 15",
       description: "Reached national finals and achieved a Top 15 ranking in Toycathon, an innovation competition organized by the Govt. of India.",
       category: "Innovation",
       icon: Award,
@@ -109,7 +109,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2021–2023",
-      title: "Content Creator | Technical AZ",
+      title: "Content Creator · Technical AZ",
       description: "Founded and scaled Technical AZ on YouTube to 2.06K+ subscribers, producing tutorials on emerging consumer technologies and software.",
       category: "Content Creation",
       icon: Video,
@@ -133,7 +133,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2023–2026",
-      title: "Content Creator | Daily Decipher",
+      title: "Content Creator · Daily Decipher",
       description: "Founded Daily Decipher on YouTube, producing educational breakdowns and growing an organic community of 10K+ subscribers.",
       category: "Content Creation",
       icon: Youtube,
@@ -165,7 +165,7 @@ function AboutSectionComponent() {
     },
     {
       period: "2026",
-      title: "Technex'26 | IIT BHU Finalist in 5/6 Competitions",
+      title: "Technex'26 · IIT BHU Finalist in 5/6 Competitions",
       description: "Competed at IIT Varanasi's national techfest, advancing to the finals across 5 separate technical challenges.",
       category: "Competitions",
       icon: Star,
@@ -190,37 +190,37 @@ function AboutSectionComponent() {
   ];
 
   return (
-    <div className="w-full space-y-12 sm:space-y-16 pb-12">
+    <div className="w-full space-y-12 sm:space-y-14 pb-12">
       {/* 1. EDITORIAL HEADER */}
-      <header className="space-y-4 pt-2">
-        <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-semibold tracking-wide text-purple-700 dark:text-purple-400">
-            Biography &amp; Human Core · About Sayam
+      <header className="space-y-5 pt-2 border-b border-[var(--border)] pb-8">
+        <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-muted)]">
+          <span className="font-semibold text-[var(--accent)] tracking-wider uppercase">
+            01 · Biography &amp; Human Core
           </span>
-          <span className="h-px w-8 bg-zinc-300 dark:border-white/[0.08]" />
-          <span className="text-xs font-mono text-zinc-500 tracking-wide hidden sm:inline">
-            Engineering Identity, Values &amp; Story
-          </span>
+          <span aria-hidden="true">/</span>
+          <span className="hidden sm:inline">Engineering Identity, Values &amp; Story</span>
         </div>
 
-        <div className="space-y-2 max-w-3xl">
-          <h1 
-            className="font-extrabold tracking-tight text-zinc-900 dark:text-white font-display leading-[1.08]"
-            style={{ fontSize: "clamp(2rem, 3.5vw, 3.25rem)" }}
+        <div className="space-y-3 max-w-3xl">
+          <h1
+            className="font-extrabold tracking-tight text-[var(--text)] font-display leading-[1.03] text-balance"
+            style={{ fontSize: "clamp(2.1rem, 4vw, 3.6rem)" }}
           >
-            Sayam Mukherjee <br />
-            <span className="text-zinc-500 dark:text-zinc-400">Engineer, Builder &amp; Athlete</span>
+            Sayam Mukherjee —{" "}
+            <span className="font-serif-editorial italic font-normal text-[var(--text-secondary)]">
+              engineer, builder &amp; athlete.
+            </span>
           </h1>
-          <p className="text-sm sm:text-base text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans pt-1">
-            Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ total community reach, district table tennis athlete, and software engineer.
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans max-w-2xl">
+            Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ historical community reach across channels, district table tennis athlete, and software systems engineer.
           </p>
         </div>
 
-        {/* View Switcher Tabs */}
-        <div className="flex flex-wrap gap-2 pt-2">
+        {/* Editorial Tabs */}
+        <div className="flex flex-wrap gap-2 pt-1" role="tablist" aria-label="About sections">
           {[
             { id: "narrative", label: "Personal Narrative & Values", icon: User },
-            { id: "timeline", label: "Lived Chronological Timeline (2011–2026)", icon: Calendar },
+            { id: "timeline", label: "Chronological Timeline (2011–2026)", icon: Calendar },
             { id: "education", label: "Academics & Honors", icon: GraduationCap }
           ].map((tab) => {
             const Icon = tab.icon;
@@ -229,12 +229,14 @@ function AboutSectionComponent() {
               <button
                 key={tab.id}
                 type="button"
-                onClick={() => setActiveTab(tab.id as any)}
-                className={`btn !py-2 !px-4 !text-xs ${
+                role="tab"
+                aria-selected={isSelected}
+                onClick={() => setActiveTab(tab.id as "narrative" | "timeline" | "education")}
+                className={`btn !min-h-[40px] !py-2 !px-4 !text-xs ${
                   isSelected ? "btn-primary" : "btn-secondary"
                 }`}
               >
-                <Icon className="w-3.5 h-3.5" />
+                <Icon className="w-3.5 h-3.5" aria-hidden="true" />
                 <span>{tab.label}</span>
               </button>
             );
@@ -244,111 +246,111 @@ function AboutSectionComponent() {
 
       {/* 2. TAB CONTENT PANELS */}
       <AnimatePresence mode="wait">
-        {/* NARRATIVE & VALUES TAB */}
         {activeTab === "narrative" && (
           <motion.div
             key="narrative-tab"
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
-            className="space-y-10"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.18 }}
+            className="space-y-12"
           >
             {/* Biography & Profile Hero Card */}
-            <div className="card p-6 sm:p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                {/* Photo & Essential Badges */}
+            <div className="card p-6 sm:p-8 lg:p-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
+                {/* Portrait & Essential Ledger */}
                 <div className="lg:col-span-4 space-y-4">
-                  <div className="aspect-square w-full rounded-xl overflow-hidden border border-zinc-200 dark:border-zinc-800 relative bg-zinc-100 dark:bg-zinc-900">
-                    <img 
-                      src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg" 
-                      alt="Portrait of Sayam Mukherjee, Computer Science and Engineering student at KIIT" 
+                  <div className="aspect-[4/5] w-full rounded-[10px] overflow-hidden border border-[var(--border)] bg-[var(--surface)]">
+                    <img
+                      src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
+                      alt="Portrait of Sayam Mukherjee, Computer Science and Engineering student at KIIT"
                       width={400}
-                      height={400}
+                      height={500}
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover"
+                      referrerPolicy="no-referrer"
+                      className="w-full h-full object-cover object-top"
                     />
                   </div>
 
-                  <div className="p-4 rounded-xl border border-zinc-200/80 dark:border-white/[0.06] bg-zinc-50/70 dark:bg-white/[0.02] space-y-2 text-xs font-mono text-zinc-600 dark:text-zinc-400">
-                    <div className="flex justify-between">
-                      <span>Location:</span>
-                      <span className="font-semibold text-zinc-900 dark:text-zinc-200">Hooghly / Bhubaneswar, India</span>
+                  <dl className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] space-y-2.5 text-xs font-mono">
+                    <div className="flex justify-between gap-2">
+                      <dt className="text-[var(--text-muted)]">Location</dt>
+                      <dd className="font-semibold text-[var(--text)] text-right">Hooghly / Bhubaneswar</dd>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Institution:</span>
-                      <span className="font-semibold text-zinc-900 dark:text-zinc-200">KIIT University (B.Tech CSE)</span>
+                    <div className="flex justify-between gap-2 border-t border-[var(--border)] pt-2">
+                      <dt className="text-[var(--text-muted)]">Institution</dt>
+                      <dd className="font-semibold text-[var(--text)] text-right">KIIT University (B.Tech CSE)</dd>
                     </div>
-                    <div className="flex justify-between">
-                      <span>LeetCode:</span>
-                      <span className="font-semibold text-emerald-600 dark:text-emerald-400">100% Acceptance Rate</span>
+                    <div className="flex justify-between gap-2 border-t border-[var(--border)] pt-2">
+                      <dt className="text-[var(--text-muted)]">First-Year CGPA</dt>
+                      <dd className="font-semibold text-[var(--accent)] tabular-nums text-right">9.06 / 10.0</dd>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Audience:</span>
-                      <span className="font-semibold text-zinc-900 dark:text-zinc-200">12K+ Total YouTube Subs</span>
+                    <div className="flex justify-between gap-2 border-t border-[var(--border)] pt-2">
+                      <dt className="text-[var(--text-muted)]">LeetCode</dt>
+                      <dd className="font-semibold text-[var(--text)] tabular-nums text-right">100% Acceptance Rate</dd>
                     </div>
-                  </div>
+                  </dl>
                 </div>
 
-                {/* Narrative Text */}
-                <div className="lg:col-span-8 space-y-4">
-                  <span className="text-xs font-mono tracking-wide text-purple-700 dark:text-purple-400 font-semibold">
-                    Personal Story &amp; Motivation
-                  </span>
-                  <h2 className="text-2xl sm:text-3xl font-bold font-display text-zinc-900 dark:text-white">
-                    Building Practical Systems from Solid Fundamentals
-                  </h2>
+                {/* Narrative Prose */}
+                <div className="lg:col-span-8 space-y-5">
+                  <div className="space-y-2">
+                    <span className="text-xs font-mono tracking-wider text-[var(--accent)] font-semibold uppercase">
+                      Personal Story &amp; Motivation
+                    </span>
+                    <h2 className="text-2xl sm:text-3xl font-bold font-display text-[var(--text)] leading-tight text-balance">
+                      Building practical systems from{" "}
+                      <span className="font-serif-editorial italic font-normal">solid fundamentals.</span>
+                    </h2>
+                  </div>
 
-                  <div className="space-y-3 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed font-sans">
+                  <div className="space-y-4 text-sm sm:text-[15px] text-[var(--text-secondary)] leading-relaxed font-sans">
                     <p>
                       I am a Computer Science undergraduate at KIIT Bhubaneswar interested in autonomous AI agents, practical computer vision, and reliable full-stack applications. Originally from Hooghly, West Bengal, I grew up balancing competitive table tennis with self-taught programming and digital media.
                     </p>
                     <p>
-                      At age 16, I started my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which has now reached an organic audience of over 10,000 learners. Producing technical tutorials and working with early clients taught me early on how people actually interact with technology: they value clarity, speed, and real utility over buzzwords.
+                      At age 16, I started my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which reached an organic audience of over 10,000 learners. Producing technical breakdowns and working with early clients taught me early on how people actually interact with technology: they value clarity, speed, and real utility over buzzwords.
                     </p>
                     <p>
                       In my software projects, I stick to that same practical focus. Whether building <strong>Operon</strong> (a multi-agent operational platform with human approvals), <strong>Mausam</strong> (a weather analytics app developed for SIH 2026), or maintaining <strong>SayamSolves</strong> (my C++ algorithmic archive), my priority is building reliable code that solves actual problems.
                     </p>
                   </div>
 
-                  {/* Quote Banner */}
-                  <div className="mt-4 p-4 rounded-xl border border-zinc-200/80 dark:border-white/[0.06] bg-zinc-50/70 dark:bg-white/[0.02] flex items-start gap-3">
-                    <Quote className="w-5 h-5 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" />
-                    <p className="text-xs sm:text-sm italic font-sans leading-relaxed text-zinc-700 dark:text-zinc-300">
-                      "I believe great engineering is not about writing the maximum amount of code, but about constructing reliable boundaries where systems fail gracefully and users feel empowered."
+                  {/* Editorial Callout */}
+                  <blockquote className="mt-4 p-5 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] flex items-start gap-3.5">
+                    <Quote className="w-5 h-5 text-[var(--accent)] shrink-0 mt-0.5" aria-hidden="true" />
+                    <p className="text-sm font-serif-editorial italic leading-relaxed text-[var(--text)]">
+                      &ldquo;Great engineering is not about writing the maximum amount of code — it is about constructing reliable boundaries where systems fail gracefully and people stay in control.&rdquo;
                     </p>
-                  </div>
+                  </blockquote>
                 </div>
               </div>
             </div>
 
             {/* Operating Values & Principles */}
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div className="space-y-1">
-                <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-                  CORE PRINCIPLES
+                <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+                  Core Principles
                 </span>
-                <h3 className="text-xl font-bold font-display text-zinc-900 dark:text-white">
+                <h3 className="text-xl sm:text-2xl font-bold font-display text-[var(--text)]">
                   Values &amp; Working Philosophy
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {values.map((v) => {
                   const Icon = v.icon;
                   return (
-                    <div
-                      key={v.name}
-                      className="card p-4 space-y-2"
-                    >
-                      <div className="flex items-center gap-2 text-purple-700 dark:text-purple-400">
-                        <Icon className="w-4 h-4" />
-                        <h4 className="text-sm font-bold font-display text-zinc-900 dark:text-zinc-100">
+                    <div key={v.name} className="card p-5 space-y-2">
+                      <div className="flex items-center gap-2.5 text-[var(--accent)]">
+                        <Icon className="w-4 h-4 shrink-0" aria-hidden="true" />
+                        <h4 className="text-sm font-bold font-display text-[var(--text)]">
                           {v.name}
                         </h4>
                       </div>
-                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
                         {v.desc}
                       </p>
                     </div>
@@ -359,27 +361,26 @@ function AboutSectionComponent() {
 
             {/* Strengths & Honest Areas of Improvement */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Strengths */}
               <div className="card p-6 space-y-4">
-                <div className="space-y-1">
-                  <span className="text-xs font-mono font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">
-                    PROVEN CAPACITIES
+                <div className="space-y-1 border-b border-[var(--border)] pb-3">
+                  <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+                    Proven Capacities
                   </span>
-                  <h3 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
+                  <h3 className="text-lg font-bold font-display text-[var(--text)]">
                     Core Strengths
                   </h3>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {strengths.map((s, idx) => (
                     <div key={idx} className="space-y-1">
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                        <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 font-sans">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent)] shrink-0" aria-hidden="true" />
+                        <h4 className="text-sm font-bold text-[var(--text)] font-sans">
                           {s.title}
                         </h4>
                       </div>
-                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed pl-5 font-sans">
+                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed pl-5.5 font-sans">
                         {s.desc}
                       </p>
                     </div>
@@ -387,29 +388,28 @@ function AboutSectionComponent() {
                 </div>
               </div>
 
-              {/* Areas for Growth */}
               <div className="card p-6 space-y-4">
-                <div className="space-y-1">
-                  <span className="text-xs font-mono font-semibold text-amber-700 dark:text-amber-400 uppercase tracking-wider">
-                    SELF-REFLECTION
+                <div className="space-y-1 border-b border-[var(--border)] pb-3">
+                  <span className="text-xs font-mono font-semibold text-[var(--text-muted)] uppercase tracking-wider">
+                    Self-Reflection
                   </span>
-                  <h3 className="text-lg font-bold font-display text-zinc-900 dark:text-white">
+                  <h3 className="text-lg font-bold font-display text-[var(--text)]">
                     Areas of Continuous Improvement
                   </h3>
                 </div>
 
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {improvements.map((imp, idx) => (
                     <div key={idx} className="space-y-1">
-                      <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-zinc-900 dark:text-zinc-100 font-sans">
+                      <div className="flex items-center justify-between gap-2">
+                        <h4 className="text-sm font-bold text-[var(--text)] font-sans">
                           {imp.title}
                         </h4>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+                        <span className="text-[11px] font-mono text-[var(--text-muted)] shrink-0">
                           {imp.area}
                         </span>
                       </div>
-                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                      <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
                         {imp.desc}
                       </p>
                     </div>
@@ -418,30 +418,27 @@ function AboutSectionComponent() {
               </div>
             </div>
 
-            {/* Beyond the Screen / Extracurriculars */}
-            <div className="space-y-4">
+            {/* Extracurriculars */}
+            <div className="space-y-5">
               <div className="space-y-1">
-                <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-                  LIFE BEYOND THE SCREEN
+                <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+                  Beyond the Terminal
                 </span>
-                <h3 className="text-xl font-bold font-display text-zinc-900 dark:text-white">
-                  Athletics, Content &amp; Inquiries
+                <h3 className="text-xl sm:text-2xl font-bold font-display text-[var(--text)]">
+                  Athletics, Media &amp; Inquiries
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {extracurriculars.map((e, idx) => {
                   const Icon = e.icon;
                   return (
-                    <div
-                      key={idx}
-                      className="card p-4 space-y-2"
-                    >
-                      <Icon className="w-5 h-5 text-purple-700 dark:text-purple-400" />
-                      <h4 className="text-sm font-bold font-display text-zinc-900 dark:text-zinc-100">
+                    <div key={idx} className="card p-5 space-y-2.5">
+                      <Icon className="w-5 h-5 text-[var(--accent)]" aria-hidden="true" />
+                      <h4 className="text-sm font-bold font-display text-[var(--text)]">
                         {e.name}
                       </h4>
-                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans">
+                      <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
                         {e.desc}
                       </p>
                     </div>
@@ -452,117 +449,129 @@ function AboutSectionComponent() {
           </motion.div>
         )}
 
-        {/* TIMELINE TAB */}
         {activeTab === "timeline" && (
           <motion.div
             key="timeline-tab"
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.18 }}
             className="space-y-8"
           >
-            <div className="space-y-1">
-              <span className="text-xs font-mono font-semibold text-purple-700 dark:text-purple-400 uppercase tracking-wider">
-                LIVED CHRONOLOGY
+            <div className="space-y-1.5">
+              <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+                Lived Chronology
               </span>
-              <h3 className="text-2xl font-bold font-display text-zinc-900 dark:text-white">
+              <h3 className="text-2xl font-bold font-display text-[var(--text)]">
                 Engineering &amp; Life Milestones (2011 – Present)
               </h3>
-              <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 font-sans">
+              <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans max-w-2xl">
                 An authentic chronological account of schooling, athletic achievements, entrepreneurial ventures, and software systems.
               </p>
             </div>
 
-            <div className="relative border-l ml-3 sm:ml-6 pl-6 sm:pl-8 space-y-8 py-2 border-zinc-250/70 dark:border-white/[0.08]">
+            <div
+              ref={timelineRef}
+              className="relative ml-3 sm:ml-6 pl-6 sm:pl-8 space-y-6 py-2"
+            >
+              {/* Static track spine */}
+              <span
+                aria-hidden="true"
+                className="absolute left-0 top-0 bottom-0 w-[2px] bg-[var(--border)]"
+              />
+              {/* Scroll-drawn Signal Lime spine */}
+              <motion.span
+                aria-hidden="true"
+                style={
+                  reduced
+                    ? { scaleY: 1, originY: 0 }
+                    : { scaleY: spineScaleY, originY: 0 }
+                }
+                className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#C7E34A]"
+              />
+
               {engineeringJourney.map((item, idx) => {
                 const Icon = item.icon;
                 const isCurrent = item.status === "present";
                 const isFuture = item.status === "future";
 
                 return (
-                  <div key={idx} className="relative group">
-                    {/* Timeline Node Dot */}
-                    <div className={`absolute -left-[31px] sm:-left-[39px] top-1.5 w-3.5 h-3.5 rounded-full border-2 transition-all ${
-                      isCurrent
-                        ? "bg-emerald-500 border-emerald-300 ring-4 ring-emerald-500/20"
-                        : isFuture
-                        ? "bg-purple-600 border-purple-300"
-                        : "bg-zinc-200 dark:bg-zinc-800 border-zinc-400 dark:border-zinc-600 group-hover:border-purple-500"
-                    }`} />
+                  <EditorialReveal
+                    key={idx}
+                    delay={Math.min(idx * 0.04, 0.24)}
+                    distance={14}
+                  >
+                    <div className="relative group">
+                      <div
+                        className={`absolute -left-[31px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full border-2 transition-colors ${
+                          isCurrent
+                            ? "bg-[#C7E34A] border-[#20231D] dark:border-[#151713]"
+                            : isFuture
+                            ? "bg-[var(--accent)] border-[var(--bg)]"
+                            : "bg-[var(--surface)] border-[var(--border-strong)] group-hover:border-[#C7E34A]"
+                        }`}
+                      />
 
-                    <div className="card p-4 sm:p-5 transition-all">
-                      <div className="flex flex-wrap items-center justify-between gap-2 pb-1.5">
-                        <div className="flex items-center gap-2">
-                          <span className={`text-xs font-mono font-bold ${
-                            isCurrent 
-                              ? "text-emerald-700 dark:text-emerald-400" 
-                              : isFuture
-                              ? "text-purple-700 dark:text-purple-400"
-                              : "text-zinc-500"
-                          }`}>
-                            {item.period}
-                          </span>
-                          <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-zinc-100 dark:bg-white/[0.04] text-zinc-600 dark:text-zinc-400 border border-zinc-250/70 dark:border-white/[0.06]">
-                            {item.category}
-                          </span>
+                      <div className="card p-5 space-y-2">
+                        <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                          <div className="flex items-center gap-2.5 text-[var(--text-muted)]">
+                            <Icon className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
+                            <span className={`font-bold tabular-nums ${isCurrent ? "text-[var(--text)]" : "text-[var(--text-secondary)]"}`}>
+                              {item.period}
+                            </span>
+                            <span aria-hidden="true">·</span>
+                            <span>{item.category}</span>
+                          </div>
+                          {isCurrent && (
+                            <span className="px-2 py-0.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] text-[10px] font-bold uppercase tracking-wider">
+                              Active Phase
+                            </span>
+                          )}
                         </div>
-                        {isCurrent && (
-                          <span className="text-[10px] font-mono text-emerald-700 dark:text-emerald-400 font-semibold flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                            ACTIVE PHASE
-                          </span>
-                        )}
-                      </div>
 
-                      <h4 className="text-base font-bold font-display text-zinc-900 dark:text-white pt-1">
-                        {item.title}
-                      </h4>
-                      <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-sans pt-1">
-                        {item.description}
-                      </p>
+                        <h4 className="text-base font-bold font-display text-[var(--text)]">
+                          {item.title}
+                        </h4>
+                        <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
+                  </EditorialReveal>
                 );
               })}
             </div>
           </motion.div>
         )}
 
-        {/* EDUCATION & HONORS TAB */}
         {activeTab === "education" && (
           <motion.div
             key="education-tab"
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.18 }}
             className="space-y-8"
           >
-            {/* Unified Academic Hierarchy & Record Widget */}
             <AcademicRecord />
 
-            {/* Key Honors */}
-            <div className="space-y-3">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-zinc-500 font-semibold">
+            <div className="space-y-4">
+              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold">
                 Verified Honors &amp; Competitions
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {[
                   { title: "Technex'26 IIT BHU", desc: "Finalist across 5 out of 6 challenges at IIT Varanasi techfest" },
                   { title: "Toycathon National Finals", desc: "Top 15 ranking in Govt. of India national innovation hackathon" },
                   { title: "Smart India Hackathon", desc: "Team Algnite member developing the Mausam platform (2026)" },
                   { title: "District Table Tennis", desc: "Selected and represented district at competitive table tennis tournaments" }
                 ].map((h, i) => (
-                  <div
-                    key={i}
-                    className="card p-4 space-y-1"
-                  >
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-                    <h5 className="text-xs font-bold font-sans text-zinc-900 dark:text-zinc-100 pt-1">
+                  <div key={i} className="card p-5 space-y-2">
+                    <CheckCircle2 className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />
+                    <h5 className="text-sm font-bold font-display text-[var(--text)]">
                       {h.title}
                     </h5>
-                    <p className="text-[11px] text-zinc-600 dark:text-zinc-400 font-sans leading-relaxed">
+                    <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
                       {h.desc}
                     </p>
                   </div>

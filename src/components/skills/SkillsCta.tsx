@@ -1,7 +1,12 @@
-import React, { useState } from "react";
-import { 
-  Mail, Copy, Check, ExternalLink, Github, 
-  FolderGit2, ArrowRight
+import { useState } from "react";
+import {
+  Mail,
+  Copy,
+  Check,
+  ExternalLink,
+  Github,
+  FolderGit2,
+  ArrowRight,
 } from "lucide-react";
 
 interface SkillsCtaProps {
@@ -9,7 +14,10 @@ interface SkillsCtaProps {
   onNavigateToContact?: () => void;
 }
 
-export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsCtaProps) {
+export function SkillsCta({
+  onNavigateToProjects,
+  onNavigateToContact,
+}: SkillsCtaProps) {
   const [copiedBusiness, setCopiedBusiness] = useState(false);
   const [copiedContact, setCopiedContact] = useState(false);
 
@@ -42,29 +50,28 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
   };
 
   return (
-    <div className="p-6 sm:p-7 rounded-2xl bg-zinc-950/40 border border-zinc-850 space-y-6">
+    <div className="card p-6 sm:p-8 space-y-6">
       {/* Header Statement */}
       <div className="space-y-2 max-w-2xl">
-        <span className="text-[11px] font-mono font-medium uppercase tracking-[0.14em] text-cyan-400">
-          COLLABORATE
+        <span className="text-xs font-mono font-semibold text-[var(--accent)] block">
+          Collaborate
         </span>
-        <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight font-display">
-          Let’s build something meaningful.
+        <h2 className="text-xl sm:text-2xl font-bold text-[var(--text)] tracking-tight font-display">
+          Let&apos;s build something meaningful.
         </h2>
-        <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed font-sans">
+        <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
           B.Tech CSE (AI &amp; ML) student at KIIT University available for software engineering internships, machine learning research projects, and hackathons.
         </p>
       </div>
 
       {/* Direct Email Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
-        {/* Business Email */}
-        <div className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-2.5">
+        <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2.5">
           <div className="space-y-1">
-            <span className="text-[10px] font-mono text-zinc-500 uppercase font-medium tracking-wider">
-              PROJECTS &amp; COLLABORATION
+            <span className="text-[11px] font-mono text-[var(--text-muted)] font-medium">
+              Projects &amp; Collaboration
             </span>
-            <div className="text-xs sm:text-sm font-mono text-zinc-200 truncate">
+            <div className="text-xs sm:text-sm font-mono text-[var(--text)] truncate">
               {businessEmail}
             </div>
           </div>
@@ -72,7 +79,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           <div className="flex items-center justify-between pt-1">
             <a
               href={`mailto:${businessEmail}`}
-              className="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="text-xs font-mono text-[var(--accent)] hover:underline transition-colors"
             >
               Compose email ↗
             </a>
@@ -80,13 +87,13 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
             <button
               type="button"
               onClick={() => copyEmail(businessEmail, "business")}
-              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-750 text-[11px] font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-[var(--surface-2)] hover:bg-[var(--surface-hover)] border border-[var(--border)] text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors cursor-pointer whitespace-nowrap shrink-0"
               title="Copy email"
             >
               {copiedBusiness ? (
                 <>
-                  <Check className="w-3 h-3 text-emerald-400" />
-                  <span className="text-emerald-400">Copied</span>
+                  <Check className="w-3 h-3 text-[var(--success)]" />
+                  <span className="text-[var(--success)]">Copied</span>
                 </>
               ) : (
                 <>
@@ -98,13 +105,12 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           </div>
         </div>
 
-        {/* Contact Email */}
-        <div className="p-4 rounded-xl bg-zinc-900/40 border border-zinc-850 flex flex-col justify-between space-y-2.5">
+        <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2.5">
           <div className="space-y-1">
-            <span className="text-[10px] font-mono text-zinc-500 uppercase font-medium tracking-wider">
-              RECRUITMENT &amp; ACADEMIC
+            <span className="text-[11px] font-mono text-[var(--text-muted)] font-medium">
+              Recruitment &amp; Academic
             </span>
-            <div className="text-xs sm:text-sm font-mono text-zinc-200 truncate">
+            <div className="text-xs sm:text-sm font-mono text-[var(--text)] truncate">
               {contactEmail}
             </div>
           </div>
@@ -112,7 +118,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           <div className="flex items-center justify-between pt-1">
             <a
               href={`mailto:${contactEmail}`}
-              className="text-[11px] font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="text-xs font-mono text-[var(--accent)] hover:underline transition-colors"
             >
               Compose email ↗
             </a>
@@ -120,13 +126,13 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
             <button
               type="button"
               onClick={() => copyEmail(contactEmail, "contact")}
-              className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-800 hover:bg-zinc-750 text-[11px] font-mono text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] bg-[var(--surface-2)] hover:bg-[var(--surface-hover)] border border-[var(--border)] text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--text)] transition-colors cursor-pointer whitespace-nowrap shrink-0"
               title="Copy email"
             >
               {copiedContact ? (
                 <>
-                  <Check className="w-3 h-3 text-emerald-400" />
-                  <span className="text-emerald-400">Copied</span>
+                  <Check className="w-3 h-3 text-[var(--success)]" />
+                  <span className="text-[var(--success)]">Copied</span>
                 </>
               ) : (
                 <>
@@ -145,7 +151,7 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           <button
             type="button"
             onClick={onNavigateToProjects}
-            className="px-4 py-2 rounded-lg bg-zinc-100 hover:bg-white text-zinc-950 font-medium text-xs font-mono flex items-center gap-1.5 transition-all cursor-pointer"
+            className="btn btn-primary text-xs font-mono cursor-pointer whitespace-nowrap shrink-0"
           >
             <FolderGit2 className="w-3.5 h-3.5" />
             <span>View Verified Projects</span>
@@ -157,18 +163,18 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
           href="https://github.com/codesbysayam"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-zinc-300 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all"
+          className="btn btn-secondary text-xs font-mono whitespace-nowrap shrink-0"
         >
           <Github className="w-3.5 h-3.5" />
           <span>GitHub Profile</span>
-          <ExternalLink className="w-3 h-3 text-zinc-500" />
+          <ExternalLink className="w-3 h-3 text-[var(--text-muted)]" />
         </a>
 
         {onNavigateToContact && (
           <button
             type="button"
             onClick={onNavigateToContact}
-            className="px-4 py-2 rounded-lg bg-zinc-900/60 hover:bg-zinc-850 border border-zinc-800 text-zinc-400 hover:text-white text-xs font-mono flex items-center gap-1.5 transition-all cursor-pointer"
+            className="btn btn-secondary text-xs font-mono cursor-pointer whitespace-nowrap shrink-0"
           >
             <Mail className="w-3.5 h-3.5" />
             <span>Contact Form</span>
@@ -180,3 +186,4 @@ export function SkillsCta({ onNavigateToProjects, onNavigateToContact }: SkillsC
 }
 
 export default SkillsCta;
+

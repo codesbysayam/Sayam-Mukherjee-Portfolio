@@ -1,9 +1,23 @@
 import React from "react";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, ArrowUpRight, ArrowUp } from "lucide-react";
 import { SAYAM_DATA } from "../data";
+import { SOCIAL_LINKS } from "../data/siteContent";
+import ClosingFluidCanvas from "./motion/ClosingFluidCanvas";
 
 export interface SiteFooterProps {
-  onNavigateTab: (tab: "home" | "contact" | "privacy" | "terms") => void;
+  onNavigateTab: (
+    tab:
+      | "home"
+      | "about"
+      | "projects"
+      | "skills"
+      | "ecosystem"
+      | "certificates"
+      | "journal"
+      | "contact"
+      | "privacy"
+      | "terms"
+  ) => void;
   activeTab?: string;
   theme?: "dark" | "light";
   toggleTheme?: () => void;
@@ -15,134 +29,236 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
   theme,
   toggleTheme,
 }) => {
+  const currentYear = new Date().getFullYear();
+
   const handleLinkClick = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    tab: "contact" | "privacy" | "terms" | "home"
+    tab:
+      | "home"
+      | "about"
+      | "projects"
+      | "skills"
+      | "ecosystem"
+      | "certificates"
+      | "journal"
+      | "contact"
+      | "privacy"
+      | "terms"
   ) => {
     e.preventDefault();
     onNavigateTab(tab);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   return (
     <footer
       id="site-footer"
-      className="w-full border-t border-zinc-200/80 dark:border-zinc-800/80 bg-white/70 dark:bg-[#070709]/80 backdrop-blur-sm transition-colors duration-200 text-zinc-600 dark:text-zinc-400 font-sans"
+      className="relative overflow-hidden w-full bg-[#151713] text-[#F4F4ED] border-t border-[#41443A] font-sans"
       style={{
-        paddingTop: "clamp(1.75rem, 3.5vw, 2.75rem)",
-        paddingBottom: "max(1.75rem, env(safe-area-inset-bottom, 1.75rem))",
+        paddingTop: "clamp(3rem, 5vw, 4.5rem)",
+        paddingBottom: "max(2.5rem, env(safe-area-inset-bottom, 2.5rem))",
       }}
     >
+      <ClosingFluidCanvas tone="dark" />
       <div
-        className="w-full mx-auto flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6"
+        className="relative z-10 w-full mx-auto space-y-10"
         style={{
-          width: "min(100%, 1440px)",
-          paddingInline: "clamp(1rem, 3.5vw, 2.5rem)",
+          width: "min(100%, 1280px)",
+          paddingInline: "clamp(1rem, 4vw, 3rem)",
         }}
       >
-        {/* Left: Brand & Copyright Information */}
-        <div className="flex flex-col items-start gap-1 text-left">
-          <a
-            href="/"
-            onClick={(e) => handleLinkClick(e, "home")}
-            className="font-display font-semibold text-sm tracking-tight text-zinc-900 dark:text-zinc-100 hover:text-purple-600 dark:hover:text-purple-400 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded"
-          >
-            Sayam Mukherjee
-          </a>
-          <p className="text-xs text-zinc-500 dark:text-zinc-400 tracking-normal font-sans">
-            AI &amp; ML CSE Undergraduate · Developer Portfolio
-          </p>
-          <div className="flex flex-wrap items-center gap-x-2 text-xs font-mono text-zinc-400 dark:text-zinc-500 mt-0.5">
-            <span>© 2026 Sayam Mukherjee. All rights reserved.</span>
-            <span aria-hidden="true" className="select-none">·</span>
-            <span className="text-purple-600/80 dark:text-purple-400/80 font-medium">Last updated: October 2026</span>
+        {/* TOP EDITORIAL MANIFESTO ROW */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-10 border-b border-[#41443A]">
+          <div className="lg:col-span-7 space-y-3">
+            <span className="font-mono text-xs uppercase tracking-[0.14em] text-[#C7E34A] font-semibold block">
+              Engineering Portfolio · Sayam Mukherjee
+            </span>
+            <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-[1.08] text-[#F4F4ED]">
+              Engineered in{" "}
+              <span className="font-serif-editorial italic font-normal text-[#C7E34A]">
+                Bhubaneswar &amp; Hooghly.
+              </span>{" "}
+              Open to thoughtful software work.
+            </h2>
+          </div>
+
+          <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col lg:items-end justify-between gap-4">
+            <div className="lg:text-right space-y-1">
+              <div className="text-xs font-mono uppercase tracking-[0.1em] text-[#B5B8AA]">
+                Direct Dispatch
+              </div>
+              <a
+                href={`mailto:${SAYAM_DATA.socials.email}`}
+                className="text-base sm:text-lg font-bold text-[#F4F4ED] hover:text-[#C7E34A] transition-colors inline-flex items-center gap-1.5"
+              >
+                <span>{SAYAM_DATA.socials.email}</span>
+                <ArrowUpRight className="w-4 h-4 text-[#C7E34A]" />
+              </a>
+            </div>
+
+            <div className="flex items-center gap-2.5">
+              {toggleTheme && (
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-[#20231D] text-[#F4F4ED] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer inline-flex items-center gap-2 text-xs font-mono"
+                  title={theme === "dark" ? "Switch to Paper theme" : "Switch to Ink theme"}
+                  aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
+                >
+                  {theme === "dark" ? (
+                    <>
+                      <Sun className="w-3.5 h-3.5 text-[#C7E34A]" />
+                      <span>Paper Mode</span>
+                    </>
+                  ) : (
+                    <>
+                      <Moon className="w-3.5 h-3.5 text-[#C7E34A]" />
+                      <span>Ink Mode</span>
+                    </>
+                  )}
+                </button>
+              )}
+
+              <button
+                type="button"
+                onClick={scrollToTop}
+                className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:border-[#F4F4ED] transition-colors cursor-pointer inline-flex items-center gap-1.5 text-xs font-mono"
+                aria-label="Back to top"
+              >
+                <ArrowUp className="w-3.5 h-3.5" />
+                <span>Top</span>
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Right: Only Contact, Privacy Policy, Terms & Preserved Theme Switcher */}
-        <div className="flex flex-wrap items-center gap-1 sm:gap-3 self-stretch sm:self-auto justify-between sm:justify-end">
-          <nav
-            aria-label="Footer Navigation"
-            className="flex flex-wrap items-center gap-1 sm:gap-1.5 text-xs sm:text-[13px] font-medium"
-          >
+        {/* NAVIGATION & SOCIAL LINKS */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-8 border-b border-[#41443A] text-sm">
+          <div className="md:col-span-4 space-y-2">
             <a
-              href="/contact"
-              onClick={(e) => handleLinkClick(e, "contact")}
-              className={`inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 ${
-                activeTab === "contact"
-                  ? "text-purple-600 dark:text-purple-400 font-semibold"
-                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:underline underline-offset-4"
-              }`}
+              href="/"
+              onClick={(e) => handleLinkClick(e, "home")}
+              className="font-display font-extrabold text-base tracking-tight text-[#F4F4ED] hover:text-[#C7E34A] transition-colors"
             >
-              Contact
+              SAYAM MUKHERJEE
             </a>
+            <p className="text-xs text-[#B5B8AA] leading-relaxed max-w-xs">
+              B.Tech CSE (AI &amp; ML) undergraduate at KIIT University building multi-agent workflows, full-stack TypeScript systems, and C++ algorithms.
+            </p>
+          </div>
 
-            <span
-              className="text-zinc-300 dark:text-zinc-700 select-none text-xs px-0.5"
-              aria-hidden="true"
-            >
-              ·
-            </span>
-
-            <a
-              href="/privacy"
-              onClick={(e) => handleLinkClick(e, "privacy")}
-              className={`inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 ${
-                activeTab === "privacy"
-                  ? "text-purple-600 dark:text-purple-400 font-semibold"
-                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:underline underline-offset-4"
-              }`}
-            >
-              Privacy Policy
-            </a>
-
-            <span
-              className="text-zinc-300 dark:text-zinc-700 select-none text-xs px-0.5"
-              aria-hidden="true"
-            >
-              ·
-            </span>
-
-            <a
-              href="/terms"
-              onClick={(e) => handleLinkClick(e, "terms")}
-              className={`inline-flex items-center min-h-[44px] px-2.5 py-1.5 rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 ${
-                activeTab === "terms"
-                  ? "text-purple-600 dark:text-purple-400 font-semibold"
-                  : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:underline underline-offset-4"
-              }`}
-            >
-              Terms
-            </a>
-          </nav>
-
-          {/* Preserved Theme Switcher Control */}
-          {toggleTheme && (
-            <div className="flex items-center pl-2 sm:pl-3 border-l border-zinc-200 dark:border-zinc-800/80">
-              <button
-                type="button"
-                onClick={toggleTheme}
-                className="min-h-[44px] min-w-[44px] p-2.5 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-colors cursor-pointer flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
-                title={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-                aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
-              >
-                {theme === "dark" ? (
-                  <Sun className="w-4 h-4 text-amber-400" />
-                ) : (
-                  <Moon className="w-4 h-4 text-indigo-500" />
-                )}
-              </button>
+          <div className="md:col-span-5">
+            <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#B5B8AA] mb-3">
+              Directory
             </div>
-          )}
+            <nav
+              aria-label="Footer Navigation"
+              className="grid grid-cols-2 sm:grid-cols-3 gap-y-2 gap-x-4 text-xs font-medium"
+            >
+              {(
+                [
+                  ["home", "Home"],
+                  ["about", "About"],
+                  ["projects", "Projects"],
+                  ["skills", "Skills"],
+                  ["ecosystem", "Ecosystem"],
+                  ["certificates", "Certificates"],
+                  ["journal", "Journal"],
+                  ["contact", "Contact"],
+                  ["privacy", "Privacy Policy"],
+                  ["terms", "Terms"],
+                ] as const
+              ).map(([tab, label]) => (
+                <a
+                  key={tab}
+                  href={tab === "home" ? "/" : `/${tab}`}
+                  onClick={(e) => handleLinkClick(e, tab)}
+                  className={`py-1 transition-colors ${
+                    activeTab === tab
+                      ? "text-[#C7E34A] font-bold"
+                      : "text-[#D4D6CA] hover:text-[#C7E34A]"
+                  }`}
+                >
+                  {label}
+                </a>
+              ))}
+            </nav>
+          </div>
+
+          <div className="md:col-span-3">
+            <div className="font-mono text-[11px] uppercase tracking-[0.12em] text-[#B5B8AA] mb-3">
+              Verified Profiles
+            </div>
+            <div className="grid grid-cols-2 gap-y-2 gap-x-4 text-xs font-mono">
+              <a
+                href={SOCIAL_LINKS.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+              >
+                GitHub ↗
+              </a>
+              <a
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+              >
+                LinkedIn ↗
+              </a>
+              <a
+                href={SOCIAL_LINKS.leetcode}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+              >
+                LeetCode ↗
+              </a>
+              <a
+                href={SOCIAL_LINKS.codolio}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+              >
+                Codolio ↗
+              </a>
+              <a
+                href={SOCIAL_LINKS.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+              >
+                YouTube ↗
+              </a>
+              <a
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+              >
+                Instagram ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* BOTTOM LEGAL LINE */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs font-mono text-[#B5B8AA]">
+          <span>© {currentYear} Sayam Mukherjee. All rights reserved.</span>
+          <span>Verified Static &amp; Live GitHub Records · sayammukherjee.in</span>
         </div>
       </div>
 
-      {/* Print-only details */}
-      <div className="hidden print:block max-w-7xl mx-auto px-6 pt-6 mt-6 border-t border-zinc-300 dark:border-zinc-800 text-black dark:text-white">
+      {/* Print-only summary */}
+      <div className="hidden print:block max-w-7xl mx-auto px-6 pt-6 mt-6 border-t border-zinc-300 text-black">
         <h2 className="text-lg font-bold font-display">Sayam Mukherjee</h2>
-        <p className="text-xs font-mono mt-0.5 text-zinc-600 dark:text-zinc-400">
+        <p className="text-xs font-mono mt-0.5 text-zinc-600">
           AI &amp; ML CSE Undergraduate · Developer Portfolio
         </p>
-        <div className="mt-3 flex flex-col gap-1 text-xs text-zinc-800 dark:text-zinc-300">
+        <div className="mt-3 flex flex-col gap-1 text-xs text-zinc-800">
           <p>
             <strong>Email:</strong> {SAYAM_DATA.socials.email}
           </p>

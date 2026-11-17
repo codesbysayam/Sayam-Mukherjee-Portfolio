@@ -1,24 +1,24 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { 
-  Lock, Mail, Key, ShieldCheck, BarChart3, Plus, Edit3, Trash2, 
-  CheckCircle, RefreshCw, Send, Users, FileText, Settings, Award, 
-  Layers, Clock, HelpCircle, LogOut, Download, Archive, Eye, EyeOff,
-  Check, X, FileSpreadsheet, ArrowLeft, Github, Laptop, Smartphone, Tablet, AlertCircle
+import {
+  Lock, Mail, Key, ShieldCheck, BarChart3, Plus, Edit3, Trash2,
+  RefreshCw, Users, FileText, Settings, Award,
+  Layers, Clock, HelpCircle, LogOut, Archive, Eye, EyeOff,
+  Check, X, FileSpreadsheet, ArrowLeft, Laptop, Smartphone, Tablet, AlertCircle
 } from "lucide-react";
-import { 
-  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip as ChartTooltip, 
-  BarChart, Bar, PieChart, Pie, Cell 
+import {
+  ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip as ChartTooltip,
+  BarChart, Bar, PieChart, Pie, Cell
 } from "recharts";
 import { usePortfolio } from "../context/PortfolioContext";
-import { Project, Blog, SkillGroup, ExperienceItem, Certification } from "../data";
+import { Project, Blog, ExperienceItem, Certification } from "../data";
 import ConfirmationModal from "./common/ConfirmationModal";
+import { showToast } from "./Toast";
 
 export default function AdminDashboard() {
-  const { 
-    portfolioData, loginAdmin, verify2FA, logoutAdmin, isAdmin, otpRequired, 
-    updatePortfolioSection, fetchAdminMessages, actionAdminMessage, fetchAdminSubscribers, 
-    deleteAdminSubscriber, actionAdminTestimonial, fetchAdminAnalytics, theme, toggleTheme 
+  const {
+    portfolioData, loginAdmin, verify2FA, logoutAdmin, isAdmin, otpRequired,
+    updatePortfolioSection, fetchAdminMessages, actionAdminMessage, fetchAdminSubscribers,
+    deleteAdminSubscriber, actionAdminTestimonial, fetchAdminAnalytics
   } = usePortfolio();
 
   // Confirmation modal state
@@ -143,7 +143,7 @@ export default function AdminDashboard() {
   };
 
   // RECHARTS PIE CHART COLORS
-  const COLORS = ["#8B5CF6", "#06B6D4", "#10B981", "#F59E0B", "#EF4444"];
+  const COLORS = ["#69734A", "#C7E34A", "#4E5834", "#A16207", "#B91C1C"];
 
   // EXPORT UTILS
   const exportToCSV = (data: any[], filename: string) => {
@@ -363,7 +363,7 @@ export default function AdminDashboard() {
       setNewsSent(false);
       setNewsSubject("");
       setNewsBody("");
-      alert(`Automated dispatch successful! Newsletter transmitted to ${subscribers.length} encrypted nodes.`);
+      showToast(`Automated dispatch successful! Newsletter transmitted to ${subscribers.length} subscribers.`, "success");
     }, 1500);
   };
 
@@ -375,35 +375,25 @@ export default function AdminDashboard() {
   // LOGIN PAGE VIEW IF NOT AUTHENTICATED
   if (!isAdmin) {
     return (
-      <div className="min-h-screen flex items-center justify-center relative font-sans p-6 text-white selection:bg-purple-500/30">
-        
-        {/* Abstract grids */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-950/20 via-zinc-950 to-zinc-950 pointer-events-none z-0" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-cyan-500/5 rounded-full blur-[140px] pointer-events-none z-0" />
-        
+      <div className="min-h-screen flex items-center justify-center relative font-sans p-6 bg-[var(--bg)] text-[var(--text)]">
         <div className="w-full max-w-md relative z-10 space-y-6">
-          
-          <div className="text-center space-y-2">
-            <a href="/" className="inline-flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-xs font-mono">
-              <ArrowLeft className="w-4.5 h-4.5" /> Return to Terminal
+          <div className="text-center space-y-3">
+            <a href="/" className="inline-flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors text-xs font-mono">
+              <ArrowLeft className="w-4 h-4" /> Return to Portfolio
             </a>
-            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-purple-600 to-cyan-400 p-[1px] flex items-center justify-center mx-auto shadow-lg mt-4">
-              <div className="w-full h-full rounded-full bg-zinc-950 flex items-center justify-center text-sm font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-300 to-cyan-300">
-                S
-              </div>
+            <div className="w-12 h-12 rounded-[10px] bg-[var(--surface-2)] border border-[var(--border)] flex items-center justify-center mx-auto text-sm font-extrabold font-mono text-[var(--text)] mt-4">
+              SM
             </div>
-            <h1 className="text-2xl font-bold tracking-tight font-display text-white">Administration Node</h1>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Secure authentication matrix for wrickbusiness@gmail.com
+            <h1 className="text-2xl font-extrabold tracking-tight font-display text-[var(--text)]">Administration Console</h1>
+            <p className="text-xs text-[var(--text-muted)] leading-relaxed">
+              Protected access for wrickbusiness@gmail.com
             </p>
           </div>
 
-          <div className="bg-zinc-950/40 border border-zinc-900 p-6 md:p-8 rounded-2xl relative overflow-hidden shadow-2xl">
-            <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
-            
+          <div className="card p-6 md:p-8 relative overflow-hidden">
             {authError && (
-              <div className="mb-4 p-3 bg-red-950/50 border border-red-500/20 rounded-xl text-red-200 text-xs flex items-start gap-2 animate-shake">
-                <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+              <div className="mb-4 p-3 bg-[var(--surface)] border border-[var(--danger)]/40 rounded-[6px] text-[var(--danger)] text-xs flex items-start gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{authError}</span>
               </div>
             )}
@@ -411,36 +401,36 @@ export default function AdminDashboard() {
             {!otpRequired ? (
               <form onSubmit={handleLogin} className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-mono tracking-wider text-zinc-400">Security Email</label>
+                  <label className="text-[10px] uppercase font-mono tracking-wider text-[var(--text-muted)]">Security Email</label>
                   <div className="relative">
-                    <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
+                    <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[var(--text-faint)]" />
                     <input
                       type="email"
                       required
                       placeholder="wrickbusiness@gmail.com"
                       value={emailInput}
                       onChange={(e) => setEmailInput(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl pl-10 pr-3.5 py-3 text-xs text-white placeholder-zinc-500 outline-none transition-all"
+                      className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] pl-10 pr-3.5 py-3 text-xs text-[var(--text)] placeholder-[var(--text-faint)] outline-none transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-mono tracking-wider text-zinc-400">Cryptographic Password</label>
+                  <label className="text-[10px] uppercase font-mono tracking-wider text-[var(--text-muted)]">Password</label>
                   <div className="relative">
-                    <Key className="absolute left-3.5 top-3.5 w-4 h-4 text-zinc-500" />
+                    <Key className="absolute left-3.5 top-3.5 w-4 h-4 text-[var(--text-faint)]" />
                     <input
                       type={showPassword ? "text" : "password"}
                       required
                       placeholder="••••••••"
                       value={passInput}
                       onChange={(e) => setPassInput(e.target.value)}
-                      className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl pl-10 pr-10 py-3 text-xs text-white placeholder-zinc-500 outline-none transition-all"
+                      className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] pl-10 pr-10 py-3 text-xs text-[var(--text)] placeholder-[var(--text-faint)] outline-none transition-colors"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-zinc-500 hover:text-zinc-300 focus:outline-none cursor-pointer"
+                      className="absolute right-3 top-3 text-[var(--text-faint)] hover:text-[var(--text)] focus:outline-none cursor-pointer"
                       title={showPassword ? "Hide password" : "Show password"}
                       aria-label={showPassword ? "Hide password" : "Show password"}
                     >
@@ -452,33 +442,33 @@ export default function AdminDashboard() {
                 <button
                   type="submit"
                   disabled={authLoading}
-                  className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold py-3.5 rounded-xl text-xs tracking-wider uppercase transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                  className="btn btn-primary w-full text-xs tracking-wider uppercase"
                 >
                   <Lock className="w-4 h-4" />
-                  <span>{authLoading ? "Decrypting credentials..." : "Initialize Session"}</span>
+                  <span>{authLoading ? "Verifying credentials..." : "Initialize Session"}</span>
                 </button>
-                
+
                 <div className="text-center pt-2">
-                  <span className="text-[10px] text-zinc-500 font-mono">Authorized administrative personnel only</span>
+                  <span className="text-[10px] text-[var(--text-faint)] font-mono">Authorized administrative personnel only</span>
                 </div>
               </form>
             ) : (
               <form onSubmit={handleVerifyOTP} className="space-y-4">
-                <div className="p-3 bg-purple-500/5 border border-purple-500/20 rounded-xl text-purple-200 text-xs space-y-2">
+                <div className="p-3 bg-[var(--surface)] border border-[var(--border)] rounded-[6px] text-[var(--text)] text-xs space-y-2">
                   <div className="flex items-center gap-2 font-bold font-display">
-                    <ShieldCheck className="w-4 h-4 text-cyan-400 animate-pulse" />
+                    <ShieldCheck className="w-4 h-4 text-[var(--accent)]" />
                     <span>2FA Verification Required</span>
                   </div>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">
-                    A verification OTP was transmitted to your encrypted email address. For ease of portfolio review, your simulated OTP code is printed below:
+                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                    A verification OTP was issued for your session. For portfolio review convenience, the simulated OTP code is displayed below:
                   </p>
-                  <div className="text-center py-1.5 bg-zinc-950 rounded-lg border border-purple-500/10">
-                    <span className="text-sm font-bold tracking-widest text-cyan-400 font-mono select-all">{otpSimulated}</span>
+                  <div className="text-center py-1.5 bg-[var(--surface-2)] rounded-[6px] border border-[var(--border)]">
+                    <span className="text-sm font-bold tracking-widest text-[var(--accent)] font-mono select-all">{otpSimulated}</span>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-mono tracking-wider text-zinc-400">One-Time Security Code</label>
+                  <label className="text-[10px] uppercase font-mono tracking-wider text-[var(--text-muted)]">One-Time Security Code</label>
                   <input
                     type="text"
                     required
@@ -486,79 +476,68 @@ export default function AdminDashboard() {
                     placeholder="Enter 6-digit code"
                     value={otpInput}
                     onChange={(e) => setOtpInput(e.target.value)}
-                    className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3.5 py-3 text-center text-sm font-bold tracking-widest text-white placeholder-zinc-500 outline-none transition-all font-mono"
+                    className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3.5 py-3 text-center text-sm font-bold tracking-widest text-[var(--text)] placeholder-[var(--text-faint)] outline-none transition-colors font-mono"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={authLoading}
-                  className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold py-3.5 rounded-xl text-xs tracking-wider uppercase transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                  className="btn btn-primary w-full text-xs tracking-wider uppercase"
                 >
                   <ShieldCheck className="w-4 h-4" />
                   <span>{authLoading ? "Authorizing..." : "Finalize Verification"}</span>
                 </button>
               </form>
             )}
-
           </div>
-
         </div>
       </div>
     );
   }
 
-  // LOGGED IN DASHBOARD CORE VIEW
   return (
-    <div className="min-h-screen bg-[#070709] text-white font-sans selection:bg-purple-500/30 selection:text-cyan-200">
-      
-      {/* Dynamic SEO Injector for admin page */}
+    <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] font-sans">
       <title>Admin Dashboard CMS - Sayam Mukherjee</title>
 
-      {/* ADMIN CONTROL PANEL HEADER */}
-      <header className="border-b border-zinc-900 bg-zinc-950/40 sticky top-0 z-30 py-4 px-6 backdrop-blur">
+      <header className="border-b border-[var(--border)] bg-[var(--bg)]/95 sticky top-0 z-30 py-4 px-6 backdrop-blur">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-          
           <div className="flex items-center gap-3">
-            <a href="/" className="p-2 bg-zinc-900 border border-zinc-850 hover:bg-zinc-800 rounded-lg text-zinc-400 hover:text-white transition-colors" title="Back to site">
+            <a href="/" className="p-2 bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-strong)] rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors" title="Back to site">
               <ArrowLeft className="w-4 h-4" />
             </a>
             <div>
-              <div className="flex items-center gap-1.5">
-                <span className="text-xs font-bold text-white font-display">Sayam's Administrative Node</span>
-                <span className="text-[9px] bg-emerald-500/10 border border-emerald-500/30 px-2 py-0.5 rounded-full font-mono text-emerald-400 font-bold uppercase tracking-wider">SECURE_LEVEL_2</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-bold text-[var(--text)] font-display">Administrative Console</span>
+                <span className="text-[10px] font-mono text-[var(--success)] uppercase tracking-wider">· SECURE_LEVEL_2</span>
               </div>
-              <p className="text-[10px] text-zinc-500 font-mono">Logged: wrickbusiness@gmail.com</p>
+              <p className="text-[10px] text-[var(--text-muted)] font-mono">Logged: wrickbusiness@gmail.com</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={loadAdminPayloads}
-              className="p-2 bg-zinc-900 border border-zinc-850 hover:bg-zinc-800 text-zinc-400 hover:text-white rounded-lg transition-colors cursor-pointer"
+              className="p-2 bg-[var(--surface)] border border-[var(--border)] hover:border-[var(--border-strong)] text-[var(--text-muted)] hover:text-[var(--text)] rounded-[6px] transition-colors cursor-pointer"
               title="Synchronize database parameters"
             >
-              <RefreshCw className="w-4 h-4" />
+              <RefreshCw className={`w-4 h-4 ${analyticsLoading ? "animate-spin" : ""}`} />
             </button>
             <button
               onClick={logoutAdmin}
-              className="flex items-center gap-2 bg-red-950/20 hover:bg-red-950/50 border border-red-900/40 text-red-200 px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-colors"
+              className="btn btn-secondary !min-h-[36px] !px-3 !py-1.5 text-xs border-[var(--danger)]/40 text-[var(--danger)] hover:!bg-[var(--danger)] hover:!text-white hover:!border-[var(--danger)]"
             >
               <LogOut className="w-4 h-4" />
               <span className="hidden sm:inline">Terminate Session</span>
             </button>
           </div>
-
         </div>
       </header>
 
-      {/* DASHBOARD GRID CONTENT */}
       <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
-        {/* SIDE BAR NAVIGATION MODULES */}
-        <aside className="lg:col-span-3 space-y-2">
-          <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest block px-3">CMS Database Entities</span>
-          
+        <aside className="lg:col-span-3 space-y-1.5">
+          <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase tracking-widest block px-3 pb-1">CMS Database Entities</span>
+
           {[
             { id: "analytics", label: "Analytics Overview", icon: <BarChart3 className="w-4 h-4" /> },
             { id: "projects", label: "Manage Projects", icon: <Layers className="w-4 h-4" /> },
@@ -575,7 +554,6 @@ export default function AdminDashboard() {
               key={tb.id}
               onClick={() => {
                 setActiveTab(tb.id as any);
-                // Clear active editors
                 setEditingProject(null);
                 setEditingBlog(null);
                 setEditingSkillGroup(null);
@@ -586,10 +564,10 @@ export default function AdminDashboard() {
                 setIsAddingCert(false);
                 setIsAddingTimeline(false);
               }}
-              className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-medium cursor-pointer transition-all ${
+              className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-[6px] text-xs font-medium cursor-pointer transition-colors ${
                 activeTab === tb.id
-                  ? "bg-gradient-to-r from-purple-950/40 to-cyan-950/20 border border-purple-500/20 text-white shadow-md font-semibold"
-                  : "bg-transparent border border-transparent hover:bg-zinc-900/40 text-zinc-400 hover:text-white"
+                  ? "bg-[var(--surface-2)] border border-[var(--border-strong)] text-[var(--text)] font-bold"
+                  : "bg-transparent border border-transparent hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)]"
               }`}
             >
               <div className="flex items-center gap-2.5">
@@ -597,64 +575,54 @@ export default function AdminDashboard() {
                 <span>{tb.label}</span>
               </div>
               {tb.count !== undefined && tb.count > 0 && (
-                <span className="bg-cyan-500 text-zinc-950 font-bold font-mono text-[10px] px-2 py-0.5 rounded-full animate-pulse">{tb.count}</span>
+                <span className="bg-[#C7E34A] text-[#20231D] font-bold font-mono text-[10px] px-2 py-0.5 rounded-[4px] tabular-nums">{tb.count}</span>
               )}
             </button>
           ))}
         </aside>
 
-        {/* ACTIVE CMS BODY NODE */}
         <main className="lg:col-span-9 space-y-6">
-          
-          {/* ANALYTICS DASHBOARD VIEW */}
           {activeTab === "analytics" && (
             <div className="space-y-6">
-              
-              {/* Header metadata summary metrics */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl relative overflow-hidden">
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase">Total Visitors Count</span>
-                  <p className="text-2xl font-bold font-display text-white mt-1">
+                <div className="card p-5 relative overflow-hidden">
+                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Total Visitors Count</span>
+                  <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
                     {analyticsData?.totalVisits || 240}
                   </p>
-                  <span className="text-[9px] text-emerald-400 font-mono block mt-2">▲ 14.5% vs last week</span>
+                  <span className="text-[10px] text-[var(--success)] font-mono block mt-2">▲ 14.5% vs last week</span>
                 </div>
 
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl">
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase">Avg Session Duration</span>
-                  <p className="text-2xl font-bold font-display text-white mt-1">
+                <div className="card p-5">
+                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Avg Session Duration</span>
+                  <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
                     {analyticsData ? `${Math.floor(analyticsData.avgDurationSec / 60)}m ${analyticsData.avgDurationSec % 60}s` : "2m 14s"}
                   </p>
-                  <span className="text-[9px] text-zinc-500 font-mono block mt-2">Active threshold standard</span>
+                  <span className="text-[10px] text-[var(--text-muted)] font-mono block mt-2">Active threshold standard</span>
                 </div>
 
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl">
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase">Average Bounce Rate</span>
-                  <p className="text-2xl font-bold font-display text-white mt-1">
+                <div className="card p-5">
+                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Average Bounce Rate</span>
+                  <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
                     {analyticsData?.bounceRatePct || 28}%
                   </p>
-                  <span className="text-[9px] text-emerald-400 font-mono block mt-2">▼ 3.2% optimization rate</span>
+                  <span className="text-[10px] text-[var(--success)] font-mono block mt-2">▼ 3.2% optimization rate</span>
                 </div>
 
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl">
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase">Inquiry Conversion Rate</span>
-                  <p className="text-2xl font-bold font-display text-white mt-1">
+                <div className="card p-5">
+                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Inquiry Conversion Rate</span>
+                  <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
                     {analyticsData?.conversionRatePct || 4.2}%
                   </p>
-                  <span className="text-[9px] text-cyan-400 font-mono block mt-2">▲ Form dispatched nodes</span>
+                  <span className="text-[10px] text-[var(--accent)] font-mono block mt-2">▲ Form dispatched records</span>
                 </div>
-
               </div>
 
-              {/* RECHARTS CHANNELS & TIMESERIES */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {/* Traffic history AreaChart */}
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-3xl space-y-4">
+                <div className="card p-5 space-y-4">
                   <div>
-                    <h3 className="text-sm font-bold text-white">Traffic Volume (14-Day rolling)</h3>
-                    <p className="text-[10px] text-zinc-500 font-mono">Synchronized daily visits logs</p>
+                    <h3 className="text-sm font-bold text-[var(--text)]">Traffic Volume (14-Day rolling)</h3>
+                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Synchronized daily visit logs</p>
                   </div>
                   <div className="h-56">
                     {analyticsData?.timelineChart ? (
@@ -662,52 +630,47 @@ export default function AdminDashboard() {
                         <AreaChart data={analyticsData.timelineChart}>
                           <defs>
                             <linearGradient id="colorVisits" x1="0" y1="0" x2="0" y2="1">
-                              <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.2}/>
-                              <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0}/>
+                              <stop offset="5%" stopColor="#69734A" stopOpacity={0.28} />
+                              <stop offset="95%" stopColor="#69734A" stopOpacity={0} />
                             </linearGradient>
                           </defs>
-                          <XAxis dataKey="date" stroke="#3f3f46" tick={{ fontSize: 9, fontFamily: 'monospace' }} />
-                          <YAxis stroke="#3f3f46" tick={{ fontSize: 9, fontFamily: 'monospace' }} />
-                          <ChartTooltip contentStyle={{ background: "#09090b", border: "1px solid #18181b", fontSize: 10, borderRadius: 8 }} />
-                          <Area type="monotone" dataKey="Visitors" stroke="#8b5cf6" fillOpacity={1} fill="url(#colorVisits)" strokeWidth={2} />
+                          <XAxis dataKey="date" stroke="var(--chart-axis)" tick={{ fontSize: 9, fontFamily: "monospace" }} />
+                          <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 9, fontFamily: "monospace" }} />
+                          <ChartTooltip contentStyle={{ background: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", color: "var(--chart-tooltip-text)", fontSize: 10, borderRadius: 6 }} />
+                          <Area type="monotone" dataKey="Visitors" stroke="#69734A" fillOpacity={1} fill="url(#colorVisits)" strokeWidth={2} />
                         </AreaChart>
                       </ResponsiveContainer>
                     ) : (
-                      <div className="h-full flex items-center justify-center text-xs text-zinc-500">Retrieving charts coordinates...</div>
+                      <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)]">Retrieving chart coordinates...</div>
                     )}
                   </div>
                 </div>
 
-                {/* Top Countries BarChart */}
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-3xl space-y-4">
+                <div className="card p-5 space-y-4">
                   <div>
-                    <h3 className="text-sm font-bold text-white">Top Geographic Locations</h3>
-                    <p className="text-[10px] text-zinc-500 font-mono">Crawl session visitor locales</p>
+                    <h3 className="text-sm font-bold text-[var(--text)]">Top Geographic Locations</h3>
+                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Session visitor locales</p>
                   </div>
                   <div className="h-56">
                     {analyticsData?.countryChart ? (
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={analyticsData.countryChart}>
-                          <XAxis dataKey="name" stroke="#3f3f46" fontSize={9} />
-                          <YAxis stroke="#3f3f46" fontSize={9} />
-                          <ChartTooltip contentStyle={{ background: "#09090b", border: "1px solid #18181b", fontSize: 10, borderRadius: 8 }} />
-                          <Bar dataKey="value" fill="#06b6d4" radius={[4, 4, 0, 0]} />
+                          <XAxis dataKey="name" stroke="var(--chart-axis)" fontSize={9} />
+                          <YAxis stroke="var(--chart-axis)" fontSize={9} />
+                          <ChartTooltip contentStyle={{ background: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", color: "var(--chart-tooltip-text)", fontSize: 10, borderRadius: 6 }} />
+                          <Bar dataKey="value" fill="#C7E34A" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     ) : (
-                      <div className="h-full flex items-center justify-center text-xs text-zinc-500">Compiling regional coordinates...</div>
+                      <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)]">Compiling regional coordinates...</div>
                     )}
                   </div>
                 </div>
-
               </div>
 
-              {/* DEVICES AND TRAFFIC SOURCES ROW */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                {/* Traffic Sources Pie Chart */}
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-3xl space-y-4 md:col-span-2">
-                  <h3 className="text-sm font-bold text-white">Acquisition Sources Index</h3>
+                <div className="card p-5 space-y-4 md:col-span-2">
+                  <h3 className="text-sm font-bold text-[var(--text)]">Acquisition Sources Index</h3>
                   <div className="grid grid-cols-2 items-center gap-4">
                     <div className="h-40">
                       {analyticsData?.sourceChart ? (
@@ -722,72 +685,66 @@ export default function AdminDashboard() {
                               paddingAngle={4}
                               dataKey="value"
                             >
-                              {analyticsData.sourceChart.map((entry: any, index: number) => (
+                              {analyticsData.sourceChart.map((_entry: any, index: number) => (
                                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                               ))}
                             </Pie>
-                            <ChartTooltip contentStyle={{ background: "#09090b", border: "1px solid #18181b", fontSize: 10, borderRadius: 8 }} />
+                            <ChartTooltip contentStyle={{ background: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", color: "var(--chart-tooltip-text)", fontSize: 10, borderRadius: 6 }} />
                           </PieChart>
                         </ResponsiveContainer>
                       ) : (
-                        <div className="h-full flex items-center justify-center text-xs text-zinc-500">Compiling sources...</div>
+                        <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)]">Compiling sources...</div>
                       )}
                     </div>
-                    
-                    {/* Legend details */}
+
                     <div className="space-y-1.5 text-xs">
                       {analyticsData?.sourceChart?.map((sc: any, index: number) => (
                         <div key={sc.name} className="flex items-center gap-2">
-                          <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                          <span className="text-zinc-400 font-mono">{sc.name}</span>
-                          <span className="text-white font-bold font-mono ml-auto">{sc.value}</span>
+                          <span className="w-2.5 h-2.5 rounded-[2px] shrink-0" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                          <span className="text-[var(--text-muted)] font-mono">{sc.name}</span>
+                          <span className="text-[var(--text)] font-bold font-mono ml-auto tabular-nums">{sc.value}</span>
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
 
-                {/* Device Categories */}
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-3xl flex flex-col justify-between space-y-4">
+                <div className="card p-5 flex flex-col justify-between space-y-4">
                   <div>
-                    <h3 className="text-sm font-bold text-white">Device Segments</h3>
-                    <p className="text-[10px] text-zinc-500 font-mono">Mobile vs desktop ratios</p>
+                    <h3 className="text-sm font-bold text-[var(--text)]">Device Segments</h3>
+                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Mobile vs desktop ratios</p>
                   </div>
-                  
+
                   <div className="space-y-3.5 pt-2">
                     {analyticsData?.deviceChart?.map((dv: any) => {
                       const pct = Math.round((dv.value / (analyticsData?.totalVisits || 1)) * 100) || 30;
                       return (
                         <div key={dv.name} className="space-y-1 text-xs">
                           <div className="flex justify-between font-mono">
-                            <span className="flex items-center gap-1.5 text-zinc-400 capitalize">
+                            <span className="flex items-center gap-1.5 text-[var(--text-muted)] capitalize">
                               {dv.name === "Desktop" ? <Laptop className="w-3.5 h-3.5" /> : dv.name === "Mobile" ? <Smartphone className="w-3.5 h-3.5" /> : <Tablet className="w-3.5 h-3.5" />}
                               {dv.name}
                             </span>
-                            <span className="text-white font-bold">{pct}%</span>
+                            <span className="text-[var(--text)] font-bold tabular-nums">{pct}%</span>
                           </div>
-                          <div className="w-full bg-zinc-900 h-1.5 rounded-full overflow-hidden">
-                            <div className="bg-purple-500 h-full rounded-full transition-all" style={{ width: `${pct}%` }} />
+                          <div className="w-full bg-[var(--surface-3)] h-1.5 rounded-[4px] overflow-hidden">
+                            <div className="bg-[var(--accent)] h-full rounded-[4px] transition-all" style={{ width: `${pct}%` }} />
                           </div>
                         </div>
                       );
                     })}
                   </div>
                 </div>
-
               </div>
-
             </div>
           )}
 
-          {/* PROJECTS CMS TAB VIEW */}
           {activeTab === "projects" && (
             <div className="space-y-6">
-              
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-white font-display">Manage Portfolio Projects</h3>
-                  <p className="text-xs text-zinc-500 font-mono">Manage case study parameters and technology badges</p>
+                  <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Portfolio Projects</h3>
+                  <p className="text-xs text-[var(--text-muted)] font-mono">Manage case study parameters and technology tags</p>
                 </div>
                 <button
                   onClick={() => {
@@ -806,37 +763,36 @@ export default function AdminDashboard() {
                       metrics: []
                     });
                   }}
-                  className="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-md"
+                  className="btn btn-primary !min-h-[36px] !px-3.5 !py-1.5 text-xs"
                 >
                   <Plus className="w-4 h-4" /> Add Project
                 </button>
               </div>
 
-              {/* EDITOR MODAL */}
               {editingProject && (
-                <div className="bg-zinc-950/80 border border-purple-500/20 p-6 rounded-2xl space-y-4">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-400 font-mono">
-                    {isAddingProject ? "🟢 Add New Project Node" : "⚙️ Edit Project Configuration"}
+                <div className="card p-6 space-y-4 border-[var(--border-strong)]">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] font-mono">
+                    {isAddingProject ? "Add New Project" : "Edit Project Configuration"}
                   </h4>
-                  
+
                   <form onSubmit={handleSaveProject} className="space-y-4 text-xs">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Project Title</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Project Title</span>
                         <input
                           type="text"
                           required
                           value={editingProject.title || ""}
-                          onChange={(e) => setEditingProject({...editingProject, title: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingProject({ ...editingProject, title: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Sector Classification</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Sector Classification</span>
                         <select
                           value={editingProject.category || "ai_ml"}
-                          onChange={(e) => setEditingProject({...editingProject, category: e.target.value as any})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingProject({ ...editingProject, category: e.target.value as any })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         >
                           <option value="ai_ml">Artificial Intelligence & ML</option>
                           <option value="full_stack">Full-Stack Development</option>
@@ -847,65 +803,65 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 block uppercase">Short Description (Summary)</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Short Description (Summary)</span>
                       <input
                         type="text"
                         required
                         value={editingProject.description || ""}
-                        onChange={(e) => setEditingProject({...editingProject, description: e.target.value})}
-                        className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                        onChange={(e) => setEditingProject({ ...editingProject, description: e.target.value })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 block uppercase font-bold">Case Study Long Description (Markdown / Detailed Brief)</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase font-bold">Case Study Long Description (Markdown / Detailed Brief)</span>
                       <textarea
                         rows={6}
                         value={editingProject.longDescription || ""}
-                        onChange={(e) => setEditingProject({...editingProject, longDescription: e.target.value})}
-                        className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none font-mono text-[11px] leading-relaxed"
+                        onChange={(e) => setEditingProject({ ...editingProject, longDescription: e.target.value })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none font-mono text-[11px] leading-relaxed"
                       />
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Image URL</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Image URL</span>
                         <input
                           type="text"
                           value={editingProject.imageUrl || ""}
-                          onChange={(e) => setEditingProject({...editingProject, imageUrl: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingProject({ ...editingProject, imageUrl: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">GitHub Repository URL</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">GitHub Repository URL</span>
                         <input
                           type="text"
                           value={editingProject.githubUrl || ""}
-                          onChange={(e) => setEditingProject({...editingProject, githubUrl: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingProject({ ...editingProject, githubUrl: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Live Demo coordinate</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Live Demo URL</span>
                         <input
                           type="text"
                           value={editingProject.demoUrl || ""}
-                          onChange={(e) => setEditingProject({...editingProject, demoUrl: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingProject({ ...editingProject, demoUrl: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Technology Tags (Comma split)</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Technology Tags (Comma split)</span>
                         <input
                           type="text"
                           placeholder="React, PyTorch, OpenCV"
                           value={editingProject.tags?.join(", ") || ""}
-                          onChange={(e) => setEditingProject({...editingProject, tags: e.target.value.split(",").map(t => t.trim())})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingProject({ ...editingProject, tags: e.target.value.split(",").map(t => t.trim()) })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1 pt-6 flex items-center gap-2">
@@ -913,27 +869,27 @@ export default function AdminDashboard() {
                           type="checkbox"
                           id="feat-chk"
                           checked={editingProject.featured || false}
-                          onChange={(e) => setEditingProject({...editingProject, featured: e.target.checked})}
-                          className="w-4 h-4 text-purple-600 rounded focus:ring-purple-500 focus:ring-opacity-20 bg-zinc-900 border-zinc-800"
+                          onChange={(e) => setEditingProject({ ...editingProject, featured: e.target.checked })}
+                          className="w-4 h-4 accent-[#69734A] rounded-[4px]"
                         />
-                        <label htmlFor="feat-chk" className="text-[10px] uppercase font-mono text-zinc-400 cursor-pointer">Feature on main hero reel</label>
+                        <label htmlFor="feat-chk" className="text-[10px] uppercase font-mono text-[var(--text-muted)] cursor-pointer">Feature on main hero reel</label>
                       </div>
                     </div>
 
-                    <div className="flex justify-end gap-3 pt-4 border-t border-zinc-900">
+                    <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
                       <button
                         type="button"
                         onClick={() => {
                           setEditingProject(null);
                           setIsAddingProject(false);
                         }}
-                        className="bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white px-4 py-2 rounded-xl"
+                        className="btn btn-secondary !min-h-[36px] !px-4 !py-1.5 text-xs"
                       >
-                        Abort
+                        Cancel
                       </button>
                       <button
                         type="submit"
-                        className="bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold px-6 py-2 rounded-xl shadow-md cursor-pointer"
+                        className="btn btn-primary !min-h-[36px] !px-5 !py-1.5 text-xs"
                       >
                         Save Configuration
                       </button>
@@ -942,50 +898,46 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              {/* LIST PROJECTS */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {portfolioData.projects.map((proj) => (
-                  <div key={proj.id} className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl flex flex-col justify-between hover:border-zinc-800 transition-all">
+                  <div key={proj.id} className="card p-5 flex flex-col justify-between">
                     <div className="space-y-2">
-                      <div className="flex justify-between items-start">
-                        <h4 className="font-bold text-white font-display text-sm truncate max-w-[200px]">{proj.title}</h4>
-                        <span className="text-[9px] bg-zinc-900 border border-zinc-850 px-2.5 py-1 rounded-full text-zinc-500 uppercase font-mono">{proj.category}</span>
+                      <div className="flex justify-between items-start gap-2">
+                        <h4 className="font-bold text-[var(--text)] font-display text-sm truncate max-w-[220px]">{proj.title}</h4>
+                        <span className="text-[10px] font-mono uppercase text-[var(--text-muted)] shrink-0">{proj.category}</span>
                       </div>
-                      <p className="text-zinc-400 text-[11px] line-clamp-2 leading-relaxed">{proj.description}</p>
+                      <p className="text-[var(--text-muted)] text-[11px] line-clamp-2 leading-relaxed">{proj.description}</p>
                     </div>
 
-                    <div className="flex justify-end gap-2.5 pt-4 mt-4 border-t border-zinc-900">
+                    <div className="flex justify-end gap-2 pt-4 mt-4 border-t border-[var(--border)]">
                       <button
                         onClick={() => {
                           setEditingProject(proj);
                           setIsAddingProject(false);
                         }}
-                        className="p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                        className="p-1.5 bg-[var(--surface)] hover:bg-[var(--surface-3)] border border-[var(--border)] rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
                       >
-                        <Edit3 className="w-4.5 h-4.5" />
+                        <Edit3 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteProject(proj.id)}
-                        className="p-1.5 bg-red-950/10 hover:bg-red-950/45 border border-red-900/10 rounded-lg text-red-400 transition-colors cursor-pointer"
+                        className="p-1.5 bg-[var(--surface)] hover:bg-[var(--danger)]/15 border border-[var(--border)] hover:border-[var(--danger)]/40 rounded-[6px] text-[var(--danger)] transition-colors cursor-pointer"
                       >
-                        <Trash2 className="w-4.5 h-4.5" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-
             </div>
           )}
 
-          {/* BLOGS CMS TAB VIEW */}
           {activeTab === "blogs" && (
             <div className="space-y-6">
-              
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-white font-display">Manage Portfolio Blogs</h3>
-                  <p className="text-xs text-zinc-500 font-mono">Create and edit engineering journal markdown articles</p>
+                  <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Portfolio Blogs</h3>
+                  <p className="text-xs text-[var(--text-muted)] font-mono">Create and edit engineering journal markdown articles</p>
                 </div>
                 <button
                   onClick={() => {
@@ -1000,102 +952,101 @@ export default function AdminDashboard() {
                       readTime: "5 min read"
                     });
                   }}
-                  className="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer shadow-md"
+                  className="btn btn-primary !min-h-[36px] !px-3.5 !py-1.5 text-xs"
                 >
                   <Plus className="w-4 h-4" /> Add Blog Post
                 </button>
               </div>
 
-              {/* EDITOR MODAL */}
               {editingBlog && (
-                <div className="bg-zinc-950/80 border border-purple-500/20 p-6 rounded-2xl space-y-4">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-400 font-mono">
-                    {isAddingBlog ? "🟢 Draft New Blog Post" : "⚙️ Edit Blog Post Configuration"}
+                <div className="card p-6 space-y-4 border-[var(--border-strong)]">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] font-mono">
+                    {isAddingBlog ? "Draft New Blog Post" : "Edit Blog Post Configuration"}
                   </h4>
-                  
+
                   <form onSubmit={handleSaveBlog} className="space-y-4 text-xs">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Post Title</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Post Title</span>
                         <input
                           type="text"
                           required
                           value={editingBlog.title || ""}
-                          onChange={(e) => setEditingBlog({...editingBlog, title: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingBlog({ ...editingBlog, title: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Category Index</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Category</span>
                         <input
                           type="text"
                           required
                           value={editingBlog.category || ""}
-                          onChange={(e) => setEditingBlog({...editingBlog, category: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingBlog({ ...editingBlog, category: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Excerpt Summary</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Excerpt Summary</span>
                         <input
                           type="text"
                           required
                           value={editingBlog.excerpt || ""}
-                          onChange={(e) => setEditingBlog({...editingBlog, excerpt: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingBlog({ ...editingBlog, excerpt: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Estimated Read Time</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Estimated Read Time</span>
                         <input
                           type="text"
                           placeholder="6 min read"
                           value={editingBlog.readTime || ""}
-                          onChange={(e) => setEditingBlog({...editingBlog, readTime: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                          onChange={(e) => setEditingBlog({ ...editingBlog, readTime: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 block uppercase font-bold">Post Markdown Content</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase font-bold">Post Markdown Content</span>
                       <textarea
                         rows={8}
                         required
                         value={editingBlog.content || ""}
-                        onChange={(e) => setEditingBlog({...editingBlog, content: e.target.value})}
-                        className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none font-mono text-[11px] leading-relaxed"
+                        onChange={(e) => setEditingBlog({ ...editingBlog, content: e.target.value })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none font-mono text-[11px] leading-relaxed"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 block uppercase">Keywords & Tags (Comma separated)</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Keywords & Tags (Comma separated)</span>
                       <input
                         type="text"
                         placeholder="YOLOv8, PyTorch, Edge AI"
                         value={editingBlog.tags?.join(", ") || ""}
-                        onChange={(e) => setEditingBlog({...editingBlog, tags: e.target.value.split(",").map(t => t.trim())})}
-                        className="w-full bg-zinc-900 border border-zinc-850 focus:border-cyan-500/60 rounded-xl px-3 py-2 text-white outline-none"
+                        onChange={(e) => setEditingBlog({ ...editingBlog, tags: e.target.value.split(",").map(t => t.trim()) })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                       />
                     </div>
 
-                    <div className="flex justify-end gap-3 pt-4 border-t border-zinc-900">
+                    <div className="flex justify-end gap-3 pt-4 border-t border-[var(--border)]">
                       <button
                         type="button"
                         onClick={() => {
                           setEditingBlog(null);
                           setIsAddingBlog(false);
                         }}
-                        className="bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white px-4 py-2 rounded-xl"
+                        className="btn btn-secondary !min-h-[36px] !px-4 !py-1.5 text-xs"
                       >
-                        Abort
+                        Cancel
                       </button>
                       <button
                         type="submit"
-                        className="bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold px-6 py-2 rounded-xl shadow-md cursor-pointer"
+                        className="btn btn-primary !min-h-[36px] !px-5 !py-1.5 text-xs"
                       >
                         Publish Blog Post
                       </button>
@@ -1104,17 +1055,17 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              {/* LIST BLOGS */}
               <div className="grid grid-cols-1 gap-4">
                 {portfolioData.blogs.map((b) => (
-                  <div key={b.id} className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl flex items-center justify-between gap-6 hover:border-zinc-800 transition-all">
-                    <div className="space-y-1 max-w-lg">
-                      <div className="flex items-center gap-3">
-                        <span className="text-[9px] bg-zinc-900 border border-zinc-850 px-2.5 py-1 rounded-full text-zinc-500 font-mono uppercase font-bold">{b.category}</span>
-                        <span className="text-[9px] text-zinc-500 font-mono">{b.date}</span>
+                  <div key={b.id} className="card p-5 flex items-center justify-between gap-6">
+                    <div className="space-y-1 max-w-lg min-w-0">
+                      <div className="flex items-center gap-2 text-[10px] text-[var(--text-muted)] font-mono uppercase">
+                        <span className="font-bold text-[var(--accent)]">{b.category}</span>
+                        <span aria-hidden="true">·</span>
+                        <span>{b.date}</span>
                       </div>
-                      <h4 className="font-bold text-white font-display text-sm truncate">{b.title}</h4>
-                      <p className="text-zinc-400 text-[11px] line-clamp-1 leading-relaxed">{b.excerpt}</p>
+                      <h4 className="font-bold text-[var(--text)] font-display text-sm truncate">{b.title}</h4>
+                      <p className="text-[var(--text-muted)] text-[11px] line-clamp-1 leading-relaxed">{b.excerpt}</p>
                     </div>
 
                     <div className="flex gap-2 shrink-0">
@@ -1123,73 +1074,71 @@ export default function AdminDashboard() {
                           setEditingBlog(b);
                           setIsAddingBlog(false);
                         }}
-                        className="p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 rounded-lg text-zinc-400 hover:text-white transition-colors cursor-pointer"
+                        className="p-1.5 bg-[var(--surface)] hover:bg-[var(--surface-3)] border border-[var(--border)] rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
                       >
-                        <Edit3 className="w-4.5 h-4.5" />
+                        <Edit3 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteBlog(b.id)}
-                        className="p-1.5 bg-red-950/10 hover:bg-red-950/45 border border-red-900/10 rounded-lg text-red-400 transition-colors cursor-pointer"
+                        className="p-1.5 bg-[var(--surface)] hover:bg-[var(--danger)]/15 border border-[var(--border)] hover:border-[var(--danger)]/40 rounded-[6px] text-[var(--danger)] transition-colors cursor-pointer"
                       >
-                        <Trash2 className="w-4.5 h-4.5" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-
             </div>
           )}
 
-          {/* SKILLS CMS TAB VIEW */}
           {activeTab === "skills" && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-base font-bold text-white font-display">Manage Portfolio Skills Matrix</h3>
-                <p className="text-xs text-zinc-500 font-mono">Modulate technical categories and levels percentages</p>
+                <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Portfolio Skills Matrix</h3>
+                <p className="text-xs text-[var(--text-muted)] font-mono">Update technical categories and proficiency percentages</p>
               </div>
 
               {editingSkillGroup && (
-                <div className="bg-zinc-950/80 border border-purple-500/20 p-5 rounded-2xl space-y-3">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-400 font-mono">
+                <div className="card p-5 space-y-3 border-[var(--border-strong)]">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] font-mono">
                     Skill Level Parameters Editor
                   </h4>
                   <form onSubmit={handleSaveSkillLevel} className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs items-end">
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase block">Skill Node Name</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">Skill Name</span>
                       <input
                         type="text"
                         required
                         value={editingSkillGroup.name || ""}
-                        onChange={(e) => setEditingSkillGroup({...editingSkillGroup, name: e.target.value})}
-                        className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-1.5 text-white outline-none"
+                        onChange={(e) => setEditingSkillGroup({ ...editingSkillGroup, name: e.target.value })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                       />
                     </div>
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase block">Level (%)</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">Level (%)</span>
                       <input
                         type="number"
                         required
                         min={0}
                         max={100}
                         value={editingSkillGroup.level || 0}
-                        onChange={(e) => setEditingSkillGroup({...editingSkillGroup, level: parseInt(e.target.value)})}
-                        className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-1.5 text-white outline-none font-mono"
+                        onChange={(e) => setEditingSkillGroup({ ...editingSkillGroup, level: parseInt(e.target.value) })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none font-mono"
                       />
                     </div>
                     <div className="flex gap-2 justify-end">
                       <button
                         type="button"
                         onClick={() => setEditingSkillGroup(null)}
-                        className="bg-zinc-900 text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg"
+                        className="btn btn-secondary !min-h-[34px] !px-3 !py-1.5 text-xs"
                       >
                         Cancel
                       </button>
                       <button
                         type="submit"
-                        className="bg-purple-600 hover:bg-purple-500 text-white font-bold px-4 py-1.5 rounded-lg cursor-pointer"
+                        className="btn btn-primary !min-h-[34px] !px-4 !py-1.5 text-xs"
                       >
-                        Apply Node
+                        Apply
                       </button>
                     </div>
                   </form>
@@ -1197,40 +1146,40 @@ export default function AdminDashboard() {
               )}
 
               {portfolioData.skills.map((group, gIdx) => (
-                <div key={gIdx} className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl space-y-4">
+                <div key={gIdx} className="card p-5 space-y-4">
                   <div className="flex justify-between items-center">
-                    <h4 className="text-sm font-bold text-white font-display tracking-tight">{group.category}</h4>
+                    <h4 className="text-sm font-bold text-[var(--text)] font-display tracking-tight">{group.category}</h4>
                     <button
                       onClick={() => setEditingSkillGroup({ groupIndex: gIdx, name: "", level: 80, icon: "Code" })}
-                      className="text-[10px] bg-zinc-900 border border-zinc-850 hover:border-zinc-700 px-2.5 py-1 rounded-full text-zinc-400 hover:text-white font-mono cursor-pointer transition-all"
+                      className="btn btn-secondary !min-h-[30px] !px-3 !py-1 text-[11px] font-mono"
                     >
-                      + Add Node
+                      + Add Skill
                     </button>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {group.skills.map((sk, skIdx) => (
-                      <div key={skIdx} className="bg-zinc-900/40 border border-zinc-900/60 p-3.5 rounded-xl flex items-center justify-between gap-4">
-                        <div className="space-y-1 flex-1">
+                      <div key={skIdx} className="bg-[var(--surface)] border border-[var(--border)] p-3.5 rounded-[8px] flex items-center justify-between gap-4">
+                        <div className="space-y-1.5 flex-1">
                           <div className="flex justify-between text-xs font-mono font-medium">
-                            <span className="text-zinc-300">{sk.name}</span>
-                            <span className="text-purple-400 font-bold">{sk.level}%</span>
+                            <span className="text-[var(--text)]">{sk.name}</span>
+                            <span className="text-[var(--accent)] font-bold tabular-nums">{sk.level}%</span>
                           </div>
-                          <div className="w-full bg-zinc-950 h-1 rounded-full overflow-hidden">
-                            <div className="bg-purple-500 h-full rounded-full" style={{ width: `${sk.level}%` }} />
+                          <div className="w-full bg-[var(--surface-3)] h-1.5 rounded-[4px] overflow-hidden">
+                            <div className="bg-[var(--accent)] h-full rounded-[4px]" style={{ width: `${sk.level}%` }} />
                           </div>
                         </div>
 
                         <div className="flex gap-1">
                           <button
                             onClick={() => setEditingSkillGroup({ groupIndex: gIdx, skillIndex: skIdx, name: sk.name, level: sk.level, icon: sk.icon })}
-                            className="p-1 text-zinc-500 hover:text-white transition-colors cursor-pointer"
+                            className="p-1 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
                           >
                             <Edit3 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDeleteSkill(gIdx, skIdx)}
-                            className="p-1 text-red-500/50 hover:text-red-400 transition-colors cursor-pointer"
+                            className="p-1 text-[var(--danger)]/70 hover:text-[var(--danger)] transition-colors cursor-pointer"
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -1240,18 +1189,15 @@ export default function AdminDashboard() {
                   </div>
                 </div>
               ))}
-
             </div>
           )}
 
-          {/* TIMELINE CMS TAB VIEW */}
           {activeTab === "timeline" && (
             <div className="space-y-6">
-              
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-white font-display">Manage Career & Research Timeline</h3>
-                  <p className="text-xs text-zinc-500 font-mono">Modulate student work, research, and designer milestones</p>
+                  <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Career & Research Timeline</h3>
+                  <p className="text-xs text-[var(--text-muted)] font-mono">Update engineering work, research, and milestones</p>
                 </div>
                 <button
                   onClick={() => {
@@ -1264,70 +1210,70 @@ export default function AdminDashboard() {
                       skills: []
                     });
                   }}
-                  className="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer shadow-md"
+                  className="btn btn-primary !min-h-[36px] !px-3.5 !py-1.5 text-xs"
                 >
                   <Plus className="w-4 h-4" /> Add Milestone
                 </button>
               </div>
 
               {editingTimeline && (
-                <div className="bg-zinc-950/80 border border-purple-500/20 p-6 rounded-2xl space-y-4 text-xs">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-400 font-mono">
-                    Timeline Milestone Node Editor
+                <div className="card p-6 space-y-4 text-xs border-[var(--border-strong)]">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] font-mono">
+                    Timeline Milestone Editor
                   </h4>
                   <form onSubmit={handleSaveTimeline} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Role Title</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Role Title</span>
                         <input
                           type="text"
                           required
                           value={editingTimeline.role || ""}
-                          onChange={(e) => setEditingTimeline({...editingTimeline, role: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingTimeline({ ...editingTimeline, role: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Company / Group</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Company / Group</span>
                         <input
                           type="text"
                           required
                           value={editingTimeline.company || ""}
-                          onChange={(e) => setEditingTimeline({...editingTimeline, company: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingTimeline({ ...editingTimeline, company: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Period</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Period</span>
                         <input
                           type="text"
                           required
                           value={editingTimeline.period || ""}
-                          onChange={(e) => setEditingTimeline({...editingTimeline, period: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingTimeline({ ...editingTimeline, period: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 block uppercase">Key Tasks & achievements (Comma divided lines)</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Key Tasks & Achievements (One per line)</span>
                       <textarea
                         rows={3}
                         value={editingTimeline.description?.join("\n") || ""}
-                        onChange={(e) => setEditingTimeline({...editingTimeline, description: e.target.value.split("\n").filter(t => t.trim())})}
-                        className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none font-mono"
+                        onChange={(e) => setEditingTimeline({ ...editingTimeline, description: e.target.value.split("\n").filter(t => t.trim()) })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none font-mono"
                         placeholder="Engineered computer vision tracking pipeline&#10;Built interactive full-stack client applications"
                       />
                     </div>
 
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 block uppercase">Applied Technology Toolkit (Comma separated)</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Applied Technology Toolkit (Comma separated)</span>
                       <input
                         type="text"
-                        placeholder="Photoshop, PyTorch, React"
+                        placeholder="PyTorch, React, TypeScript"
                         value={editingTimeline.skills?.join(", ") || ""}
-                        onChange={(e) => setEditingTimeline({...editingTimeline, skills: e.target.value.split(",").map(t => t.trim())})}
-                        className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                        onChange={(e) => setEditingTimeline({ ...editingTimeline, skills: e.target.value.split(",").map(t => t.trim()) })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                       />
                     </div>
 
@@ -1338,13 +1284,13 @@ export default function AdminDashboard() {
                           setEditingTimeline(null);
                           setIsAddingTimeline(false);
                         }}
-                        className="bg-zinc-900 text-zinc-400 hover:text-white px-4 py-2"
+                        className="btn btn-secondary !min-h-[36px] !px-4 !py-1.5 text-xs"
                       >
-                        Abort
+                        Cancel
                       </button>
                       <button
                         type="submit"
-                        className="bg-purple-600 hover:bg-purple-500 text-white px-5 py-2 rounded-xl cursor-pointer"
+                        className="btn btn-primary !min-h-[36px] !px-5 !py-1.5 text-xs"
                       >
                         Save Milestone
                       </button>
@@ -1355,29 +1301,30 @@ export default function AdminDashboard() {
 
               <div className="space-y-4">
                 {portfolioData.experience.map((exp, idx) => (
-                  <div key={idx} className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl flex items-start justify-between gap-6 hover:border-zinc-800 transition-all">
+                  <div key={idx} className="card p-5 flex items-start justify-between gap-6">
                     <div className="space-y-1.5 flex-1">
-                      <div className="flex items-center gap-3 font-mono">
-                        <span className="text-[10px] bg-zinc-900 px-2.5 py-1 rounded-full text-zinc-500">{exp.period}</span>
-                        <span className="text-purple-400 font-bold text-[10px]">{exp.company}</span>
+                      <div className="flex items-center gap-2 font-mono text-[10px]">
+                        <span className="text-[var(--text-muted)]">{exp.period}</span>
+                        <span aria-hidden="true" className="text-[var(--text-faint)]">·</span>
+                        <span className="text-[var(--accent)] font-bold">{exp.company}</span>
                       </div>
-                      <h4 className="font-bold text-white text-sm font-display leading-tight">{exp.role}</h4>
-                      <p className="text-zinc-400 text-[11px] leading-relaxed line-clamp-2">{exp.description[0]}</p>
+                      <h4 className="font-bold text-[var(--text)] text-sm font-display leading-tight">{exp.role}</h4>
+                      <p className="text-[var(--text-muted)] text-[11px] leading-relaxed line-clamp-2">{exp.description[0]}</p>
                     </div>
 
-                    <div className="flex gap-1 shrink-0">
+                    <div className="flex gap-1.5 shrink-0">
                       <button
                         onClick={() => {
                           setEditingTimeline({ ...exp, id: idx as any });
                           setIsAddingTimeline(false);
                         }}
-                        className="p-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 rounded-lg text-zinc-400 hover:text-white"
+                        className="p-1.5 bg-[var(--surface)] hover:bg-[var(--surface-3)] border border-[var(--border)] rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteTimeline(idx)}
-                        className="p-1.5 bg-red-950/15 hover:bg-red-950/45 border border-red-900/10 rounded-lg text-red-400"
+                        className="p-1.5 bg-[var(--surface)] hover:bg-[var(--danger)]/15 border border-[var(--border)] hover:border-[var(--danger)]/40 rounded-[6px] text-[var(--danger)] cursor-pointer"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -1385,29 +1332,27 @@ export default function AdminDashboard() {
                   </div>
                 ))}
               </div>
-
             </div>
           )}
 
-          {/* LEARNING DASHBOARD TAB VIEW */}
           {activeTab === "learning" && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-base font-bold text-white font-display">Manage Learning Dashboard Progress</h3>
-                <p className="text-xs text-zinc-500 font-mono">Modulate current active coursework and coding progress indicators</p>
+                <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Learning Dashboard Progress</h3>
+                <p className="text-xs text-[var(--text-muted)] font-mono">Update active coursework and coding progress indicators</p>
               </div>
 
-              <div className="bg-zinc-950/40 border border-zinc-900 p-6 rounded-2xl space-y-5">
-                <span className="text-[10px] uppercase font-mono text-zinc-500 block">Edit Dynamic Progress Bars</span>
-                
+              <div className="card p-6 space-y-5">
+                <span className="text-[10px] uppercase font-mono text-[var(--text-faint)] block">Edit Dynamic Progress Bars</span>
+
                 <div className="space-y-4">
                   {portfolioData.learningDashboard.items.map((item, idx) => (
                     <div key={idx} className="space-y-1.5">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-medium text-white">{item.name}</span>
-                        <div className="flex items-center gap-3 font-mono font-bold">
-                          <span className="text-cyan-400">{item.progress}%</span>
-                          <span className="text-zinc-500 text-[10px]">({item.status})</span>
+                        <span className="font-medium text-[var(--text)]">{item.name}</span>
+                        <div className="flex items-center gap-3 font-mono font-bold tabular-nums">
+                          <span className="text-[var(--accent)]">{item.progress}%</span>
+                          <span className="text-[var(--text-muted)] text-[10px]">({item.status})</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
@@ -1417,25 +1362,22 @@ export default function AdminDashboard() {
                           max="100"
                           value={item.progress}
                           onChange={(e) => handleUpdateLearningProgress(idx, parseInt(e.target.value))}
-                          className="flex-1 bg-zinc-900 h-1.5 rounded-lg appearance-none cursor-pointer accent-purple-500"
+                          className="flex-1 bg-[var(--surface-3)] h-1.5 rounded-[4px] appearance-none cursor-pointer accent-[#69734A]"
                         />
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-
             </div>
           )}
 
-          {/* CERTIFICATES CMS TAB VIEW */}
           {activeTab === "certificates" && (
             <div className="space-y-6">
-              
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-white font-display">Manage Academics & Certifications</h3>
-                  <p className="text-xs text-zinc-500 font-mono">Modulate Coursera, Google Cloud and academic verification nodes</p>
+                  <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Academics & Certifications</h3>
+                  <p className="text-xs text-[var(--text-muted)] font-mono">Manage Coursera, Google Cloud, and academic credentials</p>
                 </div>
                 <button
                   onClick={() => {
@@ -1448,68 +1390,68 @@ export default function AdminDashboard() {
                       image: "https://picsum.photos/seed/cert/100/100"
                     });
                   }}
-                  className="flex items-center gap-1.5 bg-purple-600 hover:bg-purple-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer shadow-md"
+                  className="btn btn-primary !min-h-[36px] !px-3.5 !py-1.5 text-xs"
                 >
                   <Plus className="w-4 h-4" /> Add Certificate
                 </button>
               </div>
 
               {editingCert && (
-                <div className="bg-zinc-950/80 border border-purple-500/20 p-6 rounded-2xl space-y-4 text-xs">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-purple-400 font-mono">
-                    Academics Credentials Node Editor
+                <div className="card p-6 space-y-4 text-xs border-[var(--border-strong)]">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] font-mono">
+                    Academics Credentials Editor
                   </h4>
                   <form onSubmit={handleSaveCert} className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Certification Name</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Certification Name</span>
                         <input
                           type="text"
                           required
                           value={editingCert.name || ""}
-                          onChange={(e) => setEditingCert({...editingCert, name: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingCert({ ...editingCert, name: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Issuer Authority</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Issuer Authority</span>
                         <input
                           type="text"
                           required
                           value={editingCert.issuer || ""}
-                          onChange={(e) => setEditingCert({...editingCert, issuer: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingCert({ ...editingCert, issuer: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Issue Date</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Issue Date</span>
                         <input
                           type="text"
                           required
                           value={editingCert.date || ""}
-                          onChange={(e) => setEditingCert({...editingCert, date: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingCert({ ...editingCert, date: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Verification Registry URL</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Verification Registry URL</span>
                         <input
                           type="text"
                           value={editingCert.verificationUrl || ""}
-                          onChange={(e) => setEditingCert({...editingCert, verificationUrl: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingCert({ ...editingCert, verificationUrl: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-zinc-500 block uppercase">Badge Icon URL</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Badge Icon URL</span>
                         <input
                           type="text"
                           value={editingCert.image || ""}
-                          onChange={(e) => setEditingCert({...editingCert, image: e.target.value})}
-                          className="w-full bg-zinc-900 border border-zinc-850 rounded-lg px-2.5 py-2 text-white outline-none"
+                          onChange={(e) => setEditingCert({ ...editingCert, image: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                     </div>
@@ -1521,13 +1463,13 @@ export default function AdminDashboard() {
                           setEditingCert(null);
                           setIsAddingCert(false);
                         }}
-                        className="bg-zinc-900 text-zinc-400 hover:text-white px-4 py-2"
+                        className="btn btn-secondary !min-h-[36px] !px-4 !py-1.5 text-xs"
                       >
-                        Abort
+                        Cancel
                       </button>
                       <button
                         type="submit"
-                        className="bg-purple-600 hover:bg-purple-500 text-white px-5 py-2 rounded-xl cursor-pointer"
+                        className="btn btn-primary !min-h-[36px] !px-5 !py-1.5 text-xs"
                       >
                         Save Credentials
                       </button>
@@ -1538,12 +1480,12 @@ export default function AdminDashboard() {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {portfolioData.certifications.map((cert, idx) => (
-                  <div key={idx} className="bg-zinc-950/40 border border-zinc-900 p-4 rounded-2xl flex items-center justify-between gap-4">
-                    <div className="flex items-center gap-3.5">
-                      <img src={cert.image} alt={cert.name} referrerPolicy="no-referrer" className="w-10 h-10 rounded-lg object-cover bg-zinc-900 shrink-0 border border-zinc-800" />
-                      <div>
-                        <h4 className="font-bold text-white text-xs leading-snug truncate max-w-[200px]">{cert.name}</h4>
-                        <p className="text-[10px] text-zinc-500 font-mono mt-0.5">{cert.issuer}</p>
+                  <div key={idx} className="card p-4 flex items-center justify-between gap-4">
+                    <div className="flex items-center gap-3.5 min-w-0">
+                      <img src={cert.image} alt={cert.name} referrerPolicy="no-referrer" className="w-10 h-10 rounded-[6px] object-cover bg-[var(--surface)] shrink-0 border border-[var(--border)]" />
+                      <div className="min-w-0">
+                        <h4 className="font-bold text-[var(--text)] text-xs leading-snug truncate max-w-[200px]">{cert.name}</h4>
+                        <p className="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">{cert.issuer}</p>
                       </div>
                     </div>
 
@@ -1553,36 +1495,33 @@ export default function AdminDashboard() {
                           setEditingCert({ ...cert, id: idx as any });
                           setIsAddingCert(false);
                         }}
-                        className="p-1 hover:text-white text-zinc-500"
+                        className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
                       >
-                        <Edit3 className="w-4.5 h-4.5" />
+                        <Edit3 className="w-4 h-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteCert(idx)}
-                        className="p-1 hover:text-red-400 text-red-900/40"
+                        className="p-1.5 text-[var(--danger)]/70 hover:text-[var(--danger)] cursor-pointer"
                       >
-                        <Trash2 className="w-4.5 h-4.5" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-
             </div>
           )}
 
-          {/* CONTACT INQUIRIES MESSAGES CMS VIEW */}
           {activeTab === "messages" && (
             <div className="space-y-6">
-              
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-white font-display">Inquiry Transmissions Inbox</h3>
-                  <p className="text-xs text-zinc-500 font-mono">Bypassed records from standard contact submittals</p>
+                  <h3 className="text-base font-bold text-[var(--text)] font-display">Inquiry Transmissions Inbox</h3>
+                  <p className="text-xs text-[var(--text-muted)] font-mono">Recorded submissions from the contact form</p>
                 </div>
                 <button
                   onClick={() => exportToCSV(messages, "sayam_messages_export")}
-                  className="flex items-center gap-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 px-3.5 py-1.5 rounded-xl text-xs font-semibold cursor-pointer text-zinc-300 hover:text-white transition-all"
+                  className="btn btn-secondary !min-h-[36px] !px-3.5 !py-1.5 text-xs"
                 >
                   <FileSpreadsheet className="w-4 h-4" /> Export CSV
                 </button>
@@ -1590,127 +1529,121 @@ export default function AdminDashboard() {
 
               <div className="space-y-4">
                 {messages.length === 0 ? (
-                  <div className="bg-zinc-950/20 border border-zinc-900 rounded-2xl py-12 text-center text-xs text-zinc-500 font-mono">
-                    📭 Archive filters clear. No inbound transmissions recorded yet.
+                  <div className="card py-12 text-center text-xs text-[var(--text-muted)] font-mono">
+                    Archive filters clear. No inbound transmissions recorded yet.
                   </div>
                 ) : (
                   messages.map((msg) => (
-                    <div 
-                      key={msg.id} 
-                      className={`bg-zinc-950/40 border p-5 rounded-2xl space-y-4 relative ${
-                        msg.status === "unread" ? "border-purple-500/20 shadow-[0_4px_12px_rgba(139,92,246,0.05)]" : "border-zinc-900"
+                    <div
+                      key={msg.id}
+                      className={`card p-5 space-y-4 relative ${
+                        msg.status === "unread" ? "border-[var(--accent)]" : ""
                       }`}
                     >
                       {msg.status === "unread" && (
-                        <span className="absolute top-4 right-4 bg-cyan-500 text-zinc-950 font-mono font-bold text-[8px] px-2 py-0.5 rounded-full uppercase">NEW_ALERT</span>
+                        <span className="absolute top-4 right-4 bg-[#C7E34A] text-[#20231D] font-mono font-bold text-[9px] px-2 py-0.5 rounded-[4px] uppercase">UNREAD</span>
                       )}
 
                       <div className="space-y-1">
                         <div className="flex items-center gap-2.5 text-xs">
-                          <span className="font-bold text-white font-display">{msg.firstName} {msg.lastName}</span>
-                          <span className="text-[10px] text-zinc-500 font-mono">• {msg.email}</span>
+                          <span className="font-bold text-[var(--text)] font-display">{msg.firstName} {msg.lastName}</span>
+                          <span className="text-[10px] text-[var(--text-muted)] font-mono">· {msg.email}</span>
                         </div>
-                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-zinc-500 font-mono">
-                          <span>📍 Loc: {msg.country || "Bhubaneswar, IN"}</span>
-                          <span>🏢 Org: {msg.company || "Independent"}</span>
-                          <span>💰 Budget: {msg.budget || "None"}</span>
-                          <span>🗓️ Timeline: {msg.timeline || "None"}</span>
-                          <span>📅 {new Date(msg.timestamp).toLocaleString()}</span>
+                        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-[var(--text-muted)] font-mono">
+                          <span>Loc: {msg.country || "Bhubaneswar, IN"}</span>
+                          <span>· Org: {msg.company || "Independent"}</span>
+                          <span>· Budget: {msg.budget || "None"}</span>
+                          <span>· Timeline: {msg.timeline || "None"}</span>
+                          <span>· {new Date(msg.timestamp).toLocaleString()}</span>
                         </div>
                       </div>
 
-                      <div className="bg-zinc-900/30 border border-zinc-900/60 p-3 rounded-xl text-xs text-zinc-300 leading-relaxed font-mono whitespace-pre-wrap">
+                      <div className="bg-[var(--surface)] border border-[var(--border)] p-3 rounded-[6px] text-xs text-[var(--text-secondary)] leading-relaxed font-mono whitespace-pre-wrap">
                         {msg.message}
                       </div>
 
                       {msg.attachmentName && (
-                        <div className="flex items-center gap-2 text-[10px] text-purple-400 font-mono bg-purple-500/5 border border-purple-500/10 rounded-lg px-3 py-1.5">
+                        <div className="flex items-center gap-2 text-[10px] text-[var(--accent)] font-mono bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-3 py-1.5">
                           <FileText className="w-3.5 h-3.5" />
-                          <span>Attachment Parameters: {msg.attachmentName}</span>
+                          <span>Attachment: {msg.attachmentName}</span>
                         </div>
                       )}
 
-                      <div className="flex justify-end gap-2 pt-2 border-t border-zinc-900/60">
+                      <div className="flex justify-end gap-2 pt-2 border-t border-[var(--border)]">
                         {msg.status !== "archived" && (
                           <button
                             onClick={() => handleMessageAction(msg.id, "archive")}
-                            className="flex items-center gap-1.5 bg-zinc-900 hover:bg-zinc-850 text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg text-[10px] font-mono transition-all cursor-pointer"
+                            className="btn btn-secondary !min-h-[30px] !px-3 !py-1 text-[11px] font-mono"
                           >
                             <Archive className="w-3.5 h-3.5" /> Archive
                           </button>
                         )}
                         <button
                           onClick={() => handleMessageAction(msg.id, "delete")}
-                          className="flex items-center gap-1.5 bg-red-950/10 hover:bg-red-950/30 text-red-400 px-3 py-1.5 rounded-lg text-[10px] font-mono transition-all cursor-pointer"
+                          className="btn btn-secondary !min-h-[30px] !px-3 !py-1 text-[11px] font-mono border-[var(--danger)]/40 text-[var(--danger)] hover:!bg-[var(--danger)] hover:!text-white hover:!border-[var(--danger)]"
                         >
-                          <Trash2 className="w-3.5 h-3.5" /> Delete Node
+                          <Trash2 className="w-3.5 h-3.5" /> Delete
                         </button>
                       </div>
                     </div>
                   ))
                 )}
               </div>
-
             </div>
           )}
 
-          {/* NEWSLETTER SUB SUBSCRIBERS CMS VIEW */}
           {activeTab === "newsletter" && (
             <div className="space-y-6">
-              
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                
-                {/* Send Newsletter Form */}
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-3xl md:col-span-2 space-y-4">
-                  <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400">Broadcast Newsletter Node</h4>
-                  
+                <div className="card p-5 md:col-span-2 space-y-4">
+                  <h4 className="text-xs uppercase font-mono tracking-wider text-[var(--text-muted)]">Broadcast Newsletter</h4>
+
                   <form onSubmit={handleSendNewsletter} className="space-y-4 text-xs">
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase block">Subject Header</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">Subject Header</span>
                       <input
                         type="text"
                         required
                         placeholder="Weekly Deep Learning Brief | YOLOv8 Optimizations"
                         value={newsSubject}
                         onChange={(e) => setNewsSubject(e.target.value)}
-                        className="w-full bg-zinc-900 border border-zinc-850 rounded-xl px-3 py-2 text-white outline-none"
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none"
                       />
                     </div>
-                    
+
                     <div className="space-y-1">
-                      <span className="text-[10px] font-mono text-zinc-500 uppercase block">Newsletter Body (Markdown compatible)</span>
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">Newsletter Body (Markdown compatible)</span>
                       <textarea
                         rows={5}
                         required
                         placeholder="Compose technical broadcast content details..."
                         value={newsBody}
                         onChange={(e) => setNewsBody(e.target.value)}
-                        className="w-full bg-zinc-900 border border-zinc-850 rounded-xl px-3 py-2 text-white outline-none font-mono"
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-3 py-2 text-[var(--text)] outline-none font-mono"
                       />
                     </div>
 
                     <button
                       type="submit"
                       disabled={subscribers.length === 0 || newsSent}
-                      className="w-full bg-gradient-to-r from-purple-600 to-cyan-500 hover:from-purple-500 hover:to-cyan-400 text-white font-bold py-2.5 rounded-xl text-xs tracking-wider uppercase transition-all shadow-md cursor-pointer disabled:opacity-50"
+                      className="btn btn-primary w-full text-xs tracking-wider uppercase disabled:opacity-50"
                     >
-                      {newsSent ? "Broadcasting node packets..." : `Transmit Broadcast to ${subscribers.length} Nodes`}
+                      {newsSent ? "Broadcasting dispatch..." : `Transmit Broadcast to ${subscribers.length} Subscribers`}
                     </button>
                   </form>
                 </div>
 
-                {/* Subscribers list details */}
-                <div className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-3xl space-y-4 flex flex-col justify-between">
+                <div className="card p-5 space-y-4 flex flex-col justify-between">
                   <div>
-                    <div className="flex justify-between items-center border-b border-zinc-900 pb-2">
-                      <h4 className="text-xs uppercase font-mono tracking-wider text-zinc-400">Locked Subscribers</h4>
-                      <span className="text-[10px] text-cyan-400 font-mono font-bold">({subscribers.length})</span>
+                    <div className="flex justify-between items-center border-b border-[var(--border)] pb-2">
+                      <h4 className="text-xs uppercase font-mono tracking-wider text-[var(--text-muted)]">Subscribers</h4>
+                      <span className="text-[10px] text-[var(--accent)] font-mono font-bold tabular-nums">({subscribers.length})</span>
                     </div>
 
                     <div className="space-y-2 max-h-56 overflow-y-auto pt-2 text-[11px] font-mono no-scrollbar">
                       {subscribers.map((sub) => (
-                        <div key={sub.id} className="flex items-center justify-between gap-3 bg-zinc-900/30 p-2 rounded-lg border border-zinc-900/60">
-                          <span className="truncate text-zinc-400">{sub.email}</span>
+                        <div key={sub.id} className="flex items-center justify-between gap-3 bg-[var(--surface)] p-2 rounded-[6px] border border-[var(--border)]">
+                          <span className="truncate text-[var(--text-secondary)]">{sub.email}</span>
                           <button
                             onClick={() => {
                               triggerConfirm(
@@ -1722,7 +1655,7 @@ export default function AdminDashboard() {
                                 }
                               );
                             }}
-                            className="text-red-500 hover:text-red-400 cursor-pointer"
+                            className="text-[var(--danger)] hover:opacity-80 cursor-pointer"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
                           </button>
@@ -1734,78 +1667,71 @@ export default function AdminDashboard() {
                   <button
                     type="button"
                     onClick={() => exportToCSV(subscribers, "sayam_newsletter_subscribers")}
-                    className="w-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-850 py-2 rounded-xl text-xs font-semibold text-zinc-300 transition-all text-center block"
+                    className="btn btn-secondary w-full text-xs"
                   >
                     Export Contacts List
                   </button>
                 </div>
-
               </div>
-
             </div>
           )}
 
-          {/* TESTIMONIALS APPROVAL CMS VIEW */}
           {activeTab === "testimonials" && (
             <div className="space-y-6">
               <div>
-                <h3 className="text-base font-bold text-white font-display">Manage Testimonials Feed</h3>
-                <p className="text-xs text-zinc-500 font-mono">Approve, edit, or reject inbound visitor testimonial requests</p>
+                <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Testimonials Feed</h3>
+                <p className="text-xs text-[var(--text-muted)] font-mono">Approve, edit, or reject inbound visitor testimonial requests</p>
               </div>
 
               <div className="space-y-4">
                 {portfolioData.testimonials.length === 0 ? (
-                  <div className="bg-zinc-950/20 border border-zinc-900 rounded-2xl py-12 text-center text-xs text-zinc-500 font-mono">
-                    📭 Testimonials registry empty.
+                  <div className="card py-12 text-center text-xs text-[var(--text-muted)] font-mono">
+                    Testimonials registry empty.
                   </div>
                 ) : (
                   portfolioData.testimonials.map((test) => (
-                    <div key={test.id} className="bg-zinc-950/40 border border-zinc-900 p-5 rounded-2xl flex items-center justify-between gap-6 hover:border-zinc-800 transition-all">
+                    <div key={test.id} className="card p-5 flex items-center justify-between gap-6">
                       <div className="space-y-2 flex-1 max-w-lg">
                         <div className="flex items-center gap-3">
-                          <img src={test.avatar} alt={test.name} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full object-cover shrink-0 bg-zinc-900 border border-zinc-800" />
+                          <img src={test.avatar} alt={test.name} referrerPolicy="no-referrer" className="w-8 h-8 rounded-[6px] object-cover shrink-0 bg-[var(--surface)] border border-[var(--border)]" />
                           <div>
-                            <h4 className="font-bold text-white text-xs leading-none">{test.name}</h4>
-                            <p className="text-[10px] text-zinc-500 font-mono mt-1">{test.role}</p>
+                            <h4 className="font-bold text-[var(--text)] text-xs leading-none">{test.name}</h4>
+                            <p className="text-[10px] text-[var(--text-muted)] font-mono mt-1">{test.role}</p>
                           </div>
                           {!test.approved && (
-                            <span className="bg-amber-500/10 border border-amber-500/30 px-2 py-0.5 rounded text-[8px] font-bold text-amber-400 font-mono uppercase tracking-wider">PENDING_CMS</span>
+                            <span className="bg-[var(--surface)] border border-[var(--warning)]/40 px-2 py-0.5 rounded-[4px] text-[9px] font-bold text-[var(--warning)] font-mono uppercase tracking-wider">PENDING</span>
                           )}
                         </div>
-                        <p className="text-zinc-300 text-xs italic leading-relaxed">"{test.content}"</p>
+                        <p className="text-[var(--text-secondary)] text-xs italic leading-relaxed">&ldquo;{test.content}&rdquo;</p>
                       </div>
 
                       <div className="flex gap-2 shrink-0">
                         {!test.approved && (
                           <button
                             onClick={() => handleTestimonialAction(test.id, "approve")}
-                            className="p-1.5 bg-emerald-950/15 hover:bg-emerald-950/40 border border-emerald-900/20 text-emerald-400 rounded-lg cursor-pointer"
+                            className="p-1.5 bg-[var(--surface)] hover:bg-[var(--success)]/15 border border-[var(--border)] hover:border-[var(--success)]/40 text-[var(--success)] rounded-[6px] cursor-pointer"
                             title="Approve to publish on feed"
                           >
-                            <Check className="w-4.5 h-4.5" />
+                            <Check className="w-4 h-4" />
                           </button>
                         )}
                         <button
                           onClick={() => handleTestimonialAction(test.id, "reject")}
-                          className="p-1.5 bg-red-950/15 hover:bg-red-950/40 border border-red-900/20 text-red-400 rounded-lg cursor-pointer"
+                          className="p-1.5 bg-[var(--surface)] hover:bg-[var(--danger)]/15 border border-[var(--border)] hover:border-[var(--danger)]/40 text-[var(--danger)] rounded-[6px] cursor-pointer"
                           title="Reject or delete"
                         >
-                          <X className="w-4.5 h-4.5" />
+                          <X className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
                   ))
                 )}
               </div>
-
             </div>
           )}
-
         </main>
-
       </div>
 
-      {/* Reusable Confirmation Modal */}
       <ConfirmationModal
         isOpen={confirmModalState.isOpen}
         title={confirmModalState.title}
@@ -1815,7 +1741,6 @@ export default function AdminDashboard() {
         onConfirm={confirmModalState.onConfirm}
         onCancel={() => setConfirmModalState((prev) => ({ ...prev, isOpen: false }))}
       />
-
     </div>
   );
 }

@@ -1,4 +1,3 @@
-import React from "react";
 import { Search, X, RotateCcw } from "lucide-react";
 import { SKILL_FILTER_TABS, SkillFilterKey } from "../../data/skills";
 
@@ -21,44 +20,47 @@ export function SkillsFilterSearch({
   totalCount = 0,
   onReset,
 }: SkillsFilterSearchProps) {
-  const isFiltered = activeFilter !== "all" || (searchQuery && searchQuery.trim().length > 0);
+  const isFiltered =
+    activeFilter !== "all" || (searchQuery && searchQuery.trim().length > 0);
 
   return (
     <div className="space-y-3">
       {/* Search Input & Counter */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-        {/* Search Field */}
         <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500 pointer-events-none" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--text-muted)] pointer-events-none" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery?.(e.target.value)}
             placeholder="Search technologies, frameworks, or concepts..."
-            className="w-full pl-10 pr-10 py-2.5 rounded-xl bg-zinc-950/60 border border-zinc-850 focus:border-zinc-700 focus:outline-none focus:ring-1 focus:ring-zinc-600 text-sm text-zinc-200 placeholder:text-zinc-500 font-sans transition-all"
+            className="w-full pl-10 pr-10 py-2.5 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--border-strong)] focus:outline-none text-sm text-[var(--text)] placeholder:text-[var(--text-muted)] font-sans transition-colors"
           />
           {searchQuery && (
             <button
+              type="button"
               onClick={() => setSearchQuery?.("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-zinc-500 hover:text-zinc-300 transition-colors cursor-pointer"
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
               title="Clear search"
+              aria-label="Clear search"
             >
               <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
 
-        {/* Counter & Clear Filter */}
-        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
-          <span className="text-xs font-mono text-zinc-500">
-            Showing <span className="text-zinc-300 font-semibold">{resultCount}</span> of {totalCount} verified items
+        <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 tabular-nums">
+          <span className="text-xs font-mono text-[var(--text-muted)]">
+            Showing{" "}
+            <span className="text-[var(--text)] font-semibold">{resultCount}</span>{" "}
+            of {totalCount} verified items
           </span>
 
           {isFiltered && (
             <button
               type="button"
               onClick={onReset}
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-[11px] font-mono text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+              className="btn btn-secondary px-2.5 py-1 text-xs font-mono rounded-[6px] cursor-pointer whitespace-nowrap shrink-0"
             >
               <RotateCcw className="w-3 h-3" />
               <span>Reset</span>
@@ -77,10 +79,10 @@ export function SkillsFilterSearch({
               key={tab.key}
               type="button"
               onClick={() => setActiveFilter?.(tab.key)}
-              className={`px-3 py-1.5 rounded-lg whitespace-nowrap transition-all cursor-pointer font-medium ${
+              className={`px-3 py-1.5 rounded-[6px] whitespace-nowrap shrink-0 transition-colors cursor-pointer font-medium border ${
                 isActive
-                  ? "bg-zinc-800 text-white border border-zinc-700"
-                  : "bg-zinc-950/40 border border-zinc-850/80 text-zinc-400 hover:text-zinc-200 hover:border-zinc-800"
+                  ? "bg-[#C7E34A] text-[#20231D] border-[#A9C52F] font-semibold"
+                  : "bg-[var(--surface)] border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
               }`}
             >
               {tab.label}
@@ -93,3 +95,4 @@ export function SkillsFilterSearch({
 }
 
 export default SkillsFilterSearch;
+

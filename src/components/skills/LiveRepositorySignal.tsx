@@ -1,10 +1,9 @@
 import React from "react";
-import { 
-  GitBranch, GitCommit, Radio, Clock, CheckCircle2, 
-  ExternalLink, FolderGit2, AlertCircle, RefreshCw, Server
+import {
+  GitBranch, Clock, CheckCircle2,
+  ExternalLink, FolderGit2, Server
 } from "lucide-react";
 import { useGithub } from "../../hooks/useGithub";
-import { PROJECTS } from "../../data/projects";
 
 const DEPLOYED_APPS = [
   {
@@ -31,12 +30,10 @@ const DEPLOYED_APPS = [
 ];
 
 export function LiveRepositorySignal() {
-  const { repos, events, syncedAt } = useGithub();
+  const { repos, syncedAt } = useGithub();
 
-  // Primary languages across verified codebases
   const primaryLanguages = ["TypeScript", "C++", "Python", "JavaScript"];
 
-  // Find latest repository pushed date
   const latestPushDate = React.useMemo(() => {
     if (!repos || repos.length === 0) return "Recent";
     const dates = repos
@@ -50,11 +47,6 @@ export function LiveRepositorySignal() {
       year: "numeric"
     });
   }, [repos]);
-
-  // Real push events count or recent activities
-  const pushEvents = React.useMemo(() => {
-    return (events || []).filter((e) => e.type === "PushEvent");
-  }, [events]);
 
   const formattedSyncTime = React.useMemo(() => {
     if (!syncedAt) return "Just now";
@@ -70,104 +62,98 @@ export function LiveRepositorySignal() {
 
   return (
     <section id="repository-signals" className="space-y-6">
-      {/* Section Header */}
       <div className="space-y-1.5">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-mono font-medium tracking-wide text-cyan-400">
+          <span className="text-xs font-mono font-medium tracking-wide text-[var(--accent)]">
             06 · Live Repository Signal
           </span>
-          <span className="h-px w-8 bg-zinc-800" />
-          <div className="flex items-center gap-1.5 text-xs font-mono text-emerald-400">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Live from GitHub</span>
-          </div>
+          <span className="h-px w-8 bg-[var(--border)]" />
+          <span className="text-xs font-mono text-[var(--success)]">
+            Live from GitHub
+          </span>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-900 dark:text-white font-display">
+          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text)] font-display">
             Repository Health &amp; Deployment State
           </h2>
-          <span className="text-xs font-mono text-zinc-500">
+          <span className="text-xs font-mono text-[var(--text-faint)]">
             {syncStatusText}
           </span>
         </div>
-        <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 max-w-2xl font-sans leading-relaxed">
+        <p className="text-xs sm:text-sm text-[var(--text-muted)] max-w-2xl font-sans leading-relaxed">
           Public GitHub repository metrics and live application runtime availability. Direct signals fetched from the GitHub API.
         </p>
       </div>
 
-      {/* 4-Stat Metric Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
-        {/* Metric 1: Public Repositories */}
-        <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-2.5">
-          <div className="flex items-center justify-between text-zinc-500">
+        <div className="card p-4 space-y-2.5">
+          <div className="flex items-center justify-between text-[var(--text-faint)]">
             <span className="text-[11px] font-mono uppercase tracking-wider font-medium">
               Public Repositories
             </span>
-            <FolderGit2 className="w-3.5 h-3.5 text-cyan-400" />
+            <FolderGit2 className="w-3.5 h-3.5 text-[var(--accent)]" />
           </div>
           <div className="space-y-0.5">
-            <div className="text-xl sm:text-2xl font-semibold text-white font-mono">
+            <div className="text-xl sm:text-2xl font-semibold text-[var(--text)] font-mono tabular-nums">
               {repos.length > 0 ? repos.length : "4"}
             </div>
-            <p className="text-xs text-zinc-400 font-sans">
+            <p className="text-xs text-[var(--text-muted)] font-sans">
               Verified public source codebases
             </p>
           </div>
         </div>
 
-        {/* Metric 2: Core Languages */}
-        <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-2.5">
-          <div className="flex items-center justify-between text-zinc-500">
+        <div className="card p-4 space-y-2.5">
+          <div className="flex items-center justify-between text-[var(--text-faint)]">
             <span className="text-[11px] font-mono uppercase tracking-wider font-medium">
               Primary Languages
             </span>
-            <GitBranch className="w-3.5 h-3.5 text-sky-400" />
+            <GitBranch className="w-3.5 h-3.5 text-[var(--accent)]" />
           </div>
           <div className="space-y-1">
-            <div className="text-xs font-medium text-white font-mono flex flex-wrap gap-1">
-              {primaryLanguages.map((lang) => (
-                <span key={lang} className="px-1.5 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300 text-[11px]">
-                  {lang}
+            <div className="text-xs font-medium text-[var(--text)] font-mono flex flex-wrap items-center gap-x-2 gap-y-1">
+              {primaryLanguages.map((lang, idx) => (
+                <span key={lang} className="inline-flex items-center gap-2">
+                  {idx > 0 && <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>}
+                  <span>{lang}</span>
                 </span>
               ))}
             </div>
-            <p className="text-xs text-zinc-400 font-sans">
+            <p className="text-xs text-[var(--text-muted)] font-sans">
               Active production runtimes
             </p>
           </div>
         </div>
 
-        {/* Metric 3: Latest Push */}
-        <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-2.5">
-          <div className="flex items-center justify-between text-zinc-500">
+        <div className="card p-4 space-y-2.5">
+          <div className="flex items-center justify-between text-[var(--text-faint)]">
             <span className="text-[11px] font-mono uppercase tracking-wider font-medium">
               Latest Repo Push
             </span>
-            <Clock className="w-3.5 h-3.5 text-emerald-400" />
+            <Clock className="w-3.5 h-3.5 text-[var(--accent)]" />
           </div>
           <div className="space-y-0.5">
-            <div className="text-base sm:text-lg font-semibold text-white font-mono truncate">
+            <div className="text-base sm:text-lg font-semibold text-[var(--text)] font-mono truncate tabular-nums">
               {latestPushDate}
             </div>
-            <p className="text-xs text-zinc-400 font-sans">
+            <p className="text-xs text-[var(--text-muted)] font-sans">
               Recent commit &amp; branch update
             </p>
           </div>
         </div>
 
-        {/* Metric 4: Live Apps Active */}
-        <div className="p-4 rounded-xl bg-zinc-950/40 border border-zinc-850 space-y-2.5">
-          <div className="flex items-center justify-between text-zinc-500">
+        <div className="card p-4 space-y-2.5">
+          <div className="flex items-center justify-between text-[var(--text-faint)]">
             <span className="text-[11px] font-mono uppercase tracking-wider font-medium">
               Production Apps
             </span>
-            <Server className="w-3.5 h-3.5 text-purple-400" />
+            <Server className="w-3.5 h-3.5 text-[var(--accent)]" />
           </div>
           <div className="space-y-0.5">
-            <div className="text-xl sm:text-2xl font-semibold text-white font-mono">
+            <div className="text-xl sm:text-2xl font-semibold text-[var(--text)] font-mono tabular-nums">
               3 Live
             </div>
-            <p className="text-xs text-emerald-400 font-mono flex items-center gap-1">
+            <p className="text-xs text-[var(--success)] font-mono flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" />
               <span>All systems operational</span>
             </p>
@@ -175,18 +161,17 @@ export function LiveRepositorySignal() {
         </div>
       </div>
 
-      {/* Production Deployments Status Table */}
-      <div className="rounded-xl bg-zinc-950/40 border border-zinc-850 p-4 sm:p-5 space-y-3.5">
-        <div className="flex items-center justify-between">
+      <div className="card p-4 sm:p-5 space-y-3.5">
+        <div className="flex items-center justify-between gap-2">
           <div className="space-y-0.5">
-            <h3 className="text-sm sm:text-base font-semibold text-white font-display">
+            <h3 className="text-sm sm:text-base font-semibold text-[var(--text)] font-display">
               Public Deployment Endpoints
             </h3>
-            <p className="text-xs text-zinc-400 font-sans">
+            <p className="text-xs text-[var(--text-muted)] font-sans">
               Edge routing and live availability for published software projects.
             </p>
           </div>
-          <span className="text-[11px] font-mono text-zinc-500 hidden sm:inline">
+          <span className="text-[11px] font-mono text-[var(--text-faint)] hidden sm:inline">
             Zero synthetic uptime ratings
           </span>
         </div>
@@ -195,26 +180,25 @@ export function LiveRepositorySignal() {
           {DEPLOYED_APPS.map((app) => (
             <div
               key={app.name}
-              className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800 flex flex-col justify-between space-y-2.5 hover:border-zinc-700 transition-colors"
+              className="p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2.5 hover:border-[var(--border-strong)] transition-colors"
             >
               <div className="space-y-1">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm font-semibold text-white font-display">{app.name}</span>
-                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                    <span>{app.status}</span>
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-sm font-semibold text-[var(--text)] font-display">{app.name}</span>
+                  <span className="text-[10px] font-mono text-[var(--success)] font-semibold uppercase">
+                    {app.status}
                   </span>
                 </div>
-                <div className="text-xs text-zinc-400 font-sans">{app.role}</div>
-                <div className="text-[11px] font-mono text-zinc-500">{app.platform}</div>
+                <div className="text-xs text-[var(--text-secondary)] font-sans">{app.role}</div>
+                <div className="text-[11px] font-mono text-[var(--text-faint)]">{app.platform}</div>
               </div>
 
-              <div className="pt-2 border-t border-zinc-800/80">
+              <div className="pt-2 border-t border-[var(--border)]">
                 <a
                   href={app.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-mono text-[var(--accent)] hover:underline transition-colors"
                 >
                   <span>Launch Live App</span>
                   <ExternalLink className="w-3 h-3" />

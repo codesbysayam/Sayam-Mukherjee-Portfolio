@@ -12,9 +12,9 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(function Card(
 ) {
   const variantClass =
     variant === "interactive"
-      ? "card cursor-pointer hover:border-purple-500/40 dark:hover:border-purple-500/40 transition-all duration-200"
+      ? "card cursor-pointer hover:border-[var(--accent)] transition-all duration-200"
       : variant === "subtle"
-      ? "rounded-xl border border-zinc-250/70 dark:border-white/[0.05] bg-zinc-50/70 dark:bg-[#11131b]/60 transition-colors"
+      ? "rounded-[10px] border border-[var(--border)] bg-[var(--surface)] transition-colors"
       : "card";
 
   return (

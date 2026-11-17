@@ -1,8 +1,8 @@
 import React from "react";
 import { EXTENDED_DATA } from "../data/extendedData";
-import { 
+import {
   Award, GraduationCap, Trophy, Target, Sparkles, Zap,
-  ArrowRight, CheckCircle2, ShieldCheck, ExternalLink
+  ArrowRight
 } from "lucide-react";
 
 interface CertificationsSectionProps {
@@ -12,12 +12,18 @@ interface CertificationsSectionProps {
 export default function CertificationsSection({ onNavigateToCertificates }: CertificationsSectionProps) {
   const getAchievementIcon = (iconName: string) => {
     switch (iconName) {
-      case 'Award': return <Award className="w-4 h-4 text-purple-400" />;
-      case 'Code': return <Trophy className="w-4 h-4 text-cyan-400" />;
-      case 'Flame': return <Zap className="w-4 h-4 text-amber-500 animate-pulse" />;
-      case 'GraduationCap': return <GraduationCap className="w-4 h-4 text-emerald-400" />;
-      case 'TrendingUp': return <Target className="w-4 h-4 text-pink-400" />;
-      default: return <Sparkles className="w-4 h-4 text-purple-400" />;
+      case "Award":
+        return <Award className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
+      case "Code":
+        return <Trophy className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
+      case "Flame":
+        return <Zap className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
+      case "GraduationCap":
+        return <GraduationCap className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
+      case "TrendingUp":
+        return <Target className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
+      default:
+        return <Sparkles className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
     }
   };
 
@@ -32,121 +38,128 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
   return (
     <div className="space-y-10 font-sans" id="certifications-achievements">
       {/* Header with Callout to Dedicated Vault */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-zinc-850/80 pb-6">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--border)] pb-6">
         <div className="space-y-2">
-          <span className="text-xs text-purple-400 font-mono uppercase tracking-widest block font-bold">
-            HONORS &amp; MILESTONES
+          <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-wider block font-semibold">
+            Honors &amp; Milestones
           </span>
-          <h2 
-            style={{ fontSize: "clamp(1.5rem, 3.5vw, 3.5rem)" }} 
-            className="font-bold tracking-tight text-white font-display"
+          <h2
+            style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
+            className="font-extrabold tracking-tight text-[var(--text)] font-display leading-[1.06]"
           >
             Achievements &amp; Honours
           </h2>
-          <p className="text-sm text-zinc-400 max-w-xl leading-relaxed">
+          <p className="text-sm text-[var(--text-secondary)] max-w-xl leading-relaxed">
             Verified competitive records, hackathon finalist positions, and athletic achievements.
           </p>
         </div>
 
-        {/* Dedicated Certificates Gateway Button */}
         <button
+          type="button"
           onClick={handleNavigate}
-          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/40 hover:border-purple-500/60 text-xs font-mono font-semibold transition-all shrink-0 cursor-pointer shadow-lg shadow-purple-950/40 group"
+          className="btn btn-primary !text-xs font-mono shrink-0"
         >
-          <Award className="w-4 h-4 text-purple-400" />
-          <span>VIEW ALL CERTIFICATES</span>
-          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+          <Award className="w-4 h-4" aria-hidden="true" />
+          <span>View All Certificates</span>
+          <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
         </button>
       </div>
 
       {/* Achievements Timeline and Academic Overview Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         {/* Left timeline layout */}
-        <div className="lg:col-span-8 space-y-8 relative">
-          <div className="absolute left-6 top-4 bottom-4 w-[1px] bg-zinc-900" />
+        <div className="lg:col-span-8 space-y-6 relative">
+          <div className="absolute left-3.5 top-4 bottom-4 w-px bg-[var(--border-strong)]" />
 
           {EXTENDED_DATA.achievements.map((ach) => (
-            <div key={ach.id} className="relative pl-14 group">
-              {/* Timeline node icon container */}
-              <div className="absolute left-3 top-1 w-7 h-7 rounded-full bg-zinc-950 border border-zinc-850 flex items-center justify-center group-hover:border-purple-500/40 transition-colors z-10 shadow-md">
+            <div key={ach.id} className="relative pl-11 group">
+              <div className="absolute left-0 top-3 w-7 h-7 rounded-full bg-[var(--surface-2)] border border-[var(--border-strong)] flex items-center justify-center group-hover:border-[var(--accent)] transition-colors z-10">
                 {getAchievementIcon(ach.iconName)}
               </div>
 
-              <div className="glass-card rounded-2xl p-6 border border-zinc-850/60 hover:border-purple-500/20 transition-all duration-300 space-y-3">
+              <div className="card p-5 sm:p-6 space-y-3">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
-                    <span className="text-xs text-purple-400 font-mono tracking-wider block font-semibold">
+                    <span className="text-xs text-[var(--accent)] font-mono tracking-wider block font-semibold">
                       {ach.category}
                     </span>
-                    <h3 className="text-base font-bold text-white font-display tracking-tight mt-1">
+                    <h3 className="text-base font-bold text-[var(--text)] font-display tracking-tight mt-0.5">
                       {ach.title}
                     </h3>
                   </div>
-                  <span className="text-xs font-mono bg-zinc-900 border border-zinc-850 text-zinc-400 px-2.5 py-0.5 rounded-md">
+                  <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
                     {ach.date}
                   </span>
                 </div>
 
-                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
                   {ach.description}
                 </p>
 
-                <div className="flex items-center gap-1.5 pt-2 text-xs text-zinc-400 font-mono">
-                  <span>Organized by:</span>
-                  <span className="text-zinc-200 font-semibold">{ach.organization}</span>
+                <div className="flex items-center gap-1.5 pt-2 border-t border-[var(--border)] text-xs text-[var(--text-muted)] font-mono">
+                  <span>Organized by</span>
+                  <span className="text-[var(--text)] font-semibold">{ach.organization}</span>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Right details stats box */}
-        <div className="lg:col-span-4 space-y-6">
-          <div className="glass-card p-6 rounded-2xl space-y-4">
-            <GraduationCap className="w-8 h-8 text-cyan-400" />
-            <h3 className="text-base font-bold text-white font-display tracking-tight">Academic Profile Summary</h3>
-            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              Pursuing B.Tech in Computer Science &amp; Engineering (AI &amp; ML) at Kalinga Institute of Industrial Technology, Bhubaneswar, with a dedicated focus on algorithmic foundations and system design.
+        {/* Right details column */}
+        <div className="lg:col-span-4 space-y-5">
+          <div className="card p-6 space-y-4">
+            <GraduationCap className="w-7 h-7 text-[var(--accent)]" aria-hidden="true" />
+            <h3 className="text-base font-bold text-[var(--text)] font-display tracking-tight">
+              Academic Profile Summary
+            </h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+              Pursuing B.Tech in Computer Science &amp; Engineering (AI &amp; ML) at Kalinga Institute of Industrial Technology, Bhubaneswar, with focus on algorithmic foundations and system design.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 pt-2">
-              <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                <span className="text-xs text-zinc-400 block uppercase font-mono">Current Status</span>
-                <span className="text-xs font-bold text-white block mt-1 font-display">2nd Year, 3rd Sem</span>
+            <div className="grid grid-cols-2 gap-3 pt-1">
+              <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center">
+                <span className="text-[10px] text-[var(--text-muted)] block uppercase font-mono">First-Year</span>
+                <span className="text-xs font-bold text-[var(--text)] block mt-1 font-display tabular-nums">9.06 CGPA</span>
               </div>
-              <div className="bg-zinc-900/60 p-3 rounded-xl border border-zinc-850/60 text-center">
-                <span className="text-xs text-zinc-400 block uppercase font-mono">Institution</span>
-                <span className="text-xs font-bold text-cyan-400 block mt-1 font-display">KIIT, Bhubaneswar</span>
+              <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center">
+                <span className="text-[10px] text-[var(--text-muted)] block uppercase font-mono">Institution</span>
+                <span className="text-xs font-bold text-[var(--accent)] block mt-1 font-display">KIIT, Bhubaneswar</span>
               </div>
             </div>
           </div>
 
-          <div className="glass-card p-6 rounded-2xl space-y-4">
-            <Trophy className="w-8 h-8 text-pink-400" />
-            <h3 className="text-base font-bold text-white font-display tracking-tight">Sports &amp; Reflex Skills</h3>
-            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-              High-speed dynamic processing translates into gaming and athletics. Securing multiple first positions in regional Table Tennis tournaments.
+          <div className="card p-6 space-y-4">
+            <Trophy className="w-7 h-7 text-[var(--accent)]" aria-hidden="true" />
+            <h3 className="text-base font-bold text-[var(--text)] font-display tracking-tight">
+              Sports &amp; Reflex Skills
+            </h3>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed">
+              High-speed rally discipline translates directly into focus and agility. District representative and regional Table Tennis champion.
             </p>
-            <div className="flex items-center gap-2.5 bg-zinc-900/40 p-3 rounded-xl border border-zinc-850">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs font-mono text-zinc-300 font-bold">3× First Position Champion</span>
+            <div className="flex items-center justify-between bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)]">
+              <span className="text-xs font-mono text-[var(--text)] font-semibold">
+                3× First Position Champion
+              </span>
+              <span className="text-[11px] font-mono text-[var(--accent)] font-semibold">Verified</span>
             </div>
           </div>
 
-          {/* Quick link card to Credential Vault */}
-          <div 
+          <button
+            type="button"
             onClick={handleNavigate}
-            className="p-6 rounded-2xl bg-gradient-to-br from-purple-950/30 to-zinc-950 border border-purple-900/30 hover:border-purple-600/50 transition-all cursor-pointer space-y-3 group"
+            className="w-full text-left p-6 rounded-[12px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] hover:border-[#C7E34A] transition-all cursor-pointer space-y-3 group"
           >
             <div className="flex items-center justify-between">
-              <Award className="w-6 h-6 text-purple-400" />
-              <ArrowRight className="w-4 h-4 text-purple-400 group-hover:translate-x-1 transition-transform" />
+              <Award className="w-6 h-6 text-[#C7E34A]" aria-hidden="true" />
+              <ArrowRight className="w-4 h-4 text-[#C7E34A] group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </div>
-            <h4 className="text-sm font-bold text-white font-display">Explore the Credential Vault</h4>
-            <p className="text-xs text-zinc-400 leading-relaxed">
-              Browse industry-verified technical certifications, filter by skill or year, and inspect credentials with the integrated viewer.
+            <h4 className="text-sm font-bold text-[#F4F4ED] font-display">
+              Explore the Credential Vault
+            </h4>
+            <p className="text-xs text-[#EAEAE1]/80 leading-relaxed">
+              Browse verified certifications, filter by discipline or year, and inspect credentials inside the lightbox viewer.
             </p>
-          </div>
+          </button>
         </div>
       </div>
     </div>

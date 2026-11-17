@@ -1,361 +1,333 @@
-import { memo, useMemo } from "react";
-import { ArrowUpRight, RotateCw, Star, GitFork, Github, GitCommit, GitBranch, Terminal, Activity, Zap, Radio } from "lucide-react";
+import { memo, useMemo, Suspense } from "react";
+import { motion } from "motion/react";
+import { ArrowUpRight, ArrowDown, RotateCw, Github, GitCommit } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
-import { usePortfolio } from "../context/PortfolioContext";
 import { siteContent, SOCIAL_LINKS } from "../data/siteContent";
-import {
-  formatRelativeTime,
-  formatSyncAge,
-  formatGitHubEvent
-} from "../services/github";
-import { GitHubPulseSummary } from "./GitHubPulseSummary";
+import { formatRelativeTime, formatSyncAge } from "../services/github";
 import { ResumeSpotlight } from "./ResumeSpotlight";
+import { lazyWithRetry } from "../utils/lazyWithRetry";
+import { TextLineReveal } from "../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
+
+const HeroOrbitalSculpture = lazyWithRetry(() => import("./motion/HeroOrbitalSculpture"));
 
 interface HeroSectionProps {
   onViewWork: () => void;
   onOpenResume?: () => void;
+  onNavigateContact?: () => void;
 }
 
-const LANGUAGE_COLORS: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f7df1e",
-  Python: "#3572A5",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Java: "#b07219",
-  "C++": "#f34b7d",
-  C: "#555555",
-  Go: "#00ADD8",
-  Rust: "#dea584",
-  Shell: "#89e051"
-};
-
-function HeroSectionComponent({ onViewWork, onOpenResume }: HeroSectionProps) {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
-
+function HeroSectionComponent({
+  onViewWork,
+  onOpenResume,
+}: HeroSectionProps) {
+  const reduced = usePrefersReducedMotion();
   const {
     user,
     repos,
     events,
     stats,
-    pulse,
     latestRepo,
     latestEvent,
     loading,
     syncedAt,
-    usingCache,
-    refresh
+    refresh,
   } = useGithub();
 
-  // Color dot helper
-  const getLanguageColor = (lang: string | null) => {
-    if (!lang) return "#71717a";
-    return LANGUAGE_COLORS[lang] || "#a1a1aa";
-  };
-
-  // Parsed authentic activity event
-  const recentActivity = useMemo(() => {
-    return formatGitHubEvent(latestEvent);
-  }, [latestEvent]);
-
-  // Derived high-signal telemetry for Build Card (branch, latest SHA, authentic commit message)
   const latestCommitInfo = useMemo(() => {
-    const pushEvent = events?.find((e) => e.type === "PushEvent" && e.payload?.commits?.length > 0) || (latestEvent?.type === "PushEvent" ? latestEvent : null);
-    const branch = pushEvent?.payload?.ref ? pushEvent.payload.ref.replace(/^refs\/heads\//, "") : (latestRepo?.default_branch || "main");
+    const pushEvent =
+      events?.find((e) => e.type === "PushEvent" && e.payload?.commits?.length > 0) ||
+      (latestEvent?.type === "PushEvent" ? latestEvent : null);
+    const branch = pushEvent?.payload?.ref
+      ? pushEvent.payload.ref.replace(/^refs\/heads\//, "")
+      : latestRepo?.default_branch || "main";
     const commit = pushEvent?.payload?.commits?.[pushEvent.payload.commits.length - 1];
-    const sha = commit?.sha ? commit.sha.slice(0, 7) : (stats?.recentCommits?.[0]?.sha?.slice(0, 7) || "5739270");
-    const message = commit?.message || stats?.recentCommits?.[0]?.message || "Time: 14 ms (47.31%), Space: 9.3 MB (77.48%) - LeetHub";
-    const repoName = pushEvent?.repo?.name?.replace(/^[^/]+\//, "") || latestRepo?.name || "sayam-solves";
-    const time = pushEvent?.created_at ? formatRelativeTime(pushEvent.created_at) : (latestRepo?.updated_at ? formatRelativeTime(latestRepo.updated_at) : "recently");
+    const sha = commit?.sha
+      ? commit.sha.slice(0, 7)
+      : stats?.recentCommits?.[0]?.sha?.slice(0, 7) || "5739270";
+    const message =
+      commit?.message ||
+      stats?.recentCommits?.[0]?.message ||
+      "Time: 14 ms (47.31%), Space: 9.3 MB (77.48%) - LeetHub";
+    const repoName =
+      pushEvent?.repo?.name?.replace(/^[^/]+\//, "") || latestRepo?.name || "sayam-solves";
+    const time = pushEvent?.created_at
+      ? formatRelativeTime(pushEvent.created_at)
+      : latestRepo?.updated_at
+        ? formatRelativeTime(latestRepo.updated_at)
+        : "recently";
     const commitUrl = `https://github.com/codesbysayam/${repoName}/commit/${sha}`;
 
     return { branch, sha, message, repoName, time, commitUrl };
   }, [events, latestEvent, latestRepo, stats]);
 
+  const scrollToChapters = () => {
+    const target = document.getElementById("home-about-chapter");
+    if (target) {
+      target.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    }
+  };
+
   return (
-    <div className="w-full relative select-none">
-      {/* Centered Hero Section */}
-      <section className="hero relative" id="hero" aria-label="Hero">
-        <div className="hero-grid">
-          {/* ==================================================
-              LEFT COLUMN (≈ 60% on desktop)
-              ================================================== */}
-          <div className="flex flex-col justify-start text-left">
-            
-            {/* Author Identity & Availability Status Line */}
-            <div className="flex items-center gap-3.5 mb-5">
-              <div className={`relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border shadow-md shrink-0 ${
-                isLight ? "border-slate-200 bg-slate-100" : "border-white/15 bg-zinc-900"
-              }`}>
+    <section
+      id="hero"
+      aria-label="Hero Introduction"
+      className="relative w-full overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-5 py-8 sm:px-9 sm:py-12 lg:px-12 lg:py-14"
+    >
+      {/* Subtle Architectural Contour Lines */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 1200 640"
+        fill="none"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.055] dark:opacity-[0.07]"
+      >
+        <path
+          d="M-60 480C180 410 290 540 520 460C760 375 880 180 1260 220"
+          stroke="currentColor"
+          strokeWidth="1.25"
+        />
+        <path
+          d="M-40 530C220 470 360 595 590 505C830 410 930 240 1280 280"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+        <path
+          d="M-80 140C160 190 340 60 590 120C820 175 940 310 1240 110"
+          stroke="currentColor"
+          strokeWidth="1"
+        />
+        <path
+          d="M-80 190C190 235 380 115 620 170C850 225 970 355 1260 165"
+          stroke="currentColor"
+          strokeWidth="0.9"
+        />
+      </svg>
+
+      <div className="relative z-10 hero-grid">
+        {/* LEFT EDITORIAL COLUMN */}
+        <div className="flex flex-col justify-start text-left min-w-0">
+          <motion.p
+            initial={reduced ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+            className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)] mb-4"
+          >
+            COMPUTER SCIENCE · AI &amp; ML · KIIT UNIVERSITY
+          </motion.p>
+
+          <h1 className="hero-title font-display font-extrabold tracking-[-0.035em] text-[var(--text)]">
+            <TextLineReveal delay={0.04}>SAYAM</TextLineReveal>
+            <br />
+            <TextLineReveal delay={0.12}>MUKHERJEE</TextLineReveal>
+          </h1>
+
+          <motion.p
+            initial={reduced ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: MOTION_DURATION.enter,
+              delay: 0.18,
+              ease: MOTION_EASE.out,
+            }}
+            className="mt-5 max-w-2xl text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.22] text-[var(--text)] font-medium"
+          >
+            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+              Designing autonomous workflows,
+            </span>{" "}
+            full-stack web platforms, and C++ algorithms that hold up under real constraints.
+          </motion.p>
+
+          <motion.p
+            initial={reduced ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: MOTION_DURATION.enter,
+              delay: 0.24,
+              ease: MOTION_EASE.out,
+            }}
+            className="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]"
+          >
+            {siteContent.hero.description} Open to software engineering internships, applied AI research, and collaborative product builds.
+          </motion.p>
+
+          {/* Primary & Secondary Action Cluster */}
+          <motion.div
+            initial={reduced ? false : { opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: MOTION_DURATION.enter,
+              delay: 0.3,
+              ease: MOTION_EASE.out,
+            }}
+            className="mt-7 flex flex-wrap items-center gap-3"
+          >
+            <button
+              type="button"
+              onClick={onViewWork}
+              className="btn btn-primary group"
+            >
+              <span>EXPLORE MY WORK</span>
+              <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </button>
+
+            <ResumeSpotlight onOpenViewer={onOpenResume} />
+
+            <a
+              href={SOCIAL_LINKS.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-secondary group"
+            >
+              <Github className="w-4 h-4" />
+              <span>GitHub</span>
+              <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </a>
+          </motion.div>
+        </div>
+
+        {/* RIGHT PORTRAIT, INTERACTIVE 3D CORE & VERIFIED GITHUB TELEMETRY COLUMN */}
+        <motion.div
+          initial={reduced ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: MOTION_DURATION.enter,
+            delay: 0.14,
+            ease: MOTION_EASE.out,
+          }}
+          className="flex flex-col gap-4 w-full lg:items-end"
+        >
+          <div className="w-full max-w-[500px] overflow-hidden rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)]">
+            {/* Visual Dual Stage: Portrait + Procedural Three.js Machined Logic Core */}
+            <div className="grid grid-cols-1 sm:grid-cols-12 border-b border-[var(--border)]">
+              <div className="sm:col-span-7 relative h-[220px] sm:h-[244px] overflow-hidden bg-[var(--surface)] border-b sm:border-b-0 sm:border-r border-[var(--border)]">
                 <img
                   src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
-                  alt="Sayam Mukherjee"
-                  width={44}
-                  height={44}
+                  alt="Sayam Mukherjee portrait"
+                  referrerPolicy="no-referrer"
                   loading="eager"
                   decoding="async"
-                  className="w-full h-full object-cover filter contrast-[1.02]"
+                  className="h-full w-full object-cover object-center contrast-[1.03]"
                 />
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#151713]/85 via-[#151713]/30 to-transparent px-3.5 py-2.5 text-[#F4F4ED]">
+                  <div className="flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-[0.08em]">
+                    <span>SAYAM MUKHERJEE</span>
+                    <span className="text-[#C7E34A] tabular-nums">CGPA 9.06 · KIIT&apos;29</span>
+                  </div>
+                </div>
               </div>
-              <div className="space-y-0.5 min-w-0">
-                <div className={`text-sm font-bold font-sans flex items-center gap-2 ${
-                  isLight ? "text-slate-900" : "text-white"
-                }`}>
-                  <span>Sayam Mukherjee</span>
-                  <span className={`text-xs font-mono font-normal hidden sm:inline ${
-                    isLight ? "text-zinc-600" : "text-zinc-400"
-                  }`}>
-                    · KIIT B.Tech CSE (AI &amp; ML)
-                  </span>
-                </div>
-                <div className={`inline-flex items-center gap-1.5 text-[11px] font-mono ${
-                  isLight ? "text-emerald-700 font-semibold" : "text-emerald-400"
-                }`}>
-                  <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isLight ? "bg-emerald-600 animate-pulse" : "bg-emerald-400 animate-pulse"}`} />
-                  <span className={isLight ? "text-slate-700" : "text-zinc-300"}>Open to internships · collaborations · freelance</span>
-                </div>
+
+              <div className="sm:col-span-5 h-[210px] sm:h-[244px] bg-[#151713]">
+                <Suspense
+                  fallback={
+                    <div className="flex h-full w-full items-center justify-center bg-[#151713] font-mono text-[10px] uppercase tracking-wider text-[#B5B8AA]">
+                      3D Stage
+                    </div>
+                  }
+                >
+                  <HeroOrbitalSculpture />
+                </Suspense>
               </div>
             </div>
 
-            {/* Main Editorial Headline */}
-            <h1 
-              className="hero-title font-extrabold tracking-tight font-display text-zinc-900 dark:text-white leading-[1.05] break-words"
-            >
-              {siteContent.hero.title}
-            </h1>
+            {/* Verified GitHub Compact Telemetry Readout */}
+            <div className="p-4 sm:p-5 space-y-3.5">
+              <div className="flex items-center justify-between gap-2 text-xs font-mono">
+                <a
+                  href={user?.html_url || SOCIAL_LINKS.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-semibold text-[var(--text)] hover:underline inline-flex items-center gap-1.5"
+                >
+                  <Github className="w-3.5 h-3.5 text-[var(--accent)]" />
+                  <span>@{user?.login || "codesbysayam"}</span>
+                </a>
 
-            {/* Role Subtitle */}
-            <p 
-              className="font-mono mt-3 font-semibold tracking-tight text-purple-700 dark:text-purple-400"
-              style={{ fontSize: "clamp(1.05rem, 1.3vw, 1.35rem)" }}
-            >
-              {siteContent.hero.subtitle}
-            </p>
-
-            {/* Clear summary of actual focus */}
-            <p className="text-sm sm:text-base leading-relaxed max-w-xl mt-3 text-zinc-600 dark:text-zinc-400 font-normal">
-              {siteContent.hero.description}
-            </p>
-
-            {/* Hero Actions Row: Primary, Secondary, and Resume CTA */}
-            <div className="flex flex-wrap items-center gap-3 pt-6 sm:pt-7">
-              <button
-                type="button"
-                onClick={onViewWork}
-                className="btn btn-primary"
-              >
-                <span>{siteContent.hero.primaryCta}</span>
-                <ArrowUpRight className="w-4 h-4" />
-              </button>
-              <a
-                href={SOCIAL_LINKS.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-secondary"
-              >
-                <Github className="w-4 h-4" />
-                <span>{siteContent.hero.secondaryCta}</span>
-              </a>
-              <ResumeSpotlight onOpenViewer={onOpenResume} />
-            </div>
-          </div>
-
-          {/* ==================================================
-              RIGHT COLUMN: CLEAN GITHUB PULSE CARD
-              ================================================== */}
-          <div className="flex flex-col items-start lg:items-end w-full">
-            <div 
-              id="hero-github-card"
-              className="card w-full max-w-[440px] p-5 sm:p-6 transition-all duration-300 flex flex-col justify-between select-text shadow-lg"
-            >
-              {/* Top Bar: Live Status, Verified Tag & Re-sync */}
-              <div className="flex items-center justify-between gap-2 pb-4 border-b border-zinc-200/80 dark:border-white/[0.08]">
-                <div className="flex items-center gap-2">
-                  <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-                  </span>
-                  <span className="inline-flex items-center gap-1.5 text-[11px] font-mono font-bold tracking-wider uppercase px-2.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
-                    Verified GitHub
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-mono text-zinc-500 dark:text-zinc-400">
-                    {formatSyncAge(syncedAt)}
-                  </span>
+                <div className="flex items-center gap-2 text-[11px] text-[var(--text-muted)]">
+                  <span>{formatSyncAge(syncedAt)}</span>
                   <button
                     type="button"
                     onClick={() => refresh()}
                     disabled={loading}
                     title="Refresh live GitHub data"
-                    className="btn btn-ghost !p-1.5 !min-h-0 text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
                     aria-label="Refresh live GitHub data"
+                    className="p-1 rounded hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
                   >
-                    <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-purple-400" : ""}`} />
+                    <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
                   </button>
                 </div>
               </div>
 
-              {/* Profile Identity Bar */}
-              <div className="flex items-center justify-between gap-3 py-4 border-b border-zinc-200/80 dark:border-white/[0.08]">
-                <a
-                  href={user?.html_url || "https://github.com/codesbysayam"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 min-w-0 group/profile flex-1"
-                  title="View Sayam's GitHub Profile"
-                >
-                  <div className="relative shrink-0">
-                    <div className="w-11 h-11 rounded-full overflow-hidden border border-zinc-200 dark:border-white/15 bg-zinc-100 dark:bg-zinc-900 shadow-sm">
-                      <img
-                        src={user?.avatar_url || "https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"}
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = "https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg";
-                        }}
-                        referrerPolicy="no-referrer"
-                        alt={user?.name || "Sayam Mukherjee"}
-                        width={44}
-                        height={44}
-                        className="w-full h-full object-cover"
-                        loading="lazy"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <h2 className="text-sm font-bold text-zinc-900 dark:text-white group-hover/profile:text-purple-600 dark:group-hover/profile:text-purple-400 transition-colors truncate">
-                        {user?.name || "Sayam Mukherjee"}
-                      </h2>
-                    </div>
-                    <span className="text-xs font-mono font-medium text-purple-700 dark:text-purple-400">
-                      @{user?.login || "codesbysayam"}
-                    </span>
-                  </div>
-                </a>
-
-                <a
-                  href={user?.html_url || "https://github.com/codesbysayam"}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-ghost !p-2 !min-h-0 text-zinc-500 hover:text-zinc-900 dark:hover:text-white"
-                  title="Open GitHub Profile"
-                  aria-label="Open GitHub Profile"
-                >
-                  <ArrowUpRight className="w-4 h-4" />
-                </a>
-              </div>
-
-              {/* 3 Real GitHub Metrics */}
-              <div className="grid grid-cols-3 gap-2 py-3.5 border-b border-zinc-200/80 dark:border-white/[0.08] text-center">
-                <div className="space-y-0.5">
-                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
+              <div className="grid grid-cols-3 divide-x divide-[var(--border)] border-y border-[var(--border)] py-2.5 text-center">
+                <div>
+                  <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
                     {user ? user.public_repos : repos.length || 5}
                   </div>
-                  <div className="text-xs font-sans text-zinc-500 dark:text-zinc-400 font-medium">
-                    Repositories
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                    Repos
                   </div>
                 </div>
-
-                <div className="space-y-0.5 border-x border-zinc-200/80 dark:border-white/[0.08]">
-                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
+                <div>
+                  <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
                     {stats?.totalStars ?? 0}
                   </div>
-                  <div className="text-xs font-sans text-zinc-500 dark:text-zinc-400 font-medium">
-                    Stars Earned
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                    Stars
                   </div>
                 </div>
-
-                <div className="space-y-0.5">
-                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-900 dark:text-white leading-none">
+                <div>
+                  <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
                     {user?.followers ?? 0}
                   </div>
-                  <div className="text-xs font-sans text-zinc-500 dark:text-zinc-400 font-medium">
+                  <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
                     Followers
                   </div>
                 </div>
               </div>
 
-              {/* Latest Real Push / Commit Signal */}
-              <div id="hero-latest-commit-box" className="pt-3.5 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-mono text-xs font-semibold text-zinc-500 dark:text-zinc-400 flex items-center gap-1.5">
-                    <GitCommit className="w-3.5 h-3.5 text-cyan-600 dark:text-cyan-400" />
-                    Latest Commit
+              <a
+                href={latestCommitInfo.commitUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 hover:border-[var(--border-strong)] transition-colors group"
+              >
+                <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)] mb-1">
+                  <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--text)]">
+                    <GitCommit className="w-3.5 h-3.5 text-[var(--accent)]" />
+                    {latestCommitInfo.repoName}/{latestCommitInfo.branch}@{latestCommitInfo.sha}
                   </span>
-                  <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400">
-                    {latestCommitInfo.time}
-                  </span>
+                  <span>{latestCommitInfo.time}</span>
                 </div>
-
-                <a
-                  href={latestCommitInfo.commitUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block p-2.5 rounded-lg bg-zinc-100 dark:bg-white/[0.04] border border-zinc-200/60 dark:border-white/[0.06] hover:border-purple-400 dark:hover:border-purple-500/40 transition-colors group/commit"
-                >
-                  <div className="flex items-center gap-1.5 text-xs font-mono text-purple-700 dark:text-purple-300 font-semibold mb-1">
-                    <span>{latestCommitInfo.repoName}</span>
-                    <span className="text-zinc-400">/</span>
-                    <span className="text-zinc-500 dark:text-zinc-400">{latestCommitInfo.branch}</span>
-                    <span className="text-zinc-400">@</span>
-                    <span className="text-cyan-600 dark:text-cyan-400">{latestCommitInfo.sha}</span>
-                  </div>
-                  <p className="text-xs text-zinc-700 dark:text-zinc-300 font-mono line-clamp-1 group-hover/commit:text-purple-600 dark:group-hover/commit:text-purple-300 transition-colors">
-                    {latestCommitInfo.message}
-                  </p>
-                </a>
-              </div>
-
-              {/* Card Footer Link */}
-              <div className="pt-4 mt-2 border-t border-zinc-200/80 dark:border-white/[0.08] flex items-center justify-between text-xs">
-                <a
-                  href="#live-build-feed"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById("live-build-feed")?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="font-semibold text-purple-700 dark:text-purple-400 hover:underline flex items-center gap-1 cursor-pointer"
-                >
-                  <span>Explore all verified repositories</span>
-                  <span>↓</span>
-                </a>
-                <a
-                  href="https://github.com/codesbysayam"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors"
-                >
-                  github.com/codesbysayam ↗
-                </a>
-              </div>
+                <p className="text-xs font-mono text-[var(--text-secondary)] line-clamp-1 group-hover:text-[var(--text)]">
+                  {latestCommitInfo.message}
+                </p>
+              </a>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* ==================================================
-          COMPACT PROOF STRIP WITH ONLY GENUINE INFORMATION
-          ================================================== */}
-      <div className="w-full pt-4 pb-2 border-t border-zinc-200/80 dark:border-white/[0.08]">
-        <div className={`flex flex-wrap items-center justify-center sm:justify-between gap-3 sm:gap-6 text-xs font-mono text-center sm:text-left ${
-          isLight ? "text-slate-600" : "text-zinc-400"
-        }`}>
-          <div className="flex items-center gap-2">
-            <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isLight ? "bg-violet-600" : "bg-purple-400"}`} />
-            <span className={`font-semibold ${isLight ? "text-slate-900" : "text-zinc-200"}`}>KIIT University</span>
-          </div>
-          <span className={`hidden sm:inline ${isLight ? "text-slate-400" : "text-zinc-700"}`}>·</span>
-          <div className={isLight ? "text-slate-700 font-medium" : ""}>B.Tech CSE (AI &amp; ML)</div>
-          <span className={`hidden sm:inline ${isLight ? "text-slate-400" : "text-zinc-700"}`}>·</span>
-          <div className={`font-semibold ${isLight ? "text-slate-900" : "text-zinc-200"}`}>9.06 First-Year CGPA</div>
-          <span className={`hidden sm:inline ${isLight ? "text-slate-400" : "text-zinc-700"}`}>·</span>
-          <div className={isLight ? "text-slate-700 font-medium" : ""}>Kolkata / Bhubaneswar</div>
-        </div>
+        </motion.div>
       </div>
-    </div>
+
+      {/* BOTTOM VERIFIED PROOF STRIP + RESTRAINED SCROLL CUE */}
+      <div className="relative z-10 mt-8 pt-5 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[var(--text-muted)]">
+          <span className="font-semibold text-[var(--text)]">KIIT University, Bhubaneswar</span>
+          <span className="hidden sm:inline" aria-hidden="true">·</span>
+          <span>B.Tech CSE (AI &amp; ML) · Class of 2029</span>
+          <span className="hidden sm:inline" aria-hidden="true">·</span>
+          <span className="tabular-nums font-semibold text-[var(--text)]">9.06 First-Year CGPA</span>
+          <span className="hidden md:inline" aria-hidden="true">·</span>
+          <span className="hidden md:inline">Hooghly / Bhubaneswar</span>
+        </div>
+
+        <button
+          type="button"
+          onClick={scrollToChapters}
+          className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1.5 py-1"
+        >
+          <span>Scroll to explore</span>
+          <ArrowDown className="w-3.5 h-3.5 text-[var(--accent)] transition-transform duration-200 group-hover:translate-y-0.5" />
+        </button>
+      </div>
+    </section>
   );
 }
 
