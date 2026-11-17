@@ -6,7 +6,7 @@
   "avatarUrl": "https://avatars.githubusercontent.com/u/85777731?v=4",
   "name": "Sayam Mukherjee",
   "bio": "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
-  "publicRepos": 11,
+  "publicRepos": 12,
   "followers": 1,
   "following": 0,
   "publicGists": 0,
@@ -17,13 +17,43 @@
     "avatar_url": "https://avatars.githubusercontent.com/u/85777731?v=4",
     "html_url": "https://github.com/codesbysayam",
     "bio": "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
-    "public_repos": 11,
+    "public_repos": 12,
     "followers": 1,
     "following": 0
   },
   "totalStars": 6,
   "totalForks": 0,
   "repositories": [
+    {
+      "id": 1461749225,
+      "name": "mausam_sih-26",
+      "full_name": "codesbysayam/mausam_sih-26",
+      "fullName": "codesbysayam/mausam_sih-26",
+      "html_url": "https://github.com/codesbysayam/mausam_sih-26",
+      "url": "https://github.com/codesbysayam/mausam_sih-26",
+      "description": "demo",
+      "homepage": "https://mausamgovt.vercel.app",
+      "language": "TypeScript",
+      "stargazers_count": 0,
+      "stars": 0,
+      "forks_count": 0,
+      "forks": 0,
+      "watchers_count": 0,
+      "watchers": 0,
+      "fork": false,
+      "isFork": false,
+      "archived": false,
+      "isArchived": false,
+      "open_issues_count": 0,
+      "default_branch": "main",
+      "created_at": "2026-11-17T17:31:45Z",
+      "createdAt": "2026-11-17T17:31:45Z",
+      "updated_at": "2026-11-17T18:49:10Z",
+      "updatedAt": "2026-11-17T18:49:10Z",
+      "pushed_at": "2026-11-17T19:17:44Z",
+      "pushedAt": "2026-11-17T19:17:44Z",
+      "topics": []
+    },
     {
       "id": 1355576736,
       "name": "Sayam-Mukherjee-Portfolio",
@@ -50,8 +80,8 @@
       "createdAt": "2026-09-03T06:02:37Z",
       "updated_at": "2026-11-17T08:00:59Z",
       "updatedAt": "2026-11-17T08:00:59Z",
-      "pushed_at": "2026-11-17T09:29:06Z",
-      "pushedAt": "2026-11-17T09:29:06Z",
+      "pushed_at": "2026-11-17T15:37:29Z",
+      "pushedAt": "2026-11-17T15:37:29Z",
       "topics": [
         "ai",
         "ai-agent",
@@ -1279,10 +1309,21 @@
     }
   ],
   "languages": {
+    "codesbysayam/mausam_sih-26": {
+      "TypeScript": 5432380,
+      "Python": 118579,
+      "JavaScript": 65917,
+      "CSS": 52924,
+      "HTML": 33574,
+      "C": 31107,
+      "Jupyter Notebook": 14149,
+      "PLpgSQL": 3057,
+      "Makefile": 1358
+    },
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
-      "TypeScript": 1644395,
+      "TypeScript": 1713746,
       "JavaScript": 31206,
-      "CSS": 25881,
+      "CSS": 27845,
       "C": 6359,
       "Python": 5783,
       "Jupyter Notebook": 5438,
@@ -1336,25 +1377,25 @@
     }
   },
   "languageCounts": {
-    "TypeScript": 7,
+    "TypeScript": 8,
     "C++": 1
   },
   "languageBytes": {
-    "TypeScript": 10683073,
-    "JavaScript": 99492,
-    "CSS": 190083,
-    "C": 37466,
-    "Python": 286374,
-    "Jupyter Notebook": 19587,
-    "HTML": 44573,
-    "Makefile": 3842,
+    "TypeScript": 16184804,
+    "Python": 404953,
+    "JavaScript": 165409,
+    "CSS": 244971,
+    "HTML": 78147,
+    "C": 68573,
+    "Jupyter Notebook": 33736,
+    "PLpgSQL": 6114,
+    "Makefile": 5200,
     "Shell": 569,
-    "PLpgSQL": 3057,
     "C++": 2037
   },
-  "latestPush": "2026-11-17T11:46:41Z",
+  "latestPush": "2026-11-17T19:17:44Z",
   "contributionCalendar": {
-    "totalContributions": 238,
+    "totalContributions": 242,
     "weeks": [
       {
         "contributionDays": [
@@ -3393,14 +3434,14 @@
           },
           {
             "date": "2026-11-17",
-            "count": 2,
-            "color": "#9be9a8"
+            "count": 6,
+            "color": "#40c463"
           }
         ]
       }
     ]
   },
-  "fetchedAt": "2026-11-17T13:00:37.522Z",
-  "syncedAt": "2026-11-17T13:00:37.522Z",
+  "fetchedAt": "2026-11-17T22:08:27.772Z",
+  "syncedAt": "2026-11-17T22:08:27.772Z",
   "status": "ok"
 }
