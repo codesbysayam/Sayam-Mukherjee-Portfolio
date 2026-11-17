@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="SightForge Dual-Service YOLOv8 and ByteTrack Real-Time Computer Vision Pipeline">
+  <defs>
+    <pattern id="grid-sf" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#41443A" stroke-width="0.6" stroke-opacity="0.35"/>
+    </pattern>
+    <marker id="arrow-sf" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#C7E34A"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#151713"/>
+  <rect width="1600" height="900" fill="url(#grid-sf)"/>
+
+  <!-- Header -->
+  <rect x="72" y="56" width="1456" height="68" rx="10" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <rect x="96" y="74" width="144" height="32" rx="4" fill="#C7E34A"/>
+  <text x="168" y="95" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#151713" text-anchor="middle" letter-spacing="1.2">SIGHTFORGE</text>
+  <text x="262" y="96" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="600" fill="#F4F4ED">YOLOv8 Edge Computer Vision, 17-Keypoint Pose &amp; ByteTrack Pipeline</text>
+  <text x="1496" y="95" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA" text-anchor="end">NEXT.JS 15 + FASTAPI</text>
+
+  <!-- Left: Frontend 16:9 Canvas -->
+  <rect x="72" y="168" width="660" height="546" rx="12" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <text x="104" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">FRONTEND · NEXT.JS 15 / REACT 19 / TS</text>
+  <text x="104" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Atomic CVFrame HTML5 Canvas (16:9)</text>
+
+  <!-- Simulated 16:9 Optical Viewport -->
+  <rect x="104" y="268" width="596" height="335" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <!-- Crosshair Reticle -->
+  <circle cx="402" cy="435" r="76" fill="none" stroke="#C7E34A" stroke-width="1.5" stroke-dasharray="6 4" stroke-opacity="0.5"/>
+  <line x1="390" y1="435" x2="414" y2="435" stroke="#C7E34A" stroke-width="1.5"/>
+  <line x1="402" y1="423" x2="402" y2="447" stroke="#C7E34A" stroke-width="1.5"/>
+
+  <!-- Detection Bounding Box + 17-Keypoint Skeleton -->
+  <rect x="218" y="318" width="142" height="248" rx="3" fill="none" stroke="#C7E34A" stroke-width="2"/>
+  <rect x="218" y="294" width="184" height="24" rx="3" fill="#C7E34A"/>
+  <text x="226" y="310" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" font-weight="700" fill="#151713">ID #04 · COCO 0 · 0.94</text>
+
+  <!-- Pose Skeleton -->
+  <circle cx="289" cy="348" r="10" fill="none" stroke="#F4F4ED" stroke-width="2"/>
+  <line x1="289" y1="358" x2="289" y2="438" stroke="#C7E34A" stroke-width="2.5"/>
+  <line x1="252" y1="382" x2="326" y2="382" stroke="#C7E34A" stroke-width="2.5"/>
+  <line x1="252" y1="382" x2="240" y2="434" stroke="#F4F4ED" stroke-width="2"/>
+  <line x1="326" y1="382" x2="340" y2="434" stroke="#F4F4ED" stroke-width="2"/>
+  <line x1="289" y1="438" x2="264" y2="536" stroke="#F4F4ED" stroke-width="2"/>
+  <line x1="289" y1="438" x2="314" y2="536" stroke="#F4F4ED" stroke-width="2"/>
+  <circle cx="252" cy="382" r="4" fill="#C7E34A"/>
+  <circle cx="326" cy="382" r="4" fill="#C7E34A"/>
+  <circle cx="289" cy="438" r="4" fill="#C7E34A"/>
+  <circle cx="264" cy="536" r="4" fill="#C7E34A"/>
+  <circle cx="314" cy="536" r="4" fill="#C7E34A"/>
+
+  <!-- Second Track Box -->
+  <rect x="448" y="346" width="128" height="220" rx="3" fill="none" stroke="#8D947E" stroke-width="1.8" stroke-dasharray="6 4"/>
+  <rect x="448" y="322" width="164" height="24" rx="3" fill="#20231D" stroke="#8D947E" stroke-width="1"/>
+  <text x="456" y="338" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#F4F4ED">ID #07 · TRACKED 0.89</text>
+
+  <!-- Velocity Telemetry Overlay -->
+  <text x="122" y="294" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#B5B8AA">ATOMIC STATE SWAP · ZERO STALE OVERLAYS</text>
+  <text x="122" y="586" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#C7E34A">IoU NMS: 0.45 · 17 COCO KEYPOINTS</text>
+
+  <rect x="104" y="622" width="596" height="62" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.2"/>
+  <text x="124" y="650" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#EAEAE1">CVFrame Contract: frame_id · timestamp · detections[] · keypoints[17] · track_ids[]</text>
+  <text x="124" y="670" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#8D947E">Synchronized overlay clearing avoids ghosted boxes across frame drops</text>
+
+  <!-- Connecting Bridge -->
+  <line x1="732" y1="435" x2="808" y2="435" stroke="#C7E34A" stroke-width="2.5" marker-end="url(#arrow-sf)"/>
+
+  <!-- Right: Backend FastAPI + YOLOv8 + PostgreSQL -->
+  <rect x="818" y="168" width="710" height="546" rx="12" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <text x="850" y="208" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">BACKEND · FASTAPI / PYTHON / PYTORCH</text>
+  <text x="850" y="240" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Inference &amp; Persistent Tracking Stage</text>
+
+  <!-- Pipeline Stages -->
+  <rect x="850" y="272" width="646" height="84" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="876" y="302" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A">STAGE 01 · YOLOv8 PERSON DETECTOR</text>
+  <text x="876" y="330" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#F4F4ED">COCO Class ID 0 Extraction · Non-Max Suppression (IoU 0.45)</text>
+
+  <rect x="850" y="376" width="646" height="84" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <text x="876" y="406" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A">STAGE 02 · YOLOv8 POSE ESTIMATION</text>
+  <text x="876" y="434" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#F4F4ED">17 COCO Body Keypoints + Confidence Vectors per ROI</text>
+
+  <rect x="850" y="480" width="646" height="84" rx="8" fill="#151713" stroke="#C7E34A" stroke-width="1.8"/>
+  <text x="876" y="510" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A">STAGE 03 · BYTETRACK ASSOCIATION</text>
+  <text x="876" y="538" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" fill="#F4F4ED">Persistent Multi-Object Identity Assignment + Occlusion Recovery</text>
+
+  <rect x="850" y="584" width="646" height="100" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="876" y="614" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#EAEAE1">STAGE 04 · POSTGRESQL + TELEMETRY STREAM</text>
+  <text x="876" y="642" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA">TypeScript 252.1 KB · Python 149.6 KB · CSS 4.7 KB · Makefile 2.5 KB</text>
+  <text x="876" y="666" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#8D947E">github.com/codesbysayam/SightForge · Local / Self-Hosted Dual Runtime</text>
+
+  <!-- Footer -->
+  <text x="72" y="790" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#8D947E">VERIFIED REPOSITORY 03 / 08 · REAL-TIME EDGE COMPUTER VISION</text>
+  <text x="1528" y="790" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#C7E34A" text-anchor="end">COCO-0 + 17 KEYPOINTS + BYTETRACK</text>
+</svg>

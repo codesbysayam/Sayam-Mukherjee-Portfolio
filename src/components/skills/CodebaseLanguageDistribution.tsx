@@ -29,14 +29,14 @@ const LANGUAGE_ROLES: LanguageRole[] = [
     language: "TypeScript",
     role: "System architecture, full-stack microservices, and React application state",
     category: "Primary Stack",
-    sourcePath: "operon, mausam, portfolio",
+    sourcePath: "operon, mausam_sample, sightforge, memory-in-motion, axiom, inkloom, campus-connect, portfolio",
     icon: Layers
   },
   {
     language: "Python",
-    role: "Edge computer vision, deep learning inference, and data pipelines",
+    role: "YOLOv8 computer vision inference, FastAPI backend, and climate utilities",
     category: "AI & Systems",
-    sourcePath: "yolo, tools/*",
+    sourcePath: "SightForge, mausam_sample, Memory-in-Motion, tools/*",
     icon: ShieldCheck
   },
   {
@@ -72,14 +72,15 @@ const LANGUAGE_ROLES: LanguageRole[] = [
 export function CodebaseLanguageDistribution() {
   const reduced = usePrefersReducedMotion();
   const [languageStats, setLanguageStats] = useState<LanguageStat[]>([
-    { language: "TypeScript", bytes: 6955191, percentage: 94.1, color: "#69734A" },
-    { language: "Python", bytes: 181108, percentage: 2.4, color: "#3E4A35" },
-    { language: "CSS", bytes: 106236, percentage: 1.4, color: "#8D947E" },
-    { language: "JavaScript", bytes: 55813, percentage: 0.8, color: "#A9C52F" },
-    { language: "HTML", bytes: 32368, percentage: 0.4, color: "#585B52" },
-    { language: "C++", bytes: 2037, percentage: 0.1, color: "#C7E34A" }
+    { language: "TypeScript", bytes: 10676896, percentage: 93.6, color: "#69734A" },
+    { language: "Python", bytes: 286374, percentage: 2.5, color: "#3E4A35" },
+    { language: "CSS", bytes: 236453, percentage: 2.1, color: "#8D947E" },
+    { language: "JavaScript", bytes: 99492, percentage: 0.9, color: "#A9C52F" },
+    { language: "HTML", bytes: 44171, percentage: 0.4, color: "#585B52" },
+    { language: "C", bytes: 37466, percentage: 0.3, color: "#777A70" },
+    { language: "C++", bytes: 2037, percentage: 0.02, color: "#C7E34A" }
   ]);
-  const [totalBytes, setTotalBytes] = useState<number>(7392863);
+  const [totalBytes, setTotalBytes] = useState<number>(11409944);
   const [lastSyncedTime, setLastSyncedTime] = useState<string>("Verified GitHub API Baseline");
   const [sourceType, setSourceType] = useState<string>("Aggregated GitHub Repositories");
 
@@ -127,7 +128,7 @@ export function CodebaseLanguageDistribution() {
         </div>
 
         <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
-          Aggregated bytes calculated directly from verified public repositories on GitHub (<span className="font-mono text-[var(--text)]">mausam</span>, <span className="font-mono text-[var(--text)]">operon</span>, <span className="font-mono text-[var(--text)]">sayam-solves</span>, <span className="font-mono text-[var(--text)]">yolo</span>, and portfolio).
+          Aggregated bytes calculated directly across 11 public repositories on GitHub (<span className="font-mono text-[var(--text)]">Operon</span>, <span className="font-mono text-[var(--text)]">mausam_sample</span>, <span className="font-mono text-[var(--text)]">SightForge</span>, <span className="font-mono text-[var(--text)]">Memory-in-Motion</span>, <span className="font-mono text-[var(--text)]">AXIOM</span>, <span className="font-mono text-[var(--text)]">inkloom</span>, <span className="font-mono text-[var(--text)]">CAMPUSCONNECT_1273</span>, <span className="font-mono text-[var(--text)]">sayam-solves</span>, and portfolio).
         </p>
       </div>
 
@@ -244,7 +245,7 @@ export function CodebaseLanguageDistribution() {
                 href="https://github.com/codesbysayam"
                 target="_blank"
                 rel="noreferrer"
-                className="text-[var(--text)] hover:text-[var(--accent)] underline inline-flex items-center gap-1"
+                className="text-[var(--text)] hover:text-[var(--accent)] active:opacity-75 underline inline-flex items-center gap-1"
               >
                 github.com/codesbysayam
                 <ExternalLink className="w-3 h-3" aria-hidden="true" />

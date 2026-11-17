@@ -23,7 +23,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
 
   const featuredLead = PROJECTS.find((p) => p.id === "operon") || PROJECTS[0];
   const secondaryFeatured = PROJECTS.filter((p) =>
-    ["mausam", "sayam-solves", "yolo"].includes(p.id)
+    ["mausam", "sightforge", "memory-in-motion"].includes(p.id)
   );
   const homeFeaturedPool = [featuredLead, ...secondaryFeatured];
 
@@ -116,7 +116,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                   SYSTEMS &amp; DISCOVERY
                 </div>
                 <div className="mt-1.5 text-lg font-bold text-[var(--text)]">
-                  5 Verified Builds · Active Telemetry
+                  8 Verified Builds · Active Telemetry
                 </div>
                 <p className="mt-2 text-xs leading-relaxed text-[var(--text-muted)]">
                   Every architecture note, hackathon outcome, and codebase link on this portfolio maps directly to real public repositories and verified records.
@@ -157,7 +157,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
           <button
             type="button"
             onClick={() => onNavigateTab("projects")}
-            className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-[6px] bg-[#C7E34A] text-[#20231D] font-bold text-sm hover:bg-[#A9C52F] transition-colors cursor-pointer shrink-0 self-start md:self-end group"
+            className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-[6px] bg-[#C7E34A] text-[#20231D] font-bold text-sm hover:bg-[#A9C52F] active:bg-[#9BB827] active:scale-[0.98] transition-all cursor-pointer shrink-0 self-start md:self-end group"
           >
             <span>VIEW ALL {PROJECTS.length} PROJECTS</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
@@ -219,7 +219,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                     <button
                       type="button"
                       onClick={() => setSelectedProject(featuredLead)}
-                      className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-[6px] bg-[#C7E34A] text-[#20231D] text-xs font-bold uppercase tracking-wider hover:bg-[#A9C52F] transition-colors cursor-pointer group/btn"
+                      className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-[6px] bg-[#C7E34A] text-[#20231D] text-xs font-bold uppercase tracking-wider hover:bg-[#A9C52F] active:bg-[#9BB827] active:scale-[0.98] transition-all cursor-pointer group/btn"
                     >
                       <span>Read Case Study</span>
                       <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
@@ -230,7 +230,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                         href={featuredLead.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-[6px] border border-[#41443A] text-[#F4F4ED] text-xs font-semibold hover:bg-[#F4F4ED] hover:text-[#20231D] transition-colors"
+                        className="inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-[6px] border border-[#41443A] text-[#F4F4ED] text-xs font-semibold hover:bg-[#F4F4ED] hover:text-[#20231D] active:bg-[#2E3229] active:border-[#C7E34A] active:scale-[0.98] transition-all"
                       >
                         <span>Live Demo</span>
                         <ArrowUpRight className="w-3.5 h-3.5" />
@@ -241,7 +241,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                       href={featuredLead.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-[6px] border border-[#41443A] text-[#B5B8AA] text-xs font-semibold hover:text-[#F4F4ED] hover:border-[#F4F4ED] transition-colors"
+                      className="inline-flex items-center gap-1.5 min-h-[44px] px-3.5 py-2 rounded-[6px] border border-[#41443A] text-[#B5B8AA] text-xs font-semibold hover:text-[#F4F4ED] hover:border-[#F4F4ED] active:bg-[#2E3229] active:border-[#C7E34A] active:text-[#F4F4ED] active:scale-[0.98] transition-all"
                     >
                       <Github className="w-3.5 h-3.5" />
                       <span>Source</span>
@@ -309,7 +309,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                   <button
                     type="button"
                     onClick={() => setSelectedProject(project)}
-                    className="text-xs font-mono font-bold uppercase tracking-wider text-[#C7E34A] hover:underline inline-flex items-center gap-1 cursor-pointer min-h-[44px] group/cs"
+                    className="text-xs font-mono font-bold uppercase tracking-wider text-[#C7E34A] hover:underline active:opacity-75 active:scale-[0.97] transition-all inline-flex items-center gap-1 cursor-pointer min-h-[44px] group/cs"
                   >
                     <span>Case Study</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/cs:translate-x-1" />
@@ -321,7 +321,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                         href={project.liveUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[#F4F4ED] hover:text-[#C7E34A] inline-flex items-center gap-1 transition-colors"
+                        className="text-[#F4F4ED] hover:text-[#C7E34A] active:text-[#C7E34A] active:scale-[0.97] inline-flex items-center gap-1 transition-all min-h-[40px] px-1.5"
                       >
                         <span>Live</span>
                         <ArrowUpRight className="w-3 h-3" />
@@ -331,7 +331,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                       href={project.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-[#B5B8AA] hover:text-[#F4F4ED] inline-flex items-center gap-1 transition-colors"
+                      className="text-[#B5B8AA] hover:text-[#F4F4ED] active:text-[#C7E34A] active:scale-[0.97] inline-flex items-center gap-1 transition-all min-h-[40px] px-1.5"
                     >
                       <Github className="w-3.5 h-3.5" />
                       <span>Repo</span>

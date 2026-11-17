@@ -123,7 +123,7 @@ export function SkillEcosystem({
           <button
             type="button"
             onClick={handleClear}
-            className="absolute top-5 right-5 p-2 rounded-[6px] text-[var(--text-secondary)] hover:text-[var(--text)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] border border-[var(--border)] transition-colors cursor-pointer"
+            className="absolute top-5 right-5 p-2 rounded-[6px] text-[var(--text-secondary)] hover:text-[var(--text)] bg-[var(--surface)] hover:bg-[var(--surface-hover)] active:scale-95 border border-[var(--border)] transition-all cursor-pointer"
             title="Clear inspection view"
             aria-label="Clear inspection view"
           >
@@ -203,7 +203,7 @@ export function SkillEcosystem({
                             href={p.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="p-1.5 rounded-[6px] bg-[var(--surface)] hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] hover:text-[var(--text)] border border-[var(--border)] transition-colors"
+                            className="p-1.5 rounded-[6px] bg-[var(--surface)] hover:bg-[var(--surface-hover)] active:scale-95 text-[var(--text-secondary)] hover:text-[var(--text)] border border-[var(--border)] transition-all"
                             title="View GitHub Repository"
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
@@ -247,7 +247,7 @@ export function SkillEcosystem({
                       );
                       if (match) setActiveSkill(match);
                     }}
-                    className="px-2.5 py-1 rounded-[6px] bg-[var(--surface)] hover:bg-[var(--surface-hover)] text-[var(--text-secondary)] hover:text-[var(--text)] border border-[var(--border)] hover:border-[var(--border-strong)] transition-colors cursor-pointer whitespace-nowrap shrink-0"
+                    className="px-2.5 py-1 rounded-[6px] bg-[var(--surface)] hover:bg-[var(--surface-hover)] active:scale-[0.96] text-[var(--text-secondary)] hover:text-[var(--text)] border border-[var(--border)] hover:border-[var(--border-strong)] transition-all cursor-pointer whitespace-nowrap shrink-0"
                   >
                     {rel}
                   </button>
@@ -262,7 +262,7 @@ export function SkillEcosystem({
                 href={activeSkill.docsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-[var(--accent)] hover:underline transition-colors shrink-0 whitespace-nowrap"
+                className="inline-flex items-center gap-1.5 text-[var(--accent)] hover:underline active:opacity-75 transition-colors shrink-0 whitespace-nowrap"
               >
                 <span>Documentation Reference</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -297,7 +297,7 @@ export function SkillEcosystem({
                 key={skill.id}
                 type="button"
                 onClick={() => handleCardClick(skill)}
-                className={`group text-left p-4 rounded-[10px] transition-all duration-150 cursor-pointer flex flex-col justify-between space-y-3 border ${
+                className={`group text-left p-4 rounded-[10px] transition-all duration-150 cursor-pointer flex flex-col justify-between space-y-3 border active:scale-[0.985] ${
                   isSelected
                     ? "bg-[var(--surface-2)] border-[var(--accent)] ring-1 ring-[var(--accent)]"
                     : isDimmed

@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
-  Cpu, GitBranch, Users, ExternalLink, Eye, Globe, CloudRain, Binary, CheckCircle2
+  Cpu, GitBranch, Users, ExternalLink, Eye, CloudRain, Binary, CheckCircle2, Brain, Shield, Sparkles, GraduationCap
 } from "lucide-react";
 import { SectionHeader } from "../common/SectionHeader";
-import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
-type BlueprintId = "operon" | "sayamsolves" | "mausam" | "yolo" | "portfolio";
+type BlueprintId =
+  | "operon"
+  | "mausam"
+  | "sightforge"
+  | "memory-in-motion"
+  | "axiom"
+  | "inkloom"
+  | "campus-connect"
+  | "sayam-solves";
 
 interface SystemBlueprint {
   id: BlueprintId;
@@ -31,174 +39,284 @@ interface SystemBlueprint {
 const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
   operon: {
     id: "operon",
-    title: "Operon Multi-Agent Governance Engine",
-    subtitle: "Autonomous operations with non-bypassable human checkpoints",
+    title: "OPERON Multi-Agent Governance Engine",
+    subtitle: "Autonomous operations across Support, Finance, HR & Ops with HITL gates",
     category: "Autonomous Systems & AI",
-    status: "Active Production",
-    purpose: "Coordinates multiple specialized AI agents across organizational workflows while guaranteeing that sensitive actions (payouts, data mutations, terminations) halt at strict human-in-the-loop checkpoints.",
+    status: "Live · Deploy or Die",
+    purpose:
+      "Coordinates specialized role-scoped agents across Support, Finance, HR, and Operations workflows while guaranteeing that irreversible mutations halt at explicit Human-in-the-Loop (HITL) approval checkpoints.",
     nodes: [
-      { name: "ERP Event / User Trigger", description: "Inbound ticket or system webhook", type: "input" },
-      { name: "Agent Task Router", description: "Deconstructs goal and evaluates capabilities", type: "process" },
-      { name: "Specialized Agents", description: "Support, Finance, HR isolated workers", type: "process" },
-      { name: "Human Approval Checkpoint", description: "Cryptographically verified sign-off gate", type: "decision" },
-      { name: "State Machine Ledger", description: "Immutable audit trail of agent executions", type: "storage" },
-      { name: "External System Dispatch", description: "API execution on target platforms", type: "output" }
+      { name: "Operational Trigger", description: "Support, Finance, HR, or Ops workflow event", type: "input" },
+      { name: "Agent Task Router", description: "Evaluates intent and dispatches role-scoped workers", type: "process" },
+      { name: "Specialized Agents", description: "Isolated Support, Finance, HR, and Ops agents", type: "process" },
+      { name: "HITL Approval Checkpoint", description: "Explicit human sign-off before execution", type: "decision" },
+      { name: "State Machine Ledger", description: "Auditable PROPOSED -> AWAITING_HUMAN -> APPROVED trace", type: "storage" },
+      { name: "Action Dispatch", description: "Committed external state transition", type: "output" }
     ],
     connections: [
-      "Inbound Event -> Router decomposes task into DAG dependencies",
-      "Router -> Dispatches sub-tasks to isolated domain worker agents",
-      "Worker Agents -> Synthesize proposed actions and calculate risk score",
-      "Risk Score > Threshold -> Halts execution at Human Approval Gate",
-      "Approval -> Commits transition to State Machine Ledger & Dispatches"
+      "Inbound Event -> Router decomposes operational request by department scope",
+      "Router -> Dispatches isolated Support, Finance, HR, or Ops workers",
+      "Workers -> Propose structured payloads and enter AWAITING_HUMAN checkpoint",
+      "Operator Sign-Off -> Authorizes or halts proposed side effects cleanly",
+      "Approval -> Commits transition to State Machine Ledger & executes"
     ],
     invariants: [
-      "Zero autonomous mutations without audit entry in immutable state log",
-      "Human authorization required for all irreversible financial or operational actions",
-      "Isolated agent contexts prevent cross-tenant memory contamination"
+      "Separated agent intent generation from external mutation execution",
+      "Human authorization required before irreversible operational changes",
+      "Role-scoped agent contexts verified across codesbysayam/Operon (main)"
     ],
     repoUrl: "https://github.com/codesbysayam/Operon",
     liveUrl: "https://operonpro.vercel.app",
     stats: [
-      { label: "Architecture", value: "Multi-Agent DAG" },
-      { label: "Core Runtime", value: "Node.js / TypeScript" },
-      { label: "Governance", value: "Human-in-the-Loop" }
-    ]
-  },
-  sayamsolves: {
-    id: "sayamsolves",
-    title: "SayamSolves Algorithmic Engine & DSA Architecture",
-    subtitle: "High-performance C++ algorithmic problem solving and data structures repository",
-    category: "Algorithmic Engineering & C++ DSA",
-    status: "Active Practice",
-    purpose: "Systematic algorithmic repository cataloging optimal C++ solutions, time/space complexity invariants, graph traversal mechanics, and dynamic programming patterns across competitive platforms.",
-    nodes: [
-      { name: "Problem Invariant Modeling", description: "Constraint deconstruction, bounds checking & edge case mapping", type: "input" },
-      { name: "Data Structure Selection", description: "Segment trees, Trie, Fenwick trees, Disjoint Set Union", type: "process" },
-      { name: "Complexity Optimization Engine", description: "Pruning redundant branches, cache locality & vector allocations", type: "process" },
-      { name: "Asymptotic Proof & Verification", description: "Formal big-O time and space complexity validation", type: "decision" },
-      { name: "Annotated Solution Corpus", description: "Documented C++ templates and pattern classification", type: "storage" },
-      { name: "Verified Execution Matrix", description: "Sub-millisecond runtime execution on benchmark test suites", type: "output" }
-    ],
-    connections: [
-      "Problem Constraints -> Evaluates worst-case bounds to select asymptotic targets",
-      "Structure Selection -> Instantiates optimal memory layout (Trees, Graphs, Queues)",
-      "Optimization -> Applies two-pointer, DP bitmask, or greedy invariants",
-      "Proof Engine -> Verifies monotonic invariants and non-trivial edge conditions",
-      "Execution -> Benchmarks against LeetCode & Codeforces automated grading harnesses"
-    ],
-    invariants: [
-      "Strict asymptotic guarantees: all solutions verified against worst-case input bounds",
-      "Zero dynamic memory leaks: RAII and modern C++ standard library structures",
-      "Deterministic reproducible benchmarks with sub-millisecond execution runtime"
-    ],
-    repoUrl: "https://github.com/codesbysayam/sayam-solves",
-    stats: [
-      { label: "Language", value: "Modern C++ (C++17/20)" },
-      { label: "Specialization", value: "Algorithms & Data Structures" },
-      { label: "Evaluation", value: "Verified Invariant Proofs" }
+      { label: "Architecture", value: "Multi-Agent HITL" },
+      { label: "Codebase", value: "TypeScript (936.6 KB)" },
+      { label: "Event", value: "Deploy or Die · NEXUS" }
     ]
   },
   mausam: {
     id: "mausam",
-    title: "Mausam Meteorological Telemetry Pipeline",
-    subtitle: "High-density climate aggregation engineered for SIH 2026",
-    category: "Geospatial Systems & APIs",
-    status: "SIH 2026 Submission",
-    purpose: "Normalizes fragmented weather data, ocean tide forecasts, air quality vectors, and soil moisture indices into a single high-signal meteorological dashboard for farmers and coastal workers.",
+    title: "MAUSAM Meteorological Intelligence Platform",
+    subtitle: "Doppler nowcasting, SACHET/NDMA, NAQI, INCOIS & Ask MAUSAM AI",
+    category: "Weather & Geospatial Systems",
+    status: "Live · SIH 2026 (mausam_sample)",
+    purpose:
+      "Consolidates Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality, INCOIS coastal/marine state, and agrometeorological metrics with Ask MAUSAM AI into one responsive TypeScript platform.",
     nodes: [
-      { name: "Multi-Source Sensor Ingestion", description: "Open-Meteo, IMD, and coastal tide feeds", type: "input" },
-      { name: "Backoff & Normalizer Worker", description: "Handles API limits and standardizes units", type: "process" },
-      { name: "Localized Threshold Engine", description: "Calculates severe weather & AQI alert bands", type: "process" },
-      { name: "Client In-Memory Cache", description: "Sub-100ms instant geospatial recall", type: "storage" },
-      { name: "Geospatial Canvas & UI", description: "Reactive climate charts & interactive map", type: "output" }
+      { name: "Multi-Agency Telemetry", description: "Doppler nowcasting, NAQI, SACHET/NDMA, INCOIS feeds", type: "input" },
+      { name: "Python & TS Normalizers", description: "Standardizes units across atmospheric & marine metrics", type: "process" },
+      { name: "Ask MAUSAM AI Engine", description: "Translates raw telemetry into actionable guidance", type: "process" },
+      { name: "Hazard Threshold Evaluator", description: "Computes localized air, UV, soil & coastal alerts", type: "decision" },
+      { name: "Client State Cache", description: "Fast meteorological slice recall", type: "storage" },
+      { name: "Geospatial Weather UI", description: "Responsive dashboard served on mausamgovt.vercel.app", type: "output" }
     ],
     connections: [
-      "Sensor Ingestion -> Polls meteorological feeds with exponential backoff",
-      "Normalizer -> Harmonizes differing unit scales into a canonical schema",
-      "Threshold Engine -> Computes localized risk indices for AQI, UV, and tides",
-      "Cache -> Stores current observation matrices locally to prevent rate limits",
-      "Geospatial UI -> Renders zero-CLS weather widgets and hazard warnings"
+      "Agency Feeds -> Harmonized into unified atmospheric, NAQI & marine schemas",
+      "Python Utilities -> Pre-process environmental & spatial climate vectors",
+      "Threshold Evaluator -> Surfaces SACHET/NDMA and coastal hazard advisories",
+      "Ask MAUSAM -> Converts live conditions into plain-language summaries",
+      "UI Layer -> Renders responsive multi-domain climate cards cleanly"
     ],
     invariants: [
-      "Sub-100ms instant UI responses via optimistic client cache hydration",
-      "Deterministic hazard scoring matching Indian Meteorological Department thresholds",
-      "Offline-first cached viewing capability for low-bandwidth coastal zones"
+      "Canonical source repo is codesbysayam/mausam_sample (mausam_demo is an empty template)",
+      "Unified domestic weather, air-quality, coastal & soil views without silos",
+      "Verified polyglot build led by 5.14 MB TypeScript & 118.6 KB Python"
     ],
-    repoUrl: "https://github.com/codesbysayam/mausam",
+    repoUrl: "https://github.com/codesbysayam/mausam_sample",
     liveUrl: "https://mausamgovt.vercel.app",
     stats: [
-      { label: "Data Providers", value: "IMD & Open-Meteo" },
-      { label: "Latency Target", value: "< 100ms Cache" },
-      { label: "Target Audience", value: "Coastal / Farmers" }
+      { label: "Canonical Repo", value: "codesbysayam/mausam_sample" },
+      { label: "Coverage", value: "Doppler / NAQI / INCOIS" },
+      { label: "Event", value: "SIH 2026 · Team ALGNITE" }
     ]
   },
-  yolo: {
-    id: "yolo",
-    title: "YOLO Edge Vision Pipeline",
-    subtitle: "Real-time edge computer vision and spatial inference",
+  sightforge: {
+    id: "sightforge",
+    title: "SightForge Edge Computer Vision Pipeline",
+    subtitle: "Dual-service Next.js 15 / React 19 + FastAPI YOLOv8 & ByteTrack platform",
     category: "Computer Vision & Edge AI",
-    status: "Research Prototype",
-    purpose: "Implements real-time bounding box detection, polygon region-of-interest monitoring, and optimized frame inference latency for embedded camera feeds.",
+    status: "Open Source · Dual-Service (Local/Self-Hosted)",
+    purpose:
+      "Pairs a 16:9 HTML5 Canvas client in Next.js 15 / React 19 with a FastAPI YOLOv8 backend performing COCO Class ID 0 person detection, 17-keypoint pose estimation, NMS (IoU 0.45), ByteTrack tracking, and PostgreSQL telemetry persistence.",
     nodes: [
-      { name: "Video Stream Ingestion", description: "RTSP camera stream or local video frame feed", type: "input" },
-      { name: "Pre-processing & Tensor Normalization", description: "Resizing, RGB standardization, CUDA memory staging", type: "process" },
-      { name: "YOLOv8 Backbone & Head", description: "Feature extraction with anchor-free bounding box regression", type: "process" },
-      { name: "Spatial ROI Evaluation", description: "Polygon containment and crossing boundary detection", type: "decision" },
-      { name: "Inference Log Matrix", description: "Frame-by-frame coordinate and confidence scores", type: "storage" },
-      { name: "Bounding Box Canvas Render", description: "Low-latency visual tracking overlay", type: "output" }
+      { name: "Video / Camera Stream", description: "Local video or edge stream frames ingested by FastAPI", type: "input" },
+      { name: "YOLOv8 Person + Pose", description: "COCO Class ID 0 detector + 17 COCO body keypoints", type: "process" },
+      { name: "NMS & ByteTrack Tracker", description: "IoU 0.45 filtering & persistent multi-frame track IDs", type: "process" },
+      { name: "Atomic CVFrame Contract", description: "Replaces full frame state cleanly without stale box lag", type: "decision" },
+      { name: "PostgreSQL Telemetry", description: "Structured persistence for tracked detections & events", type: "storage" },
+      { name: "16:9 HTML5 Canvas UI", description: "Next.js 15 / React 19 synchronized overlay renderer", type: "output" }
     ],
     connections: [
-      "Stream Ingestion -> Normalizes frame rates and feeds image buffer",
-      "Pre-processing -> Converts raw pixels to optimized tensors",
-      "Backbone -> Infers class probabilities and coordinates in single pass",
-      "ROI Evaluation -> Evaluates intersections against user-defined zones",
-      "Canvas Render -> Overlays high-confidence detections at edge speeds"
+      "Frame Stream -> FastAPI decodes frame and runs YOLOv8 person & pose models",
+      "Detection Head -> Filters COCO Class ID 0 with Non-Max Suppression (IoU 0.45)",
+      "ByteTrack -> Associates 17-keypoint detections into persistent track IDs",
+      "PostgreSQL -> Persists session analytics and detection telemetry",
+      "Next.js Canvas -> Atomically swaps CVFrame state on a 16:9 HTML5 Canvas"
     ],
     invariants: [
-      "Sub-30ms per-frame inference target on accelerated edge runtimes",
-      "Non-maximum suppression thresholding to eliminate duplicate detections",
-      "Strict separation between camera feed decoding and visual inference overlays"
+      "Atomic CVFrame state swap prevents partial bounding-box ghosting",
+      "Strict COCO Class ID 0 filtering & IoU 0.45 NMS before tracking",
+      "Local/self-hosted dual-service repository without a public cloud live URL"
     ],
-    repoUrl: "https://github.com/codesbysayam/yolo",
+    repoUrl: "https://github.com/codesbysayam/SightForge",
     stats: [
-      { label: "Core Model", value: "YOLOv8 / PyTorch" },
-      { label: "Inference Target", value: "Real-Time Embedded" },
-      { label: "Specialization", value: "Spatial ROI Monitoring" }
+      { label: "Frontend", value: "Next.js 15 / React 19" },
+      { label: "CV Backend", value: "FastAPI / YOLOv8 / ByteTrack" },
+      { label: "Hosting", value: "Local / Self-Hosted Repo" }
     ]
   },
-  portfolio: {
-    id: "portfolio",
-    title: "Interactive Portfolio Ecosystem",
-    subtitle: "Full-stack client and server architecture with live GitHub sync",
-    category: "Full-Stack Web Architecture",
-    status: "Live Production",
-    purpose: "Architected around strict zero-CLS layout stability, server-side caching proxies, live GitHub API commit pipelines, and mathematical typography clamp systems.",
+  "memory-in-motion": {
+    id: "memory-in-motion",
+    title: "Memory in Motion Mechanistic Interpretability Lab",
+    subtitle: "Interactive O(1) recurrent state, Hebbian fast weights & BDH lab",
+    category: "Mechanistic Interpretability & AI Research",
+    status: "Live · IIT KGP DataForge 2026",
+    purpose:
+      "Interactive browser lab engineered with Team ALGNITE for DataForge 2026 (IIT Kharagpur, 'Explain the Frontier'), contrasting O(1) fixed-size recurrent state, Hebbian fast weights, and Dragon Hatchling (BDH) dynamics against O(T) KV caches.",
     nodes: [
-      { name: "Live GitHub GraphQL / REST API", description: "Real repo metadata, commit histories, and byte counts", type: "input" },
-      { name: "Express Proxy & Caching Layer", description: "In-memory LRU cache preventing API rate-limiting", type: "process" },
-      { name: "Theme Token State Engine", description: "CSS custom properties with light/dark runtime parity", type: "process" },
-      { name: "Route & Modal Controller", description: "Deep-linkable modal views and single-screen tabs", type: "decision" },
-      { name: "Local Storage Fallback Store", description: "Resilient cache hydration for zero-network conditions", type: "storage" },
-      { name: "Fluid Design System UI", description: "Semantic, accessible presentation with Tailwind tokens", type: "output" }
+      { name: "Parameter Controls", description: "Sequence length, fast-weight decay & capacity sliders", type: "input" },
+      { name: "Trace State Engine", description: "Evaluates O(1) recurrent vs O(T) KV-cache growth", type: "process" },
+      { name: "Hebbian / BDH Simulator", description: "Models associative memory updates & collisions", type: "process" },
+      { name: "KaTeX Math Renderer", description: "Live mathematical formulations synced to state", type: "decision" },
+      { name: "Deterministic Trace Store", description: "Reproducible zero-GPU browser trace states", type: "storage" },
+      { name: "D3.js / SVG Visual Canvas", description: "Interactive plots served at memoryinmotion.vercel.app", type: "output" }
     ],
     connections: [
-      "GitHub API -> Express server fetches commit logs and repo metrics",
-      "Server Proxy -> Evaluates cache age and returns sanitized payloads",
-      "Token Engine -> Synchronizes documentElement attributes and CSS variables",
-      "Route Controller -> Smoothly mounts active views with zero layout shifts",
-      "Design System -> Delivers verified engineering telemetry directly to user"
+      "User Parameters -> Recompute recurrent vs attention memory footprint",
+      "Hebbian Simulator -> Updates fast-weight state matrices step-by-step",
+      "KaTeX Synchronizer -> Aligns matrix equations with live UI state",
+      "D3.js / SVG -> Plots smooth O(1) vs O(T) scaling curves",
+      "Exploratory Narrative -> Guides evaluation through DataForge 2026 chapters"
     ],
     invariants: [
-      "Zero fabricated metrics, fake stars, or synthetic commit counts",
-      "Zero Cumulative Layout Shift (CLS) on initial paint across all viewports",
-      "100% theme variable parity across light and dark color modes"
+      "100% browser-reproducible deterministic simulations with KaTeX derivations",
+      "Direct visual contrast between O(1) recurrent memory and O(T) KV caches",
+      "Verified under codesbysayam/Memory-in-Motion (1 star, Team ALGNITE)"
     ],
-    repoUrl: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-    liveUrl: "https://sayammukherjee.in",
+    repoUrl: "https://github.com/codesbysayam/Memory-in-Motion",
+    liveUrl: "https://memoryinmotion.vercel.app",
     stats: [
-      { label: "Frontend", value: "React 19 / Tailwind" },
-      { label: "Backend", value: "Express API Proxy" },
-      { label: "Data Integrity", value: "Live GitHub Telemetry" }
+      { label: "Visual Stack", value: "React / D3.js / KaTeX" },
+      { label: "Codebase", value: "TypeScript (1.71 MB) + Python" },
+      { label: "Event", value: "DataForge 2026 · IIT KGP" }
+    ]
+  },
+  axiom: {
+    id: "axiom",
+    title: "AXIOM Autonomous Operations Control Plane",
+    subtitle: "Policy rules, approval gates, sandboxes, failure recovery & audit chains",
+    category: "Autonomous Control Planes & Governance",
+    status: "Live · WCC Launchpad 30 (36h)",
+    purpose:
+      "Built in 36 hours for WCC Launchpad 30 with Team ALGNITE, AXIOM governs automated operations through deterministic policy evaluation, dry-run sandboxes, human quorum gates, structured failure recovery, and tamper-evident audit chains.",
+    nodes: [
+      { name: "Operational Action Intent", description: "Queued automated mutation awaiting pre-flight check", type: "input" },
+      { name: "Deterministic Policy Engine", description: "Evaluates static allow, deny & escalate rules", type: "process" },
+      { name: "Dry-Run Simulation Sandbox", description: "Previews state diffs and blast radius safely", type: "process" },
+      { name: "Approval & Recovery Gate", description: "Operator sign-off & structured fallback transitions", type: "decision" },
+      { name: "Tamper-Evident Audit Chain", description: "Hash-linked sequential execution history", type: "storage" },
+      { name: "Control Plane Console", description: "Live dashboard hosted at axiomwcc.vercel.app", type: "output" }
+    ],
+    connections: [
+      "Intent Queue -> Policy Engine evaluates pre-flight compliance boundaries",
+      "Simulation Sandbox -> Computes safe dry-run diffs before side effects",
+      "Escalation Gate -> Halts high-impact mutations until human operator approval",
+      "Failure Recovery -> Transitions degraded actions safely without partial corruption",
+      "Audit Chain -> Appends verifiable hash-linked proof entries"
+    ],
+    invariants: [
+      "Pre-flight deterministic policy boundaries precede all execution pathways",
+      "Hash-linked audit records expose unauthorized log mutation",
+      "Delivered in 36h at WCC Launchpad 30 by Team ALGNITE"
+    ],
+    repoUrl: "https://github.com/codesbysayam/AXIOM",
+    liveUrl: "https://axiomwcc.vercel.app",
+    stats: [
+      { label: "Sprint", value: "36h · WCC Launchpad 30" },
+      { label: "Codebase", value: "TypeScript (793.5 KB)" },
+      { label: "Core", value: "Policy / Sandbox / Audit" }
+    ]
+  },
+  inkloom: {
+    id: "inkloom",
+    title: "INKLOOM Constructed Identity & Logo Workspace",
+    subtitle: "Public fork (master branch) · Early access at inkloom.art",
+    category: "Generative Design Systems (Fork)",
+    status: "Early Access · Fork (default: master)",
+    purpose:
+      "Explores multi-stage constructed logo design workflows—extracting brand constraints, separating typographic and geometric symbol construction, and applying composition lockup/clear-space rules. Specialized logo generation models remain under active construction.",
+    nodes: [
+      { name: "Brand Constraint Brief", description: "Industry tone, name & layout parameters", type: "input" },
+      { name: "Typographic & Symbol Stages", description: "Decoupled font pairing & vector mark rules", type: "process" },
+      { name: "Composition & Lockup Engine", description: "Enforces clear-space ratios & geometric lockups", type: "process" },
+      { name: "Model Pipeline Boundary", description: "Specialized logo models under active R&D", type: "decision" },
+      { name: "PLpgSQL + Docker Workspace", description: "PostgreSQL schema & containerized runtime", type: "storage" },
+      { name: "Early Access Interface", description: "Web showcase hosted at inkloom.art", type: "output" }
+    ],
+    connections: [
+      "Brand Brief -> Parsed into explicit typographic and geometric constraints",
+      "Composition Engine -> Aligns symbol mark and wordmark spacing rules",
+      "Container Runtime -> Docker + PLpgSQL environment coordinates workspace state",
+      "Early Access Web -> Surfaces platform preview on inkloom.art"
+    ],
+    invariants: [
+      "Disclosed public fork (isFork: true) using default branch 'master'",
+      "Specialized AI logo generation models remain under active construction",
+      "TypeScript, CSS, PLpgSQL & Docker workspace transparency"
+    ],
+    repoUrl: "https://github.com/codesbysayam/inkloom",
+    liveUrl: "https://inkloom.art",
+    stats: [
+      { label: "Repo Status", value: "Public Fork (master)" },
+      { label: "Stack", value: "TS / PLpgSQL / Docker" },
+      { label: "Model State", value: "Under Construction" }
+    ]
+  },
+  "campus-connect": {
+    id: "campus-connect",
+    title: "CampusConnect Event & Organizer Platform",
+    subtitle: "Next.js + TypeScript + Vitest campus discovery & seeded in-memory store",
+    category: "Full-Stack Web Applications",
+    status: "Live Demo · Seeded In-Memory Store",
+    purpose:
+      "Unifies student campus event discovery, filtering, and seat registration with a dedicated organizer dashboard in Next.js and TypeScript—backed by Vitest automated checks and README-disclosed seeded in-memory storage (resets on restart).",
+    nodes: [
+      { name: "Student / Organizer Actions", description: "Event browse, RSVP, create & edit requests", type: "input" },
+      { name: "Next.js App Handlers", description: "Typed route handlers & form validation", type: "process" },
+      { name: "Seat Capacity Manager", description: "Prevents over-booking and duplicate RSVPs", type: "decision" },
+      { name: "Seeded In-Memory Store", description: "Fast demo dataset (resets on process restart)", type: "storage" },
+      { name: "Vitest Verification Suite", description: "Automated tests for registration & CRUD states", type: "process" },
+      { name: "Live Vercel Demo", description: "Published at campusconnect1273.vercel.app/", type: "output" }
+    ],
+    connections: [
+      "Student Discovery -> Filters live campus events by category and availability",
+      "Organizer Console -> Creates and updates event schedules & seat limits",
+      "Seat Manager -> Validates remaining capacity against seeded store",
+      "Vitest Suite -> Verifies deterministic state transitions on changes"
+    ],
+    invariants: [
+      "Seeded in-memory storage resets on server restart (per README disclosure)",
+      "Core registration and organizer paths covered by Vitest",
+      "Repository verified under codesbysayam/CAMPUSCONNECT_1273 (main)"
+    ],
+    repoUrl: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
+    liveUrl: "https://campusconnect1273.vercel.app/",
+    stats: [
+      { label: "Framework", value: "Next.js / TypeScript" },
+      { label: "Testing", value: "Vitest Suite" },
+      { label: "Persistence", value: "Seeded In-Memory Store" }
+    ]
+  },
+  "sayam-solves": {
+    id: "sayam-solves",
+    title: "SayamSolves C++ DSA & LeetHub V2 Archive",
+    subtitle: "3 tracked C++ repo solutions (LC 0005, 0033, 0115) & 4 LC baseline",
+    category: "Competitive Programming & DSA",
+    status: "Active · 3 Repo Files / 4 LC Solved",
+    purpose:
+      "Synchronizes accepted LeetCode C++ solutions directly via LeetHub V2. Verified stats.json records 3 committed solution directories—0005 Longest Palindromic Substring, 0033 Search in Rotated Sorted Array, and 0115 Distinct Subsequences—complemented by a 4-problem LeetCode profile baseline.",
+    nodes: [
+      { name: "LeetCode Submission", description: "Accepted C++ solution synced via LeetHub V2", type: "input" },
+      { name: "Invariant & Complexity Spec", description: "Time & space bounds verified per problem constraint", type: "process" },
+      { name: "Zero-Padded Repo Folders", description: "0005, 0033, and 0115 structured on main", type: "storage" },
+      { name: "stats.json Telemetry Ledger", description: "Tracks exact committed repo count (3 files)", type: "decision" },
+      { name: "Verifiable Public Archive", description: "Hosted at codesbysayam/sayam-solves (1 star)", type: "output" }
+    ],
+    connections: [
+      "LeetCode Judge -> Accepts C++ implementation (LC 0005, 0033, 0115)",
+      "LeetHub V2 -> Commits solution + README into lowercase sayam-solves repo",
+      "stats.json -> Audits exact count of 3 committed solution folders",
+      "Profile Sync -> Cross-referenced honestly with 4-problem LeetCode baseline"
+    ],
+    invariants: [
+      "Exact lowercase slug codesbysayam/sayam-solves (1 star, main branch)",
+      "Transparent stats.json reporting: 3 committed repo files & 4 LC solved",
+      "Optimal O(n^2)/O(1) expansion, O(log n) pivot search, and O(|s|*|t|) DP"
+    ],
+    repoUrl: "https://github.com/codesbysayam/sayam-solves",
+    stats: [
+      { label: "Language", value: "Modern C++ (2,037 B)" },
+      { label: "Repo Files", value: "3 Synced (0005, 0033, 0115)" },
+      { label: "LeetCode Baseline", value: "4 Problems Solved" }
     ]
   }
 };
@@ -228,7 +346,7 @@ export function EcosystemPage() {
         />
 
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-[var(--text-muted)]">
-          <span className="font-semibold text-[var(--text)]">5 Verified Architectures</span>
+          <span className="font-semibold text-[var(--text)]">8 Verified Architectures</span>
           <span aria-hidden="true">·</span>
           <span>End-to-End Delivery Lifecycle</span>
           <span aria-hidden="true">·</span>
@@ -315,18 +433,21 @@ export function EcosystemPage() {
             </span>
           </div>
           <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
-            Inspect the processing stages, data handshakes, and formal invariants across all five documented platforms.
+            Inspect the processing stages, data handshakes, and formal invariants across all eight verified architectures.
           </p>
         </div>
 
         {/* Selector Tabs */}
         <div className="flex flex-wrap gap-2 pt-1" role="tablist" aria-label="System blueprints">
           {[
-            { id: "operon", label: "Operon: Multi-Agent AI", icon: Cpu },
-            { id: "sayamsolves", label: "SayamSolves: C++ Algorithms", icon: Binary },
-            { id: "mausam", label: "Mausam: Weather Telemetry", icon: CloudRain },
-            { id: "yolo", label: "YOLO: Edge Computer Vision", icon: Eye },
-            { id: "portfolio", label: "Portfolio: Full-Stack Architecture", icon: Globe }
+            { id: "operon", label: "OPERON · Multi-Agent HITL", icon: Cpu },
+            { id: "mausam", label: "MAUSAM · Weather Intelligence", icon: CloudRain },
+            { id: "sightforge", label: "SightForge · YOLOv8 & ByteTrack", icon: Eye },
+            { id: "memory-in-motion", label: "Memory in Motion · AI Lab", icon: Brain },
+            { id: "axiom", label: "AXIOM · Control Plane", icon: Shield },
+            { id: "inkloom", label: "Inkloom · Logo Systems (Fork)", icon: Sparkles },
+            { id: "campus-connect", label: "CampusConnect · Events", icon: GraduationCap },
+            { id: "sayam-solves", label: "SayamSolves · C++ DSA", icon: Binary }
           ].map((tab) => {
             const Icon = tab.icon;
             const isSelected = activeBlueprint === tab.id;
@@ -337,7 +458,7 @@ export function EcosystemPage() {
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => setActiveBlueprint(tab.id as BlueprintId)}
-                className={`btn !min-h-[40px] !py-2 !px-3.5 !text-xs font-mono ${
+                className={`btn !min-h-[40px] !py-2 !px-3.5 !text-xs font-mono active:scale-[0.97] ${
                   isSelected ? "btn-primary" : "btn-secondary"
                 }`}
               >

@@ -252,7 +252,7 @@ export default function ContactSection() {
               <StaggerItem>
                 <div
                   onClick={() => handleCopyBusiness()}
-                  className="card group cursor-pointer p-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4 min-w-0 hover:-translate-y-0.5"
+                  className="card card-interactive group cursor-pointer p-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4 min-w-0 hover:-translate-y-0.5 active:scale-[0.985] active:border-[var(--accent)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -315,7 +315,7 @@ export default function ContactSection() {
               <StaggerItem>
                 <div
                   onClick={() => handleCopyContact()}
-                  className="card group cursor-pointer p-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4 min-w-0 hover:-translate-y-0.5"
+                  className="card card-interactive group cursor-pointer p-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4 min-w-0 hover:-translate-y-0.5 active:scale-[0.985] active:border-[var(--accent)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -380,7 +380,7 @@ export default function ContactSection() {
                   href={verifiedLinkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                  className="card card-interactive group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5 active:scale-[0.985] active:border-[var(--accent)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -415,7 +415,7 @@ export default function ContactSection() {
                   href={verifiedGithub}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                  className="card card-interactive group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5 active:scale-[0.985] active:border-[var(--accent)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -450,7 +450,7 @@ export default function ContactSection() {
                   href={verifiedCodolio}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+                  className="card card-interactive group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5 active:scale-[0.985] active:border-[var(--accent)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -586,7 +586,7 @@ export default function ContactSection() {
                       href={profile.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group p-3.5 rounded-[8px] border hover:border-[var(--border-strong)] transition-colors flex items-center justify-between gap-3 h-full"
+                      className="group p-3.5 rounded-[8px] border hover:border-[var(--border-strong)] active:scale-[0.975] active:border-[var(--accent)] transition-all flex items-center justify-between gap-3 h-full"
                       style={{
                         backgroundColor: "var(--surface)",
                         borderColor: "var(--border)",

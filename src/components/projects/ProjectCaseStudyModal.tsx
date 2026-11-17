@@ -8,8 +8,20 @@ import ReadingProgressBar from "../common/ReadingProgressBar";
 import { calculateReadingTime } from "../../utils/readingTime";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
-  X, ExternalLink, Github, Star, GitFork,
-  Calendar, CheckCircle2, Clock, ChevronLeft, ChevronRight
+  X,
+  ExternalLink,
+  Github,
+  Star,
+  GitFork,
+  Calendar,
+  CheckCircle2,
+  Clock,
+  ChevronLeft,
+  ChevronRight,
+  GitBranch,
+  ShieldCheck,
+  AlertCircle,
+  Compass,
 } from "lucide-react";
 
 interface ProjectCaseStudyModalProps {
@@ -47,21 +59,25 @@ function ProjectCaseStudyModalComponent({
     }
   }, [project?.id]);
 
+  // Manage dynamic document title & meta description while open, restoring cleanly on close
   useEffect(() => {
     if (!project) return;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
+    const prevTitle = document.title;
+    const metaDesc = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+    const prevMetaDesc = metaDesc?.getAttribute("content") ?? null;
+
+    document.title = `${project.title} · Case Study — Sayam Mukherjee`;
+    if (metaDesc) {
+      metaDesc.setAttribute("content", `${project.subtitle}: ${project.shortDescription}`);
+    }
+
+    return () => {
+      document.title = prevTitle;
+      if (metaDesc && prevMetaDesc !== null) {
+        metaDesc.setAttribute("content", prevMetaDesc);
       }
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [project, onClose]);
+  }, [project]);
 
   const readingStats = useMemo(
     () => (project ? calculateReadingTime(project) : { formatted: "", words: 0 }),
@@ -75,6 +91,28 @@ function ProjectCaseStudyModalComponent({
 
   const canStep = Boolean(projects && projects.length > 1 && onSelectProject && currentIndex !== -1);
 
+  useEffect(() => {
+    if (!project) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        onClose();
+      } else if (e.key === "ArrowLeft" && canStep && projects && onSelectProject) {
+        const nextIdx = (currentIndex - 1 + projects.length) % projects.length;
+        onSelectProject(projects[nextIdx]);
+      } else if (e.key === "ArrowRight" && canStep && projects && onSelectProject) {
+        const nextIdx = (currentIndex + 1) % projects.length;
+        onSelectProject(projects[nextIdx]);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [project, onClose, canStep, projects, onSelectProject, currentIndex]);
+
   const handleStep = (direction: -1 | 1) => {
     if (!canStep || !projects || !onSelectProject) return;
     const nextIdx = (currentIndex + direction + projects.length) % projects.length;
@@ -87,6 +125,8 @@ function ProjectCaseStudyModalComponent({
   const langColor = LANGUAGE_COLORS[language] || "#69734A";
   const starsCount = repo ? repo.stargazers_count : 0;
   const forksCount = repo ? repo.forks_count : 0;
+  const branchName = repo?.default_branch || project.defaultBranch || "main";
+  const isForkRepo = repo?.fork ?? project.isFork ?? false;
   const lastUpdated = repo
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
@@ -109,7 +149,7 @@ function ProjectCaseStudyModalComponent({
         className="fixed inset-0 bg-[#151713]/80 backdrop-blur-sm cursor-pointer"
       />
 
-      {/* Modal Container with Geometric Mask Entrance */}
+      {/* Modal Container */}
       <motion.div
         initial={
           reduced
@@ -172,9 +212,9 @@ function ProjectCaseStudyModalComponent({
                 <button
                   type="button"
                   onClick={() => handleStep(-1)}
-                  className="w-8 h-8 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] text-[var(--text-muted)] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-8 h-8 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text-muted)] flex items-center justify-center transition-all cursor-pointer"
                   aria-label="Previous project case study"
-                  title="Previous case study"
+                  title="Previous case study (Left Arrow)"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -184,9 +224,9 @@ function ProjectCaseStudyModalComponent({
                 <button
                   type="button"
                   onClick={() => handleStep(1)}
-                  className="w-8 h-8 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] text-[var(--text-muted)] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-8 h-8 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text-muted)] flex items-center justify-center transition-all cursor-pointer"
                   aria-label="Next project case study"
-                  title="Next case study"
+                  title="Next case study (Right Arrow)"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
@@ -196,7 +236,7 @@ function ProjectCaseStudyModalComponent({
             <button
               type="button"
               onClick={onClose}
-              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] bg-[var(--surface)] hover:bg-[var(--text)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
+              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] bg-[var(--surface)] hover:bg-[var(--text)] active:scale-95 active:bg-[var(--text)] active:text-[var(--bg)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text)] hover:text-[var(--bg)] transition-all cursor-pointer"
               title="Close modal (Esc)"
               aria-label="Close case study modal"
             >
@@ -209,7 +249,7 @@ function ProjectCaseStudyModalComponent({
 
         {/* Scrollable Body */}
         <div ref={bodyRef} className="overflow-y-auto p-5 sm:p-8 space-y-6 flex-1 text-[var(--text-secondary)]">
-          {/* Media Preview Banner with Masked Image-to-Image Wipe */}
+          {/* Media Preview Banner */}
           <div className="rounded-[10px] overflow-hidden border border-[var(--border)] bg-[var(--surface)]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -256,7 +296,7 @@ function ProjectCaseStudyModalComponent({
                   <button
                     type="button"
                     onClick={() => handleStep(-1)}
-                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] text-[var(--text)] font-semibold cursor-pointer"
+                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text)] font-semibold cursor-pointer"
                     aria-label="Previous project"
                   >
                     Prev
@@ -264,7 +304,7 @@ function ProjectCaseStudyModalComponent({
                   <button
                     type="button"
                     onClick={() => handleStep(1)}
-                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] text-[var(--text)] font-semibold cursor-pointer"
+                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text)] font-semibold cursor-pointer"
                     aria-label="Next project"
                   >
                     Next
@@ -274,8 +314,8 @@ function ProjectCaseStudyModalComponent({
             </div>
           </div>
 
-          {/* Title */}
-          <div className="space-y-1.5 border-b border-[var(--border)] pb-5">
+          {/* Title & Metadata Badges */}
+          <div className="space-y-2 border-b border-[var(--border)] pb-5">
             <h3 id="case-study-modal-title" className="text-2xl sm:text-3xl font-extrabold text-[var(--text)] font-display">
               {project.title}
             </h3>
@@ -284,41 +324,78 @@ function ProjectCaseStudyModalComponent({
                 {project.subtitle}
               </p>
             )}
-            {project.role && (
-              <p className="text-xs text-[var(--text-muted)] font-mono pt-1">
-                Role: {project.role}
-              </p>
-            )}
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 pt-1 text-xs font-mono text-[var(--text-muted)]">
+              {project.role && <span>Role: {project.role}</span>}
+              {project.team && <span>· Team: {project.team}</span>}
+              {project.event && <span>· Event: {project.event}</span>}
+              <span className="inline-flex items-center gap-1">
+                <GitBranch className="w-3 h-3 text-[var(--accent)]" aria-hidden="true" />
+                <span>Branch: {branchName}</span>
+              </span>
+              {isForkRepo && (
+                <span className="px-2 py-0.5 rounded-[4px] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--text)] font-semibold">
+                  Public Fork
+                </span>
+              )}
+            </div>
           </div>
 
-          {/* Overview */}
+          {/* 1. Overview */}
           <div className="space-y-2">
             <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
-              Overview
+              01 · Overview
             </h4>
             <p className="text-sm leading-relaxed font-sans text-[var(--text-secondary)]">
               {project.longDescription}
             </p>
           </div>
 
-          {project.whyItExists && (
+          {/* 2 & 3. Problem & Solution Split */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
               <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--text)] font-semibold">
-                Problem &amp; Purpose
+                02 · Problem &amp; Purpose
               </h4>
               <p className="text-xs sm:text-sm leading-relaxed font-sans text-[var(--text-secondary)]">
-                {project.whyItExists}
+                {project.problem || project.whyItExists}
               </p>
+            </div>
+
+            <div className="space-y-2 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+              <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
+                03 · Solution Overview
+              </h4>
+              <p className="text-xs sm:text-sm leading-relaxed font-sans text-[var(--text-secondary)]">
+                {project.solution || project.whatIBuilt}
+              </p>
+            </div>
+          </div>
+
+          {/* 4. System Architecture & Pipeline */}
+          {project.architecture && project.architecture.length > 0 && (
+            <div className="space-y-2.5">
+              <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
+                04 · System Architecture &amp; Pipeline
+              </h4>
+              <ul className="space-y-2 text-xs">
+                {project.architecture.map((arch, idx) => (
+                  <li key={idx} className="flex items-start gap-2.5 bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] font-mono">
+                    <span className="text-[var(--accent)] font-bold tabular-nums">0{idx + 1}.</span>
+                    <span className="leading-relaxed text-[var(--text-secondary)]">{arch}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           )}
 
-          {project.whatIBuilt && (
+          {/* 5. Engineering Implementation */}
+          {(project.implementation || project.whatIBuilt) && (
             <div className="space-y-2 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
               <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
-                Engineering Implementation
+                05 · Engineering Implementation
               </h4>
               <p className="text-xs sm:text-sm leading-relaxed font-sans text-[var(--text-secondary)]">
-                {project.whatIBuilt}
+                {project.implementation || project.whatIBuilt}
               </p>
             </div>
           )}
@@ -327,10 +404,11 @@ function ProjectCaseStudyModalComponent({
             <ProjectMetricsSummary metrics={project.metrics} projectName={project.title} />
           )}
 
+          {/* 6. Key Capabilities & Highlights */}
           {project.highlights && project.highlights.length > 0 && (
             <div className="space-y-2.5">
               <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
-                Key Capabilities &amp; Highlights
+                06 · Key Capabilities &amp; Highlights
               </h4>
               <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
                 {project.highlights.map((item, idx) => (
@@ -343,21 +421,57 @@ function ProjectCaseStudyModalComponent({
             </div>
           )}
 
-          {project.architecture && project.architecture.length > 0 && (
+          {/* 7. Engineering Decisions & Trade-offs */}
+          {project.engineeringDecisions && project.engineeringDecisions.length > 0 && (
             <div className="space-y-2.5">
-              <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
-                System Architecture &amp; Pipeline
+              <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold flex items-center gap-1.5">
+                <Compass className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>07 · Engineering Decisions &amp; Trade-offs</span>
               </h4>
-              <ul className="space-y-2 text-xs">
-                {project.architecture.map((arch, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] font-mono">
-                    <span className="text-[var(--accent)] font-bold tabular-nums">0{idx + 1}.</span>
-                    <span className="leading-relaxed text-[var(--text-secondary)]">{arch}</span>
+              <ul className="space-y-2 text-xs sm:text-sm">
+                {project.engineeringDecisions.map((decision, idx) => (
+                  <li
+                    key={idx}
+                    className="flex items-start gap-2.5 bg-[var(--surface)] p-3.5 rounded-[8px] border border-[var(--border)] text-[var(--text-secondary)]"
+                  >
+                    <span className="font-mono text-xs font-bold text-[var(--accent)] shrink-0 mt-0.5">
+                      →
+                    </span>
+                    <span className="leading-relaxed font-sans">{decision}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
+
+          {/* 8. Results, Status & Disclosures */}
+          <div className="space-y-3 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
+              <span>08 · Results, Status &amp; Verification Notes</span>
+            </h4>
+            {project.resultsAndStatus && (
+              <p className="text-xs sm:text-sm leading-relaxed font-sans text-[var(--text-secondary)]">
+                {project.resultsAndStatus}
+              </p>
+            )}
+            {project.verificationNote && (
+              <div className="flex items-start gap-2 p-3 rounded-[6px] bg-[var(--surface-2)] border border-[var(--border)] text-xs font-mono text-[var(--text)]">
+                <AlertCircle className="w-3.5 h-3.5 text-[var(--accent)] shrink-0 mt-0.5" aria-hidden="true" />
+                <span className="leading-relaxed">{project.verificationNote}</span>
+              </div>
+            )}
+            {project.verifiedFacts && project.verifiedFacts.length > 0 && (
+              <ul className="space-y-1.5 pt-1 text-xs font-mono text-[var(--text-muted)]">
+                {project.verifiedFacts.map((fact, idx) => (
+                  <li key={idx} className="flex items-start gap-2">
+                    <span className="text-[var(--accent)]">·</span>
+                    <span>{fact}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           {/* Technology Stack */}
           <div className="space-y-2">
@@ -376,10 +490,10 @@ function ProjectCaseStudyModalComponent({
             </div>
           </div>
 
-          {/* GitHub Telemetry */}
+          {/* 9. Repository Record & Live Telemetry */}
           <div className="space-y-2 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
             <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)] font-semibold">
-              GitHub Repository Record
+              09 · GitHub Repository Record
             </h4>
             <div className="flex items-center gap-4 text-xs font-mono text-[var(--text)] flex-wrap pt-1 tabular-nums">
               <div className="flex items-center gap-1.5">
@@ -388,11 +502,15 @@ function ProjectCaseStudyModalComponent({
               </div>
               <div className="flex items-center gap-1">
                 <Star className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
-                <span>{starsCount} stars</span>
+                <span>{starsCount} {starsCount === 1 ? "star" : "stars"}</span>
               </div>
               <div className="flex items-center gap-1">
                 <GitFork className="w-3.5 h-3.5 text-[var(--text-muted)]" aria-hidden="true" />
-                <span>{forksCount} forks</span>
+                <span>{forksCount} {forksCount === 1 ? "fork" : "forks"}</span>
+              </div>
+              <div className="flex items-center gap-1 text-[var(--text-muted)]">
+                <GitBranch className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>{branchName}</span>
               </div>
               <div className="flex items-center gap-1 text-[var(--text-muted)]">
                 <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
@@ -407,7 +525,7 @@ function ProjectCaseStudyModalComponent({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-secondary"
+              className="btn btn-secondary active:scale-[0.98]"
             >
               <Github className="w-4 h-4" aria-hidden="true" />
               <span>View on GitHub ↗</span>
@@ -418,7 +536,7 @@ function ProjectCaseStudyModalComponent({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-primary"
+                className="btn btn-primary active:scale-[0.98]"
               >
                 <ExternalLink className="w-4 h-4" aria-hidden="true" />
                 <span>Open Live Project ↗</span>

@@ -157,7 +157,7 @@ export default function TestimonialsSection() {
                   setCurrentIndex(idx);
                 }}
                 aria-label={`Show testimonial ${idx + 1}`}
-                className="h-2 rounded-[2px] transition-all cursor-pointer"
+                className="h-2 rounded-[2px] transition-all cursor-pointer active:scale-[0.9] active:opacity-80"
                 style={{
                   width: currentIndex === idx ? "24px" : "8px",
                   backgroundColor:

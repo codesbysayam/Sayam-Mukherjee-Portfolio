@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="AXIOM Autonomous Operations Control Plane Architecture">
+  <defs>
+    <pattern id="grid-ax" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#41443A" stroke-width="0.6" stroke-opacity="0.35"/>
+    </pattern>
+    <marker id="arrow-ax" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#C7E34A"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#151713"/>
+  <rect width="1600" height="900" fill="url(#grid-ax)"/>
+
+  <!-- Header -->
+  <rect x="72" y="56" width="1456" height="68" rx="10" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <rect x="96" y="74" width="104" height="32" rx="4" fill="#C7E34A"/>
+  <text x="148" y="95" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#151713" text-anchor="middle" letter-spacing="1.4">AXIOM</text>
+  <text x="224" y="96" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="600" fill="#F4F4ED">Autonomous Operations Control Plane · Policy, Approval &amp; Tamper-Evident Audit</text>
+  <text x="1496" y="95" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA" text-anchor="end">WCC LAUNCHPAD 30 · TEAM ALGNITE</text>
+
+  <!-- 4 Control Plane Columns -->
+  <!-- Col 1: Deterministic Policy Engine -->
+  <rect x="72" y="176" width="336" height="528" rx="12" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <text x="102" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">01 · POLICY ENGINE</text>
+  <text x="102" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Deterministic Rules</text>
+  <rect x="102" y="286" width="276" height="96" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <text x="122" y="318" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" fill="#F4F4ED">BOUNDED AUTONOMY</text>
+  <text x="122" y="344" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Static capability caps &amp;</text>
+  <text x="122" y="364" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">blast-radius thresholds</text>
+  <rect x="102" y="406" width="276" height="122" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="122" y="438" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">ALLOW / DENY / ESCALATE</text>
+  <text x="122" y="468" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#EAEAE1">policy.tier === "critical"</text>
+  <text x="122" y="492" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#EAEAE1">→ forceHumanApproval()</text>
+  <rect x="102" y="552" width="276" height="118" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="122" y="586" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#F4F4ED">SIMULATION SANDBOX</text>
+  <text x="122" y="614" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Dry-run action diff before</text>
+  <text x="122" y="636" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">production dispatch</text>
+
+  <line x1="408" y1="440" x2="438" y2="440" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-ax)"/>
+
+  <!-- Col 2: Human Approval Gate -->
+  <rect x="446" y="176" width="336" height="528" rx="12" fill="#20231D" stroke="#C7E34A" stroke-width="2"/>
+  <text x="476" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">02 · APPROVAL GATE</text>
+  <text x="476" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Operator Verification</text>
+  <rect x="476" y="286" width="276" height="148" rx="8" fill="#2B3022" stroke="#C7E34A" stroke-width="1.5"/>
+  <text x="496" y="320" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" fill="#C7E34A">HIGH-RISK QUEUE</text>
+  <text x="496" y="352" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#F4F4ED">• Full intent inspection</text>
+  <text x="496" y="378" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#F4F4ED">• Policy conflict breakdown</text>
+  <text x="496" y="404" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#F4F4ED">• Quorum sign-off</text>
+  <rect x="476" y="458" width="276" height="96" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <text x="496" y="490" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" font-weight="700" fill="#F4F4ED">FAILURE RECOVERY</text>
+  <text x="496" y="518" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Circuit breakers, retries &amp;</text>
+  <text x="496" y="538" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">safe rollback transitions</text>
+  <rect x="476" y="578" width="276" height="92" rx="8" fill="#C7E34A"/>
+  <text x="614" y="618" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#151713" text-anchor="middle">GATE CLEARED → DISPATCH</text>
+  <text x="614" y="644" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#20231D" text-anchor="middle">cryptographic decision binding</text>
+
+  <line x1="782" y1="440" x2="812" y2="440" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-ax)"/>
+
+  <!-- Col 3: Tamper-Evident Audit Chain -->
+  <rect x="820" y="176" width="336" height="528" rx="12" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <text x="850" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">03 · AUDIT LEDGER</text>
+  <text x="850" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Tamper-Evident Chain</text>
+
+  <rect x="850" y="286" width="276" height="96" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="870" y="316" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#8D947E">ENTRY #N-2 · POLICY_EVAL</text>
+  <text x="870" y="344" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#EAEAE1">hash: 0x8f41...c92a</text>
+  <text x="870" y="366" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#B5B8AA">prev: 0x3b12...04e1</text>
+
+  <rect x="850" y="406" width="276" height="96" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <text x="870" y="436" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#C7E34A">ENTRY #N-1 · OPERATOR_SIGN</text>
+  <text x="870" y="464" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#EAEAE1">hash: 0xa27e...44b8</text>
+  <text x="870" y="486" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#B5B8AA">prev: 0x8f41...c92a</text>
+
+  <rect x="850" y="526" width="276" height="144" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="870" y="558" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#C7E34A">ENTRY #N · EXECUTION_SEAL</text>
+  <text x="870" y="586" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#EAEAE1">hash: 0xe910...771d</text>
+  <text x="870" y="610" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#B5B8AA">prev: 0xa27e...44b8</text>
+  <text x="870" y="646" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#8D947E">Verifiable replay &amp; trace lineage</text>
+
+  <line x1="1156" y1="440" x2="1186" y2="440" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-ax)"/>
+
+  <!-- Col 4: Deployment & Stack -->
+  <rect x="1194" y="176" width="334" height="528" rx="12" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <text x="1224" y="218" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">04 · RUNTIME &amp; SPEC</text>
+  <text x="1224" y="250" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Verified Telemetry</text>
+
+  <rect x="1224" y="286" width="274" height="114" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="1244" y="318" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">LIVE DEPLOYMENT</text>
+  <text x="1244" y="348" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="700" fill="#F4F4ED">axiomwcc.vercel.app</text>
+  <text x="1244" y="378" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">github.com/codesbysayam/AXIOM</text>
+
+  <rect x="1224" y="424" width="274" height="246" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="1244" y="458" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#F4F4ED">LANGUAGE BREAKDOWN</text>
+  <text x="1244" y="492" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA">TypeScript · 793.5 KB</text>
+  <text x="1244" y="520" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA">CSS · 61.2 KB · HTML · 1.8 KB</text>
+  <line x1="1244" y1="542" x2="1478" y2="542" stroke="#41443A" stroke-width="1"/>
+  <text x="1244" y="574" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">✓ Deterministic policy rules</text>
+  <text x="1244" y="602" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">✓ 36h WCC Launchpad 30 build</text>
+  <text x="1244" y="630" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">✓ Sandbox dry-run inspection</text>
+
+  <text x="72" y="790" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#8D947E">VERIFIED REPOSITORY 05 / 08 · AUTONOMOUS OPERATIONS CONTROL PLANE</text>
+  <text x="1528" y="790" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#C7E34A" text-anchor="end">POLICY · SANDBOX · TAMPER-EVIDENT AUDIT</text>
+</svg>

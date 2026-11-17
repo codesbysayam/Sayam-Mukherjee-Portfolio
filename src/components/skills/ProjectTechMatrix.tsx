@@ -9,19 +9,22 @@ interface MatrixTech {
 }
 
 const MATRIX_TECHNOLOGIES: MatrixTech[] = [
-  { id: "python", name: "Python", category: "Languages" },
   { id: "typescript", name: "TypeScript", category: "Languages" },
+  { id: "python", name: "Python", category: "Languages" },
   { id: "cpp", name: "C++", category: "Languages" },
   { id: "react", name: "React", category: "Frontend" },
+  { id: "nextjs", name: "Next.js", category: "Frontend" },
   { id: "tailwind", name: "Tailwind CSS", category: "Frontend" },
+  { id: "katex-d3", name: "KaTeX / D3.js", category: "Frontend" },
   { id: "node", name: "Node.js", category: "Backend" },
   { id: "express", name: "Express", category: "Backend" },
+  { id: "fastapi", name: "FastAPI", category: "Backend" },
+  { id: "postgres", name: "PostgreSQL / PLpgSQL", category: "Data" },
   { id: "multi-agent", name: "Multi-Agent AI", category: "AI / ML" },
-  { id: "yolo", name: "YOLO / YOLOv8", category: "AI / ML" },
-  { id: "opencv", name: "OpenCV", category: "AI / ML" },
-  { id: "pytorch", name: "PyTorch", category: "AI / ML" },
+  { id: "yolo", name: "YOLOv8 / ByteTrack", category: "AI / ML" },
+  { id: "vitest", name: "Vitest", category: "Testing" },
+  { id: "docker", name: "Docker", category: "DevOps" },
   { id: "dsa", name: "Data Structures & Algorithms", category: "Core" },
-  { id: "apis", name: "API Integration", category: "Core" },
   { id: "git", name: "Git / GitHub", category: "Tools" },
   { id: "vercel", name: "Vercel", category: "Tools" }
 ];
@@ -42,20 +45,26 @@ function checkTechInProject(tech: MatrixTech, project: ProjectItem): boolean {
   if (tech.id === "dsa") {
     return allProjectTechs.some((t) => t.includes("dsa") || t.includes("algorithm") || t.includes("data structure"));
   }
-  if (tech.id === "apis") {
-    return allProjectTechs.some((t) => t.includes("api") || t.includes("weather"));
-  }
-  if (tech.id === "opencv") {
-    return allProjectTechs.some((t) => t.includes("opencv"));
-  }
-  if (tech.id === "multi-agent") {
-    return allProjectTechs.some((t) => t.includes("agent") || t.includes("multi-agent"));
-  }
   if (tech.id === "cpp") {
     return allProjectTechs.some((t) => t === "c++" || t.includes("c++"));
   }
+  if (tech.id === "react") {
+    return allProjectTechs.some((t) => t.includes("react"));
+  }
+  if (tech.id === "nextjs") {
+    return allProjectTechs.some((t) => t.includes("next.js"));
+  }
+  if (tech.id === "katex-d3") {
+    return allProjectTechs.some((t) => t.includes("katex") || t.includes("d3"));
+  }
+  if (tech.id === "postgres") {
+    return allProjectTechs.some((t) => t.includes("postgres") || t.includes("plpgsql"));
+  }
+  if (tech.id === "multi-agent") {
+    return allProjectTechs.some((t) => t.includes("agent") || t.includes("control plane") || t.includes("policy"));
+  }
   if (tech.id === "yolo") {
-    return allProjectTechs.some((t) => t.includes("yolo"));
+    return allProjectTechs.some((t) => t.includes("yolo") || t.includes("bytetrack"));
   }
   if (tech.id === "vercel") {
     return project.liveUrl?.includes("vercel.app") || allProjectTechs.some((t) => t.includes("vercel"));
@@ -88,7 +97,7 @@ export function ProjectTechMatrix() {
             Project &amp; Technology Matrix
           </h2>
           <span className="text-[11px] font-mono text-[var(--text-faint)]">
-            5 Verified Projects · 15 Key Technologies
+            {verifiedProjects.length} Verified Projects · {MATRIX_TECHNOLOGIES.length} Key Technologies
           </span>
         </div>
         <p className="text-xs sm:text-sm text-[var(--text-muted)] max-w-2xl font-sans leading-relaxed">
@@ -99,7 +108,7 @@ export function ProjectTechMatrix() {
       {/* Desktop Matrix View */}
       <div className="hidden md:block card overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full min-w-[820px] text-left border-collapse">
             <thead>
               <tr className="border-b border-[var(--border)] bg-[var(--surface)]">
                 <th className="py-3 px-4 text-[11px] font-mono font-medium text-[var(--text-muted)] uppercase tracking-wider w-1/3">
@@ -211,7 +220,7 @@ export function ProjectTechMatrix() {
               <button
                 type="button"
                 onClick={() => setExpandedProject(isExpanded ? null : project.id)}
-                className="w-full p-4 flex items-center justify-between text-left hover:bg-[var(--surface)] transition-colors cursor-pointer"
+                className="w-full p-4 flex items-center justify-between text-left hover:bg-[var(--surface)] active:bg-[var(--surface-2)] transition-colors cursor-pointer"
               >
                 <div>
                   <div className="text-sm font-bold text-[var(--text)] font-display">

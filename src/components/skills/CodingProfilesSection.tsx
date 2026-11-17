@@ -80,7 +80,7 @@ export function CodingProfilesSection() {
               href={profile.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="card p-5 h-full group flex flex-col justify-between space-y-4 hover:border-[var(--accent)] transition-all"
+              className="card card-interactive p-5 h-full group flex flex-col justify-between space-y-4 hover:border-[var(--accent)] active:scale-[0.985] active:border-[var(--accent)] transition-all"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-3">

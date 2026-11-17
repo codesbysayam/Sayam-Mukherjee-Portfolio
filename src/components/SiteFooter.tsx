@@ -93,7 +93,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 </div>
                 <a
                   href={`mailto:${SAYAM_DATA.socials.email}`}
-                  className="text-base sm:text-lg font-bold text-[#F4F4ED] hover:text-[#C7E34A] transition-colors inline-flex items-center gap-1.5 group break-all sm:break-normal max-w-full"
+                  className="text-base sm:text-lg font-bold text-[#F4F4ED] hover:text-[#C7E34A] active:text-[#C7E34A] active:opacity-80 transition-all inline-flex items-center gap-1.5 group break-all sm:break-normal max-w-full"
                 >
                   <span>{SAYAM_DATA.socials.email}</span>
                   <ArrowUpRight className="w-4 h-4 shrink-0 text-[#C7E34A] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -105,7 +105,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                   <button
                     type="button"
                     onClick={toggleTheme}
-                    className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-[#20231D] text-[#F4F4ED] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer inline-flex items-center gap-2 text-xs font-mono"
+                    className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-[#20231D] text-[#F4F4ED] hover:border-[#C7E34A] hover:text-[#C7E34A] active:scale-[0.97] active:border-[#C7E34A] active:bg-[#262922] transition-all cursor-pointer inline-flex items-center gap-2 text-xs font-mono"
                     title={theme === "dark" ? "Switch to Paper theme" : "Switch to Ink theme"}
                     aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
                   >
@@ -126,7 +126,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 <button
                   type="button"
                   onClick={scrollToTop}
-                  className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:border-[#F4F4ED] transition-colors cursor-pointer inline-flex items-center gap-1.5 text-xs font-mono group"
+                  className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:border-[#F4F4ED] active:scale-[0.97] active:border-[#C7E34A] active:text-[#F4F4ED] transition-all cursor-pointer inline-flex items-center gap-1.5 text-xs font-mono group"
                   aria-label="Back to top"
                 >
                   <ArrowUp className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-y-0.5" />
@@ -145,7 +145,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
             <a
               href="/"
               onClick={(e) => handleLinkClick(e, "home")}
-              className="font-display font-extrabold text-base tracking-tight text-[#F4F4ED] hover:text-[#C7E34A] transition-colors"
+              className="font-display font-extrabold text-base tracking-tight text-[#F4F4ED] hover:text-[#C7E34A] active:opacity-80 transition-all inline-block"
             >
               SAYAM MUKHERJEE
             </a>
@@ -180,7 +180,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                   key={tab}
                   href={tab === "home" ? "/" : `/${tab}`}
                   onClick={(e) => handleLinkClick(e, tab)}
-                  className={`py-1 transition-colors ${
+                  className={`py-1 transition-all active:opacity-75 active:text-[#C7E34A] ${
                     activeTab === tab
                       ? "text-[#C7E34A] font-bold"
                       : "text-[#D4D6CA] hover:text-[#C7E34A]"
@@ -201,7 +201,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 href={SOCIAL_LINKS.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] active:text-[#C7E34A] active:opacity-75 py-1 transition-all"
               >
                 GitHub ↗
               </a>
@@ -209,7 +209,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 href={SOCIAL_LINKS.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] active:text-[#C7E34A] active:opacity-75 py-1 transition-all"
               >
                 LinkedIn ↗
               </a>
@@ -217,7 +217,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 href={SOCIAL_LINKS.leetcode}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] active:text-[#C7E34A] active:opacity-75 py-1 transition-all"
               >
                 LeetCode ↗
               </a>
@@ -225,7 +225,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 href={SOCIAL_LINKS.codolio}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] active:text-[#C7E34A] active:opacity-75 py-1 transition-all"
               >
                 Codolio ↗
               </a>
@@ -233,7 +233,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 href={SOCIAL_LINKS.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] active:text-[#C7E34A] active:opacity-75 py-1 transition-all"
               >
                 YouTube ↗
               </a>
@@ -241,7 +241,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[#D4D6CA] hover:text-[#C7E34A] py-1 transition-colors"
+                className="text-[#D4D6CA] hover:text-[#C7E34A] active:text-[#C7E34A] active:opacity-75 py-1 transition-all"
               >
                 Instagram ↗
               </a>

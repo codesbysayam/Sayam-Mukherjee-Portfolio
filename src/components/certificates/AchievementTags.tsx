@@ -49,7 +49,7 @@ export function AchievementTags({
               e.stopPropagation();
               onInspect?.();
             }}
-            className="achievement-card__more px-2 py-1 rounded-[4px] border text-[11px] font-mono font-semibold transition-colors cursor-pointer hover:border-[var(--border-strong)]"
+            className="achievement-card__more px-2 py-1 rounded-[4px] border text-[11px] font-mono font-semibold transition-all cursor-pointer hover:border-[var(--border-strong)] active:scale-[0.96] active:opacity-80"
             style={{
               backgroundColor: "var(--surface-2)",
               borderColor: "var(--border)",

@@ -136,12 +136,13 @@ export const EXTENDED_DATA = {
     certifications: [] as CertificationItem[],
   projects: [
     {
-      id: "proj-1",
-      title: "YOLO Edge Computer Vision",
-      description: "YOLOv8 tracking on edge devices.",
-      tags: ["Python", "YOLOv8", "OpenCV"],
-      category: "AI",
-      imageUrl: "https://picsum.photos/seed/proj1/400/300",
+      id: "sightforge",
+      title: "SightForge — YOLOv8 & ByteTrack Computer Vision",
+      description: "Dual-service Next.js 15 / React 19 Canvas + FastAPI YOLOv8 COCO-0, 17-keypoint pose & ByteTrack platform.",
+      tags: ["Next.js 15", "FastAPI", "YOLOv8", "ByteTrack", "PostgreSQL"],
+      category: "AI / ML",
+      imageUrl: "",
+      githubUrl: "https://github.com/codesbysayam/SightForge",
       featured: true
     }
   ] as ExtendedProject[],
@@ -181,7 +182,7 @@ export const EXTENDED_DATA = {
       thumbnailUrl: 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&q=80&w=400',
       views: '12K',
       duration: '14:25',
-      watchUrl: 'https://youtube.com/sayam-mukherjee-placeholder'
+      watchUrl: 'https://www.youtube.com/@ObsidianOptics_in'
     },
     {
       id: 'video-2',
@@ -189,7 +190,7 @@ export const EXTENDED_DATA = {
       thumbnailUrl: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=400',
       views: '8.4K',
       duration: '18:10',
-      watchUrl: 'https://youtube.com/sayam-mukherjee-placeholder'
+      watchUrl: 'https://www.youtube.com/@dailydecipher'
     }
   ] as YouTubeVideo[],
   freelanceServices: [

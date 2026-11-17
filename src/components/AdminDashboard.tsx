@@ -178,7 +178,7 @@ export default function AdminDashboard() {
         longDescription: editingProject.longDescription || "",
         tags: editingProject.tags || [],
         category: editingProject.category || "ai_ml",
-        imageUrl: editingProject.imageUrl || "https://picsum.photos/seed/default/800/450",
+        imageUrl: editingProject.imageUrl || "",
         featured: editingProject.featured || false,
         githubUrl: editingProject.githubUrl || "",
         demoUrl: editingProject.demoUrl || "",
@@ -286,7 +286,7 @@ export default function AdminDashboard() {
         issuer: editingCert.issuer,
         date: editingCert.date || "2025",
         verificationUrl: editingCert.verificationUrl || "",
-        image: editingCert.image || "https://picsum.photos/seed/cert/100/100"
+        image: editingCert.image || ""
       };
       updatedList.push(newCert);
     } else {
@@ -756,7 +756,7 @@ export default function AdminDashboard() {
                       longDescription: "",
                       tags: [],
                       category: "ai_ml",
-                      imageUrl: "https://picsum.photos/seed/project/800/450",
+                      imageUrl: "",
                       featured: false,
                       githubUrl: "",
                       demoUrl: "",
@@ -1387,7 +1387,7 @@ export default function AdminDashboard() {
                       issuer: "",
                       date: "2025",
                       verificationUrl: "",
-                      image: "https://picsum.photos/seed/cert/100/100"
+                      image: ""
                     });
                   }}
                   className="btn btn-primary !min-h-[36px] !px-3.5 !py-1.5 text-xs"

@@ -42,14 +42,14 @@ export const SEO_CONFIG: Record<string, RouteSEO> = {
   },
   skills: {
     title: "Skills & Engineering Stack | Sayam Mukherjee",
-    description: "Comprehensive breakdown of Sayam Mukherjee's technical toolkit: Python, C++, TypeScript, PyTorch, YOLOv8, React, PostgreSQL, and Linux systems.",
+    description: "Comprehensive breakdown of Sayam Mukherjee's technical toolkit: TypeScript, Python, C++, Next.js 15, FastAPI, YOLOv8, ByteTrack, React, PostgreSQL, Docker, and Vitest.",
     canonicalPath: "/skills",
     robots: "index, follow",
     ogTitle: "Skills & Technical Stack | Sayam Mukherjee",
-    ogDescription: "Verified toolkit across AI/ML, Full-Stack Development, Algorithmic Problem Solving, and Cloud Infrastructure.",
+    ogDescription: "Verified toolkit across AI/ML, Computer Vision, Full-Stack Development, and C++ Algorithmic Problem Solving.",
     ogType: "website",
     twitterTitle: "Skills & Stack | Sayam Mukherjee",
-    twitterDescription: "PyTorch, C++, React, TypeScript, and AI engineering stack by Sayam Mukherjee."
+    twitterDescription: "TypeScript, Python, C++, Next.js 15, FastAPI, YOLOv8, ByteTrack & React stack by Sayam Mukherjee."
   },
   ecosystem: {
     title: "System Ecosystem & Architecture | Sayam Mukherjee",
@@ -64,14 +64,14 @@ export const SEO_CONFIG: Record<string, RouteSEO> = {
   },
   projects: {
     title: "Projects | Sayam Mukherjee",
-    description: "Explore verified real-world projects by Sayam Mukherjee, including OPERON (Autonomous Operations), MAUSAM (Weather & AQI), and YOLOv8 Edge Vision.",
+    description: "Explore 8 verified GitHub projects by Sayam Mukherjee: OPERON, MAUSAM (mausam_sample), SightForge, Memory in Motion, AXIOM, Inkloom, CampusConnect, and SayamSolves.",
     canonicalPath: "/projects",
     robots: "index, follow",
     ogTitle: "Projects & Engineering Work | Sayam Mukherjee",
-    ogDescription: "Autonomous platforms, climate telemetry dashboards, and computer vision models with verified GitHub repositories.",
+    ogDescription: "Multi-agent HITL platforms, YOLOv8/ByteTrack CV pipelines, interactive AI labs, climate telemetry, and C++ DSA repositories.",
     ogType: "website",
     twitterTitle: "Projects | Sayam Mukherjee",
-    twitterDescription: "Real-world engineering projects: OPERON, MAUSAM, and computer vision models."
+    twitterDescription: "Verified GitHub projects: OPERON, MAUSAM, SightForge, Memory in Motion, AXIOM, Inkloom, CampusConnect & SayamSolves."
   },
   certificates: {
     title: "Credentials & Certifications | Sayam Mukherjee",

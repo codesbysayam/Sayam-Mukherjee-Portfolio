@@ -230,6 +230,15 @@ select {
   max-width: 100%;
 }
 
+a,
+button,
+[role="button"],
+input[type="submit"],
+input[type="button"],
+summary {
+  touch-action: manipulation;
+}
+
 ::selection {
   background: #C7E34A;
   color: #20231D;
@@ -326,7 +335,10 @@ p {
 }
 
 .btn-primary:active {
-  transform: translateY(0);
+  background-color: #9BB827;
+  border-color: #9BB827;
+  color: #151713;
+  transform: scale(0.975) translateY(1px);
 }
 
 .btn-secondary {
@@ -342,6 +354,13 @@ p {
   transform: translateY(-1px);
 }
 
+.btn-secondary:active {
+  background-color: var(--surface-3);
+  border-color: var(--accent);
+  color: var(--text);
+  transform: scale(0.975) translateY(1px);
+}
+
 .btn-ghost {
   background-color: transparent;
   color: var(--text-muted);
@@ -351,6 +370,16 @@ p {
 .btn-ghost:hover {
   background-color: var(--surface);
   color: var(--text);
+}
+
+.btn-ghost:active {
+  background-color: var(--surface-3);
+  color: var(--text);
+  transform: scale(0.975);
+}
+
+.btn:active {
+  transform: scale(0.975);
 }
 
 .btn:focus-visible {
@@ -409,6 +438,19 @@ p {
 .featured-project:hover {
   border-color: var(--border-strong);
   box-shadow: var(--shadow);
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+
+.card-interactive:active,
+button.card:active,
+a.card:active,
+[role="button"].card:active {
+  border-color: var(--accent);
+  background-color: var(--surface-3);
+  transform: scale(0.985);
 }
 
 .glass {
@@ -639,6 +681,11 @@ p {
   transform: translateY(-2px);
 }
 
+.achievement-card:active {
+  border-color: var(--accent);
+  transform: scale(0.99);
+}
+
 .achievement-card__body {
   display: flex;
   flex: 1 1 auto;
@@ -767,6 +814,12 @@ p {
   border-color: #A9C52F;
 }
 
+.achievement-card__button--primary:active {
+  background-color: #9BB827;
+  border-color: #9BB827;
+  transform: scale(0.975);
+}
+
 .achievement-card__button--secondary {
   flex: 1 1 0;
   background-color: transparent;
@@ -777,6 +830,12 @@ p {
   background-color: var(--surface-3);
 }
 
+.achievement-card__button--secondary:active {
+  background-color: var(--surface-3);
+  border-color: var(--accent);
+  transform: scale(0.975);
+}
+
 .achievement-card__download {
   flex: 0 0 auto;
   background-color: transparent;
@@ -785,6 +844,12 @@ p {
 
 .achievement-card__download:hover {
   background-color: var(--surface-3);
+}
+
+.achievement-card__download:active {
+  background-color: var(--surface-3);
+  border-color: var(--accent);
+  transform: scale(0.975);
 }
 
 .achievement-card__button:focus-visible,
@@ -871,6 +936,31 @@ p {
 
 * {
   -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) {
+  .btn-primary:hover {
+    background-color: #C7E34A;
+    border-color: #C7E34A;
+    color: #20231D;
+    transform: none;
+  }
+
+  .btn-secondary:hover {
+    background-color: transparent;
+    border-color: var(--border-strong);
+    color: var(--text);
+    transform: none;
+  }
+
+  .btn-ghost:hover {
+    background-color: transparent;
+    color: var(--text-muted);
+  }
+
+  .achievement-card:hover {
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

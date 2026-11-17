@@ -463,7 +463,7 @@ function AppContent() {
             <button
               type="button"
               onClick={() => navigateToTab("home")}
-              className="flex flex-col items-start text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] py-1"
+              className="flex flex-col items-start text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
               aria-label="Sayam Mukherjee Home"
             >
               <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none">
@@ -488,7 +488,7 @@ function AppContent() {
                     onClick={() => navigateToTab(tab.id as TabType)}
                     title={`${tab.label} (Press '${tab.shortcut}')`}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative py-2 text-[13px] font-semibold tracking-wide transition-colors cursor-pointer whitespace-nowrap select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] ${
+                    className={`relative py-2 px-1 text-[13px] font-semibold tracking-wide transition-all cursor-pointer whitespace-nowrap select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] active:scale-[0.97] active:opacity-80 ${
                       isActive
                         ? "text-[var(--text)]"
                         : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -512,7 +512,7 @@ function AppContent() {
               <button
                 type="button"
                 onClick={() => setIsCommandMenuOpen(true)}
-                className="hidden sm:flex items-center gap-2 min-h-[40px] px-2.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--text)] transition-colors cursor-pointer"
+                className="hidden sm:flex items-center gap-2 min-h-[40px] px-2.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--text)] active:scale-[0.97] active:bg-[var(--surface)] transition-all cursor-pointer"
                 title="Search Workspace (Ctrl+K or ⌘K)"
                 aria-label="Search Workspace"
               >
@@ -558,7 +558,7 @@ function AppContent() {
               <button
                 type="button"
                 onClick={() => setIsResumeModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-1.5 min-h-[40px] px-3.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-1.5 min-h-[40px] px-3.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] transition-all cursor-pointer"
                 aria-label="Open official verified resume viewer"
               >
                 <ResumeGlyph className="w-3.5 h-3.5 shrink-0" />
@@ -568,10 +568,10 @@ function AppContent() {
               <button
                 type="button"
                 onClick={() => navigateToTab("contact")}
-                className={`hidden sm:inline-flex items-center justify-center min-h-[40px] px-4 rounded-[6px] text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                className={`hidden sm:inline-flex items-center justify-center min-h-[40px] px-4 rounded-[6px] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-[0.97] ${
                   activeTab === "contact"
                     ? "bg-[#20231D] text-[#C7E34A] dark:bg-[#F4F4ED] dark:text-[#20231D]"
-                    : "bg-[#C7E34A] text-[#20231D] hover:bg-[#A9C52F]"
+                    : "bg-[#C7E34A] text-[#20231D] hover:bg-[#A9C52F] active:bg-[#9BB827]"
                 }`}
               >
                 Contact
@@ -583,7 +583,7 @@ function AppContent() {
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-navigation-drawer"
-                className="xl:hidden min-h-[44px] min-w-[44px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] cursor-pointer transition-colors"
+                className="xl:hidden min-h-[44px] min-w-[44px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] active:scale-[0.95] active:bg-[var(--surface-3)] cursor-pointer transition-all"
                 aria-label="Toggle navigation menu"
               >
                 {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -621,10 +621,10 @@ function AppContent() {
                           setIsMenuOpen(false);
                         }}
                         aria-current={isActive ? "page" : undefined}
-                        className={`text-left min-h-[48px] py-2.5 px-3.5 rounded-[6px] transition-colors flex items-center justify-between cursor-pointer ${
+                        className={`text-left min-h-[48px] py-2.5 px-3.5 rounded-[6px] transition-all flex items-center justify-between cursor-pointer active:scale-[0.985] ${
                           isActive
                             ? "bg-[#C7E34A] text-[#20231D] font-bold"
-                            : "text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text)]"
+                            : "text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text)] active:bg-[var(--surface-3)]"
                         }`}
                       >
                         <span>{tab.label}</span>
@@ -640,7 +640,7 @@ function AppContent() {
                         setIsMenuOpen(false);
                         setIsCommandMenuOpen(true);
                       }}
-                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text)] cursor-pointer"
+                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text)] active:scale-[0.97] active:bg-[var(--surface)] transition-all cursor-pointer"
                     >
                       <Search className="w-3.5 h-3.5" />
                       <span>Search (⌘K)</span>
@@ -652,7 +652,7 @@ function AppContent() {
                         setIsMenuOpen(false);
                         setIsResumeModalOpen(true);
                       }}
-                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] cursor-pointer"
+                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] active:scale-[0.97] active:bg-[var(--surface)] transition-all cursor-pointer"
                     >
                       <ResumeGlyph className="w-3.5 h-3.5 shrink-0" />
                       <span>Résumé</span>

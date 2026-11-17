@@ -17,51 +17,80 @@ const PROJECT_EVIDENCE_DATA: EvidenceRow[] = [
   {
     id: "operon",
     projectTitle: "OPERON",
-    projectSubtitle: "Autonomous Operations Engine",
-    skills: ["TypeScript", "Node.js", "Express.js", "React", "Multi-Agent AI", "State Orchestration"],
-    evidence: "Architected role-specific autonomous agents, auditable state machine checkpoints, human-in-the-loop decision boundaries, and REST API service routing.",
+    projectSubtitle: "Multi-Agent Operations Platform",
+    skills: ["TypeScript", "React", "Node.js", "Express.js", "Multi-Agent AI", "Tailwind CSS"],
+    evidence: "Architected Support, Finance, HR & Ops agents with deterministic Human-in-the-Loop (HITL) approval gates and audit logging (Deploy or Die, Team NEXUS).",
     githubUrl: "https://github.com/codesbysayam/Operon",
     liveUrl: "https://operonpro.vercel.app",
-    statusBadge: "Active Production"
+    statusBadge: "Live · Deploy or Die"
   },
   {
     id: "mausam",
     projectTitle: "MAUSAM",
-    projectSubtitle: "Weather Intelligence Platform (SIH 2026)",
-    skills: ["TypeScript", "React", "Tailwind CSS", "REST API Integration", "Data Normalization"],
-    evidence: "Aggregated multi-provider meteorological telemetry (AQI, UV, tides, soil moisture) with resilient local caching and sub-100ms client state rendering.",
-    githubUrl: "https://github.com/codesbysayam/mausam",
+    projectSubtitle: "Weather Intelligence (SIH 2026)",
+    skills: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "PLpgSQL"],
+    evidence: "Unified Doppler nowcasting, SACHET/NDMA alerts, CPCB NAQI, INCOIS marine state, and Ask MAUSAM AI in canonical repo codesbysayam/mausam_sample (mausam_demo is an empty template).",
+    githubUrl: "https://github.com/codesbysayam/mausam_sample",
     liveUrl: "https://mausamgovt.vercel.app",
-    statusBadge: "SIH 2026 Competition"
+    statusBadge: "Live · SIH 2026"
   },
   {
-    id: "sayamsolves",
-    projectTitle: "SayamSolves",
-    projectSubtitle: "DSA Practice Repository",
-    skills: ["C++", "Data Structures & Algorithms", "Space-Time Optimization", "LeetCode"],
-    evidence: "Verifiable implementation of dynamic programming recurrence relations, graph traversals (BFS/DFS), and memory-bounded algorithmic routines.",
+    id: "sightforge",
+    projectTitle: "SIGHTFORGE",
+    projectSubtitle: "Dual-Service YOLOv8 & ByteTrack CV",
+    skills: ["Next.js 15", "React 19", "TypeScript", "FastAPI", "Python", "YOLOv8", "ByteTrack", "PostgreSQL"],
+    evidence: "Dual-service CV platform pairing a 16:9 HTML5 Canvas client with FastAPI YOLOv8 COCO Class ID 0, 17-keypoint pose, IoU 0.45 NMS, ByteTrack, and PostgreSQL (self-hosted, no public live URL).",
+    githubUrl: "https://github.com/codesbysayam/SightForge",
+    statusBadge: "Open Source · Dual-Service"
+  },
+  {
+    id: "memory-in-motion",
+    projectTitle: "MEMORY IN MOTION",
+    projectSubtitle: "Interactive Mechanistic Lab (IIT KGP)",
+    skills: ["TypeScript", "React", "KaTeX", "D3.js", "Python", "Tailwind CSS"],
+    evidence: "DataForge 2026 interactive lab with Team ALGNITE contrasting O(1) recurrent state, Hebbian fast weights & Dragon Hatchling (BDH) against O(T) KV caches.",
+    githubUrl: "https://github.com/codesbysayam/Memory-in-Motion",
+    liveUrl: "https://memoryinmotion.vercel.app",
+    statusBadge: "Live · IIT KGP DataForge"
+  },
+  {
+    id: "axiom",
+    projectTitle: "AXIOM",
+    projectSubtitle: "Autonomous Operations Control Plane",
+    skills: ["TypeScript", "React", "Policy Engine", "Audit Chain", "CSS"],
+    evidence: "Built in 36h at WCC Launchpad 30 (Team ALGNITE) with policy rules, approval gates, dry-run sandboxes, failure recovery, and tamper-evident audit structures.",
+    githubUrl: "https://github.com/codesbysayam/AXIOM",
+    liveUrl: "https://axiomwcc.vercel.app",
+    statusBadge: "Live · WCC Launchpad 30"
+  },
+  {
+    id: "inkloom",
+    projectTitle: "INKLOOM",
+    projectSubtitle: "Constructed AI Identity Workspace (Fork)",
+    skills: ["TypeScript", "React", "PLpgSQL", "Docker", "CSS"],
+    evidence: "Public fork (isFork: true, default branch: master) exploring constructed typography/symbol marks, lockups & clear-space rules; specialized models under active construction.",
+    githubUrl: "https://github.com/codesbysayam/inkloom",
+    liveUrl: "https://inkloom.art",
+    statusBadge: "Early Access · Fork (master)"
+  },
+  {
+    id: "campus-connect",
+    projectTitle: "CAMPUS CONNECT",
+    projectSubtitle: "Event Discovery & Organizer Console",
+    skills: ["Next.js", "TypeScript", "React", "Vitest", "Tailwind CSS"],
+    evidence: "Full-stack Next.js event discovery/registration and organizer CRUD dashboard verified with Vitest; uses README-disclosed seeded in-memory storage (resets on restart).",
+    githubUrl: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
+    liveUrl: "https://campusconnect1273.vercel.app/",
+    statusBadge: "Live · Demo Deployed"
+  },
+  {
+    id: "sayam-solves",
+    projectTitle: "SAYAMSOLVES",
+    projectSubtitle: "C++ DSA & LeetHub V2 Repository",
+    skills: ["C++", "DSA", "Algorithms", "LeetHub V2"],
+    evidence: "LeetHub V2 synced C++ archive tracking 3 committed solution files in stats.json (LC 0005, 0033, 0115) alongside a verified 4-problem LeetCode baseline.",
     githubUrl: "https://github.com/codesbysayam/sayam-solves",
-    liveUrl: "https://github.com/codesbysayam/sayam-solves",
-    statusBadge: "Continuous Practice"
-  },
-  {
-    id: "portfolio",
-    projectTitle: "Interactive Portfolio",
-    projectSubtitle: "Full-Stack Portfolio Ecosystem",
-    skills: ["React 19", "TypeScript", "Tailwind CSS", "Express Backend", "GitHub API"],
-    evidence: "Engineered responsive client architecture, server-side caching proxies, zero-CLS layout rendering, and live GitHub commit telemetry pipeline.",
-    githubUrl: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-    liveUrl: "https://sayammukherjee.in",
-    statusBadge: "Live Ecosystem"
-  },
-  {
-    id: "yolo",
-    projectTitle: "YOLO Edge Vision",
-    projectSubtitle: "Edge Computer Vision & Tracking",
-    skills: ["Python", "Computer Vision", "PyTorch", "YOLO / YOLOv8", "Edge Inference"],
-    evidence: "Trained and benchmarked real-time bounding box object detection, polygon ROI boundary monitoring, and frame latency optimization for embedded feeds.",
-    githubUrl: "https://github.com/codesbysayam/yolo",
-    statusBadge: "Research Prototype"
+    statusBadge: "Active · 3 Repo / 4 LC"
   }
 ];
 
@@ -73,8 +102,8 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
   const [selectedSkillFilter, setSelectedSkillFilter] = useState<string | null>(null);
 
   const keySkills = [
-    "TypeScript", "React", "Node.js", "C++", "Python",
-    "Computer Vision", "Tailwind CSS", "Express.js"
+    "TypeScript", "React", "Next.js 15", "Next.js", "FastAPI", "Python",
+    "YOLOv8", "ByteTrack", "KaTeX", "PostgreSQL", "Vitest", "Node.js", "C++"
   ];
 
   const filteredRows = selectedSkillFilter
@@ -94,7 +123,7 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
             Project Evidence
           </span>
           <span aria-hidden="true">/</span>
-          <span>5 Verified Projects</span>
+          <span>{PROJECT_EVIDENCE_DATA.length} Verified Projects</span>
         </div>
         <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
           <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text)] font-display">
@@ -119,11 +148,11 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
         <button
           type="button"
           onClick={() => setSelectedSkillFilter(null)}
-          className={`btn !min-h-[36px] !py-1 !px-3 !text-xs ${
+          className={`btn !min-h-[36px] !py-1 !px-3 !text-xs active:scale-[0.97] ${
             selectedSkillFilter === null ? "btn-primary" : "btn-secondary"
           }`}
         >
-          All (5)
+          All ({PROJECT_EVIDENCE_DATA.length})
         </button>
 
         {keySkills.map((skill) => (
@@ -131,7 +160,7 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
             key={skill}
             type="button"
             onClick={() => setSelectedSkillFilter(selectedSkillFilter === skill ? null : skill)}
-            className={`btn !min-h-[36px] !py-1 !px-3 !text-xs whitespace-nowrap ${
+            className={`btn !min-h-[36px] !py-1 !px-3 !text-xs whitespace-nowrap active:scale-[0.97] ${
               selectedSkillFilter === skill ? "btn-primary" : "btn-secondary"
             }`}
           >

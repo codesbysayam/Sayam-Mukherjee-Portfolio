@@ -1,0 +1,114 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="OPERON Multi-Agent Operations and Human-in-the-Loop Architecture">
+  <defs>
+    <pattern id="grid-op" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#41443A" stroke-width="0.6" stroke-opacity="0.35"/>
+    </pattern>
+    <marker id="arrow-lime" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#C7E34A"/>
+    </marker>
+    <marker id="arrow-muted" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#8D947E"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="900" fill="#151713"/>
+  <rect width="1600" height="900" fill="url(#grid-op)"/>
+
+  <!-- Header Bar -->
+  <rect x="72" y="56" width="1456" height="68" rx="10" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <rect x="96" y="74" width="108" height="32" rx="4" fill="#C7E34A"/>
+  <text x="150" y="95" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#151713" text-anchor="middle" letter-spacing="1.2">OPERON</text>
+  <text x="228" y="96" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="600" fill="#F4F4ED">Multi-Agent Operations Platform &amp; Approval State Machine</text>
+  <text x="1496" y="95" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA" text-anchor="end">TEAM NEXUS · DEPLOY OR DIE</text>
+
+  <!-- Ingress Dispatcher -->
+  <rect x="72" y="180" width="320" height="530" rx="12" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <text x="102" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">01 · TASK DISPATCHER</text>
+  <text x="102" y="252" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Role-Scoped Agents</text>
+  <text x="102" y="278" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">TypeScript · Node/Express</text>
+
+  <!-- 4 Role Cards -->
+  <rect x="102" y="312" width="260" height="76" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <circle cx="126" cy="340" r="6" fill="#C7E34A"/>
+  <text x="144" y="345" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#F4F4ED">SUPPORT AGENT</text>
+  <text x="144" y="368" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Ticket triage &amp; escalation</text>
+
+  <rect x="102" y="404" width="260" height="76" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <circle cx="126" cy="432" r="6" fill="#C7E34A"/>
+  <text x="144" y="437" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#F4F4ED">FINANCE AGENT</text>
+  <text x="144" y="460" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Ledger &amp; payout validation</text>
+
+  <rect x="102" y="496" width="260" height="76" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <circle cx="126" cy="524" r="6" fill="#8D947E"/>
+  <text x="144" y="529" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#F4F4ED">HR AGENT</text>
+  <text x="144" y="552" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Onboarding &amp; policy handoffs</text>
+
+  <rect x="102" y="588" width="260" height="76" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <circle cx="126" cy="616" r="6" fill="#8D947E"/>
+  <text x="144" y="621" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#F4F4ED">OPS AGENT</text>
+  <text x="144" y="644" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Runbooks &amp; SLA coordination</text>
+
+  <!-- Connector Arrows -->
+  <line x1="392" y1="350" x2="508" y2="380" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-lime)"/>
+  <line x1="392" y1="442" x2="508" y2="442" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-lime)"/>
+  <line x1="392" y1="534" x2="508" y2="500" stroke="#8D947E" stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#arrow-muted)"/>
+  <line x1="392" y1="626" x2="508" y2="540" stroke="#8D947E" stroke-width="1.5" stroke-dasharray="5 5" marker-end="url(#arrow-muted)"/>
+
+  <!-- Center HITL Gate -->
+  <rect x="518" y="180" width="540" height="530" rx="12" fill="#20231D" stroke="#C7E34A" stroke-width="2"/>
+  <text x="550" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">02 · HUMAN-IN-THE-LOOP GATE</text>
+  <text x="550" y="254" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#F4F4ED">Approval State Machine</text>
+  <text x="550" y="280" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">Explicit pause before mutating external state</text>
+
+  <!-- State Pipeline Nodes -->
+  <rect x="550" y="324" width="214" height="82" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="572" y="356" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#8D947E">STATE 01</text>
+  <text x="572" y="382" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="700" fill="#F4F4ED">PROPOSED</text>
+
+  <line x1="764" y1="365" x2="808" y2="365" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-lime)"/>
+
+  <rect x="814" y="324" width="214" height="82" rx="8" fill="#2B3022" stroke="#C7E34A" stroke-width="2"/>
+  <text x="836" y="356" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#C7E34A">CHECKPOINT</text>
+  <text x="836" y="382" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="16" font-weight="700" fill="#F4F4ED">AWAITING HUMAN</text>
+
+  <line x1="921" y1="406" x2="921" y2="454" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-lime)"/>
+
+  <rect x="550" y="462" width="478" height="106" rx="8" fill="#151713" stroke="#69734A" stroke-width="1.5"/>
+  <text x="574" y="494" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A">DECISION PAYLOAD VERIFICATION</text>
+  <text x="574" y="522" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#EAEAE1">action: "finance.release_reimbursement" · risk: HIGH</text>
+  <text x="574" y="546" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA">operator_decision: APPROVE | REJECT | REQUEST_REVISION</text>
+
+  <rect x="550" y="596" width="228" height="78" rx="8" fill="#C7E34A"/>
+  <text x="664" y="630" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#151713" text-anchor="middle">APPROVED → EXECUTE</text>
+  <text x="664" y="652" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#20231D" text-anchor="middle">Signed operator token attached</text>
+
+  <rect x="800" y="596" width="228" height="78" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="914" y="630" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="14" font-weight="700" fill="#EAEAE1" text-anchor="middle">HALTED → ROLLBACK</text>
+  <text x="914" y="652" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="11" fill="#B5B8AA" text-anchor="middle">Zero side-effects emitted</text>
+
+  <!-- Arrow to Output -->
+  <line x1="1058" y1="442" x2="1166" y2="442" stroke="#C7E34A" stroke-width="2" marker-end="url(#arrow-lime)"/>
+
+  <!-- Right Column: Audit & Telemetry -->
+  <rect x="1176" y="180" width="352" height="530" rx="12" fill="#20231D" stroke="#41443A" stroke-width="1.5"/>
+  <text x="1208" y="222" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#C7E34A" letter-spacing="1.5">03 · AUDIT &amp; TELEMETRY</text>
+  <text x="1208" y="252" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#F4F4ED">Immutable Event Log</text>
+
+  <rect x="1208" y="294" width="288" height="114" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="1228" y="324" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">LIVE PRODUCTION</text>
+  <text x="1228" y="352" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="15" font-weight="700" fill="#F4F4ED">operonpro.vercel.app</text>
+  <text x="1228" y="382" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#B5B8AA">github.com/codesbysayam/Operon</text>
+
+  <rect x="1208" y="430" width="288" height="244" rx="8" fill="#151713" stroke="#41443A" stroke-width="1.5"/>
+  <text x="1228" y="462" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" font-weight="700" fill="#EAEAE1">REPOSITORY PROFILE</text>
+  <line x1="1228" y1="478" x2="1476" y2="478" stroke="#41443A" stroke-width="1"/>
+  <text x="1228" y="510" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA">TypeScript · 936.6 KB (99.0%)</text>
+  <text x="1228" y="540" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#B5B8AA">CSS · 8.8 KB · HTML · 1.2 KB</text>
+  <text x="1228" y="578" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">✓ Role-scoped cross-team handoffs</text>
+  <text x="1228" y="606" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">✓ Deterministic state checkpoints</text>
+  <text x="1228" y="634" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="12" fill="#C7E34A">✓ Operator accountability trail</text>
+
+  <!-- Footer Strip -->
+  <text x="72" y="790" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#8D947E">VERIFIED REPOSITORY 01 / 08 · SAYAM MUKHERJEE ENGINEERING ARCHIVE</text>
+  <text x="1528" y="790" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13" fill="#C7E34A" text-anchor="end">HUMAN-GOVERNED AUTONOMY</text>
+</svg>

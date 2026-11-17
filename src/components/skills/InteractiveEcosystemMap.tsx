@@ -26,71 +26,110 @@ const ECOSYSTEM_CHAINS: EcoNode[] = [
   {
     id: "operon-chain",
     name: "Autonomous Multi-Agent Systems",
-    techs: ["TypeScript", "Node.js", "Express", "React", "Git"],
+    techs: ["TypeScript", "React", "Node.js", "Express", "Tailwind CSS", "Git"],
     domain: "Autonomous Systems & Governance",
     projectId: "operon",
     projectName: "OPERON",
     repoName: "codesbysayam/Operon",
     repoUrl: "https://github.com/codesbysayam/Operon",
-    evidence: "Multi-agent task dispatching with human-in-the-loop state machine governance."
-  },
-  {
-    id: "sayamsolves-chain",
-    name: "Algorithmic Problem Solving",
-    techs: ["C++", "DSA", "Algorithms", "Git"],
-    domain: "Data Structures & Computational Complexity",
-    projectId: "sayamsolves",
-    projectName: "SayamSolves",
-    repoName: "codesbysayam/sayam-solves",
-    repoUrl: "https://github.com/codesbysayam/sayam-solves",
-    evidence: "Daily LeetCode algorithmic solutions in C++ with asymptotic runtime analysis."
+    evidence: "Multi-agent workflow routing across Support, Finance, HR & Ops with HITL gates."
   },
   {
     id: "mausam-chain",
     name: "Meteorological Intelligence Platform",
-    techs: ["TypeScript", "React", "Tailwind CSS", "API Integration", "Python", "Git"],
-    domain: "Data-Driven Applications & APIs",
+    techs: ["TypeScript", "React", "Python", "Tailwind CSS", "API Integration", "Git"],
+    domain: "Civic & Climate Telemetry",
     projectId: "mausam",
     projectName: "MAUSAM",
-    repoName: "codesbysayam/mausam",
-    repoUrl: "https://github.com/codesbysayam/mausam",
-    evidence: "Smart India Hackathon (SIH 2026) verified climate telemetry aggregator."
+    repoName: "codesbysayam/mausam_sample",
+    repoUrl: "https://github.com/codesbysayam/mausam_sample",
+    evidence: "SIH 2026 platform unifying Doppler nowcasting, NAQI, INCOIS & SACHET (canonical mausam_sample)."
   },
   {
-    id: "portfolio-chain",
-    name: "Interactive Engineering Architecture",
-    techs: ["React", "TypeScript", "Tailwind CSS", "Node.js", "Express", "Git"],
-    domain: "Full-Stack Web Engineering",
-    projectId: "portfolio",
-    projectName: "Portfolio",
-    repoName: "codesbysayam/Sayam-Mukherjee-Portfolio",
-    repoUrl: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-    evidence: "Live server-proxied GitHub telemetry, clamp() typography, and fluid design system."
+    id: "sightforge-chain",
+    name: "Dual-Service Edge Computer Vision",
+    techs: ["Next.js", "React", "TypeScript", "FastAPI", "Python", "YOLOv8", "ByteTrack", "PostgreSQL", "Git"],
+    domain: "Computer Vision & Pose Tracking",
+    projectId: "sightforge",
+    projectName: "SIGHTFORGE",
+    repoName: "codesbysayam/SightForge",
+    repoUrl: "https://github.com/codesbysayam/SightForge",
+    evidence: "Next.js 15 / React 19 Canvas + FastAPI YOLOv8 COCO-0, 17-keypoint pose & ByteTrack (self-hosted)."
   },
   {
-    id: "yolo-chain",
-    name: "Edge Computer Vision & Tracking",
-    techs: ["Python", "YOLO / YOLOv8", "OpenCV", "PyTorch", "Git"],
-    domain: "Computer Vision & Edge Inference",
-    projectId: "yolo",
-    projectName: "YOLO / Edge Vision",
-    repoName: "codesbysayam",
-    repoUrl: "https://github.com/codesbysayam",
-    evidence: "Real-time edge frame processing with OpenCV and YOLOv8 spatial bounding coordinates."
+    id: "memory-in-motion-chain",
+    name: "Mechanistic Interpretability Lab",
+    techs: ["TypeScript", "React", "KaTeX", "D3.js", "Python", "Tailwind CSS", "Git"],
+    domain: "AI Research Visualization",
+    projectId: "memory-in-motion",
+    projectName: "MEMORY IN MOTION",
+    repoName: "codesbysayam/Memory-in-Motion",
+    repoUrl: "https://github.com/codesbysayam/Memory-in-Motion",
+    evidence: "IIT KGP DataForge 2026 interactive lab contrasting O(1) Hebbian fast weights vs O(T) KV caches."
+  },
+  {
+    id: "axiom-chain",
+    name: "Autonomous Policy & Audit Control Plane",
+    techs: ["TypeScript", "React", "API Integration", "Git"],
+    domain: "Governance & Control Planes",
+    projectId: "axiom",
+    projectName: "AXIOM",
+    repoName: "codesbysayam/AXIOM",
+    repoUrl: "https://github.com/codesbysayam/AXIOM",
+    evidence: "36h WCC Launchpad 30 control plane with policy checks, sandboxes, recovery & audit chains."
+  },
+  {
+    id: "inkloom-chain",
+    name: "Constructed AI Identity Workspace",
+    techs: ["TypeScript", "React", "PostgreSQL", "Docker", "Git"],
+    domain: "Generative Design (Fork · master)",
+    projectId: "inkloom",
+    projectName: "INKLOOM",
+    repoName: "codesbysayam/inkloom",
+    repoUrl: "https://github.com/codesbysayam/inkloom",
+    evidence: "Public fork (master branch) for constructed logo workflows; specialized models under R&D."
+  },
+  {
+    id: "campus-connect-chain",
+    name: "Campus Event & Organizer Platform",
+    techs: ["Next.js", "TypeScript", "React", "Vitest", "Tailwind CSS", "Git"],
+    domain: "Full-Stack Web Platform",
+    projectId: "campus-connect",
+    projectName: "CAMPUS CONNECT",
+    repoName: "codesbysayam/CAMPUSCONNECT_1273",
+    repoUrl: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
+    evidence: "Next.js discovery + organizer CRUD verified via Vitest (seeded in-memory store resets on restart)."
+  },
+  {
+    id: "sayamsolves-chain",
+    name: "Algorithmic Problem Solving",
+    techs: ["C++", "DSA", "Git"],
+    domain: "Data Structures & C++ Complexity",
+    projectId: "sayam-solves",
+    projectName: "SAYAMSOLVES",
+    repoName: "codesbysayam/sayam-solves",
+    repoUrl: "https://github.com/codesbysayam/sayam-solves",
+    evidence: "LeetHub V2 synced C++ archive tracking 3 repo files (LC 0005, 0033, 0115) & 4 LC baseline."
   }
 ];
 
 const SELECTABLE_TECHS = [
   "TypeScript",
-  "Python",
-  "C++",
   "React",
+  "Next.js",
+  "Python",
+  "FastAPI",
+  "YOLOv8",
+  "ByteTrack",
   "Node.js",
-  "OpenCV",
-  "Git",
-  "Tailwind CSS",
+  "KaTeX",
+  "D3.js",
+  "PostgreSQL",
+  "Vitest",
+  "Docker",
+  "C++",
   "DSA",
-  "API Integration"
+  "Tailwind CSS"
 ];
 
 interface InteractiveEcosystemMapProps {
@@ -258,7 +297,7 @@ export function InteractiveEcosystemMap({
                   key={tech}
                   type="button"
                   onClick={() => handleSelectTech(tech)}
-                  className={`w-full text-left p-3 rounded-[8px] border text-xs font-mono transition-all flex items-center justify-between group cursor-pointer ${
+                  className={`w-full text-left p-3 rounded-[8px] border text-xs font-mono transition-all flex items-center justify-between group cursor-pointer active:scale-[0.98] ${
                     isSelected
                       ? "bg-[#C7E34A] border-[#A9C52F] text-[#20231D]"
                       : isDimmed
@@ -313,7 +352,7 @@ export function InteractiveEcosystemMap({
                   key={project.id}
                   type="button"
                   onClick={() => handleSelectProject(project.id)}
-                  className={`w-full text-left p-3 rounded-[8px] border text-xs transition-all space-y-1 group cursor-pointer ${
+                  className={`w-full text-left p-3 rounded-[8px] border text-xs transition-all space-y-1 group cursor-pointer active:scale-[0.98] ${
                     isSelected
                       ? "bg-[#C7E34A] border-[#A9C52F] text-[#20231D]"
                       : isDimmed
@@ -363,7 +402,7 @@ export function InteractiveEcosystemMap({
                       href={chain.repoUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-1 rounded-[4px] bg-[var(--surface-2)] hover:bg-[var(--surface-3)] text-[var(--text-muted)] hover:text-[var(--text)] border border-[var(--border)] transition-colors shrink-0"
+                      className="p-1 rounded-[4px] bg-[var(--surface-2)] hover:bg-[var(--surface-3)] active:scale-95 text-[var(--text-muted)] hover:text-[var(--text)] border border-[var(--border)] transition-all shrink-0"
                       title="Open Verified GitHub Repository"
                     >
                       <ExternalLink className="w-3 h-3" />
@@ -383,7 +422,7 @@ export function InteractiveEcosystemMap({
             <CheckCircle2 className="w-3.5 h-3.5 text-[var(--success)]" />
             <span>Strict mapping: Zero unverified connections or synthetic nodes</span>
           </div>
-          <span className="tabular-nums">Active Connections: {activeChains.length} / 5</span>
+          <span className="tabular-nums">Active Connections: {activeChains.length} / {ECOSYSTEM_CHAINS.length}</span>
         </div>
       </div>
       </EditorialReveal>
@@ -394,7 +433,7 @@ export function InteractiveEcosystemMap({
           <button
             type="button"
             onClick={() => setMobileTab("tech")}
-            className={`flex-1 min-h-[44px] py-2 rounded-[6px] font-semibold transition-all cursor-pointer ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[6px] font-semibold transition-all cursor-pointer active:scale-[0.98] ${
               mobileTab === "tech"
                 ? "bg-[#C7E34A] text-[#20231D]"
                 : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -405,7 +444,7 @@ export function InteractiveEcosystemMap({
           <button
             type="button"
             onClick={() => setMobileTab("project")}
-            className={`flex-1 min-h-[44px] py-2 rounded-[6px] font-semibold transition-all cursor-pointer ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[6px] font-semibold transition-all cursor-pointer active:scale-[0.98] ${
               mobileTab === "project"
                 ? "bg-[#C7E34A] text-[#20231D]"
                 : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -433,7 +472,7 @@ export function InteractiveEcosystemMap({
                       key={tech}
                       type="button"
                       onClick={() => handleSelectTech(tech)}
-                      className={`min-h-[40px] px-3 py-1.5 rounded-[6px] text-xs font-mono transition-all cursor-pointer border ${
+                      className={`min-h-[40px] px-3 py-1.5 rounded-[6px] text-xs font-mono transition-all cursor-pointer border active:scale-[0.96] ${
                         isSelected
                           ? "bg-[#C7E34A] text-[#20231D] border-[#A9C52F] font-semibold"
                           : "bg-[var(--surface)] text-[var(--text-muted)] border-[var(--border)] hover:text-[var(--text)]"
@@ -463,7 +502,7 @@ export function InteractiveEcosystemMap({
                         href={chain.repoUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 min-w-0 max-w-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)]"
+                        className="inline-flex items-center gap-1 min-w-0 max-w-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)] active:opacity-75"
                       >
                         <FolderGit2 className="w-3 h-3 shrink-0" />
                         <span className="truncate">{chain.repoName}</span>
@@ -515,7 +554,7 @@ export function InteractiveEcosystemMap({
                         href={proj.githubUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 min-w-0 max-w-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)]"
+                        className="inline-flex items-center gap-1 min-w-0 max-w-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)] active:opacity-75"
                       >
                         <FolderGit2 className="w-3 h-3 shrink-0" />
                         <span className="truncate">{proj.githubRepoName || proj.name}</span>

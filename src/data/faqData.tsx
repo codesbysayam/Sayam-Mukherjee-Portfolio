@@ -106,42 +106,53 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "Projects & Engineering",
     question: "What are the primary software projects featured in the portfolio?",
     plainTextAnswer:
-      "The portfolio features five verified projects: OPERON (autonomous multi-agent workflow engine), MAUSAM (SIH 2026 climate and weather dashboard), SayamSolves (open-source C++ algorithmic problem-solving repository), Edge Computer Vision (real-time YOLOv8 OpenCV spatial pipeline), and the full-stack Engineering Portfolio itself.",
-    keywords: ["projects", "OPERON", "MAUSAM", "SayamSolves", "YOLO", "portfolio", "codebase", "features"],
+      "The portfolio features eight verified GitHub projects across @codesbysayam (11 public repos total including meta/template repos): OPERON (multi-agent HITL workflow engine), MAUSAM (SIH 2026 platform in codesbysayam/mausam_sample), SightForge (dual-service Next.js 15 + FastAPI YOLOv8/ByteTrack pipeline, local/self-hosted), Memory in Motion (IIT KGP DataForge O(1) vs O(T) lab), AXIOM (WCC Launchpad 30 control plane), Inkloom (public fork on master branch, early access at inkloom.art while logo models are under R&D), CampusConnect (Next.js event platform with Vitest and seeded in-memory storage), and SayamSolves (C++ LeetHub V2 archive with 3 repo files in stats.json and 4 LC baseline).",
+    keywords: [
+      "projects",
+      "OPERON",
+      "MAUSAM",
+      "SightForge",
+      "Memory in Motion",
+      "AXIOM",
+      "Inkloom",
+      "CampusConnect",
+      "SayamSolves",
+      "repositories",
+    ],
     answer: (
       <div className="space-y-2.5 text-[var(--text-secondary)]">
-        <p>The portfolio showcases verified software engineering systems backed by live GitHub repositories:</p>
+        <p>The showcase highlights eight verified engineering and algorithmic repositories backed by public source on <code>github.com/codesbysayam</code>:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
           <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
             <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
-              01 · OPERON
+              01 · OPERON &amp; AXIOM
             </div>
             <p className="text-xs text-[var(--text-muted)] mt-1">
-              Autonomous operations platform coordinating specialized agents with human-in-the-loop checkpoint gates and audit tracking.
+              Multi-agent HITL operations platform (Deploy or Die, Team NEXUS) and 36h WCC Launchpad 30 autonomous control plane with policy, sandbox, recovery &amp; audit chains.
             </p>
           </div>
           <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
             <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
-              02 · MAUSAM
+              02 · MAUSAM &amp; CampusConnect
             </div>
             <p className="text-xs text-[var(--text-muted)] mt-1">
-              SIH 2026 localized climate telemetry and severe weather prediction dashboard engineered by Team Algnite.
+              SIH 2026 Doppler/NAQI/INCOIS/SACHET suite in <code>mausam_sample</code> (vs empty <code>mausam_demo</code> template) and Next.js + Vitest campus hub (seeded in-memory storage).
             </p>
           </div>
           <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
             <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
-              03 · SayamSolves
+              03 · SightForge &amp; Memory in Motion
             </div>
             <p className="text-xs text-[var(--text-muted)] mt-1">
-              Documented algorithmic repository with clean C++ solutions and complexity analyses for LeetCode problem patterns.
+              Local dual-service Next.js 15 + FastAPI YOLOv8 COCO-0/17-keypoint pose/ByteTrack pipeline and IIT KGP DataForge 2026 interactive O(1) vs O(T) lab.
             </p>
           </div>
           <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
             <div className="font-semibold text-[var(--text)] font-mono text-xs tracking-wide">
-              04 · Edge Computer Vision
+              04 · Inkloom (Fork) &amp; SayamSolves
             </div>
             <p className="text-xs text-[var(--text-muted)] mt-1">
-              Real-time spatial motion detection and object tracking pipeline utilizing YOLOv8 and OpenCV on constrained edge camera hardware.
+              Forked identity workspace (<code>master</code>, early access on inkloom.art; models under construction) &amp; C++ LeetHub V2 repo (3 files / 4 LC baseline).
             </p>
           </div>
         </div>
@@ -154,20 +165,20 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "Projects & Engineering",
     question: "What technical challenges have these projects addressed?",
     plainTextAnswer:
-      "Key engineering hurdles addressed include multi-agent race conditions and safety checkpoints in OPERON, edge-constrained real-time inference latency in OpenCV YOLOv8, and zero-rate-limit client-side caching for live GitHub API telemetry.",
-    keywords: ["challenges", "architecture", "tradeoffs", "concurrency", "rate limits", "inference", "optimization"],
+      "Key engineering trade-offs solved include atomic CVFrame canvas replacement and COCO Class ID 0 / IoU 0.45 NMS synchronization between Next.js 15 and FastAPI + ByteTrack in SightForge; separating agent planning from side-effect execution via deterministic HITL approval and hash-linked audit gates in OPERON and AXIOM; and pre-rendering 11-repo GitHub telemetry into public/data/github.json to avoid visitor rate limits.",
+    keywords: ["challenges", "architecture", "tradeoffs", "SightForge", "ByteTrack", "rate limits", "OPERON", "AXIOM"],
     answer: (
       <div className="space-y-2.5 text-[var(--text-secondary)]">
-        <p>Across these projects, several non-trivial engineering trade-offs were solved:</p>
+        <p>Across the 8 featured platforms, several non-trivial engineering trade-offs were resolved:</p>
         <ul className="list-disc list-inside space-y-1.5 pl-1">
           <li>
-            <strong>Autonomous Multi-Agent Boundaries (OPERON):</strong> Preventing runaway agent execution by architecting an immutable state transition machine where sensitive decisions pause at strict human authorization gates.
+            <strong>Autonomous Safety &amp; Control Planes (OPERON &amp; AXIOM):</strong> Isolating agent intent proposal from external mutations behind Human-in-the-Loop approval gates, simulation sandboxes, failure recovery, and tamper-evident audit trails.
           </li>
           <li>
-            <strong>Edge Inference Latency (YOLO / Vision):</strong> Overcoming frame drops on edge micro-hardware by quantizing YOLO weights and stripping non-essential visual channels before running spatial vector calculations.
+            <strong>Synchronized Computer Vision Overlays (SightForge):</strong> Eliminating bounding-box canvas ghosting via atomic <code>CVFrame</code> state replacement over a 16:9 HTML5 Canvas backed by FastAPI YOLOv8 (COCO-0, 17 keypoints, IoU 0.45 NMS), ByteTrack, and PostgreSQL.
           </li>
           <li>
-            <strong>Zero-Rate-Limit API Telemetry (Portfolio):</strong> Eliminating the standard 60-req/hour unauthenticated GitHub API ceiling by establishing a background CI/CD sync script that pre-renders metrics to static JSON files.
+            <strong>Zero-Rate-Limit Multi-Repo Telemetry (Portfolio):</strong> Serving a static 11-repo GitHub snapshot from <code>public/data/github.json</code> alongside server-side caching proxies so visitor browsers never hit API ceilings.
           </li>
         </ul>
       </div>
@@ -179,18 +190,18 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "Projects & Engineering",
     question: "How are the applications structured, tested, and deployed?",
     plainTextAnswer:
-      "Applications are structured in modular TypeScript and React with strict type safety, tested with automated type checking (tsc --noEmit) and Vite production builds, and deployed via modern edge platforms like EdgeOne, Cloudflare, and Node production runtimes.",
-    keywords: ["structure", "testing", "deployment", "CI/CD", "TypeScript", "build", "Vite", "esbuild"],
+      "Applications use modular TypeScript (React 19, Next.js 15, Vite) and Python (FastAPI) codebases, validated with TypeScript strict checking (tsc --noEmit), Vitest suites (CampusConnect), Makefile workflows (SightForge), and Vite/Next production builds deployed across Vercel and local dual-service runtimes.",
+    keywords: ["structure", "testing", "deployment", "Vitest", "TypeScript", "build", "Vite", "Vercel"],
     answer: (
       <div className="space-y-2.5 text-[var(--text-secondary)]">
         <p>
-          Codebases adhere to strict separation of concerns: modular UI components in React 19, strongly typed domain schemas in TypeScript, and minimal external dependencies.
+          Codebases adhere to strict separation of concerns: modular UI components in React 19 / Next.js 15, strongly typed domain schemas in TypeScript, and clean Python FastAPI backends where ML inference applies.
         </p>
         <p>
-          <strong>Testing &amp; Validation:</strong> Every pull request and release is validated using TypeScript compiler checks (<code>tsc --noEmit</code>) and production Vite bundling. For full-stack backends, <code>esbuild</code> compiles the Express server into an optimized <code>dist/server.cjs</code> bundle.
+          <strong>Testing &amp; Validation:</strong> Builds are checked with TypeScript (<code>tsc --noEmit</code>), automated unit/integration tests with <strong>Vitest</strong> (e.g., CampusConnect), and production Vite / Next.js bundling, plus <code>esbuild</code> compilation for this portfolio&apos;s Express API server.
         </p>
         <p>
-          <strong>Deployment:</strong> Static assets are distributed via global edge CDNs (Cloudflare / EdgeOne) with HTTP caching headers, while automated GitHub Actions handle scheduled repository telemetry and profile synchronization.
+          <strong>Deployment &amp; Hosting:</strong> Six live web apps run on Vercel / edge hosting (OPERON, MAUSAM, Memory in Motion, AXIOM, Inkloom early access, CampusConnect), while dual-service SightForge runs locally/self-hosted via Makefile and SayamSolves syncs on GitHub via LeetHub V2.
         </p>
       </div>
     ),
@@ -203,27 +214,27 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "Technical Skills",
     question: "What engineering stack and programming languages does Sayam use?",
     plainTextAnswer:
-      "Languages: Python, C++, TypeScript, JavaScript, SQL. Frontend: React 19, Vite, Tailwind CSS, Motion, Recharts. Backend: Node.js, Express, REST APIs. AI/ML: PyTorch, OpenCV, YOLOv8, Google GenAI SDK. Tooling: Git, GitHub Actions, Linux CLI.",
-    keywords: ["languages", "stack", "Python", "C++", "TypeScript", "React", "Node.js", "PyTorch", "OpenCV", "Tailwind"],
+      "Languages: TypeScript (~93.6% / 10.67 MB verified multi-repo bytes), Python, C++, JavaScript, C, Java, SQL/PLpgSQL. Frontend: React 19, Next.js 15, Vite, Tailwind CSS, KaTeX, D3.js, HTML5 Canvas, Motion. Backend & Data: FastAPI, Node.js, Express, PostgreSQL. AI/ML & Vision: YOLOv8, ByteTrack, PyTorch, Multi-Agent HITL. Tooling: Git, GitHub, Vitest, Docker, Vercel.",
+    keywords: ["languages", "stack", "Python", "C++", "TypeScript", "React", "Next.js", "FastAPI", "YOLOv8", "ByteTrack", "PostgreSQL", "Vitest", "Docker"],
     answer: (
       <div className="space-y-2.5 text-[var(--text-secondary)]">
-        <p>Sayam&apos;s technical toolkit is verified by concrete project implementations:</p>
+        <p>Sayam&apos;s technical toolkit is verified across 11 public repositories on GitHub:</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
           <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
             <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Languages</span>
-            <span className="text-[var(--text)]">Python · C++ (Modern) · TypeScript · JavaScript · SQL</span>
+            <span className="text-[var(--text)]">TypeScript · Python · C++ · JavaScript · C · SQL / PLpgSQL</span>
           </div>
           <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
-            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Frontend &amp; UI</span>
-            <span className="text-[var(--text)]">React 19 · Vite · Tailwind CSS 4 · Motion · Recharts</span>
+            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Frontend &amp; Visuals</span>
+            <span className="text-[var(--text)]">React 19 · Next.js 15 · Vite · Tailwind CSS · KaTeX · D3.js</span>
           </div>
           <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
-            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Backend &amp; Systems</span>
-            <span className="text-[var(--text)]">Node.js · Express · RESTful APIs · Linux CLI · Bash</span>
+            <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">Backend, Data &amp; Test</span>
+            <span className="text-[var(--text)]">FastAPI · Node.js · Express · PostgreSQL · Vitest · Docker</span>
           </div>
           <div className="p-2.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
             <span className="text-[var(--accent)] font-semibold block uppercase tracking-wide mb-0.5">AI / ML &amp; Vision</span>
-            <span className="text-[var(--text)]">PyTorch · OpenCV · YOLOv8 · Google GenAI SDK · Multi-Agent</span>
+            <span className="text-[var(--text)]">YOLOv8 · ByteTrack · PyTorch · Multi-Agent HITL · BDH Lab</span>
           </div>
         </div>
       </div>
@@ -264,7 +275,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "GitHub & Architecture",
     question: "How is GitHub telemetry handled without visitor API keys or rate limits?",
     plainTextAnswer:
-      "The portfolio utilizes a pre-rendered static snapshot pipeline. A scheduled GitHub Action (sync-github.yml) runs hourly using authenticated credentials to fetch repository stats and language breakdowns, saving them into public/github-data.json. The web client loads this local static file, completely eliminating visitor rate limits and API token requirements.",
+      "The portfolio utilizes a pre-rendered static snapshot pipeline alongside server-side caching proxies. Verified repository stats and language breakdowns across all 11 public repositories are stored in public/data/github.json, completely eliminating visitor rate limits and client API token requirements.",
     keywords: ["GitHub", "telemetry", "rate limit", "API key", "Actions", "sync", "snapshot", "SWR", "caching"],
     answer: (
       <div className="space-y-2 text-[var(--text-secondary)]">
@@ -272,7 +283,7 @@ export const FAQ_ITEMS: FAQItem[] = [
           Visitors never need personal GitHub tokens, nor do they encounter GitHub&apos;s standard unauthenticated limit of 60 requests per hour.
         </p>
         <p>
-          Instead, an automated GitHub Actions workflow (<code>.github/workflows/sync-github.yml</code>) runs hourly. It authenticates with a secure repository secret, retrieves real-time statistics (stars, forks, commits, and byte-level language distributions) across all public repositories, and commits the result to <code>public/github-data.json</code>.
+          Instead, a pre-rendered multi-repo snapshot at <code>public/data/github.json</code> stores verified statistics (stars, forks, commits, and byte-level language distributions across all 11 public repositories), supplemented by server-side caching routes on the backend.
         </p>
         <p>
           The frontend React application loads this static JSON file using a client-side SWR caching hook, delivering instantaneous sub-millisecond render times with zero API failure risk.
@@ -397,7 +408,7 @@ export const FAQ_ITEMS: FAQItem[] = [
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-xs">
           <a
             href="mailto:wrickbusiness@gmail.com"
-            className="p-3 rounded-[8px] bg-[var(--surface)] hover:border-[var(--border-strong)] border border-[var(--border)] text-[var(--text)] transition-colors flex flex-col gap-0.5"
+            className="p-3 rounded-[8px] bg-[var(--surface)] hover:border-[var(--border-strong)] active:scale-[0.985] active:bg-[var(--surface-2)] border border-[var(--border)] text-[var(--text)] transition-all flex flex-col gap-0.5"
           >
             <span className="font-mono font-semibold uppercase text-[10px] text-[var(--accent)]">
               Business &amp; Collaborations
@@ -406,7 +417,7 @@ export const FAQ_ITEMS: FAQItem[] = [
           </a>
           <a
             href="mailto:sayammukherjee1506@gmail.com"
-            className="p-3 rounded-[8px] bg-[var(--surface)] hover:border-[var(--border-strong)] border border-[var(--border)] text-[var(--text)] transition-colors flex flex-col gap-0.5"
+            className="p-3 rounded-[8px] bg-[var(--surface)] hover:border-[var(--border-strong)] active:scale-[0.985] active:bg-[var(--surface-2)] border border-[var(--border)] text-[var(--text)] transition-all flex flex-col gap-0.5"
           >
             <span className="font-mono font-semibold uppercase text-[10px] text-[var(--accent)]">
               Direct &amp; Internship Inquiries
@@ -417,10 +428,10 @@ export const FAQ_ITEMS: FAQItem[] = [
         <p className="text-xs text-[var(--text-muted)] pt-1">
           Professional profiles:{" "}
           <a
-            href="https://linkedin.com/in/codesbysayam"
+            href="https://www.linkedin.com/in/sayammukherjee-portfolio/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] font-mono font-medium"
+            className="text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] active:opacity-75 font-mono font-medium"
           >
             LinkedIn ↗
           </a>{" "}
@@ -429,7 +440,7 @@ export const FAQ_ITEMS: FAQItem[] = [
             href="https://github.com/codesbysayam"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] font-mono font-medium"
+            className="text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] active:opacity-75 font-mono font-medium"
           >
             GitHub ↗
           </a>
@@ -459,7 +470,7 @@ export const FAQ_ITEMS: FAQItem[] = [
               href={RESUME_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-xs text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] break-all"
+              className="font-mono text-xs text-[var(--text)] underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] active:opacity-75 break-all"
             >
               {RESUME_URL} ↗
             </a>
@@ -499,7 +510,7 @@ export const FAQ_ITEMS: FAQItem[] = [
               href="https://github.com/codesbysayam"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[var(--text)] font-mono underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)]"
+              className="text-[var(--text)] font-mono underline decoration-[var(--border-strong)] hover:decoration-[var(--accent)] active:opacity-75"
             >
               github.com/codesbysayam ↗
             </a>.

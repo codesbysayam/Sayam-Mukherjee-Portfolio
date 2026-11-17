@@ -13,29 +13,29 @@ const CURRENTLY_DEVELOPING_DATA: DevelopingArea[] = [
   {
     area: "Advanced DSA",
     status: "PRACTICING",
-    description: "Daily C++ LeetCode implementations, algorithmic space-time optimization, and graph algorithms.",
-    context: "Focus on dynamic programming, graph traversals, and asymptotic performance.",
+    description: "C++ LeetCode implementations synced via LeetHub V2 (3 repo files: LC 0005, 0033, 0115; 4 LC solved baseline).",
+    context: "Focus on string DP, rotated binary search, graph traversals, and asymptotic performance.",
     icon: <Terminal className="w-4 h-4 text-[var(--accent)]" />
   },
   {
     area: "React",
     status: "BUILDING",
-    description: "Production web architectures, component composition, custom hooks, and zero-layout-shift UI systems.",
-    context: "Active work across Mausam weather platform and interactive web applications.",
+    description: "Production Next.js 15 / React 19 & Vite interfaces, KaTeX + D3.js visualizations, and zero-layout-shift UI systems.",
+    context: "Active work across Mausam (mausam_sample), SightForge Canvas, Memory in Motion, and CampusConnect.",
     icon: <Layout className="w-4 h-4 text-[var(--accent)]" />
   },
   {
     area: "AI / ML",
     status: "EXPLORING",
-    description: "Edge computer vision models with YOLOv8, PyTorch tensor workflows, and OpenCV frame processing.",
-    context: "Building edge camera object detection prototypes and practical inference pipelines.",
+    description: "YOLOv8 person & 17-keypoint pose detection with ByteTrack (SightForge) and O(1) Hebbian fast-weight interpretability.",
+    context: "Building FastAPI + Next.js computer vision pipelines and interactive BDH research visualizations.",
     icon: <Brain className="w-4 h-4 text-[var(--accent)]" />
   },
   {
     area: "System Architecture",
     status: "LEARNING",
-    description: "Multi-agent autonomous coordination, deterministic state machines, and human-in-the-loop workflows.",
-    context: "Developing Operon platform protocols, API routing, and system reliability boundaries.",
+    description: "Multi-agent HITL coordination, policy control planes, sandbox simulation, and tamper-evident audit chains.",
+    context: "Developing Operon and AXIOM governance protocols, approval gates, and resilient API routing.",
     icon: <Cpu className="w-4 h-4 text-[var(--accent)]" />
   }
 ];

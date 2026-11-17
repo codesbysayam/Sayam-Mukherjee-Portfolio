@@ -106,10 +106,10 @@ function FeaturedProjectComponent({
             <Clock className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
             <span>{readingStats.formatted}</span>
           </span>
-          {project.id === "mausam" && (
+          {project.event && (
             <>
               <span aria-hidden="true">·</span>
-              <span className="text-[#C7E34A] font-semibold">SIH 2026 Qualification</span>
+              <span className="text-[#C7E34A] font-semibold">{project.event}</span>
             </>
           )}
         </div>
@@ -118,10 +118,10 @@ function FeaturedProjectComponent({
           <button
             type="button"
             onClick={onToggleCandidate}
-            className="inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 rounded-[6px] border border-[#41443A] hover:border-[#C7E34A] text-xs font-mono text-[#F4F4ED] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 rounded-[6px] border border-[#41443A] hover:border-[#C7E34A] active:scale-[0.97] active:bg-[#151713] text-xs font-mono text-[#F4F4ED] transition-all cursor-pointer"
           >
             <ArrowLeftRight className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
-            <span>Compare: {candidateTitle}</span>
+            <span>Next Spotlight: {candidateTitle}</span>
           </button>
         )}
       </div>
@@ -155,10 +155,10 @@ function FeaturedProjectComponent({
           <div className="p-4 rounded-[8px] bg-[#151713] border border-[#41443A] space-y-1.5">
             <span className="text-[11px] font-mono uppercase tracking-wider text-[#C7E34A] font-semibold flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5" aria-hidden="true" />
-              Why I Built This
+              Problem &amp; Design Intent
             </span>
             <p className="text-xs sm:text-sm text-[#EAEAE1]/85 leading-relaxed font-sans">
-              {project.whyItExists}
+              {project.problem || project.whyItExists}
             </p>
           </div>
 
@@ -180,10 +180,10 @@ function FeaturedProjectComponent({
                     type="button"
                     onClick={() => onSelectTech && onSelectTech(isActive ? "ALL" : tech)}
                     title={onSelectTech ? `Filter projects by ${tech}` : tech}
-                    className={`min-h-[36px] sm:min-h-0 text-xs px-2.5 py-1 rounded-[4px] font-mono transition-colors cursor-pointer border ${
+                    className={`min-h-[36px] sm:min-h-0 text-xs px-2.5 py-1 rounded-[4px] font-mono transition-all cursor-pointer border active:scale-[0.96] ${
                       isActive
                         ? "bg-[#C7E34A] text-[#20231D] border-[#C7E34A] font-bold"
-                        : "bg-[#151713] hover:border-[#C7E34A]/60 text-[#EAEAE1] border-[#41443A]"
+                        : "bg-[#151713] hover:border-[#C7E34A]/60 active:bg-[#20231D] text-[#EAEAE1] border-[#41443A]"
                     }`}
                   >
                     {tech}
@@ -198,7 +198,7 @@ function FeaturedProjectComponent({
             <button
               type="button"
               onClick={() => onSelectCaseStudy(project)}
-              className="btn btn-primary"
+              className="btn btn-primary active:scale-[0.98]"
             >
               <span>View Case Study</span>
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -208,7 +208,7 @@ function FeaturedProjectComponent({
               href={project.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] !text-[#F4F4ED]"
+              className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] active:!bg-[#151713] active:scale-[0.98] !text-[#F4F4ED]"
               title="Open Repository on GitHub"
             >
               <Github className="w-3.5 h-3.5" aria-hidden="true" />
@@ -220,7 +220,7 @@ function FeaturedProjectComponent({
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] !text-[#F4F4ED]"
+                className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] active:!bg-[#151713] active:scale-[0.98] !text-[#F4F4ED]"
                 title="Launch Live Deployment"
               >
                 <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -231,7 +231,7 @@ function FeaturedProjectComponent({
             <button
               type="button"
               onClick={handleShare}
-              className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] !text-[#F4F4ED]"
+              className="btn !bg-transparent !border-[#41443A] hover:!border-[#C7E34A] active:!bg-[#151713] active:scale-[0.98] !text-[#F4F4ED]"
               title="Share Project"
               aria-label={`Share ${project.title}`}
             >
@@ -298,10 +298,10 @@ function FeaturedProjectComponent({
                 <CheckCircle2 className="w-3.5 h-3.5" aria-hidden="true" />
                 Implementation
               </span>
-              <span className="text-[#B5B8AA]">Production Code</span>
+              <span className="text-[#B5B8AA]">{project.githubRepoName}</span>
             </div>
             <p className="text-xs sm:text-sm text-[#EAEAE1]/85 leading-relaxed font-sans">
-              {project.whatIBuilt}
+              {project.implementation || project.whatIBuilt}
             </p>
           </div>
 

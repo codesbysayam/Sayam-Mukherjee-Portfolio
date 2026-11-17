@@ -187,7 +187,7 @@ export default function CommandMenu({
         id: "nav-projects",
         type: "command",
         title: "Navigate to Engineered Case Studies",
-        subtitle: "All 5 verified production builds",
+        subtitle: "All 8 verified engineering projects",
         badge: "COMMAND",
         category: "Navigation",
         icon: Terminal,
@@ -196,7 +196,7 @@ export default function CommandMenu({
           onClose();
         },
         searchTarget:
-          "projects engineered case studies software builds operon mausam sayamsolves portfolio yolo",
+          "projects engineered case studies software builds operon mausam sightforge memory-in-motion axiom inkloom campus-connect sayamsolves",
       },
       {
         id: "nav-certificates",
@@ -682,10 +682,10 @@ export default function CommandMenu({
                   key={tabKey}
                   type="button"
                   onClick={() => setActiveMenuTab(tabKey)}
-                  className={`min-h-[36px] sm:min-h-0 py-1 px-2.5 text-[10px] font-mono rounded-[4px] transition-colors shrink-0 cursor-pointer border ${
+                  className={`min-h-[36px] sm:min-h-0 py-1 px-2.5 text-[10px] font-mono rounded-[4px] transition-all shrink-0 cursor-pointer border active:scale-[0.96] ${
                     activeMenuTab === tabKey
                       ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D] font-bold"
-                      : "bg-transparent border-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:bg-[#20231D]"
+                      : "bg-transparent border-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:bg-[#20231D] active:bg-[#262922]"
                   }`}
                 >
                   {label}
@@ -723,7 +723,7 @@ export default function CommandMenu({
                                 aria-selected={isSelected}
                                 onClick={item.action}
                                 onMouseEnter={() => setSelectedIndex(globalIdx)}
-                                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-[6px] text-left transition-colors cursor-pointer border ${
+                                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-[6px] text-left transition-all cursor-pointer border active:scale-[0.985] active:bg-[#262922] ${
                                   isSelected
                                     ? "bg-[#151713] border-[#C7E34A]/60 text-[#F4F4ED]"
                                     : "bg-transparent text-[#D4D6CA] hover:text-[#F4F4ED] border-transparent"
@@ -804,7 +804,7 @@ export default function CommandMenu({
                               setActiveMenuTab("channels");
                               setSelectedIndex(0);
                             }}
-                            className="text-[10px] font-mono px-2.5 py-1 rounded-[4px] border border-[#41443A] text-[#F4F4ED] hover:border-[#C7E34A] cursor-pointer flex items-center gap-1"
+                            className="text-[10px] font-mono px-2.5 py-1 rounded-[4px] border border-[#41443A] text-[#F4F4ED] hover:border-[#C7E34A] active:scale-[0.96] active:border-[#C7E34A] transition-all cursor-pointer flex items-center gap-1"
                           >
                             <Youtube className="w-3 h-3 text-red-400" />
                             <span>Channels ({crossTabChannels.length})</span>
@@ -816,7 +816,7 @@ export default function CommandMenu({
                             setActiveMenuTab("all");
                             setSelectedIndex(0);
                           }}
-                          className="text-[10px] font-mono px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold cursor-pointer"
+                          className="text-[10px] font-mono px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold active:scale-[0.96] active:bg-[#9BB827] transition-all cursor-pointer"
                         >
                           Search Across All
                         </button>

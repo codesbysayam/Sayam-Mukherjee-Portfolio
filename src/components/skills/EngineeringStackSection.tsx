@@ -33,7 +33,8 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
             Core Technologies &amp; Domains
           </h2>
           <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
-            6 Disciplines · 29 Technologies
+            {ENGINEERING_STACK_CATEGORIES.length} Disciplines ·{" "}
+            {ENGINEERING_STACK_CATEGORIES.reduce((sum, grp) => sum + grp.skills.length, 0)} Technologies
           </span>
         </div>
         <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
@@ -76,10 +77,10 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
                       key={skillName}
                       type="button"
                       onClick={() => onSelectTech?.(isSelected ? null : skillName)}
-                      className={`px-2.5 py-1 rounded-[4px] text-xs font-mono transition-colors text-left flex items-center gap-1 cursor-pointer border ${
+                      className={`px-2.5 py-1 rounded-[4px] text-xs font-mono transition-all text-left flex items-center gap-1 cursor-pointer border active:scale-[0.96] ${
                         isSelected
                           ? "bg-[#20231D] dark:bg-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D] border-[#20231D] dark:border-[#C7E34A] font-semibold"
-                          : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
+                          : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)] active:bg-[var(--surface-2)]"
                       }`}
                     >
                       <span>{skillName}</span>

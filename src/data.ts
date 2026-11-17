@@ -78,26 +78,51 @@ export const SAYAM_DATA = {
     focus: ['C++', 'DSA', 'Computer Vision', 'Full Stack'],
     githubCommits: 'Live GitHub Activity',
     codingStreak: 'Active Routine',
-    projectsCompleted: '5 Verified Projects'
+    projectsCompleted: '8 Verified Projects'
   },
   socials: {
     linkedin: 'https://www.linkedin.com/in/sayammukherjee-portfolio/',
     github: 'https://github.com/codesbysayam',
     instagram: 'https://www.instagram.com/_.wrick._/',
-    youtube: 'https://youtube.com/@technicalaz',
+    youtube: 'https://www.youtube.com/@ObsidianOptics_in',
     fiverr: 'https://www.fiverr.com/',
     email: 'wrickbusiness@gmail.com',
     resume: RESUME_URL
   },
   projects: [
     {
-      id: 'private-enterprise',
-      title: 'Private Enterprise Project',
-      description: 'Currently building an exclusive private project on GitHub.',
-      longDescription: 'This project is actively under development and hosted in a private repository. Due to confidentiality and ongoing development, the source code and details are currently restricted.',
-      tags: ['Python', 'JavaScript', 'Django', 'Kotlin'],
+      id: 'operon',
+      title: 'OPERON',
+      description: 'Multi-agent operations engine across Support, Finance, HR & Ops with human-in-the-loop approval gates.',
+      longDescription: 'Built for Deploy or Die with Team NEXUS, enforcing deterministic HITL approval state transitions across autonomous agent workflows.',
+      tags: ['TypeScript', 'React', 'Node.js', 'Express', 'Multi-Agent AI'],
+      category: 'ai_ml',
+      githubUrl: 'https://github.com/codesbysayam/Operon',
+      demoUrl: 'https://operonpro.vercel.app',
+      imageUrl: '',
+      featured: true
+    },
+    {
+      id: 'mausam',
+      title: 'MAUSAM',
+      description: 'SIH 2026 platform unifying Doppler nowcasting, SACHET/NDMA alerts, NAQI, INCOIS marine state & Ask MAUSAM AI.',
+      longDescription: 'Canonical source verified at codesbysayam/mausam_sample (mausam_demo is an empty template placeholder).',
+      tags: ['TypeScript', 'React', 'Python', 'Tailwind CSS', 'PLpgSQL'],
       category: 'full_stack',
-      imageUrl: 'https://picsum.photos/seed/private/800/450',
+      githubUrl: 'https://github.com/codesbysayam/mausam_sample',
+      demoUrl: 'https://mausamgovt.vercel.app',
+      imageUrl: '',
+      featured: true
+    },
+    {
+      id: 'sightforge',
+      title: 'SIGHTFORGE',
+      description: 'Dual-service Next.js 15 / React 19 Canvas client + FastAPI YOLOv8 COCO-0, 17-keypoint pose, ByteTrack & PostgreSQL pipeline.',
+      longDescription: 'Local/self-hosted dual-service computer vision workbench using atomic CVFrame replacement without a public cloud live URL.',
+      tags: ['Next.js 15', 'React 19', 'FastAPI', 'YOLOv8', 'ByteTrack', 'PostgreSQL'],
+      category: 'ai_ml',
+      githubUrl: 'https://github.com/codesbysayam/SightForge',
+      imageUrl: '',
       featured: true
     }
   ] as Project[],
@@ -137,11 +162,11 @@ export const SAYAM_DATA = {
       { name: 'Web Architecture: TypeScript & Next.js/React', progress: 70, status: 'Active', resource: 'Production Deployments' }
     ] as LearningItem[],
     leetcode: {
-      solved: 0,
+      solved: 4,
       target: 100,
-      easy: 0,
-      medium: 0,
-      hard: 0
+      easy: 1,
+      medium: 2,
+      hard: 1
     }
   },
   experience: [
@@ -150,10 +175,10 @@ export const SAYAM_DATA = {
       company: 'Self-Directed / Vercel & Contests',
       period: '2025 – Present',
       description: [
-        'Engineered and deployed 6 projects on Vercel with React, Next.js, Node.js, Tailwind CSS, and Gemini API integrations.',
-        'Collaborated with teammates across 5 hackathons and contests in 2026 to deliver working prototypes.'
+        'Engineered 8 verified public repositories across TypeScript, React, Next.js 15, FastAPI, Node.js, YOLOv8, and C++.',
+        'Collaborated with teammates across 5 hackathons and contests in 2026 to deliver working full-stack and AI systems.'
       ],
-      skills: ['React', 'Next.js', 'Node.js', 'Tailwind CSS', 'Gemini API', 'Hackathons']
+      skills: ['TypeScript', 'React', 'Next.js 15', 'FastAPI', 'Node.js', 'YOLOv8', 'ByteTrack', 'Hackathons']
     }
   ] as ExperienceItem[],
   certifications: [] as Certification[],

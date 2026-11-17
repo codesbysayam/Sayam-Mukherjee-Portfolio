@@ -150,7 +150,7 @@ export const ExpandableFAQ: React.FC = () => {
               type="button"
               onClick={expandAll}
               disabled={filteredItems.length === 0 || allVisibleOpen}
-              className="min-h-[40px] px-4 py-2 rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--text)] hover:text-[var(--bg)] text-[var(--text)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer font-semibold"
+              className="min-h-[40px] px-4 py-2 rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] active:text-[var(--text)] text-[var(--text)] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer font-semibold"
               title="Expand all visible questions"
             >
               Expand All
@@ -159,7 +159,7 @@ export const ExpandableFAQ: React.FC = () => {
               type="button"
               onClick={collapseAll}
               disabled={filteredItems.length === 0 || !someVisibleOpen}
-              className="min-h-[40px] px-4 py-2 rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--text)] hover:text-[var(--bg)] text-[var(--text)] disabled:opacity-40 disabled:cursor-not-allowed transition-colors cursor-pointer font-semibold"
+              className="min-h-[40px] px-4 py-2 rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] active:text-[var(--text)] text-[var(--text)] disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer font-semibold"
               title="Collapse all visible questions"
             >
               Collapse All
@@ -188,7 +188,7 @@ export const ExpandableFAQ: React.FC = () => {
             <button
               type="button"
               onClick={() => setSearchQuery("")}
-              className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded text-[var(--text-faint)] hover:text-[var(--text)] transition-colors cursor-pointer"
+              className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[40px] min-h-[40px] flex items-center justify-center rounded text-[var(--text-faint)] hover:text-[var(--text)] active:scale-[0.92] transition-all cursor-pointer"
               aria-label="Clear FAQ search"
               title="Clear search"
             >
@@ -212,10 +212,10 @@ export const ExpandableFAQ: React.FC = () => {
                 key={cat.id}
                 type="button"
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] py-1.5 px-3 rounded-[6px] text-xs font-mono transition-colors shrink-0 cursor-pointer border ${
+                className={`inline-flex items-center gap-1.5 min-h-[40px] sm:min-h-[36px] py-1.5 px-3 rounded-[6px] text-xs font-mono transition-all shrink-0 cursor-pointer border active:scale-[0.96] ${
                   isSelected
                     ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D] font-bold"
-                    : "bg-transparent hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] border-[var(--border)]"
+                    : "bg-transparent hover:bg-[var(--surface)] active:bg-[var(--surface-3)] text-[var(--text-muted)] hover:text-[var(--text)] border-[var(--border)]"
                 }`}
               >
                 <Icon className="w-3.5 h-3.5" />
@@ -297,7 +297,7 @@ export const ExpandableFAQ: React.FC = () => {
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   onClick={() => toggleItem(item.id)}
-                  className="w-full text-left min-h-[56px] p-4 sm:p-5 flex items-start sm:items-center justify-between gap-3.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[10px] group transition-colors"
+                  className="w-full text-left min-h-[56px] p-4 sm:p-5 flex items-start sm:items-center justify-between gap-3.5 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[10px] group transition-all active:bg-[var(--surface)] active:scale-[0.995]"
                 >
                   <div className="flex items-start sm:items-center gap-3.5 min-w-0">
                     <div

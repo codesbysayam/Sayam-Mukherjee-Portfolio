@@ -250,8 +250,8 @@ function AboutSectionComponent() {
     },
     {
       period: "2026",
-      title: "Engineered Flagship Systems (Operon, Mausam, SayamSolves)",
-      description: "Built the Operon multi-agent engine, Mausam meteorological platform for SIH 2026, SayamSolves algorithmic practice archive, and real-time computer vision workflows.",
+      title: "Engineered 8 Flagship Systems (Operon, Mausam, SightForge, AXIOM & more)",
+      description: "Built the Operon multi-agent engine, Mausam meteorological platform for SIH 2026, SightForge dual-service YOLOv8 tracker, Memory-in-Motion, AXIOM control plane, Inkloom studio, CampusConnect, and SayamSolves C++ archive.",
       category: "Projects",
       icon: Rocket,
       status: "present"
@@ -390,7 +390,7 @@ function AboutSectionComponent() {
                       At age 16, I started my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which reached an organic audience of over 10,000 learners. Producing technical breakdowns and working with early clients taught me early on how people actually interact with technology: they value clarity, speed, and real utility over buzzwords.
                     </p>
                     <p>
-                      In my software projects, I stick to that same practical focus. Whether building <strong>Operon</strong> (a multi-agent operational platform with human approvals), <strong>Mausam</strong> (a weather analytics app developed for SIH 2026), or maintaining <strong>SayamSolves</strong> (my C++ algorithmic archive), my priority is building reliable code that solves actual problems.
+                      In my software projects, I stick to that same practical focus. Whether building <strong>Operon</strong> (a multi-agent operational platform with human approvals), <strong>Mausam</strong> (climate analytics for SIH 2026), <strong>SightForge</strong> (YOLOv8 tracking), <strong>Memory-in-Motion</strong> (3D educational physics), <strong>AXIOM</strong> (governed AI execution), <strong>Inkloom</strong>, <strong>CampusConnect</strong>, or <strong>SayamSolves</strong> (C++ algorithmic archive), my priority is building reliable code that solves actual problems.
                     </p>
                   </div>
 

@@ -14,9 +14,9 @@ export const LINKS = {
   // Primary Developer Profiles
   github: "https://github.com/codesbysayam",
   linkedin: "https://www.linkedin.com/in/sayammukherjee-portfolio/",
-  leetcode: "https://leetcode.com/u/sayammukherjee/",
+  leetcode: "https://leetcode.com/u/codesbysayam/",
   codolio: "https://codolio.com/profile/codesbysayam",
-  youtube: "https://youtube.com/@technicalaz",
+  youtube: "https://www.youtube.com/@ObsidianOptics_in",
   instagram: "https://www.instagram.com/_.wrick._/",
   fiverr: "https://www.fiverr.com/",
 
@@ -27,11 +27,15 @@ export const LINKS = {
 
   // Verified Public GitHub Repositories
   projects: {
-    operon: "https://github.com/codesbysayam/operon",
-    mausam: "https://github.com/codesbysayam/mausam",
-    portfolio: "https://github.com/codesbysayam/codesbysayam",
+    operon: "https://github.com/codesbysayam/Operon",
+    mausam: "https://github.com/codesbysayam/mausam_sample",
+    sightforge: "https://github.com/codesbysayam/SightForge",
+    memoryInMotion: "https://github.com/codesbysayam/Memory-in-Motion",
+    axiom: "https://github.com/codesbysayam/AXIOM",
+    inkloom: "https://github.com/codesbysayam/inkloom",
+    campusConnect: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
     sayamSolves: "https://github.com/codesbysayam/sayam-solves",
-    yoloVision: "https://github.com/codesbysayam",
+    portfolioRepo: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
     allRepos: "https://github.com/codesbysayam?tab=repositories"
   },
 

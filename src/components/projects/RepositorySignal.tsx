@@ -43,8 +43,6 @@ function RepositorySignalComponent() {
       }
     });
 
-    langCounts["Python"] = (langCounts["Python"] || 0) + 1;
-
     let topLang = "TypeScript";
     let maxCount = 0;
     Object.entries(langCounts).forEach(([lang, count]) => {
@@ -109,7 +107,7 @@ function RepositorySignalComponent() {
           <p className="text-lg sm:text-xl font-mono font-extrabold text-[var(--text)]">
             {mostUsedLanguage}
           </p>
-          <span className="text-[10px] font-mono text-[var(--text-muted)]">Calculated from 5 repos</span>
+          <span className="text-[10px] font-mono text-[var(--text-muted)]">Calculated from {totalProjectsCount} repos</span>
         </div>
 
         <div className="p-3.5 rounded-[8px] border bg-[var(--surface)] border-[var(--border)] space-y-1">

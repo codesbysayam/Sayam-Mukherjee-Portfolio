@@ -10,22 +10,43 @@ const DEPLOYED_APPS = [
     name: "OPERON",
     url: "https://operonpro.vercel.app",
     platform: "Vercel Edge",
-    role: "Production App",
-    status: "Operational"
+    role: "Multi-Agent HITL App",
+    status: "Live"
   },
   {
     name: "MAUSAM",
     url: "https://mausamgovt.vercel.app",
     platform: "Vercel Edge",
-    role: "SIH 2026 Production",
-    status: "Operational"
+    role: "SIH 2026 Platform",
+    status: "Live"
   },
   {
-    name: "Portfolio",
-    url: "https://sayammukherjee.in",
-    platform: "Vercel & Express API",
-    role: "Full-Stack Ecosystem",
-    status: "Operational"
+    name: "Memory in Motion",
+    url: "https://memoryinmotion.vercel.app",
+    platform: "Vercel Edge",
+    role: "DataForge 2026 AI Lab",
+    status: "Live"
+  },
+  {
+    name: "AXIOM",
+    url: "https://axiomwcc.vercel.app",
+    platform: "Vercel Edge",
+    role: "WCC Control Plane",
+    status: "Live"
+  },
+  {
+    name: "Inkloom",
+    url: "https://inkloom.art",
+    platform: "Web (Public Fork)",
+    role: "Early Access Showcase",
+    status: "Early Access"
+  },
+  {
+    name: "CampusConnect",
+    url: "https://campusconnect1273.vercel.app/",
+    platform: "Vercel Edge",
+    role: "Seeded In-Memory Demo",
+    status: "Live Demo"
   }
 ];
 
@@ -95,7 +116,7 @@ export function LiveRepositorySignal() {
           </div>
           <div className="space-y-0.5">
             <div className="text-xl sm:text-2xl font-semibold text-[var(--text)] font-mono tabular-nums">
-              {repos.length > 0 ? repos.length : "4"}
+              {repos.length > 0 ? repos.length : "11"}
             </div>
             <p className="text-xs text-[var(--text-muted)] font-sans">
               Verified public source codebases
@@ -151,7 +172,7 @@ export function LiveRepositorySignal() {
           </div>
           <div className="space-y-0.5">
             <div className="text-xl sm:text-2xl font-semibold text-[var(--text)] font-mono tabular-nums">
-              3 Live
+              {DEPLOYED_APPS.length} Live
             </div>
             <p className="text-xs text-[var(--success)] font-mono flex items-center gap-1">
               <CheckCircle2 className="w-3 h-3" />
@@ -176,7 +197,7 @@ export function LiveRepositorySignal() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {DEPLOYED_APPS.map((app) => (
             <div
               key={app.name}
@@ -198,7 +219,7 @@ export function LiveRepositorySignal() {
                   href={app.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-mono text-[var(--accent)] hover:underline transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-mono text-[var(--accent)] hover:underline active:opacity-75 transition-colors"
                 >
                   <span>Launch Live App</span>
                   <ExternalLink className="w-3 h-3" />

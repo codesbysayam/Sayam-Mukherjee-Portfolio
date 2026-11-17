@@ -6,7 +6,7 @@ import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { calculateReadingTime } from "../../utils/readingTime";
 import {
   Star, GitFork, ExternalLink, Github, ArrowRight,
-  Clock, Share2, Check
+  Clock, Share2, Check, GitBranch
 } from "lucide-react";
 
 interface ProjectCardProps {
@@ -39,6 +39,8 @@ function ProjectCardComponent({
   const langColor = LANGUAGE_COLORS[language] || "#69734A";
   const starsCount = repo ? repo.stargazers_count : 0;
   const forksCount = repo ? repo.forks_count : 0;
+  const isForkRepo = repo?.fork ?? project.isFork ?? false;
+  const branchName = repo?.default_branch || project.defaultBranch || "main";
   const lastUpdated = repo
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
@@ -123,7 +125,7 @@ function ProjectCardComponent({
         style={canHover ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined}
         whileHover={canHover ? { y: -2 } : undefined}
         transition={{ duration: 0.18 }}
-        className="card overflow-hidden flex flex-col justify-between group h-full relative focus-within:border-[var(--accent)]"
+        className="card card-interactive overflow-hidden flex flex-col justify-between group h-full relative focus-within:border-[var(--accent)] active:border-[var(--accent)]"
       >
         {/* Clean Editorial Media Header */}
         <div className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--surface)]">
@@ -142,11 +144,18 @@ function ProjectCardComponent({
               <span className="font-mono text-xs text-[var(--text-muted)]">{project.title}</span>
             </div>
           )}
-          {isFeaturedCandidate && (
-            <span className="absolute top-3 left-3 px-2 py-0.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] text-[10px] font-mono font-bold uppercase tracking-wider">
-              Lead System
-            </span>
-          )}
+          <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
+            {isFeaturedCandidate && (
+              <span className="px-2 py-0.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] text-[10px] font-mono font-bold uppercase tracking-wider">
+                Lead System
+              </span>
+            )}
+            {isForkRepo && (
+              <span className="px-2 py-0.5 rounded-[4px] bg-[#20231D]/90 text-[#F4F4ED] border border-[#41443A] text-[10px] font-mono font-semibold uppercase tracking-wider">
+                Fork · {branchName}
+              </span>
+            )}
+          </div>
         </div>
 
         <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 space-y-4">
@@ -187,7 +196,7 @@ function ProjectCardComponent({
             {project.whyItExists && (
               <div className="p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-1">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold block">
-                  Why it exists
+                  {project.team || project.event ? `${project.team ?? ""} ${project.event ? `· ${project.event}` : ""}`.trim() : "Why it exists"}
                 </span>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
                   {project.whyItExists}
@@ -210,10 +219,10 @@ function ProjectCardComponent({
                       if (onSelectTech) onSelectTech(isActive ? "ALL" : tech);
                     }}
                     title={onSelectTech ? `Filter projects by ${tech}` : tech}
-                    className={`text-xs font-mono px-2 py-0.5 rounded-[4px] transition-colors cursor-pointer border ${
+                    className={`text-xs font-mono px-2 py-0.5 rounded-[4px] transition-all cursor-pointer border active:scale-[0.96] ${
                       isActive
                         ? "bg-[#20231D] dark:bg-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D] border-[#20231D] dark:border-[#C7E34A] font-semibold"
-                        : "bg-[var(--surface)] hover:border-[var(--border-strong)] text-[var(--text-secondary)] border-[var(--border)]"
+                        : "bg-[var(--surface)] hover:border-[var(--border-strong)] active:bg-[var(--surface-2)] text-[var(--text-secondary)] border-[var(--border)]"
                     }`}
                   >
                     {tech}
@@ -228,12 +237,18 @@ function ProjectCardComponent({
             </div>
 
             <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)] tabular-nums">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span
                   className="w-2 h-2 rounded-full inline-block shrink-0"
                   style={{ backgroundColor: langColor }}
                 />
                 <span className="text-[var(--text)] font-medium">{language}</span>
+                {branchName !== "main" && (
+                  <span className="inline-flex items-center gap-0.5 text-[11px] text-[var(--text-muted)]">
+                    <GitBranch className="w-3 h-3" aria-hidden="true" />
+                    {branchName}
+                  </span>
+                )}
               </div>
 
               <div className="flex items-center gap-3">
@@ -258,7 +273,7 @@ function ProjectCardComponent({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs"
+                  className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs active:scale-[0.98]"
                   title="Open GitHub Repository"
                 >
                   <Github className="w-3.5 h-3.5" aria-hidden="true" />
@@ -270,7 +285,7 @@ function ProjectCardComponent({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs"
+                    className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs active:scale-[0.98]"
                     title="Launch Live Deployment"
                   >
                     <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -281,7 +296,7 @@ function ProjectCardComponent({
                 <button
                   type="button"
                   onClick={handleShare}
-                  className="btn btn-ghost !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-2.5 !text-xs"
+                  className="btn btn-ghost !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-2.5 !text-xs active:scale-[0.98]"
                   title="Share Project"
                   aria-label={`Share ${project.title}`}
                 >
@@ -297,7 +312,7 @@ function ProjectCardComponent({
               <button
                 type="button"
                 onClick={() => onSelectCaseStudy(project)}
-                className="btn btn-primary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs group/cs"
+                className="btn btn-primary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs group/cs active:scale-[0.98]"
               >
                 <span>Case Study</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/cs:translate-x-1" aria-hidden="true" />

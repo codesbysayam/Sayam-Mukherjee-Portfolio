@@ -409,7 +409,7 @@ export default function CertificatesPage() {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  className="px-3.5 py-2 rounded-[6px] text-xs font-sans font-semibold whitespace-nowrap cursor-pointer flex items-center gap-2 transition-colors border"
+                  className="px-3.5 py-2 rounded-[6px] text-xs font-sans font-semibold whitespace-nowrap cursor-pointer flex items-center gap-2 transition-all border active:scale-[0.97]"
                   style={{
                     backgroundColor: isSelected ? "#C7E34A" : "var(--surface)",
                     borderColor: isSelected ? "#C7E34A" : "var(--border)",
@@ -451,7 +451,7 @@ export default function CertificatesPage() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] active:scale-95 active:opacity-80 cursor-pointer"
                   title="Clear search"
                   aria-label="Clear search"
                 >
@@ -545,7 +545,7 @@ export default function CertificatesPage() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer"
+                    className="flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--accent)] hover:underline active:scale-95 active:opacity-80 cursor-pointer"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Reset Filters</span>

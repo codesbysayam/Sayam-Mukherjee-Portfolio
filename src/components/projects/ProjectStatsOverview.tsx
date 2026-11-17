@@ -128,7 +128,7 @@ function ProjectStatsOverviewComponent({
   const secondaryBarColor = isLight ? "#20231D" : "#8D947E";
 
   const totalRepos = useMemo(() => {
-    return repos.length > 0 ? repos.length : user?.public_repos || 7;
+    return repos.length > 0 ? repos.length : user?.public_repos || 11;
   }, [repos.length, user?.public_repos]);
 
   const totalStars = useMemo(() => {
@@ -202,7 +202,12 @@ function ProjectStatsOverviewComponent({
       else if (shortName === "Memory-in-Motion") shortName = "MemMotion";
       else if (shortName === "codesbysayam") shortName = "Config";
       else if (shortName === "sayam-solves") shortName = "DSA Solves";
-      else if (shortName === "mausam") shortName = "Mausam";
+      else if (shortName === "mausam_sample") shortName = "Mausam";
+      else if (shortName === "mausam_demo") shortName = "M.Demo";
+      else if (shortName === "CAMPUSCONNECT_1273") shortName = "Campus";
+      else if (shortName === "SightForge") shortName = "SightForge";
+      else if (shortName === "AXIOM") shortName = "AXIOM";
+      else if (shortName === "inkloom") shortName = "Inkloom";
       else if (shortName === "Operon") shortName = "Operon";
 
       let repoBytes = 0;
@@ -414,10 +419,10 @@ function ProjectStatsOverviewComponent({
               <button
                 type="button"
                 onClick={() => setRepoMetric("stars")}
-                className={`px-2.5 py-1 text-xs font-mono rounded-[4px] transition-colors cursor-pointer ${
+                className={`px-2.5 py-1 text-xs font-mono rounded-[4px] transition-all cursor-pointer active:scale-[0.97] ${
                   repoMetric === "stars"
                     ? "bg-[#20231D] dark:bg-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D] font-semibold"
-                    : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    : "text-[var(--text-muted)] hover:text-[var(--text)] active:bg-[var(--surface-2)]"
                 }`}
               >
                 Stars &amp; Forks
@@ -425,10 +430,10 @@ function ProjectStatsOverviewComponent({
               <button
                 type="button"
                 onClick={() => setRepoMetric("size")}
-                className={`px-2.5 py-1 text-xs font-mono rounded-[4px] transition-colors cursor-pointer ${
+                className={`px-2.5 py-1 text-xs font-mono rounded-[4px] transition-all cursor-pointer active:scale-[0.97] ${
                   repoMetric === "size"
                     ? "bg-[#20231D] dark:bg-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D] font-semibold"
-                    : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    : "text-[var(--text-muted)] hover:text-[var(--text)] active:bg-[var(--surface-2)]"
                 }`}
               >
                 Code Size

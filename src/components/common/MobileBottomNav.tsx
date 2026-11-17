@@ -68,10 +68,10 @@ function MobileBottomNavComponent({
               type="button"
               onClick={() => onNavigate(dest.id)}
               aria-current={isActive ? "page" : undefined}
-              className={`relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-[6px] transition-colors duration-150 cursor-pointer ${
+              className={`relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-[6px] transition-all duration-150 cursor-pointer active:scale-[0.95] ${
                 isActive
                   ? "bg-[#C7E34A] text-[#20231D] font-bold"
-                  : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                  : "text-[var(--text-muted)] hover:text-[var(--text)] active:bg-[var(--surface)]"
               }`}
             >
               <Icon className="w-[18px] h-[18px] sm:w-5 sm:h-5 shrink-0" />
@@ -86,7 +86,7 @@ function MobileBottomNavComponent({
           type="button"
           onClick={onOpenSearch}
           aria-label="Open command palette search"
-          className="flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors duration-150 cursor-pointer"
+          className="flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] active:scale-[0.95] active:bg-[var(--surface)] transition-all duration-150 cursor-pointer"
         >
           <Search className="w-[18px] h-[18px] sm:w-5 sm:h-5 shrink-0" />
           <span className="text-[10px] sm:text-[11px] font-medium tracking-tight leading-tight mt-1 font-sans truncate max-w-full text-center">

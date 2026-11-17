@@ -246,7 +246,7 @@ function HeroSectionComponent({
                   href={user?.html_url || SOCIAL_LINKS.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold text-[var(--text)] hover:underline inline-flex items-center gap-1.5"
+                  className="font-semibold text-[var(--text)] hover:underline active:opacity-75 inline-flex items-center gap-1.5"
                 >
                   <Github className="w-3.5 h-3.5 text-[var(--accent)]" />
                   <span>@{user?.login || "codesbysayam"}</span>
@@ -260,7 +260,7 @@ function HeroSectionComponent({
                     disabled={loading}
                     title="Refresh live GitHub data"
                     aria-label="Refresh live GitHub data"
-                    className="min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
+                    className="min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded hover:bg-[var(--surface)] active:bg-[var(--surface-3)] active:scale-[0.94] text-[var(--text-muted)] hover:text-[var(--text)] transition-all cursor-pointer"
                   >
                     <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
                   </button>
@@ -270,7 +270,7 @@ function HeroSectionComponent({
               <div className="grid grid-cols-3 divide-x divide-[var(--border)] border-y border-[var(--border)] py-2.5 text-center">
                 <div>
                   <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
-                    {user ? user.public_repos : repos.length || 5}
+                    {user ? user.public_repos : repos.length || 11}
                   </div>
                   <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
                     Repos
@@ -298,7 +298,7 @@ function HeroSectionComponent({
                 href={latestCommitInfo.commitUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 hover:border-[var(--border-strong)] transition-colors group"
+                className="block rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 hover:border-[var(--border-strong)] active:border-[var(--accent)] active:bg-[var(--surface-3)] active:scale-[0.985] transition-all group"
               >
                 <div className="flex items-center justify-between gap-2 min-w-0 text-[11px] font-mono text-[var(--text-muted)] mb-1">
                   <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--text)] min-w-0">
@@ -348,7 +348,7 @@ function HeroSectionComponent({
           <button
             type="button"
             onClick={scrollToChapters}
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1.5 py-1"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] active:opacity-75 active:scale-[0.97] transition-all cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1.5 py-1"
           >
             <span>Scroll to explore</span>
             <motion.span

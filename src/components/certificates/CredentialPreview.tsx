@@ -34,7 +34,7 @@ export function CredentialPreview({
     return (
       <div
         onClick={onInspect}
-        className={`achievement-card__credential group/img relative w-full h-44 rounded-[10px] border overflow-hidden cursor-pointer flex items-center justify-center p-2 transition-colors ${className}`}
+        className={`achievement-card__credential group/img relative w-full h-44 rounded-[10px] border overflow-hidden cursor-pointer flex items-center justify-center p-2 transition-all active:scale-[0.99] ${className}`}
         style={{
           backgroundColor: "var(--surface)",
           borderColor: "var(--border)",
@@ -108,7 +108,7 @@ export function CredentialPreview({
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[var(--accent)] hover:underline shrink-0"
+                    className="inline-flex items-center gap-1 text-[11px] font-mono font-semibold text-[var(--accent)] hover:underline active:opacity-75 shrink-0"
                     title={`Open ${proj.name}`}
                   >
                     <span>Launch</span>

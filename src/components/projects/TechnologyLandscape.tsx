@@ -12,48 +12,48 @@ interface TechGroup {
 
 const VERIFIED_LANDSCAPE: TechGroup[] = [
   {
-    category: "Frontend & Interface",
+    category: "Frontend & Interactive Labs",
     icon: Layers,
     items: [
-      { name: "React", usedIn: "Mausam, Operon, Portfolio" },
-      { name: "TypeScript", usedIn: "Mausam, Operon, Portfolio" },
-      { name: "Tailwind CSS", usedIn: "Mausam, Portfolio" },
-      { name: "Vite", usedIn: "Portfolio, Mausam" },
-      { name: "Motion", usedIn: "Portfolio micro-interactions" }
-    ]
+      { name: "TypeScript & React", usedIn: "OPERON, MAUSAM, AXIOM, Inkloom" },
+      { name: "Next.js 15 / React 19", usedIn: "SightForge, Campus Connect" },
+      { name: "D3.js & KaTeX", usedIn: "Memory in Motion interpretive lab" },
+      { name: "HTML5 Canvas (16:9)", usedIn: "SightForge atomic CVFrame renderer" },
+      { name: "Tailwind CSS", usedIn: "MAUSAM, Campus Connect, OPERON" },
+    ],
   },
   {
-    category: "Backend & Systems",
+    category: "Backend, APIs & Algorithms",
     icon: Terminal,
     items: [
-      { name: "Node.js", usedIn: "Operon, Portfolio proxy" },
-      { name: "Express.js", usedIn: "Operon backend, API proxy" },
-      { name: "C++", usedIn: "SayamSolves algorithmic engine" },
-      { name: "REST APIs", usedIn: "Operon, Mausam weather integration" },
-      { name: "Human-in-the-Loop", usedIn: "Operon governance checkpoints" }
-    ]
+      { name: "FastAPI (Python)", usedIn: "SightForge real-time CV service" },
+      { name: "Node.js & Express", usedIn: "OPERON dispatcher & approval API" },
+      { name: "PostgreSQL & PLpgSQL", usedIn: "SightForge, MAUSAM, Inkloom" },
+      { name: "C++20", usedIn: "SayamSolves (LC 0005, 0033, 0115)" },
+      { name: "HITL & Control Planes", usedIn: "OPERON, AXIOM policy & audit chains" },
+    ],
   },
   {
-    category: "AI, ML & Computer Vision",
+    category: "AI, CV & Agentic Research",
     icon: Cpu,
     items: [
-      { name: "YOLOv8", usedIn: "Edge Computer Vision pipeline" },
-      { name: "OpenCV", usedIn: "Spatial motion & frame processing" },
-      { name: "PyTorch", usedIn: "Model loading & tensor inference" },
-      { name: "Python", usedIn: "YOLO pipeline & telemetry scripts" },
-      { name: "Multi-Agent AI", usedIn: "Operon autonomous workflow engine" }
-    ]
+      { name: "YOLOv8 & 17-Keypoint Pose", usedIn: "SightForge COCO Class ID 0 + IoU 0.45" },
+      { name: "ByteTrack", usedIn: "SightForge persistent tracking" },
+      { name: "Multi-Agent Workflows", usedIn: "OPERON Support/Finance/HR/Ops" },
+      { name: "Hebbian Fast Weights & BDH", usedIn: "Memory in Motion O(1) vs O(T) lab" },
+      { name: "Constructed Brand AI", usedIn: "Inkloom composition & clear-space" },
+    ],
   },
   {
-    category: "Tools & Infrastructure",
+    category: "Testing & Infrastructure",
     icon: Wrench,
     items: [
-      { name: "Git & GitHub", usedIn: "Version control across all 5 repos" },
-      { name: "Vercel", usedIn: "Mausam, Operon, Portfolio deployment" },
-      { name: "Linux / POSIX", usedIn: "Edge CV and backend runtime" },
-      { name: "LeetCode Engine", usedIn: "SayamSolves DSA benchmarking" }
-    ]
-  }
+      { name: "Git & GitHub", usedIn: "All 8 product repos (11 public total)" },
+      { name: "Vitest", usedIn: "Campus Connect automated test suite" },
+      { name: "Docker & Makefile", usedIn: "Inkloom container, SightForge/MAUSAM" },
+      { name: "Vercel", usedIn: "OPERON, MAUSAM, AXIOM, MemMotion, Campus" },
+    ],
+  },
 ];
 
 function TechnologyLandscapeComponent() {
@@ -67,7 +67,7 @@ function TechnologyLandscapeComponent() {
           </h3>
         </div>
         <p className="text-xs font-sans text-[var(--text-muted)]">
-          Taxonomy of verified technologies used across Sayam&apos;s 5 systems. No generic skill bars.
+          Taxonomy of verified technologies across all 8 engineering repositories. No generic skill bars.
         </p>
       </div>
 

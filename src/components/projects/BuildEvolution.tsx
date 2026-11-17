@@ -1,6 +1,6 @@
 import { memo } from "react";
 import { GitBranch } from "lucide-react";
-import { ProjectItem } from "../../data/projects";
+import { ProjectItem, PROJECTS } from "../../data/projects";
 
 interface BuildEvolutionProps {
   onSelectProject?: (project: ProjectItem) => void;
@@ -18,53 +18,94 @@ interface EvolutionStage {
 
 const EVOLUTION_STAGES: EvolutionStage[] = [
   {
-    stage: "EARLY BUILDS",
+    stage: "ALGORITHMS",
     step: "01",
     title: "SayamSolves",
-    projectId: "sayamsolves",
-    domain: "Algorithms & DSA",
-    narrative: "Foundational problem decomposition, optimal C++ asymptotic memory & runtime discipline through daily LeetCode practice.",
-    tech: ["C++", "DSA", "Algorithms", "LeetCode"]
+    projectId: "sayam-solves",
+    domain: "C++ & LeetHub V2",
+    narrative:
+      "Consistent C++ DSA problem solving synced via LeetHub V2 (3 repo files covering LC 0005, 0033, and 0115; 4-problem LeetCode baseline).",
+    tech: ["C++", "DSA", "LeetHub V2", "Dynamic Programming"],
   },
   {
-    stage: "SYSTEMS & COMPETITION",
+    stage: "CAMPUS WEB",
     step: "02",
+    title: "CAMPUS CONNECT",
+    projectId: "campus-connect",
+    domain: "Next.js Event Platform",
+    narrative:
+      "Full-stack Next.js and TypeScript campus event discovery, registration, and organizer seat management verified with Vitest.",
+    tech: ["Next.js", "TypeScript", "React", "Vitest"],
+  },
+  {
+    stage: "CIVIC CLIMATE TECH",
+    step: "03",
     title: "MAUSAM",
     projectId: "mausam",
-    domain: "SIH 2026 / Weather Platform",
-    narrative: "Engineered with Team Algnite for Smart India Hackathon 2026 to consolidate complex meteorological and maritime indices.",
-    tech: ["TypeScript", "React", "Weather APIs", "Tailwind"]
+    domain: "SIH 2026 / Team ALGNITE",
+    narrative:
+      "Engineered for Smart India Hackathon 2026 unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI, INCOIS marine state, and Ask MAUSAM AI.",
+    tech: ["TypeScript", "React", "Python", "Tailwind CSS"],
   },
   {
-    stage: "FULL-STACK",
-    step: "03",
-    title: "Interactive Portfolio",
-    projectId: "portfolio",
-    domain: "Web Architecture & Telemetry",
-    narrative: "Production full-stack portfolio with editorial architecture, server-side caching proxy, and zero fabricated metrics.",
-    tech: ["React", "Express", "Vite", "Motion"]
-  },
-  {
-    stage: "AI / ML",
+    stage: "MECHANISTIC LAB",
     step: "04",
-    title: "YOLO / YOLOv8 Edge CV",
-    projectId: "yolo",
-    domain: "Computer Vision & Edge AI",
-    narrative: "Research into lightweight YOLOv8 models running on constrained edge nodes with OpenCV spatial tracking.",
-    tech: ["Python", "YOLOv8", "OpenCV", "PyTorch"]
+    title: "MEMORY IN MOTION",
+    projectId: "memory-in-motion",
+    domain: "DataForge 2026 · IIT KGP",
+    narrative:
+      "Interactive lab comparing fixed-size O(1) recurrent states, Hebbian fast weights, and BDH against O(T) KV caches.",
+    tech: ["TypeScript", "KaTeX", "D3.js", "Python"],
   },
   {
-    stage: "CURRENT DEVELOPMENT",
+    stage: "EDGE COMPUTER VISION",
     step: "05",
+    title: "SIGHTFORGE",
+    projectId: "sightforge",
+    domain: "YOLOv8 & ByteTrack",
+    narrative:
+      "Dual-service Next.js 15 + FastAPI system pairing YOLOv8 COCO-0 detection, 17-keypoint pose, IoU 0.45 NMS, ByteTrack, and atomic CVFrame rendering.",
+    tech: ["Next.js 15", "FastAPI", "YOLOv8", "ByteTrack"],
+  },
+  {
+    stage: "GENERATIVE SYSTEMS",
+    step: "06",
+    title: "INKLOOM",
+    projectId: "inkloom",
+    domain: "Public Fork (master) · Early Access",
+    narrative:
+      "Forked AI logo construction workspace decomposing brand constraints, typography/symbol geometry, and lockup clear-space rules.",
+    tech: ["TypeScript", "PLpgSQL", "Docker", "Composition Engine"],
+  },
+  {
+    stage: "CONTROL PLANES",
+    step: "07",
+    title: "AXIOM",
+    projectId: "axiom",
+    domain: "WCC Launchpad 30 (36h)",
+    narrative:
+      "Autonomous operations control plane featuring deterministic policy enforcement, approval gates, failure recovery, sandboxes, and audit chains.",
+    tech: ["TypeScript", "Policy Engine", "Sandbox", "Audit Chain"],
+  },
+  {
+    stage: "MULTI-AGENT AI",
+    step: "08",
     title: "OPERON",
     projectId: "operon",
-    domain: "Autonomous Multi-Agent AI",
-    narrative: "Enterprise multi-agent autonomous operations platform with strict human-in-the-loop governance checkpoints.",
-    tech: ["TypeScript", "Multi-Agent AI", "Node.js", "Express"]
-  }
+    domain: "Deploy or Die · Team NEXUS",
+    narrative:
+      "Lead multi-agent operations platform routing Support, Finance, HR, and Ops workflows through deterministic human-in-the-loop checkpoints.",
+    tech: ["TypeScript", "Multi-Agent AI", "Node.js", "Express"],
+  },
 ];
 
-function BuildEvolutionComponent({ onSelectProject: _onSelectProject }: BuildEvolutionProps) {
+function BuildEvolutionComponent({ onSelectProject }: BuildEvolutionProps) {
+  const handleSelect = (projectId: string) => {
+    if (!onSelectProject) return;
+    const match = PROJECTS.find((p) => p.id === projectId);
+    if (match) onSelectProject(match);
+  };
+
   return (
     <div className="card p-6 sm:p-7 space-y-6">
       <div className="space-y-1 border-b border-[var(--border)] pb-4">
@@ -75,7 +116,7 @@ function BuildEvolutionComponent({ onSelectProject: _onSelectProject }: BuildEvo
           </h3>
         </div>
         <p className="text-xs font-sans text-[var(--text-muted)]">
-          Progression of software systems from early algorithmic foundations to autonomous multi-agent pipelines.
+          Progression across all 8 verified repositories—from C++20 DSA discipline to edge CV pipelines and human-governed multi-agent systems.
         </p>
       </div>
 
@@ -96,7 +137,16 @@ function BuildEvolutionComponent({ onSelectProject: _onSelectProject }: BuildEvo
                 {stage.step}
               </div>
 
-              <div className="flex-1 p-3.5 rounded-[10px] border bg-[var(--surface)] border-[var(--border)] hover:border-[var(--border-strong)] transition-colors space-y-1.5">
+              <button
+                type="button"
+                onClick={() => handleSelect(stage.projectId)}
+                disabled={!onSelectProject}
+                className={`flex-1 text-left p-3.5 rounded-[10px] border bg-[var(--surface)] border-[var(--border)] transition-all space-y-1.5 ${
+                  onSelectProject
+                    ? "hover:border-[var(--border-strong)] active:scale-[0.99] active:border-[var(--accent)] cursor-pointer"
+                    : ""
+                }`}
+              >
                 <div className="flex items-center justify-between gap-2 flex-wrap">
                   <span className="text-[10px] font-mono uppercase tracking-widest font-semibold text-[var(--accent)]">
                     {stage.stage}
@@ -122,7 +172,7 @@ function BuildEvolutionComponent({ onSelectProject: _onSelectProject }: BuildEvo
                     </span>
                   ))}
                 </div>
-              </div>
+              </button>
             </div>
           );
         })}

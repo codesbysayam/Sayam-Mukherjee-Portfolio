@@ -111,7 +111,7 @@ export function AchievementCard({
         {/* Event / Achievement Title */}
         <h3
           onClick={handleInspect}
-          className="achievement-card__title text-lg sm:text-xl font-bold tracking-tight leading-snug cursor-pointer transition-colors m-0 text-[var(--text)] group-hover:text-[var(--accent)] font-display"
+          className="achievement-card__title text-lg sm:text-xl font-bold tracking-tight leading-snug cursor-pointer transition-colors m-0 text-[var(--text)] group-hover:text-[var(--accent)] active:opacity-75 font-display"
         >
           {displayTitle}
         </h3>

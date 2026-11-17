@@ -325,7 +325,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Watch ${video.title} on YouTube`}
-                    className="w-12 h-12 rounded-full bg-[#C7E34A] text-[#20231D] flex items-center justify-center hover:scale-105 transition-transform cursor-pointer shadow-lg"
+                    className="w-12 h-12 rounded-full bg-[#C7E34A] text-[#20231D] flex items-center justify-center hover:scale-105 active:scale-95 active:bg-[#A9C52F] transition-transform cursor-pointer shadow-lg"
                   >
                     <Play className="w-5 h-5 ml-0.5" />
                   </a>
@@ -350,7 +350,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
                     href={video.watchUrl || LINKS.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[var(--accent)] hover:underline font-bold cursor-pointer"
+                    className="text-[var(--accent)] hover:underline active:opacity-75 font-bold cursor-pointer py-1"
                   >
                     Watch Now ↗
                   </a>

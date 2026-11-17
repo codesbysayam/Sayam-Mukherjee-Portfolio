@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect, memo } from "react";
 import { AnimatePresence } from "motion/react";
-import { PROJECTS, ProjectItem } from "../data/projects";
+import { PROJECTS, ProjectItem, getProjectById } from "../data/projects";
 import { useGithub } from "../hooks/useGithub";
 import { GitHubRepo } from "../services/github";
 import { Search, X, Code2 } from "lucide-react";
@@ -11,18 +11,14 @@ import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
 import { ProjectStatsOverview } from "./projects/ProjectStatsOverview";
 import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
-type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "DSA";
+type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "SYSTEMS" | "DSA";
 
 interface ProjectsShowcaseProps {
   initialProjectId?: string | null;
   onClearInitialProject?: () => void;
 }
 
-function normalizeProjectLookupId(id: string): string {
-  const lower = id.toLowerCase().trim();
-  if (lower === "sayamsolves") return "sayam-solves";
-  return lower;
-}
+const SPOTLIGHT_ORDER = ["operon", "mausam", "sightforge", "memory-in-motion", "axiom"];
 
 function ProjectsShowcaseComponent({
   initialProjectId,
@@ -35,8 +31,7 @@ function ProjectsShowcaseComponent({
 
   useEffect(() => {
     if (!initialProjectId) return;
-    const normalized = normalizeProjectLookupId(initialProjectId);
-    const match = PROJECTS.find((p) => p.id.toLowerCase() === normalized);
+    const match = getProjectById(initialProjectId);
     if (match) {
       setSelectedCaseStudy(match);
     }
@@ -53,101 +48,102 @@ function ProjectsShowcaseComponent({
     return map;
   }, [repos]);
 
-  const [featuredProjectId, setFeaturedProjectId] = useState<string>("mausam");
-
-  useEffect(() => {
-    const mausamRepo = repoMap["mausam"];
-    const operonRepo = repoMap["operon"];
-    if (mausamRepo && operonRepo) {
-      const mausamTime = new Date(mausamRepo.pushed_at || mausamRepo.updated_at).getTime();
-      const operonTime = new Date(operonRepo.pushed_at || operonRepo.updated_at).getTime();
-      setFeaturedProjectId(operonTime > mausamTime ? "operon" : "mausam");
-    }
-  }, [repoMap]);
+  const [featuredProjectId, setFeaturedProjectId] = useState<string>("operon");
 
   const featuredProject = useMemo(() => {
     return (
       PROJECTS.find((p) => p.id === featuredProjectId) ||
-      PROJECTS.find((p) => p.id === "mausam") ||
+      PROJECTS.find((p) => p.id === "operon") ||
       PROJECTS[0]
     );
   }, [featuredProjectId]);
 
-  const alternativeFeaturedCandidate = useMemo(() => {
-    return featuredProject.id === "mausam" ? "OPERON" : "MAUSAM";
+  const nextSpotlightId = useMemo(() => {
+    const idx = SPOTLIGHT_ORDER.indexOf(featuredProject.id);
+    return SPOTLIGHT_ORDER[(idx + 1) % SPOTLIGHT_ORDER.length];
   }, [featuredProject.id]);
 
+  const nextSpotlightTitle = useMemo(() => {
+    return PROJECTS.find((p) => p.id === nextSpotlightId)?.title || "OPERON";
+  }, [nextSpotlightId]);
+
   const toggleFeaturedCandidate = () => {
-    setFeaturedProjectId((prev) => (prev === "mausam" ? "operon" : "mausam"));
+    setFeaturedProjectId(nextSpotlightId);
+  };
+
+  const matchCategory = (project: ProjectItem, cat: FilterCategory): boolean => {
+    if (cat === "ALL") return true;
+    return (
+      project.categoryFilter === cat ||
+      Boolean(project.secondaryCategories?.includes(cat))
+    );
   };
 
   const matchTech = (project: ProjectItem, tech: string): boolean => {
     if (tech === "ALL") return true;
     const techLower = tech.toLowerCase().trim();
-    if (techLower === "ai/ml" || techLower === "ai / ml" || techLower === "ai") {
+    const stackText = [
+      ...project.techStack,
+      ...(project.technologies || []),
+      ...(project.tags || []),
+      project.subtitle,
+    ]
+      .join(" ")
+      .toLowerCase();
+
+    if (techLower === "ai / ml" || techLower === "ai/ml" || techLower === "ai") {
       return (
-        project.id === "operon" ||
-        project.id === "yolo" ||
-        project.techStack.some((t) => /ai|ml|yolo|pytorch|vision|agent|ollama|gemini/i.test(t))
+        project.categoryFilter === "AI / ML" ||
+        /ai|ml|yolo|bytetrack|multi-agent|bdh|fast weights|composition/.test(stackText)
       );
     }
-    if (techLower === "c++" || techLower === "c++ / dsa" || techLower === "dsa") {
+    if (techLower === "c++ / dsa" || techLower === "c++" || techLower === "dsa") {
       return (
-        project.id === "sayam-solves" ||
-        project.techStack.some((t) => /c\+\+|dsa|algorithm|data structure|leetcode/i.test(t))
+        project.categoryFilter === "DSA" ||
+        /c\+\+|dsa|dynamic programming|binary search|leethub/.test(stackText)
       );
     }
     if (techLower === "computer vision" || techLower === "vision") {
-      return (
-        project.id === "yolo" ||
-        project.techStack.some((t) => /vision|yolo|opencv|image/i.test(t))
-      );
+      return /yolo|bytetrack|coco|vision|canvas/.test(stackText);
     }
-    if (techLower === "node.js" || techLower === "node") {
-      return project.techStack.some((t) => /node|express/i.test(t));
-    }
-    if (techLower === "tailwind css" || techLower === "tailwind") {
-      return project.techStack.some((t) => /tailwind/i.test(t));
+    if (techLower === "node / express" || techLower === "node.js") {
+      return /node\.js|express/.test(stackText);
     }
     return (
-      project.techStack.some((t) => t.toLowerCase().includes(techLower) || techLower.includes(t.toLowerCase())) ||
+      project.techStack.some(
+        (t) => t.toLowerCase().includes(techLower) || techLower.includes(t.toLowerCase())
+      ) ||
+      (project.technologies || []).some((t) => t.toLowerCase().includes(techLower)) ||
       (project.tags && project.tags.some((t) => t.toLowerCase().includes(techLower))) ||
       project.subtitle.toLowerCase().includes(techLower)
     );
   };
 
   const categoryFilters: { id: FilterCategory; label: string; count: number }[] = useMemo(() => {
-    return [
-      { id: "ALL", label: "All", count: PROJECTS.length },
-      {
-        id: "AI / ML",
-        label: "AI / ML",
-        count: PROJECTS.filter((p) => p.id === "operon" || p.id === "yolo").length,
-      },
-      {
-        id: "FULL-STACK",
-        label: "Full-Stack",
-        count: PROJECTS.filter((p) => p.id === "mausam" || p.id === "portfolio" || p.id === "operon").length,
-      },
-      {
-        id: "DSA",
-        label: "DSA",
-        count: PROJECTS.filter((p) => p.id === "sayam-solves").length,
-      },
+    const categories: { id: FilterCategory; label: string }[] = [
+      { id: "ALL", label: "All" },
+      { id: "AI / ML", label: "AI / ML" },
+      { id: "FULL-STACK", label: "Full-Stack" },
+      { id: "SYSTEMS", label: "Systems" },
+      { id: "DSA", label: "DSA" },
     ];
+    return categories.map((c) => ({
+      ...c,
+      count: PROJECTS.filter((p) => matchCategory(p, c.id)).length,
+    }));
   }, []);
 
   const techFilters = useMemo(() => {
     const techs = [
       { id: "ALL", label: "All Tech" },
-      { id: "React", label: "React" },
-      { id: "Node.js", label: "Node.js" },
-      { id: "AI / ML", label: "AI / ML" },
       { id: "TypeScript", label: "TypeScript" },
+      { id: "React", label: "React" },
+      { id: "Next.js", label: "Next.js" },
       { id: "Python", label: "Python" },
+      { id: "FastAPI", label: "FastAPI" },
+      { id: "AI / ML", label: "AI / ML" },
+      { id: "Node.js", label: "Node / Express" },
       { id: "C++ / DSA", label: "C++ / DSA" },
-      { id: "Computer Vision", label: "Computer Vision" },
-      { id: "Tailwind CSS", label: "Tailwind CSS" },
     ];
     return techs.map((t) => ({
       ...t,
@@ -159,20 +155,8 @@ function ProjectsShowcaseComponent({
     const query = searchQuery.toLowerCase().trim();
 
     return PROJECTS.filter((project) => {
-      if (selectedCategory !== "ALL") {
-        if (selectedCategory === "AI / ML") {
-          if (project.id !== "operon" && project.id !== "yolo") return false;
-        } else if (selectedCategory === "FULL-STACK") {
-          if (project.id !== "mausam" && project.id !== "portfolio" && project.id !== "operon") return false;
-        } else if (selectedCategory === "DSA") {
-          if (project.id !== "sayam-solves") return false;
-        }
-      }
-
-      if (selectedTech !== "ALL") {
-        if (!matchTech(project, selectedTech)) return false;
-      }
-
+      if (!matchCategory(project, selectedCategory)) return false;
+      if (selectedTech !== "ALL" && !matchTech(project, selectedTech)) return false;
       if (!query) return true;
 
       return (
@@ -180,8 +164,9 @@ function ProjectsShowcaseComponent({
         project.subtitle.toLowerCase().includes(query) ||
         project.shortDescription.toLowerCase().includes(query) ||
         project.longDescription.toLowerCase().includes(query) ||
-        project.whyItExists.toLowerCase().includes(query) ||
-        project.whatIBuilt.toLowerCase().includes(query) ||
+        project.problem.toLowerCase().includes(query) ||
+        project.solution.toLowerCase().includes(query) ||
+        project.implementation.toLowerCase().includes(query) ||
         project.category.toLowerCase().includes(query) ||
         project.techStack.some((t) => t.toLowerCase().includes(query)) ||
         (project.githubRepoName && project.githubRepoName.toLowerCase().includes(query))
@@ -199,7 +184,7 @@ function ProjectsShowcaseComponent({
               02 · Engineering Archive
             </span>
             <span aria-hidden="true">/</span>
-            <span>Verified Codebase</span>
+            <span>8 Verified Codebases</span>
           </div>
 
           <h1
@@ -213,7 +198,7 @@ function ProjectsShowcaseComponent({
           </h1>
 
           <p className="text-sm sm:text-base text-[var(--text-secondary)] font-sans leading-relaxed max-w-2xl">
-            Production web applications, autonomous AI agents, computer vision pipelines, and documented C++ algorithmic problem-solving archives.
+            Multi-agent platforms, weather &amp; hazard intelligence, real-time YOLOv8 computer vision, mechanistic memory labs, control planes, and synced C++ algorithms—every card backed directly by a public GitHub repository.
           </p>
         </EditorialReveal>
 
@@ -223,7 +208,7 @@ function ProjectsShowcaseComponent({
           <span aria-hidden="true">·</span>
           <span className="text-[var(--accent)] font-semibold">Live GitHub Telemetry</span>
           <span aria-hidden="true">·</span>
-          <span>2024–Present</span>
+          <span>11 Public Repositories Total</span>
           <span className="hidden sm:inline" aria-hidden="true">·</span>
           <span className="hidden sm:inline">AI / ML · Full-Stack · Systems · DSA</span>
         </div>
@@ -249,7 +234,7 @@ function ProjectsShowcaseComponent({
             repo={repoMap[featuredProject.githubRepoName?.toLowerCase() || ""] || null}
             onSelectCaseStudy={setSelectedCaseStudy}
             onToggleCandidate={toggleFeaturedCandidate}
-            candidateTitle={alternativeFeaturedCandidate}
+            candidateTitle={nextSpotlightTitle}
             onSelectTech={setSelectedTech}
             selectedTech={selectedTech}
           />
@@ -263,10 +248,10 @@ function ProjectsShowcaseComponent({
             <h2 className="text-xl sm:text-2xl font-bold font-display text-[var(--text)]">
               {selectedCategory === "ALL"
                 ? "Project Explorer"
-                : `${selectedCategory.charAt(0) + selectedCategory.slice(1).toLowerCase()} Systems`}
+                : `${selectedCategory} Systems`}
             </h2>
             <p className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
-              Showing {filteredProjects.length} of {PROJECTS.length} verified projects
+              Showing {filteredProjects.length} of {PROJECTS.length} verified engineering projects
             </p>
           </div>
 
@@ -285,7 +270,7 @@ function ProjectsShowcaseComponent({
                 type="button"
                 onClick={() => setSearchQuery("")}
                 aria-label="Clear project search"
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] active:scale-95 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
@@ -306,7 +291,7 @@ function ProjectsShowcaseComponent({
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`btn !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs shrink-0 ${
+                  className={`btn !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs shrink-0 active:scale-[0.97] ${
                     isSelected ? "btn-primary" : "btn-secondary"
                   }`}
                 >
@@ -335,10 +320,10 @@ function ProjectsShowcaseComponent({
                   key={tech.id}
                   type="button"
                   onClick={() => setSelectedTech(tech.id)}
-                  className={`inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-[6px] text-xs font-mono transition-colors cursor-pointer border ${
+                  className={`inline-flex items-center gap-1.5 py-1.5 px-2.5 rounded-[6px] text-xs font-mono transition-all cursor-pointer border active:scale-[0.96] ${
                     isSelected
                       ? "bg-[#20231D] dark:bg-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D] border-[#20231D] dark:border-[#C7E34A] font-semibold"
-                      : "bg-[var(--surface-2)] hover:bg-[var(--surface)] text-[var(--text-secondary)] hover:text-[var(--text)] border-[var(--border)]"
+                      : "bg-[var(--surface-2)] hover:bg-[var(--surface)] active:bg-[var(--surface)] active:border-[var(--border-strong)] text-[var(--text-secondary)] hover:text-[var(--text)] border-[var(--border)]"
                   }`}
                 >
                   <span>{tech.label}</span>
@@ -357,7 +342,7 @@ function ProjectsShowcaseComponent({
                   setSelectedTech("ALL");
                   setSearchQuery("");
                 }}
-                className="text-xs font-mono text-[var(--accent)] hover:underline flex items-center gap-1 ml-auto cursor-pointer py-1 px-2 font-semibold"
+                className="text-xs font-mono text-[var(--accent)] hover:underline active:opacity-75 flex items-center gap-1 ml-auto cursor-pointer py-1 px-2 font-semibold"
               >
                 <X className="w-3 h-3" aria-hidden="true" />
                 <span>Reset filters</span>
@@ -382,7 +367,7 @@ function ProjectsShowcaseComponent({
                   <button
                     type="button"
                     onClick={() => setSelectedTech("ALL")}
-                    className="hover:opacity-75 cursor-pointer"
+                    className="hover:opacity-75 active:scale-95 cursor-pointer"
                     aria-label={`Remove ${selectedTech} stack filter`}
                   >
                     ×
@@ -406,7 +391,7 @@ function ProjectsShowcaseComponent({
                 setSelectedTech("ALL");
                 setSearchQuery("");
               }}
-              className="text-[var(--text)] hover:text-[var(--accent)] underline shrink-0 font-semibold cursor-pointer"
+              className="text-[var(--text)] hover:text-[var(--accent)] active:opacity-75 underline shrink-0 font-semibold cursor-pointer"
             >
               Reset all
             </button>
@@ -434,7 +419,7 @@ function ProjectsShowcaseComponent({
                 setSelectedCategory("ALL");
                 setSelectedTech("ALL");
               }}
-              className="btn btn-secondary !py-2 !px-4 !text-xs mx-auto"
+              className="btn btn-secondary !py-2 !px-4 !text-xs mx-auto active:scale-[0.98]"
             >
               Reset Search &amp; Filters
             </button>
