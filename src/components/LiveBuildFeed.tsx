@@ -14,7 +14,7 @@ import {
 import { useGithub } from "../hooks/useGithub";
 import { formatRelativeTime, formatSyncAge } from "../services/github";
 import { Unavailable } from "./Unavailable";
-import { EditorialReveal } from "../motion/Reveal";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
 const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -113,7 +113,7 @@ function LiveBuildFeedComponent() {
     >
       {/* TOP HEADER */}
       <EditorialReveal>
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-[var(--border)]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6">
           <div className="space-y-1.5">
             <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[var(--text-muted)]">
               <span className="uppercase tracking-[0.12em] font-semibold text-[var(--accent)]">
@@ -148,6 +148,7 @@ function LiveBuildFeedComponent() {
           </button>
         </div>
       </EditorialReveal>
+      <LineReveal />
 
       {!loading && repos.length === 0 ? (
         <Unavailable
@@ -176,7 +177,7 @@ function LiveBuildFeedComponent() {
                       key={lang}
                       type="button"
                       onClick={() => handleLanguageChange(lang)}
-                      className={`px-3 py-1.5 min-h-[34px] rounded-[6px] text-xs font-mono transition-colors cursor-pointer flex items-center gap-1.5 border ${
+                      className={`px-3 py-1.5 min-h-[40px] sm:min-h-[36px] rounded-[6px] text-xs font-mono transition-colors cursor-pointer flex items-center gap-1.5 border ${
                         isSelected
                           ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D] font-bold"
                           : "bg-transparent hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] border-[var(--border)]"
@@ -195,8 +196,8 @@ function LiveBuildFeedComponent() {
               </div>
             )}
 
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="relative min-w-[200px] sm:min-w-[250px]">
+            <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
+              <div className="relative w-full sm:w-auto sm:min-w-[250px] flex-1">
                 <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--text-faint)]" />
                 <input
                   type="text"
@@ -204,16 +205,16 @@ function LiveBuildFeedComponent() {
                   onChange={(e) => handleQueryChange(e.target.value)}
                   placeholder="Filter repositories..."
                   aria-label="Search repositories"
-                  className="w-full pl-8 pr-8 py-2 rounded-[6px] text-xs font-mono bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] placeholder-[var(--text-faint)] focus:outline-none focus:border-[var(--text)]"
+                  className="w-full pl-8 pr-9 py-2 rounded-[6px] text-base sm:text-xs font-mono bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] placeholder-[var(--text-faint)] focus:outline-none focus:border-[var(--text)]"
                 />
                 {query && (
                   <button
                     type="button"
                     onClick={() => handleQueryChange("")}
                     aria-label="Clear repository filter"
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-0.5 text-[var(--text-faint)] hover:text-[var(--text)]"
+                    className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-faint)] hover:text-[var(--text)] cursor-pointer"
                   >
-                    <X className="w-3 h-3" />
+                    <X className="w-3.5 h-3.5" />
                   </button>
                 )}
               </div>
@@ -222,7 +223,7 @@ function LiveBuildFeedComponent() {
                 <button
                   type="button"
                   onClick={() => setPageSize(isViewAll ? 6 : "ALL")}
-                  className="px-3 py-2 min-h-[36px] text-xs font-mono font-semibold rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] transition-colors cursor-pointer"
+                  className="px-3 py-2 min-h-[40px] text-xs font-mono font-semibold rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] transition-colors cursor-pointer"
                 >
                   {isViewAll ? "Show 6 / page" : `View All (${totalFiltered})`}
                 </button>
@@ -231,9 +232,9 @@ function LiveBuildFeedComponent() {
           </div>
 
           {/* REPOSITORY CARDS GRID */}
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4 pt-4">
-            {loading && repos.length === 0 ? (
-              Array.from({ length: 3 }).map((_, idx) => (
+          {loading && repos.length === 0 ? (
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4 pt-4">
+              {Array.from({ length: 3 }).map((_, idx) => (
                 <div
                   key={idx}
                   className="rounded-[10px] p-5 space-y-3 min-w-0 border border-[var(--border)] bg-[var(--surface)]"
@@ -243,16 +244,21 @@ function LiveBuildFeedComponent() {
                   <div className="h-10 w-full rounded bg-[var(--border)]" />
                   <div className="h-4 w-1/2 rounded pt-2 bg-[var(--border)]" />
                 </div>
-              ))
-            ) : displayedRepos.length > 0 ? (
-              displayedRepos.map((repo, idx) => {
+              ))}
+            </div>
+          ) : displayedRepos.length > 0 ? (
+            <StaggerGroup
+              key={`${selectedLanguage}-${safeCurrentPage}-${pageSize}-${displayedRepos.length}`}
+              className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4 pt-4"
+            >
+              {displayedRepos.map((repo, idx) => {
                 const isLatest =
                   idx === 0 &&
                   selectedLanguage === "ALL" &&
                   !query &&
                   safeCurrentPage === 1;
                 return (
-                  <div
+                  <StaggerItem
                     key={repo.id || repo.name}
                     className="flex flex-col justify-between rounded-[10px] p-5 border border-[var(--border)] bg-[var(--bg)] hover:border-[var(--text)] transition-colors select-text min-w-0 w-full"
                   >
@@ -327,10 +333,12 @@ function LiveBuildFeedComponent() {
                         <span>Open ↗</span>
                       </a>
                     </div>
-                  </div>
+                  </StaggerItem>
                 );
-              })
-            ) : (
+              })}
+            </StaggerGroup>
+          ) : (
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,300px),1fr))] gap-4 pt-4">
               <div className="col-span-full py-10 text-center space-y-2">
                 <p className="text-sm font-mono text-[var(--text-muted)]">
                   No repositories matching your filter.
@@ -346,8 +354,8 @@ function LiveBuildFeedComponent() {
                   Reset filters
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* PAGINATION & FOOTER */}
           <div className="mt-6 pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[var(--text-muted)]">
@@ -364,7 +372,7 @@ function LiveBuildFeedComponent() {
                     type="button"
                     disabled={safeCurrentPage <= 1}
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="px-2.5 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] flex items-center gap-1 cursor-pointer"
+                    className="min-h-[40px] px-3 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] flex items-center gap-1 cursor-pointer"
                   >
                     <ChevronLeft className="w-3 h-3" />
                     <span>Prev</span>
@@ -376,7 +384,7 @@ function LiveBuildFeedComponent() {
                     type="button"
                     disabled={safeCurrentPage >= totalPages}
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    className="px-2.5 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] flex items-center gap-1 cursor-pointer"
+                    className="min-h-[40px] px-3 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] text-[var(--text)] flex items-center gap-1 cursor-pointer"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-3 h-3" />

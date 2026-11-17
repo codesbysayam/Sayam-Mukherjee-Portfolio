@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { usePortfolio } from "../../context/PortfolioContext";
 import { GitHubRepo, GitHubStatsData, GitHubUser, GitHubRawSnapshot } from "../../services/github";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface ProjectStatsOverviewProps {
   repos: GitHubRepo[];
@@ -254,8 +255,8 @@ function ProjectStatsOverviewComponent({
       </div>
 
       {/* METRIC KPI TILES */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 tabular-nums">
-        <div className="card p-5 flex flex-col justify-between space-y-2">
+      <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 tabular-nums">
+        <StaggerItem className="card p-4 sm:p-5 flex flex-col justify-between space-y-2 min-w-0">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider font-medium">
               Repositories
@@ -270,9 +271,9 @@ function ProjectStatsOverviewComponent({
               Open-source codebases
             </p>
           </div>
-        </div>
+        </StaggerItem>
 
-        <div className="card p-5 flex flex-col justify-between space-y-2">
+        <StaggerItem className="card p-5 flex flex-col justify-between space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider font-medium">
               Languages
@@ -287,9 +288,9 @@ function ProjectStatsOverviewComponent({
               Lead: {topLanguage.name} ({topLanguage.percent}%)
             </p>
           </div>
-        </div>
+        </StaggerItem>
 
-        <div className="card p-5 flex flex-col justify-between space-y-2">
+        <StaggerItem className="card p-5 flex flex-col justify-between space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider font-medium">
               Total Stars
@@ -304,9 +305,9 @@ function ProjectStatsOverviewComponent({
               Community GitHub Stargazers
             </p>
           </div>
-        </div>
+        </StaggerItem>
 
-        <div className="card p-5 flex flex-col justify-between space-y-2">
+        <StaggerItem className="card p-5 flex flex-col justify-between space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-mono text-[var(--text-muted)] uppercase tracking-wider font-medium">
               Code Volume
@@ -321,10 +322,11 @@ function ProjectStatsOverviewComponent({
               Multi-stack architecture
             </p>
           </div>
-        </div>
-      </div>
+        </StaggerItem>
+      </StaggerGroup>
 
       {/* CHARTS GRID */}
+      <EditorialReveal>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div className="lg:col-span-6 card p-5 sm:p-6 flex flex-col justify-between space-y-4">
           <div className="flex items-center justify-between gap-2">
@@ -345,12 +347,12 @@ function ProjectStatsOverviewComponent({
             </span>
           </div>
 
-          <div className="h-64 sm:h-72 w-full pt-2">
+          <div className="h-64 sm:h-72 w-full min-w-0 overflow-hidden pt-2">
             <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={200}>
               <BarChart
                 layout="vertical"
                 data={languageData.slice(0, 6)}
-                margin={{ top: 5, right: 35, left: 15, bottom: 5 }}
+                margin={{ top: 5, right: 20, left: 4, bottom: 5 }}
               >
                 <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke={gridColor} />
                 <XAxis
@@ -367,7 +369,7 @@ function ProjectStatsOverviewComponent({
                   stroke={axisColor}
                   fontSize={11}
                   fontFamily="monospace"
-                  width={85}
+                  width={76}
                   tickLine={false}
                 />
                 <Tooltip
@@ -434,9 +436,9 @@ function ProjectStatsOverviewComponent({
             </div>
           </div>
 
-          <div className="h-64 sm:h-72 w-full pt-2">
+          <div className="h-64 sm:h-72 w-full min-w-0 overflow-hidden pt-2">
             <ResponsiveContainer width="100%" height="100%" minWidth={100} minHeight={200}>
-              <BarChart data={repoChartData} margin={{ top: 10, right: 15, left: -15, bottom: 25 }}>
+              <BarChart data={repoChartData} margin={{ top: 10, right: 12, left: -12, bottom: 25 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} stroke={gridColor} />
                 <XAxis
                   dataKey="shortName"
@@ -504,6 +506,7 @@ function ProjectStatsOverviewComponent({
           </div>
         </div>
       </div>
+      </EditorialReveal>
     </section>
   );
 }

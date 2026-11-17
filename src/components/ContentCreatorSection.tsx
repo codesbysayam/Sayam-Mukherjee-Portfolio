@@ -1,10 +1,13 @@
 import { useState, useRef, memo } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { EXTENDED_DATA } from "../data/extendedData";
 import { LINKS } from "../config/links";
 import { youtubeChannels } from "../data/channels";
 import { YouTubeChannelCard } from "./YouTubeChannelCard";
 import { YouTubeChannelAnalyticsSection } from "./YouTubeAnalyticsCard";
 import { getCreatorSummary } from "../utils/contentCreatorStats";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 import {
   Youtube,
   Eye,
@@ -21,6 +24,7 @@ interface ContentCreatorSectionProps {
 }
 
 function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
+  const prefersReduced = usePrefersReducedMotion();
   const [decipherNotice, setDecipherNotice] = useState<string | null>(null);
   const channels = youtubeChannels;
   const creatorSummary = getCreatorSummary(channels);
@@ -53,7 +57,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
           <button
             type="button"
             onClick={onBack}
-            className="btn btn-secondary min-h-[38px] px-3.5 py-1.5 text-xs font-mono"
+            className="btn btn-secondary min-h-[44px] px-3.5 py-1.5 text-xs font-mono"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Experience</span>
@@ -62,23 +66,26 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
       )}
 
       {/* Header */}
-      <div className="space-y-2">
-        <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-widest block font-semibold">
-          MEDIA PLATFORM &amp; VIDEO SHOWCASE
-        </span>
-        <h2
-          style={{ fontSize: "clamp(1.65rem, 3.5vw, 3.2rem)" }}
-          className="font-extrabold tracking-tight text-[var(--text)] font-display"
-        >
-          YouTube Video{" "}
-          <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-            Showcase
+      <EditorialReveal immediate>
+        <div className="space-y-2">
+          <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-widest block font-semibold">
+            MEDIA PLATFORM &amp; VIDEO SHOWCASE
           </span>
-        </h2>
-        <p className="text-sm text-[var(--text-muted)] max-w-2xl leading-relaxed">
-          Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, algorithm breakdowns, and creative media formats across dedicated YouTube channels.
-        </p>
-      </div>
+          <h2
+            style={{ fontSize: "clamp(1.65rem, 3.5vw, 3.2rem)" }}
+            className="font-extrabold tracking-tight text-[var(--text)] font-display"
+          >
+            YouTube Video{" "}
+            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+              Showcase
+            </span>
+          </h2>
+          <p className="text-sm text-[var(--text-muted)] max-w-2xl leading-relaxed">
+            Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, algorithm breakdowns, and creative media formats across dedicated YouTube channels.
+          </p>
+        </div>
+      </EditorialReveal>
+      <LineReveal immediate />
 
       {/* Brand Card & Daily Decipher */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
@@ -130,31 +137,33 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
             </div>
           </div>
 
-          <div
+          <StaggerGroup
+            stagger={0.04}
             className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-6"
             style={{ borderColor: "var(--border)" }}
           >
             {creatorSummary.map((metric) => (
-              <article
-                key={metric.label}
-                className="min-w-0 rounded-[8px] border p-4 transition-colors hover:border-[var(--border-strong)]"
-                style={{
-                  backgroundColor: "var(--surface)",
-                  borderColor: "var(--border)",
-                }}
-              >
-                <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
-                  {metric.label}
-                </p>
-                <p className="mt-2 break-words text-2xl font-extrabold text-[var(--text)] font-display tabular-nums">
-                  {metric.value}
-                </p>
-                <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)] font-mono">
-                  {metric.detail}
-                </p>
-              </article>
+              <StaggerItem key={metric.label} className="h-full">
+                <article
+                  className="min-w-0 h-full rounded-[8px] border p-4 transition-colors hover:border-[var(--border-strong)]"
+                  style={{
+                    backgroundColor: "var(--surface)",
+                    borderColor: "var(--border)",
+                  }}
+                >
+                  <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                    {metric.label}
+                  </p>
+                  <p className="mt-2 break-words text-2xl font-extrabold text-[var(--text)] font-display tabular-nums">
+                    {metric.value}
+                  </p>
+                  <p className="mt-1 text-xs leading-relaxed text-[var(--text-muted)] font-mono">
+                    {metric.detail}
+                  </p>
+                </article>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerGroup>
         </div>
 
         {/* Daily Decipher Archive Card (Ink surface) */}
@@ -179,18 +188,24 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               An educational channel focused on travel metrics, geographical culture, knowledge extraction, and dynamic landscape explorations. Scaled organically to an archive of 10,000+ subscribers (2023–2026).
             </p>
 
-            {decipherNotice && (
-              <div
-                className="rounded-[6px] border p-2.5 text-xs font-mono"
-                style={{
-                  backgroundColor: "#151713",
-                  borderColor: "#41443A",
-                  color: "#C7E34A",
-                }}
-              >
-                {decipherNotice}
-              </div>
-            )}
+            <AnimatePresence>
+              {decipherNotice && (
+                <motion.div
+                  initial={prefersReduced ? false : { opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={prefersReduced ? undefined : { opacity: 0, y: -4 }}
+                  transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                  className="rounded-[6px] border p-2.5 text-xs font-mono"
+                  style={{
+                    backgroundColor: "#151713",
+                    borderColor: "#41443A",
+                    color: "#C7E34A",
+                  }}
+                >
+                  {decipherNotice}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           <button
@@ -224,15 +239,16 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        <StaggerGroup stagger={0.05} className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
           {channels.map((channel) => (
-            <YouTubeChannelCard
-              key={channel.id}
-              channel={channel}
-              featured={channel.id === "obsidianoptics"}
-            />
+            <StaggerItem key={channel.id} className="h-full">
+              <YouTubeChannelCard
+                channel={channel}
+                featured={channel.id === "obsidianoptics"}
+              />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </div>
 
       {/* Verified YouTube Studio Analytics Snapshot */}
@@ -250,7 +266,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               type="button"
               onClick={() => scrollCarousel("left")}
               aria-label="Scroll left"
-              className="btn btn-secondary min-h-[36px] min-w-[36px] p-1.5"
+              className="btn btn-secondary min-h-[44px] min-w-[44px] p-1.5"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
@@ -258,7 +274,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               type="button"
               onClick={() => scrollCarousel("right")}
               aria-label="Scroll right"
-              className="btn btn-secondary min-h-[36px] min-w-[36px] p-1.5"
+              className="btn btn-secondary min-h-[44px] min-w-[44px] p-1.5"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -272,7 +288,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
           {EXTENDED_DATA.youtubeVideos.map((video) => (
             <div
               key={video.id}
-              className="w-72 shrink-0 snap-start card overflow-hidden flex flex-col justify-between group h-full"
+              className="w-[min(288px,82vw)] shrink-0 snap-start card overflow-hidden flex flex-col justify-between group h-full"
               style={{
                 backgroundColor: "var(--surface-2)",
                 borderColor: "var(--border)",
@@ -303,13 +319,13 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
                   {video.duration}
                 </span>
 
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-[#151713]/60 transition-opacity">
+                <div className="absolute inset-0 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 bg-[#151713]/45 md:bg-[#151713]/60 transition-opacity">
                   <a
                     href={video.watchUrl || LINKS.youtube}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`Watch ${video.title} on YouTube`}
-                    className="w-11 h-11 rounded-full bg-[#C7E34A] text-[#20231D] flex items-center justify-center hover:scale-105 transition-transform cursor-pointer"
+                    className="w-12 h-12 rounded-full bg-[#C7E34A] text-[#20231D] flex items-center justify-center hover:scale-105 transition-transform cursor-pointer shadow-lg"
                   >
                     <Play className="w-5 h-5 ml-0.5" />
                   </a>
@@ -382,97 +398,109 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
-          <div
-            className="p-3.5 rounded-[8px] border"
-            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
-              Lifetime Views
-            </span>
-            <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
-              153,049
-            </span>
-            <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
-              Overview Header
-            </span>
-          </div>
+        <StaggerGroup stagger={0.035} className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-6 gap-3 pt-2">
+          <StaggerItem>
+            <div
+              className="p-3.5 rounded-[8px] border h-full"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+                Lifetime Views
+              </span>
+              <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
+                153,049
+              </span>
+              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+                Overview Header
+              </span>
+            </div>
+          </StaggerItem>
 
-          <div
-            className="p-3.5 rounded-[8px] border"
-            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
-              Subscribers
-            </span>
-            <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
-              1,305
-            </span>
-            <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
-              Realtime Panel
-            </span>
-          </div>
+          <StaggerItem>
+            <div
+              className="p-3.5 rounded-[8px] border h-full"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+                Subscribers
+              </span>
+              <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
+                1,305
+              </span>
+              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+                Realtime Panel
+              </span>
+            </div>
+          </StaggerItem>
 
-          <div
-            className="p-3.5 rounded-[8px] border"
-            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
-              Watch Time
-            </span>
-            <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
-              3.5K hrs
-            </span>
-            <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
-              13 Jan – 21 Oct
-            </span>
-          </div>
+          <StaggerItem>
+            <div
+              className="p-3.5 rounded-[8px] border h-full"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+                Watch Time
+              </span>
+              <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
+                3.5K hrs
+              </span>
+              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+                13 Jan – 21 Oct
+              </span>
+            </div>
+          </StaggerItem>
 
-          <div
-            className="p-3.5 rounded-[8px] border"
-            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
-              Subs Gained
-            </span>
-            <span className="text-base sm:text-lg font-bold text-[var(--accent)] font-display tabular-nums block mt-1">
-              +1.1K
-            </span>
-            <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
-              Selected Period
-            </span>
-          </div>
+          <StaggerItem>
+            <div
+              className="p-3.5 rounded-[8px] border h-full"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+                Subs Gained
+              </span>
+              <span className="text-base sm:text-lg font-bold text-[var(--accent)] font-display tabular-nums block mt-1">
+                +1.1K
+              </span>
+              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+                Selected Period
+              </span>
+            </div>
+          </StaggerItem>
 
-          <div
-            className="p-3.5 rounded-[8px] border"
-            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
-              Views (48h)
-            </span>
-            <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
-              1,967
-            </span>
-            <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
-              Realtime Metric
-            </span>
-          </div>
+          <StaggerItem>
+            <div
+              className="p-3.5 rounded-[8px] border h-full"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+                Views (48h)
+              </span>
+              <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
+                1,967
+              </span>
+              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+                Realtime Metric
+              </span>
+            </div>
+          </StaggerItem>
 
-          <div
-            className="p-3.5 rounded-[8px] border"
-            style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
-          >
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
-              Engaged Views
-            </span>
-            <span className="text-base sm:text-lg font-bold text-[var(--accent)] font-display tabular-nums block mt-1">
-              1,200
-            </span>
-            <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
-              Realtime Panel
-            </span>
-          </div>
-        </div>
+          <StaggerItem>
+            <div
+              className="p-3.5 rounded-[8px] border h-full"
+              style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+            >
+              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+                Engaged Views
+              </span>
+              <span className="text-base sm:text-lg font-bold text-[var(--accent)] font-display tabular-nums block mt-1">
+                1,200
+              </span>
+              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+                Realtime Panel
+              </span>
+            </div>
+          </StaggerItem>
+        </StaggerGroup>
 
         <p className="text-xs leading-relaxed text-[var(--text-faint)] font-mono pt-2">
           Note: These figures reflect a recorded YouTube Studio snapshot from 21 October 2026 and may not represent current channel analytics. Historical channel figures are preserved separately.

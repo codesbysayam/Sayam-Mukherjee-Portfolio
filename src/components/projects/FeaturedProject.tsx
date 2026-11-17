@@ -89,7 +89,7 @@ function FeaturedProjectComponent({
   };
 
   return (
-    <article className="featured-project rounded-[14px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] p-6 sm:p-8 lg:p-10">
+    <article className="featured-project rounded-[14px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] p-4 sm:p-8 lg:p-10">
       {/* Top Lead Meta Bar */}
       <div className="flex flex-wrap items-center justify-between gap-3 pb-6 mb-7 border-b border-[#41443A]">
         <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono text-[#B5B8AA]">
@@ -118,7 +118,7 @@ function FeaturedProjectComponent({
           <button
             type="button"
             onClick={onToggleCandidate}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border border-[#41443A] hover:border-[#C7E34A] text-xs font-mono text-[#F4F4ED] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 rounded-[6px] border border-[#41443A] hover:border-[#C7E34A] text-xs font-mono text-[#F4F4ED] transition-colors cursor-pointer"
           >
             <ArrowLeftRight className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
             <span>Compare: {candidateTitle}</span>
@@ -180,7 +180,7 @@ function FeaturedProjectComponent({
                     type="button"
                     onClick={() => onSelectTech && onSelectTech(isActive ? "ALL" : tech)}
                     title={onSelectTech ? `Filter projects by ${tech}` : tech}
-                    className={`text-xs px-2.5 py-1 rounded-[4px] font-mono transition-colors cursor-pointer border ${
+                    className={`min-h-[36px] sm:min-h-0 text-xs px-2.5 py-1 rounded-[4px] font-mono transition-colors cursor-pointer border ${
                       isActive
                         ? "bg-[#C7E34A] text-[#20231D] border-[#C7E34A] font-bold"
                         : "bg-[#151713] hover:border-[#C7E34A]/60 text-[#EAEAE1] border-[#41443A]"
@@ -313,7 +313,7 @@ function FeaturedProjectComponent({
               <span className="text-[#C7E34A] font-semibold">Verified Sync</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 tabular-nums">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 tabular-nums">
               <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
                 <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Primary Stack</span>
                 <div className="flex items-center gap-1.5 pt-1">

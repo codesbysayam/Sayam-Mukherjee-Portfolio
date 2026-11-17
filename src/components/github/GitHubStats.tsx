@@ -1,6 +1,7 @@
 import { memo, useMemo } from "react";
 import { FolderGit2, Star, GitFork, Activity, CheckCircle2 } from "lucide-react";
 import { GitHubStats as IGitHubStats } from "../../data/githubTypes";
+import { StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface GitHubStatsProps {
   stats: IGitHubStats;
@@ -71,37 +72,38 @@ export const GitHubStats = memo(function GitHubStats({ stats }: GitHubStatsProps
   ];
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+    <StaggerGroup stagger={0.04} className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       {cards.map((card) => {
         const Icon = card.icon;
         return (
-          <div
-            key={card.id}
-            className="card p-4 sm:p-5 flex flex-col justify-between"
-            style={{
-              backgroundColor: "var(--surface-2)",
-              borderColor: "var(--border)",
-            }}
-          >
-            <div className="flex items-center justify-between pb-3">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
-                {card.label}
-              </span>
-              <Icon className="w-4 h-4 text-[var(--accent)] shrink-0" />
-            </div>
+          <StaggerItem key={card.id} className="h-full">
+            <div
+              className="card p-4 sm:p-5 flex flex-col justify-between h-full"
+              style={{
+                backgroundColor: "var(--surface-2)",
+                borderColor: "var(--border)",
+              }}
+            >
+              <div className="flex items-center justify-between pb-3">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                  {card.label}
+                </span>
+                <Icon className="w-4 h-4 text-[var(--accent)] shrink-0" />
+              </div>
 
-            <div className="space-y-1">
-              <div className="text-2xl sm:text-3xl font-extrabold text-[var(--text)] font-display tabular-nums tracking-tight">
-                {card.value}
-              </div>
-              <div className="text-[11px] text-[var(--text-muted)] font-sans truncate">
-                {card.subtext}
+              <div className="space-y-1">
+                <div className="text-2xl sm:text-3xl font-extrabold text-[var(--text)] font-display tabular-nums tracking-tight">
+                  {card.value}
+                </div>
+                <div className="text-[11px] text-[var(--text-muted)] font-sans truncate">
+                  {card.subtext}
+                </div>
               </div>
             </div>
-          </div>
+          </StaggerItem>
         );
       })}
-    </div>
+    </StaggerGroup>
   );
 });
 

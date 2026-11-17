@@ -1,4 +1,6 @@
 import { ReactNode } from "react";
+import { motion } from "motion/react";
+import { MOTION_DISTANCE, MOTION_DURATION, MOTION_EASE, MOTION_VIEWPORT, usePrefersReducedMotion } from "../../motion/tokens";
 
 interface SectionHeaderProps {
   id?: string;
@@ -22,9 +24,26 @@ export function SectionHeader({
   level = "h2"
 }: SectionHeaderProps) {
   const HeadingTag = level;
+  const reduced = usePrefersReducedMotion();
+  const isHeroHeader = level === "h1";
+
+  const motionProps = reduced
+    ? {}
+    : isHeroHeader
+      ? {
+          initial: { opacity: 0, y: MOTION_DISTANCE.sm },
+          animate: { opacity: 1, y: 0 },
+          transition: { duration: MOTION_DURATION.reveal, ease: MOTION_EASE.out },
+        }
+      : {
+          initial: { opacity: 0, y: MOTION_DISTANCE.md },
+          whileInView: { opacity: 1, y: 0 },
+          viewport: MOTION_VIEWPORT,
+          transition: { duration: MOTION_DURATION.reveal, ease: MOTION_EASE.out },
+        };
 
   return (
-    <div id={id} className={`space-y-3 ${className}`}>
+    <motion.div id={id} {...motionProps} className={`space-y-3 ${className}`}>
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
         <div className="space-y-2.5 max-w-3xl">
           {(eyebrow || badge) && (
@@ -59,7 +78,7 @@ export function SectionHeader({
 
         {action && <div className="shrink-0 pt-1 sm:pt-0">{action}</div>}
       </div>
-    </div>
+    </motion.div>
   );
 }
 

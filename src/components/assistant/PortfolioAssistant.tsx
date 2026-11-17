@@ -206,7 +206,7 @@ export function PortfolioAssistant() {
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.18 }}
             onClick={() => setIsOpen(true)}
-            className="fixed z-40 bottom-[calc(clamp(56px,10vh,68px)+env(safe-area-inset-bottom,0px)+0.75rem)] right-[max(0.75rem,calc(env(safe-area-inset-right,0px)+0.5rem))] sm:right-5 xl:bottom-6 xl:right-6 flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-[6px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] shadow-lg hover:bg-[#151713] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A]"
+            className="fixed z-40 bottom-[calc(68px+env(safe-area-inset-bottom,0px)+0.65rem)] right-[max(0.75rem,calc(env(safe-area-inset-right,0px)+0.5rem))] sm:right-5 xl:bottom-6 xl:right-6 flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-[6px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] shadow-lg hover:bg-[#151713] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A]"
             aria-label="Open Portfolio Guide"
           >
             <Bot className="w-4 h-4 text-[#C7E34A] shrink-0" />

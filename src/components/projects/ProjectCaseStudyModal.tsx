@@ -94,7 +94,7 @@ function ProjectCaseStudyModalComponent({
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 md:p-8"
+      className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-[max(0.75rem,env(safe-area-inset-top,0.75rem))] sm:p-6 md:p-8"
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-study-modal-title"
@@ -145,7 +145,7 @@ function ProjectCaseStudyModalComponent({
           duration: reduced ? 0 : 0.38,
           ease: MOTION_EASE.emphasis,
         }}
-        className="w-full max-w-3xl rounded-[12px] overflow-hidden shadow-2xl relative z-10 max-h-[88vh] flex flex-col bg-[var(--surface-2)] border border-[var(--border-strong)]"
+        className="w-full max-w-3xl rounded-[12px] overflow-hidden shadow-2xl relative z-10 max-h-[92dvh] flex flex-col bg-[var(--surface-2)] border border-[var(--border-strong)]"
       >
         {/* Sticky Header */}
         <div className="flex items-center justify-between gap-3 px-5 sm:px-6 py-4 border-b border-[var(--border)] bg-[var(--surface-2)] sticky top-0 z-20">
@@ -196,7 +196,7 @@ function ProjectCaseStudyModalComponent({
             <button
               type="button"
               onClick={onClose}
-              className="w-9 h-9 rounded-[6px] bg-[var(--surface)] hover:bg-[var(--text)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
+              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] bg-[var(--surface)] hover:bg-[var(--text)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
               title="Close modal (Esc)"
               aria-label="Close case study modal"
             >
@@ -249,14 +249,14 @@ function ProjectCaseStudyModalComponent({
                 )}
               </motion.div>
             </AnimatePresence>
-            <div className="px-4 py-2 border-t border-[var(--border)] text-[11px] font-mono text-[var(--text-muted)] flex items-center justify-between gap-2">
-              <span>{media.caption}</span>
+            <div className="px-4 py-2 border-t border-[var(--border)] text-[11px] font-mono text-[var(--text-muted)] flex flex-wrap items-center justify-between gap-2">
+              <span className="min-w-0">{media.caption}</span>
               {canStep && (
                 <div className="flex sm:hidden items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => handleStep(-1)}
-                    className="px-2 py-0.5 rounded border border-[var(--border)] text-[var(--text)]"
+                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] text-[var(--text)] font-semibold cursor-pointer"
                     aria-label="Previous project"
                   >
                     Prev
@@ -264,7 +264,7 @@ function ProjectCaseStudyModalComponent({
                   <button
                     type="button"
                     onClick={() => handleStep(1)}
-                    className="px-2 py-0.5 rounded border border-[var(--border)] text-[var(--text)]"
+                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] text-[var(--text)] font-semibold cursor-pointer"
                     aria-label="Next project"
                   >
                     Next

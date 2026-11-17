@@ -9,14 +9,39 @@ import { FeaturedProject } from "./projects/FeaturedProject";
 import { ProjectCard } from "./projects/ProjectCard";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
 import { ProjectStatsOverview } from "./projects/ProjectStatsOverview";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
 type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "DSA";
 
-function ProjectsShowcaseComponent() {
+interface ProjectsShowcaseProps {
+  initialProjectId?: string | null;
+  onClearInitialProject?: () => void;
+}
+
+function normalizeProjectLookupId(id: string): string {
+  const lower = id.toLowerCase().trim();
+  if (lower === "sayamsolves") return "sayam-solves";
+  return lower;
+}
+
+function ProjectsShowcaseComponent({
+  initialProjectId,
+  onClearInitialProject,
+}: ProjectsShowcaseProps) {
   const [selectedCategory, setSelectedCategory] = useState<FilterCategory>("ALL");
   const [selectedTech, setSelectedTech] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [selectedCaseStudy, setSelectedCaseStudy] = useState<ProjectItem | null>(null);
+
+  useEffect(() => {
+    if (!initialProjectId) return;
+    const normalized = normalizeProjectLookupId(initialProjectId);
+    const match = PROJECTS.find((p) => p.id.toLowerCase() === normalized);
+    if (match) {
+      setSelectedCaseStudy(match);
+    }
+    onClearInitialProject?.();
+  }, [initialProjectId, onClearInitialProject]);
 
   const { repos, stats, user, snapshot, loading: githubLoading } = useGithub();
 
@@ -167,8 +192,8 @@ function ProjectsShowcaseComponent() {
   return (
     <div className="w-full space-y-10 sm:space-y-12 pb-10">
       {/* 1. EDITORIAL HEADER */}
-      <section className="space-y-4 pt-2 border-b border-[var(--border)] pb-8">
-        <div className="space-y-3 max-w-3xl">
+      <section id="projects-header" className="space-y-4 pt-2 pb-4">
+        <EditorialReveal className="space-y-3 max-w-3xl">
           <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
             <span className="text-[var(--accent)] font-semibold uppercase tracking-wider">
               02 · Engineering Archive
@@ -190,10 +215,10 @@ function ProjectsShowcaseComponent() {
           <p className="text-sm sm:text-base text-[var(--text-secondary)] font-sans leading-relaxed max-w-2xl">
             Production web applications, autonomous AI agents, computer vision pipelines, and documented C++ algorithmic problem-solving archives.
           </p>
-        </div>
+        </EditorialReveal>
 
         {/* Clean Unboxed Metadata Strip */}
-        <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)] pt-1 flex-wrap tabular-nums">
+        <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)] pt-1 flex-wrap tabular-nums pb-4">
           <span className="font-semibold text-[var(--text)]">{PROJECTS.length} Verified Systems</span>
           <span aria-hidden="true">·</span>
           <span className="text-[var(--accent)] font-semibold">Live GitHub Telemetry</span>
@@ -202,20 +227,23 @@ function ProjectsShowcaseComponent() {
           <span className="hidden sm:inline" aria-hidden="true">·</span>
           <span className="hidden sm:inline">AI / ML · Full-Stack · Systems · DSA</span>
         </div>
+        <LineReveal immediate delay={0.14} />
       </section>
 
       {/* 2. PROJECT STATS METRICS OVERVIEW */}
-      <ProjectStatsOverview
-        repos={repos}
-        stats={stats}
-        user={user}
-        snapshot={snapshot}
-        loading={githubLoading}
-      />
+      <div id="projects-overview">
+        <ProjectStatsOverview
+          repos={repos}
+          stats={stats}
+          user={user}
+          snapshot={snapshot}
+          loading={githubLoading}
+        />
+      </div>
 
       {/* 3. FEATURED PROJECT */}
       {selectedCategory === "ALL" && !searchQuery.trim() && (
-        <section className="w-full">
+        <section id="projects-featured" className="w-full">
           <FeaturedProject
             project={featuredProject}
             repo={repoMap[featuredProject.githubRepoName?.toLowerCase() || ""] || null}
@@ -229,7 +257,7 @@ function ProjectsShowcaseComponent() {
       )}
 
       {/* 4. PROJECT EXPLORER */}
-      <section className="space-y-6 pt-2">
+      <section id="projects-explorer" className="space-y-6 pt-2">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--border)] pb-5">
           <div className="space-y-1">
             <h2 className="text-xl sm:text-2xl font-bold font-display text-[var(--text)]">
@@ -250,14 +278,14 @@ function ProjectsShowcaseComponent() {
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search systems, tech, algorithms..."
               aria-label="Search engineering projects"
-              className="w-full rounded-[6px] pl-9 pr-8 py-2.5 text-xs font-mono bg-[var(--surface-2)] border border-[var(--border-strong)] text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)]"
+              className="w-full rounded-[6px] pl-9 pr-10 py-2.5 text-base sm:text-xs font-mono bg-[var(--surface-2)] border border-[var(--border-strong)] text-[var(--text)] placeholder-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)]"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
                 aria-label="Clear project search"
-                className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+                className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
@@ -278,7 +306,7 @@ function ProjectsShowcaseComponent() {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  className={`btn !min-h-[38px] !py-1.5 !px-3.5 !text-xs shrink-0 ${
+                  className={`btn !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs shrink-0 ${
                     isSelected ? "btn-primary" : "btn-secondary"
                   }`}
                 >
@@ -412,23 +440,27 @@ function ProjectsShowcaseComponent() {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <StaggerGroup
+            key={`${selectedCategory}-${selectedTech}-${filteredProjects.length}`}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
             {filteredProjects.map((project) => {
               const repo = repoMap[project.githubRepoName?.toLowerCase() || ""] || null;
               const isLead = project.id === featuredProject.id;
               return (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  repo={repo}
-                  onSelectCaseStudy={setSelectedCaseStudy}
-                  onSelectTech={(tech) => setSelectedTech(tech)}
-                  selectedTech={selectedTech}
-                  isFeaturedCandidate={isLead}
-                />
+                <StaggerItem key={project.id} className="h-full">
+                  <ProjectCard
+                    project={project}
+                    repo={repo}
+                    onSelectCaseStudy={setSelectedCaseStudy}
+                    onSelectTech={(tech) => setSelectedTech(tech)}
+                    selectedTech={selectedTech}
+                    isFeaturedCandidate={isLead}
+                  />
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         )}
       </section>
 

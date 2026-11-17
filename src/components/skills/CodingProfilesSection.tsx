@@ -1,5 +1,6 @@
 import React from "react";
 import { Github, Code2, Linkedin, Terminal, ArrowUpRight } from "lucide-react";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface ProfileItem {
   platform: string;
@@ -47,8 +48,8 @@ const PROFILES: ProfileItem[] = [
 
 export function CodingProfilesSection() {
   return (
-    <div className="space-y-6">
-      <div className="space-y-2">
+    <section id="coding-profiles" className="space-y-6">
+      <EditorialReveal className="space-y-2">
         <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
           <span className="font-semibold uppercase tracking-wider text-[var(--accent)]">
             Coding Profiles
@@ -67,19 +68,19 @@ export function CodingProfilesSection() {
         <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
           Direct access to public code repositories, algorithmic records, and academic background on official external platforms.
         </p>
-      </div>
+      </EditorialReveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {PROFILES.map((profile) => {
           const IconComp = profile.icon;
 
           return (
+            <StaggerItem key={profile.platform}>
             <a
-              key={profile.platform}
               href={profile.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="card p-5 group flex flex-col justify-between space-y-4 hover:border-[var(--accent)] transition-all"
+              className="card p-5 h-full group flex flex-col justify-between space-y-4 hover:border-[var(--accent)] transition-all"
             >
               <div className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
@@ -112,10 +113,11 @@ export function CodingProfilesSection() {
                 </span>
               </div>
             </a>
+            </StaggerItem>
           );
         })}
-      </div>
-    </div>
+      </StaggerGroup>
+    </section>
   );
 }
 

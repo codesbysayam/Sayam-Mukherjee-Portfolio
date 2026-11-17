@@ -1,21 +1,32 @@
 import { useEffect, useState } from "react";
 
 export const MOTION_DURATION = {
+  instant: 0.1,
   fast: 0.16,
+  ui: 0.22,
   normal: 0.26,
+  medium: 0.36,
   enter: 0.62,
+  reveal: 0.62,
   scene: 0.82,
+} as const;
+
+export const MOTION_DISTANCE = {
+  sm: 10,
+  md: 18,
+  lg: 28,
 } as const;
 
 export const MOTION_EASE = {
   standard: [0.2, 0.7, 0.2, 1] as [number, number, number, number],
   out: [0.22, 1, 0.36, 1] as [number, number, number, number],
+  inOut: [0.76, 0, 0.24, 1] as [number, number, number, number],
   emphasis: [0.76, 0, 0.24, 1] as [number, number, number, number],
 };
 
 export const MOTION_VIEWPORT = {
   once: true,
-  amount: 0.15 as const,
+  amount: 0.12 as const,
 };
 
 export type DeviceCapabilityTier = "high" | "standard" | "low";
@@ -66,4 +77,20 @@ export function useDeviceCapability(): DeviceCapabilityTier {
   }, [prefersReduced]);
 
   return tier;
+}
+
+export function useFinePointer(): boolean {
+  const [isFine, setIsFine] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setIsFine(mq.matches);
+
+    const onChange = (event: MediaQueryListEvent) => setIsFine(event.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return isFine;
 }

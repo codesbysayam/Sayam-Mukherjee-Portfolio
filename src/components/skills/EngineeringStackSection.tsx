@@ -1,6 +1,7 @@
 import React from "react";
 import { ENGINEERING_STACK_CATEGORIES } from "../../data/skills";
 import { Code2, Layout, Database, Brain, Wrench, Cpu, CheckCircle2 } from "lucide-react";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface EngineeringStackSectionProps {
   selectedTech?: string | null;
@@ -19,7 +20,7 @@ const CATEGORY_ICONS: Record<string, React.ReactNode> = {
 export function EngineeringStackSection({ selectedTech, onSelectTech }: EngineeringStackSectionProps) {
   return (
     <section id="engineering-stack" className="space-y-6">
-      <div className="space-y-2">
+      <EditorialReveal className="space-y-2">
         <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
           <span className="font-semibold uppercase tracking-wider text-[var(--accent)]">
             Engineering Stack
@@ -38,14 +39,14 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
         <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
           Technology ledger organized by discipline — verified tools and fundamentals applied across shipped projects and coursework.
         </p>
-      </div>
+      </EditorialReveal>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {ENGINEERING_STACK_CATEGORIES.map((group) => {
           const icon = CATEGORY_ICONS[group.id] || <Code2 className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />;
 
           return (
-            <div key={group.id} className="card p-5 flex flex-col justify-between space-y-4">
+            <StaggerItem key={group.id} className="card p-5 flex flex-col justify-between space-y-4">
               <div className="space-y-2.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
@@ -87,10 +88,10 @@ export function EngineeringStackSection({ selectedTech, onSelectTech }: Engineer
                   );
                 })}
               </div>
-            </div>
+            </StaggerItem>
           );
         })}
-      </div>
+      </StaggerGroup>
     </section>
   );
 }

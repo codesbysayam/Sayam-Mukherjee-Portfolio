@@ -163,6 +163,13 @@ export function GitHubActivityHeatmapComponent({
         setHoveredDay(day);
       });
 
+      rect.on("click", function () {
+        d3.select(this)
+          .attr("stroke", hoverStroke)
+          .attr("stroke-width", "1.5");
+        setHoveredDay(day);
+      });
+
       rect.on("mouseleave", function () {
         d3.select(this)
           .attr("stroke", day.count > 0 ? filledStroke : emptyStroke)
@@ -175,7 +182,7 @@ export function GitHubActivityHeatmapComponent({
   return (
     <div
       ref={containerRef}
-      className={`card p-6 md:p-8 space-y-6 relative overflow-hidden font-sans ${className}`}
+      className={`card p-4 sm:p-6 md:p-8 space-y-6 relative overflow-hidden font-sans ${className}`}
       style={{
         backgroundColor: "var(--surface-2)",
         borderColor: "var(--border)",
@@ -219,7 +226,7 @@ export function GitHubActivityHeatmapComponent({
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <span className="hidden sm:inline text-[10px] text-[var(--text-faint)] font-mono">
             Last synced: {statsData.lastSynced || "Recently"}
           </span>
@@ -227,7 +234,7 @@ export function GitHubActivityHeatmapComponent({
             type="button"
             onClick={handleManualRefresh}
             disabled={isRefreshing}
-            className="btn btn-secondary min-h-[36px] px-3 py-1.5 text-xs font-mono disabled:opacity-50"
+            className="btn btn-secondary min-h-[40px] px-3 py-1.5 text-xs font-mono disabled:opacity-50"
             title="Force refresh real-time GitHub telemetry"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
@@ -237,7 +244,7 @@ export function GitHubActivityHeatmapComponent({
             href={`https://github.com/${username}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary min-h-[36px] px-3.5 py-1.5 text-xs font-mono"
+            className="btn btn-primary min-h-[40px] px-3.5 py-1.5 text-xs font-mono"
           >
             <span>Verify on GitHub</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -315,7 +322,7 @@ export function GitHubActivityHeatmapComponent({
         className="border p-4 sm:p-5 rounded-[8px] space-y-3"
         style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
       >
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-[10px] font-mono uppercase text-[var(--text-muted)] tracking-wider flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 text-[var(--accent)]" />
             Contribution Activity Matrix (Past 16 Weeks)

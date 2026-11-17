@@ -58,7 +58,7 @@ export default function Toast() {
   return (
     <aside
       aria-label="Notifications"
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[80] flex flex-col items-center gap-2 pointer-events-none max-w-[92vw] sm:max-w-md w-full px-4"
+      className="fixed bottom-[calc(68px+env(safe-area-inset-bottom,0px)+0.75rem)] xl:bottom-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))] left-1/2 -translate-x-1/2 z-[80] flex flex-col items-center gap-2 pointer-events-none max-w-[92vw] sm:max-w-md w-full px-4"
     >
       <AnimatePresence>
         {toasts.map((toast) => (
@@ -70,7 +70,7 @@ export default function Toast() {
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
             role="status"
             aria-live="polite"
-            className="pointer-events-auto card flex items-center justify-between gap-3 px-4 py-3 shadow-xl w-full sm:w-auto min-w-[280px] max-w-full bg-[var(--surface-2)] border-[var(--border-strong)]"
+            className="pointer-events-auto card flex items-center justify-between gap-3 px-4 py-3 shadow-xl w-full sm:w-auto min-w-0 sm:min-w-[280px] max-w-full bg-[var(--surface-2)] border-[var(--border-strong)]"
           >
             <div className="flex items-center gap-2.5 min-w-0">
               <div className="shrink-0">
@@ -98,7 +98,7 @@ export default function Toast() {
             <button
               type="button"
               onClick={() => removeToast(toast.id)}
-              className="p-1 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer shrink-0"
+              className="p-1.5 min-w-[36px] min-h-[36px] flex items-center justify-center rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer shrink-0"
               aria-label="Close notification"
             >
               <X className="w-3.5 h-3.5" />

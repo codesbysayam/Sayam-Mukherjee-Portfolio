@@ -68,7 +68,7 @@ export default function CookieConsent() {
       id="cookie-consent-banner"
       role="region"
       aria-label="Privacy & cookies preference"
-      className="fixed bottom-3 sm:bottom-6 left-3 sm:left-6 right-3 sm:right-auto z-50 max-w-[560px] w-[calc(100%-24px)] sm:w-full font-sans select-text"
+      className="fixed bottom-[calc(68px+env(safe-area-inset-bottom,0px)+0.75rem)] xl:bottom-6 left-[max(0.75rem,env(safe-area-inset-left,0.75rem))] sm:left-6 right-[max(0.75rem,env(safe-area-inset-right,0.75rem))] sm:right-auto z-50 max-w-[560px] w-[calc(100%-1.5rem)] sm:w-full font-sans select-text"
     >
       <div className="card p-4 sm:p-5 shadow-xl bg-[var(--surface-2)] border-[var(--border-strong)]">
         {!showPreferences ? (

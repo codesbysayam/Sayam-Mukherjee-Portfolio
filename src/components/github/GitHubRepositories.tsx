@@ -2,6 +2,7 @@ import { useState, useMemo, memo } from "react";
 import { Search, ArrowUpDown, RotateCcw, FolderGit2 } from "lucide-react";
 import { GitHubRepository } from "../../data/githubTypes";
 import { GitHubRepositoryCard } from "./GitHubRepositoryCard";
+import { StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface GitHubRepositoriesProps {
   repositories: GitHubRepository[];
@@ -128,7 +129,7 @@ export const GitHubRepositories = memo(function GitHubRepositories({
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => setActiveFilter(tab.id)}
-                className="px-3 py-1.5 rounded-[6px] text-xs font-mono transition-colors shrink-0 cursor-pointer tabular-nums"
+                className="min-h-[40px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] text-xs font-mono transition-colors shrink-0 cursor-pointer tabular-nums"
                 style={{
                   backgroundColor: isSelected ? "#C7E34A" : "transparent",
                   color: isSelected ? "#20231D" : "var(--text-muted)",
@@ -143,7 +144,7 @@ export const GitHubRepositories = memo(function GitHubRepositories({
 
         {/* Search & Sort */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
-          <div className="relative min-w-[200px] sm:min-w-[240px]">
+          <div className="relative w-full sm:w-auto sm:min-w-[240px]">
             <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-faint)]" />
             <input
               type="text"
@@ -151,7 +152,7 @@ export const GitHubRepositories = memo(function GitHubRepositories({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search repositories..."
               aria-label="Search repositories"
-              className="w-full pl-9 pr-3 py-2 rounded-[6px] border text-xs focus:outline-none transition-colors"
+              className="w-full min-h-[40px] pl-9 pr-3 py-2 rounded-[6px] border text-base sm:text-xs focus:outline-none transition-colors"
               style={{
                 backgroundColor: "var(--surface-2)",
                 borderColor: "var(--border)",
@@ -166,7 +167,7 @@ export const GitHubRepositories = memo(function GitHubRepositories({
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               aria-label="Sort repositories by"
-              className="w-full sm:w-auto px-3 py-2 rounded-[6px] border text-xs font-mono focus:outline-none transition-colors cursor-pointer"
+              className="w-full sm:w-auto min-h-[40px] px-3 py-2 rounded-[6px] border text-base sm:text-xs font-mono focus:outline-none transition-colors cursor-pointer"
               style={{
                 backgroundColor: "var(--surface-2)",
                 borderColor: "var(--border)",
@@ -185,11 +186,17 @@ export const GitHubRepositories = memo(function GitHubRepositories({
 
       {/* Main Grid or Empty States */}
       {displayedRepositories.length > 0 ? (
-        <div className="github-repository-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+        <StaggerGroup
+          key={`${activeFilter}-${sortBy}-${showAll}-${displayedRepositories.length}`}
+          stagger={0.035}
+          className="github-repository-grid grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"
+        >
           {displayedRepositories.map((repo) => (
-            <GitHubRepositoryCard key={repo.id} repo={repo} />
+            <StaggerItem key={repo.id} className="h-full">
+              <GitHubRepositoryCard repo={repo} />
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       ) : repositories.length === 0 ? (
         <div
           className="card p-8 sm:p-12 text-center space-y-3"

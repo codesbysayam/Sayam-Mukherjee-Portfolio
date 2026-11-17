@@ -1,6 +1,7 @@
 import React from "react";
 import { schoolEducation, universityEducation, schoolInfo, EducationRecord } from "../data/education";
 import { GraduationCap, Building2, BookOpen, CheckCircle2 } from "lucide-react";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
 export interface AcademicRecordProps {
   className?: string;
@@ -31,6 +32,7 @@ export function AcademicRecord({ className = "", includeUniversity = true }: Aca
 
       {/* 2. University Stage (KIIT) */}
       {includeUniversity && (
+        <EditorialReveal>
         <article className="card p-6 sm:p-8 space-y-5">
           <div className="flex flex-wrap items-center justify-between gap-3 text-xs font-mono">
             <div className="flex items-center gap-2 text-[var(--accent)] font-semibold uppercase tracking-wider">
@@ -56,29 +58,30 @@ export function AcademicRecord({ className = "", includeUniversity = true }: Aca
               </p>
             </div>
 
-            <div className="lg:col-span-4 grid grid-cols-2 gap-3 pt-1">
-              <div className="p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] text-center">
+            <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div className="p-3 sm:p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] text-center min-w-0">
                 <span className="text-[10px] uppercase font-mono text-[var(--text-muted)] block">First-Year CGPA</span>
                 <span className="text-xl sm:text-2xl font-extrabold text-[var(--text)] block mt-0.5 font-display tabular-nums">
                   {universityEducation.cgpa}
                 </span>
-                <span className="text-[10px] font-mono text-[var(--text-muted)] block">
+                <span className="text-[10px] font-mono text-[var(--text-muted)] block break-words">
                   Scale of {universityEducation.cgpaScale}
                 </span>
               </div>
 
-              <div className="p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] text-center">
+              <div className="p-3 sm:p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] text-center min-w-0">
                 <span className="text-[10px] uppercase font-mono text-[var(--text-muted)] block">Graduation</span>
                 <span className="text-lg sm:text-xl font-extrabold text-[var(--text)] block mt-0.5 font-display tabular-nums">
                   {universityEducation.expectedGraduation}
                 </span>
-                <span className="text-[10px] font-mono text-[var(--text-muted)] block">
+                <span className="text-[10px] font-mono text-[var(--text-muted)] block break-words">
                   Expected Completion
                 </span>
               </div>
             </div>
           </div>
         </article>
+        </EditorialReveal>
       )}
 
       {/* 3. School Education Widget (Class 12 & Class 10) */}
@@ -101,14 +104,14 @@ export function AcademicRecord({ className = "", includeUniversity = true }: Aca
           </span>
         </div>
 
-        <div className="academic-record-list grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 items-stretch">
+        <StaggerGroup className="academic-record-list grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 items-stretch">
           {schoolEducation.map((record: EducationRecord) => {
             const isClass12 = record.id === "cbse-class-12";
 
             return (
-              <article
+              <StaggerItem
                 key={record.id}
-                className="flex flex-col justify-between p-5 sm:p-6 rounded-[10px] border border-[var(--border)] bg-[var(--surface)] space-y-5"
+                className="flex flex-col justify-between p-5 sm:p-6 rounded-[10px] border border-[var(--border)] bg-[var(--surface)] space-y-5 transition-colors hover:border-[var(--border-strong)]"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2 text-xs font-mono">
@@ -130,7 +133,7 @@ export function AcademicRecord({ className = "", includeUniversity = true }: Aca
                   </div>
 
                   {/* Score & Stream Strip */}
-                  <div className="flex items-center justify-between gap-4 p-3.5 rounded-[8px] bg-[var(--surface-2)] border border-[var(--border)]">
+                  <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4 p-3.5 rounded-[8px] bg-[var(--surface-2)] border border-[var(--border)]">
                     <div className="flex items-baseline gap-2">
                       <span className="text-xs font-mono uppercase text-[var(--text-muted)]">Overall</span>
                       <strong className="text-2xl sm:text-3xl font-extrabold text-[var(--text)] font-display tabular-nums">
@@ -170,10 +173,10 @@ export function AcademicRecord({ className = "", includeUniversity = true }: Aca
                     ))}
                   </div>
                 </div>
-              </article>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );

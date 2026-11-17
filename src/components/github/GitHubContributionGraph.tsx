@@ -1,7 +1,10 @@
 import React, { useState, useMemo, memo } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Activity } from "lucide-react";
 import { GitHubContributionWeek } from "../../data/githubTypes";
 import { usePortfolio } from "../../context/PortfolioContext";
+import { EditorialReveal } from "../../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
 interface GitHubContributionGraphProps {
   calendar: {
@@ -15,6 +18,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
 }: GitHubContributionGraphProps) {
   const { theme } = usePortfolio();
   const isDark = theme === "dark";
+  const prefersReduced = usePrefersReducedMotion();
 
   const [hoveredDay, setHoveredDay] = useState<{
     date: string;
@@ -124,17 +128,18 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
   }
 
   return (
-    <div
-      className="card p-5 sm:p-6 space-y-4"
-      style={{
-        backgroundColor: "var(--surface-2)",
-        borderColor: "var(--border)",
-      }}
-    >
+    <EditorialReveal>
+      <div
+        className="card p-4 sm:p-6 space-y-4 min-w-0 overflow-hidden"
+        style={{
+          backgroundColor: "var(--surface-2)",
+          borderColor: "var(--border)",
+        }}
+      >
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-2.5">
-          <Activity className="w-4 h-4 text-[var(--accent)]" />
+        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 min-w-0">
+          <Activity className="w-4 h-4 text-[var(--accent)] shrink-0" />
           <h4 className="text-sm font-bold text-[var(--text)] font-display">
             Contribution Calendar
           </h4>
@@ -183,49 +188,81 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
 
             {weeks.map((week, wIdx) => (
               <div key={wIdx} className="flex flex-col gap-[3px]">
-                {week.contributionDays.map((day, dIdx) => (
-                  <div
-                    key={day.date || `${wIdx}-${dIdx}`}
-                    onMouseEnter={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      setHoveredDay({
-                        date: day.date,
-                        count: day.count,
-                        x: rect.left + rect.width / 2,
-                        y: rect.top,
-                      });
-                    }}
-                    onMouseLeave={() => setHoveredDay(null)}
-                    className="w-[12px] h-[12px] rounded-[2px] border transition-transform hover:scale-125 cursor-pointer"
-                    style={getDayStyle(day.count)}
-                    title={`${day.count} contributions on ${day.date}`}
-                  />
-                ))}
+                {week.contributionDays.map((day, dIdx) => {
+                  const inspectDay = (el: HTMLDivElement) => {
+                    const rect = el.getBoundingClientRect();
+                    setHoveredDay({
+                      date: day.date,
+                      count: day.count,
+                      x: rect.left + rect.width / 2,
+                      y: rect.top,
+                    });
+                  };
+                  return (
+                    <div
+                      key={day.date || `${wIdx}-${dIdx}`}
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`${day.count} ${day.count === 1 ? "contribution" : "contributions"} on ${day.date}`}
+                      onMouseEnter={(e) => inspectDay(e.currentTarget)}
+                      onMouseLeave={() => setHoveredDay(null)}
+                      onFocus={(e) => inspectDay(e.currentTarget)}
+                      onBlur={() => setHoveredDay(null)}
+                      onClick={(e) => inspectDay(e.currentTarget)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          inspectDay(e.currentTarget);
+                        }
+                      }}
+                      className="w-[12px] h-[12px] rounded-[2px] border transition-transform hover:scale-125 focus:scale-125 focus:outline-none cursor-pointer"
+                      style={getDayStyle(day.count)}
+                      title={`${day.count} contributions on ${day.date}`}
+                    />
+                  );
+                })}
               </div>
             ))}
           </div>
         </div>
 
-        <div className="h-6 mt-2 flex items-center justify-between text-xs font-mono">
-          {hoveredDay ? (
-            <span className="text-[var(--text-secondary)]">
-              <strong className="text-[var(--accent)] font-semibold tabular-nums">
-                {hoveredDay.count}
-              </strong>{" "}
-              {hoveredDay.count === 1 ? "contribution" : "contributions"} on{" "}
-              <span className="text-[var(--text)]">{formattedTooltipDate}</span>
-            </span>
-          ) : (
-            <span className="text-[var(--text-faint)] text-[11px]">
-              Hover over squares to inspect daily contribution counts
-            </span>
-          )}
+        <div className="min-h-[24px] mt-2 flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+          <AnimatePresence mode="wait">
+            {hoveredDay ? (
+              <motion.span
+                key={hoveredDay.date}
+                initial={prefersReduced ? false : { opacity: 0, y: 3 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={prefersReduced ? undefined : { opacity: 0, y: -3 }}
+                transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                className="text-[var(--text-secondary)]"
+              >
+                <strong className="text-[var(--accent)] font-semibold tabular-nums">
+                  {hoveredDay.count}
+                </strong>{" "}
+                {hoveredDay.count === 1 ? "contribution" : "contributions"} on{" "}
+                <span className="text-[var(--text)]">{formattedTooltipDate}</span>
+              </motion.span>
+            ) : (
+              <motion.span
+                key="idle"
+                initial={prefersReduced ? false : { opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={prefersReduced ? undefined : { opacity: 0 }}
+                transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast }}
+                className="text-[var(--text-faint)] text-[11px]"
+              >
+                Hover or tap squares to inspect daily contribution counts
+              </motion.span>
+            )}
+          </AnimatePresence>
           <span className="text-[var(--text-muted)] text-[10px]">
             GraphQL sync telemetry
           </span>
         </div>
       </div>
     </div>
+    </EditorialReveal>
   );
 });
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ExternalLink, Github, ArrowUpRight, Filter, ArrowRight } from "lucide-react";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface EvidenceRow {
   id: string;
@@ -85,9 +86,9 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
     : PROJECT_EVIDENCE_DATA;
 
   return (
-    <div className="space-y-6">
+    <section id="skill-evidence" className="space-y-6">
       {/* Section Header */}
-      <div className="space-y-2">
+      <EditorialReveal className="space-y-2">
         <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
           <span className="font-semibold uppercase tracking-wider text-[var(--accent)]">
             Project Evidence
@@ -106,7 +107,7 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
         <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
           How engineering capabilities translate directly into verified production repositories and documented system designs.
         </p>
-      </div>
+      </EditorialReveal>
 
       {/* Filter Row */}
       <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs font-mono">
@@ -140,11 +141,11 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
       </div>
 
       {/* Relationship Matrix */}
-      <div className="space-y-3.5">
+      <StaggerGroup key={selectedSkillFilter || "all"} className="space-y-3.5">
         {filteredRows.map((row) => (
-          <div
+          <StaggerItem
             key={row.id}
-            className="card p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-5"
+            className="card p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-5 transition-colors hover:border-[var(--border-strong)]"
           >
             {/* Column 1: SKILL STACK */}
             <div className="lg:w-1/4 space-y-1.5 shrink-0">
@@ -237,10 +238,10 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
                 )}
               </div>
             </div>
-          </div>
+          </StaggerItem>
         ))}
-      </div>
-    </div>
+      </StaggerGroup>
+    </section>
   );
 }
 

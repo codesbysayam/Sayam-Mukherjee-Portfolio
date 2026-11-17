@@ -108,8 +108,9 @@ export default function HeroOrbitalSculpture() {
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.08;
+    const maxDpr = window.innerWidth < 768 || capability === "standard" ? 1.5 : 2;
     renderer.setPixelRatio(
-      isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, 2)
+      isSoftwareGl ? 1 : Math.min(window.devicePixelRatio || 1, maxDpr)
     );
     renderer.shadowMap.enabled = false;
 
@@ -146,7 +147,9 @@ export default function HeroOrbitalSculpture() {
     } = { geometries: [], materials: [], textures: [] };
 
     // 1. Primary undulating wave torus silhouette (PBR + onBeforeCompile vertex wave)
-    const primaryGeo = new THREE.TorusGeometry(1.18, 0.22, 28, 84);
+    const radialSegments = capability === "high" ? 28 : 18;
+    const tubularSegments = capability === "high" ? 84 : 48;
+    const primaryGeo = new THREE.TorusGeometry(1.18, 0.22, radialSegments, tubularSegments);
     const primaryMat = new THREE.MeshPhysicalMaterial({
       color: new THREE.Color("#8B956A"),
       metalness: 0.82,
@@ -318,6 +321,8 @@ export default function HeroOrbitalSculpture() {
       const width = Math.max(1, Math.round(rect.width));
       const height = Math.max(1, Math.round(rect.height));
       camera.aspect = width / height;
+      const safeAspect = Math.max(0.55, Math.min(1, camera.aspect));
+      camera.position.z = 5.4 / safeAspect;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height, false);
     };

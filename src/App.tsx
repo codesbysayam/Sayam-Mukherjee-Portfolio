@@ -21,7 +21,14 @@ import Toast from "./components/Toast";
 import { ResumeGlyph } from "./components/ResumeGlyph";
 import { NAVIGATION } from "./data/siteContent";
 import { lazyWithRetry, clearChunkReloadFlag } from "./utils/lazyWithRetry";
-import ScrollStoryThread from "./components/motion/ScrollStoryThread";
+import ScrollStoryThread, {
+  HOME_CHAPTERS,
+  type ChapterAnchor,
+} from "./components/motion/ScrollStoryThread";
+import RouteTransition from "./components/motion/RouteTransition";
+import PointerTrailCanvas from "./components/motion/PointerTrailCanvas";
+import { MotionProvider } from "./motion/MotionProvider";
+import { EditorialReveal } from "./motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "./motion/tokens";
 
 const ProjectsShowcase = lazyWithRetry(() => import("./components/ProjectsShowcase"));
@@ -52,78 +59,55 @@ export default function App() {
   return (
     <AppErrorBoundary>
       <RootErrorBoundary>
-        <PortfolioProvider>
-          <AppContent />
-        </PortfolioProvider>
+        <MotionProvider>
+          <PortfolioProvider>
+            <AppContent />
+          </PortfolioProvider>
+        </MotionProvider>
       </RootErrorBoundary>
     </AppErrorBoundary>
   );
 }
 
-function Reveal({
-  children,
-  delay = 0,
-  className = "",
-}: {
-  children: React.ReactNode;
-  delay?: number;
-  direction?: "left" | "right" | "up" | "down" | "none";
-  distance?: number;
-  stagger?: number;
-  lazy?: boolean;
-  height?: string;
-  className?: string;
-}) {
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-      el.classList.add("visible");
-      return;
-    }
-
-    const safetyTimer = setTimeout(() => {
-      if (el && !el.classList.contains("visible")) {
-        el.classList.add("visible");
-      }
-    }, delay * 1000 + 300);
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          if (delay > 0) {
-            setTimeout(() => {
-              entry.target.classList.add("visible");
-            }, delay * 1000);
-          } else {
-            entry.target.classList.add("visible");
-          }
-          observer.unobserve(entry.target);
-        }
-      },
-      {
-        threshold: 0.02,
-        rootMargin: "50px 0px 50px 0px",
-      }
-    );
-
-    observer.observe(el);
-
-    return () => {
-      clearTimeout(safetyTimer);
-      observer.disconnect();
-    };
-  }, [delay]);
-
-  return (
-    <div ref={ref} className={`reveal w-full ${className}`}>
-      {children}
-    </div>
-  );
-}
+const ROUTE_CHAPTERS: Partial<Record<string, ChapterAnchor[]>> = {
+  home: HOME_CHAPTERS,
+  about: [
+    { id: "about-hero", code: "00", label: "Identity" },
+    { id: "about-values", code: "01", label: "Principles" },
+    { id: "about-experience", code: "02", label: "Experience" },
+    { id: "about-achievements", code: "03", label: "Milestones" },
+  ],
+  skills: [
+    { id: "skills-hero", code: "00", label: "Overview" },
+    { id: "language-distribution", code: "01", label: "Telemetry" },
+    { id: "engineering-stack", code: "02", label: "Stack" },
+    { id: "ecosystem-map", code: "03", label: "Map" },
+    { id: "skill-evidence", code: "04", label: "Evidence" },
+    { id: "coding-profiles", code: "05", label: "Profiles" },
+  ],
+  ecosystem: [
+    { id: "ecosystem-hero", code: "00", label: "Architecture" },
+    { id: "ecosystem-pipeline", code: "01", label: "Pipeline" },
+    { id: "ecosystem-blueprints", code: "02", label: "Blueprints" },
+    { id: "ecosystem-matrix", code: "03", label: "Matrix" },
+    { id: "ecosystem-sih", code: "04", label: "SIH 2026" },
+  ],
+  projects: [
+    { id: "projects-header", code: "00", label: "Archive" },
+    { id: "projects-overview", code: "01", label: "Metrics" },
+    { id: "projects-featured", code: "02", label: "Featured" },
+    { id: "projects-explorer", code: "03", label: "Explorer" },
+  ],
+  certificates: [
+    { id: "certificates-hero", code: "00", label: "Credentials" },
+    { id: "academics-section", code: "01", label: "Academics" },
+    { id: "credentials-vault", code: "02", label: "Vault" },
+  ],
+  journal: [
+    { id: "journal-section", code: "00", label: "Journal" },
+    { id: "endorsements-section", code: "01", label: "Peer Notes" },
+  ],
+};
 
 function AppContent() {
   const { theme, toggleTheme, trackVisit } = usePortfolio();
@@ -139,6 +123,7 @@ function AppContent() {
   const [isResumeModalOpen, setIsResumeModalOpen] = useState(false);
   const [isCommandMenuOpen, setIsCommandMenuOpen] = useState(false);
   const [isCommandPaletteHintsVisible, setIsCommandPaletteHintsVisible] = useState(false);
+  const [focusedProjectId, setFocusedProjectId] = useState<string | null>(null);
 
   const mobileMenuButtonRef = useRef<HTMLButtonElement>(null);
   const topSentinelRef = useRef<HTMLDivElement>(null);
@@ -441,6 +426,7 @@ function AppContent() {
       <div className="min-h-screen relative font-sans bg-[var(--bg)] text-[var(--text)] transition-colors duration-200 flex flex-col">
         <ScrollProgressBar />
         <CustomCursor disabled={isLegalPage} />
+        <PointerTrailCanvas disabled={isLegalPage} />
 
         {/* Sentinel for sticky header state */}
         <div
@@ -466,12 +452,11 @@ function AppContent() {
           }`}
         >
           <div
-            className="w-full flex items-center justify-between gap-4"
+            className="header-inner w-full flex items-center justify-between gap-3 sm:gap-4 min-h-[60px] sm:min-h-[72px]"
             style={{
-              width: "min(100%, 1280px)",
+              width: "min(100%, var(--content-max, 1440px))",
               marginInline: "auto",
-              paddingInline: "clamp(1rem, 4vw, 3rem)",
-              minHeight: "74px",
+              paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
             }}
           >
             {/* Left Wordmark */}
@@ -535,19 +520,40 @@ function AppContent() {
                 <span className="hidden lg:inline">⌘K</span>
               </button>
 
-              <button
+              <motion.button
                 type="button"
+                whileTap={prefersReducedMotion ? undefined : { scale: 0.94 }}
                 onClick={toggleTheme}
-                className="min-h-[40px] min-w-[40px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer"
+                className="min-h-[40px] min-w-[40px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer overflow-hidden"
                 title={theme === "dark" ? "Switch to Paper theme" : "Switch to Ink theme"}
                 aria-label="Toggle visual theme"
               >
-                {theme === "dark" ? (
-                  <Sun className="w-4 h-4 text-[#C7E34A]" />
-                ) : (
-                  <Moon className="w-4 h-4 text-[var(--text)]" />
-                )}
-              </button>
+                <AnimatePresence mode="wait" initial={false}>
+                  {theme === "dark" ? (
+                    <motion.span
+                      key="sun"
+                      initial={prefersReducedMotion ? false : { rotate: -35, opacity: 0, scale: 0.8 }}
+                      animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                      exit={prefersReducedMotion ? undefined : { rotate: 35, opacity: 0, scale: 0.8 }}
+                      transition={{ duration: MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                      className="flex items-center justify-center"
+                    >
+                      <Sun className="w-4 h-4 text-[#C7E34A]" />
+                    </motion.span>
+                  ) : (
+                    <motion.span
+                      key="moon"
+                      initial={prefersReducedMotion ? false : { rotate: 35, opacity: 0, scale: 0.8 }}
+                      animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                      exit={prefersReducedMotion ? undefined : { rotate: -35, opacity: 0, scale: 0.8 }}
+                      transition={{ duration: MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                      className="flex items-center justify-center"
+                    >
+                      <Moon className="w-4 h-4 text-[var(--text)]" />
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </motion.button>
 
               <button
                 type="button"
@@ -594,7 +600,7 @@ function AppContent() {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: MOTION_EASE.out }}
-                className="xl:hidden border-t border-[var(--border)] bg-[var(--bg)] py-5 px-5 sm:px-6 shadow-xl max-h-[calc(100svh-4.75rem)] overflow-y-auto overscroll-contain"
+                className="xl:hidden border-t border-[var(--border)] bg-[var(--bg)] py-5 pb-[calc(44px+env(safe-area-inset-bottom,0px))] px-5 sm:px-6 shadow-xl max-h-[calc(100svh-4rem)] overflow-y-auto overscroll-contain"
               >
                 <div className="flex flex-col gap-1.5 text-base font-semibold">
                   {NAVIGATION.map((tab, idx) => {
@@ -662,181 +668,186 @@ function AppContent() {
         <main
           id="main-content"
           tabIndex={-1}
-          className="relative z-10 w-full flex-1 pt-6 sm:pt-8 pb-16 sm:pb-24 overflow-x-clip focus:outline-none"
+          className="relative z-10 w-full min-w-0 flex-1 pt-6 sm:pt-8 pb-16 sm:pb-24 overflow-x-clip focus:outline-none"
           style={
             isLegalPage
               ? { width: "100%", marginInline: "auto", paddingInline: 0 }
               : {
-                  width: "min(100%, 1280px)",
+                  width: "min(100%, var(--content-max, 1440px))",
                   marginInline: "auto",
-                  paddingInline: "clamp(1rem, 4vw, 3rem)",
+                  paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
                 }
           }
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={prefersReducedMotion ? undefined : { opacity: 0, y: -10 }}
-              transition={{ duration: prefersReducedMotion ? 0 : MOTION_DURATION.normal, ease: MOTION_EASE.out }}
-              className="w-full min-h-[60vh]"
-            >
-              {activeTab === "home" && (
-                <ErrorBoundary sectionName="Home Overview">
-                  <ScrollStoryThread />
-                  <div className="space-y-10 sm:space-y-14">
-                    <HeroSection
-                      onViewWork={() => navigateToTab("projects")}
-                      onOpenResume={() => setIsResumeModalOpen(true)}
-                      onNavigateContact={() => navigateToTab("contact")}
-                    />
+          {!isLegalPage && ROUTE_CHAPTERS[activeTab] && (
+            <ScrollStoryThread
+              chapters={ROUTE_CHAPTERS[activeTab]}
+              routeKey={activeTab}
+            />
+          )}
 
-                    <HomeEditorialChapters
-                      onNavigateTab={(tab) => navigateToTab(tab)}
-                    />
+          <RouteTransition routeKey={activeTab}>
+            {activeTab === "home" && (
+              <ErrorBoundary sectionName="Home Overview">
+                <div className="space-y-10 sm:space-y-14">
+                  <HeroSection
+                    onViewWork={() => navigateToTab("projects")}
+                    onOpenResume={() => setIsResumeModalOpen(true)}
+                    onNavigateContact={() => navigateToTab("contact")}
+                  />
 
-                    <LiveBuildFeed />
+                  <HomeEditorialChapters
+                    onNavigateTab={(tab) => navigateToTab(tab)}
+                  />
 
-                    <ErrorBoundary sectionName="Credentials Spotlight">
-                      <Suspense fallback={null}>
-                        <CredentialsHomePreview
+                  <LiveBuildFeed />
+
+                  <ErrorBoundary sectionName="Credentials Spotlight">
+                    <Suspense fallback={null}>
+                      <CredentialsHomePreview
+                        onNavigateToCertificates={() => navigateToTab("certificates")}
+                      />
+                    </Suspense>
+                  </ErrorBoundary>
+
+                  <ErrorBoundary sectionName="Expandable FAQ">
+                    <ExpandableFAQ />
+                  </ErrorBoundary>
+                </div>
+              </ErrorBoundary>
+            )}
+
+            {activeTab === "privacy" && (
+              <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
+                <PrivacyPage
+                  onNavigateHome={() => navigateToTab("home")}
+                  onNavigateTab={(tab) => navigateToTab(tab as TabType)}
+                />
+              </LegalRouteErrorBoundary>
+            )}
+
+            {activeTab === "terms" && (
+              <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
+                <TermsPage
+                  onNavigateHome={() => navigateToTab("home")}
+                  onNavigateTab={(tab) => navigateToTab(tab as TabType)}
+                />
+              </LegalRouteErrorBoundary>
+            )}
+
+            {activeTab === "404" && (
+              <NotFound onNavigateTab={(tab) => navigateToTab(tab as TabType)} />
+            )}
+
+            <ErrorBoundary sectionName="Main Tab View">
+              <Suspense fallback={<PageLoading />}>
+                {activeTab === "about" && (
+                  <ErrorBoundary sectionName="About Section">
+                    <div className="space-y-12 py-2">
+                      <EditorialReveal delay={0}>
+                        <AboutSection />
+                      </EditorialReveal>
+                      <EditorialReveal delay={0.08}>
+                        <ExperienceSection
+                          onNavigateToShowcase={() => navigateToTab("showcase")}
+                        />
+                      </EditorialReveal>
+                      <EditorialReveal delay={0.12}>
+                        <CertificationsSection
                           onNavigateToCertificates={() => navigateToTab("certificates")}
                         />
-                      </Suspense>
-                    </ErrorBoundary>
+                      </EditorialReveal>
+                    </div>
+                  </ErrorBoundary>
+                )}
 
-                    <ErrorBoundary sectionName="Expandable FAQ">
-                      <ExpandableFAQ />
+                {activeTab === "skills" && (
+                  <div className="py-2">
+                    <ErrorBoundary sectionName="Skills & Technical Stack">
+                      <SkillsSection
+                        onNavigateToProject={(projectId) => {
+                          setFocusedProjectId(projectId);
+                          navigateToTab("projects");
+                        }}
+                      />
                     </ErrorBoundary>
                   </div>
-                </ErrorBoundary>
-              )}
+                )}
 
-              {activeTab === "privacy" && (
-                <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
-                  <PrivacyPage
-                    onNavigateHome={() => navigateToTab("home")}
-                    onNavigateTab={(tab) => navigateToTab(tab as TabType)}
-                  />
-                </LegalRouteErrorBoundary>
-              )}
-
-              {activeTab === "terms" && (
-                <LegalRouteErrorBoundary onNavigateHome={() => navigateToTab("home")}>
-                  <TermsPage
-                    onNavigateHome={() => navigateToTab("home")}
-                    onNavigateTab={(tab) => navigateToTab(tab as TabType)}
-                  />
-                </LegalRouteErrorBoundary>
-              )}
-
-              {activeTab === "404" && (
-                <NotFound onNavigateTab={(tab) => navigateToTab(tab as TabType)} />
-              )}
-
-              <ErrorBoundary sectionName="Main Tab View">
-                <Suspense fallback={<PageLoading />}>
-                  {activeTab === "about" && (
-                    <ErrorBoundary sectionName="About Section">
-                      <div className="space-y-12 py-2">
-                        <Reveal delay={0}>
-                          <AboutSection />
-                        </Reveal>
-                        <Reveal delay={0.08}>
-                          <ExperienceSection
-                            onNavigateToShowcase={() => navigateToTab("showcase")}
-                          />
-                        </Reveal>
-                        <Reveal delay={0.12}>
-                          <CertificationsSection
-                            onNavigateToCertificates={() => navigateToTab("certificates")}
-                          />
-                        </Reveal>
-                      </div>
+                {activeTab === "ecosystem" && (
+                  <div className="py-2">
+                    <ErrorBoundary sectionName="Engineering Ecosystem">
+                      <EcosystemSection />
                     </ErrorBoundary>
-                  )}
+                  </div>
+                )}
 
-                  {activeTab === "skills" && (
-                    <div className="py-2">
-                      <ErrorBoundary sectionName="Skills & Technical Stack">
-                        <SkillsSection onNavigateToProject={() => navigateToTab("projects")} />
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                {activeTab === "projects" && (
+                  <div className="py-2">
+                    <ErrorBoundary sectionName="Projects Showcase">
+                      <EditorialReveal delay={0}>
+                        <ProjectsShowcase
+                          initialProjectId={focusedProjectId}
+                          onClearInitialProject={() => setFocusedProjectId(null)}
+                        />
+                      </EditorialReveal>
+                    </ErrorBoundary>
+                  </div>
+                )}
 
-                  {activeTab === "ecosystem" && (
-                    <div className="py-2">
-                      <ErrorBoundary sectionName="Engineering Ecosystem">
-                        <EcosystemSection />
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                {activeTab === "certificates" && (
+                  <div className="py-2">
+                    <ErrorBoundary sectionName="Certificates & Credentials">
+                      <CertificatesPage />
+                    </ErrorBoundary>
+                  </div>
+                )}
 
-                  {activeTab === "projects" && (
-                    <div className="py-2">
-                      <ErrorBoundary sectionName="Projects Showcase">
-                        <Reveal delay={0}>
-                          <ProjectsShowcase />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                {activeTab === "github" && (
+                  <div className="py-2">
+                    <ErrorBoundary sectionName="GitHub Repositories & Telemetry">
+                      <EditorialReveal delay={0}>
+                        <GitHubStats />
+                      </EditorialReveal>
+                    </ErrorBoundary>
+                  </div>
+                )}
 
-                  {activeTab === "certificates" && (
-                    <div className="py-2">
-                      <ErrorBoundary sectionName="Certificates & Credentials">
-                        <CertificatesPage />
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                {activeTab === "journal" && (
+                  <div className="space-y-12 py-2">
+                    <ErrorBoundary sectionName="Journal & Engineering Reflections">
+                      <EditorialReveal delay={0}>
+                        <BlogsSection />
+                      </EditorialReveal>
+                      <EditorialReveal delay={0.08}>
+                        <TestimonialsSection />
+                      </EditorialReveal>
+                    </ErrorBoundary>
+                  </div>
+                )}
 
-                  {activeTab === "github" && (
-                    <div className="py-2">
-                      <ErrorBoundary sectionName="GitHub Repositories & Telemetry">
-                        <Reveal delay={0}>
-                          <GitHubStats />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
+                {activeTab === "contact" && (
+                  <div className="w-full py-2">
+                    <ErrorBoundary sectionName="Contact Section">
+                      <EditorialReveal delay={0}>
+                        <ContactSection />
+                      </EditorialReveal>
+                    </ErrorBoundary>
+                  </div>
+                )}
 
-                  {activeTab === "journal" && (
-                    <div className="space-y-12 py-2">
-                      <ErrorBoundary sectionName="Journal & Engineering Reflections">
-                        <Reveal delay={0}>
-                          <BlogsSection />
-                        </Reveal>
-                        <Reveal delay={0.08}>
-                          <TestimonialsSection />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
-
-                  {activeTab === "contact" && (
-                    <div className="w-full py-2">
-                      <ErrorBoundary sectionName="Contact Section">
-                        <Reveal delay={0}>
-                          <ContactSection />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
-
-                  {activeTab === "showcase" && (
-                    <div className="w-full py-2">
-                      <ErrorBoundary sectionName="YouTube Video Showcase">
-                        <Reveal delay={0}>
-                          <ContentCreatorSection onBack={() => navigateToTab("about")} />
-                        </Reveal>
-                      </ErrorBoundary>
-                    </div>
-                  )}
-                </Suspense>
-              </ErrorBoundary>
-            </motion.div>
-          </AnimatePresence>
+                {activeTab === "showcase" && (
+                  <div className="w-full py-2">
+                    <ErrorBoundary sectionName="YouTube Video Showcase">
+                      <EditorialReveal delay={0}>
+                        <ContentCreatorSection onBack={() => navigateToTab("about")} />
+                      </EditorialReveal>
+                    </ErrorBoundary>
+                  </div>
+                )}
+              </Suspense>
+            </ErrorBoundary>
+          </RouteTransition>
         </main>
 
         {!isLegalPage && (

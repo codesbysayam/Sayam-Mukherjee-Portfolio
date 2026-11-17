@@ -1,6 +1,7 @@
 import { memo, useMemo } from "react";
 import { ExternalLink, Calendar, Users, UserCheck, ShieldCheck, FolderGit2 } from "lucide-react";
 import { GitHubStats } from "../../data/githubTypes";
+import { EditorialReveal } from "../../motion/Reveal";
 
 interface GitHubOverviewProps {
   stats: GitHubStats;
@@ -20,15 +21,16 @@ export const GitHubOverview = memo(function GitHubOverview({ stats }: GitHubOver
   }, [stats.accountCreatedAt]);
 
   return (
-    <div
-      className="card p-5 sm:p-6"
-      style={{
-        backgroundColor: "var(--surface-2)",
-        borderColor: "var(--border)",
-      }}
-    >
+    <EditorialReveal immediate>
+      <div
+        className="card p-5 sm:p-6"
+        style={{
+          backgroundColor: "var(--surface-2)",
+          borderColor: "var(--border)",
+        }}
+      >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
-        <div className="flex items-start sm:items-center gap-4">
+        <div className="flex items-start sm:items-center gap-4 min-w-0 w-full">
           <div className="relative shrink-0">
             <img
               src={stats.avatarUrl}
@@ -116,7 +118,8 @@ export const GitHubOverview = memo(function GitHubOverview({ stats }: GitHubOver
           </a>
         </div>
       </div>
-    </div>
+      </div>
+    </EditorialReveal>
   );
 });
 

@@ -9,6 +9,8 @@ import {
   Briefcase, Youtube, Users, GitBranch,
   ExternalLink, ArrowUpRight, ArrowRight, History
 } from "lucide-react";
+import { EditorialReveal, LineReveal } from "../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
 interface ExperienceSectionProps {
   onNavigateToShowcase?: () => void;
@@ -16,6 +18,7 @@ interface ExperienceSectionProps {
 
 function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionProps) {
   const [activeTab, setActiveTab] = useState<"Freelancing" | "Content Creation" | "Volunteer" | "Open Source">("Freelancing");
+  const reduced = usePrefersReducedMotion();
 
   const tabs = [
     { id: "Freelancing", label: "Freelancing", icon: Briefcase },
@@ -40,9 +43,10 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
   };
 
   return (
-    <div className="space-y-8 font-sans" id="professional-experience">
+    <section id="about-experience" className="space-y-8 font-sans">
+      <div id="professional-experience" className="space-y-6">
       {/* Section Header */}
-      <div className="space-y-2 border-b border-[var(--border)] pb-6">
+      <EditorialReveal className="space-y-2 pb-4">
         <span className="text-xs font-mono tracking-wider uppercase block font-semibold text-[var(--accent)]">
           Experience Ledger
         </span>
@@ -55,7 +59,8 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
         <p className="text-sm max-w-2xl leading-relaxed text-[var(--text-secondary)]">
           Learning by building, collaborating, and continuously improving — organizing hands-on work across visual editing, technical content creation, and community initiatives.
         </p>
-      </div>
+      </EditorialReveal>
+      <LineReveal />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Interactive Track Selector */}
@@ -103,11 +108,11 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
             {currentExperience && (
               <motion.div
                 key={activeTab}
-                initial={{ opacity: 0, x: 16 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -16 }}
-                transition={{ duration: 0.2 }}
-                className="card p-6 md:p-8 space-y-6 min-h-[380px] flex flex-col justify-between"
+                initial={reduced ? false : { opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduced ? undefined : { opacity: 0, y: -8 }}
+                transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+                className="card p-6 md:p-8 space-y-6 lg:min-h-[380px] flex flex-col justify-between"
               >
                 <div className="space-y-5">
                   {/* Title Bar */}
@@ -318,7 +323,7 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                     <button
                       type="button"
                       onClick={handleShowcaseClick}
-                      className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3.5 !text-xs"
+                      className="btn btn-secondary !min-h-[44px] !py-1.5 !px-3.5 !text-xs"
                       aria-label="View YouTube video showcase"
                     >
                       <span>View Video Showcase</span>
@@ -345,7 +350,8 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
           </AnimatePresence>
         </div>
       </div>
-    </div>
+      </div>
+    </section>
   );
 }
 

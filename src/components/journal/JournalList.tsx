@@ -4,6 +4,7 @@ import { journalEntries } from "../../data/journal";
 import { JournalCard } from "./JournalCard";
 import { JournalFilters } from "./JournalFilters";
 import { calculateReadingTime, STANDARD_READING_SPEED_WPM } from "../../utils/readingTime";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface JournalListProps {
   onSelectEntry: (slug: string) => void;
@@ -89,51 +90,51 @@ export const JournalList = memo(function JournalList({
   }, []);
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto px-4 sm:px-6">
+    <div className="space-y-8 max-w-5xl mx-auto">
       {/* Editorial Masthead Header */}
-      <header
-        className="space-y-3.5 pt-2 sm:pt-4 border-b pb-6"
-        style={{ borderColor: "var(--border)" }}
-      >
-        <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[var(--accent)] uppercase font-semibold">
-          <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Technical Field Notes &bull; Observations &bull; Systems Design</span>
-        </div>
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[var(--text)]">
-            Engineering{" "}
-            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-              Journal
+      <EditorialReveal immediate>
+        <header className="space-y-3.5 pt-2 sm:pt-4 pb-2">
+          <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[var(--accent)] uppercase font-semibold">
+            <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Technical Field Notes &bull; Observations &bull; Systems Design</span>
+          </div>
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[var(--text)]">
+              Engineering{" "}
+              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+                Journal
+              </span>
+            </h1>
+            <span className="text-xs font-mono text-[var(--text-muted)]">
+              Written by Sayam Mukherjee
             </span>
-          </h1>
-          <span className="text-xs font-mono text-[var(--text-muted)]">
-            Written by Sayam Mukherjee
-          </span>
-        </div>
-        <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-2xl leading-relaxed">
-          Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations written directly from practice.
-        </p>
+          </div>
+          <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-2xl leading-relaxed">
+            Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations written directly from practice.
+          </p>
 
-        {/* Reading stats */}
-        <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono text-[var(--text-muted)]">
-          <span
-            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border text-[var(--text-secondary)] tabular-nums"
-            style={{
-              backgroundColor: "var(--surface)",
-              borderColor: "var(--border)",
-            }}
-          >
-            <Clock className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
-            <span>
-              ~{totalReadingStats.totalMinutes} mins total reading time (
-              {totalReadingStats.totalWords} words)
+          {/* Reading stats */}
+          <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono text-[var(--text-muted)]">
+            <span
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border text-[var(--text-secondary)] tabular-nums"
+              style={{
+                backgroundColor: "var(--surface)",
+                borderColor: "var(--border)",
+              }}
+            >
+              <Clock className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
+              <span>
+                ~{totalReadingStats.totalMinutes} mins total reading time (
+                {totalReadingStats.totalWords} words)
+              </span>
             </span>
-          </span>
-          <span className="text-[var(--text-faint)]">
-            Estimated at standard {STANDARD_READING_SPEED_WPM} WPM
-          </span>
-        </div>
-      </header>
+            <span className="text-[var(--text-faint)]">
+              Estimated at standard {STANDARD_READING_SPEED_WPM} WPM
+            </span>
+          </div>
+        </header>
+      </EditorialReveal>
+      <LineReveal immediate />
 
       <JournalFilters
         searchQuery={searchQuery}
@@ -174,27 +175,32 @@ export const JournalList = memo(function JournalList({
       ) : (
         <div className="space-y-6">
           {featuredEntry && (
-            <div className="mb-2">
+            <EditorialReveal immediate className="mb-2">
               <JournalCard
                 entry={featuredEntry}
                 onClick={onSelectEntry}
                 featured={true}
               />
-            </div>
+            </EditorialReveal>
           )}
 
           {gridEntries.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+            <StaggerGroup
+              key={`${selectedCategory}-${sortOrder}-${gridEntries.length}`}
+              stagger={0.045}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+            >
               {gridEntries.map((entry, idx) => (
-                <JournalCard
-                  key={entry.slug}
-                  entry={entry}
-                  onClick={onSelectEntry}
-                  featured={false}
-                  index={idx}
-                />
+                <StaggerItem key={entry.slug} className="h-full">
+                  <JournalCard
+                    entry={entry}
+                    onClick={onSelectEntry}
+                    featured={false}
+                    index={idx}
+                  />
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerGroup>
           )}
         </div>
       )}

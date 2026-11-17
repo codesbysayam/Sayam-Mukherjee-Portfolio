@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { GitHubActivity as IGitHubActivity } from "../../data/githubTypes";
 import { formatRelativeTime } from "../../lib/githubCache";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 interface GitHubActivityProps {
   activity: IGitHubActivity[];
@@ -68,35 +69,36 @@ export const GitHubActivity = memo(function GitHubActivity({
   }
 
   return (
-    <div
-      className="card p-5 sm:p-6 space-y-4"
-      style={{
-        backgroundColor: "var(--surface-2)",
-        borderColor: "var(--border)",
-      }}
-    >
-      <div className="flex items-center justify-between gap-2">
-        <div className="flex items-center gap-2">
-          <ActivityIcon className="w-4 h-4 text-[var(--accent)]" />
-          <h4 className="text-sm font-bold text-[var(--text)] font-display">
-            Recent Public Activity
-          </h4>
+    <EditorialReveal>
+      <div
+        className="card p-5 sm:p-6 space-y-4"
+        style={{
+          backgroundColor: "var(--surface-2)",
+          borderColor: "var(--border)",
+        }}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2">
+            <ActivityIcon className="w-4 h-4 text-[var(--accent)]" />
+            <h4 className="text-sm font-bold text-[var(--text)] font-display">
+              Recent Public Activity
+            </h4>
+          </div>
+          <span className="text-[11px] font-mono text-[var(--text-muted)] tabular-nums">
+            {activity.length} verified public events
+          </span>
         </div>
-        <span className="text-[11px] font-mono text-[var(--text-muted)] tabular-nums">
-          {activity.length} verified public events
-        </span>
-      </div>
 
-      <div className="space-y-2.5">
-        {displayItems.map((item) => (
-          <div
-            key={item.id}
-            className="flex items-start justify-between gap-3 p-3 rounded-[8px] border transition-colors hover:border-[var(--border-strong)]"
-            style={{
-              backgroundColor: "var(--surface)",
-              borderColor: "var(--border)",
-            }}
-          >
+        <StaggerGroup stagger={0.03} className="space-y-2.5">
+          {displayItems.map((item) => (
+            <StaggerItem key={item.id}>
+              <div
+                className="flex items-start justify-between gap-3 p-3 rounded-[8px] border transition-colors hover:border-[var(--border-strong)]"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
+                }}
+              >
             <div className="flex items-start gap-3 min-w-0">
               <div
                 className="w-7 h-7 rounded-[6px] flex items-center justify-center shrink-0 border mt-0.5"
@@ -141,14 +143,16 @@ export const GitHubActivity = memo(function GitHubActivity({
               <Clock className="w-3 h-3 text-[var(--text-faint)]" />
               {formatRelativeTime(item.createdAt)}
             </span>
-          </div>
-        ))}
-      </div>
+              </div>
+            </StaggerItem>
+          ))}
+        </StaggerGroup>
 
-      <p className="text-[10px] font-mono text-[var(--text-faint)] text-center pt-1">
-        Public event telemetry sourced directly from api.github.com/users/codesbysayam/events/public
-      </p>
-    </div>
+        <p className="text-[10px] font-mono text-[var(--text-faint)] text-center pt-1">
+          Public event telemetry sourced directly from api.github.com/users/codesbysayam/events/public
+        </p>
+      </div>
+    </EditorialReveal>
   );
 });
 

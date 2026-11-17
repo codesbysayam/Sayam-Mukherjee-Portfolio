@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, FormEvent } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   Send,
   CheckCircle2,
@@ -15,12 +16,14 @@ import {
 } from "../utils/validation";
 import { trackEvent } from "../services/analytics";
 import { getStoredUtmParameters } from "../utils/utm";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
 interface ContactFormProps {
   onSuccess?: () => void;
 }
 
 export function ContactForm({ onSuccess }: ContactFormProps) {
+  const prefersReduced = usePrefersReducedMotion();
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -177,55 +180,6 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     `From: ${formData.name}\nEmail: ${formData.email}\nTopic: ${topic}\n\n${formData.message}`
   )}`;
 
-  if (submitStatus === "success") {
-    return (
-      <div
-        id="contact-form-success"
-        className="p-6 md:p-8 rounded-[10px] border text-center space-y-4"
-        style={{
-          backgroundColor: "var(--surface)",
-          borderColor: "var(--accent)",
-        }}
-      >
-        <div
-          className="w-12 h-12 rounded-[10px] border flex items-center justify-center mx-auto text-[var(--accent)]"
-          style={{
-            backgroundColor: "var(--surface-2)",
-            borderColor: "var(--border)",
-          }}
-        >
-          <CheckCircle2 className="w-6 h-6" />
-        </div>
-        <div className="space-y-1">
-          <h4 className="text-lg font-bold font-display text-[var(--text)]">
-            Message Transmitted
-          </h4>
-          <p className="text-xs md:text-sm text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">
-            Thank you,{" "}
-            <strong className="text-[var(--text)]">{formData.name}</strong>. Your
-            message has been logged securely. I typically review and reply to
-            inquiries within 24–48 hours.
-          </p>
-        </div>
-
-        <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={handleReset}
-            disabled={cooldownRemaining > 0}
-            className="btn btn-secondary text-xs font-mono disabled:opacity-50"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-            <span>
-              Send another message{" "}
-              {cooldownRemaining > 0 ? `(${cooldownRemaining}s)` : ""}
-            </span>
-          </button>
-        </div>
-      </div>
-    );
-  }
-
   const inputStyle: React.CSSProperties = {
     backgroundColor: "var(--surface)",
     borderColor: "var(--border)",
@@ -233,18 +187,75 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
   };
 
   return (
-    <form
-      id="contact-submission-form"
-      onSubmit={handleSubmit}
-      noValidate
-      className="p-5 sm:p-6 rounded-[10px] border space-y-5"
-      style={{
-        backgroundColor: "var(--surface)",
-        borderColor: "var(--border)",
-      }}
-    >
+    <AnimatePresence mode="wait" initial={false}>
+      {submitStatus === "success" ? (
+        <motion.div
+          key="success"
+          id="contact-form-success"
+          initial={prefersReduced ? false : { opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={prefersReduced ? undefined : { opacity: 0, y: -8 }}
+          transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.ui, ease: MOTION_EASE.out }}
+          className="p-6 md:p-8 rounded-[10px] border text-center space-y-4"
+          style={{
+            backgroundColor: "var(--surface)",
+            borderColor: "var(--accent)",
+          }}
+        >
+          <div
+            className="w-12 h-12 rounded-[10px] border flex items-center justify-center mx-auto text-[var(--accent)]"
+            style={{
+              backgroundColor: "var(--surface-2)",
+              borderColor: "var(--border)",
+            }}
+          >
+            <CheckCircle2 className="w-6 h-6" />
+          </div>
+          <div className="space-y-1">
+            <h4 className="text-lg font-bold font-display text-[var(--text)]">
+              Message Transmitted
+            </h4>
+            <p className="text-xs md:text-sm text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">
+              Thank you,{" "}
+              <strong className="text-[var(--text)]">{formData.name}</strong>. Your
+              message has been logged securely. I typically review and reply to
+              inquiries within 24–48 hours.
+            </p>
+          </div>
+
+          <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+            <button
+              type="button"
+              onClick={handleReset}
+              disabled={cooldownRemaining > 0}
+              className="btn btn-secondary text-xs font-mono disabled:opacity-50"
+            >
+              <RefreshCw className="w-3.5 h-3.5" />
+              <span>
+                Send another message{" "}
+                {cooldownRemaining > 0 ? `(${cooldownRemaining}s)` : ""}
+              </span>
+            </button>
+          </div>
+        </motion.div>
+      ) : (
+        <motion.form
+          key="form"
+          id="contact-submission-form"
+          initial={prefersReduced ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={prefersReduced ? undefined : { opacity: 0, y: -8 }}
+          transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.ui, ease: MOTION_EASE.out }}
+          onSubmit={handleSubmit}
+          noValidate
+          className="p-5 sm:p-6 rounded-[10px] border space-y-5"
+          style={{
+            backgroundColor: "var(--surface)",
+            borderColor: "var(--border)",
+          }}
+        >
       <div className="space-y-1">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-wrap items-center justify-between gap-2">
           <span className="text-xs font-mono tracking-wider uppercase text-[var(--accent)] font-semibold flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5" />
             Direct Message
@@ -295,7 +306,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "name-error" : undefined}
             placeholder="e.g. Elena Rostova"
-            className="w-full px-3.5 py-2.5 rounded-[6px] text-sm font-sans border focus:outline-none transition-colors"
+            className="w-full px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
             style={{
               ...inputStyle,
               borderColor:
@@ -324,6 +335,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           <input
             id="contact_email"
             type="email"
+            inputMode="email"
             required
             autoComplete="email"
             value={formData.email}
@@ -332,7 +344,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
             placeholder="elena@organization.org"
-            className="w-full px-3.5 py-2.5 rounded-[6px] text-sm font-sans border focus:outline-none transition-colors"
+            className="w-full px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
             style={{
               ...inputStyle,
               borderColor:
@@ -366,7 +378,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           id="contact_topic"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          className="w-full px-3.5 py-2.5 rounded-[6px] text-sm font-sans border focus:outline-none transition-colors"
+          className="w-full px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
           style={inputStyle}
         >
           <option value="Project Inquiry">Project Inquiry / Freelance</option>
@@ -410,7 +422,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           aria-invalid={!!errors.message}
           aria-describedby={errors.message ? "message-error" : undefined}
           placeholder="Describe your project, team, timeline, or inquiry in detail..."
-          className="w-full px-3.5 py-2.5 rounded-[6px] text-sm font-sans border focus:outline-none transition-colors resize-y min-h-[100px]"
+          className="w-full px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors resize-y min-h-[100px]"
           style={{
             ...inputStyle,
             borderColor:
@@ -432,37 +444,43 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
       </div>
 
       {/* Error banner */}
-      {submitStatus === "error" && errorMessage && (
-        <div
-          role="alert"
-          className="p-3 rounded-[8px] border text-xs flex items-start justify-between gap-2"
-          style={{
-            backgroundColor: "var(--surface-2)",
-            borderColor: "var(--danger)",
-            color: "var(--danger)",
-          }}
-        >
-          <div className="flex items-start gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
-            <div className="space-y-1">
-              <p className="font-medium">{errorMessage}</p>
-              <p className="text-[11px] text-[var(--text-muted)]">
-                Alternatively, dispatch directly via email:
-              </p>
-            </div>
-          </div>
-          <a
-            href={mailtoFallback}
-            className="btn btn-secondary min-h-[32px] px-2.5 py-1 text-[11px] font-mono shrink-0"
+      <AnimatePresence>
+        {submitStatus === "error" && errorMessage && (
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={prefersReduced ? undefined : { opacity: 0, y: -4 }}
+            transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+            role="alert"
+            className="p-3 rounded-[8px] border text-xs flex flex-wrap sm:flex-nowrap items-start justify-between gap-2"
+            style={{
+              backgroundColor: "var(--surface-2)",
+              borderColor: "var(--danger)",
+              color: "var(--danger)",
+            }}
           >
-            <Mail className="w-3 h-3" />
-            <span>Open Mail</span>
-          </a>
-        </div>
-      )}
+            <div className="flex items-start gap-2">
+              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+              <div className="space-y-1">
+                <p className="font-medium">{errorMessage}</p>
+                <p className="text-[11px] text-[var(--text-muted)]">
+                  Alternatively, dispatch directly via email:
+                </p>
+              </div>
+            </div>
+            <a
+              href={mailtoFallback}
+              className="btn btn-secondary min-h-[32px] px-2.5 py-1 text-[11px] font-mono shrink-0"
+            >
+              <Mail className="w-3 h-3" />
+              <span>Open Mail</span>
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Submit */}
-      <div className="flex items-center justify-between gap-3 pt-1">
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
         <button
           type="submit"
           id="contact-form-submit-btn"
@@ -486,6 +504,8 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           Typical response: &lt;24h
         </span>
       </div>
-    </form>
+        </motion.form>
+      )}
+    </AnimatePresence>
   );
 }

@@ -4,7 +4,7 @@ import { SectionHeader } from "../common/SectionHeader";
 
 export function SkillsHero() {
   return (
-    <header className="space-y-4 pt-2 pb-6 border-b border-[var(--border)]">
+    <header id="skills-hero" className="space-y-4 pt-2 pb-6 border-b border-[var(--border)]">
       <SectionHeader
         level="h1"
         eyebrow="03 · Technical Capabilities"

@@ -258,7 +258,7 @@ function ProjectCardComponent({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3 !text-xs"
+                  className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs"
                   title="Open GitHub Repository"
                 >
                   <Github className="w-3.5 h-3.5" aria-hidden="true" />
@@ -270,7 +270,7 @@ function ProjectCardComponent({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3 !text-xs"
+                    className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs"
                     title="Launch Live Deployment"
                   >
                     <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -281,7 +281,7 @@ function ProjectCardComponent({
                 <button
                   type="button"
                   onClick={handleShare}
-                  className="btn btn-ghost !min-h-[38px] !py-1.5 !px-2.5 !text-xs"
+                  className="btn btn-ghost !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-2.5 !text-xs"
                   title="Share Project"
                   aria-label={`Share ${project.title}`}
                 >
@@ -297,7 +297,7 @@ function ProjectCardComponent({
               <button
                 type="button"
                 onClick={() => onSelectCaseStudy(project)}
-                className="btn btn-primary !min-h-[38px] !py-1.5 !px-3.5 !text-xs group/cs"
+                className="btn btn-primary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs group/cs"
               >
                 <span>Case Study</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/cs:translate-x-1" aria-hidden="true" />

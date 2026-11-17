@@ -4,6 +4,7 @@ import {
   Award, GraduationCap, Trophy, Target, Sparkles, Zap,
   ArrowRight
 } from "lucide-react";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
 interface CertificationsSectionProps {
   onNavigateToCertificates?: () => void;
@@ -36,48 +37,52 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
   };
 
   return (
-    <div className="space-y-10 font-sans" id="certifications-achievements">
+    <section id="about-achievements" className="font-sans">
+      <div className="space-y-10" id="certifications-achievements">
       {/* Header with Callout to Dedicated Vault */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[var(--border)] pb-6">
-        <div className="space-y-2">
-          <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-wider block font-semibold">
-            Honors &amp; Milestones
-          </span>
-          <h2
-            style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
-            className="font-extrabold tracking-tight text-[var(--text)] font-display leading-[1.06]"
-          >
-            Achievements &amp; Honours
-          </h2>
-          <p className="text-sm text-[var(--text-secondary)] max-w-xl leading-relaxed">
-            Verified competitive records, hackathon finalist positions, and athletic achievements.
-          </p>
-        </div>
+      <EditorialReveal>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6">
+          <div className="space-y-2">
+            <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-wider block font-semibold">
+              Honors &amp; Milestones
+            </span>
+            <h2
+              style={{ fontSize: "clamp(1.75rem, 3.5vw, 3.25rem)" }}
+              className="font-extrabold tracking-tight text-[var(--text)] font-display leading-[1.06]"
+            >
+              Achievements &amp; Honours
+            </h2>
+            <p className="text-sm text-[var(--text-secondary)] max-w-xl leading-relaxed">
+              Verified competitive records, hackathon finalist positions, and athletic achievements.
+            </p>
+          </div>
 
-        <button
-          type="button"
-          onClick={handleNavigate}
-          className="btn btn-primary !text-xs font-mono shrink-0"
-        >
-          <Award className="w-4 h-4" aria-hidden="true" />
-          <span>View All Certificates</span>
-          <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
-        </button>
-      </div>
+          <button
+            type="button"
+            onClick={handleNavigate}
+            className="btn btn-primary !text-xs font-mono shrink-0 group"
+          >
+            <Award className="w-4 h-4" aria-hidden="true" />
+            <span>View All Certificates</span>
+            <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+          </button>
+        </div>
+        <LineReveal />
+      </EditorialReveal>
 
       {/* Achievements Timeline and Academic Overview Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
         {/* Left timeline layout */}
-        <div className="lg:col-span-8 space-y-6 relative">
+        <StaggerGroup className="lg:col-span-8 space-y-6 relative">
           <div className="absolute left-3.5 top-4 bottom-4 w-px bg-[var(--border-strong)]" />
 
           {EXTENDED_DATA.achievements.map((ach) => (
-            <div key={ach.id} className="relative pl-11 group">
+            <StaggerItem key={ach.id} className="relative pl-11 group">
               <div className="absolute left-0 top-3 w-7 h-7 rounded-full bg-[var(--surface-2)] border border-[var(--border-strong)] flex items-center justify-center group-hover:border-[var(--accent)] transition-colors z-10">
                 {getAchievementIcon(ach.iconName)}
               </div>
 
-              <div className="card p-5 sm:p-6 space-y-3">
+              <div className="card p-5 sm:p-6 space-y-3 transition-colors hover:border-[var(--border-strong)]">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
                     <span className="text-xs text-[var(--accent)] font-mono tracking-wider block font-semibold">
@@ -101,9 +106,9 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
                   <span className="text-[var(--text)] font-semibold">{ach.organization}</span>
                 </div>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
 
         {/* Right details column */}
         <div className="lg:col-span-4 space-y-5">
@@ -116,12 +121,12 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
               Pursuing B.Tech in Computer Science &amp; Engineering (AI &amp; ML) at Kalinga Institute of Industrial Technology, Bhubaneswar, with focus on algorithmic foundations and system design.
             </p>
 
-            <div className="grid grid-cols-2 gap-3 pt-1">
-              <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+              <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center min-w-0">
                 <span className="text-[10px] text-[var(--text-muted)] block uppercase font-mono">First-Year</span>
                 <span className="text-xs font-bold text-[var(--text)] block mt-1 font-display tabular-nums">9.06 CGPA</span>
               </div>
-              <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center">
+              <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center min-w-0">
                 <span className="text-[10px] text-[var(--text-muted)] block uppercase font-mono">Institution</span>
                 <span className="text-xs font-bold text-[var(--accent)] block mt-1 font-display">KIIT, Bhubaneswar</span>
               </div>
@@ -162,6 +167,7 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
           </button>
         </div>
       </div>
-    </div>
+      </div>
+    </section>
   );
 }

@@ -5,7 +5,7 @@ import { PROJECTS, ProjectItem } from "../data/projects";
 import { getProjectMedia } from "../data/projectMedia";
 import { useGithub } from "../hooks/useGithub";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
-import { EditorialReveal, MaskMediaReveal } from "../motion/Reveal";
+import { EditorialReveal, LineReveal, MaskMediaReveal } from "../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
 interface HomeEditorialChaptersProps {
@@ -135,7 +135,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
         aria-labelledby="home-featured-work-heading"
         className="w-full rounded-[12px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] px-5 py-10 sm:px-10 sm:py-14 lg:px-12"
       >
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-[#41443A] pb-7 mb-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-7">
           <EditorialReveal className="space-y-2.5 max-w-2xl">
             <span className="inline-block font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#C7E34A]">
               02 / Selected Engineering Work
@@ -163,6 +163,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
             <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
           </button>
         </div>
+        <LineReveal className="!bg-[#41443A] mb-10" />
 
         {/* LEAD FEATURED CASE STUDY: OPERON */}
         {(() => {
@@ -253,7 +254,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
         })()}
 
         {/* ALTERNATING SECONDARY FEATURED WORK GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {secondaryFeatured.map((project, index) => {
             const media = getProjectMedia(project.id);
             return (
@@ -308,7 +309,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                   <button
                     type="button"
                     onClick={() => setSelectedProject(project)}
-                    className="text-xs font-mono font-bold uppercase tracking-wider text-[#C7E34A] hover:underline inline-flex items-center gap-1 cursor-pointer min-h-[36px] group/cs"
+                    className="text-xs font-mono font-bold uppercase tracking-wider text-[#C7E34A] hover:underline inline-flex items-center gap-1 cursor-pointer min-h-[44px] group/cs"
                   >
                     <span>Case Study</span>
                     <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/cs:translate-x-1" />
@@ -369,7 +370,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
               <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
                 Deep practice across C++20 pointer mechanics, React + TypeScript system interfaces, Express backends, and YOLOv8 edge computer vision pipelines.
               </p>
-              <div className="grid grid-cols-2 gap-3 pt-2 text-xs font-mono text-[var(--text-muted)] border-t border-[var(--border)]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-[var(--text-muted)] border-t border-[var(--border)]">
                 <span className="flex items-center gap-1.5">
                   <Code2 className="w-3.5 h-3.5 text-[var(--accent)]" /> C++20 · TypeScript · Python
                 </span>
@@ -415,7 +416,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
               <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
                 Outside engineering: directing digital media on Obsidian Optics (153,049 snapshot views as of Oct 2026), publishing technical reflections, and competing as a 3× inter-school table tennis champion.
               </p>
-              <div className="grid grid-cols-2 gap-3 pt-2 text-xs font-mono text-[var(--text-muted)] border-t border-[var(--border)]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono text-[var(--text-muted)] border-t border-[var(--border)]">
                 <span className="flex items-center gap-1.5">
                   <Trophy className="w-3.5 h-3.5 text-[var(--accent)]" /> 3× Table Tennis Champion
                 </span>

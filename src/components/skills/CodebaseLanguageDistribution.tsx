@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { motion } from "motion/react";
 import { ExternalLink, Terminal, Cpu, Layers, Palette, FileCode2, ShieldCheck } from "lucide-react";
 import { fetchGitHubLanguages, LanguageStat } from "../../services/github";
+import { StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, MOTION_VIEWPORT, usePrefersReducedMotion } from "../../motion/tokens";
 
 const LANGUAGE_SWATCH: Record<string, string> = {
   TypeScript: "#69734A",
@@ -67,6 +70,7 @@ const LANGUAGE_ROLES: LanguageRole[] = [
 ];
 
 export function CodebaseLanguageDistribution() {
+  const reduced = usePrefersReducedMotion();
   const [languageStats, setLanguageStats] = useState<LanguageStat[]>([
     { language: "TypeScript", bytes: 6955191, percentage: 94.1, color: "#69734A" },
     { language: "Python", bytes: 181108, percentage: 2.4, color: "#3E4A35" },
@@ -130,12 +134,19 @@ export function CodebaseLanguageDistribution() {
       {/* Main Card */}
       <div className="card p-5 sm:p-6 space-y-6">
         <div className="space-y-3">
-          <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)] tabular-nums">
+          <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[var(--text-muted)] tabular-nums">
             <span className="font-semibold text-[var(--text)]">Multi-Repository Composition</span>
             <span>{(totalBytes / 1024).toLocaleString(undefined, { maximumFractionDigits: 1 })} KB Verified Source</span>
           </div>
 
-          <div className="h-3.5 w-full rounded-[4px] bg-[var(--surface)] overflow-hidden flex border border-[var(--border-strong)]">
+          <motion.div
+            initial={reduced ? false : { scaleX: 0 }}
+            whileInView={{ scaleX: 1 }}
+            viewport={MOTION_VIEWPORT}
+            transition={{ duration: MOTION_DURATION.scene, ease: MOTION_EASE.out }}
+            style={{ originX: 0 }}
+            className="h-3.5 w-full rounded-[4px] bg-[var(--surface)] overflow-hidden flex border border-[var(--border-strong)]"
+          >
             {languageStats.map((item) => {
               const fill = LANGUAGE_SWATCH[item.language] || "#69734A";
               return (
@@ -147,7 +158,7 @@ export function CodebaseLanguageDistribution() {
                 />
               );
             })}
-          </div>
+          </motion.div>
 
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1 text-xs font-mono tabular-nums">
             {languageStats.map((item) => {
@@ -172,13 +183,13 @@ export function CodebaseLanguageDistribution() {
             <span className="hidden sm:inline">Verified Repositories</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+          <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
             {LANGUAGE_ROLES.map((roleItem) => {
               const Icon = roleItem.icon;
               const detected = languageStats.find((l) => l.language.toLowerCase() === roleItem.language.toLowerCase());
 
               return (
-                <div
+                <StaggerItem
                   key={roleItem.language}
                   className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] transition-colors flex flex-col justify-between space-y-2.5"
                 >
@@ -195,8 +206,8 @@ export function CodebaseLanguageDistribution() {
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] tabular-nums">
-                    <span className="truncate max-w-[170px]" title={roleItem.sourcePath}>
+                  <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)] tabular-nums">
+                    <span className="truncate min-w-0" title={roleItem.sourcePath}>
                       {roleItem.sourcePath}
                     </span>
                     {detected ? (
@@ -205,10 +216,10 @@ export function CodebaseLanguageDistribution() {
                       <span className="shrink-0">Core algorithm</span>
                     )}
                   </div>
-                </div>
+                </StaggerItem>
               );
             })}
-          </div>
+          </StaggerGroup>
         </div>
 
         {/* Principle Banner */}

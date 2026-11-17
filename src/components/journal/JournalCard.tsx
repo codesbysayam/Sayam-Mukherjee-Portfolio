@@ -1,7 +1,9 @@
 import React, { memo, useMemo } from "react";
+import { motion } from "motion/react";
 import { ArrowUpRight, Clock, Calendar } from "lucide-react";
 import { JournalEntry } from "../../data/journal";
 import { calculateReadingTime } from "../../utils/readingTime";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
 interface JournalCardProps {
   entry: JournalEntry;
@@ -16,15 +18,18 @@ export const JournalCard = memo(function JournalCard({
   featured = false,
   index,
 }: JournalCardProps) {
+  const prefersReduced = usePrefersReducedMotion();
   const indexFormatted =
     typeof index === "number" ? String(index + 1).padStart(2, "0") : null;
   const readingStats = useMemo(() => calculateReadingTime(entry), [entry]);
 
   if (featured) {
     return (
-      <article
+      <motion.article
+        whileHover={prefersReduced ? undefined : { y: -3 }}
+        transition={{ duration: MOTION_DURATION.fast, ease: MOTION_EASE.out }}
         onClick={() => onClick(entry.slug)}
-        className="group relative rounded-[10px] border p-6 sm:p-8 transition-all duration-200 cursor-pointer overflow-hidden hover:-translate-y-0.5"
+        className="group relative rounded-[10px] border p-6 sm:p-8 transition-colors duration-200 cursor-pointer overflow-hidden"
         style={{
           backgroundColor: "#20231D",
           borderColor: "#41443A",
@@ -85,14 +90,16 @@ export const JournalCard = memo(function JournalCard({
             </div>
           </div>
         </div>
-      </article>
+      </motion.article>
     );
   }
 
   return (
-    <article
+    <motion.article
+      whileHover={prefersReduced ? undefined : { y: -3 }}
+      transition={{ duration: MOTION_DURATION.fast, ease: MOTION_EASE.out }}
       onClick={() => onClick(entry.slug)}
-      className="card group relative flex flex-col justify-between p-5 sm:p-6 cursor-pointer overflow-hidden hover:-translate-y-0.5"
+      className="card group relative flex flex-col justify-between p-5 sm:p-6 cursor-pointer overflow-hidden h-full"
       style={{
         backgroundColor: "var(--surface-2)",
         borderColor: "var(--border)",
@@ -148,6 +155,6 @@ export const JournalCard = memo(function JournalCard({
           {readingStats.words} words
         </span>
       </div>
-    </article>
+    </motion.article>
   );
 });

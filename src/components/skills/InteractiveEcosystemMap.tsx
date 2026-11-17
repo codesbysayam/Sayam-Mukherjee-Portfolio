@@ -1,9 +1,12 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   ExternalLink, ArrowRight, Layers,
   FolderGit2, Code2, Cpu, CheckCircle2, RotateCcw
 } from "lucide-react";
 import { PROJECTS } from "../../data/projects";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, MOTION_VIEWPORT, usePrefersReducedMotion } from "../../motion/tokens";
 
 const VERIFIED_PROJECTS_LIST = PROJECTS;
 
@@ -90,10 +93,26 @@ const SELECTABLE_TECHS = [
   "API Integration"
 ];
 
-export function InteractiveEcosystemMap() {
+interface InteractiveEcosystemMapProps {
+  selectedTechExternal?: string | null;
+  onClearExternalTech?: () => void;
+}
+
+export function InteractiveEcosystemMap({
+  selectedTechExternal,
+  onClearExternalTech,
+}: InteractiveEcosystemMapProps = {}) {
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
   const [selectedProject, setSelectedProject] = useState<string | null>(null);
   const [mobileTab, setMobileTab] = useState<"tech" | "project">("tech");
+  const reduced = usePrefersReducedMotion();
+
+  useEffect(() => {
+    if (selectedTechExternal) {
+      setSelectedTech(selectedTechExternal);
+      setSelectedProject(null);
+    }
+  }, [selectedTechExternal]);
 
   const activeChains = useMemo(() => {
     if (selectedTech) {
@@ -128,6 +147,7 @@ export function InteractiveEcosystemMap() {
   const handleReset = () => {
     setSelectedTech(null);
     setSelectedProject(null);
+    onClearExternalTech?.();
   };
 
   const isFiltered = Boolean(selectedTech || selectedProject);
@@ -153,7 +173,7 @@ export function InteractiveEcosystemMap() {
               <button
                 type="button"
                 onClick={handleReset}
-                className="btn btn-secondary !min-h-[28px] !px-2.5 !py-0.5 text-[11px] font-mono"
+                className="btn btn-secondary !min-h-[40px] sm:!min-h-[34px] !px-2.5 !py-0.5 text-[11px] font-mono"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Reset View</span>
@@ -170,24 +190,57 @@ export function InteractiveEcosystemMap() {
       </div>
 
       {/* Desktop 4-Column Flow */}
+      <EditorialReveal>
       <div className="hidden lg:block card p-5 sm:p-6 space-y-5">
-        <div className="grid grid-cols-4 gap-4 pb-3 border-b border-[var(--border)] text-[11px] font-mono font-medium text-[var(--text-faint)] uppercase tracking-wider">
-          <div className="flex items-center gap-1.5">
-            <Code2 className="w-3.5 h-3.5 text-[var(--accent)]" />
-            <span className="text-[var(--text-secondary)] font-semibold">01 · Technology</span>
+        <div className="relative space-y-2 pb-3 border-b border-[var(--border)]">
+          <div className="grid grid-cols-4 gap-4 text-[11px] font-mono font-medium text-[var(--text-faint)] uppercase tracking-wider">
+            <div className="flex items-center gap-1.5">
+              <Code2 className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <span className="text-[var(--text-secondary)] font-semibold">01 · Technology</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Cpu className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <span className="text-[var(--text-secondary)] font-semibold">02 · Domain Skill</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <span className="text-[var(--text-secondary)] font-semibold">03 · Verified Project</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <FolderGit2 className="w-3.5 h-3.5 text-[var(--accent)]" />
+              <span className="text-[var(--text-secondary)] font-semibold">04 · Repository</span>
+            </div>
           </div>
-          <div className="flex items-center gap-1.5">
-            <Cpu className="w-3.5 h-3.5 text-[var(--accent)]" />
-            <span className="text-[var(--text-secondary)] font-semibold">02 · Domain Skill</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Layers className="w-3.5 h-3.5 text-[var(--accent)]" />
-            <span className="text-[var(--text-secondary)] font-semibold">03 · Verified Project</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <FolderGit2 className="w-3.5 h-3.5 text-[var(--accent)]" />
-            <span className="text-[var(--text-secondary)] font-semibold">04 · Repository</span>
-          </div>
+
+          {/* Animated SVG Architectural Trace Line */}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 1000 8"
+            className="w-full h-2 overflow-visible"
+            preserveAspectRatio="none"
+          >
+            <line
+              x1="0"
+              y1="4"
+              x2="1000"
+              y2="4"
+              stroke="var(--border)"
+              strokeWidth="1"
+            />
+            <motion.line
+              key={selectedTech || selectedProject || "all"}
+              x1="0"
+              y1="4"
+              x2="1000"
+              y2="4"
+              stroke={isFiltered ? "#C7E34A" : "var(--accent)"}
+              strokeWidth={isFiltered ? "2" : "1.5"}
+              initial={reduced ? false : { pathLength: 0, opacity: 0.4 }}
+              whileInView={{ pathLength: 1, opacity: 1 }}
+              viewport={MOTION_VIEWPORT}
+              transition={{ duration: MOTION_DURATION.enter, ease: MOTION_EASE.out }}
+            />
+          </svg>
         </div>
 
         <div className="grid grid-cols-4 gap-4 items-start">
@@ -333,6 +386,7 @@ export function InteractiveEcosystemMap() {
           <span className="tabular-nums">Active Connections: {activeChains.length} / 5</span>
         </div>
       </div>
+      </EditorialReveal>
 
       {/* Mobile Responsive Accordion & Chain Explorer */}
       <div className="block lg:hidden space-y-4">
@@ -340,7 +394,7 @@ export function InteractiveEcosystemMap() {
           <button
             type="button"
             onClick={() => setMobileTab("tech")}
-            className={`flex-1 py-2 rounded-[6px] font-semibold transition-all cursor-pointer ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[6px] font-semibold transition-all cursor-pointer ${
               mobileTab === "tech"
                 ? "bg-[#C7E34A] text-[#20231D]"
                 : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -351,7 +405,7 @@ export function InteractiveEcosystemMap() {
           <button
             type="button"
             onClick={() => setMobileTab("project")}
-            className={`flex-1 py-2 rounded-[6px] font-semibold transition-all cursor-pointer ${
+            className={`flex-1 min-h-[44px] py-2 rounded-[6px] font-semibold transition-all cursor-pointer ${
               mobileTab === "project"
                 ? "bg-[#C7E34A] text-[#20231D]"
                 : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -361,118 +415,138 @@ export function InteractiveEcosystemMap() {
           </button>
         </div>
 
-        {mobileTab === "tech" ? (
-          <div className="space-y-3">
-            <div className="flex flex-wrap gap-1.5">
-              {SELECTABLE_TECHS.map((tech) => {
-                const isSelected = selectedTech?.toLowerCase() === tech.toLowerCase();
-                return (
-                  <button
-                    key={tech}
-                    type="button"
-                    onClick={() => handleSelectTech(tech)}
-                    className={`px-3 py-1.5 rounded-[6px] text-xs font-mono transition-all cursor-pointer border ${
-                      isSelected
-                        ? "bg-[#C7E34A] text-[#20231D] border-[#A9C52F] font-semibold"
-                        : "bg-[var(--surface)] text-[var(--text-muted)] border-[var(--border)] hover:text-[var(--text)]"
-                    }`}
+        <AnimatePresence mode="wait">
+          {mobileTab === "tech" ? (
+            <motion.div
+              key="mobile-tech"
+              initial={reduced ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? undefined : { opacity: 0, y: -6 }}
+              transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+              className="space-y-3"
+            >
+              <div className="flex flex-wrap gap-1.5">
+                {SELECTABLE_TECHS.map((tech) => {
+                  const isSelected = selectedTech?.toLowerCase() === tech.toLowerCase();
+                  return (
+                    <button
+                      key={tech}
+                      type="button"
+                      onClick={() => handleSelectTech(tech)}
+                      className={`min-h-[40px] px-3 py-1.5 rounded-[6px] text-xs font-mono transition-all cursor-pointer border ${
+                        isSelected
+                          ? "bg-[#C7E34A] text-[#20231D] border-[#A9C52F] font-semibold"
+                          : "bg-[var(--surface)] text-[var(--text-muted)] border-[var(--border)] hover:text-[var(--text)]"
+                      }`}
+                    >
+                      {tech}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <StaggerGroup
+                key={selectedTech || "all"}
+                immediate
+                className="space-y-3 pt-2"
+              >
+                {activeChains.map((chain) => (
+                  <StaggerItem
+                    key={chain.id}
+                    className="card p-4 space-y-3"
                   >
-                    {tech}
-                  </button>
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <span className="text-xs font-mono font-bold text-[var(--accent)] uppercase">
+                        {chain.domain}
+                      </span>
+                      <a
+                        href={chain.repoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 min-w-0 max-w-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)]"
+                      >
+                        <FolderGit2 className="w-3 h-3 shrink-0" />
+                        <span className="truncate">{chain.repoName}</span>
+                        <ExternalLink className="w-3 h-3 ml-0.5 shrink-0" />
+                      </a>
+                    </div>
+
+                    <div className="text-sm font-bold text-[var(--text)] font-display">
+                      {chain.projectName} · {chain.name}
+                    </div>
+
+                    <p className="text-xs text-[var(--text-muted)] leading-relaxed font-sans">
+                      {chain.evidence}
+                    </p>
+
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-1 text-[10px] font-mono text-[var(--text-secondary)]">
+                      {chain.techs.map((t, idx) => (
+                        <span key={t} className="inline-flex items-center gap-2">
+                          {idx > 0 && <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>}
+                          <span>{t}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </StaggerItem>
+                ))}
+              </StaggerGroup>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="mobile-project"
+              initial={reduced ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={reduced ? undefined : { opacity: 0, y: -6 }}
+              transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+              className="space-y-3"
+            >
+              {VERIFIED_PROJECTS_LIST.map((proj) => {
+                const chain = ECOSYSTEM_CHAINS.find((c) => c.projectId === proj.id);
+                return (
+                  <div
+                    key={proj.id}
+                    className="card p-4 space-y-3"
+                  >
+                    <div className="flex items-center justify-between gap-2 flex-wrap">
+                      <h3 className="text-sm font-bold text-[var(--text)] font-display">
+                        {proj.title}
+                      </h3>
+                      <a
+                        href={proj.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 min-w-0 max-w-full text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)]"
+                      >
+                        <FolderGit2 className="w-3 h-3 shrink-0" />
+                        <span className="truncate">{proj.githubRepoName || proj.name}</span>
+                        <ExternalLink className="w-3 h-3 shrink-0" />
+                      </a>
+                    </div>
+
+                    <p className="text-xs text-[var(--text-muted)] leading-relaxed font-sans">
+                      {proj.shortDescription}
+                    </p>
+
+                    {chain && (
+                      <div className="text-xs font-mono text-[var(--accent)]">
+                        Domain: {chain.domain}
+                      </div>
+                    )}
+
+                    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-1 text-[10px] font-mono text-[var(--text-secondary)]">
+                      {(proj.technologies || proj.techStack).map((t, idx) => (
+                        <span key={t} className="inline-flex items-center gap-2">
+                          {idx > 0 && <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>}
+                          <span>{t}</span>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 );
               })}
-            </div>
-
-            <div className="space-y-3 pt-2">
-              {activeChains.map((chain) => (
-                <div
-                  key={chain.id}
-                  className="card p-4 space-y-3"
-                >
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <span className="text-xs font-mono font-bold text-[var(--accent)] uppercase">
-                      {chain.domain}
-                    </span>
-                    <a
-                      href={chain.repoUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)]"
-                    >
-                      <FolderGit2 className="w-3 h-3" />
-                      <span>{chain.repoName}</span>
-                      <ExternalLink className="w-3 h-3 ml-0.5" />
-                    </a>
-                  </div>
-
-                  <div className="text-sm font-bold text-[var(--text)] font-display">
-                    {chain.projectName} · {chain.name}
-                  </div>
-
-                  <p className="text-xs text-[var(--text-muted)] leading-relaxed font-sans">
-                    {chain.evidence}
-                  </p>
-
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-1 text-[10px] font-mono text-[var(--text-secondary)]">
-                    {chain.techs.map((t, idx) => (
-                      <span key={t} className="inline-flex items-center gap-2">
-                        {idx > 0 && <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>}
-                        <span>{t}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div className="space-y-3">
-            {VERIFIED_PROJECTS_LIST.map((proj) => {
-              const chain = ECOSYSTEM_CHAINS.find((c) => c.projectId === proj.id);
-              return (
-                <div
-                  key={proj.id}
-                  className="card p-4 space-y-3"
-                >
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <h3 className="text-sm font-bold text-[var(--text)] font-display">
-                      {proj.title}
-                    </h3>
-                    <a
-                      href={proj.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)]"
-                    >
-                      <FolderGit2 className="w-3 h-3" />
-                      <span>{proj.githubRepoName || proj.name}</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
-
-                  <p className="text-xs text-[var(--text-muted)] leading-relaxed font-sans">
-                    {proj.shortDescription}
-                  </p>
-
-                  {chain && (
-                    <div className="text-xs font-mono text-[var(--accent)]">
-                      Domain: {chain.domain}
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 pt-1 text-[10px] font-mono text-[var(--text-secondary)]">
-                    {(proj.technologies || proj.techStack).map((t, idx) => (
-                      <span key={t} className="inline-flex items-center gap-2">
-                        {idx > 0 && <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>}
-                        <span>{t}</span>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

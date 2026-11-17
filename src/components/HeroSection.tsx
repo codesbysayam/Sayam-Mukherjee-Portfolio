@@ -6,7 +6,13 @@ import { siteContent, SOCIAL_LINKS } from "../data/siteContent";
 import { formatRelativeTime, formatSyncAge } from "../services/github";
 import { ResumeSpotlight } from "./ResumeSpotlight";
 import { lazyWithRetry } from "../utils/lazyWithRetry";
-import { TextLineReveal } from "../motion/Reveal";
+import {
+  LineReveal,
+  MaskMediaReveal,
+  StaggerGroup,
+  StaggerItem,
+  TextLineReveal,
+} from "../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
 const HeroOrbitalSculpture = lazyWithRetry(() => import("./motion/HeroOrbitalSculpture"));
@@ -72,7 +78,7 @@ function HeroSectionComponent({
     <section
       id="hero"
       aria-label="Hero Introduction"
-      className="relative w-full overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-5 py-8 sm:px-9 sm:py-12 lg:px-12 lg:py-14"
+      className="relative w-full overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-4 py-6 sm:px-9 sm:py-11 lg:px-12 lg:py-14"
     >
       {/* Subtle Architectural Contour Lines */}
       <svg
@@ -199,14 +205,18 @@ function HeroSectionComponent({
           <div className="w-full max-w-[500px] overflow-hidden rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)]">
             {/* Visual Dual Stage: Portrait + Procedural Three.js Machined Logic Core */}
             <div className="grid grid-cols-1 sm:grid-cols-12 border-b border-[var(--border)]">
-              <div className="sm:col-span-7 relative h-[220px] sm:h-[244px] overflow-hidden bg-[var(--surface)] border-b sm:border-b-0 sm:border-r border-[var(--border)]">
+              <MaskMediaReveal
+                immediate
+                delay={0.18}
+                className="sm:col-span-7 relative h-[220px] sm:h-[244px] overflow-hidden bg-[var(--surface)] border-b sm:border-b-0 sm:border-r border-[var(--border)]"
+              >
                 <img
                   src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
                   alt="Sayam Mukherjee portrait"
                   referrerPolicy="no-referrer"
                   loading="eager"
                   decoding="async"
-                  className="h-full w-full object-cover object-center contrast-[1.03]"
+                  className="h-full w-full object-cover object-[50%_20%] contrast-[1.03]"
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#151713]/85 via-[#151713]/30 to-transparent px-3.5 py-2.5 text-[#F4F4ED]">
                   <div className="flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-[0.08em]">
@@ -214,7 +224,7 @@ function HeroSectionComponent({
                     <span className="text-[#C7E34A] tabular-nums">CGPA 9.06 · KIIT&apos;29</span>
                   </div>
                 </div>
-              </div>
+              </MaskMediaReveal>
 
               <div className="sm:col-span-5 h-[210px] sm:h-[244px] bg-[#151713]">
                 <Suspense
@@ -250,7 +260,7 @@ function HeroSectionComponent({
                     disabled={loading}
                     title="Refresh live GitHub data"
                     aria-label="Refresh live GitHub data"
-                    className="p-1 rounded hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
+                    className="min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
                   >
                     <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
                   </button>
@@ -290,12 +300,14 @@ function HeroSectionComponent({
                 rel="noopener noreferrer"
                 className="block rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 hover:border-[var(--border-strong)] transition-colors group"
               >
-                <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)] mb-1">
-                  <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--text)]">
-                    <GitCommit className="w-3.5 h-3.5 text-[var(--accent)]" />
-                    {latestCommitInfo.repoName}/{latestCommitInfo.branch}@{latestCommitInfo.sha}
+                <div className="flex items-center justify-between gap-2 min-w-0 text-[11px] font-mono text-[var(--text-muted)] mb-1">
+                  <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--text)] min-w-0">
+                    <GitCommit className="w-3.5 h-3.5 shrink-0 text-[var(--accent)]" />
+                    <span className="truncate">
+                      {latestCommitInfo.repoName}/{latestCommitInfo.branch}@{latestCommitInfo.sha}
+                    </span>
                   </span>
-                  <span>{latestCommitInfo.time}</span>
+                  <span className="shrink-0">{latestCommitInfo.time}</span>
                 </div>
                 <p className="text-xs font-mono text-[var(--text-secondary)] line-clamp-1 group-hover:text-[var(--text)]">
                   {latestCommitInfo.message}
@@ -307,25 +319,48 @@ function HeroSectionComponent({
       </div>
 
       {/* BOTTOM VERIFIED PROOF STRIP + RESTRAINED SCROLL CUE */}
-      <div className="relative z-10 mt-8 pt-5 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-3 text-xs font-mono text-[var(--text-muted)]">
-          <span className="font-semibold text-[var(--text)]">KIIT University, Bhubaneswar</span>
-          <span className="hidden sm:inline" aria-hidden="true">·</span>
-          <span>B.Tech CSE (AI &amp; ML) · Class of 2029</span>
-          <span className="hidden sm:inline" aria-hidden="true">·</span>
-          <span className="tabular-nums font-semibold text-[var(--text)]">9.06 First-Year CGPA</span>
-          <span className="hidden md:inline" aria-hidden="true">·</span>
-          <span className="hidden md:inline">Hooghly / Bhubaneswar</span>
-        </div>
+      <div className="relative z-10 mt-8">
+        <LineReveal immediate delay={0.34} className="mb-5" />
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <StaggerGroup
+            immediate
+            delayChildren={0.32}
+            stagger={0.04}
+            className="flex flex-wrap items-center gap-3 text-xs font-mono text-[var(--text-muted)]"
+          >
+            <StaggerItem distance={6}>
+              <span className="font-semibold text-[var(--text)]">KIIT University, Bhubaneswar</span>
+            </StaggerItem>
+            <span className="hidden sm:inline" aria-hidden="true">·</span>
+            <StaggerItem distance={6}>
+              <span>B.Tech CSE (AI &amp; ML) · Class of 2029</span>
+            </StaggerItem>
+            <span className="hidden sm:inline" aria-hidden="true">·</span>
+            <StaggerItem distance={6}>
+              <span className="tabular-nums font-semibold text-[var(--text)]">9.06 First-Year CGPA</span>
+            </StaggerItem>
+            <span className="hidden md:inline" aria-hidden="true">·</span>
+            <StaggerItem distance={6} className="hidden md:inline-block">
+              <span>Hooghly / Bhubaneswar</span>
+            </StaggerItem>
+          </StaggerGroup>
 
-        <button
-          type="button"
-          onClick={scrollToChapters}
-          className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1.5 py-1"
-        >
-          <span>Scroll to explore</span>
-          <ArrowDown className="w-3.5 h-3.5 text-[var(--accent)] transition-transform duration-200 group-hover:translate-y-0.5" />
-        </button>
+          <button
+            type="button"
+            onClick={scrollToChapters}
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1.5 py-1"
+          >
+            <span>Scroll to explore</span>
+            <motion.span
+              aria-hidden="true"
+              animate={reduced ? undefined : { y: [0, 3, 0] }}
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              className="inline-flex items-center"
+            >
+              <ArrowDown className="w-3.5 h-3.5 text-[var(--accent)] transition-transform duration-200 group-hover:translate-y-0.5" />
+            </motion.span>
+          </button>
+        </div>
       </div>
     </section>
   );

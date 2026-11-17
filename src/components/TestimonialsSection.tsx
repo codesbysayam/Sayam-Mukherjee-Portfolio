@@ -2,25 +2,34 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EXTENDED_DATA } from "../data/extendedData";
 import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { EditorialReveal, LineReveal } from "../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
 export default function TestimonialsSection() {
+  const prefersReduced = usePrefersReducedMotion();
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const [isPaused, setIsPaused] = useState(false);
 
   useEffect(() => {
+    if (prefersReduced || isPaused) return;
     const slideInterval = setInterval(() => {
+      setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % EXTENDED_DATA.testimonials.length);
     }, 6000);
     return () => clearInterval(slideInterval);
-  }, []);
+  }, [prefersReduced, isPaused]);
 
-  const handleManualSlide = (direction: "prev" | "next") => {
-    if (direction === "prev") {
+  const handleManualSlide = (dir: "prev" | "next") => {
+    if (dir === "prev") {
+      setDirection(-1);
       setCurrentIndex(
         (prev) =>
           (prev - 1 + EXTENDED_DATA.testimonials.length) %
           EXTENDED_DATA.testimonials.length
       );
     } else {
+      setDirection(1);
       setCurrentIndex((prev) => (prev + 1) % EXTENDED_DATA.testimonials.length);
     }
   };
@@ -28,34 +37,48 @@ export default function TestimonialsSection() {
   const activeTestimony = EXTENDED_DATA.testimonials[currentIndex];
 
   return (
-    <div className="space-y-8 font-sans" id="testimonials-directory">
-      <div className="text-center max-w-xl mx-auto space-y-2">
-        <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-widest block font-semibold">
-          PARTNER FEEDBACK
-        </span>
-        <h2
-          style={{ fontSize: "clamp(1.6rem, 3.4vw, 3rem)" }}
-          className="font-extrabold tracking-tight text-[var(--text)] font-display"
-        >
-          What Collaborators{" "}
-          <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-            Say
+    <section
+      id="endorsements-section"
+      aria-label="Collaborator endorsements"
+      className="space-y-8 font-sans scroll-mt-24 pt-6"
+    >
+      <LineReveal />
+      <EditorialReveal>
+        <div className="text-center max-w-xl mx-auto space-y-2" id="testimonials-directory">
+          <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-widest block font-semibold">
+            PARTNER FEEDBACK
           </span>
-        </h2>
-        <p className="text-sm text-[var(--text-muted)] leading-relaxed">
-          Feedback and recommendations from peers, project teammates, and clients.
-        </p>
-      </div>
+          <h2
+            style={{ fontSize: "clamp(1.6rem, 3.4vw, 3rem)" }}
+            className="font-extrabold tracking-tight text-[var(--text)] font-display"
+          >
+            What Collaborators{" "}
+            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+              Say
+            </span>
+          </h2>
+          <p className="text-sm text-[var(--text-muted)] leading-relaxed">
+            Feedback and recommendations from peers, project teammates, and clients.
+          </p>
+        </div>
+      </EditorialReveal>
 
-      <div className="relative max-w-3xl mx-auto">
-        <AnimatePresence mode="wait">
+      <div
+        className="relative max-w-3xl mx-auto"
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        onFocusCapture={() => setIsPaused(true)}
+        onBlurCapture={() => setIsPaused(false)}
+      >
+        <AnimatePresence mode="wait" custom={direction}>
           {activeTestimony && (
             <motion.div
               key={currentIndex}
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.35 }}
+              custom={direction}
+              initial={prefersReduced ? false : { opacity: 0, x: direction * 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={prefersReduced ? undefined : { opacity: 0, x: direction * -16 }}
+              transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.ui, ease: MOTION_EASE.out }}
               className="card rounded-[10px] p-6 md:p-10 relative overflow-hidden flex flex-col justify-between min-h-[240px] space-y-6"
               style={{
                 backgroundColor: "var(--surface-2)",
@@ -117,7 +140,7 @@ export default function TestimonialsSection() {
           <button
             type="button"
             onClick={() => handleManualSlide("prev")}
-            className="btn btn-secondary min-h-[38px] min-w-[38px] p-2"
+            className="btn btn-secondary min-h-[44px] min-w-[44px] p-2"
             title="Previous testimony"
             aria-label="Previous testimony"
           >
@@ -129,7 +152,10 @@ export default function TestimonialsSection() {
               <button
                 key={idx}
                 type="button"
-                onClick={() => setCurrentIndex(idx)}
+                onClick={() => {
+                  setDirection(idx >= currentIndex ? 1 : -1);
+                  setCurrentIndex(idx);
+                }}
                 aria-label={`Show testimonial ${idx + 1}`}
                 className="h-2 rounded-[2px] transition-all cursor-pointer"
                 style={{
@@ -144,7 +170,7 @@ export default function TestimonialsSection() {
           <button
             type="button"
             onClick={() => handleManualSlide("next")}
-            className="btn btn-secondary min-h-[38px] min-w-[38px] p-2"
+            className="btn btn-secondary min-h-[44px] min-w-[44px] p-2"
             title="Next testimony"
             aria-label="Next testimony"
           >
@@ -152,6 +178,6 @@ export default function TestimonialsSection() {
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

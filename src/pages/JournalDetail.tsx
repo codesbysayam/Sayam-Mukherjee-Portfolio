@@ -4,6 +4,7 @@ import { journalEntries } from "../data/journal";
 import { calculateReadingTime } from "../utils/readingTime";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import ReadingProgressBar from "../components/common/ReadingProgressBar";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
 interface JournalDetailProps {
   slug: string;
@@ -86,7 +87,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
 
       <article
         ref={articleRef}
-        className="max-w-3xl mx-auto space-y-8 sm:space-y-10 py-2 sm:py-4 font-sans text-[var(--text-secondary)]"
+        className="max-w-[var(--reading-max,760px)] mx-auto space-y-8 sm:space-y-10 py-2 sm:py-4 font-sans text-[var(--text-secondary)]"
       >
         <Breadcrumbs
           items={[
@@ -97,11 +98,11 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
         />
 
         {/* Top navigation */}
-        <nav aria-label="Journal Navigation" className="flex items-center justify-between gap-4">
+        <nav aria-label="Journal Navigation" className="flex flex-wrap items-center justify-between gap-3">
           <button
             type="button"
             onClick={onBack}
-            className="btn btn-secondary min-h-[38px] px-3.5 py-1.5 text-xs font-mono"
+            className="btn btn-secondary min-h-[40px] px-3.5 py-1.5 text-xs font-mono"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to Journal</span>
@@ -110,7 +111,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
           <button
             type="button"
             onClick={handleCopyLink}
-            className="btn btn-secondary min-h-[38px] px-3.5 py-1.5 text-xs font-mono"
+            className="btn btn-secondary min-h-[40px] px-3.5 py-1.5 text-xs font-mono"
             title="Copy article link"
             aria-label="Copy link to journal entry"
           >
@@ -129,86 +130,92 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
         </nav>
 
         {/* Editorial Header */}
-        <header className="space-y-4 border-b pb-8" style={{ borderColor: "var(--border)" }}>
-          <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono tracking-wider">
-            <span
-              className="px-2.5 py-0.5 rounded-[4px] border font-semibold uppercase text-[11px]"
+        <EditorialReveal immediate>
+          <header className="space-y-4 pb-6">
+            <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono tracking-wider">
+              <span
+                className="px-2.5 py-0.5 rounded-[4px] border font-semibold uppercase text-[11px]"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border-strong)",
+                  color: "var(--accent)",
+                }}
+              >
+                {entry.category}
+              </span>
+              <span className="text-[var(--text-faint)]" aria-hidden="true">
+                &bull;
+              </span>
+              <span className="text-[var(--text-muted)] flex items-center gap-1">
+                <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
+                {entry.date}
+              </span>
+              <span className="text-[var(--text-faint)]" aria-hidden="true">
+                &bull;
+              </span>
+              <span
+                className="text-[var(--text-muted)] flex items-center gap-1 tabular-nums"
+                title={`Estimated reading time based on 200 WPM (${readingStats?.words || 0} words)`}
+              >
+                <Clock className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
+                <span>{readingStats?.formatted || entry.readingTime}</span>
+                {readingStats && (
+                  <span className="text-[var(--text-faint)] text-[11px]">
+                    ({readingStats.words} words)
+                  </span>
+                )}
+              </span>
+              <span className="text-[var(--text-faint)]" aria-hidden="true">
+                &bull;
+              </span>
+              <span className="text-[var(--text-muted)] flex items-center gap-1">
+                <User className="w-3.5 h-3.5" aria-hidden="true" />
+                Sayam Mukherjee
+              </span>
+            </div>
+
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display tracking-tight text-[var(--text)] leading-[1.12]">
+              {entry.title}
+            </h1>
+
+            {/* Lead Summary Callout */}
+            <div
+              className="p-4 sm:p-5 rounded-[8px] border border-l-[3px]"
               style={{
                 backgroundColor: "var(--surface)",
-                borderColor: "var(--border-strong)",
-                color: "var(--accent)",
+                borderColor: "var(--border)",
+                borderLeftColor: "var(--accent)",
               }}
             >
-              {entry.category}
-            </span>
-            <span className="text-[var(--text-faint)]" aria-hidden="true">
-              &bull;
-            </span>
-            <span className="text-[var(--text-muted)] flex items-center gap-1">
-              <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
-              {entry.date}
-            </span>
-            <span className="text-[var(--text-faint)]" aria-hidden="true">
-              &bull;
-            </span>
-            <span
-              className="text-[var(--text-muted)] flex items-center gap-1 tabular-nums"
-              title={`Estimated reading time based on 200 WPM (${readingStats?.words || 0} words)`}
-            >
-              <Clock className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
-              <span>{readingStats?.formatted || entry.readingTime}</span>
-              {readingStats && (
-                <span className="text-[var(--text-faint)] text-[11px]">
-                  ({readingStats.words} words)
-                </span>
-              )}
-            </span>
-            <span className="text-[var(--text-faint)]" aria-hidden="true">
-              &bull;
-            </span>
-            <span className="text-[var(--text-muted)] flex items-center gap-1">
-              <User className="w-3.5 h-3.5" aria-hidden="true" />
-              Sayam Mukherjee
-            </span>
-          </div>
+              <p className="text-sm sm:text-base text-[var(--text)] leading-relaxed font-serif-editorial italic">
+                &ldquo;{entry.summary}&rdquo;
+              </p>
+            </div>
+          </header>
+        </EditorialReveal>
 
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold font-display tracking-tight text-[var(--text)] leading-[1.12]">
-            {entry.title}
-          </h1>
-
-          {/* Lead Summary Callout */}
-          <div
-            className="p-4 sm:p-5 rounded-[8px] border border-l-[3px]"
-            style={{
-              backgroundColor: "var(--surface)",
-              borderColor: "var(--border)",
-              borderLeftColor: "var(--accent)",
-            }}
-          >
-            <p className="text-sm sm:text-base text-[var(--text)] leading-relaxed font-serif-editorial italic">
-              &ldquo;{entry.summary}&rdquo;
-            </p>
-          </div>
-        </header>
+        <LineReveal immediate />
 
         {/* Main Article Content */}
         <div className="space-y-8 text-base leading-relaxed font-sans">
           {entry.content.map((section, idx) => (
-            <section key={idx} className="space-y-3.5">
-              {section.heading && (
-                <h2 className="text-lg sm:text-xl font-bold font-display text-[var(--text)] tracking-tight pt-2">
-                  {section.heading}
-                </h2>
-              )}
-              {section.paragraphs.map((p, pIdx) => (
-                <p
-                  key={pIdx}
-                  className="leading-relaxed text-[var(--text-secondary)] text-[15px] sm:text-base"
-                >
-                  {p}
-                </p>
-              ))}
-            </section>
+            <EditorialReveal key={idx} delay={Math.min(idx * 0.03, 0.12)}>
+              <section className="space-y-3.5">
+                {section.heading && (
+                  <h2 className="text-lg sm:text-xl font-bold font-display text-[var(--text)] tracking-tight pt-2">
+                    {section.heading}
+                  </h2>
+                )}
+                {section.paragraphs.map((p, pIdx) => (
+                  <p
+                    key={pIdx}
+                    className="leading-relaxed text-[var(--text-secondary)] text-[15px] sm:text-base"
+                  >
+                    {p}
+                  </p>
+                ))}
+              </section>
+            </EditorialReveal>
           ))}
         </div>
 
@@ -237,29 +244,30 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
             <h3 className="text-xs font-mono uppercase tracking-widest text-[var(--text-muted)]">
               More Journal Notes
             </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <StaggerGroup stagger={0.05} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {relatedEntries.map((rel) => (
-                <div
-                  key={rel.slug}
-                  onClick={() => onSelectEntry(rel.slug)}
-                  className="card group p-4 cursor-pointer hover:-translate-y-0.5"
-                  style={{
-                    backgroundColor: "var(--surface-2)",
-                    borderColor: "var(--border)",
-                  }}
-                >
-                  <span className="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider block mb-1">
-                    {rel.category} &bull; {rel.date}
-                  </span>
-                  <h4 className="text-sm font-bold text-[var(--text)] group-hover:text-[var(--accent)] font-display line-clamp-1 transition-colors">
-                    {rel.title}
-                  </h4>
-                  <p className="text-xs text-[var(--text-muted)] line-clamp-2 mt-1">
-                    {rel.summary}
-                  </p>
-                </div>
+                <StaggerItem key={rel.slug}>
+                  <div
+                    onClick={() => onSelectEntry(rel.slug)}
+                    className="card group p-4 cursor-pointer hover:-translate-y-0.5 h-full"
+                    style={{
+                      backgroundColor: "var(--surface-2)",
+                      borderColor: "var(--border)",
+                    }}
+                  >
+                    <span className="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider block mb-1">
+                      {rel.category} &bull; {rel.date}
+                    </span>
+                    <h4 className="text-sm font-bold text-[var(--text)] group-hover:text-[var(--accent)] font-display line-clamp-1 transition-colors">
+                      {rel.title}
+                    </h4>
+                    <p className="text-xs text-[var(--text-muted)] line-clamp-2 mt-1">
+                      {rel.summary}
+                    </p>
+                  </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerGroup>
           </aside>
         )}
       </article>

@@ -14,7 +14,7 @@ import {
 import { showToast } from "./Toast";
 import { ContactForm } from "./ContactForm";
 import ClosingFluidCanvas from "./motion/ClosingFluidCanvas";
-import { EditorialReveal } from "../motion/Reveal";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
 const OPEN_ROLES = [
   "Internships",
@@ -149,7 +149,7 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="relative w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 font-sans text-[var(--text)] overflow-hidden rounded-[12px]"
+      className="relative w-full py-6 sm:py-10 font-sans text-[var(--text)] overflow-hidden rounded-[12px]"
     >
       <ClosingFluidCanvas tone="adaptive" />
 
@@ -184,7 +184,7 @@ export default function ContactSection() {
 
           <h1
             className="font-display font-extrabold text-[var(--text)] tracking-tight leading-[0.98]"
-            style={{ fontSize: "clamp(2.4rem, 5.2vw, 4.75rem)", maxWidth: "820px" }}
+            style={{ fontSize: "clamp(1.85rem, 5.2vw, 4.75rem)", maxWidth: "820px" }}
           >
             Let&rsquo;s build
             <br />
@@ -247,11 +247,12 @@ export default function ContactSection() {
               </p>
             </div>
 
-            <div className="space-y-2.5 pt-1">
+            <StaggerGroup stagger={0.04} className="space-y-2.5 pt-1">
               {/* Business & Hackathons Email */}
-              <div
-                onClick={() => handleCopyBusiness()}
-                className="card group cursor-pointer p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+              <StaggerItem>
+                <div
+                  onClick={() => handleCopyBusiness()}
+                  className="card group cursor-pointer p-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4 min-w-0 hover:-translate-y-0.5"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -292,7 +293,7 @@ export default function ContactSection() {
                 <button
                   type="button"
                   onClick={handleCopyBusiness}
-                  className="btn btn-secondary min-h-[36px] px-3 py-1.5 text-xs font-mono shrink-0"
+                  className="btn btn-secondary min-h-[40px] px-3 py-1.5 text-xs font-mono shrink-0"
                   aria-label="Copy business email address"
                 >
                   {copiedBusiness ? (
@@ -307,12 +308,14 @@ export default function ContactSection() {
                     </>
                   )}
                 </button>
-              </div>
+                </div>
+              </StaggerItem>
 
               {/* Contact & Internships Email */}
-              <div
-                onClick={() => handleCopyContact()}
-                className="card group cursor-pointer p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+              <StaggerItem>
+                <div
+                  onClick={() => handleCopyContact()}
+                  className="card group cursor-pointer p-4 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3 sm:gap-4 min-w-0 hover:-translate-y-0.5"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -353,7 +356,7 @@ export default function ContactSection() {
                 <button
                   type="button"
                   onClick={handleCopyContact}
-                  className="btn btn-secondary min-h-[36px] px-3 py-1.5 text-xs font-mono shrink-0"
+                  className="btn btn-secondary min-h-[40px] px-3 py-1.5 text-xs font-mono shrink-0"
                   aria-label="Copy contact email address"
                 >
                   {copiedContact ? (
@@ -368,14 +371,16 @@ export default function ContactSection() {
                     </>
                   )}
                 </button>
-              </div>
+                </div>
+              </StaggerItem>
 
               {/* Quick Social Cards */}
-              <a
-                href={verifiedLinkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+              <StaggerItem>
+                <a
+                  href={verifiedLinkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -402,13 +407,15 @@ export default function ContactSection() {
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
-              </a>
+                </a>
+              </StaggerItem>
 
-              <a
-                href={verifiedGithub}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+              <StaggerItem>
+                <a
+                  href={verifiedGithub}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -435,13 +442,15 @@ export default function ContactSection() {
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
-              </a>
+                </a>
+              </StaggerItem>
 
-              <a
-                href={verifiedCodolio}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
+              <StaggerItem>
+                <a
+                  href={verifiedCodolio}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="card group p-4 flex items-center justify-between gap-4 hover:-translate-y-0.5"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -468,8 +477,9 @@ export default function ContactSection() {
                   </div>
                 </div>
                 <ArrowRight className="w-4 h-4 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
-              </a>
-            </div>
+                </a>
+              </StaggerItem>
+            </StaggerGroup>
           </div>
         </div>
 
@@ -513,17 +523,17 @@ export default function ContactSection() {
               <div className="font-mono text-xs sm:text-sm text-[var(--text)] font-semibold select-text break-all">
                 {businessEmail}
               </div>
-              <div className="flex items-center gap-2 pt-1">
+              <div className="flex flex-wrap items-center gap-2 pt-1">
                 <button
                   type="button"
                   onClick={handleCopyBusiness}
-                  className="btn btn-secondary min-h-[34px] px-3 py-1 text-xs font-mono"
+                  className="btn btn-secondary min-h-[40px] px-3 py-1 text-xs font-mono"
                 >
                   {copiedBusiness ? "Copied" : "Copy"}
                 </button>
                 <a
                   href={`mailto:${businessEmail}?subject=Business%20%2F%20Collaboration%20Inquiry`}
-                  className="btn btn-primary min-h-[34px] px-3 py-1 text-xs font-mono"
+                  className="btn btn-primary min-h-[40px] px-3 py-1 text-xs font-mono"
                 >
                   Email
                 </a>
@@ -544,17 +554,17 @@ export default function ContactSection() {
               <div className="font-mono text-xs sm:text-sm text-[var(--text)] font-semibold select-text break-all">
                 {contactEmail}
               </div>
-              <div className="flex items-center gap-2 pt-1">
+              <div className="flex flex-wrap items-center gap-2 pt-1">
                 <button
                   type="button"
                   onClick={handleCopyContact}
-                  className="btn btn-secondary min-h-[34px] px-3 py-1 text-xs font-mono"
+                  className="btn btn-secondary min-h-[40px] px-3 py-1 text-xs font-mono"
                 >
                   {copiedContact ? "Copied" : "Copy"}
                 </button>
                 <a
                   href={`mailto:${contactEmail}?subject=Internship%20%2F%20Contact%20Inquiry`}
-                  className="btn btn-primary min-h-[34px] px-3 py-1 text-xs font-mono"
+                  className="btn btn-primary min-h-[40px] px-3 py-1 text-xs font-mono"
                 >
                   Email
                 </a>
@@ -567,46 +577,47 @@ export default function ContactSection() {
             <span className="text-xs font-mono tracking-wider text-[var(--text-muted)] uppercase font-semibold block">
               Profiles
             </span>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <StaggerGroup stagger={0.04} className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
               {SOCIAL_PROFILES.map((profile) => {
                 const IconComponent = profile.icon;
                 return (
-                  <a
-                    key={profile.name}
-                    href={profile.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group p-3.5 rounded-[8px] border hover:border-[var(--border-strong)] transition-colors flex items-center justify-between gap-3"
-                    style={{
-                      backgroundColor: "var(--surface)",
-                      borderColor: "var(--border)",
-                    }}
-                    aria-label={`Open Sayam Mukherjee's ${profile.name} profile in new tab`}
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div
-                        className="w-8 h-8 rounded-[6px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
-                        style={{
-                          backgroundColor: "var(--surface-2)",
-                          borderColor: "var(--border)",
-                        }}
-                      >
-                        <IconComponent className="w-4 h-4" />
+                  <StaggerItem key={profile.name}>
+                    <a
+                      href={profile.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group p-3.5 rounded-[8px] border hover:border-[var(--border-strong)] transition-colors flex items-center justify-between gap-3 h-full"
+                      style={{
+                        backgroundColor: "var(--surface)",
+                        borderColor: "var(--border)",
+                      }}
+                      aria-label={`Open Sayam Mukherjee's ${profile.name} profile in new tab`}
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div
+                          className="w-8 h-8 rounded-[6px] border flex items-center justify-center shrink-0 text-[var(--accent)]"
+                          style={{
+                            backgroundColor: "var(--surface-2)",
+                            borderColor: "var(--border)",
+                          }}
+                        >
+                          <IconComponent className="w-4 h-4" />
+                        </div>
+                        <div className="min-w-0">
+                          <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block font-semibold">
+                            {profile.name}
+                          </span>
+                          <span className="text-xs text-[var(--text)] font-medium block truncate">
+                            {profile.description}
+                          </span>
+                        </div>
                       </div>
-                      <div className="min-w-0">
-                        <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block font-semibold">
-                          {profile.name}
-                        </span>
-                        <span className="text-xs text-[var(--text)] font-medium block truncate">
-                          {profile.description}
-                        </span>
-                      </div>
-                    </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
-                  </a>
+                      <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--accent)] group-hover:translate-x-0.5 transition-all shrink-0" />
+                    </a>
+                  </StaggerItem>
                 );
               })}
-            </div>
+            </StaggerGroup>
           </div>
 
           <div

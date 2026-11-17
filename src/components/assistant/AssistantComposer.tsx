@@ -66,7 +66,7 @@ export const AssistantComposer = memo(function AssistantComposer({
           onChange={handleChange}
           onKeyDown={handleKeyDown}
           placeholder="Ask about Sayam’s projects, education, skills, GitHub..."
-          className="w-full bg-transparent text-[13px] sm:text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] resize-none outline-none leading-relaxed max-h-[110px] py-1 font-sans"
+          className="w-full bg-transparent text-base sm:text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] resize-none outline-none leading-relaxed max-h-[110px] py-1 font-sans"
           aria-label="Ask Sayam's Portfolio Assistant"
         />
 
@@ -81,7 +81,7 @@ export const AssistantComposer = memo(function AssistantComposer({
             <button
               type="button"
               onClick={onStop}
-              className="w-8 h-8 rounded-[6px] flex items-center justify-center bg-[var(--surface)] border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
+              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] flex items-center justify-center bg-[var(--surface)] border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
               title="Stop generating"
               aria-label="Stop response"
             >
@@ -92,7 +92,7 @@ export const AssistantComposer = memo(function AssistantComposer({
               type="button"
               onClick={handleSendClick}
               disabled={text.trim().length === 0 || disabled}
-              className="w-8 h-8 rounded-[6px] flex items-center justify-center bg-[#C7E34A] text-[#20231D] hover:bg-[#A9C52F] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C7E34A]"
+              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] flex items-center justify-center bg-[#C7E34A] text-[#20231D] hover:bg-[#A9C52F] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C7E34A]"
               title="Send message (Enter)"
               aria-label="Send message"
             >

@@ -1,9 +1,11 @@
 import React from "react";
+import { motion } from "motion/react";
 import { AchievementRecord, Certificate } from "../../types/certificates";
 import { AchievementMetadata } from "./AchievementMetadata";
 import { CredentialPreview } from "./CredentialPreview";
 import { AchievementTags } from "./AchievementTags";
 import { AchievementActions } from "./AchievementActions";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
 export interface AchievementCardProps {
   record?: AchievementRecord;
@@ -20,6 +22,7 @@ export function AchievementCard({
   onView,
   className = "",
 }: AchievementCardProps) {
+  const prefersReduced = usePrefersReducedMotion();
   const item: AchievementRecord = (record || certificate) as AchievementRecord;
   if (!item) return null;
 
@@ -79,9 +82,11 @@ export function AchievementCard({
   const displayYear = issueDate || year ? `${issueDate || year}` : "";
 
   return (
-    <article
+    <motion.article
       id={`achievement-card-${id}`}
-      className={`achievement-card card group relative flex flex-col justify-between overflow-hidden h-full hover:-translate-y-0.5 ${className}`}
+      whileHover={prefersReduced ? undefined : { y: -3 }}
+      transition={{ duration: MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+      className={`achievement-card card group relative flex flex-col justify-between overflow-hidden h-full ${className}`}
       style={{
         backgroundColor: "var(--surface-2)",
         borderColor: "var(--border)",
@@ -144,7 +149,7 @@ export function AchievementCard({
 
       {/* Standardized Card Action Footer */}
       <AchievementActions record={item} onInspect={handleInspect} />
-    </article>
+    </motion.article>
   );
 }
 

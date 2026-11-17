@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Certificate, CertificateCategory, CertificateStats } from "../../types/certificates";
 import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
-import CertificateCard from "./CertificateCard";
 import AchievementGrid from "./AchievementGrid";
 import CertificateViewerModal from "./CertificateViewerModal";
 import AcademicRecord from "../AcademicRecord";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
   Award,
   Search,
@@ -20,6 +22,7 @@ import {
 } from "lucide-react";
 
 export default function CertificatesPage() {
+  const prefersReduced = usePrefersReducedMotion();
   const [certificates, setCertificates] = useState<Certificate[]>(() => INITIAL_CERTIFICATES);
 
   const [selectedCategory, setSelectedCategory] = useState<CertificateCategory>("ALL");
@@ -285,33 +288,36 @@ export default function CertificatesPage() {
 
   return (
     <div
-      className="space-y-12 font-sans pb-20 max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8"
+      className="w-full space-y-12 font-sans pb-16 sm:pb-20"
       id="certificates-page"
     >
       {/* 1. Editorial Header */}
-      <header
-        className="card p-6 sm:p-10"
-        style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
-      >
-        <div className="max-w-3xl space-y-4">
-          <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
-            <Award className="w-4 h-4 shrink-0" />
-            <span>Credentials &amp; Milestones</span>
+      <EditorialReveal immediate>
+        <header
+          id="certificates-hero"
+          className="card p-6 sm:p-10 scroll-mt-24"
+          style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
+        >
+          <div className="max-w-3xl space-y-4">
+            <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+              <Award className="w-4 h-4 shrink-0" />
+              <span>Credentials &amp; Milestones</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.06] text-[var(--text)] font-display">
+              Certificates &amp;{" "}
+              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+                Achievements
+              </span>
+            </h1>
+
+            <p className="text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
+              A verified ledger of technical certifications, national competition
+              honours, academic transcripts, and documented engineering milestones.
+            </p>
           </div>
-
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.06] text-[var(--text)] font-display">
-            Certificates &amp;{" "}
-            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-              Achievements
-            </span>
-          </h1>
-
-          <p className="text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
-            A verified ledger of technical certifications, national competition
-            honours, academic transcripts, and documented engineering milestones.
-          </p>
-        </div>
-      </header>
+        </header>
+      </EditorialReveal>
 
       {/* 2. Academic Record */}
       <div id="academics-section" className="space-y-4">
@@ -320,29 +326,32 @@ export default function CertificatesPage() {
 
       {/* 3. Credentials Vault */}
       <section
-        className="space-y-6 pt-8 border-t"
-        style={{ borderColor: "var(--border)" }}
+        className="space-y-6 pt-8 scroll-mt-24"
         id="credentials-vault"
       >
-        <div className="space-y-2">
-          <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
-            <Trophy className="w-4 h-4 shrink-0" />
-            <span>Competitions &amp; Verified Credentials</span>
+        <LineReveal />
+        <EditorialReveal>
+          <div className="space-y-2">
+            <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+              <Trophy className="w-4 h-4 shrink-0" />
+              <span>Competitions &amp; Verified Credentials</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)] font-display">
+              Competitions &amp;{" "}
+              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+                Milestones
+              </span>
+            </h2>
+            <p className="text-sm text-[var(--text-muted)]">
+              Verified national hackathons, research pathways, and athletic achievements.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)] font-display">
-            Competitions &amp;{" "}
-            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-              Milestones
-            </span>
-          </h2>
-          <p className="text-sm text-[var(--text-muted)]">
-            Verified national hackathons, research pathways, and athletic achievements.
-          </p>
-        </div>
+        </EditorialReveal>
 
         {/* Stat Filter Cards */}
-        <div
-          className={`grid grid-cols-2 sm:grid-cols-3 ${
+        <StaggerGroup
+          stagger={0.04}
+          className={`grid grid-cols-1 sm:grid-cols-3 ${
             statCards.length >= 4 ? "lg:grid-cols-4" : ""
           } gap-3 sm:gap-4`}
         >
@@ -351,36 +360,38 @@ export default function CertificatesPage() {
             const isSelected = selectedCategory === item.category;
 
             return (
-              <button
-                key={idx}
-                type="button"
-                onClick={() => setSelectedCategory(item.category)}
-                className="rounded-[10px] p-4 sm:p-5 flex flex-col justify-between space-y-2.5 transition-all text-left border cursor-pointer"
-                style={{
-                  backgroundColor: isSelected ? "#20231D" : "var(--surface-2)",
-                  borderColor: isSelected ? "#C7E34A" : "var(--border)",
-                  color: isSelected ? "#F4F4ED" : "var(--text)",
-                }}
-              >
-                <div className="flex items-center justify-between w-full">
-                  <span
-                    className="text-xs font-mono uppercase tracking-wider"
-                    style={{ color: isSelected ? "#D4D6CA" : "var(--text-muted)" }}
-                  >
-                    {item.label}
-                  </span>
-                  <Icon
-                    className="w-4 h-4 shrink-0"
-                    style={{ color: isSelected ? "#C7E34A" : "var(--accent)" }}
-                  />
-                </div>
-                <div className="text-2xl sm:text-3xl font-extrabold tracking-tight tabular-nums font-display">
-                  {item.count}
-                </div>
-              </button>
+              <StaggerItem key={idx}>
+                <motion.button
+                  type="button"
+                  whileTap={prefersReduced ? undefined : { scale: 0.985 }}
+                  onClick={() => setSelectedCategory(item.category)}
+                  className="w-full h-full rounded-[10px] p-4 sm:p-5 flex flex-col justify-between space-y-2.5 transition-colors text-left border cursor-pointer"
+                  style={{
+                    backgroundColor: isSelected ? "#20231D" : "var(--surface-2)",
+                    borderColor: isSelected ? "#C7E34A" : "var(--border)",
+                    color: isSelected ? "#F4F4ED" : "var(--text)",
+                  }}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span
+                      className="text-xs font-mono uppercase tracking-wider"
+                      style={{ color: isSelected ? "#D4D6CA" : "var(--text-muted)" }}
+                    >
+                      {item.label}
+                    </span>
+                    <Icon
+                      className="w-4 h-4 shrink-0"
+                      style={{ color: isSelected ? "#C7E34A" : "var(--accent)" }}
+                    />
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-extrabold tracking-tight tabular-nums font-display">
+                    {item.count}
+                  </div>
+                </motion.button>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGroup>
 
         {/* Filter Controls */}
         <div
@@ -429,7 +440,7 @@ export default function CertificatesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search credentials, projects, issuers..."
-                className="w-full rounded-[6px] pl-10 pr-9 py-2.5 text-xs font-sans border transition-colors focus:outline-none"
+                className="w-full rounded-[6px] pl-10 pr-10 py-2.5 text-base sm:text-xs font-sans border transition-colors focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -440,7 +451,7 @@ export default function CertificatesPage() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+                  className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
                   title="Clear search"
                   aria-label="Clear search"
                 >
@@ -453,7 +464,7 @@ export default function CertificatesPage() {
               <select
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="w-full rounded-[6px] px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer border focus:outline-none"
+                className="w-full rounded-[6px] px-3.5 py-2.5 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer border focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -475,7 +486,7 @@ export default function CertificatesPage() {
               <select
                 value={selectedIssuer}
                 onChange={(e) => setSelectedIssuer(e.target.value)}
-                className="w-full rounded-[6px] px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
+                className="w-full rounded-[6px] px-3.5 py-2.5 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -497,7 +508,7 @@ export default function CertificatesPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as "newest" | "oldest" | "title")}
-                className="w-full rounded-[6px] px-3.5 py-2.5 text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
+                className="w-full rounded-[6px] px-3.5 py-2.5 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -514,25 +525,35 @@ export default function CertificatesPage() {
           </div>
 
           {/* Active Filters Summary */}
-          {hasActiveFilters && (
-            <div
-              className="flex items-center justify-between gap-3 pt-3 text-xs border-t"
-              style={{ borderColor: "var(--border)" }}
-            >
-              <div className="font-mono text-[11px] text-[var(--text-muted)]">
-                Showing {filteredCertificates.length} matching credential
-                {filteredCertificates.length === 1 ? "" : "s"}
-              </div>
-              <button
-                type="button"
-                onClick={handleResetFilters}
-                className="flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer"
+          <AnimatePresence>
+            {hasActiveFilters && (
+              <motion.div
+                initial={prefersReduced ? false : { opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={prefersReduced ? undefined : { opacity: 0, height: 0 }}
+                transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                className="overflow-hidden"
               >
-                <RotateCcw className="w-3 h-3" />
-                <span>Reset Filters</span>
-              </button>
-            </div>
-          )}
+                <div
+                  className="flex items-center justify-between gap-3 pt-3 text-xs border-t"
+                  style={{ borderColor: "var(--border)" }}
+                >
+                  <div className="font-mono text-[11px] text-[var(--text-muted)]">
+                    Showing {filteredCertificates.length} matching credential
+                    {filteredCertificates.length === 1 ? "" : "s"}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleResetFilters}
+                    className="flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    <span>Reset Filters</span>
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         {/* 2-Column Grid */}

@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { SkillsHero } from "./SkillsHero";
 import { CodebaseLanguageDistribution } from "./CodebaseLanguageDistribution";
 import { EngineeringStackSection } from "./EngineeringStackSection";
+import { InteractiveEcosystemMap } from "./InteractiveEcosystemMap";
 import { SkillProjectEvidence } from "./SkillProjectEvidence";
 import { CodingProfilesSection } from "./CodingProfilesSection";
-import { usePortfolio } from "../../context/PortfolioContext";
 
 interface SkillsPageProps {
   onNavigateToProject?: (projectId: string) => void;
 }
 
 export function SkillsPage({ onNavigateToProject }: SkillsPageProps) {
-  const { theme } = usePortfolio();
-  const isLight = theme === "light";
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
 
   return (
@@ -33,12 +31,18 @@ export function SkillsPage({ onNavigateToProject }: SkillsPageProps) {
         />
       </section>
 
-      {/* 4. Skill-to-Project Direct Evidence */}
+      {/* 4. Interactive Technology -> Domain -> Project -> Repo Map */}
+      <InteractiveEcosystemMap
+        selectedTechExternal={selectedTech}
+        onClearExternalTech={() => setSelectedTech(null)}
+      />
+
+      {/* 5. Skill-to-Project Direct Evidence */}
       <section>
         <SkillProjectEvidence onSelectProject={onNavigateToProject} />
       </section>
 
-      {/* 5. External Coding Profiles & Algorithmic Practice */}
+      {/* 6. External Coding Profiles & Algorithmic Practice */}
       <section>
         <CodingProfilesSection />
       </section>

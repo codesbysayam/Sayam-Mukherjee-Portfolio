@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import { Certificate } from "../../types/certificates";
 import ModalPortal from "../common/ModalPortal";
 import { useBodyScrollLock } from "../../hooks/useBodyScrollLock";
 import { ProjectMetricsSummary } from "../projects/ProjectMetricsSummary";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
   X,
   ZoomIn,
@@ -27,6 +29,7 @@ export default function CertificateViewerModal({
   certificate,
   onClose,
 }: CertificateViewerModalProps) {
+  const prefersReduced = usePrefersReducedMotion();
   const [zoom, setZoom] = useState(1);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
@@ -35,26 +38,26 @@ export default function CertificateViewerModal({
   useBodyScrollLock(Boolean(certificate));
 
   useEffect(() => {
+    if (!certificate) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [certificate, onClose]);
 
   useEffect(() => {
     setZoom(1);
     setCopiedId(false);
     setImageError(false);
+    setIsFullscreen(false);
   }, [certificate]);
 
-  if (!certificate) return null;
-
   const isPdf = Boolean(
-    certificate.pdfUrl ||
-      (certificate.imageUrl && certificate.imageUrl.endsWith(".pdf"))
+    certificate?.pdfUrl ||
+      (certificate?.imageUrl && certificate.imageUrl.endsWith(".pdf"))
   );
-  const fileUrl = certificate.imageUrl || certificate.pdfUrl;
+  const fileUrl = certificate?.imageUrl || certificate?.pdfUrl;
 
   const cleanModalTitle = (rawTitle: string) => {
     if (!rawTitle) return "";
@@ -64,7 +67,7 @@ export default function CertificateViewerModal({
       .replace(/^Certificate of Participation$/i, "")
       .replace(/^Certificate of Completion$/i, "")
       .trim();
-    if (!cleaned && certificate.event) return certificate.event;
+    if (!cleaned && certificate?.event) return certificate.event;
     return cleaned || rawTitle;
   };
 
@@ -102,21 +105,21 @@ export default function CertificateViewerModal({
   };
 
   const handleCopyId = () => {
-    if (!certificate.credentialId) return;
+    if (!certificate?.credentialId) return;
     navigator.clipboard.writeText(certificate.credentialId);
     setCopiedId(true);
     setTimeout(() => setCopiedId(false), 2000);
   };
 
   const allTags =
-    certificate.tags && certificate.tags.length > 0
+    certificate?.tags && certificate.tags.length > 0
       ? certificate.tags
-      : certificate.skills || [];
+      : certificate?.skills || [];
 
   const displayDescription =
-    certificate.overview ||
-    certificate.fullDescription ||
-    certificate.description;
+    certificate?.overview ||
+    certificate?.fullDescription ||
+    certificate?.description;
 
   const metaCellStyle: React.CSSProperties = {
     backgroundColor: "var(--surface)",
@@ -124,37 +127,47 @@ export default function CertificateViewerModal({
   };
 
   return (
-    <ModalPortal>
-      <div
-        className="certificate-modal-overlay modal-backdrop"
-        onClick={onClose}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="certificate-modal-title"
-      >
-        <div
-          id="certificate-modal-container"
-          onClick={(e) => e.stopPropagation()}
-          className={`relative w-full ${
-            isFullscreen
-              ? "h-screen max-w-none rounded-none"
-              : "certificate-modal max-w-3xl rounded-[10px]"
-          } border shadow-2xl flex flex-col overflow-hidden transition-all duration-200`}
-          style={{
-            backgroundColor: "var(--surface-2)",
-            borderColor: "var(--border-strong)",
-            color: "var(--text)",
-          }}
-        >
+    <AnimatePresence>
+      {certificate && (
+        <ModalPortal key={certificate.id}>
+          <motion.div
+            initial={prefersReduced ? false : { opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={prefersReduced ? undefined : { opacity: 0 }}
+            transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+            className="certificate-modal-overlay modal-backdrop"
+            onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="certificate-modal-title"
+          >
+            <motion.div
+              id="certificate-modal-container"
+              initial={prefersReduced ? false : { opacity: 0, scale: 0.97, y: 12 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={prefersReduced ? undefined : { opacity: 0, scale: 0.97, y: 8 }}
+              transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.ui, ease: MOTION_EASE.out }}
+              onClick={(e) => e.stopPropagation()}
+              className={`relative w-full ${
+                isFullscreen
+                  ? "h-screen max-w-none rounded-none"
+                  : "certificate-modal max-w-3xl rounded-[10px]"
+              } border shadow-2xl flex flex-col overflow-hidden`}
+              style={{
+                backgroundColor: "var(--surface-2)",
+                borderColor: "var(--border-strong)",
+                color: "var(--text)",
+              }}
+            >
           {/* Header Bar */}
           <div
-            className="flex items-center justify-between px-6 py-4 border-b shrink-0"
+            className="flex flex-wrap items-center justify-between gap-2 px-4 sm:px-6 py-3 sm:py-4 border-b shrink-0"
             style={{
               backgroundColor: "var(--surface)",
               borderColor: "var(--border)",
             }}
           >
-            <div className="min-w-0 pr-4">
+            <div className="min-w-0 flex-1 pr-2">
               <h2
                 id="certificate-modal-title"
                 className="text-base sm:text-lg font-bold truncate leading-snug font-display"
@@ -166,10 +179,10 @@ export default function CertificateViewerModal({
               </p>
             </div>
 
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
               {!isPdf && fileUrl && !imageError && (
                 <div
-                  className="hidden sm:flex items-center gap-1 p-1 rounded-[6px] border"
+                  className="flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 rounded-[6px] border"
                   style={{
                     backgroundColor: "var(--surface-2)",
                     borderColor: "var(--border)",
@@ -179,20 +192,20 @@ export default function CertificateViewerModal({
                     type="button"
                     onClick={handleZoomOut}
                     disabled={zoom <= 0.5}
-                    className="p-1.5 rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
+                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
                     title="Zoom Out"
                     aria-label="Zoom Out"
                   >
                     <ZoomOut className="w-3.5 h-3.5" />
                   </button>
-                  <span className="text-[11px] font-mono px-1.5 tabular-nums">
+                  <span className="text-[11px] font-mono px-1 sm:px-1.5 tabular-nums">
                     {Math.round(zoom * 100)}%
                   </span>
                   <button
                     type="button"
                     onClick={handleZoomIn}
                     disabled={zoom >= 3}
-                    className="p-1.5 rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
+                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
                     title="Zoom In"
                     aria-label="Zoom In"
                   >
@@ -204,7 +217,7 @@ export default function CertificateViewerModal({
               <button
                 type="button"
                 onClick={toggleFullscreen}
-                className="p-2 rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
+                className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -223,7 +236,7 @@ export default function CertificateViewerModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
+                className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -238,10 +251,10 @@ export default function CertificateViewerModal({
           </div>
 
           {/* Modal Body */}
-          <div className="flex-1 overflow-y-auto p-6 space-y-6">
+          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
             {certificate.imageUrl && !imageError ? (
               <div
-                className="relative w-full min-h-[260px] max-h-[440px] rounded-[10px] border overflow-auto p-4 flex items-center justify-center"
+                className="relative w-full min-h-[200px] sm:min-h-[260px] max-h-[440px] rounded-[10px] border overflow-auto p-3 sm:p-4 flex items-center justify-center"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -330,7 +343,7 @@ export default function CertificateViewerModal({
               </div>
 
               {/* Metadata Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                 {certificate.credentialType && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
                     <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
@@ -733,7 +746,7 @@ export default function CertificateViewerModal({
 
           {/* Action Footer */}
           <div
-            className="px-6 py-4 border-t flex items-center justify-between gap-3 shrink-0"
+            className="px-4 sm:px-6 py-3 sm:py-4 border-t flex flex-wrap items-center justify-between gap-2.5 shrink-0"
             style={{
               backgroundColor: "var(--surface)",
               borderColor: "var(--border)",
@@ -774,8 +787,10 @@ export default function CertificateViewerModal({
               )}
             </div>
           </div>
-        </div>
-      </div>
-    </ModalPortal>
+            </motion.div>
+          </motion.div>
+        </ModalPortal>
+      )}
+    </AnimatePresence>
   );
 }

@@ -621,7 +621,7 @@ export default function CommandMenu({
           role="dialog"
           aria-modal="true"
           aria-label="Command Hub"
-          className="fixed inset-0 z-50 flex items-start justify-center pt-[max(1rem,8vh)] px-3 sm:px-4 font-sans"
+          className="fixed inset-0 z-50 flex items-start justify-center pt-[max(1rem,calc(env(safe-area-inset-top,0px)+8svh))] pb-[max(1rem,env(safe-area-inset-bottom,0px))] px-3 sm:px-4 font-sans"
         >
           <motion.div
             initial={{ opacity: 0 }}
@@ -636,7 +636,7 @@ export default function CommandMenu({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.97, y: -8 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-xl bg-[#20231D] text-[#F4F4ED] border border-[#41443A] rounded-[10px] overflow-hidden shadow-2xl flex flex-col max-h-[min(520px,calc(100dvh-2rem))]"
+            className="relative w-full max-w-xl bg-[#20231D] text-[#F4F4ED] border border-[#41443A] rounded-[10px] overflow-hidden shadow-2xl flex flex-col max-h-[min(520px,calc(100dvh-env(safe-area-inset-top,0px)-env(safe-area-inset-bottom,0px)-2rem))]"
           >
             {/* Input Bar */}
             <div className="flex items-center gap-3 px-4 border-b border-[#41443A] py-3.5 bg-[#151713]">
@@ -659,7 +659,7 @@ export default function CommandMenu({
                             ? "Search competitions and credentials..."
                             : "Search saved reading list..."
                 }
-                className="w-full bg-transparent text-sm text-[#F4F4ED] placeholder-[#B5B8AA] outline-none border-none p-0 focus:ring-0"
+                className="w-full bg-transparent text-base sm:text-sm text-[#F4F4ED] placeholder-[#B5B8AA] outline-none border-none p-0 focus:ring-0"
               />
               <span className="text-[10px] font-mono text-[#B5B8AA] bg-[#20231D] border border-[#41443A] px-2 py-0.5 rounded-[4px] uppercase shrink-0">
                 ESC
@@ -682,7 +682,7 @@ export default function CommandMenu({
                   key={tabKey}
                   type="button"
                   onClick={() => setActiveMenuTab(tabKey)}
-                  className={`py-1 px-2.5 text-[10px] font-mono rounded-[4px] transition-colors shrink-0 cursor-pointer border ${
+                  className={`min-h-[36px] sm:min-h-0 py-1 px-2.5 text-[10px] font-mono rounded-[4px] transition-colors shrink-0 cursor-pointer border ${
                     activeMenuTab === tabKey
                       ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D] font-bold"
                       : "bg-transparent border-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:bg-[#20231D]"

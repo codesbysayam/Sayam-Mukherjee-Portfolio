@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
 import {
   Cpu, GitBranch, Users, ExternalLink, Eye, Globe, CloudRain, Binary, CheckCircle2
 } from "lucide-react";
 import { SectionHeader } from "../common/SectionHeader";
+import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
 type BlueprintId = "operon" | "sayamsolves" | "mausam" | "yolo" | "portfolio";
 
@@ -202,12 +205,13 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
 
 export function EcosystemPage() {
   const [activeBlueprint, setActiveBlueprint] = useState<BlueprintId>("operon");
+  const reduced = usePrefersReducedMotion();
   const blueprint = BLUEPRINTS[activeBlueprint];
 
   return (
     <div className="w-full space-y-12 sm:space-y-16 pb-12">
       {/* 1. HEADER */}
-      <header className="space-y-4 pt-2 pb-6 border-b border-[var(--border)]">
+      <header id="ecosystem-hero" className="space-y-4 pt-2 pb-6 border-b border-[var(--border)]">
         <SectionHeader
           level="h1"
           eyebrow="04 · System Architecture"
@@ -233,8 +237,8 @@ export function EcosystemPage() {
       </header>
 
       {/* 2. DELIVERY LIFECYCLE */}
-      <section className="space-y-6">
-        <div className="space-y-2">
+      <section id="ecosystem-pipeline" className="space-y-6">
+        <EditorialReveal className="space-y-2">
           <span className="text-xs font-mono font-semibold text-[var(--accent)] tracking-wider uppercase">
             Phase 01 · Delivery Lifecycle
           </span>
@@ -244,9 +248,9 @@ export function EcosystemPage() {
           <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
             How abstract requirements progress into verified, resilient production software.
           </p>
-        </div>
+        </EditorialReveal>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+        <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
           {[
             {
               step: "01",
@@ -279,7 +283,7 @@ export function EcosystemPage() {
               desc: "Expose health checkpoints, commit logs, and auditable execution ledgers."
             }
           ].map((phase, idx) => (
-            <div key={phase.step} className="card p-4 flex flex-col justify-between space-y-3">
+            <StaggerItem key={phase.step} className="card p-4 flex flex-col justify-between space-y-3 transition-colors hover:border-[var(--border-strong)]">
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-mono tabular-nums">
                   <span className="font-bold text-[var(--accent)]">STEP {phase.step}</span>
@@ -291,13 +295,13 @@ export function EcosystemPage() {
                   {phase.desc}
                 </p>
               </div>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </section>
 
       {/* 3. INTERACTIVE SYSTEM BLUEPRINTS */}
-      <section className="space-y-6">
+      <section id="ecosystem-blueprints" className="space-y-6">
         <div className="space-y-2">
           <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
             Phase 02 · Architectural Blueprints
@@ -345,7 +349,15 @@ export function EcosystemPage() {
         </div>
 
         {/* Active Blueprint Detail Card */}
-        <div className="card p-6 sm:p-8 space-y-8">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeBlueprint}
+            initial={reduced ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduced ? undefined : { opacity: 0, y: -8 }}
+            transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+            className="card p-4 sm:p-8 space-y-6 sm:space-y-8"
+          >
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 pb-6 border-b border-[var(--border)]">
             <div className="space-y-2 max-w-2xl">
               <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono">
@@ -410,11 +422,11 @@ export function EcosystemPage() {
               <span>Left-to-Right Pipeline</span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+            <StaggerGroup immediate stagger={0.035} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
               {blueprint.nodes.map((node, i) => (
-                <div
+                <StaggerItem
                   key={node.name}
-                  className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2"
+                  className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2 transition-colors hover:border-[var(--border-strong)]"
                 >
                   <div className="space-y-1">
                     <div className="flex items-center justify-between text-[11px] font-mono tabular-nums">
@@ -426,9 +438,9 @@ export function EcosystemPage() {
                   <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
                     {node.description}
                   </p>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </StaggerGroup>
           </div>
 
           {/* Data Flow Chains */}
@@ -438,9 +450,9 @@ export function EcosystemPage() {
             </h4>
             <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2 text-xs font-mono text-[var(--text-secondary)]">
               {blueprint.connections.map((conn, idx) => (
-                <div key={idx} className="flex items-start gap-2.5">
-                  <span className="text-[var(--accent)] font-bold mt-0.5">↳</span>
-                  <span className="leading-relaxed">{conn}</span>
+                <div key={idx} className="flex items-start gap-2.5 min-w-0">
+                  <span className="text-[var(--accent)] font-bold mt-0.5 shrink-0">↳</span>
+                  <span className="leading-relaxed break-words min-w-0">{conn}</span>
                 </div>
               ))}
             </div>
@@ -463,11 +475,12 @@ export function EcosystemPage() {
               ))}
             </div>
           </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </section>
 
       {/* 4. RELATIONAL INTERCONNECT MATRIX */}
-      <section className="space-y-6">
+      <section id="ecosystem-matrix" className="space-y-6">
         <div className="space-y-2">
           <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
             Phase 03 · Interdisciplinary Coupling
@@ -480,7 +493,7 @@ export function EcosystemPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {[
             {
               domainA: "AI & Computer Vision",
@@ -507,8 +520,8 @@ export function EcosystemPage() {
               details: "Multi-provider weather APIs are normalized via worker layers and cached locally for reliable low-bandwidth responsiveness."
             }
           ].map((item, idx) => (
-            <div key={idx} className="card p-5 space-y-3">
-              <div className="flex items-center justify-between text-xs font-mono">
+            <StaggerItem key={idx} className="card p-5 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
                 <span className="text-[var(--accent)] font-semibold">{item.domainA}</span>
                 <span className="text-[var(--text-muted)]">↔</span>
                 <span className="text-[var(--text)] font-semibold">{item.domainB}</span>
@@ -517,13 +530,13 @@ export function EcosystemPage() {
               <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
                 {item.details}
               </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGroup>
       </section>
 
       {/* 5. SIH 2026 CASE STUDY */}
-      <section className="space-y-6">
+      <section id="ecosystem-sih" className="space-y-6">
         <div className="space-y-2">
           <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
             Phase 04 · Team Collaboration Case Study
@@ -536,7 +549,7 @@ export function EcosystemPage() {
           </p>
         </div>
 
-        <div className="card p-6 sm:p-8 space-y-6">
+        <div className="card p-4 sm:p-8 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[var(--border)]">
             <div className="flex items-center gap-3">
               <div className="p-2.5 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)]">
