@@ -1,0 +1,232 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default-Deny Root Guard
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Core Authentication & Identity Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isEmailVerified() && (
+        request.auth.token.email == 'wrickbusiness@gmail.com' ||
+        (exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+         get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.role == 'admin')
+      );
+    }
+
+    function isValidId(id) {
+      return id.matches('^[a-zA-Z0-9_-]{3,80}$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isNonEmptyString(val, maxLen) {
+      return val is string && val.size() > 0 && val.size() <= maxLen;
+    }
+
+    function isOptionalString(data, field, maxLen) {
+      return !(field in data) || (data[field] is string && data[field].size() <= maxLen);
+    }
+
+    function isValidEmail(email) {
+      return email is string &&
+        email.size() >= 5 &&
+        email.size() <= 160 &&
+        email.matches('^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$');
+    }
+
+    // Read-only health probe collection used by client connection verifier
+    match /test/connection {
+      allow get: if true;
+      allow list, write: if false;
+    }
+
+    // Public portfolio CMS content document (no PII)
+    match /portfolio_content/{docId} {
+      allow get: if docId == 'public' || isAdmin();
+      allow list: if isAdmin();
+      allow create, update: if isAdmin() &&
+        docId == 'public' &&
+        incoming().keys().hasOnly([
+          'projects', 'blogs', 'certifications', 'skills',
+          'experience', 'achievements', 'learningDashboard',
+          'stats', 'socials', 'updatedAt'
+        ]) &&
+        incoming().projects is list && incoming().projects.size() <= 100 &&
+        incoming().blogs is list && incoming().blogs.size() <= 200 &&
+        incoming().certifications is list && incoming().certifications.size() <= 200 &&
+        incoming().skills is list && incoming().skills.size() <= 30 &&
+        incoming().experience is list && incoming().experience.size() <= 50 &&
+        incoming().achievements is list && incoming().achievements.size() <= 100 &&
+        incoming().learningDashboard is map &&
+        incoming().stats is map &&
+        incoming().socials is map &&
+        isNonEmptyString(incoming().updatedAt, 40);
+      allow delete: if false;
+    }
+
+    // Certificates & credentials archive (public read when published, admin write)
+    function isValidCertificate(data) {
+      return data.keys().hasAll([
+          'id', 'title', 'issuer', 'category', 'issueDate',
+          'skills', 'verificationStatus', 'featured', 'createdAt', 'updatedAt'
+        ]) &&
+        isNonEmptyString(data.id, 120) &&
+        isNonEmptyString(data.title, 200) &&
+        isNonEmptyString(data.issuer, 160) &&
+        data.category in [
+          'CERTIFICATIONS', 'ACHIEVEMENTS', 'COMPETITIONS',
+          'COURSES', 'WORKSHOPS', 'ACADEMIC RECORD', 'OTHER'
+        ] &&
+        isNonEmptyString(data.issueDate, 40) &&
+        data.skills is list && data.skills.size() <= 30 &&
+        data.verificationStatus in ['VERIFIED', 'LINK AVAILABLE', 'NO VERIFICATION LINK'] &&
+        data.featured is bool &&
+        isOptionalString(data, 'description', 2000) &&
+        isOptionalString(data, 'credentialId', 120) &&
+        isOptionalString(data, 'credentialUrl', 500) &&
+        isOptionalString(data, 'imageUrl', 500) &&
+        isOptionalString(data, 'pdfUrl', 500) &&
+        (!('published' in data) || data.published is bool) &&
+        isNonEmptyString(data.createdAt, 40) &&
+        isNonEmptyString(data.updatedAt, 40);
+    }
+
+    match /certificates/{certId} {
+      allow read: if isAdmin() || existing().published == true;
+      allow create: if isAdmin() &&
+        isValidId(certId) &&
+        isValidCertificate(incoming()) &&
+        incoming().id == certId;
+      allow update: if isAdmin() &&
+        isValidId(certId) &&
+        isValidCertificate(incoming()) &&
+        incoming().id == existing().id &&
+        incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin();
+    }
+
+    // Testimonials (only approved testimonials are public; pending submissions require moderation)
+    function isValidTestimonialCreate(data, docId) {
+      return data.keys().hasOnly(['id', 'name', 'role', 'content', 'approved', 'avatar', 'date', 'createdAt']) &&
+        data.id == docId &&
+        isNonEmptyString(data.name, 100) &&
+        isNonEmptyString(data.role, 120) &&
+        isNonEmptyString(data.content, 1200) &&
+        data.approved == false &&
+        isOptionalString(data, 'avatar', 400) &&
+        isNonEmptyString(data.date, 40) &&
+        data.createdAt == request.time;
+    }
+
+    match /testimonials/{testimonialId} {
+      allow read: if isAdmin() || existing().approved == true;
+      allow create: if isValidId(testimonialId) && isValidTestimonialCreate(incoming(), testimonialId);
+      allow update: if isAdmin() &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['approved', 'name', 'role', 'content']) &&
+        incoming().id == existing().id &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().approved is bool &&
+        isNonEmptyString(incoming().name, 100) &&
+        isNonEmptyString(incoming().role, 120) &&
+        isNonEmptyString(incoming().content, 1200);
+      allow delete: if isAdmin();
+    }
+
+    // Contact Messages (PII: public create only with strict bounds; admin-only read/update/delete)
+    function isValidContactCreate(data, docId) {
+      return data.keys().hasAll(['id', 'firstName', 'email', 'subject', 'message', 'status', 'createdAt']) &&
+        data.keys().hasOnly([
+          'id', 'firstName', 'lastName', 'name', 'email', 'company',
+          'country', 'phone', 'subject', 'topic', 'message', 'budget',
+          'timeline', 'attachmentName', 'attachmentMimeType', 'attachmentSizeBytes',
+          'deliveryStatus', 'deliveryError', 'status', 'createdAt'
+        ]) &&
+        data.id == docId &&
+        isNonEmptyString(data.firstName, 80) &&
+        isOptionalString(data, 'lastName', 80) &&
+        isOptionalString(data, 'name', 160) &&
+        isValidEmail(data.email) &&
+        isOptionalString(data, 'company', 140) &&
+        isOptionalString(data, 'country', 80) &&
+        isOptionalString(data, 'phone', 40) &&
+        isNonEmptyString(data.subject, 200) &&
+        isOptionalString(data, 'topic', 100) &&
+        isNonEmptyString(data.message, 4000) &&
+        isOptionalString(data, 'budget', 80) &&
+        isOptionalString(data, 'timeline', 80) &&
+        isOptionalString(data, 'attachmentName', 200) &&
+        isOptionalString(data, 'attachmentMimeType', 100) &&
+        (!('attachmentSizeBytes' in data) || (data.attachmentSizeBytes is number && data.attachmentSizeBytes >= 0 && data.attachmentSizeBytes <= 2097152)) &&
+        (!('deliveryStatus' in data) || data.deliveryStatus in ['sent', 'stored_pending_email_config', 'failed']) &&
+        isOptionalString(data, 'deliveryError', 300) &&
+        data.status == 'unread' &&
+        data.createdAt == request.time;
+    }
+
+    match /contact_messages/{messageId} {
+      allow read: if isAdmin();
+      allow create: if isValidId(messageId) && isValidContactCreate(incoming(), messageId);
+      allow update: if isAdmin() &&
+        incoming().diff(existing()).affectedKeys().hasOnly(['status', 'deliveryStatus', 'deliveryError']) &&
+        incoming().status in ['unread', 'archived', 'replied'] &&
+        incoming().id == existing().id &&
+        incoming().createdAt == existing().createdAt;
+      allow delete: if isAdmin();
+    }
+
+    // Newsletter Subscribers (PII: public create-only via hashed ID; admin-only read/delete)
+    match /subscribers/{subscriberId} {
+      allow read: if isAdmin();
+      allow create: if isValidId(subscriberId) &&
+        incoming().keys().hasOnly(['id', 'email', 'status', 'createdAt']) &&
+        incoming().id == subscriberId &&
+        isValidEmail(incoming().email) &&
+        incoming().status == 'active' &&
+        incoming().createdAt == request.time;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // Visitor Analytics Events (consent-aware: public create-only; admin-only read/delete)
+    match /analytics_events/{eventId} {
+      allow read: if isAdmin();
+      allow create: if isValidId(eventId) &&
+        incoming().keys().hasOnly(['id', 'eventType', 'sessionId', 'page', 'device', 'source', 'durationSec', 'createdAt']) &&
+        incoming().id == eventId &&
+        incoming().eventType in ['page_view', 'session_duration', 'contact_conversion'] &&
+        isNonEmptyString(incoming().sessionId, 80) &&
+        isNonEmptyString(incoming().page, 120) &&
+        incoming().device in ['Desktop', 'Mobile', 'Tablet'] &&
+        isNonEmptyString(incoming().source, 80) &&
+        incoming().durationSec is number &&
+        incoming().durationSec >= 0 &&
+        incoming().durationSec <= 86400 &&
+        incoming().createdAt == request.time;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // Admin Allowlist
+    match /admins/{uid} {
+      allow read: if isAdmin() || (isEmailVerified() && request.auth.uid == uid);
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}

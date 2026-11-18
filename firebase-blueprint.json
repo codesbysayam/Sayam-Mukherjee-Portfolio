@@ -1,0 +1,158 @@
+{
+  "entities": {
+    "PortfolioContent": {
+      "title": "Portfolio Content",
+      "description": "Publicly projected portfolio configuration covering projects, blogs, skills, experience, achievements, learning dashboard, stats, and social links.",
+      "type": "object",
+      "properties": {
+        "projects": { "type": "array", "description": "Featured portfolio projects" },
+        "blogs": { "type": "array", "description": "Engineering journal entries" },
+        "certifications": { "type": "array", "description": "Summary certification items" },
+        "skills": { "type": "array", "description": "Categorized technical and soft skill groups" },
+        "experience": { "type": "array", "description": "Timeline and experience items" },
+        "achievements": { "type": "array", "description": "Academic and competition honors" },
+        "learningDashboard": { "type": "object", "description": "Current learning focus and reading progress" },
+        "stats": { "type": "object", "description": "Academic and profile summary stats" },
+        "socials": { "type": "object", "description": "Verified social links" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp" }
+      },
+      "required": ["projects", "skills", "experience", "stats", "socials"]
+    },
+    "Certificate": {
+      "title": "Certificate",
+      "description": "Verified credential, hackathon honor, course certificate, or academic record.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Slug identifier" },
+        "title": { "type": "string", "description": "Certificate or honor title" },
+        "issuer": { "type": "string", "description": "Issuing institution or organizer" },
+        "category": { "type": "string", "description": "COMPETITIONS, CERTIFICATIONS, ACHIEVEMENTS, COURSES, WORKSHOPS, ACADEMIC RECORD, OTHER" },
+        "issueDate": { "type": "string", "description": "Date or year issued" },
+        "description": { "type": "string", "description": "Brief summary" },
+        "credentialId": { "type": "string", "description": "Optional verification ID" },
+        "credentialUrl": { "type": "string", "description": "Optional verification URL" },
+        "imageUrl": { "type": "string", "description": "Optional preview image URL" },
+        "pdfUrl": { "type": "string", "description": "Optional PDF URL" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "verificationStatus": { "type": "string", "enum": ["VERIFIED", "LINK AVAILABLE", "NO VERIFICATION LINK"] },
+        "featured": { "type": "boolean" },
+        "published": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "title", "issuer", "category", "issueDate", "skills", "verificationStatus", "featured", "createdAt", "updatedAt"]
+    },
+    "Testimonial": {
+      "title": "Testimonial",
+      "description": "Visitor or collaborator testimonial requiring admin moderation before public display.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "content": { "type": "string" },
+        "approved": { "type": "boolean" },
+        "avatar": { "type": "string" },
+        "date": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "role", "content", "approved", "date", "createdAt"]
+    },
+    "ContactMessage": {
+      "title": "Contact Message",
+      "description": "Private inbound contact inquiry submitted through the portfolio contact form.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "firstName": { "type": "string" },
+        "lastName": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "company": { "type": "string" },
+        "country": { "type": "string" },
+        "phone": { "type": "string" },
+        "subject": { "type": "string" },
+        "topic": { "type": "string" },
+        "message": { "type": "string" },
+        "budget": { "type": "string" },
+        "timeline": { "type": "string" },
+        "attachmentName": { "type": "string" },
+        "attachmentMimeType": { "type": "string" },
+        "attachmentSizeBytes": { "type": "number" },
+        "deliveryStatus": { "type": "string", "enum": ["sent", "stored_pending_email_config", "failed"] },
+        "status": { "type": "string", "enum": ["unread", "archived", "replied"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "firstName", "email", "subject", "message", "status", "createdAt"]
+    },
+    "Subscriber": {
+      "title": "Newsletter Subscriber",
+      "description": "Private newsletter subscription record keyed by email hash.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "status": { "type": "string", "enum": ["active", "unsubscribed"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "email", "status", "createdAt"]
+    },
+    "AnalyticsEvent": {
+      "title": "Analytics Event",
+      "description": "Consent-aware privacy-preserving visitor telemetry event.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "eventType": { "type": "string", "enum": ["page_view", "session_duration", "contact_conversion"] },
+        "sessionId": { "type": "string" },
+        "page": { "type": "string" },
+        "device": { "type": "string", "enum": ["Desktop", "Mobile", "Tablet"] },
+        "source": { "type": "string" },
+        "durationSec": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "eventType", "sessionId", "page", "device", "source", "durationSec", "createdAt"]
+    },
+    "AdminUser": {
+      "title": "Admin User",
+      "description": "Authorized portfolio administrator allowlist entry.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "role", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/portfolio_content/{docId}": {
+      "schema": "PortfolioContent",
+      "description": "Publicly readable portfolio CMS sections (docId: 'public'); admin-only writes."
+    },
+    "/certificates/{certId}": {
+      "schema": "Certificate",
+      "description": "Publicly readable certificate records; admin-only writes."
+    },
+    "/testimonials/{testimonialId}": {
+      "schema": "Testimonial",
+      "description": "Approved testimonials are public; pending submissions are create-only until approved by admin."
+    },
+    "/contact_messages/{messageId}": {
+      "schema": "ContactMessage",
+      "description": "Private contact submissions; public create with strict schema bounds; admin-only read/update/delete."
+    },
+    "/subscribers/{subscriberId}": {
+      "schema": "Subscriber",
+      "description": "Private newsletter subscriber registry; public create only via email hash ID; admin-only read/delete."
+    },
+    "/analytics_events/{eventId}": {
+      "schema": "AnalyticsEvent",
+      "description": "Private consent-aware visitor analytics; public create only; admin-only read/delete."
+    },
+    "/admins/{uid}": {
+      "schema": "AdminUser",
+      "description": "Administrator allowlist; strictly admin-only."
+    }
+  }
+}
