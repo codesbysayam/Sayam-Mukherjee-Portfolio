@@ -19,6 +19,8 @@ export interface GitHubRepository {
   updated_at: string;
   pushed_at: string | null;
   topics?: string[];
+  open_issues_count?: number;
+  default_branch?: string;
 
   // Compatibility aliases
   fullName?: string;
@@ -31,6 +33,7 @@ export interface GitHubRepository {
   createdAt?: string;
   updatedAt?: string;
   pushedAt?: string | null;
+  defaultBranch?: string;
 }
 
 export interface GitHubUser {

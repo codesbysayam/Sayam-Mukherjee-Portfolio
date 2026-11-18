@@ -30,27 +30,51 @@
    - Repository: https://github.com/codesbysayam/Operon
    - Live Demo: https://operonpro.vercel.app
 
-2. SayamSolves
-   - Purpose: Open-source C++ repository documenting deliberate daily algorithmic problem solving across LeetCode, with time and space complexity notes.
-   - Stack: C++, Data Structures, Algorithms, LeetCode.
-   - Repository: https://github.com/codesbysayam/sayam-solves
-
-3. MAUSAM
-   - Purpose: Weather intelligence and localized climate analytics dashboard built for Smart India Hackathon (SIH 2026) by Team Algnite, unifying forecasts, AQI, UV index, soil moisture, and coastal tides.
-   - Stack: TypeScript, React, Tailwind CSS, Meteorological APIs, Python.
-   - Repository: https://github.com/codesbysayam/mausam
+2. MAUSAM
+   - Purpose: Weather intelligence and atmospheric analytics platform built for Smart India Hackathon (SIH 2026) by Team ALGNITE, unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM AI.
+   - Stack: TypeScript, React, Python, Tailwind CSS, Weather APIs, C, PLpgSQL.
+   - Repository: https://github.com/codesbysayam/mausam_sih-26 (earlier SIH snapshot: https://github.com/codesbysayam/mausam_sample)
    - Live Demo: https://mausamgovt.vercel.app
 
-4. Interactive Developer Portfolio
-   - Purpose: Full-stack developer portfolio and engineering showcase with pre-rendered GitHub activity telemetry, dark/light theme system, and verified credentials archive.
+3. SightForge
+   - Purpose: Dual-service real-time computer vision platform pairing a Next.js 15 / React 19 16:9 HTML5 Canvas client with FastAPI YOLOv8 person detection (COCO Class ID 0), 17-keypoint pose estimation, IoU 0.45 NMS, ByteTrack tracking, and PostgreSQL persistence (self-hosted local runtime).
+   - Stack: Next.js 15, React 19, TypeScript, FastAPI, Python, YOLOv8, ByteTrack, PostgreSQL.
+   - Repository: https://github.com/codesbysayam/SightForge
+
+4. Memory in Motion
+   - Purpose: Interactive mechanistic interpretability lab built for DataForge 2026 (IIT Kharagpur) contrasting O(1) fixed-size recurrent state and Hebbian fast weights (including Dragon Hatchling / BDH) against O(T) KV caches.
+   - Stack: TypeScript, React, KaTeX, D3.js, Python, Tailwind CSS.
+   - Repository: https://github.com/codesbysayam/Memory-in-Motion
+   - Live Demo: https://memoryinmotion.vercel.app
+
+5. AXIOM
+   - Purpose: Autonomous operations control plane built in 36 hours for WCC Launchpad 30 featuring deterministic policy rules, approval gates, failure recovery, dry-run sandboxes, and tamper-evident audit chains.
+   - Stack: TypeScript, React, Control Plane Policy Engine, Audit Chain.
+   - Repository: https://github.com/codesbysayam/AXIOM
+   - Live Demo: https://axiomwcc.vercel.app
+
+6. INKLOOM
+   - Purpose: Public fork workspace (default branch: master, isFork: true) exploring constructed AI logo design pipelines—turning brand constraints into typography/symbol marks and composition lockups (early access open; specialized logo models under construction).
+   - Stack: TypeScript, React, PLpgSQL, Docker, CSS.
+   - Repository: https://github.com/codesbysayam/inkloom
+   - Early Access: https://inkloom.art
+
+7. Campus Connect
+   - Purpose: Full-stack Next.js and TypeScript campus event management platform pairing student discovery and registration with an organizer dashboard and Vitest suite (uses README-documented seeded in-memory storage that resets on restart).
+   - Stack: Next.js, TypeScript, React, Vitest, Tailwind CSS.
+   - Repository: https://github.com/codesbysayam/CAMPUSCONNECT_1273
+   - Live Demo: https://campusconnect1273.vercel.app/
+
+8. SayamSolves
+   - Purpose: Open-source C++ Data Structures & Algorithms repository synced via LeetHub V2, tracking 3 solution files in stats.json (LC 0005, 0033, 0115) alongside a verified 4-problem LeetCode profile baseline.
+   - Stack: C++, Data Structures, Algorithms, LeetHub V2, LeetCode.
+   - Repository: https://github.com/codesbysayam/sayam-solves
+
+9. Interactive Developer Portfolio (Site Meta Repository)
+   - Purpose: Full-stack developer portfolio and engineering showcase with pre-rendered 11-repo GitHub telemetry, dark/light editorial design system, and verified credentials archive.
    - Stack: React 19, TypeScript, Tailwind CSS, Express, Vite, Motion.
    - Repository: https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio
    - Live Site: https://sayammukherjee.in
-
-5. YOLO / YOLOv8 Edge Computer Vision
-   - Purpose: Edge computer vision pipeline combining lightweight YOLOv8 models with OpenCV frame processing to detect objects and compute spatial motion vectors on local hardware.
-   - Stack: Python, YOLOv8, OpenCV, PyTorch, Computer Vision.
-   - Repository: https://github.com/codesbysayam
 
 ## Verified Credentials & Competition Milestones
 

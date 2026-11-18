@@ -48,20 +48,20 @@ function getLiveGitHubSummary(): any {
         if (parsed?.profile) {
           return {
             username: parsed.profile.login || "codesbysayam",
-            publicRepos: parsed.profile.public_repos || 9,
-            followers: parsed.profile.followers || 0,
-            following: parsed.profile.following || 0,
-            totalStars: parsed.stats?.totalStars || 2,
-            totalForks: parsed.stats?.totalForks || 0,
+            publicRepos: parsed.publicRepos ?? parsed.profile.public_repos ?? 11,
+            followers: parsed.profile.followers ?? 1,
+            following: parsed.profile.following ?? 0,
+            totalStars: parsed.totalStars ?? parsed.stats?.totalStars ?? 6,
+            totalForks: parsed.totalForks ?? parsed.stats?.totalForks ?? 0,
             repositories: Array.isArray(parsed.repositories)
-              ? parsed.repositories.slice(0, 10).map((r: any) => ({
+              ? parsed.repositories.slice(0, 11).map((r: any) => ({
                   name: r.name,
                   description: r.description,
                   language: r.language,
-                  stars: r.stargazers_count,
-                  forks: r.forks_count,
-                  url: r.html_url,
-                  updatedAt: r.updated_at,
+                  stars: r.stars ?? r.stargazers_count ?? 0,
+                  forks: r.forks ?? r.forks_count ?? 0,
+                  url: r.url ?? r.html_url,
+                  updatedAt: r.updatedAt ?? r.updated_at,
                 }))
               : [],
             syncedAt: parsed.syncedAt,

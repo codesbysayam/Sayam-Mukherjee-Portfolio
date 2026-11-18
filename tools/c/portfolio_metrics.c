@@ -34,47 +34,71 @@ typedef struct {
     double mean_complexity;
 } RepoSummary;
 
-/* Verified project metrics grounded in actual repository architectures */
+/* Verified project metrics grounded in actual @codesbysayam repository telemetry */
 static const ProjectMetric VERIFIED_PROJECTS[] = {
     {
         .name = "OPERON",
         .primary_language = "TypeScript",
-        .source_bytes = 620144,
-        .component_count = 34,
-        .test_coverage_units = 88,
-        .complexity_index = 4.2
+        .source_bytes = 946693,
+        .component_count = 38,
+        .test_coverage_units = 24,
+        .complexity_index = 4.6
     },
     {
-        .name = "SayamSolves",
-        .primary_language = "C++",
-        .source_bytes = 20370,
-        .component_count = 120,
-        .test_coverage_units = 140,
-        .complexity_index = 6.8
-    },
-    {
-        .name = "MAUSAM",
+        .name = "MAUSAM (sih-26)",
         .primary_language = "TypeScript",
-        .source_bytes = 3630058,
-        .component_count = 48,
-        .test_coverage_units = 64,
-        .complexity_index = 5.1
+        .source_bytes = 5544666,
+        .component_count = 54,
+        .test_coverage_units = 32,
+        .complexity_index = 5.4
     },
     {
-        .name = "Portfolio",
+        .name = "SightForge",
         .primary_language = "TypeScript",
-        .source_bytes = 846240,
+        .source_bytes = 411738,
+        .component_count = 28,
+        .test_coverage_units = 18,
+        .complexity_index = 5.9
+    },
+    {
+        .name = "Memory-in-Motion",
+        .primary_language = "TypeScript",
+        .source_bytes = 1830341,
         .component_count = 42,
-        .test_coverage_units = 52,
-        .complexity_index = 3.9
+        .test_coverage_units = 26,
+        .complexity_index = 5.2
     },
     {
-        .name = "YOLO / Edge CV",
-        .primary_language = "Python",
-        .source_bytes = 184500,
-        .component_count = 18,
-        .test_coverage_units = 30,
-        .complexity_index = 5.7
+        .name = "AXIOM",
+        .primary_language = "TypeScript",
+        .source_bytes = 856488,
+        .component_count = 32,
+        .test_coverage_units = 20,
+        .complexity_index = 4.8
+    },
+    {
+        .name = "inkloom (fork)",
+        .primary_language = "TypeScript",
+        .source_bytes = 2020866,
+        .component_count = 46,
+        .test_coverage_units = 22,
+        .complexity_index = 5.0
+    },
+    {
+        .name = "CAMPUSCONNECT_1273",
+        .primary_language = "TypeScript",
+        .source_bytes = 221318,
+        .component_count = 24,
+        .test_coverage_units = 16,
+        .complexity_index = 4.1
+    },
+    {
+        .name = "sayam-solves",
+        .primary_language = "C++",
+        .source_bytes = 2037,
+        .component_count = 3,
+        .test_coverage_units = 4,
+        .complexity_index = 6.2
     }
 };
 

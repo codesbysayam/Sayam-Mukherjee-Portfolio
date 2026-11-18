@@ -72,7 +72,7 @@ export type VerifiedProject = ProjectItem;
 /**
  * Authoritative project registry for Sayam Mukherjee's engineering portfolio.
  * Strictly synchronized to the 8 verified product/algorithm repositories on https://github.com/codesbysayam.
- * Supporting meta/template repositories (codesbysayam, Sayam-Mukherjee-Portfolio, mausam_demo) are intentionally excluded from this showcase grid.
+ * Supporting profile/meta/snapshot repositories (codesbysayam, Sayam-Mukherjee-Portfolio, mausam_sample) are intentionally summarized separately from this 8-project showcase grid.
  */
 export const PROJECTS: ProjectItem[] = [
   {
@@ -176,7 +176,7 @@ export const PROJECTS: ProjectItem[] = [
     whatIBuilt:
       "Built the React/TypeScript frontend architecture, telemetry visualization views (Doppler nowcasting, NAQI, INCOIS sea conditions, agro indices), Python ingestion utilities, and Ask MAUSAM conversational weather assistant.",
     implementation:
-      "Implemented across TypeScript (5.13 MB including spatial/domain datasets), Python (118.6 KB) environmental data utilities, JavaScript/CSS/HTML, C (31.1 KB), Jupyter notebooks, and PLpgSQL schemas in repository codesbysayam/mausam_sample.",
+      "Implemented across TypeScript, Python environmental data utilities, JavaScript/CSS/HTML, C, and PLpgSQL schemas in repository codesbysayam/mausam_sih-26 (succeeding earlier SIH snapshot mausam_sample).",
     architecture: [
       "Multi-domain weather dashboard covering atmospheric forecasts, Doppler nowcasting & UV",
       "Civic hazard & environmental layer aggregating SACHET/NDMA alerts & CPCB NAQI metrics",
@@ -188,12 +188,12 @@ export const PROJECTS: ProjectItem[] = [
       "Separated Python data processing utilities from client UI state to keep heavy multi-metric rendering responsive.",
     ],
     resultsAndStatus:
-      "Live SIH 2026 Team ALGNITE deployment at mausamgovt.vercel.app. Source verified under codesbysayam/mausam_sample (note: codesbysayam/mausam_demo is an empty AI Studio template placeholder, not a second project).",
+      "Live SIH 2026 Team ALGNITE deployment at mausamgovt.vercel.app. Active source maintained at codesbysayam/mausam_sih-26 alongside the earlier SIH snapshot codesbysayam/mausam_sample.",
     verifiedFacts: [
-      "Canonical Repository: codesbysayam/mausam_sample (branch: main)",
-      "Placeholder Disclosure: codesbysayam/mausam_demo is an unbuilt AI Studio template placeholder",
+      "Active Canonical Repository: codesbysayam/mausam_sih-26 (branch: main)",
+      "Earlier SIH Snapshot: codesbysayam/mausam_sample (archived baseline sprint)",
       "Deployment: https://mausamgovt.vercel.app",
-      "Dominant Stack: TypeScript (5.14 MB), Python (118.6 KB), JS (65.9 KB), CSS (50.0 KB), C (31.1 KB)",
+      "Dominant Stack: TypeScript, Python, JavaScript, CSS, HTML, C, PLpgSQL",
       "Event & Team: Smart India Hackathon (SIH 2026) · Team ALGNITE",
     ],
     category: "Weather & Geospatial Systems",
@@ -206,15 +206,15 @@ export const PROJECTS: ProjectItem[] = [
     techStack: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "Ask MAUSAM AI"],
     tech: ["TypeScript", "React", "Python", "Tailwind CSS"],
     tags: ["SIH 2026", "Team ALGNITE", "Doppler Nowcasting", "NAQI / INCOIS", "SACHET / NDMA"],
-    repository: "mausam_sample",
-    githubRepoName: "mausam_sample",
-    githubUrl: "https://github.com/codesbysayam/mausam_sample",
+    repository: "mausam_sih-26",
+    githubRepoName: "mausam_sih-26",
+    githubUrl: "https://github.com/codesbysayam/mausam_sih-26",
     defaultBranch: "main",
     isFork: false,
     team: "Team ALGNITE",
     event: "Smart India Hackathon (SIH 2026)",
     verificationNote:
-      "Canonical source repo is codesbysayam/mausam_sample (mausam_demo is an empty template repo).",
+      "Active canonical repository is codesbysayam/mausam_sih-26 (with codesbysayam/mausam_sample retained as an earlier SIH 2026 snapshot).",
     liveUrl: "https://mausamgovt.vercel.app",
     demoUrl: "https://mausamgovt.vercel.app",
     featured: true,
@@ -737,7 +737,7 @@ export function getProjectById(id: string): ProjectItem | undefined {
   if (normalized === "yolo" || normalized === "yoloedgevision") {
     return PROJECTS.find((p) => p.id === "sightforge");
   }
-  if (normalized === "mausamsample") {
+  if (normalized === "mausamsample" || normalized === "mausamsih26") {
     return PROJECTS.find((p) => p.id === "mausam");
   }
   if (normalized === "campusconnect1273") {

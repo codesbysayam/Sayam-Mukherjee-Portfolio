@@ -4,6 +4,8 @@ import { ProjectItem } from "../../data/projects";
 import { getProjectMedia } from "../../data/projectMedia";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { calculateReadingTime } from "../../utils/readingTime";
+import { computeProjectLifecycle } from "../../utils/projectLifecycle";
+import { ProjectMedia } from "./ProjectMedia";
 import {
   Star, GitFork, ExternalLink, Github, ArrowRight,
   Clock, Share2, Check, GitBranch
@@ -39,7 +41,6 @@ function ProjectCardComponent({
   const langColor = LANGUAGE_COLORS[language] || "#69734A";
   const starsCount = repo ? repo.stargazers_count : 0;
   const forksCount = repo ? repo.forks_count : 0;
-  const isForkRepo = repo?.fork ?? project.isFork ?? false;
   const branchName = repo?.default_branch || project.defaultBranch || "main";
   const lastUpdated = repo
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
@@ -47,11 +48,11 @@ function ProjectCardComponent({
 
   const readingStats = useMemo(() => calculateReadingTime(project), [project]);
   const media = useMemo(() => getProjectMedia(project.id), [project.id]);
+  const lifecycle = useMemo(() => computeProjectLifecycle(project, repo), [project, repo]);
 
   const cardRef = useRef<HTMLDivElement>(null);
   const [canHover, setCanHover] = useState(false);
   const [shared, setShared] = useState(false);
-  const [imgError, setImgError] = useState(false);
 
   const handleShare = async () => {
     const shareUrl = project.liveUrl || project.githubUrl;
@@ -125,40 +126,17 @@ function ProjectCardComponent({
         style={canHover ? { rotateX, rotateY, transformStyle: "preserve-3d" } : undefined}
         whileHover={canHover ? { y: -2 } : undefined}
         transition={{ duration: 0.18 }}
-        className="card card-interactive overflow-hidden flex flex-col justify-between group h-full relative focus-within:border-[var(--accent)] active:border-[var(--accent)]"
+        className="card card-interactive project-card h-full relative focus-within:border-[var(--accent)] active:border-[var(--accent)] group"
       >
-        {/* Clean Editorial Media Header */}
-        <div className="relative overflow-hidden border-b border-[var(--border)] bg-[var(--surface)]">
-          {!imgError ? (
-            <img
-              src={media.src}
-              alt={media.alt}
-              loading="lazy"
-              decoding="async"
-              referrerPolicy="no-referrer"
-              onError={() => setImgError(true)}
-              className="w-full aspect-[16/9] object-cover group-hover:scale-[1.025] transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]"
-            />
-          ) : (
-            <div className="w-full aspect-[16/9] flex items-center justify-center p-4 bg-[var(--surface)]">
-              <span className="font-mono text-xs text-[var(--text-muted)]">{project.title}</span>
-            </div>
-          )}
-          <div className="absolute top-3 left-3 flex items-center gap-1.5 flex-wrap">
-            {isFeaturedCandidate && (
-              <span className="px-2 py-0.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] text-[10px] font-mono font-bold uppercase tracking-wider">
-                Lead System
-              </span>
-            )}
-            {isForkRepo && (
-              <span className="px-2 py-0.5 rounded-[4px] bg-[#20231D]/90 text-[#F4F4ED] border border-[#41443A] text-[10px] font-mono font-semibold uppercase tracking-wider">
-                Fork · {branchName}
-              </span>
-            )}
-          </div>
-        </div>
+        <ProjectMedia
+          project={project}
+          media={media}
+          repo={repo}
+          isFeaturedCandidate={isFeaturedCandidate}
+          imgClassName="group-hover:scale-[1.025]"
+        />
 
-        <div className="p-5 sm:p-6 flex flex-col justify-between flex-1 space-y-4">
+        <div className="project-content p-5 sm:p-6 flex-1 space-y-4">
           {/* Unboxed Metadata Line */}
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-2 text-xs font-mono text-[var(--text-muted)] flex-wrap">
@@ -166,7 +144,7 @@ function ProjectCardComponent({
                 {project.categoryLabel || project.category}
               </span>
               <div className="flex items-center gap-2">
-                <span>{project.status}</span>
+                <span title={lifecycle.title}>{project.status}</span>
                 <span aria-hidden="true">·</span>
                 <span
                   className="inline-flex items-center gap-1"

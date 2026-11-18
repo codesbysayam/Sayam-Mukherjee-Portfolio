@@ -24,9 +24,8 @@ interface ScrollStoryThreadProps {
 }
 
 /**
- * Restrained desktop editorial chapter spine + continuous scroll progress thread.
- * Compact dot index at xl (1280-1535px, expanding labels on hover/focus) and
- * full persistent editorial index at 2xl (>= 1536px).
+ * Sticky desktop editorial chapter spine + continuous scroll progress thread.
+ * Lives inside its own CSS Grid track in .site-layout so it NEVER overlaps content.
  */
 export default function ScrollStoryThread({
   chapters = HOME_CHAPTERS,
@@ -50,11 +49,12 @@ export default function ScrollStoryThread({
   useEffect(() => {
     if (typeof window === "undefined" || chapters.length === 0) return;
 
-    let observer: IntersectionObserver | null = null;
+    let intersectionObserver: IntersectionObserver | null = null;
+    let mutationObserver: MutationObserver | null = null;
     let retryTimer: ReturnType<typeof setTimeout> | null = null;
 
     const bindObserver = () => {
-      if (observer) observer.disconnect();
+      if (intersectionObserver) intersectionObserver.disconnect();
 
       const elements = chapters
         .map((c) => document.getElementById(c.id))
@@ -63,7 +63,7 @@ export default function ScrollStoryThread({
       setAvailableIds(elements.map((el) => el.id));
       if (elements.length === 0) return false;
 
-      observer = new IntersectionObserver(
+      intersectionObserver = new IntersectionObserver(
         (entries) => {
           const visible = entries
             .filter((entry) => entry.isIntersecting)
@@ -74,26 +74,36 @@ export default function ScrollStoryThread({
           }
         },
         {
-          rootMargin: "-22% 0px -45% 0px",
-          threshold: [0.08, 0.3, 0.6],
+          rootMargin: "-20% 0px -45% 0px",
+          threshold: [0.06, 0.25, 0.55],
         }
       );
 
-      elements.forEach((el) => observer?.observe(el));
+      elements.forEach((el) => intersectionObserver?.observe(el));
       return elements.length === chapters.length;
     };
 
     const rafId = requestAnimationFrame(() => {
       const complete = bindObserver();
       if (!complete) {
-        retryTimer = setTimeout(bindObserver, 420);
+        retryTimer = setTimeout(bindObserver, 350);
       }
     });
+
+    const observeTarget = document.getElementById("main-content") || document.body;
+    mutationObserver = new MutationObserver(() => {
+      const presentCount = chapters.filter((c) => Boolean(document.getElementById(c.id))).length;
+      if (presentCount > 0) {
+        bindObserver();
+      }
+    });
+    mutationObserver.observe(observeTarget, { childList: true, subtree: true });
 
     return () => {
       cancelAnimationFrame(rafId);
       if (retryTimer) clearTimeout(retryTimer);
-      if (observer) observer.disconnect();
+      if (intersectionObserver) intersectionObserver.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
     };
   }, [chapters, routeKey]);
 
@@ -114,9 +124,9 @@ export default function ScrollStoryThread({
   return (
     <aside
       aria-label="Page chapters index"
-      className="hidden xl:flex fixed right-3 2xl:right-5 top-1/2 -translate-y-1/2 z-30 flex-col items-end gap-2 select-none"
+      className="section-navigation hidden xl:flex flex-col items-end gap-2 select-none pt-3"
     >
-      <div className="relative flex flex-col gap-2.5 pr-3 py-1">
+      <nav aria-label="Section chapters" className="relative flex flex-col gap-3 pr-3.5 py-1">
         {/* Background track */}
         <span
           aria-hidden="true"
@@ -141,18 +151,18 @@ export default function ScrollStoryThread({
               onClick={() => scrollToSection(chapter.id)}
               aria-current={isActive ? "location" : undefined}
               title={`${chapter.code} ${chapter.label}`}
-              className="group flex items-center gap-2 text-right cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1"
+              className="group flex items-center justify-end gap-2 text-right cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1 py-0.5 active:scale-[0.97] transition-transform"
             >
               <span
-                className={`font-mono text-[10px] tracking-[0.08em] uppercase transition-all duration-150 ${
+                className={`font-mono text-[10px] tracking-[0.08em] uppercase whitespace-nowrap transition-colors duration-150 ${
                   isActive
-                    ? "text-[var(--text)] font-bold opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 2xl:opacity-100"
-                    : "text-[var(--text-faint)] opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 2xl:opacity-75 2xl:group-hover:opacity-100 group-hover:text-[var(--text-muted)]"
-                } px-1.5 py-0.5 rounded-[4px] bg-[var(--bg)]/85 2xl:bg-transparent backdrop-blur-sm 2xl:backdrop-blur-none`}
+                    ? "text-[var(--text)] font-bold opacity-100"
+                    : "text-[var(--text-faint)] opacity-80 group-hover:opacity-100 group-hover:text-[var(--text-muted)]"
+                }`}
               >
                 {chapter.code} {chapter.label}
               </span>
-              <span className="relative flex items-center justify-center w-2.5 h-2.5">
+              <span className="relative flex items-center justify-center w-2.5 h-2.5 shrink-0">
                 {isActive && !reduced ? (
                   <motion.span
                     layoutId={`scrollStoryDot-${routeKey}`}
@@ -174,7 +184,7 @@ export default function ScrollStoryThread({
             </button>
           );
         })}
-      </div>
+      </nav>
     </aside>
   );
 }

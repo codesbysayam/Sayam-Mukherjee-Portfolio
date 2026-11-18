@@ -60,8 +60,8 @@ export function useGithub(): GitHubState {
       fork: r.fork ?? r.isFork ?? false,
       homepage: "",
       topics: Array.isArray(r.topics) ? r.topics : [],
-      open_issues_count: 0,
-      default_branch: "main",
+      open_issues_count: r.open_issues_count ?? 0,
+      default_branch: r.default_branch || r.defaultBranch || "main",
       archived: r.archived ?? r.isArchived ?? false,
     }));
   }, [data]);
@@ -120,8 +120,8 @@ export function useGithub(): GitHubState {
       publicRepos: data?.publicRepos || repos.length,
       followers: data?.followers || 1,
       following: data?.following || 0,
-      totalStars: data?.totalStars || 5,
-      totalForks: data?.totalForks || 0,
+      totalStars: data?.totalStars ?? 6,
+      totalForks: data?.totalForks ?? 0,
       repositories: repos.map((r) => ({
         name: r.name,
         fullName: r.full_name,

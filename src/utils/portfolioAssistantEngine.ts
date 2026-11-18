@@ -7,7 +7,7 @@ import { portfolioKnowledge } from "../data/portfolioKnowledge";
  * 1. Known facts -> Answered directly, accurately, and concisely.
  * 2. Unverified or missing facts -> "I don't have verified information about that in Sayam's portfolio."
  * 3. Class 12 stream is "Science stream" (includes Biology, Mathematics, Physics, Chemistry). Never PCM.
- * 4. Only 5 verified projects: OPERON, SayamSolves, MAUSAM, Interactive Portfolio, YOLOv8 Edge Vision.
+ * 4. 8 verified showcase projects (OPERON, MAUSAM, SightForge, Memory in Motion, AXIOM, INKLOOM, Campus Connect, SayamSolves) + Interactive Portfolio repo.
  * 5. Full support for English, Hindi, Bengali, Odia, and natural multilingual inquiries.
  */
 
@@ -53,12 +53,15 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     q.includes("के बारे में") || q.includes("कौन है") || q.includes("सर्टिफिकेट")
   ) {
     if (q.includes("project") || q.includes("प्रोजेक्ट") || q.includes("काम")) {
-      return `**सायम मुखर्जी के ५ सत्यापित प्रोजेक्ट्स (Verified Projects):**\n\n` +
-        `१. **[OPERON](https://github.com/codesbysayam/Operon)**: स्वायत्त मल्टी-एजेंट बिजनेस प्रोसेस ऑटोमेशन प्लेटफॉर्म (GDG on Campus KIIT हॅकाथॉन)।\n` +
-        `२. **[SayamSolves](https://github.com/codesbysayam/SayamSolves)**: C++ में दैनिक डेटा स्ट्रक्चर और LeetCode एल्गोरिथम रिपॉजिटरी।\n` +
-        `३. **[MAUSAM](https://github.com/codesbysayam/mausam)**: स्मार्ट इंडिया हैकथॉन (SIH 2026) मौसम और पर्यावरण टेलीमेट्री प्लेटफॉर्म (Team Algnite)।\n` +
-        `४. **[Interactive Portfolio](https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio)**: लाइव गिटहब टेलीमेट्री सिंक्रोनाइज़ेशन युक्त डेवलपर पोर्टफोलियो।\n` +
-        `५. **YOLOv8 Edge Computer Vision**: एज हार्डवेयर पर रियल-टाइम मोशन ट्रैकिंग और कंप्यूटर विज़न पाइपलाइन।`;
+      return `**सायम मुखर्जी के ८ सत्यापित प्रोजेक्ट्स (Verified Projects):**\n\n` +
+        `१. **[OPERON](https://github.com/codesbysayam/Operon)**: मानव-नियंत्रित मल्टी-एजेंट बिजनेस प्रोसेस ऑटोमेशन प्लेटफॉर्म (GDG on Campus KIIT हॅकाथॉन)।\n` +
+        `२. **[MAUSAM](https://github.com/codesbysayam/mausam_sih-26)**: स्मार्ट इंडिया हैकथॉन (SIH 2026) मौसम और Doppler रडार टेलीमेट्री प्लेटफॉर्म (Team ALGNITE)।\n` +
+        `३. **[SightForge](https://github.com/codesbysayam/SightForge)**: Next.js 15 + FastAPI YOLOv8, 17-कीपॉइंट पोज़ और ByteTrack कंप्यूटर विज़न पाइपलाइन।\n` +
+        `४. **[Memory in Motion](https://github.com/codesbysayam/Memory-in-Motion)**: DataForge 2026 (IIT Kharagpur) के लिए O(1) रिकरंट मेमोरी और Hebbian फास्ट-वेट्स रिसर्च लैब।\n` +
+        `५. **[AXIOM](https://github.com/codesbysayam/AXIOM)**: WCC Launchpad 30 (36h) में निर्मित ऑटोनॉमस ऑपरेशंस कंट्रोल प्लेन।\n` +
+        `६. **[INKLOOM](https://github.com/codesbysayam/inkloom)**: कंस्ट्रक्टेड AI लोगो डिज़ाइन वर्कस्पेस (पब्लिक फोर्क, \`master\` ब्रांच)।\n` +
+        `७. **[Campus Connect](https://github.com/codesbysayam/CAMPUSCONNECT_1273)**: Next.js कॉलेज इवेंट डिस्कवरी और ऑर्गनाइज़र डैशबोर्ड।\n` +
+        `८. **[SayamSolves](https://github.com/codesbysayam/sayam-solves)**: LeetHub V2 द्वारा सिंक की गई C++ DSA रिपॉजिटरी।`;
     }
 
     if (q.includes("शिक्षा") || q.includes("education") || q.includes("12") || q.includes("10") || q.includes("kiit")) {
@@ -104,12 +107,15 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     q.includes("শিক্ষা") || q.includes("প্রজেক্ট") || q.includes("কে সায়ম")
   ) {
     if (q.includes("project") || q.includes("প্রজেক্ট") || q.includes("কাজ")) {
-      return `**সায়ম মুখার্জির ৫টি প্রধান প্রজেক্ট (Verified Projects):**\n\n` +
-        `১. **[OPERON](https://github.com/codesbysayam/Operon)** - মানব-নিয়ন্ত্রিত মাল্টি-এজেন্ট বিজনেস অটোমেশন প্ল্যাটফর্ম (GDG on Campus KIIT হ্যাকাথন)।\n` +
-        `২. **[SayamSolves](https://github.com/codesbysayam/SayamSolves)** - C++ এবং LeetCode অ্যালগরিদমিক ডেটা স্ট্রাকচার রিপোজিটরি।\n` +
-        `৩. **[MAUSAM](https://github.com/codesbysayam/mausam)** - স্মার্ট ইন্ডিয়া হ্যাকাথন (SIH 2026) আবহাওয়া ও জলবায়ু অ্যানালিটিক্স প্ল্যাটফর্ম।\n` +
-        `৪. **[Interactive Portfolio](https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio)** - লাইভ গিটহাব টেলিমেট্রি সম্বলিত ব্যক্তিগত ডেভেলপার পোর্টফোলিও।\n` +
-        `৫. **YOLOv8 Edge Computer Vision** - রিয়েল-টাইম মোশন ট্র্যাকিং ও এজ ক্যামেরা পাইপলাইন (PyTorch ও OpenCV)।`;
+      return `**সায়ম মুখার্জির ৮টি যাচাইকৃত প্রজেক্ট (Verified Projects):**\n\n` +
+        `১. **[OPERON](https://github.com/codesbysayam/Operon)** - মানব-নিয়ন্ত্রিত মাল্টি-এজেন্ট বিজনেস অটোমেশন প্ল্যাটফর্ম (GDG on Campus KIIT)।\n` +
+        `২. **[MAUSAM](https://github.com/codesbysayam/mausam_sih-26)** - স্মার্ট ইন্ডিয়া হ্যাকাথন (SIH 2026) আবহাওয়া ও Doppler রাডার প্ল্যাটফর্ম (Team ALGNITE)।\n` +
+        `৩. **[SightForge](https://github.com/codesbysayam/SightForge)** - Next.js 15 + FastAPI YOLOv8 ও ByteTrack কম্পিউটার ভিশন সিস্টেম।\n` +
+        `৪. **[Memory in Motion](https://github.com/codesbysayam/Memory-in-Motion)** - IIT Kharagpur DataForge 2026-এর O(1) রিকারেন্ট মেমরি রিসার্চ ল্যাব।\n` +
+        `৫. **[AXIOM](https://github.com/codesbysayam/AXIOM)** - WCC Launchpad 30 (৩৬ ঘণ্টা) হ্যাকাথনে তৈরি অটোনমাস অপারেশনস কন্ট্রোল প্লেন।\n` +
+        `৬. **[INKLOOM](https://github.com/codesbysayam/inkloom)** - AI লোগো ডিজাইন ওয়ার্কস্পেস (পাবলিক ফর্ক, \`master\` ব্রাঞ্চ)।\n` +
+        `৭. **[Campus Connect](https://github.com/codesbysayam/CAMPUSCONNECT_1273)** - Next.js কলেজ ইভেন্ট ডিসকভারি ও অর্গানাইজার প্ল্যাটফর্ম।\n` +
+        `৮. **[SayamSolves](https://github.com/codesbysayam/sayam-solves)** - LeetHub V2 সিঙ্কড C++ অ্যালগরিদম রিপোজিটরি।`;
     }
 
     return `**সায়ম মুখার্জির শিক্ষাগত বিবরণ (Academic Record):**\n\n` +
@@ -125,7 +131,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **ବିଶ୍ୱବିଦ୍ୟାଳୟ:** KIIT ଭୁବନେଶ୍ୱର, B.Tech CSE (AI & ML), ପ୍ରଥମ ବର୍ଷ CGPA: **9.06**\n` +
       `• **ଦ୍ୱାଦଶ ଶ୍ରେଣୀ (CBSE Class 12):** 2024–2025 ବୋର୍ଡ଼ ପରୀକ୍ଷାରେ **86.2%** (Science stream: English, Hindi, Mathematics, Physics, Biology, Chemistry; PCM ନୁହେଁ)\n` +
       `• **ଦଶମ ଶ୍ରେଣୀ (CBSE Class 10):** 2022–2023 ବୋର୍ଡ଼ ପରୀକ୍ଷାରେ **92.6%**\n` +
-      `• **ପ୍ରୋଜେକ୍ଟ:** OPERON, SayamSolves, MAUSAM, Interactive Portfolio, YOLOv8 Edge Vision.`;
+      `• **ପ୍ରୋଜେକ୍ଟ:** OPERON, MAUSAM, SightForge, Memory in Motion, AXIOM, INKLOOM, Campus Connect, SayamSolves.`;
   }
 
   // 4. CLASS 12 & PCM SPECIFIC QUERY (Crucial Test)
@@ -206,47 +212,47 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
   }
 
   // 8. SPECIFIC PROJECT INQUIRIES
-  if (q.includes("operon")) {
+  if (q.includes("operon") && !q.includes("who built") && !q.includes("which team")) {
     return `**OPERON | Autonomous Operations, Human-Controlled:**\n\n` +
-      `• **What it is:** An agent-driven operations platform designed to automate enterprise workflows while keeping critical decisions traceable, auditable, and subject to human approval.\n` +
-      `• **Sayam's Exact Contribution:** Developed the complete web application interface and workflow mechanics from scratch, translating multi-agent logic into an interactive, usable application.\n` +
-      `• **Team & Event:** Built with Team Nexus for *Deploy or Die*, an Agent-Driven Lifecycle Hackathon organized by HowToAlgo × GDG on Campus KIIT (Track A: Business Process Automation).\n` +
-      `• **Team Members:** Sayam Mukherjee, Sounak Chowdhury, Gourab Biswas, Aarush Roy.\n` +
+      `• **What it is:** An agent-driven operations platform automating Support, Finance, HR, and Ops workflows while keeping critical decisions traceable, auditable, and subject to human-in-the-loop approval.\n` +
+      `• **Sayam's Exact Contribution:** Developed the TypeScript/React client workspace, Node.js/Express API integration, and approval checkpoint UI.\n` +
+      `• **Team & Event:** Built with Team NEXUS for *Deploy or Die* (HowToAlgo × GDG on Campus KIIT, Track A: Business Process Automation).\n` +
+      `• **Team Members:** Sounak Chowdhury (Team Leader), Sayam Mukherjee, Aarush Roy, Jaydeep Dutta.\n` +
       `• **Technologies:** TypeScript, Node.js, Express, React, Tailwind CSS, Multi-Agent Systems, Human-in-the-Loop Governance.\n` +
-      `• [Live Showcase](https://impressive-indigo-lkxz4q1q.edgeone.dev/) · [GitHub Repository](https://github.com/codesbysayam/Operon)`;
+      `• [Live Showcase](https://operonpro.vercel.app) · [GitHub Repository](https://github.com/codesbysayam/Operon)`;
   }
 
   if (q.includes("mausam")) {
     return `**MAUSAM | Smart Weather Intelligence Platform:**\n\n` +
-      `• **What it is:** An advanced weather and environmental analytics platform built for Smart India Hackathon (SIH 2026) by Team Algnite.\n` +
-      `• **Capabilities:** Real-time localized weather telemetry, AQI, UV index, soil moisture, humidity, wind, pollen count, and coastal tides across India.\n` +
-      `• **Sayam's Role:** Frontend and telemetry interface engineer.\n` +
-      `• **Technologies:** TypeScript, React, Python, Tailwind CSS, Weather APIs, Open-Meteo telemetry.\n` +
-      `• [Live Platform](https://mausamgovt.vercel.app) · [GitHub Repository](https://github.com/codesbysayam/mausam)`;
+      `• **What it is:** SIH 2026 atmospheric intelligence platform by Team ALGNITE unifying Doppler radar nowcasting, SACHET/NDMA alerts, CPCB NAQI air quality, INCOIS marine state, soil moisture, and Ask MAUSAM AI.\n` +
+      `• **Repository Disclosure:** Active canonical repo is \`codesbysayam/mausam_sih-26\` (with \`mausam_sample\` retained as an earlier SIH 2026 snapshot).\n` +
+      `• **Technologies:** TypeScript, React, Python, Tailwind CSS, Weather APIs, C, PLpgSQL.\n` +
+      `• [Live Platform](https://mausamgovt.vercel.app) · [Canonical Repository](https://github.com/codesbysayam/mausam_sih-26)`;
   }
 
-  if (q.includes("sayamsolves") || (q.includes("leetcode") && !q.includes("profile") && !q.includes("link"))) {
-    return `**SayamSolves | Algorithmic Problem Solving:**\n\n` +
-      `• **What it is:** Sayam's dedicated repository for disciplined daily algorithmic problem solving in C++.\n` +
-      `• **Focus:** Data structures, asymptotic time-space complexity guarantees, and LeetCode problem breakdowns.\n` +
-      `• **Technologies:** C++, Data Structures, Algorithms, Asymptotic Analysis.\n` +
-      `• [GitHub Repository](https://github.com/codesbysayam/SayamSolves) · [LeetCode Profile](https://leetcode.com/u/codesbysayam/)`;
+  if (q.includes("sightforge") || q.includes("yolo") || q.includes("edge vision") || q.includes("computer vision")) {
+    return `**SightForge | Dual-Service YOLOv8 Pose & ByteTrack Edge CV Platform:**\n\n` +
+      `• **What it is:** Real-time computer vision platform pairing a Next.js 15 / React 19 16:9 HTML5 Canvas client with a FastAPI Python backend.\n` +
+      `• **Pipeline Details:** YOLOv8 Person Detection (COCO Class ID 0), 17 COCO body keypoints pose estimation, Non-Max Suppression (IoU 0.45), ByteTrack persistent ID tracking, and PostgreSQL telemetry storage.\n` +
+      `• **Hosting Disclosure:** Self-hosted dual-service repository orchestrated via Makefile (no public cloud host URL).\n` +
+      `• [GitHub Repository](https://github.com/codesbysayam/SightForge)`;
   }
 
-  if (q.includes("yolo") || q.includes("edge vision") || q.includes("computer vision")) {
-    return `**YOLO / YOLOv8 Edge Computer Vision:**\n\n` +
-      `• **What it is:** An autonomous edge camera computer vision pipeline detecting movement vectors and spatial coordinates.\n` +
-      `• **Focus:** Lightweight YOLOv8 models optimized for low-latency inference on edge hardware.\n` +
-      `• **Technologies:** Python, PyTorch, OpenCV, YOLOv8, Edge AI.\n` +
-      `• [GitHub Profile](https://github.com/codesbysayam)`;
+  if (q.includes("sayamsolves") || q.includes("sayam-solves") || (q.includes("leetcode") && !q.includes("profile") && !q.includes("link"))) {
+    return `**SayamSolves | C++ DSA Solutions & LeetHub V2:**\n\n` +
+      `• **What it is:** Sayam's open-source C++ Data Structures & Algorithms repository automatically synced via LeetHub V2.\n` +
+      `• **Verified Metrics:** Tracks **3** committed solution directories in \`stats.json\` (LC 0005 Longest Palindromic Substring, 0033 Search in Rotated Sorted Array, 0115 Distinct Subsequences) alongside a **4-problem** LeetCode profile baseline.\n` +
+      `• **Technologies:** C++, Data Structures, Algorithms, Dynamic Programming, Binary Search.\n` +
+      `• [GitHub Repository](https://github.com/codesbysayam/sayam-solves) · [LeetCode Profile](https://leetcode.com/u/codesbysayam/)`;
   }
 
   if (q.includes("recent build") || q.includes("built recently") || q.includes("what did he build recently")) {
-    return `**Recently Built by Sayam Mukherjee:**\n\n` +
-      `1. **[Interactive Developer Portfolio](https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio)**: Built with dark/light liquid glass aesthetics, real-time GitHub repository telemetry, and a knowledge-grounded assistant.\n` +
-      `2. **[OPERON](https://github.com/codesbysayam/Operon)**: Developed the complete UI and human-in-the-loop workflow interface for GDG on Campus KIIT's Deploy or Die hackathon.\n` +
-      `3. **[MAUSAM](https://github.com/codesbysayam/mausam)**: Frontend interface for SIH 2026 smart weather intelligence.\n` +
-      `4. **[SayamSolves](https://github.com/codesbysayam/SayamSolves)**: Active C++ algorithmic problem-solving repository.`;
+    return `**Recently Built & Updated by Sayam Mukherjee:**\n\n` +
+      `1. **[Memory in Motion](https://github.com/codesbysayam/Memory-in-Motion)**: Mechanistic interpretability lab for DataForge 2026 (IIT Kharagpur) at [memoryinmotion.vercel.app](https://memoryinmotion.vercel.app).\n` +
+      `2. **[MAUSAM](https://github.com/codesbysayam/mausam_sih-26)**: SIH 2026 atmospheric telemetry & Doppler radar platform at [mausamgovt.vercel.app](https://mausamgovt.vercel.app).\n` +
+      `3. **[SightForge](https://github.com/codesbysayam/SightForge)**: Next.js 15 + FastAPI YOLOv8 person/pose & ByteTrack edge computer vision workbench.\n` +
+      `4. **[Interactive Portfolio](https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio)**: Editorial developer portfolio with pre-rendered 11-repo GitHub telemetry.\n` +
+      `5. **[AXIOM](https://github.com/codesbysayam/AXIOM)**: Autonomous operations control plane built in 36h for WCC Launchpad 30.`;
   }
 
   if (
@@ -256,13 +262,16 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     q.includes("what did he build") ||
     q.includes("portfolio projects")
   ) {
-    return `**Sayam's 5 Verified Flagship Projects:**\n\n` +
-      `1. **[OPERON](https://github.com/codesbysayam/Operon)**: Autonomous multi-agent operations platform with human-in-the-loop governance (GDG on Campus KIIT hackathon).\n` +
-      `2. **[SayamSolves](https://github.com/codesbysayam/SayamSolves)**: Algorithmic problem-solving repository in C++ focusing on data structures and LeetCode fundamentals.\n` +
-      `3. **[MAUSAM](https://github.com/codesbysayam/mausam)**: Smart weather and environmental telemetry platform for SIH 2026 by Team Algnite.\n` +
-      `4. **[Interactive Portfolio](https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio)**: Personal developer portfolio featuring real-time GitHub telemetry synchronization.\n` +
-      `5. **YOLOv8 Edge Computer Vision**: Real-time spatial tracking and edge vision pipeline with PyTorch and OpenCV.\n\n` +
-      `*(Note: Older concepts like Fitness OS Pro, Finance OS Pro, or Obsidian Optics are not active portfolio projects).*`;
+    return `**Sayam's 8 Verified Flagship Projects:**\n\n` +
+      `1. **[OPERON](https://github.com/codesbysayam/Operon)**: Multi-agent operations platform with human-in-the-loop approval gates ([operonpro.vercel.app](https://operonpro.vercel.app)).\n` +
+      `2. **[MAUSAM](https://github.com/codesbysayam/mausam_sih-26)**: SIH 2026 weather & Doppler nowcasting platform ([mausamgovt.vercel.app](https://mausamgovt.vercel.app)).\n` +
+      `3. **[SightForge](https://github.com/codesbysayam/SightForge)**: Dual-service Next.js 15 + FastAPI YOLOv8 pose & ByteTrack CV platform (local self-hosted).\n` +
+      `4. **[Memory in Motion](https://github.com/codesbysayam/Memory-in-Motion)**: DataForge 2026 mechanistic lab contrasting O(1) recurrent memory vs O(T) KV caches ([memoryinmotion.vercel.app](https://memoryinmotion.vercel.app)).\n` +
+      `5. **[AXIOM](https://github.com/codesbysayam/AXIOM)**: 36h WCC Launchpad 30 control plane with policy gates & audit chains ([axiomwcc.vercel.app](https://axiomwcc.vercel.app)).\n` +
+      `6. **[INKLOOM](https://github.com/codesbysayam/inkloom)**: Public fork (\`master\` branch, \`isFork: true\`) for constructed AI logo systems ([inkloom.art](https://inkloom.art), models under construction).\n` +
+      `7. **[Campus Connect](https://github.com/codesbysayam/CAMPUSCONNECT_1273)**: Next.js campus event discovery & organizer dashboard ([campusconnect1273.vercel.app](https://campusconnect1273.vercel.app), seeded in-memory store).\n` +
+      `8. **[SayamSolves](https://github.com/codesbysayam/sayam-solves)**: LeetHub V2 synced C++ DSA repository (3 repo files / 4 LC baseline).\n\n` +
+      `*(This site itself is hosted in \`codesbysayam/Sayam-Mukherjee-Portfolio\`. Concepts like Fitness OS Pro or Finance OS Pro are not active projects.)*`;
   }
 
   // 9. CONTENT CREATION & YOUTUBE
@@ -306,13 +315,13 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
 
   // 11. GITHUB INQUIRIES
   if (q.includes("github") || q.includes("repo") || q.includes("repositories") || q.includes("commit")) {
-    const repoCount = liveGitHubStats?.publicRepos || 9;
+    const repoCount = liveGitHubStats?.publicRepos || 11;
 
     return `**GitHub Activity & Work:**\n\n` +
       `• **Profile:** [@codesbysayam](https://github.com/codesbysayam)\n` +
-      `• **Public Repositories:** **${repoCount}** public repositories\n` +
-      `• **Key Repositories:** \`Operon\`, \`mausam\`, \`SayamSolves\`, \`Sayam-Mukherjee-Portfolio\`, \`codesbysayam\`\n` +
-      `• **Primary Languages:** TypeScript, C++, Python, JavaScript, CSS\n` +
+      `• **Public Repositories:** **${repoCount}** public repositories (**6** stars across portfolio builds)\n` +
+      `• **Key Repositories:** \`Operon\`, \`mausam_sih-26\`, \`SightForge\`, \`Memory-in-Motion\`, \`AXIOM\`, \`inkloom\`, \`CAMPUSCONNECT_1273\`, \`sayam-solves\`, \`Sayam-Mukherjee-Portfolio\`\n` +
+      `• **Primary Languages:** TypeScript, Python, CSS, JavaScript, HTML, C, C++\n` +
       `• Explore the live sync in the **GitHub Workspace** section of this portfolio!`;
   }
 
@@ -600,8 +609,8 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     return `**Sayam Mukherjee's Verified Resume:**\n\n` +
       `• **Headline:** Computer Science Engineering Student | AI & Machine Learning | Software Development\n` +
       `• **Degree & CGPA:** B.Tech in CSE (AI & ML) at KIIT University, Bhubaneswar (2025–2029) | First-Year CGPA: 9.06/10\n` +
-      `• **Featured Projects:** AXIOM (WCC Launchpad 30, Team Leader), Memory in Motion (DataForge 2026, IIT Kharagpur), Edge Computer Vision (YOLOv8), Mausam (SIH 2026), Operon (Multi-Agent Operations Platform, GDG KIIT)\n` +
-      `• **Hard Skills:** Python, Java, C, C++, JavaScript, TypeScript, React, Next.js, Node.js, Express.js, Tailwind CSS, Vite, PyTorch, OpenCV, YOLOv8, MongoDB, SQL\n` +
+      `• **Featured Projects:** AXIOM (WCC Launchpad 30), Memory in Motion (DataForge 2026, IIT Kharagpur), SightForge (YOLOv8 Pose + ByteTrack), MAUSAM (SIH 2026), OPERON (Multi-Agent Operations Platform, GDG KIIT), Campus Connect, INKLOOM, SayamSolves\n` +
+      `• **Hard Skills:** Python, Java, C, C++, JavaScript, TypeScript, React, Next.js 15, FastAPI, Node.js, Express.js, Tailwind CSS, Vite, PyTorch, YOLOv8, PostgreSQL, SQL\n` +
       `• **Certifications:** WCC Launchpad 30 (Team Leader), DataForge 2026, Technex'26 (IIT BHU), Toycathon 2021, MATLAB Workshop (IEEE KIIT)\n\n` +
       `📄 **View Complete Document:** [Open Verified Resume PDF](https://exciting-brown-6y14ojmv.edgeone.dev/)`;
   }
@@ -635,7 +644,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Video Showcase:** Dedicated YouTube creator showcase featuring all 3 channels, analytics, and video library.\n` +
       `• **Skills:** Interactive technical stack matrix, languages, and live repository telemetry.\n` +
       `• **Ecosystem:** System architecture diagrams and engineering node graphs.\n` +
-      `• **Projects:** All 5 verified projects (OPERON, SayamSolves, MAUSAM, Portfolio, YOLOv8).\n` +
+      `• **Projects:** All 8 verified projects (OPERON, MAUSAM, SightForge, Memory in Motion, AXIOM, INKLOOM, Campus Connect, SayamSolves).\n` +
       `• **Certificates:** Verified hackathon honors, competition credentials, and grade reports.\n` +
       `• **Journal:** Technical reflections, architectural notes, and articles.\n` +
       `• **Contact:** Direct message channel and social profiles.`;
@@ -654,7 +663,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
   ) {
     return `**About Sayam Mukherjee:**\n\n` +
       `Sayam is a 2nd-year B.Tech Computer Science and Engineering undergraduate specializing in **Artificial Intelligence & Machine Learning** at **Kalinga Institute of Industrial Technology (KIIT)**, Bhubaneswar (First-Year CGPA: **9.06**).\n\n` +
-      `He builds full-stack systems and AI pipelines, focusing on agent-driven platforms (like **OPERON**), meteorological telemetry (**MAUSAM** for SIH 2026), and algorithmic foundations in C++ (**SayamSolves**). He is also an educational and creative content creator across YouTube channels Daily Decipher, Technical AZ, and Obsidian Optics (@ObsidianOptics_in).\n\n` +
+      `He builds full-stack systems and AI pipelines, focusing on agent-driven platforms (**OPERON**, **AXIOM**), meteorological telemetry (**MAUSAM** for SIH 2026), edge computer vision (**SightForge**), mechanistic interpretability (**Memory in Motion**), and algorithmic foundations in C++ (**SayamSolves**). He is also an educational and creative content creator across YouTube channels Daily Decipher, Technical AZ, and Obsidian Optics (@ObsidianOptics_in).\n\n` +
       `You can ask me about his projects, education, skills, GitHub activity, content creation, or verified credentials!`;
   }
 
@@ -662,9 +671,9 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
   return `I don't have verified information about that in Sayam's portfolio.\n\n` +
     `I can give you verified details on:\n` +
     `• **Education:** KIIT (9.06 CGPA), CBSE Class 12 (86.2% Science stream), CBSE Class 10 (92.6%)\n` +
-    `• **Projects:** OPERON, SayamSolves, MAUSAM, Interactive Portfolio, YOLOv8 Edge Vision\n` +
-    `• **Technical Stack:** C++, Python, TypeScript, React, Node.js, PyTorch\n` +
+    `• **Projects:** OPERON, MAUSAM, SightForge, Memory in Motion, AXIOM, INKLOOM, Campus Connect, SayamSolves\n` +
+    `• **Technical Stack:** C++, Python, TypeScript, React, Next.js, FastAPI, Node.js, YOLOv8\n` +
     `• **Content Creation:** YouTube channels Daily Decipher (10K+ historical), Technical AZ (2.06K+ historical), and Obsidian Optics (@ObsidianOptics_in)\n` +
-    `• **Competitions:** DataForge 2026 (IIT KGP), Deploy or Die (GDG KIIT), Technex'26 (IIT BHU), Toycathon\n` +
+    `• **Competitions:** DataForge 2026 (IIT KGP), Deploy or Die (GDG KIIT), WCC Launchpad 30, IGNITHON 2.0, Technex'26 (IIT BHU), Toycathon\n` +
     `• **Contact & Profiles:** GitHub, LinkedIn, Resume, Email`;
 }

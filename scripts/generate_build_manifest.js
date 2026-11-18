@@ -40,6 +40,27 @@ function generateManifest() {
     hasLive: Boolean(p.liveUrl)
   }));
 
+  const githubJsonPath = path.join(ROOT_DIR, 'public', 'data', 'github.json');
+  const githubData = fs.existsSync(githubJsonPath) ? JSON.parse(fs.readFileSync(githubJsonPath, 'utf-8')) : null;
+  const languagesMonitored = githubData?.languageBytes
+    ? Object.entries(githubData.languageBytes)
+        .sort((a, b) => Number(b[1]) - Number(a[1]))
+        .map(([lang]) => lang)
+    : [
+        'TypeScript',
+        'Python',
+        'CSS',
+        'JavaScript',
+        'HTML',
+        'C',
+        'Jupyter Notebook',
+        'PLpgSQL',
+        'Makefile',
+        'C++',
+        'Dockerfile',
+        'Shell'
+      ];
+
   const manifest = {
     appName: metadata.name || 'Sayam Mukherjee Portfolio',
     version: pkg.version || '1.0.0',
@@ -48,15 +69,7 @@ function generateManifest() {
     projectCount: verifiedProjects.length,
     projects: verifiedProjects,
     systemIntegrity: 'verified',
-    languagesMonitored: [
-      'TypeScript',
-      'JavaScript',
-      'CSS',
-      'HTML',
-      'Python',
-      'C',
-      'Jupyter Notebook'
-    ]
+    languagesMonitored
   };
 
   fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });

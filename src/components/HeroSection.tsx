@@ -200,9 +200,9 @@ function HeroSectionComponent({
             delay: 0.14,
             ease: MOTION_EASE.out,
           }}
-          className="flex flex-col gap-4 w-full lg:items-end"
+          className="flex flex-col gap-4 w-full min-w-0 lg:items-end"
         >
-          <div className="w-full max-w-[500px] overflow-hidden rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)]">
+          <div className="w-full min-w-0 max-w-[500px] overflow-hidden rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)]">
             {/* Visual Dual Stage: Portrait + Procedural Three.js Machined Logic Core */}
             <div className="grid grid-cols-1 sm:grid-cols-12 border-b border-[var(--border)]">
               <MaskMediaReveal

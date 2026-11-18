@@ -1,130 +1,146 @@
 {
   "projects": [
     {
-      "id": "yolo-edge-vision",
-      "title": "YOLO / Edge Computer Vision",
-      "description": "A high-performance real-time edge computer vision pipeline using YOLOv8, PyTorch, and OpenCV for multi-object tracking and zone analytics.",
-      "longDescription": "Real-time edge computer vision pipeline engineered with YOLOv8, PyTorch, and OpenCV. Capable of high-frame-rate bounding box inference, multi-object tracking, and region-of-interest spatial analytics.",
+      "id": "operon",
+      "title": "OPERON",
+      "description": "Multi-agent operations engine across Support, Finance, HR, and Ops that automates task routing while enforcing explicit human-in-the-loop approval gates.",
+      "longDescription": "OPERON is an autonomous operations platform engineered to coordinate role-scoped software agents across Support, Finance, HR, and Operations workflows with an explicit human-in-the-loop approval state machine.",
       "tags": [
-        "Python",
-        "YOLOv8",
-        "PyTorch",
-        "OpenCV",
-        "Computer Vision"
-      ],
-      "category": "ai_ml",
-      "imageUrl": "https://picsum.photos/seed/yolo/800/450",
-      "featured": true,
-      "githubUrl": "https://github.com/codesbysayam",
-      "metrics": [
-        {
-          "label": "Inference Speed",
-          "value": "14ms / frame"
-        },
-        {
-          "label": "mAP@0.5",
-          "value": "92.4%"
-        },
-        {
-          "label": "Model Weight Size",
-          "value": "12.4 MB"
-        }
-      ]
-    },
-    {
-      "id": "daily-decipher",
-      "title": "Daily Decipher",
-      "description": "An automated AI newsletter summarization engine that aggregates technical publications and outputs high-signal digests.",
-      "longDescription": "Daily Decipher is a personal aggregator and summarizer. It periodically crawls top-tier machine learning publications (arXiv, Hugging Face Daily, TechCrunch) and stock market blogs. Using Gemini 1.5/3.5 models via a custom multi-agent structure, it parses dense technical texts, summarizes them into structured Markdown, extracts core sentiments, and automatically distributes them to a Telegram group and email subscribers via Mailgun.",
-      "tags": [
-        "Gemini API",
+        "TypeScript",
+        "React",
         "Node.js",
         "Express",
-        "Cheerio",
-        "Markdown",
-        "Cron"
+        "Multi-Agent AI"
       ],
       "category": "ai_ml",
-      "imageUrl": "https://picsum.photos/seed/decipher/800/450",
+      "imageUrl": "",
       "featured": true,
-      "githubUrl": "https://github.com/codesbysayam/daily-decipher",
-      "metrics": [
-        {
-          "label": "Articles Scoped",
-          "value": "1,200+/mo"
-        },
-        {
-          "label": "Summarization Time",
-          "value": "<2.1s"
-        },
-        {
-          "label": "Telegram Subscribers",
-          "value": "150+"
-        }
-      ]
+      "githubUrl": "https://github.com/codesbysayam/Operon",
+      "liveUrl": "https://operonpro.vercel.app"
     },
     {
-      "id": "bullrun-analytics",
-      "title": "BullRun Analytics",
-      "description": "Financial sentiment analyzer correlating global financial news and Reddit trends with technical market indicators.",
-      "longDescription": "BullRun Analytics represents my stock market learning journey. It is a full-stack engine that tracks tickers, performs text sentiment classification using FinBERT, and overlays these sentiment indexes on stock charts. Users can visualize correlation peaks between social media hype (Reddit /r/wallstreetbets) and actual volume breakouts, utilizing a React financial charting interface.",
+      "id": "mausam",
+      "title": "MAUSAM",
+      "description": "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM AI.",
+      "longDescription": "Built for Smart India Hackathon (SIH 2026) with Team ALGNITE, MAUSAM consolidates hyper-local weather telemetry, Doppler radar nowcasting, civic alerts, NAQI air quality, and coastal advisories.",
       "tags": [
-        "Python",
-        "FinBERT",
+        "TypeScript",
         "React",
-        "Recharts",
+        "Python",
+        "Tailwind CSS",
+        "Weather APIs"
+      ],
+      "category": "full_stack",
+      "imageUrl": "",
+      "featured": true,
+      "githubUrl": "https://github.com/codesbysayam/mausam_sih-26",
+      "liveUrl": "https://mausamgovt.vercel.app"
+    },
+    {
+      "id": "sightforge",
+      "title": "SIGHTFORGE",
+      "description": "Real-time computer vision platform pairing a Next.js 15 / React 19 16:9 Canvas client with FastAPI YOLOv8 person detection, 17-keypoint pose, and ByteTrack.",
+      "longDescription": "SightForge is a dual-service computer vision workbench combining a Next.js 15 / React 19 HTML5 Canvas client with a FastAPI YOLOv8 COCO-0 detection, 17-keypoint pose estimation, ByteTrack tracking, and PostgreSQL backend.",
+      "tags": [
+        "Next.js 15",
+        "React 19",
         "FastAPI",
+        "YOLOv8",
+        "ByteTrack",
+        "PostgreSQL"
+      ],
+      "category": "ai_ml",
+      "imageUrl": "",
+      "featured": true,
+      "githubUrl": "https://github.com/codesbysayam/SightForge"
+    },
+    {
+      "id": "memory-in-motion",
+      "title": "MEMORY IN MOTION",
+      "description": "Interactive mechanistic interpretability lab built for DataForge 2026 (IIT Kharagpur) contrasting O(1) recurrent state and Hebbian fast weights against O(T) KV caches.",
+      "longDescription": "Memory in Motion is an interactive visualization lab built with Team ALGNITE exploring fixed-size O(1) recurrent memory updates, Hebbian fast weights, and Dragon Hatchling (BDH) dynamics alongside O(T) KV caches.",
+      "tags": [
+        "TypeScript",
+        "React",
+        "KaTeX",
+        "D3.js",
+        "Python"
+      ],
+      "category": "ai_ml",
+      "imageUrl": "",
+      "featured": true,
+      "githubUrl": "https://github.com/codesbysayam/Memory-in-Motion",
+      "liveUrl": "https://memoryinmotion.vercel.app"
+    },
+    {
+      "id": "axiom",
+      "title": "AXIOM",
+      "description": "Autonomous operations control plane built in 36h for WCC Launchpad 30 featuring deterministic policy rules, approval gates, failure recovery, sandboxes, and audit chains.",
+      "longDescription": "AXIOM governs high-stakes autonomous workflows through deterministic policy evaluation, human approval gates, dry-run simulation sandboxes, failure recovery transitions, and tamper-evident audit structures.",
+      "tags": [
+        "TypeScript",
+        "React",
+        "Control Plane",
+        "Policy Engine",
+        "Audit Chain"
+      ],
+      "category": "systems",
+      "imageUrl": "",
+      "featured": false,
+      "githubUrl": "https://github.com/codesbysayam/AXIOM",
+      "liveUrl": "https://axiomwcc.vercel.app"
+    },
+    {
+      "id": "inkloom",
+      "title": "INKLOOM",
+      "description": "Forked workspace for specialized AI logo design models turning brand constraints into constructed typography/symbol marks with composition lockups and clear-space rules.",
+      "longDescription": "Public fork (master branch, isFork: true) exploring constructed AI logo design pipelines hosted in early access at inkloom.art while specialized logo models remain under active construction.",
+      "tags": [
+        "TypeScript",
+        "React",
+        "PLpgSQL",
+        "Docker",
+        "Design Systems"
+      ],
+      "category": "ai_ml",
+      "imageUrl": "",
+      "featured": false,
+      "githubUrl": "https://github.com/codesbysayam/inkloom",
+      "liveUrl": "https://inkloom.art"
+    },
+    {
+      "id": "campus-connect",
+      "title": "CAMPUS CONNECT",
+      "description": "Next.js & TypeScript campus event management platform pairing student discovery and registration with an organizer dashboard and Vitest suite.",
+      "longDescription": "Campus Connect streamlines campus event discovery, filtering, and registration with an organizer dashboard and Vitest verification suite using README-documented seeded in-memory storage.",
+      "tags": [
+        "Next.js",
+        "TypeScript",
+        "React",
+        "Vitest",
         "Tailwind CSS"
       ],
-      "category": "finance",
-      "imageUrl": "https://picsum.photos/seed/bullrun/800/450",
-      "featured": true,
-      "githubUrl": "https://github.com/codesbysayam/bullrun-analytics",
-      "metrics": [
-        {
-          "label": "Backtest Accuracy",
-          "value": "78.6%"
-        },
-        {
-          "label": "News Scraped/day",
-          "value": "5,000+"
-        },
-        {
-          "label": "Supported Tickers",
-          "value": "50+ US/NSE"
-        }
-      ]
+      "category": "full_stack",
+      "imageUrl": "",
+      "featured": false,
+      "githubUrl": "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
+      "liveUrl": "https://campusconnect1273.vercel.app/"
     },
     {
-      "id": "cognitive-canvas",
-      "title": "Cognitive Canvas",
-      "description": "A media resource hub that translates conceptual sketches and raw assets into high-CTR graphic templates.",
-      "longDescription": "Cognitive Canvas merges my skill as a Freelance Thumbnail Designer with software. It uses AI diffusion models and canvas-based layering (React Konva) to let creators draft design assets rapidly. Users can upload rough layouts, write text prompts, and watch the system generate aesthetic, high-contrast, clickable thumbnail compositions ready for export in 4K resolution.",
+      "id": "sayam-solves",
+      "title": "SAYAMSOLVES",
+      "description": "Open-source C++ algorithmic archive synced via LeetHub V2, tracking 3 repository problem solutions (LC 0005, 0033, 0115) alongside a 4-problem LeetCode baseline.",
+      "longDescription": "SayamSolves is a disciplined C++ Data Structures & Algorithms repository synced from LeetCode via LeetHub V2 with complexity notes across string expansion, rotated binary search, and dynamic programming.",
       "tags": [
-        "React",
-        "Konva.js",
-        "Stable Diffusion API",
-        "Tailwind CSS",
-        "Canvas"
+        "C++",
+        "DSA",
+        "Algorithms",
+        "LeetHub V2"
       ],
-      "category": "design_media",
-      "imageUrl": "https://picsum.photos/seed/canvas/800/450",
+      "category": "dsa",
+      "imageUrl": "",
       "featured": false,
-      "githubUrl": "https://github.com/codesbysayam/cognitive-canvas",
-      "metrics": [
-        {
-          "label": "Avg CTR Increase",
-          "value": "14.2%"
-        },
-        {
-          "label": "Thumbnails Rendered",
-          "value": "340+"
-        },
-        {
-          "label": "Active Creators",
-          "value": "12"
-        }
-      ]
+      "githubUrl": "https://github.com/codesbysayam/sayam-solves"
     }
   ],
   "blogs": [],
@@ -283,7 +299,7 @@
     "books": [
       {
         "title": "Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow",
-        "author": "Aur\u00e9lien G\u00e9ron",
+        "author": "Aurélien Géron",
         "progress": 65
       },
       {
@@ -319,11 +335,11 @@
       }
     ],
     "leetcode": {
-      "solved": 312,
-      "target": 500,
-      "easy": 120,
-      "medium": 162,
-      "hard": 30
+      "solved": 4,
+      "target": 100,
+      "easy": 1,
+      "medium": 2,
+      "hard": 1
     }
   },
   "stats": {
@@ -425,7 +441,7 @@
       "role": "Tech Content Creator (100k+ subs)",
       "content": "Working with Sayam was a game-changer for our click-through rates. His designs are rooted in deep visual psychology. Our overall channel CTR boosted from 4.8% to 7.2% in just two months of design cooperation.",
       "approved": true,
-      "avatar": "https://picsum.photos/seed/creator1/100/100",
+      "avatar": "",
       "date": "Feb 2025"
     }
   ],
@@ -4893,6 +4909,753 @@
       "device": "Desktop",
       "source": "Google",
       "duration": 115
+    },
+    {
+      "id": "visit_1794994858489_fhz0",
+      "timestamp": "2026-11-18T09:40:58.489Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 90
+    },
+    {
+      "id": "visit_1794994858499_uhcd",
+      "timestamp": "2026-11-18T09:40:58.499Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 33
+    },
+    {
+      "id": "visit_1794994858531_v508",
+      "timestamp": "2026-11-18T09:40:58.531Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 139
+    },
+    {
+      "id": "visit_1794994858537_4zqk",
+      "timestamp": "2026-11-18T09:40:58.537Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 99
+    },
+    {
+      "id": "visit_1794994874405_npr5",
+      "timestamp": "2026-11-18T09:41:14.405Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 43
+    },
+    {
+      "id": "visit_1794994880117_1zgs",
+      "timestamp": "2026-11-18T09:41:20.117Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 144
+    },
+    {
+      "id": "visit_1794994880120_uihn",
+      "timestamp": "2026-11-18T09:41:20.120Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 31
+    },
+    {
+      "id": "visit_1794994880138_t5z3",
+      "timestamp": "2026-11-18T09:41:20.138Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 116
+    },
+    {
+      "id": "visit_1794994880141_kemw",
+      "timestamp": "2026-11-18T09:41:20.141Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 134
+    },
+    {
+      "id": "visit_1794994893934_j8dx",
+      "timestamp": "2026-11-18T09:41:33.934Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 79
+    },
+    {
+      "id": "visit_1794994893938_me3w",
+      "timestamp": "2026-11-18T09:41:33.938Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 139
+    },
+    {
+      "id": "visit_1794994893951_z6h7",
+      "timestamp": "2026-11-18T09:41:33.951Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 108
+    },
+    {
+      "id": "visit_1794994893954_gkvi",
+      "timestamp": "2026-11-18T09:41:33.954Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 113
+    },
+    {
+      "id": "visit_1794994905532_e9x7",
+      "timestamp": "2026-11-18T09:41:45.532Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 140
+    },
+    {
+      "id": "visit_1794994905535_4bdu",
+      "timestamp": "2026-11-18T09:41:45.535Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 44
+    },
+    {
+      "id": "visit_1794994905556_dw48",
+      "timestamp": "2026-11-18T09:41:45.556Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 137
+    },
+    {
+      "id": "visit_1794994905559_daxg",
+      "timestamp": "2026-11-18T09:41:45.559Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 111
+    },
+    {
+      "id": "visit_1794994912558_4yw7",
+      "timestamp": "2026-11-18T09:41:52.558Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 57
+    },
+    {
+      "id": "visit_1794994912619_sipo",
+      "timestamp": "2026-11-18T09:41:52.619Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 88
+    },
+    {
+      "id": "visit_1794994912638_tdtr",
+      "timestamp": "2026-11-18T09:41:52.638Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 94
+    },
+    {
+      "id": "visit_1794994912642_rb9z",
+      "timestamp": "2026-11-18T09:41:52.642Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 123
+    },
+    {
+      "id": "visit_1794994936167_i4e4",
+      "timestamp": "2026-11-18T09:42:16.167Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 96
+    },
+    {
+      "id": "visit_1794994942328_yg9i",
+      "timestamp": "2026-11-18T09:42:22.328Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 83
+    },
+    {
+      "id": "visit_1794994942332_jnfp",
+      "timestamp": "2026-11-18T09:42:22.332Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 118
+    },
+    {
+      "id": "visit_1794994942364_xv2i",
+      "timestamp": "2026-11-18T09:42:22.364Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 114
+    },
+    {
+      "id": "visit_1794994942367_r4kf",
+      "timestamp": "2026-11-18T09:42:22.367Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 143
+    },
+    {
+      "id": "visit_1794994958123_zr0u",
+      "timestamp": "2026-11-18T09:42:38.123Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 59
+    },
+    {
+      "id": "visit_1794994958125_e3ni",
+      "timestamp": "2026-11-18T09:42:38.125Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 48
+    },
+    {
+      "id": "visit_1794994958145_76wl",
+      "timestamp": "2026-11-18T09:42:38.145Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 95
+    },
+    {
+      "id": "visit_1794994958149_rv2i",
+      "timestamp": "2026-11-18T09:42:38.149Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 132
+    },
+    {
+      "id": "visit_1794994970220_kl4n",
+      "timestamp": "2026-11-18T09:42:50.220Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 80
+    },
+    {
+      "id": "visit_1794994970223_1a9i",
+      "timestamp": "2026-11-18T09:42:50.223Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 108
+    },
+    {
+      "id": "visit_1794994970240_lofr",
+      "timestamp": "2026-11-18T09:42:50.240Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 36
+    },
+    {
+      "id": "visit_1794994970243_xann",
+      "timestamp": "2026-11-18T09:42:50.243Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 49
+    },
+    {
+      "id": "visit_1794995025559_qogw",
+      "timestamp": "2026-11-18T09:43:45.559Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 75
+    },
+    {
+      "id": "visit_1794995025562_x2f5",
+      "timestamp": "2026-11-18T09:43:45.562Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 107
+    },
+    {
+      "id": "visit_1794995025578_h0io",
+      "timestamp": "2026-11-18T09:43:45.578Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 37
+    },
+    {
+      "id": "visit_1794995025581_lhwl",
+      "timestamp": "2026-11-18T09:43:45.581Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 80
+    },
+    {
+      "id": "visit_1794995039000_tv1r",
+      "timestamp": "2026-11-18T09:43:59.000Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 139
+    },
+    {
+      "id": "visit_1794995039004_hqlj",
+      "timestamp": "2026-11-18T09:43:59.004Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 95
+    },
+    {
+      "id": "visit_1794995039013_ra7t",
+      "timestamp": "2026-11-18T09:43:59.013Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 129
+    },
+    {
+      "id": "visit_1794995039016_tqnx",
+      "timestamp": "2026-11-18T09:43:59.016Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 53
+    },
+    {
+      "id": "visit_1794995042985_s8ts",
+      "timestamp": "2026-11-18T09:44:02.985Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 138
+    },
+    {
+      "id": "visit_1794995042988_z1z5",
+      "timestamp": "2026-11-18T09:44:02.988Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 117
+    },
+    {
+      "id": "visit_1794995043032_bhkq",
+      "timestamp": "2026-11-18T09:44:03.032Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 129
+    },
+    {
+      "id": "visit_1794995043037_4l9w",
+      "timestamp": "2026-11-18T09:44:03.037Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 70
+    },
+    {
+      "id": "visit_1794995058394_6dyr",
+      "timestamp": "2026-11-18T09:44:18.394Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 83
+    },
+    {
+      "id": "visit_1794995058399_uvdr",
+      "timestamp": "2026-11-18T09:44:18.399Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 50
+    },
+    {
+      "id": "visit_1794995058405_csvq",
+      "timestamp": "2026-11-18T09:44:18.405Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 134
+    },
+    {
+      "id": "visit_1794995058411_8f9j",
+      "timestamp": "2026-11-18T09:44:18.411Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 70
+    },
+    {
+      "id": "visit_1794995062370_wi9b",
+      "timestamp": "2026-11-18T09:44:22.370Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 51
+    },
+    {
+      "id": "visit_1794995062379_07j4",
+      "timestamp": "2026-11-18T09:44:22.379Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 81
+    },
+    {
+      "id": "visit_1794995062419_plb0",
+      "timestamp": "2026-11-18T09:44:22.419Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 75
+    },
+    {
+      "id": "visit_1794995062423_8n1z",
+      "timestamp": "2026-11-18T09:44:22.423Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 104
+    },
+    {
+      "id": "visit_1794995076297_of3y",
+      "timestamp": "2026-11-18T09:44:36.297Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 41
+    },
+    {
+      "id": "visit_1794995076301_29ow",
+      "timestamp": "2026-11-18T09:44:36.301Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 114
+    },
+    {
+      "id": "visit_1794995076333_jng2",
+      "timestamp": "2026-11-18T09:44:36.333Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 134
+    },
+    {
+      "id": "visit_1794995076337_e8yn",
+      "timestamp": "2026-11-18T09:44:36.337Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 68
+    },
+    {
+      "id": "visit_1794995146547_s30v",
+      "timestamp": "2026-11-18T09:45:46.547Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 127
+    },
+    {
+      "id": "visit_1794995146550_a1l4",
+      "timestamp": "2026-11-18T09:45:46.550Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 31
+    },
+    {
+      "id": "visit_1794995146571_vhp5",
+      "timestamp": "2026-11-18T09:45:46.571Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 148
+    },
+    {
+      "id": "visit_1794995146574_qscb",
+      "timestamp": "2026-11-18T09:45:46.574Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 113
+    },
+    {
+      "id": "visit_1794995177834_ej5i",
+      "timestamp": "2026-11-18T09:46:17.834Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 80
+    },
+    {
+      "id": "visit_1794995177837_dpmv",
+      "timestamp": "2026-11-18T09:46:17.837Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 42
+    },
+    {
+      "id": "visit_1794995177855_z112",
+      "timestamp": "2026-11-18T09:46:17.855Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 103
+    },
+    {
+      "id": "visit_1794995177861_kfw8",
+      "timestamp": "2026-11-18T09:46:17.861Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 105
+    },
+    {
+      "id": "visit_1794995190638_jdgc",
+      "timestamp": "2026-11-18T09:46:30.638Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 39
+    },
+    {
+      "id": "visit_1794995190641_vlbd",
+      "timestamp": "2026-11-18T09:46:30.641Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 112
+    },
+    {
+      "id": "visit_1794995190650_nih4",
+      "timestamp": "2026-11-18T09:46:30.650Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 64
+    },
+    {
+      "id": "visit_1794995190653_bdvl",
+      "timestamp": "2026-11-18T09:46:30.653Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 82
+    },
+    {
+      "id": "visit_1794995194072_u007",
+      "timestamp": "2026-11-18T09:46:34.072Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 50
+    },
+    {
+      "id": "visit_1794995194075_39c0",
+      "timestamp": "2026-11-18T09:46:34.075Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 84
+    },
+    {
+      "id": "visit_1794995194092_zjud",
+      "timestamp": "2026-11-18T09:46:34.092Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 144
+    },
+    {
+      "id": "visit_1794995194098_smyj",
+      "timestamp": "2026-11-18T09:46:34.098Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 115
+    },
+    {
+      "id": "visit_1794995206218_ovco",
+      "timestamp": "2026-11-18T09:46:46.218Z",
+      "page": "PROJECTS Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 77
+    },
+    {
+      "id": "visit_1794995209581_q8ii",
+      "timestamp": "2026-11-18T09:46:49.581Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 74
+    },
+    {
+      "id": "visit_1794995209584_ehk2",
+      "timestamp": "2026-11-18T09:46:49.584Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 134
+    },
+    {
+      "id": "visit_1794995209640_9acy",
+      "timestamp": "2026-11-18T09:46:49.640Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 36
+    },
+    {
+      "id": "visit_1794995209644_vumt",
+      "timestamp": "2026-11-18T09:46:49.644Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 116
+    },
+    {
+      "id": "visit_1794995220847_7y72",
+      "timestamp": "2026-11-18T09:47:00.847Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 52
+    },
+    {
+      "id": "visit_1794995220853_h7p5",
+      "timestamp": "2026-11-18T09:47:00.853Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 131
+    },
+    {
+      "id": "visit_1794995220874_hiuy",
+      "timestamp": "2026-11-18T09:47:00.874Z",
+      "page": "Home Portfolio",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 144
+    },
+    {
+      "id": "visit_1794995220877_m04e",
+      "timestamp": "2026-11-18T09:47:00.877Z",
+      "page": "HOME Page",
+      "country": "India",
+      "device": "Desktop",
+      "source": "Direct",
+      "duration": 96
     }
   ],
   "certificateVault": [
@@ -4952,9 +5715,9 @@
     {
       "id": "gdg-kiit-operon-2026",
       "category": "COMPETITIONS",
-      "title": "Deploy or Die - HowToAlgo \u00d7 GDG on Campus KIIT",
+      "title": "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
       "issuer": "GDG on Campus KIIT / HowToAlgo",
-      "event": "Deploy or Die - HowToAlgo \u00d7 GDG on Campus KIIT",
+      "event": "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
       "organizer": "GDG on Campus KIIT",
       "coOrganizer": "HowToAlgo",
       "associatedOrganizer": "HowToAlgo",
@@ -4982,7 +5745,7 @@
         }
       ],
       "description": "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
-      "fullDescription": "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo \u00d7 GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
+      "fullDescription": "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
       "skills": [
         "Agent-Driven Lifecycle",
         "Business Process Automation",
@@ -5077,7 +5840,7 @@
       "credentialType": "Certificate of Participation",
       "category": "COMPETITIONS",
       "issueDate": "2026",
-      "date": "4\u20135 October 2026",
+      "date": "4–5 October 2026",
       "year": 2026,
       "team": "ALGNITE",
       "teamMembers": [
@@ -5093,7 +5856,7 @@
         }
       ],
       "description": "Led the development of AXIOM as the team lead and built the primary architecture during WCC Launchpad 30, a 36-hour hackathon organized by We Code Coders with title sponsor inkloom across Frontend, Backend, and AI / ML categories.",
-      "fullDescription": "Certificate of Participation awarded to Sayam Mukherjee for actively participating in WCC Launchpad 30, a 36-Hour Hackathon organized by We Code Coders with title sponsor inkloom on 4\u20135 October 2026. Recognizes participation as Team Leader of Team ALGNITE across Frontend, Backend, and AI / ML tracks. Led the development of AXIOM as the team lead and built the primary architecture.",
+      "fullDescription": "Certificate of Participation awarded to Sayam Mukherjee for actively participating in WCC Launchpad 30, a 36-Hour Hackathon organized by We Code Coders with title sponsor inkloom on 4–5 October 2026. Recognizes participation as Team Leader of Team ALGNITE across Frontend, Backend, and AI / ML tracks. Led the development of AXIOM as the team lead and built the primary architecture.",
       "skills": [
         "36-Hour Hackathon",
         "Team Leadership",
@@ -5140,7 +5903,7 @@
       "credentialType": "Certificate of Participation",
       "category": "COMPETITIONS",
       "issueDate": "2026",
-      "date": "4\u20135 October 2026",
+      "date": "4–5 October 2026",
       "year": 2026,
       "team": "ALGNITE",
       "teamMembers": [
@@ -5156,7 +5919,7 @@
         }
       ],
       "description": "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
-      "fullDescription": "Certificate of Participation awarded to Shinibali Kumar for actively participating in WCC Launchpad 30, a 36-Hour National Online Hackathon organized by We Code Coders with title sponsor inkloom on 4\u20135 October 2026. Recognised as a participant in team ALGNITE as a team member on Product / Research and Presentation / Demo tracks. Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validating system behaviour across different execution scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.",
+      "fullDescription": "Certificate of Participation awarded to Shinibali Kumar for actively participating in WCC Launchpad 30, a 36-Hour National Online Hackathon organized by We Code Coders with title sponsor inkloom on 4–5 October 2026. Recognised as a participant in team ALGNITE as a team member on Product / Research and Presentation / Demo tracks. Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validating system behaviour across different execution scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.",
       "contribution": "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
       "skills": [
         "36-Hour Hackathon",
@@ -5228,7 +5991,7 @@
       "issuer": "Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar",
       "category": "ACADEMIC RECORD",
       "year": 2025,
-      "session": "2025\u201326",
+      "session": "2025–26",
       "credentialType": "Grade Report",
       "issueDate": "2025",
       "description": "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
@@ -5264,7 +6027,7 @@
       ],
       "tags": [
         "20 Subjects",
-        "2025\u201326"
+        "2025–26"
       ],
       "verificationStatus": "LINK AVAILABLE",
       "featured": false,

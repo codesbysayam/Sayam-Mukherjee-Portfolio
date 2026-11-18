@@ -106,10 +106,10 @@ export const SAYAM_DATA = {
       id: 'mausam',
       title: 'MAUSAM',
       description: 'SIH 2026 platform unifying Doppler nowcasting, SACHET/NDMA alerts, NAQI, INCOIS marine state & Ask MAUSAM AI.',
-      longDescription: 'Canonical source verified at codesbysayam/mausam_sample (mausam_demo is an empty template placeholder).',
+      longDescription: 'Active repository verified at codesbysayam/mausam_sih-26 alongside earlier SIH baseline codesbysayam/mausam_sample.',
       tags: ['TypeScript', 'React', 'Python', 'Tailwind CSS', 'PLpgSQL'],
       category: 'full_stack',
-      githubUrl: 'https://github.com/codesbysayam/mausam_sample',
+      githubUrl: 'https://github.com/codesbysayam/mausam_sih-26',
       demoUrl: 'https://mausamgovt.vercel.app',
       imageUrl: '',
       featured: true

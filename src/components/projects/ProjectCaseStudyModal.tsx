@@ -6,6 +6,7 @@ import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import ReadingProgressBar from "../common/ReadingProgressBar";
 import { calculateReadingTime } from "../../utils/readingTime";
+import { computeProjectLifecycle } from "../../utils/projectLifecycle";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
   X,
@@ -131,6 +132,7 @@ function ProjectCaseStudyModalComponent({
     ? formatRelativeTime(repo.pushed_at || repo.updated_at)
     : "recently";
   const media = getProjectMedia(project.id);
+  const lifecycle = computeProjectLifecycle(project, repo);
 
   return (
     <div
@@ -192,6 +194,12 @@ function ProjectCaseStudyModalComponent({
           <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono text-[var(--text-muted)]">
             <span className="text-[var(--accent)] font-bold uppercase tracking-wider">
               {project.categoryLabel || project.category}
+            </span>
+            <span
+              title={lifecycle.title}
+              className={`px-2 py-0.5 rounded-[4px] font-bold uppercase tracking-wider text-[10px] ${lifecycle.badgeClass}`}
+            >
+              {lifecycle.label}
             </span>
             <span aria-hidden="true">·</span>
             <span className="text-[var(--text)]">{project.status}</span>
@@ -280,10 +288,10 @@ function ProjectCaseStudyModalComponent({
                     alt={media.alt}
                     referrerPolicy="no-referrer"
                     onError={() => setImgError(true)}
-                    className="w-full aspect-[16/9] object-cover"
+                    className="project-screenshot w-full aspect-[16/10] h-full object-cover object-top"
                   />
                 ) : (
-                  <div className="w-full aspect-[16/9] flex items-center justify-center p-6">
+                  <div className="w-full aspect-[16/10] flex items-center justify-center p-6">
                     <span className="font-mono text-xs text-[var(--text-muted)]">{project.title}</span>
                   </div>
                 )}

@@ -99,15 +99,51 @@ export const VERIFIED_USER_BASELINE: GitHubUser = {
   name: "Sayam Mukherjee",
   bio: "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
   location: "Kolkata, India",
-  public_repos: 9,
+  public_repos: 11,
   public_gists: 0,
   followers: 1,
   following: 0,
   created_at: "2021-06-12T04:55:46Z",
-  updated_at: "2026-10-04T19:35:34Z"
+  updated_at: "2026-11-18T09:10:56Z"
 };
 
 export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
+  {
+    id: 1361090226,
+    name: "Memory-in-Motion",
+    full_name: "codesbysayam/Memory-in-Motion",
+    html_url: "https://github.com/codesbysayam/Memory-in-Motion",
+    description: "Interactive mechanistic interpretability lab exploring O(1) recurrent state, Hebbian fast weights, and Dragon Hatchling (BDH) dynamics for DataForge 2026.",
+    language: "TypeScript",
+    stargazers_count: 1,
+    forks_count: 0,
+    updated_at: "2026-10-25T16:44:06Z",
+    pushed_at: "2026-11-18T09:10:56Z",
+    created_at: "2026-09-08T07:59:51Z",
+    fork: false,
+    default_branch: "main",
+    archived: false,
+    homepage: "https://memoryinmotion.vercel.app",
+    topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
+  },
+  {
+    id: 1368247830,
+    name: "codesbysayam",
+    full_name: "codesbysayam/codesbysayam",
+    html_url: "https://github.com/codesbysayam/codesbysayam",
+    description: "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, web technologies, DSA, machine learning, open source, and building practical projects.",
+    language: null,
+    stargazers_count: 1,
+    forks_count: 0,
+    updated_at: "2026-11-12T11:00:18Z",
+    pushed_at: "2026-11-18T07:29:56Z",
+    created_at: "2026-09-13T09:39:25Z",
+    fork: false,
+    default_branch: "main",
+    archived: false,
+    homepage: "",
+    topics: ["artificial-intelligence", "computer-science", "data-structures", "portfolio", "typescript"]
+  },
   {
     id: 1355576736,
     name: "Sayam-Mukherjee-Portfolio",
@@ -115,77 +151,105 @@ export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
     html_url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
     description: "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey.",
     language: "TypeScript",
-    stargazers_count: 1,
+    stargazers_count: 2,
     forks_count: 0,
-    updated_at: "2026-10-04T19:35:34Z",
-    pushed_at: "2026-10-04T19:35:30Z",
+    updated_at: "2026-11-17T08:00:59Z",
+    pushed_at: "2026-11-18T04:06:22Z",
     created_at: "2026-09-03T06:02:37Z",
     fork: false,
+    default_branch: "main",
+    archived: false,
     homepage: "https://sayammukherjee.in",
     topics: ["portfolio", "react", "typescript", "tailwindcss", "vite", "full-stack"]
   },
   {
-    id: 1368247830,
-    name: "codesbysayam",
-    full_name: "codesbysayam/codesbysayam",
-    html_url: "https://github.com/codesbysayam/codesbysayam",
-    description: "Personal GitHub profile and developer portfolio of Sayam Mukherjee.",
-    language: null,
-    stargazers_count: 1,
+    id: 1461749225,
+    name: "mausam_sih-26",
+    full_name: "codesbysayam/mausam_sih-26",
+    html_url: "https://github.com/codesbysayam/mausam_sih-26",
+    description: "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite. Get real-time weather, AQI, UV index, humidity, wind, pollen, sea conditions, tides & soil moisture in one place.",
+    language: "TypeScript",
+    stargazers_count: 0,
     forks_count: 0,
-    updated_at: "2026-10-04T09:44:33Z",
-    pushed_at: "2026-10-04T09:44:33Z",
-    created_at: "2026-09-13T09:39:25Z",
+    updated_at: "2026-11-18T02:37:29Z",
+    pushed_at: "2026-11-18T02:32:07Z",
+    created_at: "2026-11-17T17:31:45Z",
     fork: false,
+    default_branch: "main",
+    archived: false,
+    homepage: "https://mausamgovt.vercel.app",
+    topics: ["sih-2026", "weather", "typescript", "react", "python"]
+  },
+  {
+    id: 1406277351,
+    name: "SightForge",
+    full_name: "codesbysayam/SightForge",
+    html_url: "https://github.com/codesbysayam/SightForge",
+    description: "YOLOv8 Edge CV Pipeline pairing a Next.js 15 / React 19 Canvas client with FastAPI YOLOv8 person detection, 17-keypoint pose, and ByteTrack.",
+    language: "TypeScript",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: "2026-10-25T09:11:28Z",
+    pushed_at: "2026-10-25T09:11:24Z",
+    created_at: "2026-10-05T19:18:39Z",
+    fork: false,
+    default_branch: "main",
+    archived: false,
     homepage: "",
-    topics: ["developer", "profile", "readme"]
+    topics: ["yolov8", "computer-vision", "fastapi", "nextjs", "bytetrack"]
+  },
+  {
+    id: 1403521263,
+    name: "AXIOM",
+    full_name: "codesbysayam/AXIOM",
+    html_url: "https://github.com/codesbysayam/AXIOM",
+    description: "Autonomous Operations Control Plane built in 36h for WCC Launchpad 30 featuring deterministic policy rules, approval gates, failure recovery, sandboxes, and audit chains.",
+    language: "TypeScript",
+    stargazers_count: 0,
+    forks_count: 0,
+    updated_at: "2026-10-04T20:37:37Z",
+    pushed_at: "2026-10-04T18:39:23Z",
+    created_at: "2026-10-03T18:28:37Z",
+    fork: false,
+    default_branch: "main",
+    archived: false,
+    homepage: "https://axiomwcc.vercel.app",
+    topics: ["agentic-ai", "control-plane", "typescript", "react"]
   },
   {
     id: 1350807639,
     name: "Operon",
     full_name: "codesbysayam/Operon",
     html_url: "https://github.com/codesbysayam/Operon",
-    description: "🤖 Autonomous operations platform with multi-agent AI workflows across Support, Finance, and Operations.",
+    description: "🤖 Autonomous operations platform with multi-agent AI workflows across Support, Finance, HR, and Operations with human-in-the-loop governance.",
     language: "TypeScript",
     stargazers_count: 1,
     forks_count: 0,
-    updated_at: "2026-10-03T17:02:09Z",
+    updated_at: "2026-10-03T17:02:13Z",
     pushed_at: "2026-10-03T17:02:09Z",
     created_at: "2026-08-29T18:06:43Z",
     fork: false,
+    default_branch: "main",
+    archived: false,
     homepage: "https://operonpro.vercel.app",
     topics: ["backend", "business-automation", "express", "multi-agent-ai", "nodejs", "reactjs"]
   },
   {
-    id: 1403829101,
-    name: "mausam_demo",
-    full_name: "codesbysayam/mausam_demo",
-    html_url: "https://github.com/codesbysayam/mausam_demo",
-    description: "🌦️ Environmental telemetry and weather dashboard demonstration build.",
-    language: null,
-    stargazers_count: 0,
-    forks_count: 0,
-    updated_at: "2026-09-30T20:19:28Z",
-    pushed_at: "2026-09-30T20:19:28Z",
-    created_at: "2026-09-30T20:19:28Z",
-    fork: false,
-    homepage: "",
-    topics: ["weather", "dashboard", "telemetry"]
-  },
-  {
-    id: 1403759281,
+    id: 1398584204,
     name: "mausam_sample",
     full_name: "codesbysayam/mausam_sample",
     html_url: "https://github.com/codesbysayam/mausam_sample",
-    description: "🌦️ Sample implementation and API models for MAUSAM meteorological platform.",
+    description: "🌦️ Earlier SIH 2026 snapshot of the MAUSAM smart weather intelligence platform by Team Algnite.",
     language: "TypeScript",
     stargazers_count: 0,
     forks_count: 0,
-    updated_at: "2026-09-30T18:22:07Z",
+    updated_at: "2026-09-30T18:23:43Z",
     pushed_at: "2026-09-30T18:22:07Z",
-    created_at: "2026-09-30T18:22:07Z",
+    created_at: "2026-09-30T18:20:33Z",
     fork: false,
-    homepage: "",
+    default_branch: "main",
+    archived: false,
+    homepage: "https://mausamgovt.vercel.app",
     topics: ["weather", "react", "typescript"]
   },
   {
@@ -193,62 +257,52 @@ export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
     name: "CAMPUSCONNECT_1273",
     full_name: "codesbysayam/CAMPUSCONNECT_1273",
     html_url: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
-    description: "🎓 A full-stack college event management platform that helps students discover and register for campus events.",
+    description: "🎓 A full-stack college event management platform that helps students discover, search, filter, and register for campus events.",
     language: "TypeScript",
     stargazers_count: 0,
     forks_count: 0,
-    updated_at: "2026-09-28T18:11:59Z",
+    updated_at: "2026-09-28T18:43:30Z",
     pushed_at: "2026-09-28T18:11:59Z",
-    created_at: "2026-09-28T18:11:59Z",
+    created_at: "2026-09-28T18:08:23Z",
     fork: false,
+    default_branch: "main",
+    archived: false,
     homepage: "https://campusconnect1273.vercel.app/",
-    topics: ["campus", "events", "react", "typescript"]
+    topics: ["campus-connect", "college-events", "nextjs", "react", "typescript"]
   },
   {
-    id: 1398291823,
+    id: 1404767583,
     name: "inkloom",
     full_name: "codesbysayam/inkloom",
     html_url: "https://github.com/codesbysayam/inkloom",
-    description: "Dynamic digital canvas and collaborative writing workspace platform.",
+    description: "Specialised AI models for logo design — brand-analysis, typography/symbol construction, and composition lockups. Early access open.",
     language: null,
     stargazers_count: 0,
     forks_count: 0,
-    updated_at: "2026-09-26T13:29:22Z",
+    updated_at: "2026-10-04T19:26:28Z",
     pushed_at: "2026-09-26T13:29:22Z",
-    created_at: "2026-09-26T13:29:22Z",
-    fork: false,
-    homepage: "",
-    topics: ["canvas", "writing", "workspace"]
-  },
-  {
-    id: 1358811824,
-    name: "Memory-in-Motion",
-    full_name: "codesbysayam/Memory-in-Motion",
-    html_url: "https://github.com/codesbysayam/Memory-in-Motion",
-    description: "Interactive mechanistic laboratory exploring recurrent memory, hidden-state dynamics, and the compression vs interference trade-off.",
-    language: "TypeScript",
-    stargazers_count: 1,
-    forks_count: 0,
-    updated_at: "2026-09-23T06:12:15Z",
-    pushed_at: "2026-09-23T06:12:15Z",
-    created_at: "2026-09-06T14:52:00Z",
-    fork: false,
-    homepage: "",
-    topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
+    created_at: "2026-10-04T19:26:28Z",
+    fork: true,
+    default_branch: "master",
+    archived: false,
+    homepage: "https://inkloom.art",
+    topics: ["design-systems", "typescript", "plpgsql", "docker"]
   },
   {
     id: 1358811826,
     name: "sayam-solves",
     full_name: "codesbysayam/sayam-solves",
     html_url: "https://github.com/codesbysayam/sayam-solves",
-    description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice in C++.",
+    description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice in C++ via LeetHub V2.",
     language: "C++",
     stargazers_count: 1,
     forks_count: 0,
-    updated_at: "2026-09-07T06:02:43Z",
+    updated_at: "2026-09-26T13:06:19Z",
     pushed_at: "2026-09-07T06:02:43Z",
     created_at: "2026-09-06T05:18:47Z",
     fork: false,
+    default_branch: "main",
+    archived: false,
     homepage: "",
     topics: ["dsa", "dsa-algorithm", "dsa-practice", "leetcode", "leetcode-solutions"]
   }
@@ -256,49 +310,7 @@ export const VERIFIED_REPOS_BASELINE: GitHubRepo[] = [
 
 export const VERIFIED_EVENTS_BASELINE: GitHubEvent[] = [
   {
-    id: "21074815462",
-    type: "PushEvent",
-    actor: {
-      id: 85777731,
-      login: "codesbysayam",
-      avatar_url: "https://avatars.githubusercontent.com/u/85777731?v=4"
-    },
-    repo: {
-      id: 1368247830,
-      name: "codesbysayam/codesbysayam",
-      url: "https://github.com/codesbysayam/codesbysayam"
-    },
-    payload: {
-      head: "8a71d2e",
-      ref: "refs/heads/main",
-      commits: [{ message: "Update portfolio profile and repositories", sha: "8a71d2e" }]
-    },
-    public: true,
-    created_at: "2026-09-17T08:37:30Z"
-  },
-  {
-    id: "21060931254",
-    type: "PushEvent",
-    actor: {
-      id: 85777731,
-      login: "codesbysayam",
-      avatar_url: "https://avatars.githubusercontent.com/u/85777731?v=4"
-    },
-    repo: {
-      id: 1370345267,
-      name: "codesbysayam/RouteLedger",
-      url: "https://github.com/codesbysayam/RouteLedger"
-    },
-    payload: {
-      head: "3c91bf0",
-      ref: "refs/heads/main",
-      commits: [{ message: "feat: route optimization and compliance rules", sha: "3c91bf0" }]
-    },
-    public: true,
-    created_at: "2026-09-16T19:29:42Z"
-  },
-  {
-    id: "21060910118",
+    id: "27515576006",
     type: "PushEvent",
     actor: {
       id: 85777731,
@@ -311,27 +323,90 @@ export const VERIFIED_EVENTS_BASELINE: GitHubEvent[] = [
       url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
     },
     payload: {
-      head: "1e16335",
+      head: "05b52d9",
       ref: "refs/heads/main",
-      commits: [{ message: "refactor: update verified ecosystem telemetry", sha: "1e16335" }]
+      commits: [{ message: "chore: synchronize verified portfolio telemetry", sha: "05b52d9" }]
     },
     public: true,
-    created_at: "2026-09-16T19:28:41Z"
+    created_at: "2026-11-17T09:29:07Z"
+  },
+  {
+    id: "27482421737",
+    type: "PushEvent",
+    actor: {
+      id: 85777731,
+      login: "codesbysayam",
+      avatar_url: "https://avatars.githubusercontent.com/u/85777731?v=4"
+    },
+    repo: {
+      id: 1461749225,
+      name: "codesbysayam/mausam_sih-26",
+      url: "https://github.com/codesbysayam/mausam_sih-26"
+    },
+    payload: {
+      head: "7bc2886",
+      ref: "refs/heads/main",
+      commits: [{ message: "feat: SIH 2026 Doppler radar, NAQI & INCOIS telemetry", sha: "7bc2886" }]
+    },
+    public: true,
+    created_at: "2026-11-17T19:13:40Z"
+  },
+  {
+    id: "25209572158",
+    type: "PushEvent",
+    actor: {
+      id: 85777731,
+      login: "codesbysayam",
+      avatar_url: "https://avatars.githubusercontent.com/u/85777731?v=4"
+    },
+    repo: {
+      id: 1406277351,
+      name: "codesbysayam/SightForge",
+      url: "https://github.com/codesbysayam/SightForge"
+    },
+    payload: {
+      head: "4349936",
+      ref: "refs/heads/main",
+      commits: [{ message: "feat: YOLOv8 pose keypoints & ByteTrack pipeline", sha: "4349936" }]
+    },
+    public: true,
+    created_at: "2026-10-25T09:05:38Z"
+  },
+  {
+    id: "25163580704",
+    type: "PushEvent",
+    actor: {
+      id: 85777731,
+      login: "codesbysayam",
+      avatar_url: "https://avatars.githubusercontent.com/u/85777731?v=4"
+    },
+    repo: {
+      id: 1361090226,
+      name: "codesbysayam/Memory-in-Motion",
+      url: "https://github.com/codesbysayam/Memory-in-Motion"
+    },
+    payload: {
+      head: "main",
+      ref: "refs/heads/main",
+      commits: [{ message: "feat: update O(1) recurrent state interpretability views", sha: "main" }]
+    },
+    public: true,
+    created_at: "2026-10-25T16:44:02Z"
   }
 ];
 
 export const VERIFIED_PULSE_BASELINE: GitHubPulseData = {
-  commitsCount: 18,
+  commitsCount: 14,
   activeReposCount: 4,
   activeRepos: [
-    { name: "codesbysayam", fullName: "codesbysayam/codesbysayam", url: "https://github.com/codesbysayam/codesbysayam", commitsCount: 10, language: "Python", pushedAt: "2026-09-17T08:37:30Z" },
-    { name: "RouteLedger", fullName: "codesbysayam/RouteLedger", url: "https://github.com/codesbysayam/RouteLedger", commitsCount: 4, language: "TypeScript", pushedAt: "2026-09-16T19:29:42Z" },
-    { name: "Sayam-Mukherjee-Portfolio", fullName: "codesbysayam/Sayam-Mukherjee-Portfolio", url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio", commitsCount: 3, language: "TypeScript", pushedAt: "2026-09-16T19:28:41Z" },
-    { name: "sayam-solves", fullName: "codesbysayam/sayam-solves", url: "https://github.com/codesbysayam/sayam-solves", commitsCount: 1, language: "C++", pushedAt: "2026-09-14T17:53:36Z" }
+    { name: "Memory-in-Motion", fullName: "codesbysayam/Memory-in-Motion", url: "https://github.com/codesbysayam/Memory-in-Motion", commitsCount: 4, language: "TypeScript", pushedAt: "2026-11-18T09:10:56Z" },
+    { name: "codesbysayam", fullName: "codesbysayam/codesbysayam", url: "https://github.com/codesbysayam/codesbysayam", commitsCount: 3, language: "Markdown", pushedAt: "2026-11-18T07:29:56Z" },
+    { name: "Sayam-Mukherjee-Portfolio", fullName: "codesbysayam/Sayam-Mukherjee-Portfolio", url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio", commitsCount: 4, language: "TypeScript", pushedAt: "2026-11-18T04:06:22Z" },
+    { name: "mausam_sih-26", fullName: "codesbysayam/mausam_sih-26", url: "https://github.com/codesbysayam/mausam_sih-26", commitsCount: 3, language: "TypeScript", pushedAt: "2026-11-18T02:32:07Z" }
   ],
   periodDays: 7,
   periodLabel: "Last 7 Days",
-  dailyCadence: "~2.6/day",
+  dailyCadence: "~2.0/day",
   isLive: true,
   syncedAt: Date.now()
 };
@@ -440,7 +515,7 @@ export async function loadGitHubSnapshot(force = false): Promise<GitHubRawSnapsh
       html_url: VERIFIED_USER_BASELINE.html_url,
       bio: VERIFIED_USER_BASELINE.bio || "",
       public_repos: VERIFIED_REPOS_BASELINE.length,
-      followers: 0,
+      followers: 1,
       following: 0
     },
     repositories: VERIFIED_REPOS_BASELINE,
@@ -453,15 +528,19 @@ export async function loadGitHubSnapshot(force = false): Promise<GitHubRawSnapsh
       payload: e.payload
     })),
     languages: {
-      "codesbysayam/codesbysayam": { "Python": 2500, "Shell": 1200 },
-      "codesbysayam/RouteLedger": { "TypeScript": 323332, "Python": 90890, "CSS": 6949, "HTML": 1497 },
-      "codesbysayam/Sayam-Mukherjee-Portfolio": { "TypeScript": 582410, "CSS": 42100, "HTML": 8500, "JavaScript": 15400 },
-      "codesbysayam/Memory-in-Motion": { "TypeScript": 194200, "Python": 48200, "CSS": 5200 },
-      "codesbysayam/mausam": { "TypeScript": 412000, "CSS": 28400, "HTML": 12100, "JavaScript": 8200 },
-      "codesbysayam/sayam-solves": { "C++": 86400, "Python": 12400 },
-      "codesbysayam/Operon": { "TypeScript": 384000, "JavaScript": 34000, "CSS": 12000 }
+      "codesbysayam/Memory-in-Motion": { TypeScript: 1782728, CSS: 32111, Python: 12367, HTML: 3135 },
+      "codesbysayam/codesbysayam": {},
+      "codesbysayam/Sayam-Mukherjee-Portfolio": { TypeScript: 1713746, JavaScript: 31206, CSS: 27845, C: 6359, Python: 5783, "Jupyter Notebook": 5438, HTML: 3432 },
+      "codesbysayam/mausam_sih-26": { TypeScript: 5223931, Python: 118579, JavaScript: 65917, CSS: 54354, HTML: 33574, C: 31107, "Jupyter Notebook": 14149, PLpgSQL: 3057, Makefile: 1358 },
+      "codesbysayam/SightForge": { TypeScript: 252115, Python: 149645, CSS: 4674, Makefile: 2484, JavaScript: 2251, Shell: 569 },
+      "codesbysayam/AXIOM": { TypeScript: 793470, CSS: 61244, HTML: 1774 },
+      "codesbysayam/Operon": { TypeScript: 936622, CSS: 8841, HTML: 1230 },
+      "codesbysayam/mausam_sample": { TypeScript: 5138656, Python: 118579, JavaScript: 65917, CSS: 50018, HTML: 34053, C: 31107, "Jupyter Notebook": 14149, PLpgSQL: 3057, Makefile: 1358 },
+      "codesbysayam/CAMPUSCONNECT_1273": { TypeScript: 210511, CSS: 9694, HTML: 995, JavaScript: 118 },
+      "codesbysayam/inkloom": { TypeScript: 1983309, CSS: 16933, JavaScript: 12719, PLpgSQL: 7305, Dockerfile: 600 },
+      "codesbysayam/sayam-solves": { "C++": 2037 }
     },
-    syncedAt: new Date().toISOString(),
+    syncedAt: "2026-11-18T09:10:56Z",
     status: "ok"
   };
 
@@ -493,7 +572,7 @@ export const github = {
       name: p.name || (snapshot as any).name || "Sayam Mukherjee",
       bio: p.bio || (snapshot as any).bio || VERIFIED_USER_BASELINE.bio,
       location: "Kolkata, India",
-      public_repos: snapshot.repositories?.length || p.public_repos || 8,
+      public_repos: snapshot.repositories?.length || p.public_repos || 11,
       public_gists: 0,
       followers: p.followers || 1,
       following: p.following || 0,
@@ -834,11 +913,16 @@ export interface GitHubStatsData {
 
 const LANGUAGE_COLOR_MAP: Record<string, string> = {
   "TypeScript": "#3178c6",
+  "Python": "#3572A5",
   "CSS": "#563d7c",
   "JavaScript": "#f1e05a",
   "HTML": "#e34c26",
+  "C": "#555555",
+  "Jupyter Notebook": "#DA5B0B",
+  "PLpgSQL": "#336791",
+  "Makefile": "#427819",
   "C++": "#f43f5e",
-  "Python": "#3572A5",
+  "Dockerfile": "#384d54",
   "Shell": "#89e051"
 };
 
@@ -848,10 +932,10 @@ export const VERIFIED_GITHUB_FALLBACK: GitHubStatsData = {
   avatarUrl: "https://avatars.githubusercontent.com/u/85777731?v=4",
   bio: "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
   location: "Kolkata, India",
-  publicRepos: 9,
+  publicRepos: 11,
   followers: 1,
   following: 0,
-  totalStars: 5,
+  totalStars: 6,
   totalForks: 0,
   commitsThisYear: null,
   totalContributionsThisYear: null,
@@ -871,36 +955,42 @@ export const VERIFIED_GITHUB_FALLBACK: GitHubStatsData = {
   recentCommits: [
     {
       repo: "codesbysayam/Sayam-Mukherjee-Portfolio",
-      message: "Update portfolio assistant and journal layout",
-      date: "2026-10-04T19:35:30Z",
-      sha: "main"
+      message: "chore: synchronize verified portfolio telemetry",
+      date: "2026-11-17T09:29:07Z",
+      sha: "05b52d9"
     },
     {
-      repo: "codesbysayam/Operon",
-      message: "feat: autonomous workflow orchestration",
-      date: "2026-10-03T17:02:09Z",
-      sha: "main"
+      repo: "codesbysayam/mausam_sih-26",
+      message: "feat: SIH 2026 Doppler radar, NAQI & INCOIS telemetry",
+      date: "2026-11-17T19:13:40Z",
+      sha: "7bc2886"
     },
     {
-      repo: "codesbysayam/mausam_sample",
-      message: "feat: meteorological telemetry data models",
-      date: "2026-09-30T18:22:07Z",
-      sha: "main"
+      repo: "codesbysayam/SightForge",
+      message: "feat: YOLOv8 pose keypoints & ByteTrack pipeline",
+      date: "2026-10-25T09:05:38Z",
+      sha: "4349936"
     },
     {
-      repo: "codesbysayam/CAMPUSCONNECT_1273",
-      message: "feat: event management portal",
-      date: "2026-09-28T18:11:59Z",
+      repo: "codesbysayam/Memory-in-Motion",
+      message: "feat: update O(1) recurrent state interpretability views",
+      date: "2026-10-25T16:44:02Z",
       sha: "main"
     }
   ],
   languages: [
-    { name: "TypeScript", percent: 81.3, bytes: 1895942, color: "#3178c6" },
-    { name: "Python", percent: 6.6, bytes: 153990, color: "#3572A5" },
-    { name: "CSS", percent: 4.1, bytes: 94649, color: "#563d7c" },
-    { name: "C++", percent: 3.7, bytes: 86400, color: "#f43f5e" },
-    { name: "JavaScript", percent: 2.5, bytes: 57600, color: "#f1e05a" },
-    { name: "HTML", percent: 0.9, bytes: 22097, color: "#e34c26" }
+    { name: "TypeScript", percent: 94.5, bytes: 18035088, color: "#3178c6" },
+    { name: "Python", percent: 2.1, bytes: 404953, color: "#3572A5" },
+    { name: "CSS", percent: 1.4, bytes: 265714, color: "#563d7c" },
+    { name: "JavaScript", percent: 0.9, bytes: 178128, color: "#f1e05a" },
+    { name: "HTML", percent: 0.4, bytes: 78193, color: "#e34c26" },
+    { name: "C", percent: 0.4, bytes: 68573, color: "#555555" },
+    { name: "Jupyter Notebook", percent: 0.2, bytes: 33736, color: "#DA5B0B" },
+    { name: "PLpgSQL", percent: 0.1, bytes: 13419, color: "#336791" },
+    { name: "Makefile", percent: 0.0, bytes: 5200, color: "#427819" },
+    { name: "C++", percent: 0.0, bytes: 2037, color: "#f43f5e" },
+    { name: "Dockerfile", percent: 0.0, bytes: 600, color: "#384d54" },
+    { name: "Shell", percent: 0.0, bytes: 569, color: "#89e051" }
   ],
   contributionCalendar: [],
   isLive: true,
@@ -1052,14 +1142,20 @@ export async function fetchGitHubLanguages(force = false): Promise<GitHubLanguag
 
   return {
     languages: [
-      { language: "TypeScript", bytes: 1895942, percentage: 81.3, color: "#3178c6" },
-      { language: "Python", bytes: 153990, percentage: 6.6, color: "#3572A5" },
-      { language: "CSS", bytes: 94649, percentage: 4.1, color: "#563d7c" },
-      { language: "C++", bytes: 86400, percentage: 3.7, color: "#f43f5e" },
-      { language: "JavaScript", bytes: 57600, percentage: 2.5, color: "#f1e05a" },
-      { language: "HTML", bytes: 22097, percentage: 0.9, color: "#e34c26" }
+      { language: "TypeScript", bytes: 18035088, percentage: 94.5, color: "#3178c6" },
+      { language: "Python", bytes: 404953, percentage: 2.1, color: "#3572A5" },
+      { language: "CSS", bytes: 265714, percentage: 1.4, color: "#563d7c" },
+      { language: "JavaScript", bytes: 178128, percentage: 0.9, color: "#f1e05a" },
+      { language: "HTML", bytes: 78193, percentage: 0.4, color: "#e34c26" },
+      { language: "C", bytes: 68573, percentage: 0.4, color: "#555555" },
+      { language: "Jupyter Notebook", bytes: 33736, percentage: 0.2, color: "#DA5B0B" },
+      { language: "PLpgSQL", bytes: 13419, percentage: 0.1, color: "#336791" },
+      { language: "Makefile", bytes: 5200, percentage: 0.0, color: "#427819" },
+      { language: "C++", bytes: 2037, percentage: 0.0, color: "#f43f5e" },
+      { language: "Dockerfile", bytes: 600, percentage: 0.0, color: "#384d54" },
+      { language: "Shell", bytes: 569, percentage: 0.0, color: "#89e051" }
     ],
-    totalBytes: 2310678,
+    totalBytes: 19086210,
     source: "verified-baseline",
     lastSynced: "Verified Baseline"
   };
@@ -1123,36 +1219,36 @@ export async function fetchRecentPublicCommits(force = false): Promise<PublicCom
 
   return [
     {
-      repo: "codesbysayam",
-      message: "Update portfolio profile and repositories",
+      repo: "Memory-in-Motion",
+      message: "feat: update O(1) recurrent state interpretability views",
       time: "today",
-      url: "https://github.com/codesbysayam/codesbysayam/commit/8a71d2e",
-      sha: "8a71d2e",
-      language: "Python"
+      url: "https://github.com/codesbysayam/Memory-in-Motion/commits/main",
+      sha: "main",
+      language: "TypeScript"
     },
     {
-      repo: "RouteLedger",
-      message: "feat: route optimization and compliance rules",
-      time: "yesterday",
-      url: "https://github.com/codesbysayam/RouteLedger/commit/3c91bf0",
-      sha: "3c91bf0",
+      repo: "mausam_sih-26",
+      message: "feat: SIH 2026 Doppler radar, NAQI & INCOIS telemetry",
+      time: "today",
+      url: "https://github.com/codesbysayam/mausam_sih-26/commit/7bc2886",
+      sha: "7bc2886",
       language: "TypeScript"
     },
     {
       repo: "Sayam-Mukherjee-Portfolio",
-      message: "refactor: update verified ecosystem telemetry",
+      message: "chore: synchronize verified portfolio telemetry",
       time: "yesterday",
-      url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio/commit/1e16335",
-      sha: "1e16335",
+      url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio/commit/05b52d9",
+      sha: "05b52d9",
       language: "TypeScript"
     },
     {
-      repo: "sayam-solves",
-      message: "Time: 14 ms (47.31%), Space: 9.3 MB (77.48%) - LeetHub",
-      time: "3d ago",
-      url: "https://github.com/codesbysayam/sayam-solves/commit/5739270",
-      sha: "5739270",
-      language: "C++"
+      repo: "SightForge",
+      message: "feat: YOLOv8 pose keypoints & ByteTrack pipeline",
+      time: "recently",
+      url: "https://github.com/codesbysayam/SightForge/commit/4349936",
+      sha: "4349936",
+      language: "TypeScript"
     }
   ];
 }

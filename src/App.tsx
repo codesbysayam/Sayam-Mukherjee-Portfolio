@@ -423,7 +423,7 @@ function AppContent() {
     <>
       <SEO routeKey={activeTab} />
 
-      <div className="min-h-screen relative font-sans bg-[var(--bg)] text-[var(--text)] transition-colors duration-200 flex flex-col">
+      <div className="site-shell min-h-screen relative font-sans bg-[var(--bg)] text-[var(--text)] transition-colors duration-200 flex flex-col">
         <ScrollProgressBar />
         <CustomCursor disabled={isLegalPage} />
         <PointerTrailCanvas disabled={isLegalPage} />
@@ -664,29 +664,23 @@ function AppContent() {
           </AnimatePresence>
         </header>
 
-        {/* MAIN CONTENT AREA */}
-        <main
-          id="main-content"
-          tabIndex={-1}
-          className="relative z-10 w-full min-w-0 flex-1 pt-6 sm:pt-8 pb-16 sm:pb-24 overflow-x-clip focus:outline-none"
-          style={
+        {/* RESPONSIVE CSS GRID LAYOUT (Main Track + Sticky Desktop Chapter Spine) */}
+        <div
+          className={
             isLegalPage
-              ? { width: "100%", marginInline: "auto", paddingInline: 0 }
-              : {
-                  width: "min(100%, var(--content-max, 1440px))",
-                  marginInline: "auto",
-                  paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
-                }
+              ? "site-layout site-layout--legal"
+              : ROUTE_CHAPTERS[activeTab]
+                ? "site-layout site-layout--with-nav"
+                : "site-layout"
           }
         >
-          {!isLegalPage && ROUTE_CHAPTERS[activeTab] && (
-            <ScrollStoryThread
-              chapters={ROUTE_CHAPTERS[activeTab]}
-              routeKey={activeTab}
-            />
-          )}
-
-          <RouteTransition routeKey={activeTab}>
+          {/* MAIN CONTENT AREA */}
+          <main
+            id="main-content"
+            tabIndex={-1}
+            className="site-main relative z-10 w-full min-w-0 flex-1 pt-6 sm:pt-8 pb-16 sm:pb-24 overflow-x-clip focus:outline-none"
+          >
+            <RouteTransition routeKey={activeTab}>
             {activeTab === "home" && (
               <ErrorBoundary sectionName="Home Overview">
                 <div className="space-y-10 sm:space-y-14">
@@ -744,7 +738,7 @@ function AppContent() {
                 {activeTab === "about" && (
                   <ErrorBoundary sectionName="About Section">
                     <div className="space-y-12 py-2">
-                      <EditorialReveal delay={0}>
+                      <EditorialReveal immediate delay={0}>
                         <AboutSection />
                       </EditorialReveal>
                       <EditorialReveal delay={0.08}>
@@ -785,7 +779,7 @@ function AppContent() {
                 {activeTab === "projects" && (
                   <div className="py-2">
                     <ErrorBoundary sectionName="Projects Showcase">
-                      <EditorialReveal delay={0}>
+                      <EditorialReveal immediate delay={0}>
                         <ProjectsShowcase
                           initialProjectId={focusedProjectId}
                           onClearInitialProject={() => setFocusedProjectId(null)}
@@ -806,7 +800,7 @@ function AppContent() {
                 {activeTab === "github" && (
                   <div className="py-2">
                     <ErrorBoundary sectionName="GitHub Repositories & Telemetry">
-                      <EditorialReveal delay={0}>
+                      <EditorialReveal immediate delay={0}>
                         <GitHubStats />
                       </EditorialReveal>
                     </ErrorBoundary>
@@ -816,7 +810,7 @@ function AppContent() {
                 {activeTab === "journal" && (
                   <div className="space-y-12 py-2">
                     <ErrorBoundary sectionName="Journal & Engineering Reflections">
-                      <EditorialReveal delay={0}>
+                      <EditorialReveal immediate delay={0}>
                         <BlogsSection />
                       </EditorialReveal>
                       <EditorialReveal delay={0.08}>
@@ -829,7 +823,7 @@ function AppContent() {
                 {activeTab === "contact" && (
                   <div className="w-full py-2">
                     <ErrorBoundary sectionName="Contact Section">
-                      <EditorialReveal delay={0}>
+                      <EditorialReveal immediate delay={0}>
                         <ContactSection />
                       </EditorialReveal>
                     </ErrorBoundary>
@@ -839,7 +833,7 @@ function AppContent() {
                 {activeTab === "showcase" && (
                   <div className="w-full py-2">
                     <ErrorBoundary sectionName="YouTube Video Showcase">
-                      <EditorialReveal delay={0}>
+                      <EditorialReveal immediate delay={0}>
                         <ContentCreatorSection onBack={() => navigateToTab("about")} />
                       </EditorialReveal>
                     </ErrorBoundary>
@@ -847,8 +841,16 @@ function AppContent() {
                 )}
               </Suspense>
             </ErrorBoundary>
-          </RouteTransition>
-        </main>
+            </RouteTransition>
+          </main>
+
+          {!isLegalPage && ROUTE_CHAPTERS[activeTab] && (
+            <ScrollStoryThread
+              chapters={ROUTE_CHAPTERS[activeTab]}
+              routeKey={activeTab}
+            />
+          )}
+        </div>
 
         {!isLegalPage && (
           <SiteFooter

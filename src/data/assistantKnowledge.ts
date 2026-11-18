@@ -24,7 +24,7 @@ export const PROFILE_LINKS = {
   youtubeTechnicalAZ: "https://youtube.com/@technicalaz",
   youtubeDailyDecipher: "https://youtube.com/@dailydecipher",
   youtubeObsidianOptics: "https://www.youtube.com/@ObsidianOptics_in",
-  emailPrimary: "sayam.business@gmail.com",
+  emailPrimary: "wrickbusiness@gmail.com",
   emailAcademic: "24051052@kiit.ac.in",
 } as const;
 
@@ -162,7 +162,9 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
     title: "Featured Projects",
     keywords: [
       "project", "projects", "built", "build", "portfolio", "operon",
-      "mausam", "sayam-solves", "sayamsolves", "yolo", "yolov8", "apps", "software",
+      "mausam", "sightforge", "memory in motion", "memory-in-motion",
+      "axiom", "inkloom", "campus connect", "campusconnect",
+      "sayam-solves", "sayamsolves", "yolo", "yolov8", "apps", "software",
       "work", "showcase", "creations"
     ],
     phrases: [
@@ -173,7 +175,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "show projects",
       "featured projects"
     ],
-    answer: "Sayam has built 5 verified portfolio projects:\n1. OPERON | Autonomous multi-agent operations platform\n2. SayamSolves | Algorithmic problem solving and daily LeetCode practice in C++\n3. MAUSAM | Smart weather intelligence platform for SIH 2026\n4. Sayam Mukherjee | Interactive developer portfolio with live telemetry\n5. YOLO | Real-time edge computer vision and motion tracking pipeline",
+    answer: "Sayam's portfolio showcases 8 verified engineering projects (plus his interactive portfolio repo):\n1. OPERON | Multi-agent operations platform with human-in-the-loop governance (operonpro.vercel.app)\n2. MAUSAM | Smart weather & Doppler nowcasting platform for SIH 2026 (mausamgovt.vercel.app)\n3. SightForge | Dual-service Next.js 15 + FastAPI YOLOv8 person/pose & ByteTrack pipeline\n4. Memory in Motion | Mechanistic interpretability lab comparing O(1) recurrent memory vs O(T) KV caches\n5. AXIOM | Autonomous operations control plane built in 36h for WCC Launchpad 30\n6. INKLOOM | Public fork workspace exploring constructed AI logo systems (inkloom.art)\n7. Campus Connect | Next.js college event discovery & organizer dashboard (campusconnect1273.vercel.app)\n8. SayamSolves | LeetHub V2 synced C++ DSA archive (sayam-solves)",
     action: {
       type: "github",
       label: "Open GitHub",
@@ -454,7 +456,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       type: "contact",
       label: "Go to Contact Section",
       url: "#contact",
-      handle: "sayam.business@gmail.com",
+      handle: "wrickbusiness@gmail.com",
     },
     suggestions: ["LinkedIn", "💻 GitHub", "⚡ Projects"],
   },

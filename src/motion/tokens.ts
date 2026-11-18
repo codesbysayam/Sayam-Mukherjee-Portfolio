@@ -26,7 +26,7 @@ export const MOTION_EASE = {
 
 export const MOTION_VIEWPORT = {
   once: true,
-  amount: 0.12 as const,
+  amount: "some" as const,
 };
 
 export type DeviceCapabilityTier = "high" | "standard" | "low";

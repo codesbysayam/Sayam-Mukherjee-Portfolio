@@ -58,6 +58,8 @@ export function EditorialReveal({
   );
 }
 
+export const SectionReveal = EditorialReveal;
+
 interface TextLineRevealProps {
   children: ReactNode;
   className?: string;

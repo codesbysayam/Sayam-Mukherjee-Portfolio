@@ -1,39 +1,71 @@
 {
   "appName": "Sayam Mukherjee | Engineering Portfolio & Ecosystem",
   "version": "0.0.0",
-  "generatedAt": "2026-11-17T09:20:27.042Z",
+  "generatedAt": "2026-11-18T09:47:48.242Z",
   "environment": "development",
-  "projectCount": 4,
+  "projectCount": 8,
   "projects": [
     {
-      "id": "yolo-edge-vision",
-      "title": "YOLO / Edge Computer Vision",
+      "id": "operon",
+      "title": "OPERON",
       "category": "ai_ml",
       "tagsCount": 5,
       "hasGithub": true,
-      "hasLive": false
+      "hasLive": true
     },
     {
-      "id": "daily-decipher",
-      "title": "Daily Decipher",
+      "id": "mausam",
+      "title": "MAUSAM",
+      "category": "full_stack",
+      "tagsCount": 5,
+      "hasGithub": true,
+      "hasLive": true
+    },
+    {
+      "id": "sightforge",
+      "title": "SIGHTFORGE",
       "category": "ai_ml",
       "tagsCount": 6,
       "hasGithub": true,
       "hasLive": false
     },
     {
-      "id": "bullrun-analytics",
-      "title": "BullRun Analytics",
-      "category": "finance",
-      "tagsCount": 6,
+      "id": "memory-in-motion",
+      "title": "MEMORY IN MOTION",
+      "category": "ai_ml",
+      "tagsCount": 5,
       "hasGithub": true,
-      "hasLive": false
+      "hasLive": true
     },
     {
-      "id": "cognitive-canvas",
-      "title": "Cognitive Canvas",
-      "category": "design_media",
+      "id": "axiom",
+      "title": "AXIOM",
+      "category": "systems",
       "tagsCount": 5,
+      "hasGithub": true,
+      "hasLive": true
+    },
+    {
+      "id": "inkloom",
+      "title": "INKLOOM",
+      "category": "ai_ml",
+      "tagsCount": 5,
+      "hasGithub": true,
+      "hasLive": true
+    },
+    {
+      "id": "campus-connect",
+      "title": "CAMPUS CONNECT",
+      "category": "full_stack",
+      "tagsCount": 5,
+      "hasGithub": true,
+      "hasLive": true
+    },
+    {
+      "id": "sayam-solves",
+      "title": "SAYAMSOLVES",
+      "category": "dsa",
+      "tagsCount": 4,
       "hasGithub": true,
       "hasLive": false
     }
@@ -41,11 +73,16 @@
   "systemIntegrity": "verified",
   "languagesMonitored": [
     "TypeScript",
-    "JavaScript",
-    "CSS",
-    "HTML",
     "Python",
+    "CSS",
+    "JavaScript",
+    "HTML",
     "C",
-    "Jupyter Notebook"
+    "Jupyter Notebook",
+    "PLpgSQL",
+    "Makefile",
+    "C++",
+    "Dockerfile",
+    "Shell"
   ]
 }

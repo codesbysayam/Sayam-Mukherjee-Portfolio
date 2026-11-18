@@ -5,6 +5,8 @@ import { PROJECTS, ProjectItem } from "../data/projects";
 import { getProjectMedia } from "../data/projectMedia";
 import { useGithub } from "../hooks/useGithub";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
+import { ProjectMedia } from "./projects/ProjectMedia";
+import { computeProjectLifecycle } from "../utils/projectLifecycle";
 import { EditorialReveal, LineReveal, MaskMediaReveal } from "../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
@@ -168,23 +170,38 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
         {/* LEAD FEATURED CASE STUDY: OPERON */}
         {(() => {
           const media = getProjectMedia(featuredLead.id);
+          const leadRepo = findRepoForProject(featuredLead);
+          const leadLifecycle = computeProjectLifecycle(featuredLead, leadRepo);
           return (
             <motion.article
               initial={reduced ? false : { opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
+              viewport={{ once: true, amount: "some" }}
               transition={{ duration: MOTION_DURATION.enter, ease: MOTION_EASE.out }}
               className="rounded-[10px] border border-[#41443A] focus-within:border-[#C7E34A] bg-[#151713] overflow-hidden mb-8 transition-colors group"
             >
               <div className="grid grid-cols-1 lg:grid-cols-12">
-                <MaskMediaReveal className="lg:col-span-7 relative aspect-[16/9] lg:aspect-auto overflow-hidden border-b lg:border-b-0 lg:border-r border-[#41443A] bg-[#151713]">
+                <MaskMediaReveal className="lg:col-span-7 relative aspect-[16/10] lg:aspect-auto lg:min-h-[360px] h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-[#41443A] bg-[#151713]">
                   <img
                     src={media.src}
                     alt={media.alt}
                     loading="lazy"
                     decoding="async"
-                    className="h-full w-full object-cover object-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
+                    className="!h-full w-full object-cover object-top transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
                   />
+                  <div className="absolute top-3 left-3 pointer-events-none">
+                    <span className="px-2 py-0.5 rounded-[4px] bg-[#20231D]/92 text-[#C7E34A] border border-[#C7E34A]/60 text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-sm">
+                      Lead System
+                    </span>
+                  </div>
+                  <div className="absolute top-3 right-3 pointer-events-none">
+                    <span
+                      title={leadLifecycle.title}
+                      className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-[10px] font-mono font-bold uppercase tracking-wider ${leadLifecycle.badgeClass}`}
+                    >
+                      {leadLifecycle.label}
+                    </span>
+                  </div>
                 </MaskMediaReveal>
 
                 <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between gap-6">
@@ -257,27 +274,28 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {secondaryFeatured.map((project, index) => {
             const media = getProjectMedia(project.id);
+            const repo = findRepoForProject(project);
             return (
               <motion.article
                 key={project.id}
                 initial={reduced ? false : { opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
+                viewport={{ once: true, amount: "some" }}
                 transition={{
                   duration: MOTION_DURATION.enter,
                   delay: index * 0.06,
                   ease: MOTION_EASE.out,
                 }}
-                className="flex flex-col justify-between rounded-[10px] border border-[#41443A] focus-within:border-[#C7E34A] hover:border-[#69734A] bg-[#151713] overflow-hidden group transition-colors"
+                className="project-card rounded-[10px] border border-[#41443A] focus-within:border-[#C7E34A] hover:border-[#69734A] bg-[#151713] justify-between group transition-colors"
               >
                 <div>
-                  <MaskMediaReveal delay={index * 0.05} className="aspect-[4/3] w-full overflow-hidden border-b border-[#41443A] bg-[#20231D]">
-                    <img
-                      src={media.src}
-                      alt={media.alt}
-                      loading="lazy"
-                      decoding="async"
-                      className="h-full w-full object-cover object-center transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
+                  <MaskMediaReveal delay={index * 0.05} className="w-full">
+                    <ProjectMedia
+                      project={project}
+                      media={media}
+                      repo={repo}
+                      className="!border-[#41443A]"
+                      imgClassName="group-hover:scale-[1.025]"
                     />
                   </MaskMediaReveal>
 

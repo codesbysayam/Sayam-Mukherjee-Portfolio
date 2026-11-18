@@ -78,7 +78,7 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
     title: "MAUSAM Meteorological Intelligence Platform",
     subtitle: "Doppler nowcasting, SACHET/NDMA, NAQI, INCOIS & Ask MAUSAM AI",
     category: "Weather & Geospatial Systems",
-    status: "Live · SIH 2026 (mausam_sample)",
+    status: "Live · SIH 2026 (mausam_sih-26)",
     purpose:
       "Consolidates Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality, INCOIS coastal/marine state, and agrometeorological metrics with Ask MAUSAM AI into one responsive TypeScript platform.",
     nodes: [
@@ -97,14 +97,14 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
       "UI Layer -> Renders responsive multi-domain climate cards cleanly"
     ],
     invariants: [
-      "Canonical source repo is codesbysayam/mausam_sample (mausam_demo is an empty template)",
+      "Active canonical repo is codesbysayam/mausam_sih-26 alongside baseline snapshot mausam_sample",
       "Unified domestic weather, air-quality, coastal & soil views without silos",
-      "Verified polyglot build led by 5.14 MB TypeScript & 118.6 KB Python"
+      "Verified polyglot TypeScript, Python, JavaScript, CSS, C & PLpgSQL stack"
     ],
-    repoUrl: "https://github.com/codesbysayam/mausam_sample",
+    repoUrl: "https://github.com/codesbysayam/mausam_sih-26",
     liveUrl: "https://mausamgovt.vercel.app",
     stats: [
-      { label: "Canonical Repo", value: "codesbysayam/mausam_sample" },
+      { label: "Canonical Repo", value: "codesbysayam/mausam_sih-26" },
       { label: "Coverage", value: "Doppler / NAQI / INCOIS" },
       { label: "Event", value: "SIH 2026 · Team ALGNITE" }
     ]

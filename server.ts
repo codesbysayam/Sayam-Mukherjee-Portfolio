@@ -22,6 +22,13 @@ function parsePort(): number {
     const val = parseInt(process.argv[portArgIndex + 1], 10);
     if (!isNaN(val) && val > 0) return val;
   }
+  if (process.env.DEFAULT_APP_PORT) {
+    const defaultPort = parseInt(process.env.DEFAULT_APP_PORT, 10);
+    if (!isNaN(defaultPort) && defaultPort > 0) return defaultPort;
+  }
+  if (process.env.NODE_ENV !== "production" && process.env.NGINX_PORT && process.env.PORT === process.env.NGINX_PORT) {
+    return 3000;
+  }
   return Number(process.env.PORT) || 3000;
 }
 const PORT = parsePort();
@@ -73,12 +80,16 @@ SAYAM'S BACKGROUND:
 - Location: Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal).
 - Main Ambition: Future AI Engineer building intelligent, scalable digital systems.
 
-SAYAM'S VERIFIED REAL PROJECTS:
-1. "OPERON": Autonomous operations platform built for intelligent, human-controlled workflows across Support, Finance, HR, and Operations, combining multi-agent AI with human-in-the-loop governance (TypeScript, Node.js, Express, React).
-2. "SayamSolves": Algorithmic problem solving and consistent daily DSA practice solving LeetCode challenges in C++ with structured complexity notes (C++, Algorithms, Data Structures).
-3. "MAUSAM": Smart India Hackathon (SIH 2026) Project by Team Algnite. Weather forecasting and localized climate analytics dashboard with real-time AQI, UV index, soil moisture, and meteorological telemetry (React, TypeScript, Tailwind CSS, Weather APIs, Python).
-4. "Sayam Mukherjee | Interactive Portfolio": Personal developer portfolio featuring dark/light liquid glass aesthetics, live GitHub activity telemetry, and responsive micro-interactions (React, TypeScript, Tailwind CSS, Express, Vite, Motion).
-5. "YOLO / YOLOv8 Edge Computer Vision": Autonomous edge camera pipeline detecting movement vectors and spatial telemetry using lightweight YOLOv8 models optimized for edge hardware (Python, OpenCV, YOLOv8, PyTorch).
+SAYAM'S VERIFIED REAL PROJECTS (8 Flagship Projects + Interactive Portfolio):
+1. "OPERON": Multi-agent operations platform with human-in-the-loop governance across Support, Finance, HR, and Operations (TypeScript, Node.js, Express, React; live at operonpro.vercel.app; repo: codesbysayam/Operon).
+2. "MAUSAM": SIH 2026 atmospheric intelligence platform by Team ALGNITE unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM AI (TypeScript, React, Python, C, PLpgSQL; live at mausamgovt.vercel.app; canonical repo: codesbysayam/mausam_sih-26).
+3. "SightForge": Dual-service real-time computer vision workbench pairing a Next.js 15 / React 19 16:9 HTML5 Canvas client with a FastAPI YOLOv8 person detection (COCO Class ID 0), 17-keypoint pose, IoU 0.45 NMS, ByteTrack, and PostgreSQL backend (self-hosted local repo: codesbysayam/SightForge).
+4. "Memory in Motion": Interactive mechanistic interpretability lab for DataForge 2026 (IIT Kharagpur) contrasting O(1) recurrent state and Hebbian fast weights vs O(T) KV caches (TypeScript, React, KaTeX, D3.js, Python; live at memoryinmotion.vercel.app; repo: codesbysayam/Memory-in-Motion).
+5. "AXIOM": Autonomous operations control plane built in 36h for WCC Launchpad 30 featuring deterministic policy rules, approval gates, failure recovery, sandboxes, and audit chains (TypeScript, React; live at axiomwcc.vercel.app; repo: codesbysayam/AXIOM).
+6. "INKLOOM": Public fork workspace (default branch 'master', isFork: true) exploring constructed AI logo systems with brand constraint extraction and composition rules (early access at inkloom.art; underlying logo models under construction; repo: codesbysayam/inkloom).
+7. "Campus Connect": Full-stack Next.js campus event management platform with organizer dashboard and Vitest suite using README-documented seeded in-memory storage (live at campusconnect1273.vercel.app; repo: codesbysayam/CAMPUSCONNECT_1273).
+8. "SayamSolves": LeetHub V2 synced C++ DSA repository tracking 3 solution files in stats.json (LC 0005, 0033, 0115) alongside a verified 4-problem LeetCode profile baseline (repo: codesbysayam/sayam-solves).
+Note: "Sayam-Mukherjee-Portfolio" is the personal developer portfolio repository hosting sayammukherjee.in.
 
 SAYAM'S SKILLS & TOOLKIT:
 - AI & Machine Learning: PyTorch, OpenCV, YOLOv8, Scikit-Learn, LLM APIs (Gemini).
@@ -170,7 +181,7 @@ const INITIAL_DB = {
       role: "Tech Content Creator (100k+ subs)",
       content: "Working with Sayam was a game-changer for our click-through rates. His designs are rooted in deep visual psychology. Our overall channel CTR boosted from 4.8% to 7.2% in just two months of design cooperation.",
       approved: true,
-      avatar: "https://picsum.photos/seed/creator1/100/100",
+      avatar: "",
       date: "Feb 2025"
     }
   ] as any[],
@@ -522,7 +533,7 @@ app.post("/api/testimonials", (req, res) => {
     role: role || "Collaborator",
     content,
     approved: false, // Pending admin approval by default
-    avatar: avatar || `https://picsum.photos/seed/${Date.now()}/100/100`,
+    avatar: typeof avatar === "string" ? avatar : "",
     date: new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }),
   };
 
@@ -761,10 +772,10 @@ const VERIFIED_GITHUB_BASELINE = {
   avatarUrl: "https://avatars.githubusercontent.com/u/85777731?v=4",
   bio: "👨‍💻 B.Tech CSE (AI&ML) student at KIIT University\r\n🔍 Exploring Python, Machine Learning, and Web Development  \r\n📂 Building projects and learning by doing",
   location: "Kolkata, India",
-  publicRepos: 9,
+  publicRepos: 11,
   followers: 1,
   following: 0,
-  totalStars: 5,
+  totalStars: 6,
   totalForks: 0,
   commitsThisYear: null,
   totalContributionsThisYear: null,
@@ -772,26 +783,70 @@ const VERIFIED_GITHUB_BASELINE = {
   longestStreak: null,
   repositories: [
     {
-      name: "Sayam-Mukherjee-Portfolio",
-      fullName: "codesbysayam/Sayam-Mukherjee-Portfolio",
-      description: "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey.",
+      name: "Memory-in-Motion",
+      fullName: "codesbysayam/Memory-in-Motion",
+      description: "Interactive mechanistic interpretability lab contrasting O(1) recurrent state and Hebbian fast weights vs O(T) KV caches for DataForge 2026.",
       stars: 1,
       forks: 0,
       language: "TypeScript",
-      url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
-      updatedAt: "2026-10-04T19:35:34Z",
-      topics: ["portfolio", "react", "typescript", "tailwindcss", "vite", "full-stack"]
+      url: "https://github.com/codesbysayam/Memory-in-Motion",
+      updatedAt: "2026-11-18T09:10:56Z",
+      topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
     },
     {
       name: "codesbysayam",
       fullName: "codesbysayam/codesbysayam",
-      description: "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee, a Computer Science student passionate about software development, DSA, and ML.",
+      description: "👨‍💻 Developer portfolio and GitHub profile of Sayam Mukherjee.",
       stars: 1,
       forks: 0,
       language: null,
       url: "https://github.com/codesbysayam/codesbysayam",
-      updatedAt: "2026-10-04T09:44:33Z",
+      updatedAt: "2026-11-18T07:29:56Z",
       topics: ["config", "github-profile"]
+    },
+    {
+      name: "Sayam-Mukherjee-Portfolio",
+      fullName: "codesbysayam/Sayam-Mukherjee-Portfolio",
+      description: "💻 An interactive AI-powered portfolio showcasing Sayam Mukherjee’s skills, projects, achievements, experience, and learning journey.",
+      stars: 2,
+      forks: 0,
+      language: "TypeScript",
+      url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio",
+      updatedAt: "2026-11-18T04:06:22Z",
+      topics: ["portfolio", "react", "typescript", "tailwindcss", "vite", "full-stack"]
+    },
+    {
+      name: "mausam_sih-26",
+      fullName: "codesbysayam/mausam_sih-26",
+      description: "🌦️ Mausam is a smart weather intelligence platform built for SIH 2026 by Team Algnite.",
+      stars: 0,
+      forks: 0,
+      language: "TypeScript",
+      url: "https://github.com/codesbysayam/mausam_sih-26",
+      updatedAt: "2026-11-18T02:32:07Z",
+      topics: ["sih-2026", "weather", "typescript", "react", "python"]
+    },
+    {
+      name: "SightForge",
+      fullName: "codesbysayam/SightForge",
+      description: "YOLOv8 Edge CV Pipeline pairing Next.js 15 / React 19 with FastAPI YOLOv8 person detection, 17-keypoint pose, and ByteTrack.",
+      stars: 0,
+      forks: 0,
+      language: "TypeScript",
+      url: "https://github.com/codesbysayam/SightForge",
+      updatedAt: "2026-10-25T09:11:24Z",
+      topics: ["yolov8", "computer-vision", "fastapi", "nextjs", "bytetrack"]
+    },
+    {
+      name: "AXIOM",
+      fullName: "codesbysayam/AXIOM",
+      description: "Autonomous operations control plane built in 36h for WCC Launchpad 30 with policy rules, approval gates, sandboxes, and audit chains.",
+      stars: 0,
+      forks: 0,
+      language: "TypeScript",
+      url: "https://github.com/codesbysayam/AXIOM",
+      updatedAt: "2026-10-04T18:39:23Z",
+      topics: ["agentic-ai", "control-plane", "typescript", "react"]
     },
     {
       name: "Operon",
@@ -805,20 +860,9 @@ const VERIFIED_GITHUB_BASELINE = {
       topics: ["backend", "business-automation", "express", "multi-agent-ai", "nodejs", "reactjs"]
     },
     {
-      name: "mausam_demo",
-      fullName: "codesbysayam/mausam_demo",
-      description: "🌦️ Environmental telemetry and weather dashboard demonstration build.",
-      stars: 0,
-      forks: 0,
-      language: null,
-      url: "https://github.com/codesbysayam/mausam_demo",
-      updatedAt: "2026-09-30T20:19:28Z",
-      topics: ["weather", "dashboard", "telemetry"]
-    },
-    {
       name: "mausam_sample",
       fullName: "codesbysayam/mausam_sample",
-      description: "🌦️ Sample implementation and API models for MAUSAM meteorological platform.",
+      description: "🌦️ Earlier SIH 2026 snapshot of the MAUSAM meteorological platform.",
       stars: 0,
       forks: 0,
       language: "TypeScript",
@@ -835,34 +879,23 @@ const VERIFIED_GITHUB_BASELINE = {
       language: "TypeScript",
       url: "https://github.com/codesbysayam/CAMPUSCONNECT_1273",
       updatedAt: "2026-09-28T18:11:59Z",
-      topics: ["campus", "events", "react", "typescript"]
+      topics: ["campus", "events", "nextjs", "react", "typescript"]
     },
     {
       name: "inkloom",
       fullName: "codesbysayam/inkloom",
-      description: "Dynamic digital canvas and collaborative writing workspace platform.",
+      description: "Specialised AI models for logo design — brand-analysis, typography/symbol construction, and composition lockups.",
       stars: 0,
       forks: 0,
       language: null,
       url: "https://github.com/codesbysayam/inkloom",
       updatedAt: "2026-09-26T13:29:22Z",
-      topics: ["canvas", "writing", "workspace"]
-    },
-    {
-      name: "Memory-in-Motion",
-      fullName: "codesbysayam/Memory-in-Motion",
-      description: "Interactive mechanistic laboratory exploring recurrent memory, hidden-state dynamics, and the compression vs interference trade-off.",
-      stars: 1,
-      forks: 0,
-      language: "TypeScript",
-      url: "https://github.com/codesbysayam/Memory-in-Motion",
-      updatedAt: "2026-09-23T06:12:15Z",
-      topics: ["recurrent-memory", "ai-research", "dynamical-systems", "typescript", "react"]
+      topics: ["design-systems", "typescript", "plpgsql", "docker"]
     },
     {
       name: "sayam-solves",
       fullName: "codesbysayam/sayam-solves",
-      description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice in C++.",
+      description: "💻 Daily coding challenges solved by Sayam, powered by consistent DSA practice in C++ via LeetHub V2.",
       stars: 1,
       forks: 0,
       language: "C++",
@@ -873,38 +906,43 @@ const VERIFIED_GITHUB_BASELINE = {
   ],
   recentCommits: [
     {
-      repo: "codesbysayam/sayam-solves",
-      message: "Time: 14 ms (47.31%), Space: 9.3 MB (77.48%) - LeetHub",
-      date: "2026-09-06T14:51:10Z",
-      sha: "5739270"
-    },
-    {
-      repo: "codesbysayam/mausam",
-      message: "feat: enhance UI components and weather data views",
-      date: "2026-09-06T14:03:47Z",
-      sha: "5ea4a90"
-    },
-    {
       repo: "codesbysayam/Sayam-Mukherjee-Portfolio",
-      message: "refactor: update academic and project profile",
-      date: "2026-09-05T20:48:31Z",
-      sha: "1e16335"
+      message: "chore: synchronize verified portfolio telemetry",
+      date: "2026-11-17T09:29:07Z",
+      sha: "05b52d9"
     },
     {
-      repo: "codesbysayam/Operon",
-      message: "feat: multi-agent autonomous workflow pipeline",
-      date: "2026-08-30T06:59:16Z",
-      sha: "8a71d2e"
+      repo: "codesbysayam/mausam_sih-26",
+      message: "feat: SIH 2026 Doppler radar, NAQI & INCOIS telemetry",
+      date: "2026-11-17T19:13:40Z",
+      sha: "7bc2886"
+    },
+    {
+      repo: "codesbysayam/SightForge",
+      message: "feat: YOLOv8 pose keypoints & ByteTrack pipeline",
+      date: "2026-10-25T09:05:38Z",
+      sha: "4349936"
+    },
+    {
+      repo: "codesbysayam/Memory-in-Motion",
+      message: "feat: update O(1) recurrent state interpretability views",
+      date: "2026-10-25T16:44:02Z",
+      sha: "main"
     }
   ],
-  // Genuine language distribution calculated from actual GitHub repository byte data
-  // Across mausam (3.29MB TS), Operon (620KB TS), Portfolio (716KB TS), and sayam-solves (2KB C++)
   languages: [
-    { name: "TypeScript", percent: 97.6, bytes: 4626491, color: "#3178c6" },
-    { name: "CSS", percent: 1.4, bytes: 68709, color: "#563d7c" },
-    { name: "JavaScript", percent: 0.8, bytes: 38506, color: "#f1e05a" },
-    { name: "HTML", percent: 0.1, bytes: 5186, color: "#e34c26" },
-    { name: "C++", percent: 0.1, bytes: 2037, color: "#f43f5e" }
+    { name: "TypeScript", percent: 94.5, bytes: 18035088, color: "#3178c6" },
+    { name: "Python", percent: 2.1, bytes: 404953, color: "#3572A5" },
+    { name: "CSS", percent: 1.4, bytes: 265714, color: "#563d7c" },
+    { name: "JavaScript", percent: 0.9, bytes: 178128, color: "#f1e05a" },
+    { name: "HTML", percent: 0.4, bytes: 78193, color: "#e34c26" },
+    { name: "C", percent: 0.4, bytes: 68573, color: "#555555" },
+    { name: "Jupyter Notebook", percent: 0.2, bytes: 33736, color: "#DA5B0B" },
+    { name: "PLpgSQL", percent: 0.1, bytes: 13419, color: "#336791" },
+    { name: "Makefile", percent: 0.0, bytes: 5200, color: "#427819" },
+    { name: "C++", percent: 0.0, bytes: 2037, color: "#f43f5e" },
+    { name: "Dockerfile", percent: 0.0, bytes: 600, color: "#384d54" },
+    { name: "Shell", percent: 0.0, bytes: 569, color: "#89e051" }
   ],
   contributionCalendar: [] as any[],
   isLive: false,
@@ -962,7 +1000,12 @@ const LANGUAGE_COLOR_MAP: Record<string, string> = {
   Python: "#3572A5",
   CSS: "#563d7c",
   HTML: "#e34c26",
+  C: "#555555",
+  "Jupyter Notebook": "#DA5B0B",
+  PLpgSQL: "#336791",
+  Makefile: "#427819",
   "C++": "#f43f5e",
+  Dockerfile: "#384d54",
   Shell: "#89e051"
 };
 
@@ -986,8 +1029,8 @@ app.all("/api/github/sync", async (req, res) => {
     return res.json({
       success: true,
       syncedAt: new Date().toISOString(),
-      publicRepos: snapshot?.profile?.public_repos ?? snapshot?.repositories?.length ?? 9,
-      totalStars: snapshot?.totalStars ?? 5,
+      publicRepos: snapshot?.profile?.public_repos ?? snapshot?.repositories?.length ?? 11,
+      totalStars: snapshot?.totalStars ?? 6,
       totalForks: snapshot?.totalForks ?? 0,
       data: snapshot,
     });
@@ -1116,7 +1159,7 @@ app.get("/api/github/languages", async (req, res) => {
   }));
   return res.json({
     languages: fallbackResult,
-    totalBytes: 4740929,
+    totalBytes: 19086210,
     source: "verified-baseline",
     lastSynced: "Verified Baseline"
   });
@@ -1127,19 +1170,19 @@ app.get("/api/github-stats", async (req, res) => {
   try {
     const snapshot = await getDynamicGitHubSnapshot();
     const repos = snapshot.repositories || [];
-    const totalStars = snapshot.totalStars ?? 0;
+    const totalStars = snapshot.totalStars ?? 6;
     const totalForks = snapshot.totalForks ?? 0;
     res.json({
-      repositories: repos.length || 4,
+      repositories: repos.length || 11,
       stars: totalStars,
       forks: totalForks,
       commitsThisYear: null,
       languages: [
-        { name: "TypeScript", percent: 97.6 },
+        { name: "TypeScript", percent: 94.5 },
+        { name: "Python", percent: 2.1 },
         { name: "CSS", percent: 1.4 },
-        { name: "JavaScript", percent: 0.8 },
-        { name: "HTML", percent: 0.1 },
-        { name: "C++", percent: 0.1 }
+        { name: "JavaScript", percent: 0.9 },
+        { name: "HTML", percent: 0.4 }
       ],
       pinnedRepos: repos.slice(0, 4).map((r: any) => ({
         name: r.name,
@@ -1150,8 +1193,8 @@ app.get("/api/github-stats", async (req, res) => {
     });
   } catch {
     res.json({
-      repositories: 4,
-      stars: 0,
+      repositories: 11,
+      stars: 6,
       forks: 0,
       languages: [{ name: "TypeScript", percent: 100 }],
       pinnedRepos: []
@@ -1179,7 +1222,7 @@ app.get("/api/github/user", async (req, res) => {
     html_url: "https://github.com/codesbysayam",
     name: VERIFIED_GITHUB_BASELINE.name,
     bio: VERIFIED_GITHUB_BASELINE.bio,
-    public_repos: 7,
+    public_repos: 11,
     public_gists: 0,
     followers: 0,
     following: 0,
@@ -1302,14 +1345,14 @@ app.get("/api/github/pulse", (req, res) => {
     return new Date(b.pushedAt).getTime() - new Date(a.pushedAt).getTime();
   });
 
-  const finalCommits = totalCommits > 0 ? totalCommits : 18;
+  const finalCommits = totalCommits > 0 ? totalCommits : 14;
   const finalActiveRepos = activeRepos.length > 0
     ? activeRepos
     : [
-        { name: "codesbysayam", fullName: "codesbysayam/codesbysayam", url: "https://github.com/codesbysayam/codesbysayam", commitsCount: 10, language: "Python", pushedAt: "2026-09-13T17:00:00Z" },
-        { name: "mausam", fullName: "codesbysayam/mausam", url: "https://github.com/codesbysayam/mausam", commitsCount: 4, language: "TypeScript", pushedAt: "2026-09-12T14:43:00Z" },
-        { name: "Sayam-Mukherjee-Portfolio", fullName: "codesbysayam/Sayam-Mukherjee-Portfolio", url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio", commitsCount: 3, language: "TypeScript", pushedAt: "2026-09-11T18:27:00Z" },
-        { name: "sayam-solves", fullName: "codesbysayam/sayam-solves", url: "https://github.com/codesbysayam/sayam-solves", commitsCount: 1, language: "C++", pushedAt: "2026-09-07T06:02:00Z" }
+        { name: "Memory-in-Motion", fullName: "codesbysayam/Memory-in-Motion", url: "https://github.com/codesbysayam/Memory-in-Motion", commitsCount: 4, language: "TypeScript", pushedAt: "2026-11-18T09:10:56Z" },
+        { name: "codesbysayam", fullName: "codesbysayam/codesbysayam", url: "https://github.com/codesbysayam/codesbysayam", commitsCount: 3, language: "Markdown", pushedAt: "2026-11-18T07:29:56Z" },
+        { name: "Sayam-Mukherjee-Portfolio", fullName: "codesbysayam/Sayam-Mukherjee-Portfolio", url: "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio", commitsCount: 4, language: "TypeScript", pushedAt: "2026-11-18T04:06:22Z" },
+        { name: "mausam_sih-26", fullName: "codesbysayam/mausam_sih-26", url: "https://github.com/codesbysayam/mausam_sih-26", commitsCount: 3, language: "TypeScript", pushedAt: "2026-11-18T02:32:07Z" }
       ];
 
   const cadenceVal = (finalCommits / 7).toFixed(1);
@@ -1472,13 +1515,16 @@ async function run() {
   const httpServer = http.createServer(app);
 
   if (process.env.NODE_ENV !== "production") {
+    const disableHmr = process.env.DISABLE_HMR === "true";
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: {
-        middlewareMode: true,
+        middlewareMode: { server: httpServer },
         host: "0.0.0.0",
         port: PORT,
-        hmr: false,
+        allowedHosts: true,
+        hmr: disableHmr ? false : { server: httpServer },
+        ...(disableHmr ? { ws: false as const } : {}),
       },
       appType: "spa",
     });

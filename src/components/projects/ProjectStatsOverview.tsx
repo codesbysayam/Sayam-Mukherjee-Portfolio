@@ -202,8 +202,8 @@ function ProjectStatsOverviewComponent({
       else if (shortName === "Memory-in-Motion") shortName = "MemMotion";
       else if (shortName === "codesbysayam") shortName = "Config";
       else if (shortName === "sayam-solves") shortName = "DSA Solves";
-      else if (shortName === "mausam_sample") shortName = "Mausam";
-      else if (shortName === "mausam_demo") shortName = "M.Demo";
+      else if (shortName === "mausam_sih-26") shortName = "Mausam";
+      else if (shortName === "mausam_sample") shortName = "M.Sample";
       else if (shortName === "CAMPUSCONNECT_1273") shortName = "Campus";
       else if (shortName === "SightForge") shortName = "SightForge";
       else if (shortName === "AXIOM") shortName = "AXIOM";

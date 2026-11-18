@@ -5,6 +5,7 @@ import { getProjectMedia } from "../../data/projectMedia";
 import { GitHubRepo, formatRelativeTime } from "../../services/github";
 import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import { calculateReadingTime } from "../../utils/readingTime";
+import { computeProjectLifecycle } from "../../utils/projectLifecycle";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
   Star, GitFork, ExternalLink, Github, ArrowRight,
@@ -49,6 +50,7 @@ function FeaturedProjectComponent({
 
   const readingStats = useMemo(() => calculateReadingTime(project), [project]);
   const media = useMemo(() => getProjectMedia(project.id), [project.id]);
+  const lifecycle = useMemo(() => computeProjectLifecycle(project, repo), [project, repo]);
   const [shared, setShared] = useState(false);
   const [imgError, setImgError] = useState(false);
   const reduced = usePrefersReducedMotion();
@@ -95,6 +97,12 @@ function FeaturedProjectComponent({
         <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono text-[#B5B8AA]">
           <span className="px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold uppercase tracking-wider text-[11px]">
             Featured Exhibit
+          </span>
+          <span
+            title={lifecycle.title}
+            className={`px-2 py-0.5 rounded-[4px] font-bold uppercase tracking-wider text-[10px] ${lifecycle.badgeClass}`}
+          >
+            {lifecycle.label}
           </span>
           <span aria-hidden="true">·</span>
           <span className="text-[#F4F4ED]">{project.category}</span>
@@ -278,7 +286,7 @@ function FeaturedProjectComponent({
                     alt={media.alt}
                     referrerPolicy="no-referrer"
                     onError={() => setImgError(true)}
-                    className="w-full aspect-[16/10] object-cover"
+                    className="project-screenshot w-full aspect-[16/10] h-full object-cover object-top"
                   />
                 ) : (
                   <div className="w-full aspect-[16/10] flex items-center justify-center p-6 text-center bg-[#151713]">

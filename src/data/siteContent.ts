@@ -220,7 +220,7 @@ export const PROJECTS: readonly ProjectContent[] = [
     shortDescription:
       "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM AI.",
     description:
-      "Built for Smart India Hackathon (SIH 2026) with Team ALGNITE, MAUSAM consolidates hyper-local weather telemetry, Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality indices, INCOIS marine advisories, and Ask MAUSAM AI guidance (canonical repo: codesbysayam/mausam_sample; mausam_demo is an empty template).",
+      "Built for Smart India Hackathon (SIH 2026) with Team ALGNITE, MAUSAM consolidates hyper-local weather telemetry, Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality indices, INCOIS marine advisories, and Ask MAUSAM AI guidance (active repo: codesbysayam/mausam_sih-26; earlier snapshot: mausam_sample).",
     whyItExists:
       "Weather, air quality, coastal tide, and disaster warnings are fragmented across separate portals; MAUSAM unifies them for citizens, farmers, and coastal communities.",
     whatIBuilt:
@@ -233,16 +233,16 @@ export const PROJECTS: readonly ProjectContent[] = [
     technologies: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "C", "PLpgSQL", "Vercel"],
     techStack: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "Ask MAUSAM AI"],
     tags: ["SIH 2026", "Team ALGNITE", "Doppler Nowcasting", "NAQI / INCOIS", "SACHET / NDMA"],
-    repository: "mausam_sample",
-    githubRepoName: "mausam_sample",
-    githubUrl: "https://github.com/codesbysayam/mausam_sample",
+    repository: "mausam_sih-26",
+    githubRepoName: "mausam_sih-26",
+    githubUrl: "https://github.com/codesbysayam/mausam_sih-26",
     liveUrl: "https://mausamgovt.vercel.app",
     demoUrl: "https://mausamgovt.vercel.app",
     featured: true,
     highlights: [
       "Doppler radar nowcasting, SACHET/NDMA alerts, and CPCB NAQI air quality integration",
       "INCOIS marine/coastal sea-state monitoring and agrometeorological soil advisories",
-      "Canonical source verified in codesbysayam/mausam_sample",
+      "Active repository maintained in codesbysayam/mausam_sih-26",
     ],
     metrics: {
       developmentTime: "SIH 2026 Sprint",

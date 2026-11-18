@@ -106,7 +106,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "Projects & Engineering",
     question: "What are the primary software projects featured in the portfolio?",
     plainTextAnswer:
-      "The portfolio features eight verified GitHub projects across @codesbysayam (11 public repos total including meta/template repos): OPERON (multi-agent HITL workflow engine), MAUSAM (SIH 2026 platform in codesbysayam/mausam_sample), SightForge (dual-service Next.js 15 + FastAPI YOLOv8/ByteTrack pipeline, local/self-hosted), Memory in Motion (IIT KGP DataForge O(1) vs O(T) lab), AXIOM (WCC Launchpad 30 control plane), Inkloom (public fork on master branch, early access at inkloom.art while logo models are under R&D), CampusConnect (Next.js event platform with Vitest and seeded in-memory storage), and SayamSolves (C++ LeetHub V2 archive with 3 repo files in stats.json and 4 LC baseline).",
+      "The portfolio features eight verified GitHub projects across @codesbysayam (11 public repos total including meta/snapshot repos): OPERON (multi-agent HITL workflow engine), MAUSAM (SIH 2026 platform in codesbysayam/mausam_sih-26 alongside baseline snapshot mausam_sample), SightForge (dual-service Next.js 15 + FastAPI YOLOv8/ByteTrack pipeline, local/self-hosted), Memory in Motion (IIT KGP DataForge O(1) vs O(T) lab), AXIOM (WCC Launchpad 30 control plane), Inkloom (public fork on master branch, early access at inkloom.art while logo models are under R&D), CampusConnect (Next.js event platform with Vitest and seeded in-memory storage), and SayamSolves (C++ LeetHub V2 archive with 3 repo files in stats.json and 4 LC baseline).",
     keywords: [
       "projects",
       "OPERON",
@@ -136,7 +136,7 @@ export const FAQ_ITEMS: FAQItem[] = [
               02 · MAUSAM &amp; CampusConnect
             </div>
             <p className="text-xs text-[var(--text-muted)] mt-1">
-              SIH 2026 Doppler/NAQI/INCOIS/SACHET suite in <code>mausam_sample</code> (vs empty <code>mausam_demo</code> template) and Next.js + Vitest campus hub (seeded in-memory storage).
+              SIH 2026 Doppler/NAQI/INCOIS/SACHET suite in <code>mausam_sih-26</code> (and snapshot <code>mausam_sample</code>) and Next.js + Vitest campus hub (seeded in-memory storage).
             </p>
           </div>
           <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
