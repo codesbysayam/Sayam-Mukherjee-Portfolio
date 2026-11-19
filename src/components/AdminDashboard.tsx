@@ -363,7 +363,7 @@ export default function AdminDashboard() {
     setMessages(fresh);
   };
 
-  // Newsletter broadcaster backed by Resend API
+  // Newsletter broadcaster (email provider optional/disabled by default)
   const handleSendNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newsSubject.trim() || !newsBody.trim() || newsSending) return;
@@ -374,13 +374,13 @@ export default function AdminDashboard() {
         setNewsSubject("");
         setNewsBody("");
         showToast(
-          `Newsletter delivered via Resend to ${result.sentCount ?? subscribers.length} subscriber(s).`,
+          `Newsletter delivered to ${result.sentCount ?? subscribers.length} subscriber(s).`,
           "success"
         );
       } else {
         showToast(
           result.error ||
-            "Newsletter broadcast could not be sent. Verify RESEND_API_KEY configuration.",
+            "Newsletter email dispatch is currently disabled because no external email provider is configured.",
           "error"
         );
       }
@@ -1611,9 +1611,10 @@ export default function AdminDashboard() {
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-[var(--text-muted)] font-mono">
                           <span>Loc: {msg.country || "Bhubaneswar, IN"}</span>
                           <span>· Org: {msg.company || "Independent"}</span>
+                          {msg.topic && <span>· Topic: {msg.topic}</span>}
                           <span>· Budget: {msg.budget || "None"}</span>
                           <span>· Timeline: {msg.timeline || "None"}</span>
-                          <span>· {new Date(msg.timestamp).toLocaleString()}</span>
+                          <span>· {msg.createdAt || msg.timestamp ? new Date(msg.createdAt || msg.timestamp).toLocaleString() : "Recent"}</span>
                         </div>
                       </div>
 
@@ -1687,7 +1688,7 @@ export default function AdminDashboard() {
                       disabled={subscribers.length === 0 || newsSending}
                       className="btn btn-primary w-full text-xs tracking-wider uppercase disabled:opacity-50"
                     >
-                      {newsSending ? "Sending via Resend..." : `Transmit Broadcast to ${subscribers.length} Subscribers`}
+                      {newsSending ? "Processing Broadcast..." : `Transmit Broadcast to ${subscribers.length} Subscribers`}
                     </button>
                   </form>
                 </div>

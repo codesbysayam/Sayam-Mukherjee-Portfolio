@@ -6,7 +6,7 @@ import {
   queryFirestoreCollection,
   upsertFirestoreDoc,
 } from "../services/firestoreRest.ts";
-import { env } from "../config/env.ts";
+import { isEmailTransportConfigured } from "../services/email.service.ts";
 
 type StoredCertificate = Certificate & { published?: boolean };
 
@@ -214,7 +214,7 @@ export async function getCertificateStats(): Promise<CertificateStats> {
 }
 
 export function getCertificateStorageStatus(): StorageStatus {
-  const emailConfigured = Boolean(env.resendApiKey && env.contactFromEmail);
+  const emailConfigured = isEmailTransportConfigured();
   return {
     database: "firestore_active",
     objectStorage: emailConfigured ? "configured" : "direct_url_mode",

@@ -2,7 +2,9 @@ import { useState, useRef, memo } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import AcademicRecord from "./AcademicRecord";
 import { EditorialReveal, MaskMediaReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
-import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
+import { ContourBackground } from "./motion/ContourBackground";
+import { SectionHeading } from "./ui/SectionHeading";
+import { usePrefersReducedMotion } from "../motion/tokens";
 import {
   GraduationCap, Award, Calendar, Shield, Compass,
   Sparkles, CheckCircle2, BookOpen, User, Target,
@@ -269,55 +271,50 @@ function AboutSectionComponent() {
   return (
     <div className="w-full space-y-12 sm:space-y-14 pb-12">
       {/* 1. EDITORIAL HEADER */}
-      <header id="about-hero" className="space-y-5 pt-2 border-b border-[var(--border)] pb-8">
-        <div className="flex items-center gap-3 text-xs font-mono text-[var(--text-muted)]">
-          <span className="font-semibold text-[var(--accent)] tracking-wider uppercase">
-            01 · Biography &amp; Human Core
-          </span>
-          <span aria-hidden="true">/</span>
-          <span className="hidden sm:inline">Engineering Identity, Values &amp; Story</span>
-        </div>
+      <header
+        id="about-hero"
+        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-6"
+      >
+        <ContourBackground density="subtle" />
 
-        <div className="space-y-3 max-w-3xl">
-          <h1
-            className="font-extrabold tracking-tight text-[var(--text)] font-display leading-[1.03] text-balance"
-            style={{ fontSize: "clamp(2.1rem, 4vw, 3.6rem)" }}
-          >
-            Sayam Mukherjee —{" "}
-            <span className="font-serif-editorial italic font-normal text-[var(--text-secondary)]">
-              engineer, builder &amp; athlete.
-            </span>
-          </h1>
-          <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed font-sans max-w-2xl">
-            Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ historical community reach across channels, district table tennis athlete, and software systems engineer.
-          </p>
-        </div>
+        <div className="relative z-10 space-y-6">
+          <SectionHeading
+            level="h1"
+            immediate
+            index="01"
+            eyebrow="Biography & Human Core"
+            title="MORE THAN JUST CODE —"
+            italicHighlight="engineer, builder & athlete."
+            description="Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ historical community reach across channels, district table tennis athlete, and software systems engineer."
+            withDivider={false}
+          />
 
-        {/* Editorial Tabs */}
-        <div className="flex flex-wrap gap-2 pt-1" role="tablist" aria-label="About sections">
-          {[
-            { id: "narrative", label: "Personal Narrative & Values", icon: User },
-            { id: "timeline", label: "Chronological Timeline (2011–2026)", icon: Calendar },
-            { id: "education", label: "Academics & Honors", icon: GraduationCap }
-          ].map((tab) => {
-            const Icon = tab.icon;
-            const isSelected = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                aria-selected={isSelected}
-                onClick={() => setActiveTab(tab.id as "narrative" | "timeline" | "education")}
-                className={`btn !min-h-[44px] !py-2 !px-4 !text-xs ${
-                  isSelected ? "btn-primary" : "btn-secondary"
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" aria-hidden="true" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+          {/* Editorial Tabs */}
+          <div className="flex flex-wrap gap-2 pt-2 border-t border-[var(--border)]" role="tablist" aria-label="About sections">
+            {[
+              { id: "narrative", label: "Personal Narrative & Values", icon: User },
+              { id: "timeline", label: "Chronological Timeline (2011–2026)", icon: Calendar },
+              { id: "education", label: "Academics & Honors", icon: GraduationCap }
+            ].map((tab) => {
+              const Icon = tab.icon;
+              const isSelected = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  onClick={() => setActiveTab(tab.id as "narrative" | "timeline" | "education")}
+                  className={`btn !min-h-[44px] !py-2 !px-4 !text-xs ${
+                    isSelected ? "btn-primary" : "btn-secondary"
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" aria-hidden="true" />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </header>
 

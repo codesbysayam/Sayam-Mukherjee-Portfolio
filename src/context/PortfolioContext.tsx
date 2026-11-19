@@ -50,7 +50,7 @@ export interface ContactSubmissionResult {
 export interface NewsletterBroadcastResult {
   success: boolean;
   deliveryStatus?: "sent" | "stored_pending_email_config" | "failed";
-  provider?: "resend" | "none";
+  provider?: "none";
   sentCount?: number;
   failedCount?: number;
   error?: string;
@@ -231,7 +231,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
         localStorage.getItem("sayam_theme") || localStorage.getItem("theme");
       if (saved === "dark" || saved === "light") return saved;
     }
-    return "light";
+    return "dark";
   });
 
   // Active page timing refs for real dwell tracking

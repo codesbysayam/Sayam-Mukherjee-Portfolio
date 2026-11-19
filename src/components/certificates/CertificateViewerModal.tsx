@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Certificate } from "../../types/certificates";
 import ModalPortal from "../common/ModalPortal";
@@ -18,15 +18,21 @@ import {
   Hash,
   Copy,
   Check,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 interface CertificateViewerModalProps {
   certificate: Certificate | null;
+  certificates?: Certificate[];
+  onSelectCertificate?: (certificate: Certificate) => void;
   onClose: () => void;
 }
 
 export default function CertificateViewerModal({
   certificate,
+  certificates,
+  onSelectCertificate,
   onClose,
 }: CertificateViewerModalProps) {
   const prefersReduced = usePrefersReducedMotion();
@@ -34,17 +40,41 @@ export default function CertificateViewerModal({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const touchStartXRef = useRef<number | null>(null);
 
   useBodyScrollLock(Boolean(certificate));
+
+  const currentIndex = useMemo(() => {
+    if (!certificate || !certificates || certificates.length === 0) return -1;
+    return certificates.findIndex((c) => c.id === certificate.id);
+  }, [certificate, certificates]);
+
+  const canStep = Boolean(
+    certificates && certificates.length > 1 && onSelectCertificate && currentIndex !== -1
+  );
+
+  const handleStep = (direction: -1 | 1) => {
+    if (!canStep || !certificates || !onSelectCertificate) return;
+    const nextIdx = (currentIndex + direction + certificates.length) % certificates.length;
+    onSelectCertificate(certificates[nextIdx]);
+  };
 
   useEffect(() => {
     if (!certificate) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        onClose();
+      } else if (e.key === "ArrowLeft" && canStep && certificates && onSelectCertificate) {
+        const nextIdx = (currentIndex - 1 + certificates.length) % certificates.length;
+        onSelectCertificate(certificates[nextIdx]);
+      } else if (e.key === "ArrowRight" && canStep && certificates && onSelectCertificate) {
+        const nextIdx = (currentIndex + 1) % certificates.length;
+        onSelectCertificate(certificates[nextIdx]);
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [certificate, onClose]);
+  }, [certificate, onClose, canStep, certificates, onSelectCertificate, currentIndex]);
 
   useEffect(() => {
     setZoom(1);
@@ -180,6 +210,38 @@ export default function CertificateViewerModal({
             </div>
 
             <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+              {canStep && (
+                <div
+                  className="flex items-center gap-0.5 p-0.5 sm:p-1 rounded-[6px] border"
+                  style={{
+                    backgroundColor: "var(--surface-2)",
+                    borderColor: "var(--border)",
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => handleStep(-1)}
+                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer hover:text-[var(--accent)]"
+                    title="Previous credential (Left Arrow)"
+                    aria-label="Previous credential"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <span className="text-[11px] font-mono px-1 tabular-nums text-[var(--text-muted)]">
+                    {currentIndex + 1}/{certificates?.length}
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleStep(1)}
+                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer hover:text-[var(--accent)]"
+                    title="Next credential (Right Arrow)"
+                    aria-label="Next credential"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              )}
+
               {!isPdf && fileUrl && !imageError && (
                 <div
                   className="flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 rounded-[6px] border"
@@ -251,7 +313,21 @@ export default function CertificateViewerModal({
           </div>
 
           {/* Modal Body */}
-          <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+          <div
+            onTouchStart={(e) => {
+              touchStartXRef.current = e.touches[0]?.clientX ?? null;
+            }}
+            onTouchEnd={(e) => {
+              if (!canStep || touchStartXRef.current === null) return;
+              const endX = e.changedTouches[0]?.clientX ?? touchStartXRef.current;
+              const diff = endX - touchStartXRef.current;
+              touchStartXRef.current = null;
+              if (Math.abs(diff) > 54 && zoom <= 1) {
+                handleStep(diff < 0 ? 1 : -1);
+              }
+            }}
+            className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6"
+          >
             {certificate.imageUrl && !imageError ? (
               <div
                 className="relative w-full min-h-[200px] sm:min-h-[260px] max-h-[440px] rounded-[10px] border overflow-auto p-3 sm:p-4 flex items-center justify-center"

@@ -1,0 +1,428 @@
+import { useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { X, ArrowUpRight, Search, Sun, Moon, FileText } from "lucide-react";
+import ContourBackground from "../motion/ContourBackground";
+import { NAVIGATION, SOCIAL_LINKS, CONTACT_INFO } from "../../data/siteContent";
+import { MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
+import operonImg from "../../assets/projects/operon-live.png";
+import mausamImg from "../../assets/projects/mausam-live.png";
+import memoryImg from "../../assets/projects/memory-in-motion-live.png";
+
+export type FullScreenMenuTab =
+  | "home"
+  | "about"
+  | "skills"
+  | "ecosystem"
+  | "projects"
+  | "certificates"
+  | "journal"
+  | "contact"
+  | "github"
+  | "showcase";
+
+interface FullScreenMenuProps {
+  isOpen: boolean;
+  onClose: () => void;
+  activeTab: string;
+  onNavigate: (tab: FullScreenMenuTab) => void;
+  onOpenResume: () => void;
+  onOpenSearch: () => void;
+  theme: "dark" | "light";
+  toggleTheme: () => void;
+  returnFocusToRef?: React.RefObject<HTMLButtonElement | null>;
+}
+
+const PORTRAIT_URL = "https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg";
+
+export function FullScreenMenu({
+  isOpen,
+  onClose,
+  activeTab,
+  onNavigate,
+  onOpenResume,
+  onOpenSearch,
+  theme,
+  toggleTheme,
+  returnFocusToRef,
+}: FullScreenMenuProps) {
+  const reduced = usePrefersReducedMotion();
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Focus entry, Escape key close, focus restoration & body scroll lock
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const focusTimer = requestAnimationFrame(() => {
+      closeButtonRef.current?.focus();
+    });
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onClose();
+        returnFocusToRef?.current?.focus();
+        return;
+      }
+
+      if (e.key === "Tab" && overlayRef.current) {
+        const focusable = overlayRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        );
+        if (focusable.length === 0) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      cancelAnimationFrame(focusTimer);
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose, returnFocusToRef]);
+
+  const handleClose = () => {
+    onClose();
+    requestAnimationFrame(() => {
+      returnFocusToRef?.current?.focus();
+    });
+  };
+
+  const handleSelectRoute = (tab: FullScreenMenuTab) => {
+    onNavigate(tab);
+    onClose();
+  };
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          ref={overlayRef}
+          id="fullscreen-navigation-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site navigation menu"
+          initial={reduced ? { opacity: 0 } : { opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+          animate={reduced ? { opacity: 1 } : { opacity: 1, clipPath: "inset(0 0 0% 0)" }}
+          exit={reduced ? { opacity: 0 } : { opacity: 0, clipPath: "inset(0 0 100% 0)" }}
+          transition={{ duration: reduced ? 0.12 : 0.44, ease: MOTION_EASE.inOut }}
+          className="fixed inset-0 z-[90] bg-[#1D201A] text-[#F4F4ED] flex flex-col justify-between overflow-y-auto overscroll-contain"
+        >
+          <ContourBackground density="medium" tone="lime-on-dark" />
+
+          {/* Top Bar */}
+          <div
+            className="relative z-10 w-full flex items-center justify-between gap-4 py-5 border-b border-[#41443A]/70 shrink-0"
+            style={{
+              width: "min(100%, var(--content-max, 1440px))",
+              marginInline: "auto",
+              paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() => handleSelectRoute("home")}
+              className="flex items-center gap-3 text-left cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px]"
+            >
+              <span className="w-9 h-9 rounded-[6px] bg-[#C7E34A] text-[#151713] font-display font-extrabold text-sm flex items-center justify-center tracking-tight shrink-0">
+                SM
+              </span>
+              <div className="flex flex-col">
+                <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[#F4F4ED] leading-none">
+                  Sayam Mukherjee
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#B5B8AA] mt-1">
+                  CSE · AI &amp; ML · KIIT University
+                </span>
+              </div>
+            </button>
+
+            <div className="flex items-center gap-2 sm:gap-2.5">
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenSearch();
+                }}
+                className="hidden sm:inline-flex items-center gap-2 min-h-[42px] px-3 rounded-[6px] border border-[#41443A] bg-[#151713]/70 text-xs font-mono text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer"
+                aria-label="Open command palette search"
+              >
+                <Search className="w-3.5 h-3.5" />
+                <span>Search ⌘K</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={toggleTheme}
+                className="min-h-[42px] px-3 rounded-[6px] border border-[#41443A] bg-[#151713]/70 text-xs font-mono text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer inline-flex items-center gap-1.5"
+                aria-label={theme === "dark" ? "Switch to Paper light mode" : "Switch to Ink dark mode"}
+              >
+                {theme === "dark" ? (
+                  <>
+                    <Sun className="w-3.5 h-3.5 text-[#C7E34A]" />
+                    <span className="hidden md:inline">Paper</span>
+                  </>
+                ) : (
+                  <>
+                    <Moon className="w-3.5 h-3.5 text-[#C7E34A]" />
+                    <span className="hidden md:inline">Ink</span>
+                  </>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  onOpenResume();
+                }}
+                className="inline-flex items-center gap-1.5 min-h-[42px] px-3.5 rounded-[6px] bg-[#C7E34A] text-[#151713] hover:bg-[#A9C52F] text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer"
+              >
+                <FileText className="w-3.5 h-3.5" />
+                <span>Résumé</span>
+              </button>
+
+              <button
+                ref={closeButtonRef}
+                type="button"
+                onClick={handleClose}
+                className="w-[44px] h-[44px] rounded-[6px] bg-[#F4F4ED] text-[#151713] hover:bg-[#C7E34A] active:scale-[0.95] flex items-center justify-center transition-all cursor-pointer shrink-0"
+                aria-label="Close navigation overlay"
+                title="Close menu (Esc)"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Center Main Split: Asymmetric Visual Collage (Desktop) + Oversized Route Index */}
+          <div
+            className="relative z-10 flex-1 w-full py-8 sm:py-10 flex items-center"
+            style={{
+              width: "min(100%, var(--content-max, 1440px))",
+              marginInline: "auto",
+              paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
+            }}
+          >
+            <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* LEFT ASYMMETRIC EDITORIAL VISUAL COLLAGE (Desktop only) */}
+              <div className="hidden lg:grid lg:col-span-6 grid-cols-12 gap-4 items-center">
+                <div className="col-span-6 space-y-4">
+                  <motion.div
+                    initial={reduced ? false : { opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, delay: 0.14, ease: MOTION_EASE.out }}
+                    className="relative rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[4/5]"
+                  >
+                    <img
+                      src={PORTRAIT_URL}
+                      alt="Sayam Mukherjee portrait"
+                      referrerPolicy="no-referrer"
+                      className="h-full w-full object-cover object-[50%_20%] grayscale contrast-[1.12] hover:grayscale-0 transition-all duration-500"
+                    />
+                    <div className="absolute inset-0 bg-[#C7E34A]/[0.06] mix-blend-multiply pointer-events-none" />
+                    <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-[#151713]/90 to-transparent font-mono text-[10px] uppercase tracking-[0.12em] text-[#C7E34A] flex items-center justify-between">
+                      <span>B.Tech CSE · KIIT&apos;29</span>
+                      <span>CGPA 9.06</span>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    initial={reduced ? false : { opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, delay: 0.24, ease: MOTION_EASE.out }}
+                    className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]"
+                  >
+                    <img
+                      src={memoryImg}
+                      alt="Memory in Motion mechanistic lab"
+                      className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                    />
+                  </motion.div>
+                </div>
+
+                <div className="col-span-6 space-y-4 pt-10">
+                  <motion.div
+                    initial={reduced ? false : { opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, delay: 0.19, ease: MOTION_EASE.out }}
+                    className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]"
+                  >
+                    <img
+                      src={operonImg}
+                      alt="OPERON multi-agent platform"
+                      className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                    />
+                  </motion.div>
+
+                  <motion.div
+                    initial={reduced ? false : { opacity: 0, y: 18 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.55, delay: 0.29, ease: MOTION_EASE.out }}
+                    className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]"
+                  >
+                    <img
+                      src={mausamImg}
+                      alt="MAUSAM weather intelligence platform"
+                      className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                    />
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* RIGHT OVERSIZED STAGGERED ROUTE LINKS */}
+              <div className="lg:col-span-6 flex flex-col justify-center lg:pl-6">
+                <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#C7E34A] mb-4">
+                  Directory Index · 01 — 08
+                </div>
+
+                <nav aria-label="Full screen directory" className="flex flex-col space-y-1 sm:space-y-1.5">
+                  {NAVIGATION.map((item, idx) => {
+                    const isActive = activeTab === item.id;
+                    return (
+                      <div key={item.id} className="overflow-hidden">
+                        <motion.button
+                          type="button"
+                          initial={reduced ? false : { y: "100%", opacity: 0 }}
+                          animate={{ y: "0%", opacity: 1 }}
+                          transition={{
+                            duration: reduced ? 0.05 : 0.45,
+                            delay: reduced ? 0 : Math.min(0.08 + idx * 0.045, 0.48),
+                            ease: MOTION_EASE.out,
+                          }}
+                          onClick={() => handleSelectRoute(item.id as FullScreenMenuTab)}
+                          aria-current={isActive ? "page" : undefined}
+                          className="group relative w-full text-left flex items-baseline justify-between gap-4 py-1 cursor-pointer focus-visible:outline-none focus-visible:text-[#C7E34A]"
+                        >
+                          <div className="relative inline-flex items-baseline gap-3 sm:gap-4">
+                            <span className="font-mono text-xs text-[#8C8F82] group-hover:text-[#C7E34A] tabular-nums transition-colors">
+                              0{idx + 1}
+                            </span>
+                            <span
+                              className={`relative font-display font-extrabold uppercase tracking-[-0.03em] leading-[0.98] transition-colors ${
+                                isActive
+                                  ? "text-[#F4F4ED]/65"
+                                  : "text-[#F4F4ED] group-hover:text-[#C7E34A]"
+                              }`}
+                              style={{ fontSize: "clamp(1.85rem, 3.8vw, 3.35rem)" }}
+                            >
+                              {item.label}
+                              {isActive && (
+                                <svg
+                                  aria-hidden="true"
+                                  viewBox="0 0 220 18"
+                                  preserveAspectRatio="none"
+                                  className="pointer-events-none absolute left-0 right-0 top-1/2 -translate-y-1/2 w-full h-4 text-[#C7E34A]"
+                                >
+                                  <path
+                                    d="M2 10 Q 40 2, 74 10 T 146 10 T 218 9"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="4"
+                                    strokeLinecap="round"
+                                  />
+                                </svg>
+                              )}
+                            </span>
+                          </div>
+
+                          <span className="font-mono text-xs text-[#8C8F82] group-hover:text-[#C7E34A] transition-colors inline-flex items-center gap-1.5 shrink-0">
+                            <span className="hidden sm:inline opacity-60">[{item.shortcut}]</span>
+                            <ArrowUpRight className="w-4 h-4 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+                          </span>
+                        </motion.button>
+                      </div>
+                    );
+                  })}
+                </nav>
+
+                {/* Quick Extra Routes */}
+                <div className="mt-6 pt-5 border-t border-[#41443A]/70 flex flex-wrap items-center gap-3 text-xs font-mono">
+                  <button
+                    type="button"
+                    onClick={() => handleSelectRoute("github")}
+                    className={`px-3 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
+                      activeTab === "github"
+                        ? "border-[#C7E34A] text-[#151713] bg-[#C7E34A] font-bold"
+                        : "border-[#41443A] text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A]"
+                    }`}
+                  >
+                    Live GitHub Inventory ↗
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleSelectRoute("showcase")}
+                    className={`px-3 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
+                      activeTab === "showcase"
+                        ? "border-[#C7E34A] text-[#151713] bg-[#C7E34A] font-bold"
+                        : "border-[#41443A] text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A]"
+                    }`}
+                  >
+                    YouTube Video Showcase ↗
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Metadata & Socials Bar */}
+          <div
+            className="relative z-10 w-full border-t border-[#41443A]/70 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-[#B5B8AA] shrink-0"
+            style={{
+              width: "min(100%, var(--content-max, 1440px))",
+              marginInline: "auto",
+              paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
+            }}
+          >
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="text-[#F4F4ED] font-semibold">INQUIRIES</span>
+              <span aria-hidden="true">·</span>
+              <a
+                href={`mailto:${CONTACT_INFO.email}`}
+                className="text-[#C7E34A] hover:underline"
+              >
+                {CONTACT_INFO.email}
+              </a>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 uppercase tracking-wider">
+              {[
+                { label: "GitHub", url: SOCIAL_LINKS.github },
+                { label: "LinkedIn", url: SOCIAL_LINKS.linkedin },
+                { label: "LeetCode", url: SOCIAL_LINKS.leetcode },
+                { label: "Codolio", url: SOCIAL_LINKS.codolio },
+                { label: "YouTube", url: SOCIAL_LINKS.youtube },
+                { label: "Instagram", url: SOCIAL_LINKS.instagram },
+              ].map((social) => (
+                <a
+                  key={social.label}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#D4D6CA] hover:text-[#C7E34A] transition-colors inline-flex items-center gap-1"
+                >
+                  <span>{social.label}</span>
+                  <ArrowUpRight className="w-3 h-3 opacity-60" />
+                </a>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+export default FullScreenMenu;

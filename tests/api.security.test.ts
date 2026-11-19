@@ -1,7 +1,14 @@
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import request from "supertest";
 import { createApp } from "../server/app.ts";
-import { validateServerEnvironment } from "../server/config/env.ts";
+import {
+  SERVER_CONFIG,
+  validateServerEnvironment,
+} from "../server/config/env.ts";
+import {
+  isEmailTransportConfigured,
+  sendContactNotification,
+} from "../server/services/email.service.ts";
 import { setTokenVerifierForTesting } from "../server/lib/firebaseAdmin.ts";
 import { resetInMemoryStoreForTests } from "../server/services/firestoreRest.ts";
 
@@ -39,13 +46,42 @@ describe("Portfolio Security, Auth, Validation & Environment API Suite", () => {
 
   afterEach(() => {
     setTokenVerifierForTesting(null);
+    delete process.env.ADMIN_EMAIL;
+    delete process.env.CONTACT_FROM_EMAIL;
+    delete process.env.CONTACT_TO_EMAIL;
   });
 
-  describe("Environment Configuration", () => {
-    it("passes mandatory validation cleanly with optional keys unset", () => {
+  describe("Environment Configuration & Credential-Free Email Abstraction", () => {
+    it("passes mandatory validation cleanly with zero email API credentials", () => {
       const diag = validateServerEnvironment();
       expect(diag.mandatoryOk).toBe(true);
       expect(diag.missingMandatory).toEqual([]);
+      expect(isEmailTransportConfigured()).toBe(false);
+    });
+
+    it("stores fixed non-secret email addresses in SERVER_CONFIG and ignores obsolete email env vars", () => {
+      process.env.ADMIN_EMAIL = "override-ignored@example.com";
+      process.env.CONTACT_FROM_EMAIL = "ignored-from@example.com";
+      process.env.CONTACT_TO_EMAIL = "ignored-to@example.com";
+
+      expect(SERVER_CONFIG).toEqual({
+        adminEmail: "wrickbusiness@gmail.com",
+        contactToEmail: "sayammukherjee1506@gmail.com",
+      });
+    });
+
+    it("reports honest disabled email delivery status without throwing when email transport is disabled", async () => {
+      const result = await sendContactNotification({
+        submissionId: "msg_disabled_1",
+        name: "Test Sender",
+        email: "sender@example.com",
+        subject: "Database-only contact test",
+        message: "Testing database persistence with email notifications disabled.",
+      });
+
+      expect(result.delivered).toBe(false);
+      expect(result.deliveryStatus).toBe("stored_pending_email_config");
+      expect(result.provider).toBe("none");
     });
   });
 
@@ -126,7 +162,7 @@ describe("Portfolio Security, Auth, Validation & Environment API Suite", () => {
   });
 
   describe("Contact Form Validation, Rate Limiting & Persistence", () => {
-    it("persists valid contact submissions and reports honest delivery status when Resend key is absent", async () => {
+    it("persists valid contact submissions and reports honest delivery status without an external email provider", async () => {
       const res = await request(app)
         .post("/api/contact")
         .set("X-Forwarded-For", "198.51.100.10")
@@ -142,7 +178,8 @@ describe("Portfolio Security, Auth, Validation & Environment API Suite", () => {
       expect(res.status).toBe(200);
       expect(res.body.success).toBe(true);
       expect(res.body.submissionId).toMatch(/^msg_/);
-      expect(["sent", "stored_pending_email_config"]).toContain(res.body.deliveryStatus);
+      expect(res.body.delivered).toBe(false);
+      expect(res.body.deliveryStatus).toBe("stored_pending_email_config");
 
       const adminMsgs = await request(app)
         .get("/api/admin/messages")

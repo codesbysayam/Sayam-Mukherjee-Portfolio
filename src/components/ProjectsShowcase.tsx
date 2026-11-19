@@ -9,7 +9,9 @@ import { FeaturedProject } from "./projects/FeaturedProject";
 import { ProjectCard } from "./projects/ProjectCard";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
 import { ProjectStatsOverview } from "./projects/ProjectStatsOverview";
-import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { SectionHeading } from "./ui/SectionHeading";
+import { ContourBackground } from "./motion/ContourBackground";
 
 type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "SYSTEMS" | "DSA";
 
@@ -177,42 +179,34 @@ function ProjectsShowcaseComponent({
   return (
     <div className="w-full space-y-10 sm:space-y-12 pb-10">
       {/* 1. EDITORIAL HEADER */}
-      <section id="projects-header" className="space-y-4 pt-2 pb-4">
-        <EditorialReveal className="space-y-3 max-w-3xl">
-          <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
-            <span className="text-[var(--accent)] font-semibold uppercase tracking-wider">
-              02 · Engineering Archive
-            </span>
-            <span aria-hidden="true">/</span>
-            <span>8 Verified Codebases</span>
+      <section
+        id="projects-header"
+        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-5"
+      >
+        <ContourBackground density="subtle" />
+
+        <div className="relative z-10 space-y-5">
+          <SectionHeading
+            level="h1"
+            immediate
+            index="02"
+            eyebrow="Engineering Archive · 8 Verified Codebases"
+            title="Engineering Projects"
+            italicHighlight="& software systems."
+            description="Multi-agent platforms, weather & hazard intelligence, real-time YOLOv8 computer vision, mechanistic memory labs, control planes, and synced C++ algorithms—every card backed directly by a public GitHub repository."
+            withDivider={false}
+          />
+
+          <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)] pt-3 border-t border-[var(--border)] flex-wrap tabular-nums">
+            <span className="font-semibold text-[var(--text)]">{PROJECTS.length} Verified Systems</span>
+            <span aria-hidden="true">·</span>
+            <span className="text-[var(--accent)] font-semibold">Live GitHub Telemetry</span>
+            <span aria-hidden="true">·</span>
+            <span>{user?.public_repos || 11} Public Repositories Total</span>
+            <span className="hidden sm:inline" aria-hidden="true">·</span>
+            <span className="hidden sm:inline">AI / ML · Full-Stack · Systems · DSA</span>
           </div>
-
-          <h1
-            className="font-extrabold text-[var(--text)] font-display tracking-tight leading-[1.04] text-balance"
-            style={{ fontSize: "clamp(2.1rem, 4vw, 3.6rem)" }}
-          >
-            Engineering Projects{" "}
-            <span className="font-serif-editorial italic font-normal text-[var(--text-secondary)]">
-              &amp; software systems.
-            </span>
-          </h1>
-
-          <p className="text-sm sm:text-base text-[var(--text-secondary)] font-sans leading-relaxed max-w-2xl">
-            Multi-agent platforms, weather &amp; hazard intelligence, real-time YOLOv8 computer vision, mechanistic memory labs, control planes, and synced C++ algorithms—every card backed directly by a public GitHub repository.
-          </p>
-        </EditorialReveal>
-
-        {/* Clean Unboxed Metadata Strip */}
-        <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)] pt-1 flex-wrap tabular-nums pb-4">
-          <span className="font-semibold text-[var(--text)]">{PROJECTS.length} Verified Systems</span>
-          <span aria-hidden="true">·</span>
-          <span className="text-[var(--accent)] font-semibold">Live GitHub Telemetry</span>
-          <span aria-hidden="true">·</span>
-          <span>11 Public Repositories Total</span>
-          <span className="hidden sm:inline" aria-hidden="true">·</span>
-          <span className="hidden sm:inline">AI / ML · Full-Stack · Systems · DSA</span>
         </div>
-        <LineReveal immediate delay={0.14} />
       </section>
 
       {/* 2. PROJECT STATS METRICS OVERVIEW */}
@@ -427,16 +421,21 @@ function ProjectsShowcaseComponent({
         ) : (
           <StaggerGroup
             key={`${selectedCategory}-${selectedTech}-${filteredProjects.length}`}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className={
+              filteredProjects.length >= 4 && selectedCategory === "ALL" && selectedTech === "ALL" && !searchQuery.trim()
+                ? "projects-grid"
+                : "grid grid-cols-1 md:grid-cols-2 gap-6"
+            }
           >
-            {filteredProjects.map((project) => {
+            {filteredProjects.map((project, idx) => {
               const repo = repoMap[project.githubRepoName?.toLowerCase() || ""] || null;
               const isLead = project.id === featuredProject.id;
               return (
-                <StaggerItem key={project.id} className="h-full">
+                <StaggerItem key={project.id} className="project-slot h-full">
                   <ProjectCard
                     project={project}
                     repo={repo}
+                    index={idx}
                     onSelectCaseStudy={setSelectedCaseStudy}
                     onSelectTech={(tech) => setSelectedTech(tech)}
                     selectedTech={selectedTech}

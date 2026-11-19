@@ -7,7 +7,7 @@
 ## Critical Invariants (Eight Pillars)
 1. **Default Deny**: Root `match /{document=**} { allow read, write: if false; }`.
 2. **Public Projection Only**: `GET /api/portfolio-data` projects strictly public portfolio fields (`projects`, `blogs`, `certifications`, `skills`, `experience`, `achievements`, `learningDashboard`, `stats`, `socials`, approved `testimonials`) and NEVER includes `messages`, `subscribers`, `visitors`, or raw attachments.
-3. **Server-Side Admin Authorization**: All `/api/admin/*`, `POST /api/portfolio-data/update`, and `POST/PATCH/DELETE /api/certificates` routes require `Authorization: Bearer <Firebase ID Token>` verified via `firebase-admin/auth` (`verifyIdToken`) with `email_verified === true` and lowercase email matching `ADMIN_EMAIL` (`wrickbusiness@gmail.com`).
+3. **Server-Side Admin Authorization**: All `/api/admin/*`, `POST /api/portfolio-data/update`, and `POST/PATCH/DELETE /api/certificates` routes require `Authorization: Bearer <Firebase ID Token>` verified via `firebase-admin/auth` (`verifyIdToken`) with `email_verified === true` and lowercase email matching `SERVER_CONFIG.adminEmail` (`wrickbusiness@gmail.com`).
 4. **Zero Client-Trusted Auth / No Simulated OTP**: No `otpSimulated`, no `mock_jwt_node_*`, no client boolean auth flags. Admin authentication uses Firebase Google Sign-In (`signInWithPopup` + `onAuthStateChanged` + real Firebase ID Token).
 5. **Bounded Document Validation & Ownership**:
    - All Firestore document IDs match `isValidId(id)` (`^[a-zA-Z0-9_-]{3,80}$`).

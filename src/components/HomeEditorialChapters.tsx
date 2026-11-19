@@ -7,7 +7,9 @@ import { useGithub } from "../hooks/useGithub";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
 import { ProjectMedia } from "./projects/ProjectMedia";
 import { computeProjectLifecycle } from "../utils/projectLifecycle";
-import { EditorialReveal, LineReveal, MaskMediaReveal } from "../motion/Reveal";
+import { EditorialReveal, MaskMediaReveal } from "../motion/Reveal";
+import { ContourBackground } from "./motion/ContourBackground";
+import { SectionHeading } from "./ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
 interface HomeEditorialChaptersProps {
@@ -37,17 +39,19 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
   return (
     <>
       {/* ====================================================================
-          CHAPTER 2: EDITORIAL ABOUT SPLIT (Warm Paper-Soft Surface)
+          CHAPTER 1: EDITORIAL ABOUT SPLIT
           ==================================================================== */}
       <section
         id="home-about-chapter"
         aria-labelledby="home-about-heading"
-        className="w-full rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-9 sm:px-10 sm:py-12 lg:px-12"
+        className="relative overflow-hidden w-full rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-9 sm:px-10 sm:py-12 lg:px-12"
       >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <ContourBackground density="subtle" />
+
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           <div className="lg:col-span-7 space-y-5">
             <EditorialReveal delay={0}>
-              <span className="inline-block font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
+              <span className="inline-block editorial-overline text-[var(--accent)]">
                 01 / A Little About Me
               </span>
             </EditorialReveal>
@@ -55,7 +59,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
             <EditorialReveal delay={0.06}>
               <h2
                 id="home-about-heading"
-                className="text-2xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-[-0.025em] leading-[1.08] text-[var(--text)]"
+                className="font-display text-2xl sm:text-4xl lg:text-[2.65rem] font-extrabold tracking-[-0.03em] leading-[1.06] text-[var(--text)]"
               >
                 Building systems from{" "}
                 <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
@@ -94,7 +98,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
 
           <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
             <EditorialReveal delay={0.08}>
-              <div className="rounded-[8px] border border-[var(--border)] bg-[var(--surface-2)] p-5 transition-colors hover:border-[var(--border-strong)]">
+              <div className="rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] p-5 transition-colors hover:border-[var(--border-strong)]">
                 <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
                   ACADEMIC BENCHMARK
                 </div>
@@ -113,7 +117,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
             </EditorialReveal>
 
             <EditorialReveal delay={0.16}>
-              <div className="rounded-[8px] border border-[var(--border)] bg-[var(--surface-2)] p-5 transition-colors hover:border-[var(--border-strong)]">
+              <div className="rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)] p-5 transition-colors hover:border-[var(--border-strong)]">
                 <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--text-muted)]">
                   SYSTEMS &amp; DISCOVERY
                 </div>
@@ -130,79 +134,85 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
       </section>
 
       {/* ====================================================================
-          CHAPTER 3: FEATURED ENGINEERING WORK (Deep Ink Contrast Chapter)
+          CHAPTER 2: FEATURED ENGINEERING WORK (Deep Ink Contrast Chapter)
           ==================================================================== */}
       <section
         id="home-work-chapter"
         aria-labelledby="home-featured-work-heading"
-        className="w-full rounded-[12px] bg-[#20231D] text-[#F4F4ED] border border-[#41443A] px-5 py-10 sm:px-10 sm:py-14 lg:px-12"
+        className="relative overflow-hidden w-full rounded-[12px] bg-[#151713] text-[#F4F4ED] border border-[#41443A] px-5 py-10 sm:px-10 sm:py-14 lg:px-12"
       >
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-7">
-          <EditorialReveal className="space-y-2.5 max-w-2xl">
-            <span className="inline-block font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#C7E34A]">
-              02 / Selected Engineering Work
-            </span>
-            <h2
-              id="home-featured-work-heading"
-              className="text-2xl sm:text-4xl lg:text-[2.75rem] font-extrabold tracking-[-0.025em] leading-[1.05] text-[#F4F4ED]"
-            >
-              Systems built for{" "}
-              <span className="font-serif-editorial italic font-normal text-[#C7E34A]">
-                clarity &amp; control.
-              </span>
-            </h2>
-            <p className="text-sm sm:text-base text-[#B5B8AA] leading-relaxed">
-              From multi-agent enterprise lifecycles with human approval checkpoints to regional climate telemetry and local computer-vision pipelines.
-            </p>
-          </EditorialReveal>
+        <ContourBackground density="medium" tone="lime-on-dark" />
 
-          <button
-            type="button"
-            onClick={() => onNavigateTab("projects")}
-            className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-[6px] bg-[#C7E34A] text-[#20231D] font-bold text-sm hover:bg-[#A9C52F] active:bg-[#9BB827] active:scale-[0.98] transition-all cursor-pointer shrink-0 self-start md:self-end group"
-          >
-            <span>VIEW ALL {PROJECTS.length} PROJECTS</span>
-            <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-          </button>
-        </div>
-        <LineReveal className="!bg-[#41443A] mb-10" />
+        <div className="relative z-10">
+          <SectionHeading
+            index="02"
+            eyebrow="Selected Engineering Work"
+            title="Systems built for"
+            italicHighlight="clarity & control."
+            description="From multi-agent enterprise lifecycles with human approval checkpoints to regional climate telemetry and local computer-vision pipelines."
+            darkSurface
+            className="mb-10"
+            rightSlot={
+              <button
+                type="button"
+                onClick={() => onNavigateTab("projects")}
+                className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-[6px] bg-[#C7E34A] text-[#20231D] font-bold text-sm hover:bg-[#A9C52F] active:bg-[#9BB827] active:scale-[0.98] transition-all cursor-pointer group"
+              >
+                <span>VIEW ALL {PROJECTS.length} PROJECTS</span>
+                <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
+              </button>
+            }
+          />
 
-        {/* LEAD FEATURED CASE STUDY: OPERON */}
-        {(() => {
-          const media = getProjectMedia(featuredLead.id);
-          const leadRepo = findRepoForProject(featuredLead);
-          const leadLifecycle = computeProjectLifecycle(featuredLead, leadRepo);
-          return (
-            <motion.article
-              initial={reduced ? false : { opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: "some" }}
-              transition={{ duration: MOTION_DURATION.enter, ease: MOTION_EASE.out }}
-              className="rounded-[10px] border border-[#41443A] focus-within:border-[#C7E34A] bg-[#151713] overflow-hidden mb-8 transition-colors group"
-            >
-              <div className="grid grid-cols-1 lg:grid-cols-12">
-                <MaskMediaReveal className="lg:col-span-7 relative aspect-[16/10] lg:aspect-auto lg:min-h-[360px] h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-[#41443A] bg-[#151713]">
-                  <img
-                    src={media.src}
-                    alt={media.alt}
-                    loading="lazy"
-                    decoding="async"
-                    className="!h-full w-full object-cover object-top transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.025]"
-                  />
-                  <div className="absolute top-3 left-3 pointer-events-none">
-                    <span className="px-2 py-0.5 rounded-[4px] bg-[#20231D]/92 text-[#C7E34A] border border-[#C7E34A]/60 text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-sm">
-                      Lead System
-                    </span>
-                  </div>
-                  <div className="absolute top-3 right-3 pointer-events-none">
-                    <span
-                      title={leadLifecycle.title}
-                      className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-[10px] font-mono font-bold uppercase tracking-wider ${leadLifecycle.badgeClass}`}
+          {/* LEAD FEATURED CASE STUDY: OPERON */}
+          {(() => {
+            const media = getProjectMedia(featuredLead.id);
+            const leadRepo = findRepoForProject(featuredLead);
+            const leadLifecycle = computeProjectLifecycle(featuredLead, leadRepo);
+            return (
+              <motion.article
+                initial={reduced ? false : { opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: "some" }}
+                transition={{ duration: MOTION_DURATION.enter, ease: MOTION_EASE.out }}
+                className="rounded-[10px] border border-[#41443A] focus-within:border-[#C7E34A] bg-[#20231D] overflow-hidden mb-8 transition-colors group"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-12">
+                  <MaskMediaReveal className="lg:col-span-7 relative aspect-[16/10] lg:aspect-auto lg:min-h-[360px] h-full overflow-hidden border-b lg:border-b-0 lg:border-r border-[#41443A] bg-[#151713]">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedProject(featuredLead)}
+                      aria-label={`Open ${featuredLead.title} case study`}
+                      className="block h-full w-full cursor-pointer text-left"
                     >
-                      {leadLifecycle.label}
-                    </span>
-                  </div>
-                </MaskMediaReveal>
+                      <img
+                        src={media.src}
+                        alt={media.alt}
+                        loading="lazy"
+                        decoding="async"
+                        className="!h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.035]"
+                      />
+                      <span
+                        aria-hidden="true"
+                        className="absolute bottom-3.5 right-3.5 w-10 h-10 rounded-full bg-[#C7E34A] text-[#20231D] flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg"
+                      >
+                        <ArrowUpRight className="w-4 h-4" />
+                      </span>
+                    </button>
+                    <div className="absolute top-3 left-3 pointer-events-none">
+                      <span className="px-2 py-0.5 rounded-[4px] bg-[#20231D]/92 text-[#C7E34A] border border-[#C7E34A]/60 text-[10px] font-mono font-bold uppercase tracking-wider backdrop-blur-sm">
+                        Lead System
+                      </span>
+                    </div>
+                    <div className="absolute top-3 right-3 pointer-events-none">
+                      <span
+                        title={leadLifecycle.title}
+                        className={`inline-flex items-center px-2 py-0.5 rounded-[4px] text-[10px] font-mono font-bold uppercase tracking-wider ${leadLifecycle.badgeClass}`}
+                      >
+                        {leadLifecycle.label}
+                      </span>
+                    </div>
+                  </MaskMediaReveal>
 
                 <div className="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between gap-6">
                   <div className="space-y-4">
@@ -294,8 +304,9 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                       project={project}
                       media={media}
                       repo={repo}
+                      onPreview={() => setSelectedProject(project)}
                       className="!border-[#41443A]"
-                      imgClassName="group-hover:scale-[1.025]"
+                      imgClassName="group-hover:scale-[1.03]"
                     />
                   </MaskMediaReveal>
 
@@ -359,6 +370,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
               </motion.article>
             );
           })}
+        </div>
         </div>
       </section>
 

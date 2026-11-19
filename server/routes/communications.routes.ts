@@ -110,10 +110,8 @@ export function createCommunicationsRouter(): Router {
         deliveryStatus: result.deliveryStatus,
         deliveryMessage:
           result.deliveryStatus === "sent"
-            ? "Inquiry persisted and email notification delivered via Resend."
-            : result.deliveryStatus === "stored_pending_email_config"
-              ? "Inquiry saved to database. Email notification is disabled because RESEND_API_KEY is not configured."
-              : "Inquiry saved to database, though email delivery via Resend failed.",
+            ? "Inquiry persisted and email notification delivered."
+            : "Your inquiry has been saved securely to the database. Automated email notifications are disabled.",
       });
     } catch (err) {
       console.error("POST /api/contact error:", err);

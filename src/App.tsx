@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, Suspense } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import confetti from "canvas-confetti";
-import { Menu, X, Sun, Moon, Search } from "lucide-react";
+import { Menu, Sun, Moon, Search } from "lucide-react";
+import FullScreenMenu from "./components/layout/FullScreenMenu";
 
 import AboutSection from "./components/AboutSection";
 import ExperienceSection from "./components/ExperienceSection";
@@ -463,14 +464,19 @@ function AppContent() {
             <button
               type="button"
               onClick={() => navigateToTab("home")}
-              className="flex flex-col items-start text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
+              className="flex items-center gap-2.5 text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
               aria-label="Sayam Mukherjee Home"
             >
-              <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none">
-                Sayam Mukherjee
+              <span className="w-8 h-8 rounded-[6px] bg-[#C7E34A] text-[#151713] font-display font-extrabold text-xs flex items-center justify-center tracking-tight shrink-0">
+                SM
               </span>
-              <span className="font-mono text-[11px] uppercase tracking-[0.1em] text-[var(--text-muted)] mt-1 hidden sm:block">
-                CSE · AI &amp; ML · KIIT
+              <span className="flex flex-col">
+                <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none">
+                  Sayam Mukherjee
+                </span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mt-1 hidden sm:block">
+                  CSE · AI &amp; ML · KIIT
+                </span>
               </span>
             </button>
 
@@ -558,7 +564,7 @@ function AppContent() {
               <button
                 type="button"
                 onClick={() => setIsResumeModalOpen(true)}
-                className="hidden sm:inline-flex items-center gap-1.5 min-h-[40px] px-3.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] transition-all cursor-pointer"
+                className="hidden md:inline-flex items-center gap-1.5 min-h-[40px] px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] transition-all cursor-pointer"
                 aria-label="Open official verified resume viewer"
               >
                 <ResumeGlyph className="w-3.5 h-3.5 shrink-0" />
@@ -570,8 +576,8 @@ function AppContent() {
                 onClick={() => navigateToTab("contact")}
                 className={`hidden sm:inline-flex items-center justify-center min-h-[40px] px-4 rounded-[6px] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-[0.97] ${
                   activeTab === "contact"
-                    ? "bg-[#20231D] text-[#C7E34A] dark:bg-[#F4F4ED] dark:text-[#20231D]"
-                    : "bg-[#C7E34A] text-[#20231D] hover:bg-[#A9C52F] active:bg-[#9BB827]"
+                    ? "bg-[var(--text)] text-[var(--bg)]"
+                    : "bg-[#C7E34A] text-[#151713] hover:bg-[#A9C52F] active:bg-[#9BB827]"
                 }`}
               >
                 Contact
@@ -580,89 +586,30 @@ function AppContent() {
               <button
                 ref={mobileMenuButtonRef}
                 type="button"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                onClick={() => setIsMenuOpen(true)}
                 aria-expanded={isMenuOpen}
-                aria-controls="mobile-navigation-drawer"
-                className="xl:hidden min-h-[44px] min-w-[44px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] active:scale-[0.95] active:bg-[var(--surface-3)] cursor-pointer transition-all"
-                aria-label="Toggle navigation menu"
+                aria-controls="fullscreen-navigation-overlay"
+                className="min-h-[42px] px-3 flex items-center gap-2 border border-[var(--border-strong)] rounded-[6px] bg-[var(--surface)] hover:border-[#C7E34A] hover:text-[var(--accent)] text-[var(--text)] active:scale-[0.95] cursor-pointer transition-all font-mono text-xs font-semibold uppercase tracking-wider"
+                aria-label="Open full-screen navigation menu"
               >
-                {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+                <Menu className="w-4 h-4" />
+                <span className="hidden sm:inline">Menu</span>
               </button>
             </div>
           </div>
-
-          {/* Mobile Drawer Menu */}
-          <AnimatePresence>
-            {isMenuOpen && (
-              <motion.div
-                id="mobile-navigation-drawer"
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: prefersReducedMotion ? 0 : 0.2, ease: MOTION_EASE.out }}
-                className="xl:hidden border-t border-[var(--border)] bg-[var(--bg)] py-5 pb-[calc(44px+env(safe-area-inset-bottom,0px))] px-5 sm:px-6 shadow-xl max-h-[calc(100svh-4rem)] overflow-y-auto overscroll-contain"
-              >
-                <div className="flex flex-col gap-1.5 text-base font-semibold">
-                  {NAVIGATION.map((tab, idx) => {
-                    const isActive = activeTab === tab.id;
-                    return (
-                      <motion.button
-                        key={tab.id}
-                        type="button"
-                        initial={prefersReducedMotion ? false : { opacity: 0, x: -8 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          duration: prefersReducedMotion ? 0 : MOTION_DURATION.fast,
-                          delay: prefersReducedMotion ? 0 : Math.min(idx * 0.02, 0.16),
-                          ease: MOTION_EASE.out,
-                        }}
-                        onClick={() => {
-                          navigateToTab(tab.id as TabType);
-                          setIsMenuOpen(false);
-                        }}
-                        aria-current={isActive ? "page" : undefined}
-                        className={`text-left min-h-[48px] py-2.5 px-3.5 rounded-[6px] transition-all flex items-center justify-between cursor-pointer active:scale-[0.985] ${
-                          isActive
-                            ? "bg-[#C7E34A] text-[#20231D] font-bold"
-                            : "text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text)] active:bg-[var(--surface-3)]"
-                        }`}
-                      >
-                        <span>{tab.label}</span>
-                        <span className="font-mono text-xs opacity-70">{tab.shortcut}</span>
-                      </motion.button>
-                    );
-                  })}
-
-                  <div className="flex items-center gap-2 pt-4 mt-2 border-t border-[var(--border)]">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        setIsCommandMenuOpen(true);
-                      }}
-                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text)] active:scale-[0.97] active:bg-[var(--surface)] transition-all cursor-pointer"
-                    >
-                      <Search className="w-3.5 h-3.5" />
-                      <span>Search (⌘K)</span>
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setIsMenuOpen(false);
-                        setIsResumeModalOpen(true);
-                      }}
-                      className="flex-1 min-h-[44px] flex items-center justify-center gap-2 py-2 px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] active:scale-[0.97] active:bg-[var(--surface)] transition-all cursor-pointer"
-                    >
-                      <ResumeGlyph className="w-3.5 h-3.5 shrink-0" />
-                      <span>Résumé</span>
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </header>
+
+        <FullScreenMenu
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          activeTab={activeTab}
+          onNavigate={(tab) => navigateToTab(tab as TabType)}
+          onOpenResume={() => setIsResumeModalOpen(true)}
+          onOpenSearch={() => setIsCommandMenuOpen(true)}
+          theme={theme}
+          toggleTheme={toggleTheme}
+          returnFocusToRef={mobileMenuButtonRef}
+        />
 
         {/* RESPONSIVE CSS GRID LAYOUT (Main Track + Sticky Desktop Chapter Spine) */}
         <div

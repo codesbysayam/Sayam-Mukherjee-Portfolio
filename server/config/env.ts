@@ -52,8 +52,16 @@ export function parseServerPort(): number {
 export interface EnvironmentDiagnostic {
   mandatoryOk: boolean;
   missingMandatory: string[];
-  optionalDisabled: Array<{ variable: string; integration: string }>;
 }
+
+/**
+ * Central non-secret server configuration.
+ * These addresses are fixed operational values (not secret env vars).
+ */
+export const SERVER_CONFIG = {
+  adminEmail: "wrickbusiness@gmail.com",
+  contactToEmail: "sayammukherjee1506@gmail.com",
+} as const;
 
 export const env = {
   // Development & Runtime Deployment Configuration
@@ -68,10 +76,9 @@ export const env = {
   ),
   disableHmr: process.env.DISABLE_HMR === "true",
 
-  // Mandatory Application Configuration (with verified defaults)
-  adminEmail: (process.env.ADMIN_EMAIL || "wrickbusiness@gmail.com")
-    .trim()
-    .toLowerCase(),
+  // Fixed Server Configuration (non-secret)
+  adminEmail: SERVER_CONFIG.adminEmail,
+  contactToEmail: SERVER_CONFIG.contactToEmail,
   appUrl: (process.env.APP_URL || "https://sayammukherjee.in").trim(),
   firebase: {
     projectId: firebaseConfig.projectId,
@@ -79,48 +86,23 @@ export const env = {
     firestoreDatabaseId: firebaseConfig.firestoreDatabaseId || "(default)",
   },
 
-  // Optional Integrations (non-blocking)
-  geminiApiKey: (process.env.GEMINI_API_KEY || "").trim(),
-  resendApiKey: (process.env.RESEND_API_KEY || "").trim(),
-  contactFromEmail: (
-    process.env.CONTACT_FROM_EMAIL || "onboarding@resend.dev"
-  ).trim(),
-  contactToEmail: (
-    process.env.CONTACT_TO_EMAIL || "sayammukherjee1506@gmail.com"
-  ).trim(),
-  youtubeApiKey: (process.env.YOUTUBE_API_KEY || "").trim(),
+  // Lazy optional integrations
+  get geminiApiKey(): string {
+    return (process.env.GEMINI_API_KEY || "").trim();
+  },
+  get youtubeApiKey(): string {
+    return (process.env.YOUTUBE_API_KEY || "").trim();
+  },
 };
 
 export function validateServerEnvironment(): EnvironmentDiagnostic {
   const missingMandatory: string[] = [];
   if (!env.firebase.projectId) missingMandatory.push("firebase-applet-config.json:projectId");
   if (!env.firebase.apiKey) missingMandatory.push("firebase-applet-config.json:apiKey");
-  if (!env.adminEmail) missingMandatory.push("ADMIN_EMAIL");
-
-  const optionalDisabled: Array<{ variable: string; integration: string }> = [];
-  if (!env.resendApiKey) {
-    optionalDisabled.push({
-      variable: "RESEND_API_KEY",
-      integration: "Transactional email delivery (Resend)",
-    });
-  }
-  if (!env.geminiApiKey) {
-    optionalDisabled.push({
-      variable: "GEMINI_API_KEY",
-      integration: "Generative AI Assistant (knowledge-grounded engine active)",
-    });
-  }
-  if (!env.youtubeApiKey) {
-    optionalDisabled.push({
-      variable: "YOUTUBE_API_KEY",
-      integration: "Live YouTube channel stats refresh",
-    });
-  }
 
   return {
     mandatoryOk: missingMandatory.length === 0,
     missingMandatory,
-    optionalDisabled,
   };
 }
 
@@ -130,12 +112,6 @@ export function logEnvironmentDiagnostics(): void {
   if (!diag.mandatoryOk) {
     console.error(
       `[Config Error] Missing mandatory configuration: ${diag.missingMandatory.join(", ")}`
-    );
-  }
-  if (diag.optionalDisabled.length > 0) {
-    const names = diag.optionalDisabled.map((d) => d.variable).join(", ");
-    console.info(
-      `[Config] Optional integrations running in fallback mode (unconfigured: ${names}).`
     );
   }
 }

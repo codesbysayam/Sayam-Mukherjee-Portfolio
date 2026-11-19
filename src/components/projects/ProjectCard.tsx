@@ -14,6 +14,7 @@ import {
 interface ProjectCardProps {
   project: ProjectItem;
   repo: GitHubRepo | null;
+  index?: number;
   onSelectCaseStudy: (project: ProjectItem) => void;
   isFeaturedCandidate?: boolean;
   onSelectTech?: (tech: string) => void;
@@ -32,6 +33,7 @@ const LANGUAGE_COLORS: Record<string, string> = {
 function ProjectCardComponent({
   project,
   repo,
+  index,
   onSelectCaseStudy,
   isFeaturedCandidate = false,
   onSelectTech,
@@ -133,14 +135,16 @@ function ProjectCardComponent({
           media={media}
           repo={repo}
           isFeaturedCandidate={isFeaturedCandidate}
-          imgClassName="group-hover:scale-[1.025]"
+          onPreview={() => onSelectCaseStudy(project)}
+          imgClassName="group-hover:scale-[1.03]"
         />
 
         <div className="project-content p-5 sm:p-6 flex-1 space-y-4">
           {/* Unboxed Metadata Line */}
           <div className="space-y-3">
             <div className="flex items-center justify-between gap-2 text-xs font-mono text-[var(--text-muted)] flex-wrap">
-              <span className="font-semibold text-[var(--accent)] uppercase tracking-wider">
+              <span className="font-semibold text-[var(--accent)] uppercase tracking-wider tabular-nums">
+                {typeof index === "number" ? `${String(index + 1).padStart(2, "0")} · ` : ""}
                 {project.categoryLabel || project.category}
               </span>
               <div className="flex items-center gap-2">

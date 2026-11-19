@@ -5,7 +5,9 @@ import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 import AchievementGrid from "./AchievementGrid";
 import CertificateViewerModal from "./CertificateViewerModal";
 import AcademicRecord from "../AcademicRecord";
-import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { LineReveal, StaggerGroup, StaggerItem, EditorialReveal } from "../../motion/Reveal";
+import { ContourBackground } from "../motion/ContourBackground";
+import { SectionHeading } from "../ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
   Award,
@@ -292,32 +294,25 @@ export default function CertificatesPage() {
       id="certificates-page"
     >
       {/* 1. Editorial Header */}
-      <EditorialReveal immediate>
-        <header
-          id="certificates-hero"
-          className="card p-6 sm:p-10 scroll-mt-24"
-          style={{ backgroundColor: "var(--surface-2)", borderColor: "var(--border)" }}
-        >
-          <div className="max-w-3xl space-y-4">
-            <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
-              <Award className="w-4 h-4 shrink-0" />
-              <span>Credentials &amp; Milestones</span>
-            </div>
+      <header
+        id="certificates-hero"
+        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 scroll-mt-24"
+      >
+        <ContourBackground density="subtle" />
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.06] text-[var(--text)] font-display">
-              Certificates &amp;{" "}
-              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-                Achievements
-              </span>
-            </h1>
-
-            <p className="text-sm sm:text-base leading-relaxed text-[var(--text-muted)]">
-              A verified ledger of technical certifications, national competition
-              honours, academic transcripts, and documented engineering milestones.
-            </p>
-          </div>
-        </header>
-      </EditorialReveal>
+        <div className="relative z-10">
+          <SectionHeading
+            level="h1"
+            immediate
+            index="05"
+            eyebrow="Credentials & Milestones"
+            title="Certificates &"
+            italicHighlight="Achievements."
+            description="A verified ledger of technical certifications, national competition honours, academic transcripts, and documented engineering milestones."
+            withDivider={false}
+          />
+        </div>
+      </header>
 
       {/* 2. Academic Record */}
       <div id="academics-section" className="space-y-4">
@@ -569,6 +564,8 @@ export default function CertificatesPage() {
 
       <CertificateViewerModal
         certificate={viewingCertificate}
+        certificates={filteredCertificates}
+        onSelectCertificate={setViewingCertificate}
         onClose={() => setViewingCertificate(null)}
       />
     </div>

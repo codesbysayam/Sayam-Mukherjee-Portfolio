@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./styles/resume-spotlight.css";
+@import "./styles/motion.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -12,7 +13,7 @@
 
 /* ==========================================================================
    DESIGN.md EDITORIAL DESIGN SYSTEM TOKENS
-   Warm Paper (#F4F4ED) + Deep Olive-Charcoal Ink (#20231D) + Signal Lime (#C7E34A)
+   Deep Olive Ink (#20231D / #151713) + Warm Paper (#F4F4ED) + Signal Lime (#C7E34A)
    ========================================================================== */
 
 :root,
@@ -38,7 +39,7 @@ html[data-theme="light"] {
 
   --border: #D6D7CC;
   --border-strong: #BFC1B3;
-  --border-subtle: rgba(32, 35, 29, 0.08);
+  --border-subtle: rgba(32, 35, 29, 0.09);
 
   --accent: #69734A;
   --accent-signal: #C7E34A;
@@ -53,6 +54,7 @@ html[data-theme="light"] {
   --radius-full: 9999px;
 
   --page-gutter: clamp(16px, 4vw, 72px);
+  --page-padding: clamp(1rem, 3.5vw, 3.5rem);
   --content-max: 1440px;
   --wide-max: 1680px;
   --reading-max: 760px;
@@ -132,7 +134,7 @@ html[data-theme="dark"] {
 
   --border: #41443A;
   --border-strong: #565A4E;
-  --border-subtle: rgba(244, 244, 237, 0.08);
+  --border-subtle: rgba(220, 225, 190, 0.16);
 
   --accent: #C7E34A;
   --accent-signal: #C7E34A;
@@ -492,10 +494,31 @@ a.card:active,
   min-width: 0;
 }
 
+.editorial-ink-band {
+  background-color: #151713;
+  color: #F4F4ED;
+  border-color: #363930;
+}
+
+.editorial-moss-band {
+  background-color: #20231D;
+  color: #F4F4ED;
+  border-color: #41443A;
+}
+
+.hairline-row {
+  border-bottom: 1px solid var(--border);
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.hairline-row:hover {
+  border-bottom-color: var(--border-strong);
+}
+
 .site-layout {
-  width: min(100%, 1580px);
+  width: min(100%, 1680px);
   margin-inline: auto;
-  padding-inline: var(--page-gutter, clamp(1rem, 4vw, 3rem));
+  padding-inline: var(--page-gutter, clamp(1rem, 4vw, 3.5rem));
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1.75rem;
@@ -505,8 +528,9 @@ a.card:active,
 
 @media (min-width: 1280px) {
   .site-layout--with-nav {
-    grid-template-columns: minmax(0, 1fr) 128px;
-    gap: 2.25rem;
+    width: min(100%, 1680px);
+    grid-template-columns: minmax(0, 1fr) minmax(112px, 144px);
+    column-gap: clamp(20px, 2.4vw, 44px);
   }
 }
 
@@ -519,13 +543,23 @@ a.card:active,
 .site-main {
   min-width: 0;
   width: 100%;
+  overflow-x: clip;
 }
 
 .section-navigation {
   position: sticky;
-  top: 7.5rem;
+  top: 7rem;
+  width: 100%;
+  min-width: 0;
   align-self: start;
-  justify-self: end;
+  justify-self: stretch;
+  z-index: 5;
+}
+
+@media (max-width: 1279px) {
+  .section-navigation {
+    display: none;
+  }
 }
 
 .project-card {

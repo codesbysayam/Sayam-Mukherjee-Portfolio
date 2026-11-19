@@ -97,9 +97,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     }, 1000);
   };
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-
+  const submitInquiry = async () => {
     if (cooldownRemaining > 0) {
       setErrorMessage(
         `Please wait ${cooldownRemaining}s before sending another message.`
@@ -177,6 +175,11 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     }
   };
 
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    await submitInquiry();
+  };
+
   const handleReset = () => {
     setFormData({ name: "", email: "", message: "", honeypot: "" });
     setTouched({});
@@ -228,13 +231,13 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             <h4 className="text-lg font-bold font-display text-[var(--text)]">
               {deliveryResult?.deliveryStatus === "sent"
                 ? "Message Delivered"
-                : "Message Saved to Database"}
+                : "Message Received"}
             </h4>
             <p className="text-xs md:text-sm text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">
               Thank you,{" "}
               <strong className="text-[var(--text)]">{formData.name}</strong>.{" "}
               {deliveryResult?.deliveryMessage ||
-                "Your inquiry has been persisted securely to Cloud Firestore."}
+                "Your inquiry has been saved securely to the portfolio database and is ready for review."}
             </p>
             {deliveryResult?.submissionId && (
               <p className="text-[11px] font-mono text-[var(--text-faint)]">
@@ -242,11 +245,12 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               </p>
             )}
             {deliveryResult && deliveryResult.delivered === false && (
-              <p className="text-[11px] font-mono text-[var(--warning)] max-w-md mx-auto">
-                External email relay is currently unconfigured or delayed; your message is safely stored for review or you can{" "}
+              <p className="text-[11px] font-mono text-[var(--text-faint)] max-w-md mx-auto">
+                Optional automated email alerts are currently disabled; you can also{" "}
                 <a href={mailtoFallback} className="underline hover:text-[var(--text)]">
                   open direct email
-                </a>.
+                </a>{" "}
+                for urgent follow-ups.
               </p>
             )}
           </div>
@@ -492,17 +496,28 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
               <div className="space-y-1">
                 <p className="font-medium">{errorMessage}</p>
                 <p className="text-[11px] text-[var(--text-muted)]">
-                  Alternatively, dispatch directly via email:
+                  Retry submitting or dispatch directly via email:
                 </p>
               </div>
             </div>
-            <a
-              href={mailtoFallback}
-              className="btn btn-secondary min-h-[32px] px-2.5 py-1 text-[11px] font-mono shrink-0"
-            >
-              <Mail className="w-3 h-3" />
-              <span>Open Mail</span>
-            </a>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => void submitInquiry()}
+                disabled={isSubmitting}
+                className="btn btn-secondary min-h-[32px] px-2.5 py-1 text-[11px] font-mono disabled:opacity-50"
+              >
+                <RefreshCw className="w-3 h-3" />
+                <span>Retry</span>
+              </button>
+              <a
+                href={mailtoFallback}
+                className="btn btn-secondary min-h-[32px] px-2.5 py-1 text-[11px] font-mono"
+              >
+                <Mail className="w-3 h-3" />
+                <span>Open Mail</span>
+              </a>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

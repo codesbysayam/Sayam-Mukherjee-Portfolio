@@ -1,0 +1,114 @@
+/* ==========================================================================
+   CINEMATIC EDITORIAL MOTION & ASYMMETRIC LAYOUT SYSTEM
+   ========================================================================== */
+
+@keyframes contour-flow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: 180;
+  }
+}
+
+.contour-path {
+  stroke-dasharray: 14 22;
+  animation: contour-flow 24s linear infinite;
+}
+
+.contour-path--slow {
+  stroke-dasharray: 18 28;
+  animation: contour-flow 32s linear infinite reverse;
+}
+
+.contour-paused .contour-path,
+.contour-paused .contour-path--slow {
+  animation-play-state: paused;
+}
+
+/* Asymmetric 12-Column Editorial Gallery Grid for Projects */
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 2.8vw, 2.5rem);
+}
+
+@media (min-width: 768px) {
+  .projects-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+
+  .projects-grid > .project-slot {
+    grid-column: span 6;
+  }
+
+  .projects-grid > .project-slot:nth-child(4n + 1) {
+    grid-column: span 7;
+  }
+
+  .projects-grid > .project-slot:nth-child(4n + 2) {
+    grid-column: span 5;
+  }
+
+  .projects-grid > .project-slot:nth-child(4n + 3) {
+    grid-column: span 5;
+  }
+
+  .projects-grid > .project-slot:nth-child(4n + 4) {
+    grid-column: span 7;
+  }
+
+  /* When last row has only a single odd item, let it span cleanly */
+  .projects-grid > .project-slot:last-child:nth-child(odd) {
+    grid-column: span 12;
+  }
+}
+
+/* Editorial Display Typography Utility */
+.editorial-display-xl {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 7vw, 6.2rem);
+  letter-spacing: -0.042em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.editorial-display-lg {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 4.6vw, 4.1rem);
+  letter-spacing: -0.032em;
+  line-height: 0.96;
+  text-wrap: balance;
+}
+
+.editorial-overline {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Image Reveal Class */
+.image-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 0.85s var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+}
+
+.image-reveal.visible {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contour-path,
+  .contour-path--slow {
+    animation: none !important;
+  }
+
+  .image-reveal {
+    clip-path: none !important;
+    transition: none !important;
+  }
+}

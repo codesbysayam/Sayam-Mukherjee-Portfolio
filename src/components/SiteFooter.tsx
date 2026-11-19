@@ -15,6 +15,7 @@ export interface SiteFooterProps {
       | "ecosystem"
       | "certificates"
       | "journal"
+      | "github"
       | "contact"
       | "privacy"
       | "terms"
@@ -42,6 +43,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
       | "ecosystem"
       | "certificates"
       | "journal"
+      | "github"
       | "contact"
       | "privacy"
       | "terms"
@@ -171,6 +173,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                   ["ecosystem", "Ecosystem"],
                   ["certificates", "Certificates"],
                   ["journal", "Journal"],
+                  ["github", "GitHub Activity"],
                   ["contact", "Contact"],
                   ["privacy", "Privacy Policy"],
                   ["terms", "Terms"],

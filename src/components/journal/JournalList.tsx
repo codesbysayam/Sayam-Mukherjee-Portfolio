@@ -1,10 +1,12 @@
 import React, { useState, useMemo, memo } from "react";
-import { BookOpen, SearchX, Clock } from "lucide-react";
+import { SearchX, Clock } from "lucide-react";
 import { journalEntries } from "../../data/journal";
 import { JournalCard } from "./JournalCard";
 import { JournalFilters } from "./JournalFilters";
 import { calculateReadingTime, STANDARD_READING_SPEED_WPM } from "../../utils/readingTime";
-import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { ContourBackground } from "../motion/ContourBackground";
+import { SectionHeading } from "../ui/SectionHeading";
 
 interface JournalListProps {
   onSelectEntry: (slug: string) => void;
@@ -92,33 +94,32 @@ export const JournalList = memo(function JournalList({
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       {/* Editorial Masthead Header */}
-      <EditorialReveal immediate>
-        <header className="space-y-3.5 pt-2 sm:pt-4 pb-2">
-          <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-[var(--accent)] uppercase font-semibold">
-            <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Technical Field Notes &bull; Observations &bull; Systems Design</span>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold font-display tracking-tight text-[var(--text)]">
-              Engineering{" "}
-              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-                Journal
+      <header className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-5">
+        <ContourBackground density="subtle" />
+
+        <div className="relative z-10 space-y-5">
+          <SectionHeading
+            level="h1"
+            immediate
+            index="06"
+            eyebrow="Technical Field Notes · Observations & Systems Design"
+            title="Engineering"
+            italicHighlight="Journal."
+            description="Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations written directly from practice."
+            rightSlot={
+              <span className="text-xs font-mono text-[var(--text-muted)]">
+                Written by Sayam Mukherjee
               </span>
-            </h1>
-            <span className="text-xs font-mono text-[var(--text-muted)]">
-              Written by Sayam Mukherjee
-            </span>
-          </div>
-          <p className="text-sm sm:text-base text-[var(--text-muted)] max-w-2xl leading-relaxed">
-            Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations written directly from practice.
-          </p>
+            }
+            withDivider={false}
+          />
 
           {/* Reading stats */}
-          <div className="flex flex-wrap items-center gap-3 pt-1 text-xs font-mono text-[var(--text-muted)]">
+          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-[var(--border)] text-xs font-mono text-[var(--text-muted)]">
             <span
               className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border text-[var(--text-secondary)] tabular-nums"
               style={{
-                backgroundColor: "var(--surface)",
+                backgroundColor: "var(--surface-2)",
                 borderColor: "var(--border)",
               }}
             >
@@ -132,9 +133,8 @@ export const JournalList = memo(function JournalList({
               Estimated at standard {STANDARD_READING_SPEED_WPM} WPM
             </span>
           </div>
-        </header>
-      </EditorialReveal>
-      <LineReveal immediate />
+        </div>
+      </header>
 
       <JournalFilters
         searchQuery={searchQuery}

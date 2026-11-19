@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from "motion/react";
 import {
   Cpu, GitBranch, Users, ExternalLink, Eye, CloudRain, Binary, CheckCircle2, Brain, Shield, Sparkles, GraduationCap
 } from "lucide-react";
-import { SectionHeader } from "../common/SectionHeader";
+import { SectionHeading } from "../ui/SectionHeading";
+import { ContourBackground } from "../motion/ContourBackground";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
@@ -329,28 +330,31 @@ export function EcosystemPage() {
   return (
     <div className="w-full space-y-12 sm:space-y-16 pb-12">
       {/* 1. HEADER */}
-      <header id="ecosystem-hero" className="space-y-4 pt-2 pb-6 border-b border-[var(--border)]">
-        <SectionHeader
-          level="h1"
-          eyebrow="04 · System Architecture"
-          badge="Process & Blueprints"
-          title={
-            <>
-              Engineering Ecosystem{" "}
-              <span className="font-serif-editorial italic font-normal text-[var(--text-secondary)]">
-                &amp; system blueprints.
-              </span>
-            </>
-          }
-          description="Software works best as an interconnected system of state machines, telemetry pipelines, mathematical invariants, and explicit human oversight."
-        />
+      <header
+        id="ecosystem-hero"
+        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-5"
+      >
+        <ContourBackground density="subtle" />
 
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-[var(--text-muted)]">
-          <span className="font-semibold text-[var(--text)]">8 Verified Architectures</span>
-          <span aria-hidden="true">·</span>
-          <span>End-to-End Delivery Lifecycle</span>
-          <span aria-hidden="true">·</span>
-          <span className="text-[var(--accent)] font-semibold">SIH 2026 Collaboration Case Study</span>
+        <div className="relative z-10 space-y-5">
+          <SectionHeading
+            level="h1"
+            immediate
+            index="04"
+            eyebrow="System Architecture · Process & Blueprints"
+            title="Engineering Ecosystem"
+            italicHighlight="& system blueprints."
+            description="Software works best as an interconnected system of state machines, telemetry pipelines, mathematical invariants, and explicit human oversight."
+            withDivider={false}
+          />
+
+          <div className="pt-3 border-t border-[var(--border)] flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs font-mono text-[var(--text-muted)]">
+            <span className="font-semibold text-[var(--text)]">8 Verified Architectures</span>
+            <span aria-hidden="true">·</span>
+            <span>End-to-End Delivery Lifecycle</span>
+            <span aria-hidden="true">·</span>
+            <span className="text-[var(--accent)] font-semibold">SIH 2026 Collaboration Case Study</span>
+          </div>
         </div>
       </header>
 

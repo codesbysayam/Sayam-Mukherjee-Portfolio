@@ -1,10 +1,11 @@
-import { memo, useMemo, Suspense } from "react";
-import { motion } from "motion/react";
-import { ArrowUpRight, ArrowDown, RotateCw, Github, GitCommit } from "lucide-react";
+import { memo, useMemo, useRef, useState, useEffect, Suspense } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { ArrowUpRight, ArrowDown, RotateCw, Github, GitCommit, Cpu, UserCheck } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
 import { siteContent, SOCIAL_LINKS } from "../data/siteContent";
 import { formatRelativeTime, formatSyncAge } from "../services/github";
 import { ResumeSpotlight } from "./ResumeSpotlight";
+import { ContourBackground } from "./motion/ContourBackground";
 import { lazyWithRetry } from "../utils/lazyWithRetry";
 import {
   LineReveal,
@@ -28,6 +29,10 @@ function HeroSectionComponent({
   onOpenResume,
 }: HeroSectionProps) {
   const reduced = usePrefersReducedMotion();
+  const [stageMode, setStageMode] = useState<"portrait" | "orbital">("portrait");
+  const [canTilt, setCanTilt] = useState(false);
+  const frameRef = useRef<HTMLDivElement>(null);
+
   const {
     user,
     repos,
@@ -39,6 +44,35 @@ function HeroSectionComponent({
     syncedAt,
     refresh,
   } = useGithub();
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const hoverQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setCanTilt(hoverQuery.matches && !reduced);
+  }, [reduced]);
+
+  const pointerX = useMotionValue(0);
+  const pointerY = useMotionValue(0);
+  const springConfig = { damping: 26, stiffness: 190, mass: 0.6 };
+  const smoothX = useSpring(pointerX, springConfig);
+  const smoothY = useSpring(pointerY, springConfig);
+  const tiltRotateX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
+  const tiltRotateY = useTransform(smoothX, [-0.5, 0.5], [-4, 4]);
+  const parallaxX = useTransform(smoothX, [-0.5, 0.5], [-8, 8]);
+  const parallaxY = useTransform(smoothY, [-0.5, 0.5], [-6, 6]);
+
+  const handleStageMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!canTilt || !frameRef.current) return;
+    const rect = frameRef.current.getBoundingClientRect();
+    if (!rect.width || !rect.height) return;
+    pointerX.set((e.clientX - rect.left) / rect.width - 0.5);
+    pointerY.set((e.clientY - rect.top) / rect.height - 0.5);
+  };
+
+  const handleStageMouseLeave = () => {
+    pointerX.set(0);
+    pointerY.set(0);
+  };
 
   const latestCommitInfo = useMemo(() => {
     const pushEvent =
@@ -78,50 +112,27 @@ function HeroSectionComponent({
     <section
       id="hero"
       aria-label="Hero Introduction"
-      className="relative w-full overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-4 py-6 sm:px-9 sm:py-11 lg:px-12 lg:py-14"
+      className="relative w-full min-h-[calc(100svh-7.5rem)] flex flex-col justify-between overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-4 py-6 sm:px-9 sm:py-10 lg:px-12 lg:py-12"
     >
-      {/* Subtle Architectural Contour Lines */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 1200 640"
-        fill="none"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.055] dark:opacity-[0.07]"
-      >
-        <path
-          d="M-60 480C180 410 290 540 520 460C760 375 880 180 1260 220"
-          stroke="currentColor"
-          strokeWidth="1.25"
-        />
-        <path
-          d="M-40 530C220 470 360 595 590 505C830 410 930 240 1280 280"
-          stroke="currentColor"
-          strokeWidth="1"
-        />
-        <path
-          d="M-80 140C160 190 340 60 590 120C820 175 940 310 1240 110"
-          stroke="currentColor"
-          strokeWidth="1"
-        />
-        <path
-          d="M-80 190C190 235 380 115 620 170C850 225 970 355 1260 165"
-          stroke="currentColor"
-          strokeWidth="0.9"
-        />
-      </svg>
+      {/* Animated Topographic Contour Canvas */}
+      <ContourBackground density="medium" tone="adaptive" />
 
-      <div className="relative z-10 hero-grid">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto py-2">
         {/* LEFT EDITORIAL COLUMN */}
-        <div className="flex flex-col justify-start text-left min-w-0">
+        <div className="lg:col-span-7 flex flex-col justify-start text-left min-w-0">
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
-            className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)] mb-4"
+            className="editorial-overline text-[var(--accent)] mb-4"
           >
             COMPUTER SCIENCE · AI &amp; ML · KIIT UNIVERSITY
           </motion.p>
 
-          <h1 className="hero-title font-display font-extrabold tracking-[-0.035em] text-[var(--text)]">
+          <h1
+            className="font-display font-extrabold tracking-[-0.04em] leading-[0.89] text-[var(--text)]"
+            style={{ fontSize: "clamp(2.55rem, 6.8vw, 6.2rem)" }}
+          >
             <TextLineReveal delay={0.04}>SAYAM</TextLineReveal>
             <br />
             <TextLineReveal delay={0.12}>MUKHERJEE</TextLineReveal>
@@ -135,7 +146,7 @@ function HeroSectionComponent({
               delay: 0.18,
               ease: MOTION_EASE.out,
             }}
-            className="mt-5 max-w-2xl text-xl sm:text-2xl lg:text-[1.75rem] leading-[1.22] text-[var(--text)] font-medium"
+            className="mt-6 max-w-2xl text-xl sm:text-2xl lg:text-[1.8rem] leading-[1.2] text-[var(--text)] font-medium"
           >
             <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
               Designing autonomous workflows,
@@ -165,7 +176,7 @@ function HeroSectionComponent({
               delay: 0.3,
               ease: MOTION_EASE.out,
             }}
-            className="mt-7 flex flex-wrap items-center gap-3"
+            className="mt-8 flex flex-wrap items-center gap-3"
           >
             <button
               type="button"
@@ -191,7 +202,7 @@ function HeroSectionComponent({
           </motion.div>
         </div>
 
-        {/* RIGHT PORTRAIT, INTERACTIVE 3D CORE & VERIFIED GITHUB TELEMETRY COLUMN */}
+        {/* RIGHT SIGNATURE PORTRAIT / INTERACTIVE 3D STAGE & VERIFIED GITHUB LEDGER */}
         <motion.div
           initial={reduced ? false : { opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
@@ -200,47 +211,100 @@ function HeroSectionComponent({
             delay: 0.14,
             ease: MOTION_EASE.out,
           }}
-          className="flex flex-col gap-4 w-full min-w-0 lg:items-end"
+          className="lg:col-span-5 flex flex-col gap-4 w-full min-w-0 lg:items-end"
         >
-          <div className="w-full min-w-0 max-w-[500px] overflow-hidden rounded-[10px] border border-[var(--border)] bg-[var(--surface-2)]">
-            {/* Visual Dual Stage: Portrait + Procedural Three.js Machined Logic Core */}
-            <div className="grid grid-cols-1 sm:grid-cols-12 border-b border-[var(--border)]">
-              <MaskMediaReveal
-                immediate
-                delay={0.18}
-                className="sm:col-span-7 relative h-[220px] sm:h-[244px] overflow-hidden bg-[var(--surface)] border-b sm:border-b-0 sm:border-r border-[var(--border)]"
+          <div className="w-full min-w-0 max-w-[460px] overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface-2)] shadow-[var(--shadow-elevated)]">
+            {/* Commanding Hero Visual Stage with Switcher */}
+            <div
+              ref={frameRef}
+              onMouseMove={handleStageMouseMove}
+              onMouseLeave={handleStageMouseLeave}
+              className="relative aspect-[4/4.35] w-full overflow-hidden border-b border-[var(--border)] bg-[#151713] [perspective:900px]"
+            >
+              <motion.div
+                style={
+                  canTilt
+                    ? {
+                        rotateX: tiltRotateX,
+                        rotateY: tiltRotateY,
+                        x: parallaxX,
+                        y: parallaxY,
+                        transformStyle: "preserve-3d",
+                      }
+                    : undefined
+                }
+                className="h-full w-full"
               >
-                <img
-                  src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
-                  alt="Sayam Mukherjee portrait"
-                  referrerPolicy="no-referrer"
-                  loading="eager"
-                  decoding="async"
-                  className="h-full w-full object-cover object-[50%_20%] contrast-[1.03]"
-                />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#151713]/85 via-[#151713]/30 to-transparent px-3.5 py-2.5 text-[#F4F4ED]">
-                  <div className="flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-[0.08em]">
-                    <span>SAYAM MUKHERJEE</span>
-                    <span className="text-[#C7E34A] tabular-nums">CGPA 9.06 · KIIT&apos;29</span>
+                {stageMode === "portrait" ? (
+                  <MaskMediaReveal immediate delay={0.18} className="h-full w-full">
+                    <img
+                      src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
+                      alt="Sayam Mukherjee portrait"
+                      referrerPolicy="no-referrer"
+                      loading="eager"
+                      decoding="async"
+                      className="h-full w-full object-cover object-[50%_18%] contrast-[1.04]"
+                    />
+                  </MaskMediaReveal>
+                ) : (
+                  <div className="h-full w-full bg-[#151713]">
+                    <Suspense
+                      fallback={
+                        <div className="flex h-full w-full items-center justify-center bg-[#151713] font-mono text-xs uppercase tracking-wider text-[#B5B8AA]">
+                          Loading 3D Core...
+                        </div>
+                      }
+                    >
+                      <HeroOrbitalSculpture />
+                    </Suspense>
                   </div>
-                </div>
-              </MaskMediaReveal>
+                )}
+              </motion.div>
 
-              <div className="sm:col-span-5 h-[210px] sm:h-[244px] bg-[#151713]">
-                <Suspense
-                  fallback={
-                    <div className="flex h-full w-full items-center justify-center bg-[#151713] font-mono text-[10px] uppercase tracking-wider text-[#B5B8AA]">
-                      3D Stage
-                    </div>
-                  }
+              {/* Subtle Editorial Gradient Scrim & Stage Toggle */}
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#151713]/92 via-[#151713]/45 to-transparent" />
+
+              <div className="absolute top-3 right-3 z-10 flex items-center gap-1 rounded-[6px] border border-[#565A4E] bg-[#151713]/88 p-1 backdrop-blur-sm">
+                <button
+                  type="button"
+                  onClick={() => setStageMode("portrait")}
+                  className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                    stageMode === "portrait"
+                      ? "bg-[#C7E34A] text-[#20231D]"
+                      : "text-[#D4D6CA] hover:text-[#F4F4ED]"
+                  }`}
+                  aria-pressed={stageMode === "portrait"}
                 >
-                  <HeroOrbitalSculpture />
-                </Suspense>
+                  <UserCheck className="w-3 h-3" aria-hidden="true" />
+                  <span>Portrait</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStageMode("orbital")}
+                  className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                    stageMode === "orbital"
+                      ? "bg-[#C7E34A] text-[#20231D]"
+                      : "text-[#D4D6CA] hover:text-[#F4F4ED]"
+                  }`}
+                  aria-pressed={stageMode === "orbital"}
+                >
+                  <Cpu className="w-3 h-3" aria-hidden="true" />
+                  <span>3D Core</span>
+                </button>
+              </div>
+
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-3 text-[#F4F4ED]">
+                <div className="flex items-center justify-between gap-2 text-[11px] font-mono uppercase tracking-[0.1em]">
+                  <span className="font-semibold">SAYAM MUKHERJEE</span>
+                  <span className="text-[#C7E34A] tabular-nums font-bold">
+                    CGPA 9.06 · KIIT&apos;29
+                  </span>
+                </div>
               </div>
             </div>
 
             {/* Verified GitHub Compact Telemetry Readout */}
-            <div className="p-4 sm:p-5 space-y-3.5">
+            <div className="p-4 sm:p-5 space-y-3">
               <div className="flex items-center justify-between gap-2 text-xs font-mono">
                 <a
                   href={user?.html_url || SOCIAL_LINKS.github}
@@ -260,19 +324,19 @@ function HeroSectionComponent({
                     disabled={loading}
                     title="Refresh live GitHub data"
                     aria-label="Refresh live GitHub data"
-                    className="min-w-[36px] min-h-[36px] inline-flex items-center justify-center rounded hover:bg-[var(--surface)] active:bg-[var(--surface-3)] active:scale-[0.94] text-[var(--text-muted)] hover:text-[var(--text)] transition-all cursor-pointer"
+                    className="min-w-[34px] min-h-[34px] inline-flex items-center justify-center rounded-[6px] hover:bg-[var(--surface)] active:bg-[var(--surface-3)] active:scale-[0.94] text-[var(--text-muted)] hover:text-[var(--text)] transition-all cursor-pointer"
                   >
                     <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
                   </button>
                 </div>
               </div>
 
-              <div className="grid grid-cols-3 divide-x divide-[var(--border)] border-y border-[var(--border)] py-2.5 text-center">
+              <div className="grid grid-cols-3 divide-x divide-[var(--border)] border-y border-[var(--border)] py-2 text-center">
                 <div>
                   <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
                     {user ? user.public_repos : repos.length || 11}
                   </div>
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
                     Repos
                   </div>
                 </div>
@@ -280,7 +344,7 @@ function HeroSectionComponent({
                   <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
                     {stats?.totalStars ?? 0}
                   </div>
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
                     Stars
                   </div>
                 </div>
@@ -288,7 +352,7 @@ function HeroSectionComponent({
                   <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
                     {user?.followers ?? 0}
                   </div>
-                  <div className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
                     Followers
                   </div>
                 </div>
@@ -298,9 +362,9 @@ function HeroSectionComponent({
                 href={latestCommitInfo.commitUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 hover:border-[var(--border-strong)] active:border-[var(--accent)] active:bg-[var(--surface-3)] active:scale-[0.985] transition-all group"
+                className="block rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 hover:border-[var(--border-strong)] active:border-[var(--accent)] active:bg-[var(--surface-3)] active:scale-[0.985] transition-all group"
               >
-                <div className="flex items-center justify-between gap-2 min-w-0 text-[11px] font-mono text-[var(--text-muted)] mb-1">
+                <div className="flex items-center justify-between gap-2 min-w-0 text-[11px] font-mono text-[var(--text-muted)] mb-0.5">
                   <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--text)] min-w-0">
                     <GitCommit className="w-3.5 h-3.5 shrink-0 text-[var(--accent)]" />
                     <span className="truncate">
@@ -319,8 +383,8 @@ function HeroSectionComponent({
       </div>
 
       {/* BOTTOM VERIFIED PROOF STRIP + RESTRAINED SCROLL CUE */}
-      <div className="relative z-10 mt-8">
-        <LineReveal immediate delay={0.34} className="mb-5" />
+      <div className="relative z-10 mt-6">
+        <LineReveal immediate delay={0.34} className="mb-4" />
         <div className="flex flex-wrap items-center justify-between gap-4">
           <StaggerGroup
             immediate

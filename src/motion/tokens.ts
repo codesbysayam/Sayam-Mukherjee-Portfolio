@@ -29,6 +29,13 @@ export const MOTION_VIEWPORT = {
   amount: "some" as const,
 };
 
+export const MOTION = {
+  duration: MOTION_DURATION,
+  distance: MOTION_DISTANCE,
+  ease: MOTION_EASE,
+  viewport: MOTION_VIEWPORT,
+} as const;
+
 export type DeviceCapabilityTier = "high" | "standard" | "low";
 
 export function usePrefersReducedMotion(): boolean {
@@ -61,26 +68,41 @@ export function useDeviceCapability(): DeviceCapabilityTier {
     }
     if (typeof window === "undefined") return;
 
-    const nav = navigator as Navigator & { deviceMemory?: number };
-    const cores = nav.hardwareConcurrency || 4;
-    const memory = nav.deviceMemory || 4;
-    const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-    const isSmallScreen = window.innerWidth < 640;
+    const coarseMq = window.matchMedia("(pointer: coarse)");
 
-    if (cores <= 2 || memory <= 2) {
-      setTier("low");
-    } else if (isCoarsePointer || isSmallScreen || cores <= 4) {
-      setTier("standard");
-    } else {
-      setTier("high");
-    }
+    const evaluate = () => {
+      const nav = navigator as Navigator & { deviceMemory?: number };
+      const cores = nav.hardwareConcurrency || 4;
+      const memory = nav.deviceMemory || 4;
+      const isCoarsePointer = coarseMq.matches;
+      const isSmallScreen = window.innerWidth < 640;
+
+      if (cores <= 2 || memory <= 2) {
+        setTier("low");
+      } else if (isCoarsePointer || isSmallScreen || cores <= 4) {
+        setTier("standard");
+      } else {
+        setTier("high");
+      }
+    };
+
+    evaluate();
+    window.addEventListener("resize", evaluate, { passive: true });
+    coarseMq.addEventListener("change", evaluate);
+    return () => {
+      window.removeEventListener("resize", evaluate);
+      coarseMq.removeEventListener("change", evaluate);
+    };
   }, [prefersReduced]);
 
   return tier;
 }
 
 export function useFinePointer(): boolean {
-  const [isFine, setIsFine] = useState<boolean>(false);
+  const [isFine, setIsFine] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  });
 
   useEffect(() => {
     if (typeof window === "undefined") return;

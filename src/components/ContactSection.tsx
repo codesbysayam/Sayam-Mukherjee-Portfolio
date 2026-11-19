@@ -14,6 +14,7 @@ import {
 import { showToast } from "./Toast";
 import { ContactForm } from "./ContactForm";
 import ClosingFluidCanvas from "./motion/ClosingFluidCanvas";
+import { ContourBackground } from "./motion/ContourBackground";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
 const OPEN_ROLES = [
@@ -151,14 +152,15 @@ export default function ContactSection() {
       id="contact"
       className="relative w-full py-6 sm:py-10 font-sans text-[var(--text)] overflow-hidden rounded-[12px]"
     >
+      <ContourBackground density="medium" />
       <ClosingFluidCanvas tone="adaptive" />
 
       {/* Editorial Hero Header */}
       <EditorialReveal>
         <header className="relative z-10 space-y-4 mb-10 sm:mb-14">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-xs font-mono uppercase tracking-[0.14em] text-[var(--accent)] font-semibold">
-              Contact &amp; Inquiries
+            <span className="editorial-overline text-[var(--accent)]">
+              08 / Contact &amp; Inquiries
             </span>
             <span className="text-[var(--text-faint)]">&bull;</span>
             <span
@@ -183,14 +185,12 @@ export default function ContactSection() {
           </div>
 
           <h1
-            className="font-display font-extrabold text-[var(--text)] tracking-tight leading-[0.98]"
-            style={{ fontSize: "clamp(1.85rem, 5.2vw, 4.75rem)", maxWidth: "820px" }}
+            className="font-display font-extrabold text-[var(--text)] tracking-[-0.03em] leading-[0.98]"
+            style={{ fontSize: "clamp(2rem, 5vw, 4.4rem)", maxWidth: "880px" }}
           >
-            Let&rsquo;s build
-            <br />
-            something{" "}
+            Have something interesting in mind?{" "}
             <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-              meaningful.
+              Let&rsquo;s build something meaningful.
             </span>
           </h1>
 

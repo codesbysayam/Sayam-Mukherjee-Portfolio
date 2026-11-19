@@ -6,7 +6,9 @@ import { youtubeChannels } from "../data/channels";
 import { YouTubeChannelCard } from "./YouTubeChannelCard";
 import { YouTubeChannelAnalyticsSection } from "./YouTubeAnalyticsCard";
 import { getCreatorSummary } from "../utils/contentCreatorStats";
-import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { EditorialReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { ContourBackground } from "./motion/ContourBackground";
+import { SectionHeading } from "./ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 import {
   Youtube,
@@ -66,26 +68,21 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
       )}
 
       {/* Header */}
-      <EditorialReveal immediate>
-        <div className="space-y-2">
-          <span className="text-xs text-[var(--accent)] font-mono uppercase tracking-widest block font-semibold">
-            MEDIA PLATFORM &amp; VIDEO SHOWCASE
-          </span>
-          <h2
-            style={{ fontSize: "clamp(1.65rem, 3.5vw, 3.2rem)" }}
-            className="font-extrabold tracking-tight text-[var(--text)] font-display"
-          >
-            YouTube Video{" "}
-            <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-              Showcase
-            </span>
-          </h2>
-          <p className="text-sm text-[var(--text-muted)] max-w-2xl leading-relaxed">
-            Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, algorithm breakdowns, and creative media formats across dedicated YouTube channels.
-          </p>
+      <header className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10">
+        <ContourBackground density="subtle" />
+        <div className="relative z-10">
+          <SectionHeading
+            level="h1"
+            immediate
+            index="07"
+            eyebrow="Media Platform & Video Showcase"
+            title="YouTube Video"
+            italicHighlight="Showcase."
+            description="Sharing knowledge beyond code. Creating high-signal visual guides surrounding software architecture, algorithm breakdowns, and creative media formats across dedicated YouTube channels."
+            withDivider={false}
+          />
         </div>
-      </EditorialReveal>
-      <LineReveal immediate />
+      </header>
 
       {/* Brand Card & Daily Decipher */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">

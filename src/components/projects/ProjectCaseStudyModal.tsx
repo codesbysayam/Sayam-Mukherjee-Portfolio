@@ -7,6 +7,7 @@ import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import ReadingProgressBar from "../common/ReadingProgressBar";
 import { calculateReadingTime } from "../../utils/readingTime";
 import { computeProjectLifecycle } from "../../utils/projectLifecycle";
+import { ContourBackground } from "../motion/ContourBackground";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
   X,
@@ -197,8 +198,9 @@ function ProjectCaseStudyModalComponent({
         className="w-full max-w-3xl rounded-[12px] overflow-hidden shadow-2xl relative z-10 max-h-[92dvh] flex flex-col bg-[var(--surface-2)] border border-[var(--border-strong)]"
       >
         {/* Sticky Header */}
-        <div className="flex items-center justify-between gap-3 px-5 sm:px-6 py-4 border-b border-[var(--border)] bg-[var(--surface-2)] sticky top-0 z-20">
-          <div className="flex items-center gap-2.5 flex-wrap text-xs font-mono text-[var(--text-muted)]">
+        <div className="relative overflow-hidden flex items-center justify-between gap-3 px-5 sm:px-6 py-4 border-b border-[var(--border)] bg-[var(--surface-2)] sticky top-0 z-20">
+          <ContourBackground density="subtle" className="opacity-35" />
+          <div className="relative z-10 flex items-center gap-2.5 flex-wrap text-xs font-mono text-[var(--text-muted)]">
             <span className="text-[var(--accent)] font-bold uppercase tracking-wider">
               {project.categoryLabel || project.category}
             </span>
@@ -262,8 +264,40 @@ function ProjectCaseStudyModalComponent({
 
         <ReadingProgressBar containerRef={bodyRef} height={3} className="shrink-0" />
 
+        {/* Quick Section Jump Anchors */}
+        <nav
+          aria-label="Case study sections"
+          className="hidden sm:flex items-center gap-1.5 px-6 py-2 border-b border-[var(--border)] bg-[var(--surface)] overflow-x-auto scrollbar-none shrink-0 text-[11px] font-mono text-[var(--text-muted)]"
+        >
+          {[
+            { id: "cs-overview", label: "01 Overview" },
+            { id: "cs-problem-solution", label: "02 Problem & Solution" },
+            ...(project.architecture?.length ? [{ id: "cs-architecture", label: "04 Architecture" }] : []),
+            { id: "cs-implementation", label: "05 Implementation" },
+            { id: "cs-verification", label: "08 Verification" },
+          ].map((sec) => (
+            <button
+              key={sec.id}
+              type="button"
+              onClick={() => {
+                const container = bodyRef.current;
+                const el = document.getElementById(sec.id);
+                if (container && el) {
+                  container.scrollTo({
+                    top: Math.max(0, el.offsetTop - 16),
+                    behavior: reduced ? "auto" : "smooth",
+                  });
+                }
+              }}
+              className="px-2.5 py-1 rounded-[4px] border border-transparent hover:border-[var(--border-strong)] hover:text-[var(--text)] active:text-[var(--accent)] transition-colors cursor-pointer whitespace-nowrap"
+            >
+              {sec.label}
+            </button>
+          ))}
+        </nav>
+
         {/* Scrollable Body */}
-        <div ref={bodyRef} className="overflow-y-auto p-5 sm:p-8 space-y-6 flex-1 text-[var(--text-secondary)]">
+        <div ref={bodyRef} className="relative overflow-y-auto p-5 sm:p-8 space-y-6 flex-1 text-[var(--text-secondary)]">
           {/* Media Preview Banner */}
           <div className="rounded-[10px] overflow-hidden border border-[var(--border)] bg-[var(--surface)]">
             <AnimatePresence mode="wait">
@@ -369,7 +403,7 @@ function ProjectCaseStudyModalComponent({
           </div>
 
           {/* 1. Overview */}
-          <div className="space-y-2">
+          <div id="cs-overview" className="space-y-2 scroll-mt-4">
             <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
               01 · Overview
             </h4>
@@ -379,7 +413,7 @@ function ProjectCaseStudyModalComponent({
           </div>
 
           {/* 2 & 3. Problem & Solution Split */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div id="cs-problem-solution" className="grid grid-cols-1 md:grid-cols-2 gap-4 scroll-mt-4">
             <div className="space-y-2 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
               <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--text)] font-semibold">
                 02 · Problem &amp; Purpose
@@ -401,7 +435,7 @@ function ProjectCaseStudyModalComponent({
 
           {/* 4. System Architecture & Pipeline */}
           {project.architecture && project.architecture.length > 0 && (
-            <div className="space-y-2.5">
+            <div id="cs-architecture" className="space-y-2.5 scroll-mt-4">
               <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
                 04 · System Architecture &amp; Pipeline
               </h4>
@@ -418,7 +452,7 @@ function ProjectCaseStudyModalComponent({
 
           {/* 5. Engineering Implementation */}
           {(project.implementation || project.whatIBuilt) && (
-            <div className="space-y-2 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+            <div id="cs-implementation" className="space-y-2 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] scroll-mt-4">
               <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
                 05 · Engineering Implementation
               </h4>
@@ -473,7 +507,7 @@ function ProjectCaseStudyModalComponent({
           )}
 
           {/* 8. Results, Status & Disclosures */}
-          <div className="space-y-3 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+          <div id="cs-verification" className="space-y-3 p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] scroll-mt-4">
             <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold flex items-center gap-1.5">
               <ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" />
               <span>08 · Results, Status &amp; Verification Notes</span>
