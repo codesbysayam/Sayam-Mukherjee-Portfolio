@@ -118,7 +118,12 @@ export async function createCertificate(
     updatedAt: now,
   };
 
-  await upsertFirestoreDoc("certificates", id, newCert, adminBearerToken);
+  await upsertFirestoreDoc(
+    "certificates",
+    id,
+    newCert as unknown as Record<string, unknown>,
+    adminBearerToken
+  );
   return newCert;
 }
 
@@ -155,7 +160,12 @@ export async function updateCertificate(
     published: updates.published ?? existing.published ?? true,
   };
 
-  await upsertFirestoreDoc("certificates", id, updated, adminBearerToken);
+  await upsertFirestoreDoc(
+    "certificates",
+    id,
+    updated as unknown as Record<string, unknown>,
+    adminBearerToken
+  );
   return updated;
 }
 
@@ -171,7 +181,12 @@ export async function deleteCertificate(
       published: false,
       updatedAt: new Date().toISOString(),
     };
-    await upsertFirestoreDoc("certificates", id, tombstone, adminBearerToken);
+    await upsertFirestoreDoc(
+      "certificates",
+      id,
+      tombstone as unknown as Record<string, unknown>,
+      adminBearerToken
+    );
     return true;
   }
 
@@ -199,10 +214,7 @@ export async function getCertificateStats(): Promise<CertificateStats> {
 }
 
 export function getCertificateStorageStatus(): StorageStatus {
-  const emailConfigured = Boolean(
-    (env.resendApiKey && env.contactFromEmail) ||
-      (env.smtpHost && env.smtpUser && env.smtpPass)
-  );
+  const emailConfigured = Boolean(env.resendApiKey && env.contactFromEmail);
   return {
     database: "firestore_active",
     objectStorage: emailConfigured ? "configured" : "direct_url_mode",

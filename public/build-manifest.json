@@ -1,22 +1,23 @@
 {
   "appName": "Sayam Mukherjee | Engineering Portfolio & Ecosystem",
   "version": "0.0.0",
-  "generatedAt": "2026-11-18T09:47:48.242Z",
+  "generatedAt": "2026-11-19T14:03:49.413Z",
   "environment": "development",
+  "storageBackend": "firestore",
   "projectCount": 8,
   "projects": [
     {
       "id": "operon",
       "title": "OPERON",
-      "category": "ai_ml",
-      "tagsCount": 5,
+      "category": "Autonomous Systems & AI",
+      "tagsCount": 4,
       "hasGithub": true,
       "hasLive": true
     },
     {
       "id": "mausam",
       "title": "MAUSAM",
-      "category": "full_stack",
+      "category": "Weather & Geospatial Systems",
       "tagsCount": 5,
       "hasGithub": true,
       "hasLive": true
@@ -24,7 +25,7 @@
     {
       "id": "sightforge",
       "title": "SIGHTFORGE",
-      "category": "ai_ml",
+      "category": "Edge Computer Vision & Tracking",
       "tagsCount": 6,
       "hasGithub": true,
       "hasLive": false
@@ -32,7 +33,7 @@
     {
       "id": "memory-in-motion",
       "title": "MEMORY IN MOTION",
-      "category": "ai_ml",
+      "category": "Mechanistic Interpretability & AI Research",
       "tagsCount": 5,
       "hasGithub": true,
       "hasLive": true
@@ -40,7 +41,7 @@
     {
       "id": "axiom",
       "title": "AXIOM",
-      "category": "systems",
+      "category": "Autonomous Control Planes & Governance",
       "tagsCount": 5,
       "hasGithub": true,
       "hasLive": true
@@ -48,7 +49,7 @@
     {
       "id": "inkloom",
       "title": "INKLOOM",
-      "category": "ai_ml",
+      "category": "Generative Design Systems",
       "tagsCount": 5,
       "hasGithub": true,
       "hasLive": true
@@ -56,7 +57,7 @@
     {
       "id": "campus-connect",
       "title": "CAMPUS CONNECT",
-      "category": "full_stack",
+      "category": "Full-Stack Web Applications",
       "tagsCount": 5,
       "hasGithub": true,
       "hasLive": true
@@ -64,8 +65,8 @@
     {
       "id": "sayam-solves",
       "title": "SAYAMSOLVES",
-      "category": "dsa",
-      "tagsCount": 4,
+      "category": "Competitive Programming & DSA",
+      "tagsCount": 5,
       "hasGithub": true,
       "hasLive": false
     }
@@ -82,7 +83,6 @@
     "PLpgSQL",
     "Makefile",
     "C++",
-    "Dockerfile",
     "Shell"
   ]
 }

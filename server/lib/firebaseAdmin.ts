@@ -1,11 +1,11 @@
 import { initializeApp, getApps, getApp } from "firebase-admin/app";
 import { getAuth, DecodedIdToken } from "firebase-admin/auth";
-import firebaseConfig from "../../firebase-applet-config.json" with { type: "json" };
+import { env } from "../config/env.js";
 
 const adminApp =
   getApps().length > 0
     ? getApp()
-    : initializeApp({ projectId: firebaseConfig.projectId });
+    : initializeApp({ projectId: env.firebase.projectId });
 
 const adminAuth = getAuth(adminApp);
 

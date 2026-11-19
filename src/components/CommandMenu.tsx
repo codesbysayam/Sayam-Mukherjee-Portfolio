@@ -19,6 +19,7 @@ import {
   Youtube,
 } from "lucide-react";
 import { EXTENDED_DATA } from "../data/extendedData";
+import { SAYAM_DATA } from "../data";
 import { youtubeChannels } from "../data/channels";
 import { PROJECTS } from "../data/projects";
 import { INITIAL_CERTIFICATES } from "../data/initialCertificates";
@@ -28,6 +29,8 @@ export type CommandItemType =
   | "channel"
   | "project"
   | "achievement"
+  | "skill"
+  | "article"
   | "bookmark";
 export type MenuTab =
   | "all"
@@ -384,7 +387,7 @@ export default function CommandMenu({
   }, [onNavigate, onClose]);
 
   const achievementItems = useMemo<UnifiedSearchItem[]>(() => {
-    return INITIAL_CERTIFICATES.slice(0, 12).map((cert) => ({
+    return INITIAL_CERTIFICATES.map((cert) => ({
       id: `cert-${cert.id}`,
       type: "achievement",
       title: cert.title,
@@ -404,6 +407,53 @@ export default function CommandMenu({
         cert.credentialId || "",
         cert.description || "",
         ...(cert.skills || []),
+      ].join(" "),
+    }));
+  }, [onNavigate, onClose]);
+
+  const skillItems = useMemo<UnifiedSearchItem[]>(() => {
+    return SAYAM_DATA.skills.flatMap((group) =>
+      group.skills.map((sk) => ({
+        id: `skill-${group.category}-${sk.name}`.toLowerCase().replace(/\s+/g, "-"),
+        type: "skill" as const,
+        title: sk.name,
+        subtitle: `${group.category} · Proficiency ${sk.level}%`,
+        badge: "SKILL",
+        category: "Technical Skills",
+        icon: Cpu,
+        action: () => {
+          onNavigate("skills");
+          onClose();
+        },
+        searchTarget: `${sk.name} ${group.category} skill stack matrix`,
+      }))
+    );
+  }, [onNavigate, onClose]);
+
+  const articleItems = useMemo<UnifiedSearchItem[]>(() => {
+    return EXTENDED_DATA.blogArticles.map((art) => ({
+      id: `article-${art.id}`,
+      type: "article" as const,
+      title: art.title,
+      subtitle: `${art.category || "Journal"} · ${art.readTime}`,
+      badge: "JOURNAL",
+      category: "Engineering Notes & Journal",
+      icon: FileText,
+      action: () => {
+        onNavigate("journal");
+        try {
+          localStorage.setItem("portfolio_selected_article_id", art.id);
+          window.dispatchEvent(
+            new CustomEvent("portfolio_select_article", { detail: { id: art.id } })
+          );
+        } catch {}
+        onClose();
+      },
+      searchTarget: [
+        art.title,
+        art.excerpt || "",
+        art.category || "",
+        ...(art.tags || []),
       ].join(" "),
     }));
   }, [onNavigate, onClose]);
@@ -473,6 +523,8 @@ export default function CommandMenu({
           ...channelItems,
           ...projectItems,
           ...achievementItems,
+          ...skillItems,
+          ...articleItems,
           ...bookmarkItems,
         ];
     }
@@ -482,6 +534,8 @@ export default function CommandMenu({
     channelItems,
     projectItems,
     achievementItems,
+    skillItems,
+    articleItems,
     bookmarkItems,
     normalizedQuery,
   ]);
@@ -514,6 +568,8 @@ export default function CommandMenu({
       ...channelItems,
       ...projectItems,
       ...achievementItems,
+      ...skillItems,
+      ...articleItems,
       ...bookmarkItems,
     ];
     return allItems
@@ -526,6 +582,8 @@ export default function CommandMenu({
     channelItems,
     projectItems,
     achievementItems,
+    skillItems,
+    articleItems,
     bookmarkItems,
     activePool,
     matchesItem,
@@ -606,6 +664,10 @@ export default function CommandMenu({
         return "border-[#C7E34A]/60 bg-[#C7E34A]/15 text-[#C7E34A]";
       case "achievement":
         return "border-amber-500/40 bg-amber-500/10 text-amber-300";
+      case "skill":
+        return "border-emerald-500/40 bg-emerald-500/10 text-emerald-300";
+      case "article":
+        return "border-[#69734A]/60 bg-[#69734A]/20 text-[#F4F4ED]";
       case "bookmark":
         return "border-[#B5B8AA]/40 bg-[#41443A]/40 text-[#F4F4ED]";
       case "command":

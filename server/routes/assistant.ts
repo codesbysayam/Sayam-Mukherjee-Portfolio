@@ -5,6 +5,7 @@ import { GoogleGenAI } from "@google/genai";
 import { portfolioKnowledge } from "../../src/data/portfolioKnowledge.ts";
 import { ASSISTANT_SYSTEM_INSTRUCTION } from "../../src/lib/assistant/systemInstruction.ts";
 import { generatePortfolioAnswer } from "../../src/utils/portfolioAssistantEngine.ts";
+import { env } from "../config/env.ts";
 
 // Helper to determine if an API key is a valid Google Generative Language key
 // Keys starting with "AQ." are currently rejected with 401 ACCESS_TOKEN_TYPE_UNSUPPORTED
@@ -18,7 +19,7 @@ function isValidGeminiApiKey(key: string | undefined): boolean {
 let aiClient: GoogleGenAI | null = null;
 
 function getGenAI(): GoogleGenAI | null {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = env.geminiApiKey;
   if (!isValidGeminiApiKey(apiKey)) return null;
 
   if (!aiClient) {

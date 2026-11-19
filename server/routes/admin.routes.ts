@@ -19,7 +19,7 @@ import {
 export function createAdminRouter(): Router {
   const router = Router();
 
-  // Deprecated insecure password/OTP login route explicitly retired
+  // Retired legacy password/OTP endpoint
   router.post("/api/admin/login", (_req, res) => {
     res.status(410).json({
       error:
@@ -62,7 +62,8 @@ export function createAdminRouter(): Router {
       const parsed = messageActionSchema.safeParse(req.body);
       if (!parsed.success) {
         return res.status(400).json({
-          error: parsed.error.issues[0]?.message || "Missing id or action parameter",
+          error:
+            parsed.error.issues[0]?.message || "Missing id or action parameter",
         });
       }
 
@@ -105,7 +106,10 @@ export function createAdminRouter(): Router {
       }
 
       try {
-        const subscribers = await deleteSubscriber(id, req.adminUser!.bearerToken);
+        const subscribers = await deleteSubscriber(
+          id,
+          req.adminUser!.bearerToken
+        );
         return res.json({ success: true, subscribers });
       } catch (err) {
         console.error("POST /api/admin/subscribers/delete error:", err);
@@ -121,7 +125,8 @@ export function createAdminRouter(): Router {
       const parsed = newsletterBroadcastSchema.safeParse(req.body);
       if (!parsed.success) {
         return res.status(400).json({
-          error: parsed.error.issues[0]?.message || "Invalid newsletter payload",
+          error:
+            parsed.error.issues[0]?.message || "Invalid newsletter payload",
         });
       }
 
@@ -145,7 +150,9 @@ export function createAdminRouter(): Router {
     requireAdmin,
     async (req: AuthenticatedAdminRequest, res) => {
       try {
-        const testimonials = await listAdminTestimonials(req.adminUser!.bearerToken);
+        const testimonials = await listAdminTestimonials(
+          req.adminUser!.bearerToken
+        );
         return res.json(testimonials);
       } catch (err) {
         console.error("GET /api/admin/testimonials error:", err);
@@ -161,7 +168,8 @@ export function createAdminRouter(): Router {
       const parsed = testimonialActionSchema.safeParse(req.body);
       if (!parsed.success) {
         return res.status(400).json({
-          error: parsed.error.issues[0]?.message || "Missing id or action parameter",
+          error:
+            parsed.error.issues[0]?.message || "Missing id or action parameter",
         });
       }
 
@@ -174,7 +182,9 @@ export function createAdminRouter(): Router {
         return res.json({ success: true, testimonials });
       } catch (err) {
         console.error("POST /api/admin/testimonials/action error:", err);
-        return res.status(500).json({ error: "Failed to process testimonial action" });
+        return res
+          .status(500)
+          .json({ error: "Failed to process testimonial action" });
       }
     }
   );
@@ -185,11 +195,15 @@ export function createAdminRouter(): Router {
     requireAdmin,
     async (req: AuthenticatedAdminRequest, res) => {
       try {
-        const summary = await getAdminAnalyticsSummary(req.adminUser!.bearerToken);
+        const summary = await getAdminAnalyticsSummary(
+          req.adminUser!.bearerToken
+        );
         return res.json(summary);
       } catch (err) {
         console.error("GET /api/admin/analytics error:", err);
-        return res.status(500).json({ error: "Failed to compute analytics summary" });
+        return res
+          .status(500)
+          .json({ error: "Failed to compute analytics summary" });
       }
     }
   );

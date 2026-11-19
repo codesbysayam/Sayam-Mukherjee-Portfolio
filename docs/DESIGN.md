@@ -13,52 +13,57 @@ The design language combines the precision of high-end developer platforms (Line
 
 ## 2. Color System & Semantic Tokens
 
-### Dark Theme (`:root` / default)
+### Light Theme (`:root`, `html.light`, `html[data-theme="light"]` — Default)
 ```css
 :root {
-  --bg: #09090b;              /* Deep warm-black slate */
-  --surface: #121215;         /* Primary container surface */
-  --surface-elevated: #18181c;/* Hover/elevated surface */
-  --text-primary: #f5f5f7;    /* High-contrast off-white (WCAG AAA) */
-  --text-secondary: #a1a1aa;  /* Readable muted zinc */
-  --text-muted: #71717a;      /* Metadata & captions */
-  --border: rgba(255, 255, 255, 0.08); /* 1px subtle divider */
-  --border-strong: rgba(255, 255, 255, 0.16);
-  --accent: #8b5cf6;          /* Restrained violet accent */
-  --accent-hover: #7c3aed;
-  --accent-surface: rgba(139, 92, 246, 0.1);
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
+  --bg: #F4F4ED;              /* Warm Chalk paper canvas */
+  --surface: #EAEAE1;         /* Primary muted container surface */
+  --surface-2: #FFFFFF;       /* Crisp elevated surface */
+  --surface-3: #E3E3D9;       /* Inset surface */
+  --text: #20231D;            /* Deep Olive Charcoal ink (high contrast) */
+  --text-secondary: #30332D;  /* Readable body copy */
+  --text-muted: #585B52;      /* Metadata & captions */
+  --text-faint: #777A70;      /* Subtle auxiliary labels */
+  --border: #D6D7CC;          /* 1px crisp structural border */
+  --border-strong: #BFC1B3;   /* Emphasized interactive border */
+  --accent: #69734A;          /* Olive Moss editorial accent */
+  --accent-signal: #C7E34A;   /* Volt Signal Lime highlight */
+  --accent-2: #4E5834;
+  --success: #3F6212;
+  --warning: #A16207;
+  --danger: #B91C1C;
 }
 ```
 
-### Light Theme (`[data-theme="light"]`)
+### Dark Theme (`html.dark`, `html[data-theme="dark"]`)
 ```css
-[data-theme="light"] {
-  --bg: #f8f9fa;              /* Off-white canvas */
-  --surface: #ffffff;         /* Crisp white container */
-  --surface-elevated: #f1f3f5;/* Elevated subtle contrast */
-  --text-primary: #111827;    /* Deep near-black slate */
-  --text-secondary: #4b5563;  /* High readability gray */
-  --text-muted: #6b7280;      /* Captions & helper text */
-  --border: rgba(0, 0, 0, 0.08);
-  --border-strong: rgba(0, 0, 0, 0.16);
-  --accent: #6d28d9;          /* Deep violet accent */
-  --accent-hover: #5b21b6;
-  --accent-surface: rgba(109, 40, 217, 0.08);
-  --success: #059669;
-  --warning: #d97706;
-  --error: #dc2626;
+html.dark {
+  --bg: #20231D;              /* Deep Olive Charcoal canvas */
+  --surface: #151713;         /* Obsidian charcoal surface */
+  --surface-2: #262922;       /* Elevated card surface */
+  --surface-3: #2E3229;       /* Inset container surface */
+  --text: #F4F4ED;            /* Warm Chalk ink */
+  --text-secondary: #D4D6CA;  /* Readable body copy */
+  --text-muted: #B5B8AA;      /* Metadata & captions */
+  --text-faint: #8C8F82;      /* Subtle auxiliary labels */
+  --border: #41443A;          /* 1px olive charcoal border */
+  --border-strong: #565A4E;
+  --accent: #C7E34A;          /* Volt Signal Lime primary highlight */
+  --accent-signal: #C7E34A;
+  --accent-2: #A9C52F;
+  --success: #A3E635;
+  --warning: #FBBF24;
+  --danger: #F87171;
 }
 ```
 
 ---
 
 ## 3. Typography & Mathematical Hierarchy
-- **Primary Body Font**: System UI stack (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif`).
-- **Monospace Font**: JetBrains Mono, Fira Code, Menlo, monospace for code snippets and verified data.
-- **Reading Measure**: Constrain reading text (paragraphs, articles, legal clauses) to `65ch`–`78ch` to ensure optimal human reading comprehension.
+- **Primary Sans & Display Font**: `"Manrope"` (`ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`).
+- **Editorial Serif Accent Font**: `"DM Serif Display"` (`Georgia, Cambria, "Times New Roman", serif`).
+- **Monospace Telemetry Font**: `"IBM Plex Mono"` (`ui-monospace, SFMono-Regular, Menlo, monospace`) for structured metadata, tabular figures, and verified data.
+- **Reading Measure**: Constrain reading text (paragraphs, articles, legal clauses) to `--reading-max: 760px` (`65ch`–`78ch`).
 - **Line Heights**: `1.6`–`1.75` for body text; `1.15`–`1.25` for display headings.
 
 ---
@@ -67,17 +72,17 @@ The design language combines the precision of high-end developer platforms (Line
 - **Main Viewport Container**:
   ```css
   .container {
-    width: min(100% - 2rem, 1440px);
+    width: min(100% - var(--page-gutter), 1440px);
     margin-inline: auto;
   }
   ```
-- **Fluid Padding**:
-  - Desktop Section Padding: `clamp(4rem, 6vw, 7rem)`
-  - Mobile Section Padding: `clamp(2rem, 4vw, 3.5rem)`
-- **Border Radii Math**:
-  - Outer Cards: `12px` to `16px`
-  - Inner Elements: `Inner Radius = Outer Radius - Padding` (prevents awkward concentric distortion)
-  - Badges / Action Pills: `9999px`
+- **Fluid Spacing**:
+  - Page Gutter: `--page-gutter: clamp(16px, 4vw, 72px)`
+  - Section Rhythm: `--section-space: clamp(3.5rem, 6vw, 6.5rem)`
+- **Editorial Border Radii Discipline (Sharp Geometry)**:
+  - Outer Cards & Containers: `--radius-lg: 10px`
+  - Inputs & Buttons: `--radius-md: 6px`
+  - Badges & Tags: `--radius-sm: 4px` (avoid bubbly rounded-full pill inflation)
 
 ---
 

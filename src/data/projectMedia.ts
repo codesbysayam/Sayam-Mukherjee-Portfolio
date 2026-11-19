@@ -13,6 +13,7 @@ export interface ProjectMediaEntry {
   alt: string;
   caption: string;
   aspect: string;
+  isMissing?: boolean;
 }
 
 export const PROJECT_MEDIA: Record<string, ProjectMediaEntry> = {
@@ -74,5 +75,17 @@ export const PROJECT_MEDIA: Record<string, ProjectMediaEntry> = {
 
 export function getProjectMedia(projectId: string): ProjectMediaEntry {
   const normalized = projectId.toLowerCase();
-  return PROJECT_MEDIA[normalized] || PROJECT_MEDIA.operon;
+  if (PROJECT_MEDIA[normalized]) {
+    return PROJECT_MEDIA[normalized];
+  }
+  if (import.meta.env.DEV) {
+    console.warn(`[ProjectMedia] Missing media asset registration for project "${projectId}".`);
+  }
+  return {
+    src: "",
+    alt: `Preview image unavailable for ${projectId}`,
+    caption: "Verified preview screenshot not registered for this project",
+    aspect: "16:10",
+    isMissing: true,
+  };
 }

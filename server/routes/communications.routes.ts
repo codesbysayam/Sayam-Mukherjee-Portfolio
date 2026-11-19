@@ -51,19 +51,24 @@ export function createCommunicationsRouter(): Router {
     const clientTimestamp = Number(req.body?.clientTimestamp || req.body?.timestamp);
     if (clientTimestamp && Date.now() - clientTimestamp < 2500) {
       return res.status(400).json({
-        error: "Form submission too rapid. Please take a moment to review before submitting.",
+        error:
+          "Form submission too rapid. Please take a moment to review before submitting.",
       });
     }
 
     const parsed = contactSubmissionSchema.safeParse(req.body);
     if (!parsed.success) {
       return res.status(400).json({
-        error: parsed.error.issues[0]?.message || "Invalid contact submission parameters",
+        error:
+          parsed.error.issues[0]?.message ||
+          "Invalid contact submission parameters",
       });
     }
 
     const input = parsed.data;
-    const rawName = (input.name || `${input.firstName || ""} ${input.lastName || ""}`).trim();
+    const rawName = (
+      input.name || `${input.firstName || ""} ${input.lastName || ""}`
+    ).trim();
     const parts = rawName.split(/\s+/);
     const resolvedFirstName = (input.firstName || parts[0] || "").trim();
     const resolvedLastName = (input.lastName || parts.slice(1).join(" ") || "").trim();
@@ -75,7 +80,9 @@ export function createCommunicationsRouter(): Router {
 
     const attachmentSizeBytes =
       input.attachmentSizeBytes ??
-      (input.attachmentData ? Math.ceil((input.attachmentData.length * 3) / 4) : undefined);
+      (input.attachmentData
+        ? Math.ceil((input.attachmentData.length * 3) / 4)
+        : undefined);
 
     try {
       const result = await createContactSubmission({
@@ -103,15 +110,16 @@ export function createCommunicationsRouter(): Router {
         deliveryStatus: result.deliveryStatus,
         deliveryMessage:
           result.deliveryStatus === "sent"
-            ? "Inquiry persisted and email notification delivered."
+            ? "Inquiry persisted and email notification delivered via Resend."
             : result.deliveryStatus === "stored_pending_email_config"
-              ? "Inquiry recorded securely in database. Email forwarding is pending external mail provider configuration."
-              : "Inquiry recorded in database, though outbound email delivery failed.",
+              ? "Inquiry saved to database. Email notification is disabled because RESEND_API_KEY is not configured."
+              : "Inquiry saved to database, though email delivery via Resend failed.",
       });
     } catch (err) {
       console.error("POST /api/contact error:", err);
       return res.status(500).json({
-        error: "Unable to persist your contact inquiry right now. Please try emailing directly.",
+        error:
+          "Unable to persist your contact inquiry right now. Please try emailing directly.",
       });
     }
   });

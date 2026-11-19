@@ -17,8 +17,9 @@ interface RippleNode {
 }
 
 /**
- * Restrained viscous pointer-reactive backdrop canvas for closing/contact sections.
- * Auto-pauses when offscreen or tab hidden, disables smoothly on reduced-motion / low tier / touch.
+ * Restrained pointer-reactive backdrop canvas for closing/contact sections.
+ * Sleeps at zero RAF frames when idle, resumes on pointermove, and respects
+ * offscreen/hidden tab states and reduced-motion / low-tier devices.
  */
 export default function ClosingFluidCanvas({
   tone = "adaptive",
@@ -64,6 +65,12 @@ export default function ClosingFluidCanvas({
     const ro = new ResizeObserver(resize);
     ro.observe(parent);
 
+    function scheduleFrame() {
+      if (!rafId && isVisible && isTabVisible && ripples.length > 0) {
+        rafId = requestAnimationFrame(render);
+      }
+    }
+
     const spawnNode = (x: number, y: number, vx = 0, vy = 0) => {
       if (ripples.length > 26) ripples.shift();
       ripples.push({
@@ -75,6 +82,7 @@ export default function ClosingFluidCanvas({
         life: 1,
         hue: ripples.length % 3 === 0 ? "lime" : "moss",
       });
+      scheduleFrame();
     };
 
     let lastX = 0;
@@ -82,6 +90,7 @@ export default function ClosingFluidCanvas({
     let hasLast = false;
 
     const onPointerMove = (e: PointerEvent) => {
+      if (!isVisible || !isTabVisible) return;
       const now = performance.now();
       if (now - lastEmit < 42) return;
       lastEmit = now;
@@ -105,9 +114,7 @@ export default function ClosingFluidCanvas({
     const io = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
-        if (isVisible && isTabVisible && !rafId) {
-          rafId = requestAnimationFrame(render);
-        }
+        scheduleFrame();
       },
       { threshold: 0.05 }
     );
@@ -115,30 +122,15 @@ export default function ClosingFluidCanvas({
 
     const onVisChange = () => {
       isTabVisible = !document.hidden;
-      if (isVisible && isTabVisible && !rafId) {
-        rafId = requestAnimationFrame(render);
-      }
+      scheduleFrame();
     };
     document.addEventListener("visibilitychange", onVisChange);
 
-    let ambientTimer = 0;
     function render() {
       rafId = 0;
       if (!ctx || !isVisible || !isTabVisible) return;
 
       ctx.clearRect(0, 0, width, height);
-
-      // Gentle ambient drift node if idle so surface subtly breathes
-      ambientTimer += 0.016;
-      if (ripples.length < 2 && ambientTimer > 2.2) {
-        ambientTimer = 0;
-        spawnNode(
-          width * (0.25 + Math.random() * 0.5),
-          height * (0.2 + Math.random() * 0.6),
-          (Math.random() - 0.5) * 14,
-          (Math.random() - 0.5) * 14
-        );
-      }
 
       for (let i = ripples.length - 1; i >= 0; i--) {
         const node = ripples[i];
@@ -178,10 +170,10 @@ export default function ClosingFluidCanvas({
         ctx.fill();
       }
 
-      rafId = requestAnimationFrame(render);
+      if (ripples.length > 0) {
+        rafId = requestAnimationFrame(render);
+      }
     }
-
-    rafId = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(rafId);

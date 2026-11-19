@@ -172,7 +172,7 @@ function ProjectCardComponent({
             </p>
 
             {project.whyItExists && (
-              <div className="p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-1">
+              <div className="border-l-2 border-[var(--accent)] pl-3.5 py-0.5 space-y-1">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold block">
                   {project.team || project.event ? `${project.team ?? ""} ${project.event ? `· ${project.event}` : ""}`.trim() : "Why it exists"}
                 </span>

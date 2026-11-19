@@ -77,8 +77,8 @@ export interface CertificateStats {
 }
 
 export interface StorageStatus {
-  database: 'postgresql_configured' | 'embedded_store_active';
-  objectStorage: 'cloud_configured' | 'not_configured';
+  database: 'firestore_active' | 'postgresql_configured' | 'embedded_store_active';
+  objectStorage: 'configured' | 'direct_url_mode' | 'cloud_configured' | 'not_configured';
   message: string;
 }
 

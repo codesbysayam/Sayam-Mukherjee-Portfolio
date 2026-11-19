@@ -37,6 +37,12 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
   const [submitStatus, setSubmitStatus] = useState<
     "idle" | "success" | "error"
   >("idle");
+  const [deliveryResult, setDeliveryResult] = useState<{
+    submissionId?: string;
+    delivered?: boolean;
+    deliveryStatus?: "sent" | "stored_pending_email_config" | "failed";
+    deliveryMessage?: string;
+  } | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [cooldownRemaining, setCooldownRemaining] = useState<number>(0);
 
@@ -149,6 +155,12 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
         );
       }
 
+      setDeliveryResult({
+        submissionId: result.submissionId,
+        delivered: result.delivered,
+        deliveryStatus: result.deliveryStatus,
+        deliveryMessage: result.deliveryMessage,
+      });
       setSubmitStatus("success");
       trackEvent("contact_form_submit", { topic });
       startCooldown(60);
@@ -170,6 +182,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
     setTouched({});
     setErrors({});
     setSubmitStatus("idle");
+    setDeliveryResult(null);
     setErrorMessage("");
     mountTimeRef.current = Date.now();
   };
@@ -211,16 +224,31 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           >
             <CheckCircle2 className="w-6 h-6" />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-1.5">
             <h4 className="text-lg font-bold font-display text-[var(--text)]">
-              Message Transmitted
+              {deliveryResult?.deliveryStatus === "sent"
+                ? "Message Delivered"
+                : "Message Saved to Database"}
             </h4>
             <p className="text-xs md:text-sm text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">
               Thank you,{" "}
-              <strong className="text-[var(--text)]">{formData.name}</strong>. Your
-              message has been logged securely. I typically review and reply to
-              inquiries within 24–48 hours.
+              <strong className="text-[var(--text)]">{formData.name}</strong>.{" "}
+              {deliveryResult?.deliveryMessage ||
+                "Your inquiry has been persisted securely to Cloud Firestore."}
             </p>
+            {deliveryResult?.submissionId && (
+              <p className="text-[11px] font-mono text-[var(--text-faint)]">
+                Reference ID: {deliveryResult.submissionId}
+              </p>
+            )}
+            {deliveryResult && deliveryResult.delivered === false && (
+              <p className="text-[11px] font-mono text-[var(--warning)] max-w-md mx-auto">
+                External email relay is currently unconfigured or delayed; your message is safely stored for review or you can{" "}
+                <a href={mailtoFallback} className="underline hover:text-[var(--text)]">
+                  open direct email
+                </a>.
+              </p>
+            )}
           </div>
 
           <div className="pt-2 flex flex-wrap items-center justify-center gap-3">

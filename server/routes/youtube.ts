@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { youtubeChannels } from "../../src/data/channels.ts";
 import type { YouTubeChannel } from "../../src/types/youtube.ts";
+import { env } from "../config/env.ts";
 
 interface CacheEntry {
   timestamp: number;
@@ -15,7 +16,7 @@ const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes cache
  * If API key is absent, invalid, or quota exceeded, falls back gracefully.
  */
 async function fetchChannelFromYouTubeApi(handle: string): Promise<Partial<YouTubeChannel> | null> {
-  const apiKey = process.env.YOUTUBE_API_KEY;
+  const apiKey = env.youtubeApiKey;
   if (!apiKey) {
     return null;
   }

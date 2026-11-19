@@ -35,9 +35,11 @@ export function ProjectMedia({
   const isForkRepo = repo?.fork ?? project.isFork ?? false;
   const branchName = repo?.default_branch || project.defaultBranch || "main";
 
+  const hasValidMedia = !imgError && !media.isMissing && Boolean(media.src);
+
   return (
-    <div className={`project-media border-b border-[var(--border)] bg-[#151713] ${className}`}>
-      {!imgError ? (
+    <div className={`project-media aspect-[16/10] border-b border-[var(--border)] bg-[#151713] ${className}`}>
+      {hasValidMedia ? (
         <img
           src={media.src}
           alt={media.alt}
@@ -50,8 +52,9 @@ export function ProjectMedia({
           } ${imgClassName}`}
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center p-4 bg-[#151713]">
-          <span className="font-mono text-xs text-[#B5B8AA]">{project.title}</span>
+        <div className="w-full h-full flex flex-col items-center justify-center gap-1 p-4 bg-[#151713] text-center">
+          <span className="font-mono text-xs font-semibold text-[#F4F4ED]">{project.title}</span>
+          <span className="font-mono text-[10px] text-[#8C8F82] uppercase tracking-wider">Preview Unavailable</span>
         </div>
       )}
 

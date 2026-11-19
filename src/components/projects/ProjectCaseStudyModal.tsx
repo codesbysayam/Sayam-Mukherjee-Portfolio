@@ -23,6 +23,7 @@ import {
   ShieldCheck,
   AlertCircle,
   Compass,
+  Maximize2,
 } from "lucide-react";
 
 interface ProjectCaseStudyModalProps {
@@ -51,10 +52,12 @@ function ProjectCaseStudyModalComponent({
 }: ProjectCaseStudyModalProps) {
   const bodyRef = useRef<HTMLDivElement>(null);
   const [imgError, setImgError] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
     setImgError(false);
+    setIsLightboxOpen(false);
     if (bodyRef.current) {
       bodyRef.current.scrollTop = 0;
     }
@@ -98,11 +101,15 @@ function ProjectCaseStudyModalComponent({
     document.body.style.overflow = "hidden";
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        onClose();
-      } else if (e.key === "ArrowLeft" && canStep && projects && onSelectProject) {
+        if (isLightboxOpen) {
+          setIsLightboxOpen(false);
+        } else {
+          onClose();
+        }
+      } else if (!isLightboxOpen && e.key === "ArrowLeft" && canStep && projects && onSelectProject) {
         const nextIdx = (currentIndex - 1 + projects.length) % projects.length;
         onSelectProject(projects[nextIdx]);
-      } else if (e.key === "ArrowRight" && canStep && projects && onSelectProject) {
+      } else if (!isLightboxOpen && e.key === "ArrowRight" && canStep && projects && onSelectProject) {
         const nextIdx = (currentIndex + 1) % projects.length;
         onSelectProject(projects[nextIdx]);
       }
@@ -112,7 +119,7 @@ function ProjectCaseStudyModalComponent({
       document.body.style.overflow = prevOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [project, onClose, canStep, projects, onSelectProject, currentIndex]);
+  }, [project, onClose, canStep, projects, onSelectProject, currentIndex, isLightboxOpen]);
 
   const handleStep = (direction: -1 | 1) => {
     if (!canStep || !projects || !onSelectProject) return;
@@ -282,17 +289,30 @@ function ProjectCaseStudyModalComponent({
                   ease: MOTION_EASE.emphasis,
                 }}
               >
-                {!imgError ? (
-                  <img
-                    src={media.src}
-                    alt={media.alt}
-                    referrerPolicy="no-referrer"
-                    onError={() => setImgError(true)}
-                    className="project-screenshot w-full aspect-[16/10] h-full object-cover object-top"
-                  />
+                {!imgError && !media.isMissing && media.src ? (
+                  <div className="relative group/preview aspect-[16/10] w-full overflow-hidden bg-[#151713]">
+                    <img
+                      src={media.src}
+                      alt={media.alt}
+                      referrerPolicy="no-referrer"
+                      onError={() => setImgError(true)}
+                      onClick={() => setIsLightboxOpen(true)}
+                      className="project-screenshot w-full aspect-[16/10] h-full object-cover object-top cursor-zoom-in transition-transform duration-300 group-hover/preview:scale-[1.015]"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setIsLightboxOpen(true)}
+                      className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[6px] bg-[#151713]/88 hover:bg-[#20231D] text-[#F4F4ED] border border-[#565A4E] text-[11px] font-mono backdrop-blur-sm transition-all active:scale-95 cursor-pointer"
+                      aria-label={`Expand preview image for ${project.title}`}
+                    >
+                      <Maximize2 className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
+                      <span>Expand View</span>
+                    </button>
+                  </div>
                 ) : (
-                  <div className="w-full aspect-[16/10] flex items-center justify-center p-6">
-                    <span className="font-mono text-xs text-[var(--text-muted)]">{project.title}</span>
+                  <div className="w-full aspect-[16/10] flex flex-col items-center justify-center gap-1 p-6 bg-[#151713]">
+                    <span className="font-mono text-xs font-semibold text-[#F4F4ED]">{project.title}</span>
+                    <span className="font-mono text-[10px] text-[#8C8F82] uppercase tracking-wider">Preview Unavailable</span>
                   </div>
                 )}
               </motion.div>
@@ -553,6 +573,48 @@ function ProjectCaseStudyModalComponent({
           </div>
         </div>
       </motion.div>
+
+      <AnimatePresence>
+        {isLightboxOpen && !media.isMissing && media.src && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: reduced ? 0 : 0.18 }}
+            onClick={() => setIsLightboxOpen(false)}
+            className="fixed inset-0 z-[70] bg-[#151713]/94 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-8"
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${project.title} full-resolution preview`}
+          >
+            <div className="w-full max-w-6xl flex items-center justify-between gap-4 pb-3 text-[#F4F4ED]">
+              <p className="text-xs font-mono truncate text-[#B5B8AA]">{media.caption}</p>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsLightboxOpen(false);
+                }}
+                className="w-10 h-10 rounded-[6px] bg-[#20231D] hover:bg-[#C7E34A] hover:text-[#20231D] border border-[#565A4E] flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                aria-label="Close full-resolution preview"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-6xl max-h-[82dvh] rounded-[10px] overflow-hidden border border-[#565A4E] bg-[#151713] shadow-2xl flex items-center justify-center"
+            >
+              <img
+                src={media.src}
+                alt={media.alt}
+                referrerPolicy="no-referrer"
+                className="w-full h-full max-h-[82dvh] object-contain"
+              />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

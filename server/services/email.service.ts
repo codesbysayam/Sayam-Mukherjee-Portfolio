@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { env } from "../config/env.ts";
 
 export type DeliveryStatus = "sent" | "stored_pending_email_config" | "failed";
@@ -6,7 +6,7 @@ export type DeliveryStatus = "sent" | "stored_pending_email_config" | "failed";
 export interface EmailSendResult {
   delivered: boolean;
   deliveryStatus: DeliveryStatus;
-  provider: "resend" | "smtp" | "none";
+  provider: "resend" | "none";
   messageId?: string;
   error?: string;
 }
@@ -34,10 +34,26 @@ export interface NewsletterDispatchPayload {
 export interface NewsletterDispatchResult {
   success: boolean;
   deliveryStatus: DeliveryStatus;
-  provider: "resend" | "smtp" | "none";
+  provider: "resend" | "none";
   sentCount: number;
   failedCount: number;
   error?: string;
+}
+
+let resendClient: Resend | null = null;
+let initializedKey: string | null = null;
+
+function getResendClient(): Resend | null {
+  if (!env.resendApiKey) return null;
+  if (!resendClient || initializedKey !== env.resendApiKey) {
+    resendClient = new Resend(env.resendApiKey);
+    initializedKey = env.resendApiKey;
+  }
+  return resendClient;
+}
+
+export function isEmailTransportConfigured(): boolean {
+  return Boolean(env.resendApiKey && env.contactFromEmail && env.contactToEmail);
 }
 
 function delay(ms: number): Promise<void> {
@@ -59,78 +75,40 @@ async function withRetries<T>(fn: () => Promise<T>, maxAttempts = 3): Promise<T>
   throw lastErr;
 }
 
-export function isEmailTransportConfigured(): boolean {
-  if (env.resendApiKey && env.contactFromEmail) return true;
-  if (env.smtpHost && env.smtpUser && env.smtpPass) return true;
-  return false;
-}
-
-async function sendViaResend(params: {
-  to: string | string[];
-  subject: string;
-  text: string;
-  html: string;
-  replyTo?: string;
-}): Promise<{ id?: string }> {
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${env.resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: env.contactFromEmail,
-      to: Array.isArray(params.to) ? params.to : [params.to],
-      subject: params.subject,
-      text: params.text,
-      html: params.html,
-      ...(params.replyTo ? { reply_to: params.replyTo } : {}),
-    }),
-  });
-
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Resend API error (${res.status}): ${body.slice(0, 240)}`);
-  }
-
-  return (await res.json()) as { id?: string };
-}
-
-async function sendViaSmtp(params: {
-  to: string | string[];
-  subject: string;
-  text: string;
-  html: string;
-  replyTo?: string;
-}): Promise<{ messageId?: string }> {
-  const transporter = nodemailer.createTransport({
-    host: env.smtpHost,
-    port: env.smtpPort,
-    secure: env.smtpSecure,
-    auth: {
-      user: env.smtpUser,
-      pass: env.smtpPass,
-    },
-  });
-
-  const info = await transporter.sendMail({
-    from: env.contactFromEmail || env.smtpUser,
-    to: Array.isArray(params.to) ? params.to.join(", ") : params.to,
-    subject: params.subject,
-    text: params.text,
-    html: params.html,
-    ...(params.replyTo ? { replyTo: params.replyTo } : {}),
-  });
-
-  return { messageId: info.messageId };
-}
-
 function escapeHtml(text: string): string {
   return text
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
+}
+
+async function sendWithResend(params: {
+  to: string | string[];
+  subject: string;
+  text: string;
+  html: string;
+  replyTo?: string;
+}): Promise<{ id?: string }> {
+  const resend = getResendClient();
+  if (!resend) {
+    throw new Error("RESEND_API_KEY is not configured.");
+  }
+
+  const { data, error } = await resend.emails.send({
+    from: env.contactFromEmail,
+    to: Array.isArray(params.to) ? params.to : [params.to],
+    subject: params.subject,
+    text: params.text,
+    html: params.html,
+    ...(params.replyTo ? { replyTo: params.replyTo } : {}),
+  });
+
+  if (error) {
+    throw new Error(error.message || "Resend delivery rejected");
+  }
+
+  return { id: data?.id };
 }
 
 export async function sendContactNotification(
@@ -142,7 +120,7 @@ export async function sendContactNotification(
       deliveryStatus: "stored_pending_email_config",
       provider: "none",
       error:
-        "External email transport (RESEND_API_KEY + CONTACT_FROM_EMAIL or SMTP_*) is not configured. Inquiry is persisted in the database.",
+        "Email delivery is disabled because RESEND_API_KEY is not configured. Message was saved to Firestore.",
     };
   }
 
@@ -177,26 +155,8 @@ export async function sendContactNotification(
   `;
 
   try {
-    if (env.resendApiKey && env.contactFromEmail) {
-      const res = await withRetries(() =>
-        sendViaResend({
-          to: env.contactToEmail,
-          subject: payload.subject,
-          text,
-          html,
-          replyTo: payload.email,
-        })
-      );
-      return {
-        delivered: true,
-        deliveryStatus: "sent",
-        provider: "resend",
-        messageId: res.id,
-      };
-    }
-
     const res = await withRetries(() =>
-      sendViaSmtp({
+      sendWithResend({
         to: env.contactToEmail,
         subject: payload.subject,
         text,
@@ -207,15 +167,15 @@ export async function sendContactNotification(
     return {
       delivered: true,
       deliveryStatus: "sent",
-      provider: "smtp",
-      messageId: res.messageId,
+      provider: "resend",
+      messageId: res.id,
     };
   } catch (err) {
     return {
       delivered: false,
       deliveryStatus: "failed",
-      provider: env.resendApiKey ? "resend" : "smtp",
-      error: err instanceof Error ? err.message : "Email dispatch failed",
+      provider: "resend",
+      error: err instanceof Error ? err.message : "Resend delivery failed",
     };
   }
 }
@@ -231,7 +191,7 @@ export async function dispatchNewsletterBroadcast(
       sentCount: 0,
       failedCount: payload.recipients.length,
       error:
-        "Email transport is not configured. Configure RESEND_API_KEY + CONTACT_FROM_EMAIL or SMTP credentials in server environment variables.",
+        "Email delivery is disabled because RESEND_API_KEY is not configured on the server.",
     };
   }
 
@@ -241,28 +201,16 @@ export async function dispatchNewsletterBroadcast(
     payload.body
   )}</pre></div>`;
 
-  const provider: "resend" | "smtp" =
-    env.resendApiKey && env.contactFromEmail ? "resend" : "smtp";
-
   for (const recipient of payload.recipients) {
     try {
-      await withRetries(async () => {
-        if (provider === "resend") {
-          await sendViaResend({
-            to: recipient,
-            subject: payload.subject,
-            text: payload.body,
-            html,
-          });
-        } else {
-          await sendViaSmtp({
-            to: recipient,
-            subject: payload.subject,
-            text: payload.body,
-            html,
-          });
-        }
-      });
+      await withRetries(() =>
+        sendWithResend({
+          to: recipient,
+          subject: payload.subject,
+          text: payload.body,
+          html,
+        })
+      );
       sentCount++;
     } catch {
       failedCount++;
@@ -272,7 +220,7 @@ export async function dispatchNewsletterBroadcast(
   return {
     success: failedCount === 0 && sentCount > 0,
     deliveryStatus: sentCount > 0 && failedCount === 0 ? "sent" : "failed",
-    provider,
+    provider: "resend",
     sentCount,
     failedCount,
     error:

@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import {
-  Lock, Mail, Key, ShieldCheck, BarChart3, Plus, Edit3, Trash2,
+  Mail, ShieldCheck, BarChart3, Plus, Edit3, Trash2,
   RefreshCw, Users, FileText, Settings, Award,
-  Layers, Clock, HelpCircle, LogOut, Archive, Eye, EyeOff,
+  Layers, Clock, HelpCircle, LogOut, Archive,
   Check, X, FileSpreadsheet, ArrowLeft, Laptop, Smartphone, Tablet, AlertCircle
 } from "lucide-react";
 import {
@@ -10,15 +10,18 @@ import {
   BarChart, Bar, PieChart, Pie, Cell
 } from "recharts";
 import { usePortfolio } from "../context/PortfolioContext";
-import { Project, Blog, ExperienceItem, Certification } from "../data";
+import { Project, Blog, ExperienceItem } from "../data";
+import { Certificate, CertificateCategory } from "../types/certificates";
 import ConfirmationModal from "./common/ConfirmationModal";
 import { showToast } from "./Toast";
 
 export default function AdminDashboard() {
   const {
-    portfolioData, loginAdmin, verify2FA, logoutAdmin, isAdmin, otpRequired,
+    portfolioData, authReady, isAdmin, adminEmail, signInWithAdminGoogle, logoutAdmin,
     updatePortfolioSection, fetchAdminMessages, actionAdminMessage, fetchAdminSubscribers,
-    deleteAdminSubscriber, actionAdminTestimonial, fetchAdminAnalytics
+    deleteAdminSubscriber, sendAdminNewsletterBroadcast, fetchAdminTestimonials,
+    actionAdminTestimonial, fetchAdminAnalytics,
+    fetchAdminCertificates, createAdminCertificate, updateAdminCertificate, deleteAdminCertificate
   } = usePortfolio();
 
   // Confirmation modal state
@@ -47,11 +50,6 @@ export default function AdminDashboard() {
   };
 
   // Authentication states
-  const [emailInput, setEmailInput] = useState("");
-  const [passInput, setPassInput] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [otpInput, setOtpInput] = useState("");
-  const [otpSimulated, setOtpSimulated] = useState<string | null>(null);
   const [authError, setAuthError] = useState<string | null>(null);
   const [authLoading, setAuthLoading] = useState(false);
 
@@ -62,13 +60,15 @@ export default function AdminDashboard() {
   const [analyticsData, setAnalyticsData] = useState<any>(null);
   const [messages, setMessages] = useState<any[]>([]);
   const [subscribers, setSubscribers] = useState<any[]>([]);
+  const [adminTestimonials, setAdminTestimonials] = useState<any[]>([]);
+  const [adminCertificates, setAdminCertificates] = useState<Certificate[]>([]);
   const [analyticsLoading, setAnalyticsLoading] = useState(false);
 
   // Editors states
   const [editingProject, setEditingProject] = useState<Partial<Project> | null>(null);
   const [editingBlog, setEditingBlog] = useState<Partial<Blog> | null>(null);
   const [editingSkillGroup, setEditingSkillGroup] = useState<{ groupIndex: number; skillIndex?: number; name?: string; level?: number; icon?: string } | null>(null);
-  const [editingCert, setEditingCert] = useState<(Partial<Certification> & { id?: number }) | null>(null);
+  const [editingCert, setEditingCert] = useState<Partial<Certificate> | null>(null);
   const [editingTimeline, setEditingTimeline] = useState<(Partial<ExperienceItem> & { id?: number }) | null>(null);
 
   // Fresh items template triggers
@@ -77,10 +77,10 @@ export default function AdminDashboard() {
   const [isAddingTimeline, setIsAddingTimeline] = useState(false);
   const [isAddingCert, setIsAddingCert] = useState(false);
 
-  // Newsletter dispatcher mockup
+  // Newsletter dispatcher state
   const [newsSubject, setNewsSubject] = useState("");
   const [newsBody, setNewsBody] = useState("");
-  const [newsSent, setNewsSent] = useState(false);
+  const [newsSending, setNewsSending] = useState(false);
 
   // Load Administrative Data
   useEffect(() => {
@@ -92,12 +92,18 @@ export default function AdminDashboard() {
   const loadAdminPayloads = async () => {
     setAnalyticsLoading(true);
     try {
-      const ann = await fetchAdminAnalytics();
+      const [ann, msgs, subs, tests, certs] = await Promise.all([
+        fetchAdminAnalytics(),
+        fetchAdminMessages(),
+        fetchAdminSubscribers(),
+        fetchAdminTestimonials(),
+        fetchAdminCertificates(),
+      ]);
       setAnalyticsData(ann);
-      const msgs = await fetchAdminMessages();
       setMessages(msgs);
-      const subs = await fetchAdminSubscribers();
       setSubscribers(subs);
+      setAdminTestimonials(tests);
+      setAdminCertificates(certs);
     } catch (e) {
       console.error(e);
     } finally {
@@ -105,38 +111,17 @@ export default function AdminDashboard() {
     }
   };
 
-  // Auth steps
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Real Firebase Google Sign-In handler
+  const handleGoogleSignIn = async () => {
     setAuthError(null);
     setAuthLoading(true);
-
     try {
-      const res = await loginAdmin(emailInput, passInput);
-      if (res.success && res.require2FA) {
-        setOtpSimulated(res.otpSimulated || "999999");
-      } else if (res.error) {
+      const res = await signInWithAdminGoogle();
+      if (!res.success && res.error) {
         setAuthError(res.error);
       }
-    } catch (err) {
-      setAuthError("Auth Node Connection timed out.");
-    } finally {
-      setAuthLoading(false);
-    }
-  };
-
-  const handleVerifyOTP = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAuthError(null);
-    setAuthLoading(true);
-
-    try {
-      const success = await verify2FA(otpInput);
-      if (!success) {
-        setAuthError("Security verification credentials failed. Review code.");
-      }
-    } catch (err) {
-      setAuthError("Network authorization error.");
+    } catch {
+      setAuthError("Unable to complete Firebase Google authentication.");
     } finally {
       setAuthLoading(false);
     }
@@ -274,37 +259,61 @@ export default function AdminDashboard() {
     });
   };
 
-  // Certifications CMS
+  // Certifications CRUD (Firestore via /api/certificates)
   const handleSaveCert = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editingCert?.name || !editingCert?.issuer) return;
+    if (!editingCert?.title || !editingCert?.issuer) return;
 
-    let updatedList = [...portfolioData.certifications];
-    if (isAddingCert) {
-      const newCert: Certification = {
-        name: editingCert.name,
-        issuer: editingCert.issuer,
-        date: editingCert.date || "2025",
-        verificationUrl: editingCert.verificationUrl || "",
-        image: editingCert.image || ""
-      };
-      updatedList.push(newCert);
-    } else {
-      updatedList = updatedList.map((c, i) => i === editingCert.id ? { ...c, ...editingCert } : c) as Certification[];
-    }
+    const payload: Partial<Certificate> = {
+      title: editingCert.title.trim(),
+      issuer: editingCert.issuer.trim(),
+      category: (editingCert.category || "CERTIFICATIONS") as Exclude<CertificateCategory, "ALL">,
+      issueDate: (editingCert.issueDate || "2026").trim(),
+      description: editingCert.description?.trim() || undefined,
+      credentialId: editingCert.credentialId?.trim() || undefined,
+      credentialUrl: editingCert.credentialUrl?.trim() || undefined,
+      imageUrl: editingCert.imageUrl?.trim() || undefined,
+      skills: Array.isArray(editingCert.skills)
+        ? editingCert.skills.filter(Boolean)
+        : [],
+      featured: Boolean(editingCert.featured),
+    };
 
-    const ok = await updatePortfolioSection({ certifications: updatedList });
-    if (ok) {
+    const result = isAddingCert
+      ? await createAdminCertificate(payload)
+      : editingCert.id
+        ? await updateAdminCertificate(editingCert.id, payload)
+        : { success: false, error: "Missing certificate id" };
+
+    if (result.success) {
+      const fresh = await fetchAdminCertificates();
+      setAdminCertificates(fresh);
       setEditingCert(null);
       setIsAddingCert(false);
+      showToast(
+        isAddingCert ? "Credential created in Firestore." : "Credential updated in Firestore.",
+        "success"
+      );
+    } else {
+      showToast(result.error || "Failed to save credential.", "error");
     }
   };
 
-  const handleDeleteCert = (idx: number) => {
-    triggerConfirm("Delete Certificate", "Are you sure you want to delete this certificate node?", async () => {
-      const updated = portfolioData.certifications.filter((_, i) => i !== idx);
-      await updatePortfolioSection({ certifications: updated });
-    });
+  const handleDeleteCert = (id: string) => {
+    triggerConfirm(
+      "Delete Certificate",
+      "Are you sure you want to remove this credential from the public vault?",
+      async () => {
+        const res = await deleteAdminCertificate(id);
+        if (res.success) {
+          const fresh = await fetchAdminCertificates();
+          setAdminCertificates(fresh);
+          showToast("Credential deleted.", "success");
+        } else {
+          showToast(res.error || "Failed to delete credential.", "error");
+        }
+      }
+    );
   };
 
   // Timeline Experience CMS
@@ -354,23 +363,47 @@ export default function AdminDashboard() {
     setMessages(fresh);
   };
 
-  // Newsletter dispatcher simulator
-  const handleSendNewsletter = (e: React.FormEvent) => {
+  // Newsletter broadcaster backed by Resend API
+  const handleSendNewsletter = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newsSubject || !newsBody) return;
-    setNewsSent(true);
-    setTimeout(() => {
-      setNewsSent(false);
-      setNewsSubject("");
-      setNewsBody("");
-      showToast(`Automated dispatch successful! Newsletter transmitted to ${subscribers.length} subscribers.`, "success");
-    }, 1500);
+    if (!newsSubject.trim() || !newsBody.trim() || newsSending) return;
+    setNewsSending(true);
+    try {
+      const result = await sendAdminNewsletterBroadcast(newsSubject.trim(), newsBody.trim());
+      if (result.success) {
+        setNewsSubject("");
+        setNewsBody("");
+        showToast(
+          `Newsletter delivered via Resend to ${result.sentCount ?? subscribers.length} subscriber(s).`,
+          "success"
+        );
+      } else {
+        showToast(
+          result.error ||
+            "Newsletter broadcast could not be sent. Verify RESEND_API_KEY configuration.",
+          "error"
+        );
+      }
+    } finally {
+      setNewsSending(false);
+    }
   };
 
   // Testimonials approval
   const handleTestimonialAction = async (id: string, action: "approve" | "reject") => {
-    await actionAdminTestimonial(id, action);
+    const updated = await actionAdminTestimonial(id, action);
+    if (Array.isArray(updated)) {
+      setAdminTestimonials(updated);
+    }
   };
+
+  if (!authReady) {
+    return (
+      <div className="min-h-screen flex items-center justify-center font-mono text-xs bg-[var(--bg)] text-[var(--text-muted)]">
+        Checking Firebase Authentication session...
+      </div>
+    );
+  }
 
   // LOGIN PAGE VIEW IF NOT AUTHENTICATED
   if (!isAdmin) {
@@ -386,110 +419,43 @@ export default function AdminDashboard() {
             </div>
             <h1 className="text-2xl font-extrabold tracking-tight font-display text-[var(--text)]">Administration Console</h1>
             <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-              Protected access for wrickbusiness@gmail.com
+              Protected via Firebase Authentication for <span className="font-mono text-[var(--text)]">wrickbusiness@gmail.com</span>
             </p>
           </div>
 
-          <div className="card p-6 md:p-8 relative overflow-hidden">
+          <div className="card p-6 md:p-8 relative overflow-hidden space-y-5">
             {authError && (
-              <div className="mb-4 p-3 bg-[var(--surface)] border border-[var(--danger)]/40 rounded-[6px] text-[var(--danger)] text-xs flex items-start gap-2">
+              <div className="p-3 bg-[var(--surface)] border border-[var(--danger)]/40 rounded-[6px] text-[var(--danger)] text-xs flex items-start gap-2">
                 <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
                 <span>{authError}</span>
               </div>
             )}
 
-            {!otpRequired ? (
-              <form onSubmit={handleLogin} className="space-y-4">
-                <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-mono tracking-wider text-[var(--text-muted)]">Security Email</label>
-                  <div className="relative">
-                    <Mail className="absolute left-3.5 top-3.5 w-4 h-4 text-[var(--text-faint)]" />
-                    <input
-                      type="email"
-                      required
-                      placeholder="wrickbusiness@gmail.com"
-                      value={emailInput}
-                      onChange={(e) => setEmailInput(e.target.value)}
-                      className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] pl-10 pr-3.5 py-3 text-xs text-[var(--text)] placeholder-[var(--text-faint)] outline-none transition-colors"
-                    />
-                  </div>
-                </div>
+            <div className="p-3.5 bg-[var(--surface)] border border-[var(--border)] rounded-[6px] space-y-1.5 text-xs">
+              <div className="flex items-center gap-2 font-bold text-[var(--text)] font-display">
+                <ShieldCheck className="w-4 h-4 text-[var(--accent)]" />
+                <span>Server-Verified Firebase ID Token</span>
+              </div>
+              <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
+                Sign in with the authorized owner Google account. API requests carry a short-lived Bearer token verified server-side.
+              </p>
+            </div>
 
-                <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-mono tracking-wider text-[var(--text-muted)]">Password</label>
-                  <div className="relative">
-                    <Key className="absolute left-3.5 top-3.5 w-4 h-4 text-[var(--text-faint)]" />
-                    <input
-                      type={showPassword ? "text" : "password"}
-                      required
-                      placeholder="••••••••"
-                      value={passInput}
-                      onChange={(e) => setPassInput(e.target.value)}
-                      className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] pl-10 pr-10 py-3 text-xs text-[var(--text)] placeholder-[var(--text-faint)] outline-none transition-colors"
-                    />
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-3 text-[var(--text-faint)] hover:text-[var(--text)] focus:outline-none cursor-pointer"
-                      title={showPassword ? "Hide password" : "Show password"}
-                      aria-label={showPassword ? "Hide password" : "Show password"}
-                    >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                    </button>
-                  </div>
-                </div>
+            <button
+              type="button"
+              onClick={handleGoogleSignIn}
+              disabled={authLoading}
+              className="btn btn-primary w-full text-xs tracking-wider uppercase"
+            >
+              <ShieldCheck className="w-4 h-4" />
+              <span>{authLoading ? "Verifying Google Session..." : "Sign in with Google"}</span>
+            </button>
 
-                <button
-                  type="submit"
-                  disabled={authLoading}
-                  className="btn btn-primary w-full text-xs tracking-wider uppercase"
-                >
-                  <Lock className="w-4 h-4" />
-                  <span>{authLoading ? "Verifying credentials..." : "Initialize Session"}</span>
-                </button>
-
-                <div className="text-center pt-2">
-                  <span className="text-[10px] text-[var(--text-faint)] font-mono">Authorized administrative personnel only</span>
-                </div>
-              </form>
-            ) : (
-              <form onSubmit={handleVerifyOTP} className="space-y-4">
-                <div className="p-3 bg-[var(--surface)] border border-[var(--border)] rounded-[6px] text-[var(--text)] text-xs space-y-2">
-                  <div className="flex items-center gap-2 font-bold font-display">
-                    <ShieldCheck className="w-4 h-4 text-[var(--accent)]" />
-                    <span>2FA Verification Required</span>
-                  </div>
-                  <p className="text-[11px] text-[var(--text-muted)] leading-relaxed">
-                    A verification OTP was issued for your session. For portfolio review convenience, the simulated OTP code is displayed below:
-                  </p>
-                  <div className="text-center py-1.5 bg-[var(--surface-2)] rounded-[6px] border border-[var(--border)]">
-                    <span className="text-sm font-bold tracking-widest text-[var(--accent)] font-mono select-all">{otpSimulated}</span>
-                  </div>
-                </div>
-
-                <div className="space-y-1.5">
-                  <label className="text-[10px] uppercase font-mono tracking-wider text-[var(--text-muted)]">One-Time Security Code</label>
-                  <input
-                    type="text"
-                    required
-                    maxLength={6}
-                    placeholder="Enter 6-digit code"
-                    value={otpInput}
-                    onChange={(e) => setOtpInput(e.target.value)}
-                    className="w-full bg-[var(--surface)] border border-[var(--border)] focus:border-[var(--accent)] rounded-[6px] px-3.5 py-3 text-center text-sm font-bold tracking-widest text-[var(--text)] placeholder-[var(--text-faint)] outline-none transition-colors font-mono"
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={authLoading}
-                  className="btn btn-primary w-full text-xs tracking-wider uppercase"
-                >
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>{authLoading ? "Authorizing..." : "Finalize Verification"}</span>
-                </button>
-              </form>
-            )}
+            <div className="text-center">
+              <span className="text-[10px] text-[var(--text-faint)] font-mono">
+                Unauthorized Google accounts are rejected server-side (403)
+              </span>
+            </div>
           </div>
         </div>
       </div>
@@ -509,9 +475,9 @@ export default function AdminDashboard() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold text-[var(--text)] font-display">Administrative Console</span>
-                <span className="text-[10px] font-mono text-[var(--success)] uppercase tracking-wider">· SECURE_LEVEL_2</span>
+                <span className="text-[10px] font-mono text-[var(--success)] uppercase tracking-wider">· FIREBASE_VERIFIED</span>
               </div>
-              <p className="text-[10px] text-[var(--text-muted)] font-mono">Logged: wrickbusiness@gmail.com</p>
+              <p className="text-[10px] text-[var(--text-muted)] font-mono">Signed in: {adminEmail || "wrickbusiness@gmail.com"}</p>
             </div>
           </div>
 
@@ -524,11 +490,11 @@ export default function AdminDashboard() {
               <RefreshCw className={`w-4 h-4 ${analyticsLoading ? "animate-spin" : ""}`} />
             </button>
             <button
-              onClick={logoutAdmin}
+              onClick={() => void logoutAdmin()}
               className="btn btn-secondary !min-h-[36px] !px-3 !py-1.5 text-xs border-[var(--danger)]/40 text-[var(--danger)] hover:!bg-[var(--danger)] hover:!text-white hover:!border-[var(--danger)]"
             >
               <LogOut className="w-4 h-4" />
-              <span className="hidden sm:inline">Terminate Session</span>
+              <span className="hidden sm:inline">Sign Out</span>
             </button>
           </div>
         </div>
@@ -548,7 +514,7 @@ export default function AdminDashboard() {
             { id: "certificates", label: "Manage Credentials", icon: <Award className="w-4 h-4" /> },
             { id: "messages", label: "Contact Inquiries", icon: <Mail className="w-4 h-4" />, count: messages.filter(m => m.status === "unread").length },
             { id: "newsletter", label: "Newsletter Matrix", icon: <Users className="w-4 h-4" /> },
-            { id: "testimonials", label: "Testimonials Approve", icon: <HelpCircle className="w-4 h-4" />, count: portfolioData.testimonials.filter(t => !t.approved).length }
+            { id: "testimonials", label: "Testimonials Approve", icon: <HelpCircle className="w-4 h-4" />, count: adminTestimonials.filter(t => !t.approved).length }
           ].map((tb) => (
             <button
               key={tb.id}
@@ -586,35 +552,39 @@ export default function AdminDashboard() {
             <div className="space-y-6">
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="card p-5 relative overflow-hidden">
-                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Total Visitors Count</span>
+                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Recorded Page Views</span>
                   <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
-                    {analyticsData?.totalVisits || 240}
+                    {analyticsData?.totalVisits ?? 0}
                   </p>
-                  <span className="text-[10px] text-[var(--success)] font-mono block mt-2">▲ 14.5% vs last week</span>
+                  <span className="text-[10px] text-[var(--text-muted)] font-mono block mt-2">
+                    {analyticsData?.uniqueSessions ?? 0} unique session(s)
+                  </span>
                 </div>
 
                 <div className="card p-5">
                   <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Avg Session Duration</span>
                   <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
-                    {analyticsData ? `${Math.floor(analyticsData.avgDurationSec / 60)}m ${analyticsData.avgDurationSec % 60}s` : "2m 14s"}
+                    {analyticsData && analyticsData.avgDurationSec > 0
+                      ? `${Math.floor(analyticsData.avgDurationSec / 60)}m ${analyticsData.avgDurationSec % 60}s`
+                      : "0m 0s"}
                   </p>
-                  <span className="text-[10px] text-[var(--text-muted)] font-mono block mt-2">Active threshold standard</span>
+                  <span className="text-[10px] text-[var(--text-muted)] font-mono block mt-2">Measured via dwell beacons</span>
                 </div>
 
                 <div className="card p-5">
-                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Average Bounce Rate</span>
+                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Bounce Rate</span>
                   <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
-                    {analyticsData?.bounceRatePct || 28}%
+                    {analyticsData?.bounceRatePct ?? 0}%
                   </p>
-                  <span className="text-[10px] text-[var(--success)] font-mono block mt-2">▼ 3.2% optimization rate</span>
+                  <span className="text-[10px] text-[var(--text-muted)] font-mono block mt-2">Single-page exits &lt;10s</span>
                 </div>
 
                 <div className="card p-5">
-                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Inquiry Conversion Rate</span>
+                  <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase">Inquiry Conversion</span>
                   <p className="text-2xl font-bold font-display text-[var(--text)] mt-1 tabular-nums">
-                    {analyticsData?.conversionRatePct || 4.2}%
+                    {analyticsData?.conversionRatePct ?? 0}%
                   </p>
-                  <span className="text-[10px] text-[var(--accent)] font-mono block mt-2">▲ Form dispatched records</span>
+                  <span className="text-[10px] text-[var(--accent)] font-mono block mt-2">Persisted contact dispatches</span>
                 </div>
               </div>
 
@@ -622,10 +592,10 @@ export default function AdminDashboard() {
                 <div className="card p-5 space-y-4">
                   <div>
                     <h3 className="text-sm font-bold text-[var(--text)]">Traffic Volume (14-Day rolling)</h3>
-                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Synchronized daily visit logs</p>
+                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Consent-gated Firestore visit events</p>
                   </div>
                   <div className="h-56">
-                    {analyticsData?.timelineChart ? (
+                    {analyticsData?.timelineChart && analyticsData.timelineChart.some((p: any) => p.Visitors > 0) ? (
                       <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={analyticsData.timelineChart}>
                           <defs>
@@ -635,34 +605,38 @@ export default function AdminDashboard() {
                             </linearGradient>
                           </defs>
                           <XAxis dataKey="date" stroke="var(--chart-axis)" tick={{ fontSize: 9, fontFamily: "monospace" }} />
-                          <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 9, fontFamily: "monospace" }} />
+                          <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 9, fontFamily: "monospace" }} allowDecimals={false} />
                           <ChartTooltip contentStyle={{ background: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", color: "var(--chart-tooltip-text)", fontSize: 10, borderRadius: 6 }} />
                           <Area type="monotone" dataKey="Visitors" stroke="#69734A" fillOpacity={1} fill="url(#colorVisits)" strokeWidth={2} />
                         </AreaChart>
                       </ResponsiveContainer>
                     ) : (
-                      <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)]">Retrieving chart coordinates...</div>
+                      <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)] font-mono">
+                        No recorded analytics events yet.
+                      </div>
                     )}
                   </div>
                 </div>
 
                 <div className="card p-5 space-y-4">
                   <div>
-                    <h3 className="text-sm font-bold text-[var(--text)]">Top Geographic Locations</h3>
-                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Session visitor locales</p>
+                    <h3 className="text-sm font-bold text-[var(--text)]">Top Visited Views</h3>
+                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Measured page views without geo-IP profiling</p>
                   </div>
                   <div className="h-56">
-                    {analyticsData?.countryChart ? (
+                    {analyticsData?.pageChart && analyticsData.pageChart.length > 0 ? (
                       <ResponsiveContainer width="100%" height="100%">
-                        <BarChart data={analyticsData.countryChart}>
+                        <BarChart data={analyticsData.pageChart.slice(0, 6)}>
                           <XAxis dataKey="name" stroke="var(--chart-axis)" fontSize={9} />
-                          <YAxis stroke="var(--chart-axis)" fontSize={9} />
+                          <YAxis stroke="var(--chart-axis)" fontSize={9} allowDecimals={false} />
                           <ChartTooltip contentStyle={{ background: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", color: "var(--chart-tooltip-text)", fontSize: 10, borderRadius: 6 }} />
                           <Bar dataKey="value" fill="#C7E34A" radius={[4, 4, 0, 0]} />
                         </BarChart>
                       </ResponsiveContainer>
                     ) : (
-                      <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)]">Compiling regional coordinates...</div>
+                      <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)] font-mono">
+                        No page view events recorded yet.
+                      </div>
                     )}
                   </div>
                 </div>
@@ -671,9 +645,9 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="card p-5 space-y-4 md:col-span-2">
                   <h3 className="text-sm font-bold text-[var(--text)]">Acquisition Sources Index</h3>
-                  <div className="grid grid-cols-2 items-center gap-4">
-                    <div className="h-40">
-                      {analyticsData?.sourceChart ? (
+                  {analyticsData?.sourceChart && analyticsData.sourceChart.length > 0 ? (
+                    <div className="grid grid-cols-2 items-center gap-4">
+                      <div className="h-40">
                         <ResponsiveContainer width="100%" height="100%">
                           <PieChart>
                             <Pie
@@ -692,47 +666,57 @@ export default function AdminDashboard() {
                             <ChartTooltip contentStyle={{ background: "var(--chart-tooltip-bg)", border: "1px solid var(--chart-tooltip-border)", color: "var(--chart-tooltip-text)", fontSize: 10, borderRadius: 6 }} />
                           </PieChart>
                         </ResponsiveContainer>
-                      ) : (
-                        <div className="h-full flex items-center justify-center text-xs text-[var(--text-muted)]">Compiling sources...</div>
-                      )}
-                    </div>
+                      </div>
 
-                    <div className="space-y-1.5 text-xs">
-                      {analyticsData?.sourceChart?.map((sc: any, index: number) => (
-                        <div key={sc.name} className="flex items-center gap-2">
-                          <span className="w-2.5 h-2.5 rounded-[2px] shrink-0" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
-                          <span className="text-[var(--text-muted)] font-mono">{sc.name}</span>
-                          <span className="text-[var(--text)] font-bold font-mono ml-auto tabular-nums">{sc.value}</span>
-                        </div>
-                      ))}
+                      <div className="space-y-1.5 text-xs">
+                        {analyticsData.sourceChart.map((sc: any, index: number) => (
+                          <div key={sc.name} className="flex items-center gap-2">
+                            <span className="w-2.5 h-2.5 rounded-[2px] shrink-0" style={{ backgroundColor: COLORS[index % COLORS.length] }} />
+                            <span className="text-[var(--text-muted)] font-mono">{sc.name}</span>
+                            <span className="text-[var(--text)] font-bold font-mono ml-auto tabular-nums">{sc.value}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="h-32 flex items-center justify-center text-xs text-[var(--text-muted)] font-mono">
+                      No acquisition source events recorded yet.
+                    </div>
+                  )}
                 </div>
 
                 <div className="card p-5 flex flex-col justify-between space-y-4">
                   <div>
                     <h3 className="text-sm font-bold text-[var(--text)]">Device Segments</h3>
-                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Mobile vs desktop ratios</p>
+                    <p className="text-[10px] text-[var(--text-muted)] font-mono">Mobile, tablet &amp; desktop breakdown</p>
                   </div>
 
                   <div className="space-y-3.5 pt-2">
-                    {analyticsData?.deviceChart?.map((dv: any) => {
-                      const pct = Math.round((dv.value / (analyticsData?.totalVisits || 1)) * 100) || 30;
-                      return (
-                        <div key={dv.name} className="space-y-1 text-xs">
-                          <div className="flex justify-between font-mono">
-                            <span className="flex items-center gap-1.5 text-[var(--text-muted)] capitalize">
-                              {dv.name === "Desktop" ? <Laptop className="w-3.5 h-3.5" /> : dv.name === "Mobile" ? <Smartphone className="w-3.5 h-3.5" /> : <Tablet className="w-3.5 h-3.5" />}
-                              {dv.name}
-                            </span>
-                            <span className="text-[var(--text)] font-bold tabular-nums">{pct}%</span>
+                    {analyticsData?.deviceChart && analyticsData.deviceChart.length > 0 ? (
+                      analyticsData.deviceChart.map((dv: any) => {
+                        const pct = analyticsData?.totalVisits > 0
+                          ? Math.round((dv.value / analyticsData.totalVisits) * 100)
+                          : 0;
+                        return (
+                          <div key={dv.name} className="space-y-1 text-xs">
+                            <div className="flex justify-between font-mono">
+                              <span className="flex items-center gap-1.5 text-[var(--text-muted)] capitalize">
+                                {dv.name === "Desktop" ? <Laptop className="w-3.5 h-3.5" /> : dv.name === "Mobile" ? <Smartphone className="w-3.5 h-3.5" /> : <Tablet className="w-3.5 h-3.5" />}
+                                {dv.name}
+                              </span>
+                              <span className="text-[var(--text)] font-bold tabular-nums">{pct}%</span>
+                            </div>
+                            <div className="w-full bg-[var(--surface-3)] h-1.5 rounded-[4px] overflow-hidden">
+                              <div className="bg-[var(--accent)] h-full rounded-[4px] transition-all" style={{ width: `${pct}%` }} />
+                            </div>
                           </div>
-                          <div className="w-full bg-[var(--surface-3)] h-1.5 rounded-[4px] overflow-hidden">
-                            <div className="bg-[var(--accent)] h-full rounded-[4px] transition-all" style={{ width: `${pct}%` }} />
-                          </div>
-                        </div>
-                      );
-                    })}
+                        );
+                      })
+                    ) : (
+                      <div className="py-6 text-center text-xs text-[var(--text-muted)] font-mono">
+                        No device telemetry recorded yet.
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -1376,18 +1360,23 @@ export default function AdminDashboard() {
             <div className="space-y-6">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Academics & Certifications</h3>
-                  <p className="text-xs text-[var(--text-muted)] font-mono">Manage Coursera, Google Cloud, and academic credentials</p>
+                  <h3 className="text-base font-bold text-[var(--text)] font-display">Manage Credentials Vault (Firestore)</h3>
+                  <p className="text-xs text-[var(--text-muted)] font-mono">Create, edit, or unpublish credentials via /api/certificates</p>
                 </div>
                 <button
                   onClick={() => {
                     setIsAddingCert(true);
                     setEditingCert({
-                      name: "",
+                      title: "",
                       issuer: "",
-                      date: "2025",
-                      verificationUrl: "",
-                      image: ""
+                      category: "CERTIFICATIONS",
+                      issueDate: new Date().getFullYear().toString(),
+                      description: "",
+                      credentialId: "",
+                      credentialUrl: "",
+                      imageUrl: "",
+                      skills: [],
+                      featured: false,
                     });
                   }}
                   className="btn btn-primary !min-h-[36px] !px-3.5 !py-1.5 text-xs"
@@ -1399,17 +1388,17 @@ export default function AdminDashboard() {
               {editingCert && (
                 <div className="card p-6 space-y-4 text-xs border-[var(--border-strong)]">
                   <h4 className="text-xs font-bold uppercase tracking-wider text-[var(--accent)] font-mono">
-                    Academics Credentials Editor
+                    {isAddingCert ? "Add New Credential" : "Edit Credential Record"}
                   </h4>
                   <form onSubmit={handleSaveCert} className="space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Certification Name</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Credential Title</span>
                         <input
                           type="text"
                           required
-                          value={editingCert.name || ""}
-                          onChange={(e) => setEditingCert({ ...editingCert, name: e.target.value })}
+                          value={editingCert.title || ""}
+                          onChange={(e) => setEditingCert({ ...editingCert, title: e.target.value })}
                           className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
@@ -1427,32 +1416,94 @@ export default function AdminDashboard() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="space-y-1">
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Category</span>
+                        <select
+                          value={(editingCert.category as string) || "CERTIFICATIONS"}
+                          onChange={(e) => setEditingCert({ ...editingCert, category: e.target.value as any })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
+                        >
+                          <option value="CERTIFICATIONS">CERTIFICATIONS</option>
+                          <option value="ACHIEVEMENTS">ACHIEVEMENTS</option>
+                          <option value="COMPETITIONS">COMPETITIONS</option>
+                          <option value="COURSES">COURSES</option>
+                          <option value="WORKSHOPS">WORKSHOPS</option>
+                          <option value="ACADEMIC RECORD">ACADEMIC RECORD</option>
+                          <option value="OTHER">OTHER</option>
+                        </select>
+                      </div>
+                      <div className="space-y-1">
                         <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Issue Date</span>
                         <input
                           type="text"
                           required
-                          value={editingCert.date || ""}
-                          onChange={(e) => setEditingCert({ ...editingCert, date: e.target.value })}
+                          placeholder="2026-03"
+                          value={editingCert.issueDate || ""}
+                          onChange={(e) => setEditingCert({ ...editingCert, issueDate: e.target.value })}
                           className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Verification Registry URL</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Credential ID</span>
                         <input
                           type="text"
-                          value={editingCert.verificationUrl || ""}
-                          onChange={(e) => setEditingCert({ ...editingCert, verificationUrl: e.target.value })}
+                          value={editingCert.credentialId || ""}
+                          onChange={(e) => setEditingCert({ ...editingCert, credentialId: e.target.value })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Verification URL</span>
+                        <input
+                          type="text"
+                          value={editingCert.credentialUrl || ""}
+                          onChange={(e) => setEditingCert({ ...editingCert, credentialUrl: e.target.value })}
                           className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Badge Icon URL</span>
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Certificate Image URL</span>
                         <input
                           type="text"
-                          value={editingCert.image || ""}
-                          onChange={(e) => setEditingCert({ ...editingCert, image: e.target.value })}
+                          value={editingCert.imageUrl || ""}
+                          onChange={(e) => setEditingCert({ ...editingCert, imageUrl: e.target.value })}
                           className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
                         />
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Description</span>
+                      <textarea
+                        rows={2}
+                        value={editingCert.description || ""}
+                        onChange={(e) => setEditingCert({ ...editingCert, description: e.target.value })}
+                        className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-mono text-[var(--text-muted)] block uppercase">Skills (Comma separated)</span>
+                        <input
+                          type="text"
+                          placeholder="Python, Computer Vision"
+                          value={editingCert.skills?.join(", ") || ""}
+                          onChange={(e) => setEditingCert({ ...editingCert, skills: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })}
+                          className="w-full bg-[var(--surface)] border border-[var(--border)] rounded-[6px] px-2.5 py-2 text-[var(--text)] outline-none"
+                        />
+                      </div>
+                      <div className="flex items-center gap-2 pt-4">
+                        <input
+                          type="checkbox"
+                          id="cert-feat-chk"
+                          checked={Boolean(editingCert.featured)}
+                          onChange={(e) => setEditingCert({ ...editingCert, featured: e.target.checked })}
+                          className="w-4 h-4 accent-[#69734A] rounded-[4px]"
+                        />
+                        <label htmlFor="cert-feat-chk" className="text-[10px] uppercase font-mono text-[var(--text-muted)] cursor-pointer">Featured Credential</label>
                       </div>
                     </div>
 
@@ -1479,29 +1530,37 @@ export default function AdminDashboard() {
               )}
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {portfolioData.certifications.map((cert, idx) => (
-                  <div key={idx} className="card p-4 flex items-center justify-between gap-4">
+                {adminCertificates.map((cert) => (
+                  <div key={cert.id} className="card p-4 flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3.5 min-w-0">
-                      <img src={cert.image} alt={cert.name} referrerPolicy="no-referrer" className="w-10 h-10 rounded-[6px] object-cover bg-[var(--surface)] shrink-0 border border-[var(--border)]" />
+                      {cert.imageUrl ? (
+                        <img src={cert.imageUrl} alt={cert.title} referrerPolicy="no-referrer" className="w-10 h-10 rounded-[6px] object-cover bg-[var(--surface)] shrink-0 border border-[var(--border)]" />
+                      ) : (
+                        <div className="w-10 h-10 rounded-[6px] bg-[var(--surface)] shrink-0 border border-[var(--border)] flex items-center justify-center text-[var(--accent)]">
+                          <Award className="w-4 h-4" />
+                        </div>
+                      )}
                       <div className="min-w-0">
-                        <h4 className="font-bold text-[var(--text)] text-xs leading-snug truncate max-w-[200px]">{cert.name}</h4>
-                        <p className="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">{cert.issuer}</p>
+                        <h4 className="font-bold text-[var(--text)] text-xs leading-snug truncate max-w-[200px]">{cert.title}</h4>
+                        <p className="text-[10px] text-[var(--text-muted)] font-mono mt-0.5">{cert.issuer} · {cert.issueDate}</p>
                       </div>
                     </div>
 
                     <div className="flex gap-1 shrink-0">
                       <button
                         onClick={() => {
-                          setEditingCert({ ...cert, id: idx as any });
+                          setEditingCert(cert);
                           setIsAddingCert(false);
                         }}
                         className="p-1.5 text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+                        aria-label={`Edit ${cert.title}`}
                       >
                         <Edit3 className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => handleDeleteCert(idx)}
+                        onClick={() => handleDeleteCert(cert.id)}
                         className="p-1.5 text-[var(--danger)]/70 hover:text-[var(--danger)] cursor-pointer"
+                        aria-label={`Delete ${cert.title}`}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -1625,10 +1684,10 @@ export default function AdminDashboard() {
 
                     <button
                       type="submit"
-                      disabled={subscribers.length === 0 || newsSent}
+                      disabled={subscribers.length === 0 || newsSending}
                       className="btn btn-primary w-full text-xs tracking-wider uppercase disabled:opacity-50"
                     >
-                      {newsSent ? "Broadcasting dispatch..." : `Transmit Broadcast to ${subscribers.length} Subscribers`}
+                      {newsSending ? "Sending via Resend..." : `Transmit Broadcast to ${subscribers.length} Subscribers`}
                     </button>
                   </form>
                 </div>
@@ -1684,12 +1743,12 @@ export default function AdminDashboard() {
               </div>
 
               <div className="space-y-4">
-                {portfolioData.testimonials.length === 0 ? (
+                {adminTestimonials.length === 0 ? (
                   <div className="card py-12 text-center text-xs text-[var(--text-muted)] font-mono">
                     Testimonials registry empty.
                   </div>
                 ) : (
-                  portfolioData.testimonials.map((test) => (
+                  adminTestimonials.map((test) => (
                     <div key={test.id} className="card p-5 flex items-center justify-between gap-6">
                       <div className="space-y-2 flex-1 max-w-lg">
                         <div className="flex items-center gap-3">
