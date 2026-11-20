@@ -50,8 +50,8 @@
       "createdAt": "2026-11-17T17:31:45Z",
       "updated_at": "2026-11-18T02:37:29Z",
       "updatedAt": "2026-11-18T02:37:29Z",
-      "pushed_at": "2026-11-20T08:47:41Z",
-      "pushedAt": "2026-11-20T08:47:41Z",
+      "pushed_at": "2026-11-20T18:08:42Z",
+      "pushedAt": "2026-11-20T18:08:42Z",
       "topics": []
     },
     {
@@ -80,8 +80,8 @@
       "createdAt": "2026-09-03T06:02:37Z",
       "updated_at": "2026-11-17T08:00:59Z",
       "updatedAt": "2026-11-17T08:00:59Z",
-      "pushed_at": "2026-11-20T02:56:25Z",
-      "pushedAt": "2026-11-20T02:56:25Z",
+      "pushed_at": "2026-11-20T17:32:29Z",
+      "pushedAt": "2026-11-20T17:32:29Z",
       "topics": [
         "ai",
         "ai-agent",
@@ -130,8 +130,8 @@
       "createdAt": "2026-09-13T09:39:25Z",
       "updated_at": "2026-11-12T11:00:18Z",
       "updatedAt": "2026-11-12T11:00:18Z",
-      "pushed_at": "2026-11-20T07:17:40Z",
-      "pushedAt": "2026-11-20T07:17:40Z",
+      "pushed_at": "2026-11-20T11:30:41Z",
+      "pushedAt": "2026-11-20T11:30:41Z",
       "topics": [
         "artificial-intelligence",
         "computer-science",
@@ -179,8 +179,8 @@
       "createdAt": "2026-09-08T07:59:51Z",
       "updated_at": "2026-10-25T16:44:06Z",
       "updatedAt": "2026-10-25T16:44:06Z",
-      "pushed_at": "2026-11-19T20:48:01Z",
-      "pushedAt": "2026-11-19T20:48:01Z",
+      "pushed_at": "2026-11-20T19:13:31Z",
+      "pushedAt": "2026-11-20T19:13:31Z",
       "topics": []
     },
     {
@@ -439,6 +439,34 @@
     }
   ],
   "events": [
+    {
+      "id": "27727800893",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam_sih-26",
+      "created_at": "2026-11-20T08:47:42Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1461749225,
+        "push_id": 51119151948,
+        "ref": "refs/heads/main",
+        "head": "3445b78e928d7681bc4abedfdb001764a1a00f5a",
+        "before": "8b9332bb292891ef1261adf54eedf106d597358b"
+      }
+    },
+    {
+      "id": "27715436906",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Memory-in-Motion",
+      "created_at": "2026-11-19T20:25:23Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1361090226,
+        "push_id": 51050881808,
+        "ref": "refs/heads/main",
+        "head": "773b8aba755ee6375c41ae0f0549eafa43c534ab",
+        "before": "37ef05f9d0045fb93f137178c57e24543e74ff64"
+      }
+    },
     {
       "id": "27704475802",
       "type": "PushEvent",
@@ -868,37 +896,37 @@
         "head": "621e937914873a1ffffbaf0b91ac3e4c97fc2617",
         "before": "d89fe8c25a3e18734c799dcc2fd7b2b64deac655"
       }
-    },
-    {
-      "id": "25209572158",
-      "type": "PushEvent",
-      "repo": "codesbysayam/SightForge",
-      "created_at": "2026-10-25T09:05:38Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1406277351,
-        "push_id": 47701039038,
-        "ref": "refs/heads/main",
-        "head": "4349936b8409231995bd1adc996f886e8c41aef7",
-        "before": "f18875fe739f5bb32aee32695d2357f543e88d0e"
-      }
-    },
-    {
-      "id": "25163580704",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Memory-in-Motion",
-      "created_at": "2026-10-25T16:44:02Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1361090226,
-        "push_id": 47732519512,
-        "ref": "refs/heads/main",
-        "head": "dd7ef22c0b9ca4e0668ecf54f99471d8bd9d4a63",
-        "before": "55b22a2565cc98f6727c9dcc111183aa889f51f0"
-      }
     }
   ],
   "recentActivity": [
+    {
+      "id": "27727800893",
+      "type": "PushEvent",
+      "createdAt": "2026-11-20T08:47:42Z",
+      "created_at": "2026-11-20T08:47:42Z",
+      "repoName": "mausam_sih-26",
+      "repo": {
+        "id": 1461749225,
+        "name": "codesbysayam/mausam_sih-26",
+        "url": "https://github.com/codesbysayam/mausam_sih-26"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "27715436906",
+      "type": "PushEvent",
+      "createdAt": "2026-11-19T20:25:23Z",
+      "created_at": "2026-11-19T20:25:23Z",
+      "repoName": "Memory-in-Motion",
+      "repo": {
+        "id": 1361090226,
+        "name": "codesbysayam/Memory-in-Motion",
+        "url": "https://github.com/codesbysayam/Memory-in-Motion"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
     {
       "id": "27704475802",
       "type": "PushEvent",
@@ -1290,50 +1318,22 @@
       },
       "public": true,
       "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "25209572158",
-      "type": "PushEvent",
-      "createdAt": "2026-10-25T09:05:38Z",
-      "created_at": "2026-10-25T09:05:38Z",
-      "repoName": "SightForge",
-      "repo": {
-        "id": 1406277351,
-        "name": "codesbysayam/SightForge",
-        "url": "https://github.com/codesbysayam/SightForge"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "25163580704",
-      "type": "PushEvent",
-      "createdAt": "2026-10-25T16:44:02Z",
-      "created_at": "2026-10-25T16:44:02Z",
-      "repoName": "Memory-in-Motion",
-      "repo": {
-        "id": 1361090226,
-        "name": "codesbysayam/Memory-in-Motion",
-        "url": "https://github.com/codesbysayam/Memory-in-Motion"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
     }
   ],
   "languages": {
     "codesbysayam/mausam_sih-26": {
-      "TypeScript": 5516488,
+      "TypeScript": 5586556,
       "Python": 118579,
-      "CSS": 74900,
+      "CSS": 78823,
       "JavaScript": 65917,
-      "HTML": 33685,
+      "HTML": 33705,
       "C": 31107,
       "Jupyter Notebook": 14149,
       "PLpgSQL": 3057,
       "Makefile": 1358
     },
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
-      "TypeScript": 1871218,
+      "TypeScript": 1910617,
       "JavaScript": 32511,
       "CSS": 32508,
       "Python": 8166,
@@ -1392,11 +1392,11 @@
     "C++": 1
   },
   "languageBytes": {
-    "TypeScript": 16533643,
+    "TypeScript": 16643110,
     "Python": 407336,
-    "CSS": 300654,
+    "CSS": 304577,
     "JavaScript": 166714,
-    "HTML": 78153,
+    "HTML": 78173,
     "C": 69249,
     "Jupyter Notebook": 33736,
     "PLpgSQL": 6114,
@@ -1404,9 +1404,9 @@
     "Shell": 569,
     "C++": 2037
   },
-  "latestPush": "2026-11-20T08:47:41Z",
+  "latestPush": "2026-11-20T19:13:31Z",
   "contributionCalendar": {
-    "totalContributions": 257,
+    "totalContributions": 261,
     "weeks": [
       {
         "contributionDays": [
@@ -3445,14 +3445,14 @@
           },
           {
             "date": "2026-11-20",
-            "count": 4,
-            "color": "#40c463"
+            "count": 8,
+            "color": "#30a14e"
           }
         ]
       }
     ]
   },
-  "fetchedAt": "2026-11-20T11:18:19.778Z",
-  "syncedAt": "2026-11-20T11:18:19.778Z",
+  "fetchedAt": "2026-11-20T19:54:34.476Z",
+  "syncedAt": "2026-11-20T19:54:34.476Z",
   "status": "ok"
 }
