@@ -24,6 +24,27 @@ async function startServer() {
 
   const httpServer = http.createServer(app);
 
+  // Guard /documents and /images so missing files never fall back to SPA index.html
+  const staticRoot = env.isProduction
+    ? path.resolve(process.cwd(), "dist")
+    : path.resolve(process.cwd(), "public");
+
+  app.use(["/documents", "/images"], (req, res, next) => {
+    const cleanRel = req.originalUrl.split("?")[0];
+    const targetPath = path.resolve(staticRoot, "." + cleanRel);
+    if (
+      !targetPath.startsWith(staticRoot + path.sep) ||
+      !fs.existsSync(targetPath) ||
+      !fs.statSync(targetPath).isFile()
+    ) {
+      return res.status(404).json({
+        error: "Document or static asset not found",
+        path: cleanRel,
+      });
+    }
+    return next();
+  });
+
   if (!env.isProduction) {
     const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({

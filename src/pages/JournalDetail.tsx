@@ -133,14 +133,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
         <EditorialReveal immediate>
           <header className="space-y-4 pb-6">
             <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono tracking-wider">
-              <span
-                className="px-2.5 py-0.5 rounded-[4px] border font-semibold uppercase text-[11px]"
-                style={{
-                  backgroundColor: "var(--surface)",
-                  borderColor: "var(--border-strong)",
-                  color: "var(--accent)",
-                }}
-              >
+              <span className="font-semibold uppercase text-[11px] text-[var(--accent)]">
                 {entry.category}
               </span>
               <span className="text-[var(--text-faint)]" aria-hidden="true">
@@ -179,14 +172,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
             </h1>
 
             {/* Lead Summary Callout */}
-            <div
-              className="p-4 sm:p-5 rounded-[8px] border border-l-[3px]"
-              style={{
-                backgroundColor: "var(--surface)",
-                borderColor: "var(--border)",
-                borderLeftColor: "var(--accent)",
-              }}
-            >
+            <div className="py-4 border-y border-[var(--border)]">
               <p className="text-sm sm:text-base text-[var(--text)] leading-relaxed font-serif-editorial italic">
                 &ldquo;{entry.summary}&rdquo;
               </p>

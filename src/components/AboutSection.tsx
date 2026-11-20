@@ -273,7 +273,7 @@ function AboutSectionComponent() {
       {/* 1. EDITORIAL HEADER */}
       <header
         id="about-hero"
-        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-6"
+        className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-6"
       >
         <ContourBackground density="subtle" />
 
@@ -290,7 +290,7 @@ function AboutSectionComponent() {
           />
 
           {/* Editorial Tabs */}
-          <div className="flex flex-wrap gap-2 pt-2 border-t border-[var(--border)]" role="tablist" aria-label="About sections">
+          <div className="flex flex-wrap gap-2 pt-3 border-t border-[var(--border)]" role="tablist" aria-label="About sections">
             {[
               { id: "narrative", label: "Personal Narrative & Values", icon: User },
               { id: "timeline", label: "Chronological Timeline (2011–2026)", icon: Calendar },
@@ -329,76 +329,73 @@ function AboutSectionComponent() {
             transition={{ duration: 0.18 }}
             className="space-y-12"
           >
-            {/* Biography & Profile Hero Card */}
-            <div className="card p-6 sm:p-8 lg:p-10">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-                {/* Portrait & Essential Ledger */}
-                <div className="lg:col-span-4 space-y-4">
-                  <MaskMediaReveal immediate delay={0.1} className="aspect-[4/5] w-full rounded-[10px] overflow-hidden border border-[var(--border)] bg-[var(--surface)]">
-                    <img
-                      src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
-                      alt="Portrait of Sayam Mukherjee, Computer Science and Engineering student at KIIT"
-                      width={400}
-                      height={500}
-                      loading="lazy"
-                      decoding="async"
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover object-[50%_20%]"
-                    />
-                  </MaskMediaReveal>
+            {/* Open Editorial Biography Spread */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pb-10 border-b border-[var(--border)]">
+              {/* Portrait & Hairline Ledger */}
+              <div className="lg:col-span-4 space-y-5">
+                <MaskMediaReveal immediate delay={0.1} className="aspect-[4/5] w-full rounded-[10px] overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)]">
+                  <img
+                    src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
+                    alt="Portrait of Sayam Mukherjee, Computer Science and Engineering student at KIIT"
+                    width={400}
+                    height={500}
+                    loading="lazy"
+                    decoding="async"
+                    className="w-full h-full object-cover object-[50%_20%]"
+                  />
+                </MaskMediaReveal>
 
-                  <dl className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] space-y-2.5 text-xs font-mono">
-                    <div className="flex flex-wrap justify-between gap-2 min-w-0">
-                      <dt className="text-[var(--text-muted)] shrink-0">Location</dt>
-                      <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">Hooghly / Bhubaneswar</dd>
-                    </div>
-                    <div className="flex flex-wrap justify-between gap-2 border-t border-[var(--border)] pt-2 min-w-0">
-                      <dt className="text-[var(--text-muted)] shrink-0">Institution</dt>
-                      <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">KIIT University (B.Tech CSE)</dd>
-                    </div>
-                    <div className="flex flex-wrap justify-between gap-2 border-t border-[var(--border)] pt-2 min-w-0">
-                      <dt className="text-[var(--text-muted)] shrink-0">First-Year CGPA</dt>
-                      <dd className="font-semibold text-[var(--accent)] tabular-nums text-right">9.06 / 10.0</dd>
-                    </div>
-                    <div className="flex flex-wrap justify-between gap-2 border-t border-[var(--border)] pt-2 min-w-0">
-                      <dt className="text-[var(--text-muted)] shrink-0">LeetCode</dt>
-                      <dd className="font-semibold text-[var(--text)] tabular-nums text-right">100% Acceptance Rate</dd>
-                    </div>
-                  </dl>
+                <dl className="divide-y divide-[var(--border)] border-y border-[var(--border)] text-xs font-mono">
+                  <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
+                    <dt className="text-[var(--text-muted)] shrink-0">Location</dt>
+                    <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">Hooghly / Bhubaneswar</dd>
+                  </div>
+                  <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
+                    <dt className="text-[var(--text-muted)] shrink-0">Institution</dt>
+                    <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">KIIT University (B.Tech CSE)</dd>
+                  </div>
+                  <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
+                    <dt className="text-[var(--text-muted)] shrink-0">First-Year CGPA</dt>
+                    <dd className="font-semibold text-[var(--accent)] tabular-nums text-right">9.06 / 10.0</dd>
+                  </div>
+                  <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
+                    <dt className="text-[var(--text-muted)] shrink-0">LeetCode</dt>
+                    <dd className="font-semibold text-[var(--text)] tabular-nums text-right">100% Acceptance Rate</dd>
+                  </div>
+                </dl>
+              </div>
+
+              {/* Narrative Prose */}
+              <div className="lg:col-span-8 space-y-5">
+                <div className="space-y-2">
+                  <span className="text-xs font-mono tracking-wider text-[var(--accent)] font-semibold uppercase">
+                    Personal Story &amp; Motivation
+                  </span>
+                  <h2 className="text-2xl sm:text-3xl font-bold font-display text-[var(--text)] leading-tight text-balance">
+                    Building practical systems from{" "}
+                    <span className="font-serif-editorial italic font-normal">solid fundamentals.</span>
+                  </h2>
                 </div>
 
-                {/* Narrative Prose */}
-                <div className="lg:col-span-8 space-y-5">
-                  <div className="space-y-2">
-                    <span className="text-xs font-mono tracking-wider text-[var(--accent)] font-semibold uppercase">
-                      Personal Story &amp; Motivation
-                    </span>
-                    <h2 className="text-2xl sm:text-3xl font-bold font-display text-[var(--text)] leading-tight text-balance">
-                      Building practical systems from{" "}
-                      <span className="font-serif-editorial italic font-normal">solid fundamentals.</span>
-                    </h2>
-                  </div>
-
-                  <div className="space-y-4 text-sm sm:text-[15px] text-[var(--text-secondary)] leading-relaxed font-sans">
-                    <p>
-                      I am a Computer Science undergraduate at KIIT Bhubaneswar interested in autonomous AI agents, practical computer vision, and reliable full-stack applications. Originally from Hooghly, West Bengal, I grew up balancing competitive table tennis with self-taught programming and digital media.
-                    </p>
-                    <p>
-                      At age 16, I started my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which reached an organic audience of over 10,000 learners. Producing technical breakdowns and working with early clients taught me early on how people actually interact with technology: they value clarity, speed, and real utility over buzzwords.
-                    </p>
-                    <p>
-                      In my software projects, I stick to that same practical focus. Whether building <strong>Operon</strong> (a multi-agent operational platform with human approvals), <strong>Mausam</strong> (climate analytics for SIH 2026), <strong>SightForge</strong> (YOLOv8 tracking), <strong>Memory-in-Motion</strong> (3D educational physics), <strong>AXIOM</strong> (governed AI execution), <strong>Inkloom</strong>, <strong>CampusConnect</strong>, or <strong>SayamSolves</strong> (C++ algorithmic archive), my priority is building reliable code that solves actual problems.
-                    </p>
-                  </div>
-
-                  {/* Editorial Callout */}
-                  <blockquote className="mt-4 p-5 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] flex items-start gap-3.5">
-                    <Quote className="w-5 h-5 text-[var(--accent)] shrink-0 mt-0.5" aria-hidden="true" />
-                    <p className="text-sm font-serif-editorial italic leading-relaxed text-[var(--text)]">
-                      &ldquo;Great engineering is not about writing the maximum amount of code — it is about constructing reliable boundaries where systems fail gracefully and people stay in control.&rdquo;
-                    </p>
-                  </blockquote>
+                <div className="space-y-4 text-sm sm:text-[15px] text-[var(--text-secondary)] leading-relaxed font-sans max-w-[66ch]">
+                  <p>
+                    I am a Computer Science undergraduate at KIIT Bhubaneswar interested in autonomous AI agents, practical computer vision, and reliable full-stack applications. Originally from Hooghly, West Bengal, I grew up balancing competitive table tennis with self-taught programming and digital media.
+                  </p>
+                  <p>
+                    At age 16, I started my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which reached an organic audience of over 10,000 learners. Producing technical breakdowns and working with early clients taught me early on how people actually interact with technology: they value clarity, speed, and real utility over buzzwords.
+                  </p>
+                  <p>
+                    In my software projects, I stick to that same practical focus. Whether building <strong>Operon</strong> (a multi-agent operational platform with human approvals), <strong>Mausam</strong> (climate analytics for SIH 2026), <strong>SightForge</strong> (YOLOv8 tracking), <strong>Memory-in-Motion</strong> (3D educational physics), <strong>AXIOM</strong> (governed AI execution), <strong>Inkloom</strong>, <strong>CampusConnect</strong>, or <strong>SayamSolves</strong> (C++ algorithmic archive), my priority is building reliable code that solves actual problems.
+                  </p>
                 </div>
+
+                {/* Editorial Pull-Quote */}
+                <blockquote className="mt-6 py-4 border-y border-[var(--border)] flex items-start gap-3.5 max-w-[66ch]">
+                  <Quote className="w-5 h-5 text-[var(--accent)] shrink-0 mt-0.5" aria-hidden="true" />
+                  <p className="text-sm sm:text-base font-serif-editorial italic leading-relaxed text-[var(--text)]">
+                    &ldquo;Great engineering is not about writing the maximum amount of code — it is about constructing reliable boundaries where systems fail gracefully and people stay in control.&rdquo;
+                  </p>
+                </blockquote>
               </div>
             </div>
 

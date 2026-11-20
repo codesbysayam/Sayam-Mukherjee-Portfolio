@@ -553,8 +553,8 @@ export const CERTIFICATES: readonly CertificateContent[] = [
       "An interactive exploration of in-context learning with recurrent memory, demonstrating how fixed-size state can retain task-relevant information while compression introduces interference and forgetting.",
     fullDescription:
       "Memory in Motion is an interactive research-exhibit project exploring in-context learning through recurrent memory. It demonstrates how a fixed-size recurrent state can carry task-relevant information forward without growing a token-by-token memory, while also exposing the trade-off: compressing information into a bounded state can introduce interference and forgetting.",
-    credentialUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
-    verificationStatus: "LINK AVAILABLE",
+    pdfUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
+    verificationStatus: "NO VERIFICATION LINK",
     featured: true,
     skills: ["In-Context Learning", "Recurrent Memory", "Explain the Frontier", "AI Research", "Machine Learning"],
     tags: ["In-Context Learning", "Recurrent Memory", "Explain the Frontier", "AI Research", "Machine Learning"],
@@ -596,8 +596,8 @@ export const CERTIFICATES: readonly CertificateContent[] = [
       "OPERON is an agent-driven operations platform designed to automate business workflows while keeping critical decisions traceable, auditable, policy-controlled, and subject to human approval.",
     fullDescription:
       "OPERON (Autonomous Operations, Human-Controlled) was developed for Deploy or Die, an Agent-Driven Lifecycle Hackathon organized through HowToAlgo × GDG on Campus KIIT. Built under Track A (Business Process Automation), the project explores how multi-agent systems can automate operational workflows while maintaining risk-based reasoning, human approval, validation, recovery, and auditability.",
-    credentialUrl: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
-    verificationStatus: "LINK AVAILABLE",
+    pdfUrl: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
+    verificationStatus: "NO VERIFICATION LINK",
     featured: true,
     skills: [
       "Agent-Driven Lifecycle",
@@ -653,8 +653,8 @@ export const CERTIFICATES: readonly CertificateContent[] = [
       "12-Hour Offline Hackathon at KIIT Deemed to be University organized by K-1000 with KIIT and KSAC, recognizing participation involving dedication, creativity, teamwork, technical excellence, innovation, and problem-solving.",
     fullDescription:
       "Certificate of Participation awarded to Sayam Mukherjee for actively participating in IGNITHON 2.0, a 12-Hour Offline Hackathon organized by K-1000 in association with KIIT and KSAC at KIIT Deemed to be University on 26th September 2026. Recognizes participation demonstrating dedication, creativity, teamwork, technical excellence, innovation, and problem-solving with Team ALGNITE.",
-    credentialUrl: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
-    verificationStatus: "LINK AVAILABLE",
+    pdfUrl: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
+    verificationStatus: "NO VERIFICATION LINK",
     featured: true,
     skills: ["12-Hour Hackathon", "Team Leadership", "Rapid Prototyping", "Problem Solving", "Technical Excellence"],
     tags: ["12-Hour Hackathon", "Offline Hackathon", "Team ALGNITE", "KIIT & KSAC"],
@@ -801,7 +801,7 @@ export const CERTIFICATES: readonly CertificateContent[] = [
       "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
     fullDescription:
       "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
-    credentialUrl: "https://increased-purple-oeuuxfwu.edgeone.dev/",
+    pdfUrl: "https://increased-purple-oeuuxfwu.edgeone.dev/",
     verificationStatus: "VERIFIED",
     verified: true,
     featured: true,
@@ -829,8 +829,8 @@ export const CERTIFICATES: readonly CertificateContent[] = [
       "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework.",
     fullDescription:
       "First-year academic grade report covering core engineering, science, mathematics, laboratory, programming, communication, and interdisciplinary coursework at KIIT.",
-    credentialUrl: "https://diverse-plum-xc5wzkru.edgeone.dev/",
-    verificationStatus: "LINK AVAILABLE",
+    pdfUrl: "https://diverse-plum-xc5wzkru.edgeone.dev/",
+    verificationStatus: "NO VERIFICATION LINK",
     featured: false,
     skills: ["Engineering Sciences", "Mathematics", "Programming", "Laboratory Work"],
     tags: ["20 Subjects", "2025–26"],

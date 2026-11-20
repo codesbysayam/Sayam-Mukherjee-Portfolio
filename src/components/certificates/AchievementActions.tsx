@@ -13,7 +13,7 @@ export function AchievementActions({
   onInspect,
   className = "",
 }: AchievementActionsProps) {
-  const { id, title, credentialUrl, verificationUrl, downloadUrl } = record;
+  const { id, title, credentialUrl, verificationUrl, downloadUrl, pdfUrl } = record;
 
   const primaryUrl = credentialUrl || verificationUrl;
   const primaryLabel = credentialUrl
@@ -22,7 +22,7 @@ export function AchievementActions({
       ? "Verify Record"
       : "View Details";
 
-  const effectiveDownloadUrl = downloadUrl;
+  const effectiveDownloadUrl = downloadUrl || pdfUrl;
 
   return (
     <div

@@ -108,7 +108,7 @@ function LiveBuildFeedComponent() {
   return (
     <section
       id="live-build-feed"
-      className="relative w-full rounded-[12px] overflow-hidden font-sans border border-[var(--border)] bg-[var(--surface-2)] text-[var(--text)] p-5 sm:p-8 lg:p-10"
+      className="relative w-full pt-8 sm:pt-12 border-t border-[var(--border)] font-sans text-[var(--text)]"
       aria-label="Live Build Feed from GitHub"
     >
       {/* TOP HEADER */}

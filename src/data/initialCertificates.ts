@@ -76,8 +76,8 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
       "AI Research",
       "Machine Learning"
     ],
-    credentialUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
-    verificationStatus: "LINK AVAILABLE",
+    pdfUrl: "https://intact-black-0mk1uydx.edgeone.dev/",
+    verificationStatus: "NO VERIFICATION LINK",
     featured: true,
     createdAt: "2026-02-15T00:00:00.000Z",
     updatedAt: "2026-02-15T00:00:00.000Z"
@@ -136,8 +136,8 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
       "Multi-Agent Systems",
       "Human-in-the-Loop"
     ],
-    credentialUrl: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
-    verificationStatus: "LINK AVAILABLE",
+    pdfUrl: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
+    verificationStatus: "NO VERIFICATION LINK",
     featured: true,
     createdAt: "2026-08-09T00:00:00.000Z",
     updatedAt: "2026-08-09T00:00:00.000Z"
@@ -195,8 +195,8 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
       "Team ALGNITE",
       "KIIT & KSAC"
     ],
-    credentialUrl: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
-    verificationStatus: "LINK AVAILABLE",
+    pdfUrl: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
+    verificationStatus: "NO VERIFICATION LINK",
     featured: true,
     createdAt: "2026-09-26T00:00:00.000Z",
     updatedAt: "2026-09-26T00:00:00.000Z"
@@ -362,7 +362,7 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
         designation: "Counselor, IEEE KIIT Student Branch"
       }
     ],
-    credentialUrl: "https://increased-purple-oeuuxfwu.edgeone.dev/",
+    pdfUrl: "https://increased-purple-oeuuxfwu.edgeone.dev/",
     verificationStatus: "VERIFIED",
     verified: true,
     featured: true,
@@ -430,18 +430,18 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
       "Basic Civil Engineering",
       "Optimization Technique"
     ],
-    credentialUrl: "https://diverse-plum-xc5wzkru.edgeone.dev/",
-    skills: [
-      "Engineering Sciences",
-      "Mathematics",
-      "Programming",
-      "Laboratory Work"
-    ],
+    pdfUrl: "https://diverse-plum-xc5wzkru.edgeone.dev/",
     tags: [
       "20 Subjects",
       "2025–26"
     ],
-    verificationStatus: "LINK AVAILABLE",
+    skills: [
+      "Differential Equations & Linear Algebra",
+      "Transforms & Numerical Methods",
+      "Optimization Technique",
+      "Computer Programming"
+    ],
+    verificationStatus: "NO VERIFICATION LINK",
     featured: false,
     createdAt: "2025-06-01T00:00:00.000Z",
     updatedAt: "2025-06-01T00:00:00.000Z"

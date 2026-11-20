@@ -1,5 +1,5 @@
-import { memo, useMemo, useRef, useState, useEffect, Suspense } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { memo, useMemo, useState, Suspense } from "react";
+import { motion } from "motion/react";
 import { ArrowUpRight, ArrowDown, RotateCw, Github, GitCommit, Cpu, UserCheck } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
 import { siteContent, SOCIAL_LINKS } from "../data/siteContent";
@@ -8,11 +8,13 @@ import { ResumeSpotlight } from "./ResumeSpotlight";
 import { ContourBackground } from "./motion/ContourBackground";
 import { lazyWithRetry } from "../utils/lazyWithRetry";
 import {
+  ImageCurtainReveal,
   LineReveal,
-  MaskMediaReveal,
+  MagneticAction,
+  PointerReactiveVisual,
   StaggerGroup,
   StaggerItem,
-  TextLineReveal,
+  TextMaskReveal,
 } from "../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
@@ -30,12 +32,9 @@ function HeroSectionComponent({
 }: HeroSectionProps) {
   const reduced = usePrefersReducedMotion();
   const [stageMode, setStageMode] = useState<"portrait" | "orbital">("portrait");
-  const [canTilt, setCanTilt] = useState(false);
-  const frameRef = useRef<HTMLDivElement>(null);
 
   const {
     user,
-    repos,
     events,
     stats,
     latestRepo,
@@ -44,35 +43,6 @@ function HeroSectionComponent({
     syncedAt,
     refresh,
   } = useGithub();
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const hoverQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setCanTilt(hoverQuery.matches && !reduced);
-  }, [reduced]);
-
-  const pointerX = useMotionValue(0);
-  const pointerY = useMotionValue(0);
-  const springConfig = { damping: 26, stiffness: 190, mass: 0.6 };
-  const smoothX = useSpring(pointerX, springConfig);
-  const smoothY = useSpring(pointerY, springConfig);
-  const tiltRotateX = useTransform(smoothY, [-0.5, 0.5], [4, -4]);
-  const tiltRotateY = useTransform(smoothX, [-0.5, 0.5], [-4, 4]);
-  const parallaxX = useTransform(smoothX, [-0.5, 0.5], [-8, 8]);
-  const parallaxY = useTransform(smoothY, [-0.5, 0.5], [-6, 6]);
-
-  const handleStageMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!canTilt || !frameRef.current) return;
-    const rect = frameRef.current.getBoundingClientRect();
-    if (!rect.width || !rect.height) return;
-    pointerX.set((e.clientX - rect.left) / rect.width - 0.5);
-    pointerY.set((e.clientY - rect.top) / rect.height - 0.5);
-  };
-
-  const handleStageMouseLeave = () => {
-    pointerX.set(0);
-    pointerY.set(0);
-  };
 
   const latestCommitInfo = useMemo(() => {
     const pushEvent =
@@ -112,30 +82,30 @@ function HeroSectionComponent({
     <section
       id="hero"
       aria-label="Hero Introduction"
-      className="relative w-full min-h-[calc(100svh-7.5rem)] flex flex-col justify-between overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--bg)] px-4 py-6 sm:px-9 sm:py-10 lg:px-12 lg:py-12"
+      className="relative w-full min-h-[calc(100svh-7rem)] flex flex-col justify-between overflow-hidden bg-[var(--bg)] py-6 sm:py-10 lg:py-12"
     >
       {/* Animated Topographic Contour Canvas */}
       <ContourBackground density="medium" tone="adaptive" />
 
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto py-2">
-        {/* LEFT EDITORIAL COLUMN */}
+        {/* LEFT MONUMENTAL EDITORIAL COLUMN */}
         <div className="lg:col-span-7 flex flex-col justify-start text-left min-w-0">
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
-            className="editorial-overline text-[var(--accent)] mb-4"
+            className="editorial-overline text-[var(--accent)] mb-5"
           >
             COMPUTER SCIENCE · AI &amp; ML · KIIT UNIVERSITY
           </motion.p>
 
           <h1
-            className="font-display font-extrabold tracking-[-0.04em] leading-[0.89] text-[var(--text)]"
-            style={{ fontSize: "clamp(2.55rem, 6.8vw, 6.2rem)" }}
+            className="editorial-display-xl text-[var(--text)]"
+            style={{ fontSize: "clamp(2.85rem, 7.2vw, 6.75rem)" }}
           >
-            <TextLineReveal delay={0.04}>SAYAM</TextLineReveal>
+            <TextMaskReveal immediate delay={0.04}>SAYAM</TextMaskReveal>
             <br />
-            <TextLineReveal delay={0.12}>MUKHERJEE</TextLineReveal>
+            <TextMaskReveal immediate delay={0.14}>MUKHERJEE</TextMaskReveal>
           </h1>
 
           <motion.p
@@ -143,10 +113,10 @@ function HeroSectionComponent({
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: MOTION_DURATION.enter,
-              delay: 0.18,
+              delay: 0.22,
               ease: MOTION_EASE.out,
             }}
-            className="mt-6 max-w-2xl text-xl sm:text-2xl lg:text-[1.8rem] leading-[1.2] text-[var(--text)] font-medium"
+            className="mt-7 max-w-2xl text-xl sm:text-2xl lg:text-[1.95rem] leading-[1.18] text-[var(--text)] font-medium"
           >
             <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
               Designing autonomous workflows,
@@ -159,7 +129,7 @@ function HeroSectionComponent({
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: MOTION_DURATION.enter,
-              delay: 0.24,
+              delay: 0.28,
               ease: MOTION_EASE.out,
             }}
             className="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]"
@@ -173,19 +143,21 @@ function HeroSectionComponent({
             animate={{ opacity: 1, y: 0 }}
             transition={{
               duration: MOTION_DURATION.enter,
-              delay: 0.3,
+              delay: 0.34,
               ease: MOTION_EASE.out,
             }}
-            className="mt-8 flex flex-wrap items-center gap-3"
+            className="mt-8 flex flex-wrap items-center gap-3.5"
           >
-            <button
-              type="button"
-              onClick={onViewWork}
-              className="btn btn-primary group"
-            >
-              <span>EXPLORE MY WORK</span>
-              <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </button>
+            <MagneticAction strength={0.18}>
+              <button
+                type="button"
+                onClick={onViewWork}
+                className="btn btn-primary group"
+              >
+                <span>EXPLORE MY WORK</span>
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </button>
+            </MagneticAction>
 
             <ResumeSpotlight onOpenViewer={onOpenResume} />
 
@@ -193,7 +165,7 @@ function HeroSectionComponent({
               href={SOCIAL_LINKS.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-secondary group"
+              className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors group"
             >
               <Github className="w-4 h-4" />
               <span>GitHub</span>
@@ -202,50 +174,67 @@ function HeroSectionComponent({
           </motion.div>
         </div>
 
-        {/* RIGHT SIGNATURE PORTRAIT / INTERACTIVE 3D STAGE & VERIFIED GITHUB LEDGER */}
+        {/* RIGHT GALLERY-SCALE PORTRAIT / 3D ORBITAL STAGE (UNBOXED EDITORIAL COMPOSITION) */}
         <motion.div
-          initial={reduced ? false : { opacity: 0, y: 18 }}
+          initial={reduced ? false : { opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
             duration: MOTION_DURATION.enter,
-            delay: 0.14,
+            delay: 0.16,
             ease: MOTION_EASE.out,
           }}
-          className="lg:col-span-5 flex flex-col gap-4 w-full min-w-0 lg:items-end"
+          className="lg:col-span-5 flex flex-col gap-3 w-full min-w-0 lg:items-end"
         >
-          <div className="w-full min-w-0 max-w-[460px] overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface-2)] shadow-[var(--shadow-elevated)]">
-            {/* Commanding Hero Visual Stage with Switcher */}
-            <div
-              ref={frameRef}
-              onMouseMove={handleStageMouseMove}
-              onMouseLeave={handleStageMouseLeave}
-              className="relative aspect-[4/4.35] w-full overflow-hidden border-b border-[var(--border)] bg-[#151713] [perspective:900px]"
-            >
-              <motion.div
-                style={
-                  canTilt
-                    ? {
-                        rotateX: tiltRotateX,
-                        rotateY: tiltRotateY,
-                        x: parallaxX,
-                        y: parallaxY,
-                        transformStyle: "preserve-3d",
-                      }
-                    : undefined
-                }
-                className="h-full w-full"
-              >
+          <div className="w-full min-w-0 max-w-[470px] space-y-3">
+            {/* Clean External Mode Controls (Never overlaid with backdrop-blur on WebGL canvas) */}
+            <div className="flex items-center justify-between gap-2 text-[11px] font-mono">
+              <span className="text-[var(--text-muted)] uppercase tracking-[0.12em]">
+                {stageMode === "portrait" ? "00 / Portrait" : "00 / 3D Orbital Core"}
+              </span>
+
+              <div className="flex items-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] p-0.5">
+                <button
+                  type="button"
+                  onClick={() => setStageMode("portrait")}
+                  className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                    stageMode === "portrait"
+                      ? "bg-[#C7E34A] text-[#151713]"
+                      : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                  }`}
+                  aria-pressed={stageMode === "portrait"}
+                >
+                  <UserCheck className="w-3 h-3" aria-hidden="true" />
+                  <span>Portrait</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStageMode("orbital")}
+                  className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                    stageMode === "orbital"
+                      ? "bg-[#C7E34A] text-[#151713]"
+                      : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                  }`}
+                  aria-pressed={stageMode === "orbital"}
+                >
+                  <Cpu className="w-3 h-3" aria-hidden="true" />
+                  <span>3D Core</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Portrait / WebGL Mount */}
+            <PointerReactiveVisual maxTiltDeg={4.5} className="w-full">
+              <div className="relative aspect-[4/4.6] w-full overflow-hidden rounded-[8px] bg-[#151713]">
                 {stageMode === "portrait" ? (
-                  <MaskMediaReveal immediate delay={0.18} className="h-full w-full">
+                  <ImageCurtainReveal immediate delay={0.18} className="h-full w-full">
                     <img
                       src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
                       alt="Sayam Mukherjee portrait"
-                      referrerPolicy="no-referrer"
                       loading="eager"
                       decoding="async"
                       className="h-full w-full object-cover object-[50%_18%] contrast-[1.04]"
                     />
-                  </MaskMediaReveal>
+                  </ImageCurtainReveal>
                 ) : (
                   <div className="h-full w-full bg-[#151713]">
                     <Suspense
@@ -259,124 +248,54 @@ function HeroSectionComponent({
                     </Suspense>
                   </div>
                 )}
-              </motion.div>
 
-              {/* Subtle Editorial Gradient Scrim & Stage Toggle */}
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#151713]/92 via-[#151713]/45 to-transparent" />
-
-              <div className="absolute top-3 right-3 z-10 flex items-center gap-1 rounded-[6px] border border-[#565A4E] bg-[#151713]/88 p-1 backdrop-blur-sm">
-                <button
-                  type="button"
-                  onClick={() => setStageMode("portrait")}
-                  className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                    stageMode === "portrait"
-                      ? "bg-[#C7E34A] text-[#20231D]"
-                      : "text-[#D4D6CA] hover:text-[#F4F4ED]"
-                  }`}
-                  aria-pressed={stageMode === "portrait"}
-                >
-                  <UserCheck className="w-3 h-3" aria-hidden="true" />
-                  <span>Portrait</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStageMode("orbital")}
-                  className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                    stageMode === "orbital"
-                      ? "bg-[#C7E34A] text-[#20231D]"
-                      : "text-[#D4D6CA] hover:text-[#F4F4ED]"
-                  }`}
-                  aria-pressed={stageMode === "orbital"}
-                >
-                  <Cpu className="w-3 h-3" aria-hidden="true" />
-                  <span>3D Core</span>
-                </button>
+                {stageMode === "portrait" && (
+                  <>
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#151713]/90 via-[#151713]/40 to-transparent" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-3 text-[#F4F4ED]">
+                      <div className="flex items-center justify-between gap-2 text-[11px] font-mono uppercase tracking-[0.1em]">
+                        <span className="font-semibold">SAYAM MUKHERJEE</span>
+                        <span className="text-[#C7E34A] tabular-nums font-bold">
+                          CGPA 9.06 · KIIT&apos;29
+                        </span>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
+            </PointerReactiveVisual>
 
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-3 text-[#F4F4ED]">
-                <div className="flex items-center justify-between gap-2 text-[11px] font-mono uppercase tracking-[0.1em]">
-                  <span className="font-semibold">SAYAM MUKHERJEE</span>
-                  <span className="text-[#C7E34A] tabular-nums font-bold">
-                    CGPA 9.06 · KIIT&apos;29
-                  </span>
-                </div>
-              </div>
-            </div>
-
-            {/* Verified GitHub Compact Telemetry Readout */}
-            <div className="p-4 sm:p-5 space-y-3">
-              <div className="flex items-center justify-between gap-2 text-xs font-mono">
-                <a
-                  href={user?.html_url || SOCIAL_LINKS.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-semibold text-[var(--text)] hover:underline active:opacity-75 inline-flex items-center gap-1.5"
-                >
-                  <Github className="w-3.5 h-3.5 text-[var(--accent)]" />
-                  <span>@{user?.login || "codesbysayam"}</span>
-                </a>
-
-                <div className="flex items-center gap-2 text-[11px] text-[var(--text-muted)]">
-                  <span>{formatSyncAge(syncedAt)}</span>
-                  <button
-                    type="button"
-                    onClick={() => refresh()}
-                    disabled={loading}
-                    title="Refresh live GitHub data"
-                    aria-label="Refresh live GitHub data"
-                    className="min-w-[34px] min-h-[34px] inline-flex items-center justify-center rounded-[6px] hover:bg-[var(--surface)] active:bg-[var(--surface-3)] active:scale-[0.94] text-[var(--text-muted)] hover:text-[var(--text)] transition-all cursor-pointer"
-                  >
-                    <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 divide-x divide-[var(--border)] border-y border-[var(--border)] py-2 text-center">
-                <div>
-                  <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
-                    {user ? user.public_repos : repos.length || 11}
-                  </div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
-                    Repos
-                  </div>
-                </div>
-                <div>
-                  <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
-                    {stats?.totalStars ?? 0}
-                  </div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
-                    Stars
-                  </div>
-                </div>
-                <div>
-                  <div className="text-base font-bold font-mono tabular-nums text-[var(--text)]">
-                    {user?.followers ?? 0}
-                  </div>
-                  <div className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
-                    Followers
-                  </div>
-                </div>
-              </div>
-
+            {/* Single-Line Commit Ticker (Replaces Heavy Boxed Stats Card) */}
+            <div className="flex items-center justify-between gap-3 pt-1 text-[11px] font-mono border-t border-[var(--border)]">
               <a
                 href={latestCommitInfo.commitUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2 hover:border-[var(--border-strong)] active:border-[var(--accent)] active:bg-[var(--surface-3)] active:scale-[0.985] transition-all group"
+                className="flex items-center gap-2 min-w-0 text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors group"
               >
-                <div className="flex items-center justify-between gap-2 min-w-0 text-[11px] font-mono text-[var(--text-muted)] mb-0.5">
-                  <span className="inline-flex items-center gap-1.5 font-semibold text-[var(--text)] min-w-0">
-                    <GitCommit className="w-3.5 h-3.5 shrink-0 text-[var(--accent)]" />
-                    <span className="truncate">
-                      {latestCommitInfo.repoName}/{latestCommitInfo.branch}@{latestCommitInfo.sha}
-                    </span>
-                  </span>
-                  <span className="shrink-0">{latestCommitInfo.time}</span>
-                </div>
-                <p className="text-xs font-mono text-[var(--text-secondary)] line-clamp-1 group-hover:text-[var(--text)]">
+                <GitCommit className="w-3.5 h-3.5 shrink-0 text-[var(--accent)]" />
+                <span className="truncate font-semibold text-[var(--text)] group-hover:text-[var(--accent)]">
+                  {latestCommitInfo.repoName}@{latestCommitInfo.sha}
+                </span>
+                <span aria-hidden="true" className="hidden sm:inline text-[var(--text-faint)]">·</span>
+                <span className="hidden sm:inline truncate text-[var(--text-muted)]">
                   {latestCommitInfo.message}
-                </p>
+                </span>
               </a>
+
+              <div className="flex items-center gap-1.5 shrink-0 text-[var(--text-muted)]">
+                <span className="tabular-nums">{formatSyncAge(syncedAt)}</span>
+                <button
+                  type="button"
+                  onClick={() => refresh()}
+                  disabled={loading}
+                  title="Refresh live GitHub commit telemetry"
+                  aria-label="Refresh live GitHub commit telemetry"
+                  className="min-w-[30px] min-h-[30px] inline-flex items-center justify-center rounded-[4px] hover:bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
+                >
+                  <RotateCw className={`w-3 h-3 ${loading ? "animate-spin" : ""}`} />
+                </button>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -393,11 +312,18 @@ function HeroSectionComponent({
             className="flex flex-wrap items-center gap-3 text-xs font-mono text-[var(--text-muted)]"
           >
             <StaggerItem distance={6}>
-              <span className="font-semibold text-[var(--text)]">KIIT University, Bhubaneswar</span>
+              <a
+                href={user?.html_url || SOCIAL_LINKS.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-[var(--text)] hover:text-[var(--accent)] transition-colors"
+              >
+                @{user?.login || "codesbysayam"}
+              </a>
             </StaggerItem>
             <span className="hidden sm:inline" aria-hidden="true">·</span>
             <StaggerItem distance={6}>
-              <span>B.Tech CSE (AI &amp; ML) · Class of 2029</span>
+              <span>KIIT University, Bhubaneswar · CSE (AI &amp; ML)</span>
             </StaggerItem>
             <span className="hidden sm:inline" aria-hidden="true">·</span>
             <StaggerItem distance={6}>
@@ -405,7 +331,7 @@ function HeroSectionComponent({
             </StaggerItem>
             <span className="hidden md:inline" aria-hidden="true">·</span>
             <StaggerItem distance={6} className="hidden md:inline-block">
-              <span>Hooghly / Bhubaneswar</span>
+              <span>{user ? `${user.public_repos} Public Repos` : "11 Public Repos"}</span>
             </StaggerItem>
           </StaggerGroup>
 

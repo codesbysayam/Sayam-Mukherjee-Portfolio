@@ -68,7 +68,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
       )}
 
       {/* Header */}
-      <header className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10">
+      <header className="relative py-4 sm:py-6 border-b border-[var(--border)]">
         <ContourBackground density="subtle" />
         <div className="relative z-10">
           <SectionHeading
@@ -118,17 +118,11 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               I operate and maintain channels as educational and creative hubs to explain software concepts, document algorithms, and build visual narrative content for diverse audiences. Historical channel audiences are catalogued transparently without misleading combined aggregate figures.
             </p>
 
-            <div className="flex flex-wrap gap-1.5 pt-2">
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 pt-2 text-[11px] font-mono text-[var(--text-secondary)]">
               {documentedCategories.map((cat, idx) => (
-                <span
-                  key={idx}
-                  className="text-[11px] border px-2.5 py-1 rounded-[4px] font-mono text-[var(--text-secondary)]"
-                  style={{
-                    backgroundColor: "var(--surface)",
-                    borderColor: "var(--border)",
-                  }}
-                >
-                  {cat}
+                <span key={idx} className="inline-flex items-center gap-2.5">
+                  {idx > 0 && <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>}
+                  <span>{cat}</span>
                 </span>
               ))}
             </div>
@@ -384,13 +378,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               Obsidian Optics · Recorded Milestone Telemetry
             </h3>
           </div>
-          <span
-            className="text-xs font-mono text-[var(--text-secondary)] border px-3 py-1 rounded-[6px]"
-            style={{
-              backgroundColor: "var(--surface)",
-              borderColor: "var(--border)",
-            }}
-          >
+          <span className="text-xs font-mono text-[var(--text-muted)]">
             Snapshot Date: 21 October 2026
           </span>
         </div>

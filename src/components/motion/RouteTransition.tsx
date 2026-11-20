@@ -9,8 +9,9 @@ interface RouteTransitionProps {
 }
 
 /**
- * Coordinates clean cross-route transitions using GPU-only transform/opacity
- * plus an architectural Signal Lime hairline sweep across the top edge.
+ * Architectural cross-route transition:
+ * Pairs GPU-composited scene entry/exit with an asymmetric Ink curtain wipe
+ * and a Signal Lime top rule, strictly non-blocking and reduced-motion safe.
  */
 export default function RouteTransition({ routeKey, children }: RouteTransitionProps) {
   const { reducedMotion } = useMotionSettings();
@@ -27,23 +28,37 @@ export default function RouteTransition({ routeKey, children }: RouteTransitionP
     <AnimatePresence mode="wait">
       <motion.div
         key={routeKey}
-        initial={{ opacity: 0, y: 10 }}
+        initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -8 }}
+        exit={{ opacity: 0, y: -10 }}
         transition={{
           duration: MOTION_DURATION.normal,
           ease: MOTION_EASE.out,
         }}
         className="relative w-full min-h-[60vh]"
       >
-        {/* Architectural hairline sweep along route entry */}
+        {/* Architectural Ink curtain pass on route entry */}
+        <motion.div
+          key={`curtain-${routeKey}`}
+          aria-hidden="true"
+          initial={{ scaleY: 0.24, opacity: 0.45 }}
+          animate={{ scaleY: 0, opacity: 0 }}
+          transition={{
+            duration: MOTION_DURATION.reveal,
+            ease: MOTION_EASE.out,
+          }}
+          style={{ originY: 0 }}
+          className="pointer-events-none fixed inset-x-0 top-0 z-[65] h-28 bg-[#151713] dark:bg-[#0E100C]"
+        />
+
+        {/* Signal Lime hairline rule */}
         <motion.span
           key={`sweep-${routeKey}`}
           aria-hidden="true"
-          initial={{ scaleX: 0, opacity: 0.9 }}
-          animate={{ scaleX: [0, 1, 1], opacity: [0.9, 0.9, 0] }}
+          initial={{ scaleX: 0, opacity: 0.95 }}
+          animate={{ scaleX: [0, 1, 1], opacity: [0.95, 0.95, 0] }}
           transition={{
-            duration: MOTION_DURATION.medium + 0.14,
+            duration: MOTION_DURATION.medium + 0.16,
             times: [0, 0.55, 1],
             ease: MOTION_EASE.inOut,
           }}

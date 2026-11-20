@@ -181,7 +181,7 @@ function ProjectsShowcaseComponent({
       {/* 1. EDITORIAL HEADER */}
       <section
         id="projects-header"
-        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-5"
+        className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-5"
       >
         <ContourBackground density="subtle" />
 

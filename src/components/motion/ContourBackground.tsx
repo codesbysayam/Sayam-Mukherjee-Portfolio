@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
+import { motion } from "motion/react";
 import { usePrefersReducedMotion } from "../../motion/tokens";
+import { useScrollVelocityMotion } from "../../motion/useScrollVelocity";
 
 interface ContourBackgroundProps {
   className?: string;
@@ -9,8 +11,8 @@ interface ContourBackgroundProps {
 
 /**
  * Animated organic SVG contour-line layer inspired by topographic field plots.
- * Uses pure CSS stroke-dashoffset transforms and automatically pauses offscreen
- * or under prefers-reduced-motion.
+ * Combines pure CSS stroke-dashoffset motion with subtle scroll-velocity drift
+ * and pauses automatically offscreen or under prefers-reduced-motion.
  */
 export function ContourBackground({
   className = "",
@@ -20,6 +22,7 @@ export function ContourBackground({
   const reduced = usePrefersReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const [inView, setInView] = useState(true);
+  const velocityDriftY = useScrollVelocityMotion(14);
 
   useEffect(() => {
     const el = containerRef.current;
@@ -57,11 +60,12 @@ export function ContourBackground({
         !inView || reduced ? "contour-paused" : ""
       } ${className}`}
     >
-      <svg
+      <motion.svg
         viewBox="0 0 1440 900"
         preserveAspectRatio="xMidYMid slice"
         fill="none"
-        className="h-full w-full"
+        style={reduced || !inView ? undefined : { y: velocityDriftY }}
+        className="h-full w-full will-change-transform"
       >
         <path
           d="M-120 680C120 560 280 730 560 610C830 495 960 210 1540 270"
@@ -93,7 +97,7 @@ export function ContourBackground({
           className={`${strokeClass} contour-path--slow`}
           strokeWidth="1.05"
         />
-      </svg>
+      </motion.svg>
     </div>
   );
 }

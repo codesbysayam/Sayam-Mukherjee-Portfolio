@@ -296,7 +296,7 @@ export default function CertificatesPage() {
       {/* 1. Editorial Header */}
       <header
         id="certificates-hero"
-        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 scroll-mt-24"
+        className="relative py-4 sm:py-6 border-b border-[var(--border)] scroll-mt-24"
       >
         <ContourBackground density="subtle" />
 

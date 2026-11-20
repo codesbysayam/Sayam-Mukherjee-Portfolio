@@ -322,19 +322,16 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "GitHub & Architecture",
     question: "Which parts of the portfolio rely on external services?",
     plainTextAnswer:
-      "Only two essential external touchpoints are used: GitHub REST API (executed asynchronously in background CI/CD) and the authoritative resume distribution CDN (EdgeOne). All UI rendering, charts, and routing operate client-side without third-party tracking scripts.",
-    keywords: ["external services", "APIs", "privacy", "EdgeOne", "CDN", "tracking", "telemetry"],
+      "Only minimal external dependencies are used: GitHub REST API (executed asynchronously in background CI/CD) and optional email relay configuration, with no third-party tracking scripts.",
+    keywords: ["external services", "APIs", "privacy", "CDN", "tracking", "telemetry"],
     answer: (
       <div className="space-y-2 text-[var(--text-secondary)]">
         <p>
-          External dependencies are kept minimal to protect privacy and maintain maximum uptime:
+          External dependencies are kept minimal to protect privacy and maintain fast, reliable loading:
         </p>
         <ul className="list-disc list-inside space-y-1.5 pl-1">
           <li>
             <strong>GitHub REST API:</strong> Queried exclusively in the background by automated GitHub Actions, keeping browser execution independent of GitHub server status.
-          </li>
-          <li>
-            <strong>Authoritative Resume CDN:</strong> Hosted on a fast global edge network (Tencent EdgeOne) at <code>https://exciting-brown-6y14ojmv.edgeone.dev/</code> for reliable high-speed PDF delivery.
           </li>
           <li>
             <strong>Zero Invasive Trackers:</strong> No marketing pixels, third-party analytics trackers, or external advertising scripts are embedded in the application.
@@ -454,7 +451,7 @@ export const FAQ_ITEMS: FAQItem[] = [
     categoryLabel: "Contact & Verification",
     question: "Where can visitors access Sayam's latest resume?",
     plainTextAnswer:
-      "The authoritative resume is hosted at https://exciting-brown-6y14ojmv.edgeone.dev/ and can be accessed directly through the Resume Spotlight button in the hero section or the portfolio's dedicated resume viewer.",
+      "The authoritative resume is hosted at https://exciting-brown-6y14ojmv.edgeone.dev/ and can be viewed or printed directly through the Resume Spotlight button in the hero section or the portfolio's interactive resume viewer.",
     keywords: ["resume", "CV", "curriculum vitae", "PDF", "download", "official resume", "verification"],
     answer: (
       <div className="space-y-2.5 text-[var(--text-secondary)]">

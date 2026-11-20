@@ -38,7 +38,7 @@ export const INITIAL_VERIFIED_TESTIMONIALS: PublicTestimonial[] = [
     content:
       "Sayam has shown exceptional analytical speed. His implementation of the YOLOv8 tracking zones in the research group was highly performant, proving his capacity to digest and deploy complex ML papers rapidly.",
     approved: true,
-    avatar: "/src/assets/images/sayam_avatar_1782887297040.jpg",
+    avatar: "",
     date: "May 2025",
   },
 ];

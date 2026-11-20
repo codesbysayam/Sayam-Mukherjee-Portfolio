@@ -346,7 +346,7 @@ export default function CertificateViewerModal({
               </div>
             ) : certificate.pdfUrl ? (
               <div
-                className="p-6 rounded-[10px] border flex flex-col items-center justify-center text-center space-y-3"
+                className="p-5 sm:p-6 rounded-[10px] border flex flex-col items-center justify-center text-center space-y-3"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -367,7 +367,7 @@ export default function CertificateViewerModal({
                     Official PDF Document
                   </h4>
                   <p className="text-xs mt-1 text-[var(--text-muted)]">
-                    Direct PDF document for this achievement is available.
+                    Official PDF document for this achievement is available.
                   </p>
                 </div>
                 <a
@@ -380,7 +380,47 @@ export default function CertificateViewerModal({
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
-            ) : null}
+            ) : (
+              <div
+                className="p-4 sm:p-5 rounded-[10px] border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
+                style={{
+                  backgroundColor: "var(--surface)",
+                  borderColor: "var(--border)",
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <div
+                    className="w-10 h-10 rounded-[8px] flex items-center justify-center border shrink-0"
+                    style={{
+                      backgroundColor: "var(--surface-2)",
+                      borderColor: "var(--border)",
+                      color: "var(--text-muted)",
+                    }}
+                  >
+                    <FileText className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-xs sm:text-sm text-[var(--text)]">
+                      Verified Credential Record
+                    </h4>
+                    <p className="text-xs mt-0.5 text-[var(--text-muted)] leading-relaxed">
+                      Structured metadata, credential details, and associated links are documented below.
+                    </p>
+                  </div>
+                </div>
+                {certificate.credentialUrl && (
+                  <a
+                    href={certificate.credentialUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary text-xs shrink-0"
+                  >
+                    <span>Verify with Issuer</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </div>
+            )}
 
             {/* Structured Information */}
             <div className="space-y-4">
@@ -857,7 +897,7 @@ export default function CertificateViewerModal({
                   rel="noopener noreferrer"
                   className="btn btn-primary text-xs sm:text-sm"
                 >
-                  <span>View Credential</span>
+                  <span>Verify with Issuer</span>
                   <ExternalLink className="w-4 h-4" />
                 </a>
               )}

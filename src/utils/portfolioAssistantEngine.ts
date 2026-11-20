@@ -425,8 +425,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Team:** ALGNITE *(Distinct from Team Nexus, which built OPERON)*\n` +
       `• **Role:** Team Leader (with teammate Shinibali Kumar)\n` +
       `• **Associated Projects:** [AlertSetu](https://alertsetu1273.vercel.app) & [CampusConnect](https://campusconnect1273.vercel.app)\n` +
-      `• **Signatories:** Dr. Ajit Kumar Pasayat (Assoc. Dean - KSAC) & Dr. Ayesha Dash (Faculty In-Charge, K-1000)\n` +
-      `• **Credential Verification:** [View Record on EdgeOne](https://marked-aquamarine-cozz1tva.edgeone.dev/)\n\n` +
+      `• **Signatories:** Dr. Ajit Kumar Pasayat (Assoc. Dean - KSAC) & Dr. Ayesha Dash (Faculty In-Charge, K-1000)\n\n` +
       `*Note: The certificate establishes participation recognizing dedication, teamwork, creativity, and technical problem-solving.*`;
   }
 
@@ -469,7 +468,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Team:** ALGNITE *(Role: Team Leader)*\n` +
       `• **Tracks:** Frontend, Backend, and AI / ML\n` +
       `• **Associated Project:** [AXIOM](https://axiomwcc.vercel.app) (Agentic AI platform - led development and built primary architecture)\n` +
-      `• **Credential Verification:** [View Record on EdgeOne](https://heavy-sapphire-gc08crqu.edgeone.dev/)\n\n` +
+      `• **Credential Verification:** [Verify at We Code Coders](https://wecodecoders.in/verify/L30-PTQXNX)\n\n` +
       `*Note: The certificate establishes participation as Team Leader demonstrating technical leadership, full-stack architecture, and AI engineering.*`;
   }
 
@@ -511,8 +510,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Associated Organization:** IEEE PES KIIT Student Branch Chapter\n` +
       `• **Resource Person:** Dr. Satya Ranjan Jena\n` +
       `• **Counselor:** Dr. Chinmoy Ku. Panigrahi (Counselor, IEEE KIIT Student Branch)\n` +
-      `• **Team Context:** Individual workshop participation record (no team or team members recorded)\n` +
-      `• **Credential URL:** [View MATLAB Workshop Credential](https://increased-purple-oeuuxfwu.edgeone.dev/)`;
+      `• **Team Context:** Individual workshop participation record (no team or team members recorded)`;
   }
 
   // 13. COMPETITIONS & CERTIFICATES

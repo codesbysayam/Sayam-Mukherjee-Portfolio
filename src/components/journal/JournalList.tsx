@@ -94,7 +94,7 @@ export const JournalList = memo(function JournalList({
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       {/* Editorial Masthead Header */}
-      <header className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-5">
+      <header className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-5">
         <ContourBackground density="subtle" />
 
         <div className="relative z-10 space-y-5">
@@ -115,20 +115,15 @@ export const JournalList = memo(function JournalList({
           />
 
           {/* Reading stats */}
-          <div className="flex flex-wrap items-center gap-3 pt-3 border-t border-[var(--border)] text-xs font-mono text-[var(--text-muted)]">
-            <span
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-[6px] border text-[var(--text-secondary)] tabular-nums"
-              style={{
-                backgroundColor: "var(--surface-2)",
-                borderColor: "var(--border)",
-              }}
-            >
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-3 border-t border-[var(--border)] text-xs font-mono text-[var(--text-muted)]">
+            <span className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] font-semibold tabular-nums">
               <Clock className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
               <span>
                 ~{totalReadingStats.totalMinutes} mins total reading time (
                 {totalReadingStats.totalWords} words)
               </span>
             </span>
+            <span aria-hidden="true">·</span>
             <span className="text-[var(--text-faint)]">
               Estimated at standard {STANDARD_READING_SPEED_WPM} WPM
             </span>

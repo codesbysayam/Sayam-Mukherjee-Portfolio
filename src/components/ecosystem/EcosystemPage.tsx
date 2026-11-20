@@ -332,7 +332,7 @@ export function EcosystemPage() {
       {/* 1. HEADER */}
       <header
         id="ecosystem-hero"
-        className="relative overflow-hidden rounded-[12px] border border-[var(--border)] bg-[var(--surface)] px-5 py-8 sm:px-9 sm:py-10 space-y-5"
+        className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-5"
       >
         <ContourBackground density="subtle" />
 
@@ -689,7 +689,7 @@ export function EcosystemPage() {
                 </span>
               </div>
             </div>
-            <span className="text-xs font-mono px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold self-start sm:self-auto">
+            <span className="text-xs font-mono text-[var(--accent)] font-bold uppercase tracking-wider self-start sm:self-auto">
               Verified Submission
             </span>
           </div>

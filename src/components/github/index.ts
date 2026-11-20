@@ -1,6 +1,7 @@
 export * from "./GitHubOverview";
 export * from "./GitHubStats";
 export * from "./GitHubContributionGraph";
+export * from "./GitHubStatsHeatmap";
 export * from "./GitHubRepositories";
 export * from "./GitHubRepositoryCard";
 export * from "./GitHubActivity";

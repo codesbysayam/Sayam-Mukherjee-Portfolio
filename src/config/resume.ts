@@ -1,12 +1,9 @@
 /**
- * Canonical Single Source of Truth for Sayam Mukherjee's Verified Resume
- * 
- * Authoritative Destination URL:
- * https://exciting-brown-6y14ojmv.edgeone.dev/
+ * Canonical Single Source of Truth for Sayam Mukherjee's Verified Resume.
  */
-
 export const RESUME_CONFIG = {
   url: "https://exciting-brown-6y14ojmv.edgeone.dev/",
+  isPdfAvailable: true,
   label: "View Resume",
   downloadLabel: "View Resume (PDF)",
   ariaLabel: "Open Sayam Mukherjee latest verified resume",

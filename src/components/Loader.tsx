@@ -41,7 +41,6 @@ export default function Loader({ onComplete }: LoaderProps) {
                 height={64}
                 loading="eager"
                 decoding="async"
-                referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
               />
             </div>

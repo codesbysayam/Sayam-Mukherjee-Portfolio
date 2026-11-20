@@ -492,7 +492,6 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       ],
       description:
         "Interactive exploration of in-context learning with recurrent memory under the 'Explain the Frontier' pathway, demonstrating how bounded state retains task-relevant data without unbounded token growth.",
-      verificationLink: "https://intact-black-0mk1uydx.edgeone.dev/",
     },
     {
       title: "Deploy or Die - HowToAlgo × GDG on Campus KIIT",
@@ -517,7 +516,6 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       ],
       description:
         "Built OPERON under Track A (Business Process Automation). Developed the complete application interface and human-in-the-loop workflows as a Team Member of Team NEXUS (led by Sounak Chowdhury).",
-      verificationLink: "https://impressive-indigo-lkxz4q1q.edgeone.dev/",
     },
     {
       title: "IGNITHON 2.0",
@@ -552,7 +550,6 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       description:
         "12-Hour Offline Hackathon at KIIT Deemed to be University organized by K-1000 with KIIT and KSAC, recognizing participation involving dedication, creativity, teamwork, technical excellence, innovation, and problem-solving.",
       note: "Official Certificate of Participation. Sayam participated as Team Leader of Team ALGNITE alongside Shinibali Kumar. ALGNITE is distinct from Team Nexus (Nexus built OPERON). Sayam was an active participant (not winner or ranked finisher).",
-      verificationLink: "https://marked-aquamarine-cozz1tva.edgeone.dev/",
     },
     {
       title: "WCC Launchpad 30",
@@ -633,7 +630,6 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       description:
         "Sayam Mukherjee participated in and successfully completed the MATLAB Workshop organized by the IEEE KIIT Student Branch in association with the IEEE PES KIIT Student Branch Chapter on 25 September 2026 at KIIT Deemed to be University.",
       note: "Individual workshop participation record. No team, no team members, and no associated team projects. Recognized for active participation and successful completion.",
-      verificationLink: "https://increased-purple-oeuuxfwu.edgeone.dev/",
     },
     {
       title: "National Finalist | Toycathon",
@@ -659,8 +655,7 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       year: "2025",
       category: "ACADEMIC RECORD",
       description:
-        "First-year university grade report covering 20 engineering coursework subjects including Differential Equations, Numerical Methods, Electronics, and Programming Lab.",
-      verificationLink: "https://diverse-plum-xc5wzkru.edgeone.dev/",
+        "First-year university grade report covering 20 engineering coursework subjects including Differential Equations, Numerical Methods, Electronics, and Programming Lab (private record available on request).",
     },
     {
       title: "Inter-School Table Tennis Champion (3x 1st Position)",

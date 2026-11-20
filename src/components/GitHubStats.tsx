@@ -3,7 +3,7 @@ import { useGitHubStats } from "../hooks/useGitHubStats";
 import { GitHubDataStatus } from "./github/GitHubDataStatus";
 import { GitHubOverview } from "./github/GitHubOverview";
 import { GitHubStats as GitHubMetricsCards } from "./github/GitHubStats";
-import { GitHubContributionGraph } from "./github/GitHubContributionGraph";
+import { GitHubStatsHeatmap } from "./github/GitHubStatsHeatmap";
 import { GitHubLanguageBreakdown } from "./github/GitHubLanguageBreakdown";
 import { GitHubRepositories } from "./github/GitHubRepositories";
 import { GitHubActivity } from "./github/GitHubActivity";
@@ -164,7 +164,7 @@ export const GitHubStats = memo(function GitHubStats({
       )}
 
       {!compact && data.contributionCalendar && (
-        <GitHubContributionGraph calendar={data.contributionCalendar} />
+        <GitHubStatsHeatmap contributions={data.contributionCalendar} />
       )}
 
       {showActivity && data.recentActivity && data.recentActivity.length > 0 && (

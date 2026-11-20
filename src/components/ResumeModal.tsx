@@ -248,16 +248,29 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
 
           {/* Action Hub */}
           <div className="flex items-center gap-2 shrink-0">
-            <a
-              href={RESUME_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={RESUME_CONFIG.ariaLabel}
-              className="btn btn-primary min-h-[40px] px-3 sm:px-4 py-2 text-xs"
-            >
-              <ExternalLink className="w-3.5 h-3.5 shrink-0" />
-              <span>{RESUME_CONFIG.label} <span className="hidden sm:inline">(PDF)</span></span>
-            </a>
+            {RESUME_CONFIG.isPdfAvailable ? (
+              <a
+                href={RESUME_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={RESUME_CONFIG.ariaLabel}
+                className="btn btn-primary min-h-[40px] px-3 sm:px-4 py-2 text-xs"
+              >
+                <ExternalLink className="w-3.5 h-3.5 shrink-0" />
+                <span>{RESUME_CONFIG.label} <span className="hidden sm:inline">(PDF)</span></span>
+              </a>
+            ) : (
+              <button
+                onClick={handlePrint}
+                type="button"
+                aria-label="Save or print resume as A4 PDF"
+                className="btn btn-primary min-h-[40px] px-3 sm:px-4 py-2 text-xs"
+                title="Save or print resume as A4 PDF"
+              >
+                <Printer className="w-3.5 h-3.5 shrink-0" />
+                <span>Print / Save PDF</span>
+              </button>
+            )}
 
             <button
               onClick={handlePrint}
@@ -324,8 +337,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   height={96}
                   loading="lazy"
                   decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
 

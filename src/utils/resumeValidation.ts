@@ -1,9 +1,10 @@
 import { RESUME_CONFIG } from "../config/resume";
 
+const APPROVED_ORIGIN = new URL(RESUME_CONFIG.url).origin;
+
 /**
  * Validates and returns the authoritative resume URL.
- * Ensures the destination protocol is HTTPS and resolves strictly
- * to the verified host exciting-brown-6y14ojmv.edgeone.dev.
+ * Ensures the destination protocol is HTTPS and matches the authoritative resume origin.
  */
 export function getResumeUrl(): string {
   const url = new URL(RESUME_CONFIG.url);
@@ -12,9 +13,9 @@ export function getResumeUrl(): string {
     throw new Error("The configured resume URL must use HTTPS.");
   }
 
-  if (url.hostname !== "exciting-brown-6y14ojmv.edgeone.dev") {
+  if (url.origin !== APPROVED_ORIGIN) {
     throw new Error(
-      "The configured resume URL does not match the approved destination."
+      "The configured resume URL does not match the approved resume origin."
     );
   }
 
@@ -27,10 +28,7 @@ export function getResumeUrl(): string {
 export function validateResumeUrl(candidate: string): boolean {
   try {
     const url = new URL(candidate);
-    return (
-      url.protocol === "https:" &&
-      url.hostname === "exciting-brown-6y14ojmv.edgeone.dev"
-    );
+    return url.protocol === "https:" && url.origin === APPROVED_ORIGIN;
   } catch {
     return false;
   }

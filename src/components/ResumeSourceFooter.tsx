@@ -16,18 +16,24 @@ export function ResumeSourceFooter({
       <div className="flex flex-wrap items-center gap-2">
         <span className="flex items-center gap-1.5 text-[var(--text-secondary)]">
           <CheckCircle2 className="w-3.5 h-3.5 text-[var(--accent)] shrink-0" />
-          <span>Authoritative Source:</span>
+          <span>Official Document Source:</span>
         </span>
-        <a
-          href={RESUME_CONFIG.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--accent)] hover:underline underline-offset-4 transition-colors inline-flex items-center gap-1 break-all font-semibold"
-          aria-label="Open authoritative resume document in external tab"
-        >
-          <span>{RESUME_CONFIG.url}</span>
-          <ExternalLink className="w-3 h-3 shrink-0" />
-        </a>
+        {RESUME_CONFIG.isPdfAvailable ? (
+          <a
+            href={RESUME_CONFIG.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--accent)] hover:underline underline-offset-4 transition-colors inline-flex items-center gap-1 break-all font-semibold"
+            aria-label="Open authoritative resume document in external tab"
+          >
+            <span>{RESUME_CONFIG.url}</span>
+            <ExternalLink className="w-3 h-3 shrink-0" />
+          </a>
+        ) : (
+          <span className="text-[var(--text-secondary)] break-all">
+            {RESUME_CONFIG.url}
+          </span>
+        )}
       </div>
 
       {lastVerified && (

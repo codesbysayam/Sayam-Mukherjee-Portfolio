@@ -120,14 +120,7 @@ export default function TestimonialsSection() {
                   </p>
                 </div>
 
-                <span
-                  className="text-[11px] font-mono tracking-wider px-2.5 py-1 rounded-[4px] border uppercase font-semibold"
-                  style={{
-                    backgroundColor: "var(--surface)",
-                    borderColor: "var(--border)",
-                    color: "var(--accent)",
-                  }}
-                >
+                <span className="text-[11px] font-mono tracking-wider uppercase font-semibold text-[var(--accent)]">
                   {activeTestimony.type}
                 </span>
               </div>

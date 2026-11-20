@@ -3,7 +3,7 @@ import { Sun, Moon, ArrowUpRight, ArrowUp } from "lucide-react";
 import { SAYAM_DATA } from "../data";
 import { SOCIAL_LINKS } from "../data/siteContent";
 import ClosingFluidCanvas from "./motion/ClosingFluidCanvas";
-import { EditorialReveal, LineReveal } from "../motion/Reveal";
+import { EditorialReveal, LineReveal, TextMaskReveal } from "../motion/Reveal";
 
 export interface SiteFooterProps {
   onNavigateTab: (
@@ -61,17 +61,33 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
       id="site-footer"
       className="relative overflow-hidden w-full bg-[#151713] text-[#F4F4ED] border-t border-[#41443A] font-sans pb-[calc(76px+env(safe-area-inset-bottom,0px))] xl:pb-[max(2.5rem,env(safe-area-inset-bottom,2.5rem))]"
       style={{
-        paddingTop: "clamp(3rem, 5vw, 4.5rem)",
+        paddingTop: "clamp(3.25rem, 6vw, 5.5rem)",
       }}
     >
       <ClosingFluidCanvas tone="dark" />
       <div
-        className="relative z-10 w-full mx-auto space-y-10"
+        className="relative z-10 w-full mx-auto space-y-12"
         style={{
           width: "min(100%, var(--content-max, 1440px))",
           paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
         }}
       >
+        {/* DRAMATIC MONUMENTAL CLOSING DISPLAY */}
+        <div className="border-b border-[#41443A]/80 pb-8">
+          <div className="font-mono text-[11px] uppercase tracking-[0.16em] text-[#C7E34A] mb-3">
+            Available for Internships &amp; Collaborations · Bhubaneswar, IN
+          </div>
+          <p
+            className="editorial-display-lg text-[#F4F4ED] select-none"
+            style={{ fontSize: "clamp(2.4rem, 7.8vw, 6.4rem)" }}
+          >
+            <TextMaskReveal>LET&apos;S BUILD</TextMaskReveal>{" "}
+            <span className="font-serif-editorial italic font-normal text-[#C7E34A]">
+              something real.
+            </span>
+          </p>
+        </div>
+
         {/* TOP EDITORIAL MANIFESTO ROW */}
         <EditorialReveal distance={14}>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 pb-10">
@@ -79,7 +95,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
               <span className="font-mono text-xs uppercase tracking-[0.14em] text-[#C7E34A] font-semibold block">
                 Engineering Portfolio · Sayam Mukherjee
               </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold tracking-tight leading-[1.08] text-[#F4F4ED]">
+              <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight leading-[1.12] text-[#F4F4ED]">
                 Engineered in{" "}
                 <span className="font-serif-editorial italic font-normal text-[#C7E34A]">
                   Bhubaneswar &amp; Hooghly.

@@ -1,12 +1,13 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ArrowUpRight, Search, Sun, Moon, FileText } from "lucide-react";
 import ContourBackground from "../motion/ContourBackground";
 import { NAVIGATION, SOCIAL_LINKS, CONTACT_INFO } from "../../data/siteContent";
-import { MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
+import { MOTION_EASE, MOTION_DURATION, usePrefersReducedMotion } from "../../motion/tokens";
 import operonImg from "../../assets/projects/operon-live.png";
 import mausamImg from "../../assets/projects/mausam-live.png";
 import memoryImg from "../../assets/projects/memory-in-motion-live.png";
+import sightforgeImg from "../../assets/projects/sightforge-cover.png";
 
 export type FullScreenMenuTab =
   | "home"
@@ -34,6 +35,99 @@ interface FullScreenMenuProps {
 
 const PORTRAIT_URL = "https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg";
 
+const ROUTE_PREVIEWS: Record<
+  string,
+  {
+    eyebrow: string;
+    headline: string;
+    caption: string;
+    image: string;
+    alt: string;
+    meta: string;
+  }
+> = {
+  home: {
+    eyebrow: "01 / OVERVIEW",
+    headline: "Sayam Mukherjee",
+    caption: "B.Tech CSE (AI & ML) · Autonomous multi-agent systems, computer vision, and full-stack web architecture.",
+    image: PORTRAIT_URL,
+    alt: "Sayam Mukherjee portrait",
+    meta: "KIIT'29 · 9.06 CGPA",
+  },
+  about: {
+    eyebrow: "02 / PROFILE & ROUTINE",
+    headline: "Discipline & Craft",
+    caption: "Focused engineering habits, 9.06 first-year CGPA across 20 subjects, and daily C++ / system practice.",
+    image: PORTRAIT_URL,
+    alt: "Sayam Mukherjee academic and engineering background",
+    meta: "Bhubaneswar · Hooghly",
+  },
+  skills: {
+    eyebrow: "03 / CAPABILITY MATRIX",
+    headline: "TypeScript, Python & C++",
+    caption: "Verified technical stack across React 19, Next.js 15, FastAPI, YOLOv8, ByteTrack, PostgreSQL, and D3.",
+    image: sightforgeImg,
+    alt: "SightForge computer vision telemetry",
+    meta: "Full-Stack + AI/ML",
+  },
+  ecosystem: {
+    eyebrow: "04 / ARCHITECTURE",
+    headline: "System Topology",
+    caption: "How control planes, ML inference pipelines, pre-rendered GitHub snapshots, and persistent APIs connect.",
+    image: operonImg,
+    alt: "OPERON multi-agent workflow topology",
+    meta: "Live System Map",
+  },
+  projects: {
+    eyebrow: "05 / SELECTED WORK",
+    headline: "8 Engineering Systems",
+    caption: "OPERON, MAUSAM, SightForge, Memory in Motion, AXIOM, INKLOOM, Campus Connect, and SayamSolves.",
+    image: mausamImg,
+    alt: "MAUSAM weather intelligence showcase",
+    meta: "Verified Codebases",
+  },
+  certificates: {
+    eyebrow: "06 / CREDENTIALS",
+    headline: "Competitions & Honors",
+    caption: "DataForge IIT Kharagpur, WCC Launchpad 30, IGNITHON 2.0, Deploy or Die, Toycathon, and Technex'26.",
+    image: memoryImg,
+    alt: "Memory in Motion research exhibit",
+    meta: "Issuer Verified",
+  },
+  journal: {
+    eyebrow: "07 / FIELD NOTES",
+    headline: "Engineering Journal",
+    caption: "Written reflections on building OPERON, fixed-size recurrent state, MAUSAM utility, and study discipline.",
+    image: memoryImg,
+    alt: "Engineering journal notes",
+    meta: "6 Technical Essays",
+  },
+  contact: {
+    eyebrow: "08 / CORRESPONDENCE",
+    headline: "Direct Inquiry",
+    caption: "Internships, hackathon collaborations, applied AI research, and full-stack software engineering.",
+    image: PORTRAIT_URL,
+    alt: "Contact Sayam Mukherjee",
+    meta: "wrickbusiness@gmail.com",
+  },
+  github: {
+    eyebrow: "LIVE REPOSITORY FEED",
+    headline: "11 Public Repositories",
+    caption: "D3 53-week contribution calendar heatmap, language breakdown, and live commit stream.",
+    image: operonImg,
+    alt: "GitHub engineering telemetry",
+    meta: "@codesbysayam",
+  },
+  showcase: {
+    eyebrow: "MEDIA & STORYTELLING",
+    headline: "YouTube Channels",
+    caption: "12K+ cumulative reach across Daily Decipher, Technical AZ, and Obsidian Optics visual storytelling.",
+    image: mausamImg,
+    alt: "Creator and media showcase",
+    meta: "3 Active Channels",
+  },
+};
+
 export function FullScreenMenu({
   isOpen,
   onClose,
@@ -48,6 +142,13 @@ export function FullScreenMenu({
   const reduced = usePrefersReducedMotion();
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [hoveredRoute, setHoveredRoute] = useState<string>(activeTab || "home");
+
+  useEffect(() => {
+    if (isOpen) {
+      setHoveredRoute(activeTab || "home");
+    }
+  }, [isOpen, activeTab]);
 
   // Focus entry, Escape key close, focus restoration & body scroll lock
   useEffect(() => {
@@ -104,6 +205,9 @@ export function FullScreenMenu({
     onNavigate(tab);
     onClose();
   };
+
+  const activePreview = ROUTE_PREVIEWS[hoveredRoute] || ROUTE_PREVIEWS.home;
+  const isPortraitPreview = activePreview.image === PORTRAIT_URL;
 
   return (
     <AnimatePresence>
@@ -207,7 +311,7 @@ export function FullScreenMenu({
             </div>
           </div>
 
-          {/* Center Main Split: Asymmetric Visual Collage (Desktop) + Oversized Route Index */}
+          {/* Center Main Split: Dynamic Route Preview (Desktop) + Oversized Route Index */}
           <div
             className="relative z-10 flex-1 w-full py-8 sm:py-10 flex items-center"
             style={{
@@ -217,69 +321,79 @@ export function FullScreenMenu({
             }}
           >
             <div className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              {/* LEFT ASYMMETRIC EDITORIAL VISUAL COLLAGE (Desktop only) */}
-              <div className="hidden lg:grid lg:col-span-6 grid-cols-12 gap-4 items-center">
-                <div className="col-span-6 space-y-4">
-                  <motion.div
-                    initial={reduced ? false : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, delay: 0.14, ease: MOTION_EASE.out }}
-                    className="relative rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[4/5]"
-                  >
-                    <img
-                      src={PORTRAIT_URL}
-                      alt="Sayam Mukherjee portrait"
-                      referrerPolicy="no-referrer"
-                      className="h-full w-full object-cover object-[50%_20%] grayscale contrast-[1.12] hover:grayscale-0 transition-all duration-500"
-                    />
-                    <div className="absolute inset-0 bg-[#C7E34A]/[0.06] mix-blend-multiply pointer-events-none" />
-                    <div className="absolute inset-x-0 bottom-0 p-3 bg-gradient-to-t from-[#151713]/90 to-transparent font-mono text-[10px] uppercase tracking-[0.12em] text-[#C7E34A] flex items-center justify-between">
-                      <span>B.Tech CSE · KIIT&apos;29</span>
-                      <span>CGPA 9.06</span>
+              {/* LEFT DYNAMIC ROUTE-REACTIVE EDITORIAL PREVIEW (Desktop only) */}
+              <div className="hidden lg:flex lg:col-span-6 flex-col gap-5 pr-4">
+                <div className="grid grid-cols-12 gap-4 items-end">
+                  <div className="col-span-8">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={hoveredRoute}
+                        initial={reduced ? false : { opacity: 0, y: 12 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={reduced ? undefined : { opacity: 0, y: -10 }}
+                        transition={{ duration: reduced ? 0 : MOTION_DURATION.normal, ease: MOTION_EASE.out }}
+                        className="relative rounded-[10px] overflow-hidden border border-[#41443A] bg-[#151713]"
+                      >
+                        <div className={isPortraitPreview ? "aspect-[4/4.2]" : "aspect-[16/10]"}>
+                          <img
+                            src={activePreview.image}
+                            alt={activePreview.alt}
+                            className={`h-full w-full object-cover ${
+                              isPortraitPreview
+                                ? "object-[50%_18%] grayscale contrast-[1.1]"
+                                : "object-top"
+                            }`}
+                          />
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#151713] via-[#151713]/20 to-transparent pointer-events-none" />
+                        <div className="absolute inset-x-0 bottom-0 p-4 flex items-end justify-between gap-3">
+                          <div className="min-w-0">
+                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#C7E34A] block">
+                              {activePreview.eyebrow}
+                            </span>
+                            <p className="font-display text-lg font-extrabold text-[#F4F4ED] tracking-tight truncate">
+                              {activePreview.headline}
+                            </p>
+                          </div>
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-[#B5B8AA] shrink-0">
+                            {activePreview.meta}
+                          </span>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Secondary Accent Stack */}
+                  <div className="col-span-4 space-y-4">
+                    <div className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]">
+                      <img
+                        src={operonImg}
+                        alt="OPERON multi-agent platform"
+                        className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                      />
                     </div>
-                  </motion.div>
-
-                  <motion.div
-                    initial={reduced ? false : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, delay: 0.24, ease: MOTION_EASE.out }}
-                    className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]"
-                  >
-                    <img
-                      src={memoryImg}
-                      alt="Memory in Motion mechanistic lab"
-                      className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
-                    />
-                  </motion.div>
+                    <div className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]">
+                      <img
+                        src={mausamImg}
+                        alt="MAUSAM weather intelligence platform"
+                        className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div className="col-span-6 space-y-4 pt-10">
-                  <motion.div
-                    initial={reduced ? false : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, delay: 0.19, ease: MOTION_EASE.out }}
-                    className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]"
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={`caption-${hoveredRoute}`}
+                    initial={reduced ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={reduced ? undefined : { opacity: 0 }}
+                    transition={{ duration: reduced ? 0 : 0.16 }}
+                    className="text-sm text-[#B5B8AA] max-w-lg leading-relaxed border-t border-[#41443A]/70 pt-3"
                   >
-                    <img
-                      src={operonImg}
-                      alt="OPERON multi-agent platform"
-                      className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
-                    />
-                  </motion.div>
-
-                  <motion.div
-                    initial={reduced ? false : { opacity: 0, y: 18 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.55, delay: 0.29, ease: MOTION_EASE.out }}
-                    className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]"
-                  >
-                    <img
-                      src={mausamImg}
-                      alt="MAUSAM weather intelligence platform"
-                      className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
-                    />
-                  </motion.div>
-                </div>
+                    {activePreview.caption}
+                  </motion.p>
+                </AnimatePresence>
               </div>
 
               {/* RIGHT OVERSIZED STAGGERED ROUTE LINKS */}
@@ -302,6 +416,8 @@ export function FullScreenMenu({
                             delay: reduced ? 0 : Math.min(0.08 + idx * 0.045, 0.48),
                             ease: MOTION_EASE.out,
                           }}
+                          onMouseEnter={() => setHoveredRoute(item.id)}
+                          onFocus={() => setHoveredRoute(item.id)}
                           onClick={() => handleSelectRoute(item.id as FullScreenMenuTab)}
                           aria-current={isActive ? "page" : undefined}
                           className="group relative w-full text-left flex items-baseline justify-between gap-4 py-1 cursor-pointer focus-visible:outline-none focus-visible:text-[#C7E34A]"
@@ -352,6 +468,8 @@ export function FullScreenMenu({
                 <div className="mt-6 pt-5 border-t border-[#41443A]/70 flex flex-wrap items-center gap-3 text-xs font-mono">
                   <button
                     type="button"
+                    onMouseEnter={() => setHoveredRoute("github")}
+                    onFocus={() => setHoveredRoute("github")}
                     onClick={() => handleSelectRoute("github")}
                     className={`px-3 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
                       activeTab === "github"
@@ -363,6 +481,8 @@ export function FullScreenMenu({
                   </button>
                   <button
                     type="button"
+                    onMouseEnter={() => setHoveredRoute("showcase")}
+                    onFocus={() => setHoveredRoute("showcase")}
                     onClick={() => handleSelectRoute("showcase")}
                     className={`px-3 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
                       activeTab === "showcase"

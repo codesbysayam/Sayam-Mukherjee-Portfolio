@@ -324,12 +324,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "who was in the team for matlab workshop",
       "what was sayam's team in the matlab workshop"
     ],
-    answer: "Sayam Mukherjee participated in and successfully completed the **MATLAB Workshop** organized by the **IEEE KIIT Student Branch** in association with the **IEEE PES KIIT Student Branch Chapter** on **25 September 2026** at **KIIT Deemed to be University**.\n\n• **Credential Type:** Participation (Official Certificate)\n• **Resource Person:** Dr. Satya Ranjan Jena\n• **Counselor (IEEE KIIT Student Branch):** Dr. Chinmoy Ku. Panigrahi\n• **Team Context:** This was an individual workshop participation record; there is no team, no team members, and no associated team project.\n• **Credential URL:** [View MATLAB Workshop Credential](https://increased-purple-oeuuxfwu.edgeone.dev/)",
-    action: {
-      type: "certificate",
-      label: "View Credential",
-      url: "https://increased-purple-oeuuxfwu.edgeone.dev/",
-    },
+    answer: "Sayam Mukherjee participated in and successfully completed the **MATLAB Workshop** organized by the **IEEE KIIT Student Branch** in association with the **IEEE PES KIIT Student Branch Chapter** on **25 September 2026** at **KIIT Deemed to be University**.\n\n• **Credential Type:** Participation (Official Certificate)\n• **Resource Person:** Dr. Satya Ranjan Jena\n• **Counselor (IEEE KIIT Student Branch):** Dr. Chinmoy Ku. Panigrahi\n• **Team Context:** This was an individual workshop participation record; there is no team, no team members, and no associated team project.",
     suggestions: ["🏆 Achievements", "⚡ Projects", "📜 Certificates"],
   },
   {

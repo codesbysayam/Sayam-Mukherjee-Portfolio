@@ -157,7 +157,7 @@ export default function ContactSection() {
 
       {/* Editorial Hero Header */}
       <EditorialReveal>
-        <header className="relative z-10 space-y-4 mb-10 sm:mb-14">
+        <header className="relative z-10 space-y-4 pb-8 mb-10 sm:mb-12 border-b border-[var(--border)]">
           <div className="flex flex-wrap items-center gap-3">
             <span className="editorial-overline text-[var(--accent)]">
               08 / Contact &amp; Inquiries
@@ -209,29 +209,17 @@ export default function ContactSection() {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         {/* Left Column: Open Roles & Direct Channels */}
         <div className="lg:col-span-5 space-y-6">
-          <div
-            className="card p-5 md:p-6 space-y-3"
-            style={{
-              backgroundColor: "var(--surface-2)",
-              borderColor: "var(--border)",
-            }}
-          >
+          <div className="py-4 border-y border-[var(--border)] space-y-2.5">
             <span className="text-xs font-mono tracking-wider uppercase text-[var(--accent)] font-semibold flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
               Currently Open To
             </span>
 
-            <div className="flex flex-wrap gap-2 pt-1">
-              {OPEN_ROLES.map((role) => (
-                <span
-                  key={role}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border text-xs font-mono text-[var(--text-secondary)]"
-                  style={{
-                    backgroundColor: "var(--surface)",
-                    borderColor: "var(--border)",
-                  }}
-                >
-                  {role}
+            <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-xs font-mono text-[var(--text)]">
+              {OPEN_ROLES.map((role, idx) => (
+                <span key={role} className="inline-flex items-center gap-2.5">
+                  {idx > 0 && <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>}
+                  <span>{role}</span>
                 </span>
               ))}
             </div>
