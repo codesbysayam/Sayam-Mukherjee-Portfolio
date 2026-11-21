@@ -50,8 +50,8 @@
       "createdAt": "2026-11-17T17:31:45Z",
       "updated_at": "2026-11-18T02:37:29Z",
       "updatedAt": "2026-11-18T02:37:29Z",
-      "pushed_at": "2026-11-21T16:58:55Z",
-      "pushedAt": "2026-11-21T16:58:55Z",
+      "pushed_at": "2026-11-21T17:27:51Z",
+      "pushedAt": "2026-11-21T17:27:51Z",
       "topics": []
     },
     {
@@ -80,8 +80,8 @@
       "createdAt": "2026-09-03T06:02:37Z",
       "updated_at": "2026-11-17T08:00:59Z",
       "updatedAt": "2026-11-17T08:00:59Z",
-      "pushed_at": "2026-11-21T15:38:13Z",
-      "pushedAt": "2026-11-21T15:38:13Z",
+      "pushed_at": "2026-11-21T17:29:07Z",
+      "pushedAt": "2026-11-21T17:29:07Z",
       "topics": [
         "ai",
         "ai-agent",
@@ -440,6 +440,104 @@
   ],
   "events": [
     {
+      "id": "27861930088",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-11-19T17:42:15Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 51031911487,
+        "ref": "refs/heads/main",
+        "head": "8707ab7e4ab58167cdc3dd5b70a72e6583cfd7fa",
+        "before": "293235fde3ca50ae76f47870e0e58b452f183b84"
+      }
+    },
+    {
+      "id": "27859447410",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-11-19T17:21:06Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 51029368915,
+        "ref": "refs/heads/main",
+        "head": "293235fde3ca50ae76f47870e0e58b452f183b84",
+        "before": "0cb6111cfbb6bd865ae197ebea8c0e046dbd909a"
+      }
+    },
+    {
+      "id": "27855671801",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam_sih-26",
+      "created_at": "2026-11-21T17:27:47Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1461749225,
+        "push_id": 51293386894,
+        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
+        "head": "4826aec213d408d50c626493e6bc8d45e9e56ca2",
+        "before": "774c07246ea4c525769682f92fb70c04a4027d2c"
+      }
+    },
+    {
+      "id": "27844962408",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam_sih-26",
+      "created_at": "2026-11-21T14:32:52Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1461749225,
+        "push_id": 51278721899,
+        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
+        "head": "d8c3f4f9b8c4324e25e77ba5e3813cec1fe93e38",
+        "before": "a0581e3e28083a635cb94d539e5848354b3179b6"
+      }
+    },
+    {
+      "id": "27844956774",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam_sih-26",
+      "created_at": "2026-11-21T14:32:46Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1461749225,
+        "push_id": 51278713829,
+        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
+        "head": "a0581e3e28083a635cb94d539e5848354b3179b6",
+        "before": "ecb2d770a77dc8f82f3759c4080f506a8988f991"
+      }
+    },
+    {
+      "id": "27844931305",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-11-21T17:28:56Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 51293481225,
+        "ref": "refs/heads/main",
+        "head": "824c024aef44e80311ab494adaea9d809936d40c",
+        "before": "bc8a289ee8d4fd131a324dacea3d9bbb184fda96"
+      }
+    },
+    {
+      "id": "27842436473",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam_sih-26",
+      "created_at": "2026-11-21T16:58:52Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1461749225,
+        "push_id": 51290926294,
+        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
+        "head": "613fa1aca40054462ca70f69381b7e2a4b49daea",
+        "before": "5a3c6af22106af730053a425474957c787f48cc4"
+      }
+    },
+    {
       "id": "27833023345",
       "type": "PushEvent",
       "repo": "codesbysayam/mausam_sih-26",
@@ -735,7 +833,7 @@
           "number": 2,
           "head": {
             "ref": "fix/mausam-responsive-all-viewports",
-            "sha": "5b7b29391567eb0c9a7fefd3b3529773d181a70b",
+            "sha": "519382c2cefae0dfb7c2883cb0018812571a3c9e",
             "repo": {
               "id": 1461749225,
               "url": "https://api.github.com/repos/codesbysayam/mausam_sih-26",
@@ -781,107 +879,107 @@
         "head": "3445b78e928d7681bc4abedfdb001764a1a00f5a",
         "before": "8b9332bb292891ef1261adf54eedf106d597358b"
       }
-    },
-    {
-      "id": "27715436906",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Memory-in-Motion",
-      "created_at": "2026-11-19T20:25:23Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1361090226,
-        "push_id": 51050881808,
-        "ref": "refs/heads/main",
-        "head": "773b8aba755ee6375c41ae0f0549eafa43c534ab",
-        "before": "37ef05f9d0045fb93f137178c57e24543e74ff64"
-      }
-    },
-    {
-      "id": "27704475802",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-11-18T17:49:01Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 50876993192,
-        "ref": "refs/heads/main",
-        "head": "0c2a8efa64ecdb263b6c9326f4fb38e5b5c3a753",
-        "before": "72d995acd873b5e067765ab42c1a1c112ed2c100"
-      }
-    },
-    {
-      "id": "27698827566",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
-      "created_at": "2026-11-18T14:05:16Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1355576736,
-        "push_id": 50847389640,
-        "ref": "refs/heads/main",
-        "head": "72d995acd873b5e067765ab42c1a1c112ed2c100",
-        "before": "fe8499e4dbfb9d5955787df778381bff515df980"
-      }
-    },
-    {
-      "id": "27634933597",
-      "type": "PushEvent",
-      "repo": "codesbysayam/Memory-in-Motion",
-      "created_at": "2026-11-18T04:03:06Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1361090226,
-        "push_id": 50782563115,
-        "ref": "refs/heads/main",
-        "head": "d9486e70185dc521be09357dd99e3b0cf62b89e7",
-        "before": "dd7ef22c0b9ca4e0668ecf54f99471d8bd9d4a63"
-      }
-    },
-    {
-      "id": "27625149576",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam_sih-26",
-      "created_at": "2026-11-18T02:09:51Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1461749225,
-        "push_id": 50772606081,
-        "ref": "refs/heads/audit/mausam-full-site-reconstruction",
-        "head": "efc045aedc821e694de87bf191481139f2e8a557",
-        "before": "d516448b8e3f0872a850c780cf7e7ae773d6c77e"
-      }
-    },
-    {
-      "id": "27601408348",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam_sih-26",
-      "created_at": "2026-11-18T02:32:08Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1461749225,
-        "push_id": 50774583780,
-        "ref": "refs/heads/main",
-        "head": "815cd5843446750e17951dedfe7440e2de75a8bb",
-        "before": "fd1692c8fcf81edb5ecd2c2e5a1adbed13a96cb3"
-      }
-    },
-    {
-      "id": "27599077746",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam_sih-26",
-      "created_at": "2026-11-18T02:10:25Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1461749225,
-        "push_id": 50772657071,
-        "ref": "refs/heads/audit/mausam-full-site-reconstruction",
-        "head": "20ed6db725931cc77dec75f8b5a412d7fd84b1d6",
-        "before": "3a0c401f5e844bb52f8447b938752e936ed5e3ad"
-      }
     }
   ],
   "recentActivity": [
+    {
+      "id": "27861930088",
+      "type": "PushEvent",
+      "createdAt": "2026-11-19T17:42:15Z",
+      "created_at": "2026-11-19T17:42:15Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "27859447410",
+      "type": "PushEvent",
+      "createdAt": "2026-11-19T17:21:06Z",
+      "created_at": "2026-11-19T17:21:06Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "27855671801",
+      "type": "PushEvent",
+      "createdAt": "2026-11-21T17:27:47Z",
+      "created_at": "2026-11-21T17:27:47Z",
+      "repoName": "mausam_sih-26",
+      "repo": {
+        "id": 1461749225,
+        "name": "codesbysayam/mausam_sih-26",
+        "url": "https://github.com/codesbysayam/mausam_sih-26"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "27844962408",
+      "type": "PushEvent",
+      "createdAt": "2026-11-21T14:32:52Z",
+      "created_at": "2026-11-21T14:32:52Z",
+      "repoName": "mausam_sih-26",
+      "repo": {
+        "id": 1461749225,
+        "name": "codesbysayam/mausam_sih-26",
+        "url": "https://github.com/codesbysayam/mausam_sih-26"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "27844956774",
+      "type": "PushEvent",
+      "createdAt": "2026-11-21T14:32:46Z",
+      "created_at": "2026-11-21T14:32:46Z",
+      "repoName": "mausam_sih-26",
+      "repo": {
+        "id": 1461749225,
+        "name": "codesbysayam/mausam_sih-26",
+        "url": "https://github.com/codesbysayam/mausam_sih-26"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "27844931305",
+      "type": "PushEvent",
+      "createdAt": "2026-11-21T17:28:56Z",
+      "created_at": "2026-11-21T17:28:56Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "27842436473",
+      "type": "PushEvent",
+      "createdAt": "2026-11-21T16:58:52Z",
+      "created_at": "2026-11-21T16:58:52Z",
+      "repoName": "mausam_sih-26",
+      "repo": {
+        "id": 1461749225,
+        "name": "codesbysayam/mausam_sih-26",
+        "url": "https://github.com/codesbysayam/mausam_sih-26"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
     {
       "id": "27833023345",
       "type": "PushEvent",
@@ -1203,104 +1301,6 @@
       },
       "public": true,
       "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "27715436906",
-      "type": "PushEvent",
-      "createdAt": "2026-11-19T20:25:23Z",
-      "created_at": "2026-11-19T20:25:23Z",
-      "repoName": "Memory-in-Motion",
-      "repo": {
-        "id": 1361090226,
-        "name": "codesbysayam/Memory-in-Motion",
-        "url": "https://github.com/codesbysayam/Memory-in-Motion"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "27704475802",
-      "type": "PushEvent",
-      "createdAt": "2026-11-18T17:49:01Z",
-      "created_at": "2026-11-18T17:49:01Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "27698827566",
-      "type": "PushEvent",
-      "createdAt": "2026-11-18T14:05:16Z",
-      "created_at": "2026-11-18T14:05:16Z",
-      "repoName": "Sayam-Mukherjee-Portfolio",
-      "repo": {
-        "id": 1355576736,
-        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
-        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "27634933597",
-      "type": "PushEvent",
-      "createdAt": "2026-11-18T04:03:06Z",
-      "created_at": "2026-11-18T04:03:06Z",
-      "repoName": "Memory-in-Motion",
-      "repo": {
-        "id": 1361090226,
-        "name": "codesbysayam/Memory-in-Motion",
-        "url": "https://github.com/codesbysayam/Memory-in-Motion"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "27625149576",
-      "type": "PushEvent",
-      "createdAt": "2026-11-18T02:09:51Z",
-      "created_at": "2026-11-18T02:09:51Z",
-      "repoName": "mausam_sih-26",
-      "repo": {
-        "id": 1461749225,
-        "name": "codesbysayam/mausam_sih-26",
-        "url": "https://github.com/codesbysayam/mausam_sih-26"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "27601408348",
-      "type": "PushEvent",
-      "createdAt": "2026-11-18T02:32:08Z",
-      "created_at": "2026-11-18T02:32:08Z",
-      "repoName": "mausam_sih-26",
-      "repo": {
-        "id": 1461749225,
-        "name": "codesbysayam/mausam_sih-26",
-        "url": "https://github.com/codesbysayam/mausam_sih-26"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "27599077746",
-      "type": "PushEvent",
-      "createdAt": "2026-11-18T02:10:25Z",
-      "created_at": "2026-11-18T02:10:25Z",
-      "repoName": "mausam_sih-26",
-      "repo": {
-        "id": 1461749225,
-        "name": "codesbysayam/mausam_sih-26",
-        "url": "https://github.com/codesbysayam/mausam_sih-26"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
     }
   ],
   "languages": {
@@ -1387,9 +1387,9 @@
     "Shell": 569,
     "C++": 2037
   },
-  "latestPush": "2026-11-21T16:58:55Z",
+  "latestPush": "2026-11-21T17:29:07Z",
   "contributionCalendar": {
-    "totalContributions": 268,
+    "totalContributions": 270,
     "weeks": [
       {
         "contributionDays": [
@@ -3428,14 +3428,14 @@
           },
           {
             "date": "2026-11-21",
-            "count": 7,
+            "count": 9,
             "color": "#30a14e"
           }
         ]
       }
     ]
   },
-  "fetchedAt": "2026-11-21T17:17:01.443Z",
-  "syncedAt": "2026-11-21T17:17:01.443Z",
+  "fetchedAt": "2026-11-21T22:59:13.287Z",
+  "syncedAt": "2026-11-21T22:59:13.287Z",
   "status": "ok"
 }
