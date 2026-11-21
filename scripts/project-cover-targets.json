@@ -1,0 +1,39 @@
+[
+  {
+    "id": "operon",
+    "url": "https://operonpro.vercel.app",
+    "output": "operon.jpg",
+    "waitMs": 2200
+  },
+  {
+    "id": "mausam",
+    "url": "https://mausamgovt.vercel.app",
+    "output": "mausam.jpg",
+    "waitMs": 3000
+  },
+  {
+    "id": "memory-in-motion",
+    "url": "https://memoryinmotion.vercel.app",
+    "output": "memory-in-motion.jpg",
+    "waitMs": 2200
+  },
+  {
+    "id": "axiom",
+    "url": "https://axiomwcc.vercel.app",
+    "output": "axiom.jpg",
+    "waitMs": 2200
+  },
+  {
+    "id": "inkloom",
+    "url": "https://inkloom.art",
+    "output": "inkloom.jpg",
+    "waitMs": 2200
+  },
+  {
+    "id": "campus-connect",
+    "url": "https://campusconnect1273.vercel.app",
+    "output": "campus-connect.jpg",
+    "waitMs": 2200,
+    "preClickSelector": "a:has-text('Events'), button:has-text('Events'), a:has-text('browse campus events')"
+  }
+]

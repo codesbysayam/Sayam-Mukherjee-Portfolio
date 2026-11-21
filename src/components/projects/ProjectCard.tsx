@@ -146,9 +146,15 @@ function ProjectCardComponent({
               <span className="font-semibold text-[var(--accent)] uppercase tracking-wider tabular-nums">
                 {typeof index === "number" ? `${String(index + 1).padStart(2, "0")} · ` : ""}
                 {project.categoryLabel || project.category}
+                {isFeaturedCandidate ? " · LEAD" : ""}
+                {(repo?.fork ?? project.isFork) ? ` · FORK (${branchName})` : ""}
               </span>
               <div className="flex items-center gap-2">
-                <span title={lifecycle.title}>{project.status}</span>
+                <span title={lifecycle.title} className="uppercase text-[11px] font-semibold">
+                  {lifecycle.label}
+                </span>
+                <span aria-hidden="true">·</span>
+                <span>{project.status}</span>
                 <span aria-hidden="true">·</span>
                 <span
                   className="inline-flex items-center gap-1"
@@ -176,7 +182,7 @@ function ProjectCardComponent({
             </p>
 
             {project.whyItExists && (
-              <div className="border-l-2 border-[var(--accent)] pl-3.5 py-0.5 space-y-1">
+              <div className="border-t border-[var(--border)] pt-2.5 space-y-1">
                 <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold block">
                   {project.team || project.event ? `${project.team ?? ""} ${project.event ? `· ${project.event}` : ""}`.trim() : "Why it exists"}
                 </span>
@@ -203,7 +209,7 @@ function ProjectCardComponent({
                     title={onSelectTech ? `Filter projects by ${tech}` : tech}
                     className={`text-xs font-mono px-2 py-0.5 rounded-[4px] transition-all cursor-pointer border active:scale-[0.96] ${
                       isActive
-                        ? "bg-[#20231D] dark:bg-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D] border-[#20231D] dark:border-[#C7E34A] font-semibold"
+                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                         : "bg-[var(--surface)] hover:border-[var(--border-strong)] active:bg-[var(--surface-2)] text-[var(--text-secondary)] border-[var(--border)]"
                     }`}
                   >

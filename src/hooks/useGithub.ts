@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useGitHubStats } from "./useGitHubStats";
+import { useGitHubTelemetry } from "./useGitHubTelemetry";
 import {
   GitHubUser,
   GitHubRepo,
@@ -10,7 +11,6 @@ import {
   VERIFIED_USER_BASELINE,
   VERIFIED_REPOS_BASELINE,
   VERIFIED_EVENTS_BASELINE,
-  VERIFIED_PULSE_BASELINE,
   VERIFIED_GITHUB_FALLBACK,
 } from "../services/github";
 
@@ -34,11 +34,11 @@ export interface GitHubState {
 }
 
 /**
- * useGithub - Compatibility wrapper delegating to canonical useGitHubStats
- * Ensures single source of truth without duplicate API fetching or undefined crashes
+ * useGithub - Compatibility wrapper delegating to canonical telemetry & useGitHubStats
  */
 export function useGithub(): GitHubState {
-  const { data, loading, error, refresh } = useGitHubStats();
+  const { data, loading, error, refresh: refreshStats } = useGitHubStats();
+  const { telemetry, refresh: refreshTelemetry } = useGitHubTelemetry();
 
   const repos: GitHubRepo[] = useMemo(() => {
     if (!data?.repositories || data.repositories.length === 0) {
@@ -77,14 +77,14 @@ export function useGithub(): GitHubState {
       name: data.name || "Sayam Mukherjee",
       bio: data.bio || VERIFIED_USER_BASELINE.bio,
       location: "Kolkata, India",
-      public_repos: data.publicRepos || repos.length,
+      public_repos: telemetry?.totalRepos || data.publicRepos || repos.length,
       public_gists: data.publicGists || 0,
       followers: data.followers || 1,
       following: data.following || 0,
       created_at: "2021-06-12T04:55:46Z",
-      updated_at: data.fetchedAt || new Date().toISOString(),
+      updated_at: telemetry?.generatedAt || data.fetchedAt || new Date().toISOString(),
     };
-  }, [data, repos.length]);
+  }, [data, telemetry, repos.length]);
 
   const events: GitHubEvent[] = useMemo(() => {
     if (!data?.recentActivity || data.recentActivity.length === 0) {
@@ -111,17 +111,27 @@ export function useGithub(): GitHubState {
   }, [data, user]);
 
   const stats: GitHubStatsData = useMemo(() => {
+    const canonicalLangs = telemetry?.languages?.length
+      ? telemetry.languages.map((l) => ({
+          name: l.name,
+          bytes: l.bytes,
+          percent: Number(l.percentage.toFixed(l.percentage < 0.01 ? 3 : l.percentage < 0.1 ? 2 : 1)),
+          color: l.color,
+        }))
+      : VERIFIED_GITHUB_FALLBACK.languages;
+
     return {
       ...VERIFIED_GITHUB_FALLBACK,
-      username: data?.username || VERIFIED_GITHUB_FALLBACK.username,
-      name: data?.name || VERIFIED_GITHUB_FALLBACK.name,
-      avatarUrl: data?.avatarUrl || VERIFIED_GITHUB_FALLBACK.avatarUrl,
-      bio: data?.bio || VERIFIED_GITHUB_FALLBACK.bio,
-      publicRepos: data?.publicRepos || repos.length,
+      username: telemetry?.username || data?.username || VERIFIED_GITHUB_FALLBACK.username,
+      name: telemetry?.name || data?.name || VERIFIED_GITHUB_FALLBACK.name,
+      avatarUrl: telemetry?.avatarUrl || data?.avatarUrl || VERIFIED_GITHUB_FALLBACK.avatarUrl,
+      bio: telemetry?.bio || data?.bio || VERIFIED_GITHUB_FALLBACK.bio,
+      publicRepos: telemetry?.totalRepos || data?.publicRepos || repos.length,
       followers: data?.followers || 1,
       following: data?.following || 0,
-      totalStars: data?.totalStars ?? 6,
-      totalForks: data?.totalForks ?? 0,
+      totalStars: telemetry?.totalStars ?? data?.totalStars ?? 6,
+      totalForks: telemetry?.totalForks ?? data?.totalForks ?? 0,
+      languages: canonicalLangs,
       repositories: repos.map((r) => ({
         name: r.name,
         fullName: r.full_name,
@@ -133,10 +143,10 @@ export function useGithub(): GitHubState {
         updatedAt: r.updated_at,
         topics: r.topics,
       })),
-      isLive: data?.source === "live",
-      lastSynced: data?.fetchedAt || new Date().toISOString(),
+      isLive: telemetry?.source === "github-api",
+      lastSynced: telemetry?.generatedAt || data?.fetchedAt || new Date().toISOString(),
     };
-  }, [data, repos]);
+  }, [data, telemetry, repos]);
 
   const pulse: GitHubPulseData = useMemo(() => ({
     commitsCount: data?.contributionCalendar?.totalContributions || 24,
@@ -152,9 +162,40 @@ export function useGithub(): GitHubState {
     periodDays: 30,
     periodLabel: "Last 30 Days",
     dailyCadence: "0.8 commits/day",
-    isLive: data?.source === "live",
+    isLive: telemetry?.source === "github-api",
     syncedAt: Date.now(),
-  }), [data, repos]);
+  }), [data, telemetry, repos]);
+
+  const snapshot: GitHubRawSnapshot | null = useMemo(() => {
+    if (!telemetry) return null;
+    const languagesRecord: Record<string, Record<string, number>> = {};
+    telemetry.repositories.forEach((r) => {
+      languagesRecord[r.fullName] = r.languages;
+    });
+    return {
+      source: telemetry.source,
+      owner: telemetry.username,
+      profile: {
+        login: user.login,
+        name: user.name || "Sayam Mukherjee",
+        avatar_url: user.avatar_url,
+        html_url: user.html_url,
+        bio: user.bio || "",
+        public_repos: telemetry.totalRepos,
+        followers: user.followers,
+        following: user.following,
+      },
+      repositories: repos,
+      events: [],
+      languages: languagesRecord,
+      syncedAt: telemetry.generatedAt,
+      status: telemetry.status,
+    };
+  }, [telemetry, user, repos]);
+
+  const refresh = async () => {
+    await Promise.all([refreshStats(true), refreshTelemetry()]);
+  };
 
   return {
     user,
@@ -166,12 +207,12 @@ export function useGithub(): GitHubState {
     latestEvent: events[0] || null,
     loading: loading && !data,
     error,
-    syncedAt: data?.fetchedAt ? new Date(data.fetchedAt).getTime() : Date.now(),
+    syncedAt: telemetry?.generatedAt ? new Date(telemetry.generatedAt).getTime() : Date.now(),
     usingCache: true,
     rateLimited: false,
-    snapshot: null,
-    snapshotStatus: "ok",
-    isUnavailable: false,
+    snapshot,
+    snapshotStatus: telemetry?.status || "ok",
+    isUnavailable: telemetry?.status === "error",
     refresh,
   };
 }

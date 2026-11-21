@@ -82,26 +82,26 @@ function HeroSectionComponent({
     <section
       id="hero"
       aria-label="Hero Introduction"
-      className="relative w-full min-h-[calc(100svh-7rem)] flex flex-col justify-between overflow-hidden bg-[var(--bg)] py-6 sm:py-10 lg:py-12"
+      className="relative w-full min-h-0 lg:min-h-[calc(100svh-7rem)] flex flex-col justify-between overflow-hidden bg-[var(--bg)] py-4 sm:py-8 lg:py-12"
     >
       {/* Animated Topographic Contour Canvas */}
       <ContourBackground density="medium" tone="adaptive" />
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center my-auto py-2">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center my-auto py-1 sm:py-2">
         {/* LEFT MONUMENTAL EDITORIAL COLUMN */}
         <div className="lg:col-span-7 flex flex-col justify-start text-left min-w-0">
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: MOTION_DURATION.normal, ease: MOTION_EASE.out }}
-            className="editorial-overline text-[var(--accent)] mb-5"
+            className="editorial-overline text-[var(--accent)] mb-3 sm:mb-5"
           >
             COMPUTER SCIENCE · AI &amp; ML · KIIT UNIVERSITY
           </motion.p>
 
           <h1
             className="editorial-display-xl text-[var(--text)]"
-            style={{ fontSize: "clamp(2.85rem, 7.2vw, 6.75rem)" }}
+            style={{ fontSize: "clamp(2.35rem, 6.8vw, 6.4rem)" }}
           >
             <TextMaskReveal immediate delay={0.04}>SAYAM</TextMaskReveal>
             <br />
@@ -116,7 +116,7 @@ function HeroSectionComponent({
               delay: 0.22,
               ease: MOTION_EASE.out,
             }}
-            className="mt-7 max-w-2xl text-xl sm:text-2xl lg:text-[1.95rem] leading-[1.18] text-[var(--text)] font-medium"
+            className="mt-5 sm:mt-7 max-w-2xl text-lg sm:text-2xl lg:text-[1.95rem] leading-[1.2] text-[var(--text)] font-medium"
           >
             <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
               Designing autonomous workflows,
@@ -132,9 +132,9 @@ function HeroSectionComponent({
               delay: 0.28,
               ease: MOTION_EASE.out,
             }}
-            className="mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]"
+            className="mt-3 sm:mt-4 max-w-xl text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]"
           >
-            {siteContent.hero.description} Open to software engineering internships, applied AI research, and collaborative product builds.
+            {siteContent.hero.description} Open to software engineering internships, systems &amp; ML research, and collaborative product builds.
           </motion.p>
 
           {/* Primary & Secondary Action Cluster */}
@@ -146,7 +146,7 @@ function HeroSectionComponent({
               delay: 0.34,
               ease: MOTION_EASE.out,
             }}
-            className="mt-8 flex flex-wrap items-center gap-3.5"
+            className="mt-6 sm:mt-8 flex flex-wrap items-center gap-3"
           >
             <MagneticAction strength={0.18}>
               <button
@@ -198,7 +198,7 @@ function HeroSectionComponent({
                   onClick={() => setStageMode("portrait")}
                   className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                     stageMode === "portrait"
-                      ? "bg-[#C7E34A] text-[#151713]"
+                      ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
                       : "text-[var(--text-muted)] hover:text-[var(--text)]"
                   }`}
                   aria-pressed={stageMode === "portrait"}
@@ -211,7 +211,7 @@ function HeroSectionComponent({
                   onClick={() => setStageMode("orbital")}
                   className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                     stageMode === "orbital"
-                      ? "bg-[#C7E34A] text-[#151713]"
+                      ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
                       : "text-[var(--text-muted)] hover:text-[var(--text)]"
                   }`}
                   aria-pressed={stageMode === "orbital"}
@@ -338,17 +338,10 @@ function HeroSectionComponent({
           <button
             type="button"
             onClick={scrollToChapters}
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] active:opacity-75 active:scale-[0.97] transition-all cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1.5 py-1"
+            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] active:opacity-75 active:scale-[0.97] transition-all cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded px-1.5 py-1"
           >
             <span>Scroll to explore</span>
-            <motion.span
-              aria-hidden="true"
-              animate={reduced ? undefined : { y: [0, 3, 0] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-              className="inline-flex items-center"
-            >
-              <ArrowDown className="w-3.5 h-3.5 text-[var(--accent)] transition-transform duration-200 group-hover:translate-y-0.5" />
-            </motion.span>
+            <ArrowDown className="w-3.5 h-3.5 text-[var(--accent)] transition-transform duration-200 group-hover:translate-y-0.5" aria-hidden="true" />
           </button>
         </div>
       </div>

@@ -229,17 +229,17 @@ export const SKILLS_DATA: SkillItem[] = [
     docsUrl: "https://katex.org/"
   },
   {
-    id: "bootstrap",
-    name: "Bootstrap",
+    id: "html5canvas",
+    name: "HTML5 Canvas",
     category: "frontend",
-    status: "practicing",
-    evidenceType: "profile",
-    evidenceSummary: "Grid layouts, foundational responsive styling, and UI component prototyping.",
-    relatedProjects: [],
-    repoEvidence: "Foundational web development practice and component layout experience.",
-    description: "Classic responsive 12-column grid system, utility classes, and prebuilt interface component styling.",
-    relatedSkills: ["CSS", "HTML", "Tailwind CSS"],
-    docsUrl: "https://getbootstrap.com/"
+    status: "building",
+    evidenceType: "project",
+    evidenceSummary: "Synchronized 16:9 Canvas overlay renderer with atomic CVFrame swaps in SightForge.",
+    relatedProjects: ["sightforge"],
+    repoEvidence: "Verified 16:9 HTML5 Canvas frame/overlay pipeline inside codesbysayam/SightForge.",
+    description: "Immediate-mode 2D bitmap and vector rendering surface for frame-locked bounding boxes, pose skeletons, and real-time telemetry overlays.",
+    relatedSkills: ["React", "TypeScript", "Computer Vision"],
+    docsUrl: "https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API"
   },
 
   // ==========================================
@@ -298,17 +298,17 @@ export const SKILLS_DATA: SkillItem[] = [
     docsUrl: "https://www.postgresql.org/"
   },
   {
-    id: "mongodb",
-    name: "MongoDB",
-    category: "data",
-    status: "practicing",
-    evidenceType: "project",
-    evidenceSummary: "Document storage modeling, collections, JSON schema flexibility, and query operators.",
-    relatedProjects: ["operon"],
-    repoEvidence: "Document schema structures explored for autonomous workflow execution state logs.",
-    description: "NoSQL document database engineered for horizontal scaling, flexible JSON-like schemas, and fast querying.",
-    relatedSkills: ["Node.js", "SQL / PostgreSQL", "System Architecture"],
-    docsUrl: "https://www.mongodb.com/"
+    id: "zod",
+    name: "Zod Schema Validation",
+    category: "backend",
+    status: "building",
+    evidenceType: "repository",
+    evidenceSummary: "Strict runtime payload validation schemas across Express contact, certificates, telemetry, and assistant endpoints.",
+    relatedProjects: ["operon", "campus-connect"],
+    repoEvidence: "Verified runtime input parsing in server/validation/schemas.ts and TypeScript API handlers.",
+    description: "TypeScript-first runtime schema validation guaranteeing type safety at HTTP request and persistence boundaries.",
+    relatedSkills: ["TypeScript", "Express.js", "Node.js"],
+    docsUrl: "https://zod.dev/"
   },
   {
     id: "firebase",
@@ -705,10 +705,10 @@ export const CATEGORY_LABELS: { key: SkillCategory | "all"; label: string }[] = 
   { key: "language", label: "LANGUAGES" },
   { key: "frontend", label: "FRONTEND" },
   { key: "backend", label: "BACKEND" },
-  { key: "ai-ml", label: "AI / ML" },
+  { key: "ai-ml", label: "ML & VISION" },
   { key: "data", label: "DATA" },
   { key: "tool", label: "TOOLS" },
-  { key: "engineering", label: "ENGINEERING" }
+  { key: "engineering", label: "CORE CS" }
 ];
 
 export type SkillFilterKey =
@@ -731,9 +731,9 @@ export const SKILL_FILTER_TABS: SkillFilterTab[] = [
   { key: "languages", label: "Languages", categoryMatch: (cat) => cat === "language" },
   { key: "frontend", label: "Frontend", categoryMatch: (cat) => cat === "frontend" },
   { key: "backend-data", label: "Backend & Data", categoryMatch: (cat) => cat === "backend" || cat === "data" },
-  { key: "ai-ml", label: "AI / ML", categoryMatch: (cat) => cat === "ai-ml" },
-  { key: "tools-devops", label: "Tools & DevOps", categoryMatch: (cat) => cat === "tool" },
-  { key: "core-engineering", label: "Core Engineering", categoryMatch: (cat) => cat === "engineering" },
+  { key: "ai-ml", label: "Machine Learning & Vision", categoryMatch: (cat) => cat === "ai-ml" },
+  { key: "tools-devops", label: "Development Tools", categoryMatch: (cat) => cat === "tool" },
+  { key: "core-engineering", label: "Core Computer Science", categoryMatch: (cat) => cat === "engineering" },
 ];
 
 export function filterSkills(filterKey: SkillFilterKey, searchQuery = ""): SkillItem[] {
@@ -764,59 +764,417 @@ export function getSkillById(id: string): SkillItem | undefined {
   return SKILLS_DATA.find((s) => s.id.toLowerCase() === id.toLowerCase());
 }
 
+export interface TechnologyItem {
+  id: string;
+  name: string;
+  categoryId: string;
+  evidenceScope: "project" | "repository" | "coursework" | "toolchain";
+  evidenceProjects: ValidProjectId[];
+  evidenceSummary: string;
+}
+
 export interface EngineeringStackGroup {
   id: string;
+  code: string;
   category: string;
   label: string;
   description: string;
+  items: TechnologyItem[];
   skills: string[];
 }
 
-/**
- * Verified Engineering Stack divided into the 6 verified core categories.
- * Strict: These are technologies and foundational tools, NOT unverified proficiency claims.
- */
-export const ENGINEERING_STACK_CATEGORIES: EngineeringStackGroup[] = [
+const RAW_STACK_GROUPS: Omit<EngineeringStackGroup, "skills">[] = [
   {
     id: "languages",
-    category: "LANGUAGES",
-    label: "Languages",
-    description: "Core programming languages for algorithmic problem-solving, systems development, and full-stack software.",
-    skills: ["TypeScript", "Python", "C++", "JavaScript", "C", "Java", "SQL / PLpgSQL", "HTML", "CSS"]
+    code: "01",
+    category: "01 — PROGRAMMING LANGUAGES",
+    label: "Programming Languages",
+    description:
+      "Verified programming, query, and markup languages backed by public repository byte telemetry and KIIT CSE coursework.",
+    items: [
+      {
+        id: "typescript",
+        name: "TypeScript",
+        categoryId: "languages",
+        evidenceScope: "project",
+        evidenceProjects: ["mausam", "memory-in-motion", "operon", "axiom", "sightforge", "inkloom", "campus-connect"],
+        evidenceSummary: "Primary application language (93.8% of owned source bytes) across 7 full-stack repositories."
+      },
+      {
+        id: "python",
+        name: "Python",
+        categoryId: "languages",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge", "mausam", "memory-in-motion"],
+        evidenceSummary: "Powers SightForge FastAPI + YOLOv8 inference, MAUSAM utilities, Memory in Motion scripts, and portfolio data validation."
+      },
+      {
+        id: "cpp",
+        name: "C++",
+        categoryId: "languages",
+        evidenceScope: "repository",
+        evidenceProjects: ["sayam-solves"],
+        evidenceSummary: "Algorithmic implementations (LC 0005, 0033, 0115) and STL complexity practice in codesbysayam/sayam-solves."
+      },
+      {
+        id: "javascript",
+        name: "JavaScript",
+        categoryId: "languages",
+        evidenceScope: "project",
+        evidenceProjects: ["mausam", "sightforge", "inkloom", "campus-connect"],
+        evidenceSummary: "Telemetry sync automation, build scripts, and cross-runtime utilities across shipped repositories."
+      },
+      {
+        id: "c",
+        name: "C",
+        categoryId: "languages",
+        evidenceScope: "repository",
+        evidenceProjects: ["mausam"],
+        evidenceSummary: "Low-level systems modules verified in mausam_sih-26 and this portfolio's C metrics utility."
+      },
+      {
+        id: "sql-plpgsql",
+        name: "SQL / PLpgSQL",
+        categoryId: "languages",
+        evidenceScope: "project",
+        evidenceProjects: ["mausam", "sightforge", "inkloom"],
+        evidenceSummary: "Relational table schemas and PLpgSQL modules verified in mausam_sih-26, SightForge, and inkloom."
+      },
+      {
+        id: "html",
+        name: "HTML",
+        categoryId: "languages",
+        evidenceScope: "project",
+        evidenceProjects: ["mausam", "memory-in-motion", "axiom", "operon", "campus-connect"],
+        evidenceSummary: "Semantic document entry points, OpenGraph metadata, and accessible landmarks."
+      },
+      {
+        id: "css",
+        name: "CSS",
+        categoryId: "languages",
+        evidenceScope: "project",
+        evidenceProjects: ["axiom", "mausam", "memory-in-motion", "inkloom", "campus-connect", "operon", "sightforge"],
+        evidenceSummary: "Custom properties, dark/light theme parity tokens, responsive CSS Grid layouts, and clamp() typography."
+      },
+      {
+        id: "java",
+        name: "Java",
+        categoryId: "languages",
+        evidenceScope: "coursework",
+        evidenceProjects: [],
+        evidenceSummary: "Academic B.Tech CSE coursework at KIIT University covering OOP, inheritance, and JVM collections."
+      }
+    ]
   },
   {
     id: "frontend",
-    category: "FRONTEND",
-    label: "Frontend",
-    description: "Component frameworks, scientific visualization libraries, and responsive design systems.",
-    skills: ["React", "Next.js 15", "Tailwind CSS", "KaTeX", "D3.js", "HTML5 Canvas", "Bootstrap"]
+    code: "02",
+    category: "02 — FRONTEND ENGINEERING",
+    label: "Frontend Engineering",
+    description:
+      "Component frameworks, real-time visualization libraries, and responsive styling systems shipped across web applications.",
+    items: [
+      {
+        id: "react",
+        name: "React",
+        categoryId: "frontend",
+        evidenceScope: "project",
+        evidenceProjects: ["operon", "mausam", "sightforge", "memory-in-motion", "axiom", "inkloom", "campus-connect"],
+        evidenceSummary: "Core declarative UI architecture across 7 web repositories including React 19 interfaces."
+      },
+      {
+        id: "nextjs-15",
+        name: "Next.js 15",
+        categoryId: "frontend",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge", "campus-connect"],
+        evidenceSummary: "App Router client applications in SightForge and CampusConnect event discovery."
+      },
+      {
+        id: "tailwind-css",
+        name: "Tailwind CSS",
+        categoryId: "frontend",
+        evidenceScope: "project",
+        evidenceProjects: ["operon", "mausam", "memory-in-motion", "campus-connect"],
+        evidenceSummary: "Design-token utility pipelines powering responsive multi-viewport layouts."
+      },
+      {
+        id: "katex",
+        name: "KaTeX",
+        categoryId: "frontend",
+        evidenceScope: "project",
+        evidenceProjects: ["memory-in-motion"],
+        evidenceSummary: "Browser-native LaTeX equation rendering synced to parameter controls in Memory in Motion."
+      },
+      {
+        id: "d3js",
+        name: "D3.js",
+        categoryId: "frontend",
+        evidenceScope: "project",
+        evidenceProjects: ["memory-in-motion"],
+        evidenceSummary: "Data-driven SVG scales and charts in Memory in Motion and this portfolio's activity heatmap."
+      },
+      {
+        id: "html5-canvas",
+        name: "HTML5 Canvas",
+        categoryId: "frontend",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge"],
+        evidenceSummary: "16:9 atomic CVFrame overlay rendering for bounding boxes and 17-keypoint skeletons in SightForge."
+      }
+    ]
   },
   {
     id: "backend-data",
-    category: "BACKEND & DATA",
+    code: "03",
+    category: "03 — BACKEND & DATA",
     label: "Backend & Data",
-    description: "Server-side runtimes, async Python APIs, relational persistence, and state stores.",
-    skills: ["Node.js", "FastAPI", "Express.js", "PostgreSQL", "MongoDB", "Firebase"]
+    description:
+      "Server-side runtimes, typed HTTP services, relational persistence, and schema validation layers.",
+    items: [
+      {
+        id: "nodejs",
+        name: "Node.js",
+        categoryId: "backend-data",
+        evidenceScope: "project",
+        evidenceProjects: ["operon", "campus-connect"],
+        evidenceSummary: "Event-driven API servers, multi-agent dispatch runtimes, and portfolio SSR/API proxy."
+      },
+      {
+        id: "fastapi",
+        name: "FastAPI",
+        categoryId: "backend-data",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge"],
+        evidenceSummary: "Python asynchronous inference backend serving YOLOv8 and ByteTrack telemetry in SightForge."
+      },
+      {
+        id: "expressjs",
+        name: "Express.js",
+        categoryId: "backend-data",
+        evidenceScope: "project",
+        evidenceProjects: ["operon"],
+        evidenceSummary: "Modular REST routing, HITL approval endpoints, and security middleware in OPERON and portfolio backend."
+      },
+      {
+        id: "postgresql",
+        name: "PostgreSQL",
+        categoryId: "backend-data",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge", "mausam", "inkloom"],
+        evidenceSummary: "Persistent CV track telemetry in SightForge and PLpgSQL database schemas in MAUSAM & Inkloom."
+      },
+      {
+        id: "firebase",
+        name: "Firebase",
+        categoryId: "backend-data",
+        evidenceScope: "repository",
+        evidenceProjects: ["axiom"],
+        evidenceSummary: "Firestore REST persistence, Firebase Auth verification, and security rule enforcement."
+      },
+      {
+        id: "zod-validation",
+        name: "Zod Validation",
+        categoryId: "backend-data",
+        evidenceScope: "repository",
+        evidenceProjects: ["operon", "campus-connect"],
+        evidenceSummary: "Runtime request schema validation across API routes and TypeScript state boundaries."
+      }
+    ]
   },
   {
-    id: "ai-ml",
-    category: "AI / MACHINE LEARNING",
-    label: "AI / Machine Learning",
-    description: "Computer vision detection & pose tracking, multi-agent systems, and mechanistic interpretability.",
-    skills: ["YOLOv8", "ByteTrack", "Multi-Agent HITL", "PyTorch", "Machine Learning", "Deep Learning"]
+    id: "ml-cv",
+    code: "04",
+    category: "04 — MACHINE LEARNING & COMPUTER VISION",
+    label: "Machine Learning & Computer Vision",
+    description:
+      "Object detection, keypoint pose estimation, multi-object identity tracking, and sequence modeling pipelines.",
+    items: [
+      {
+        id: "yolov8",
+        name: "YOLOv8",
+        categoryId: "ml-cv",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge"],
+        evidenceSummary: "COCO Class ID 0 person detector & 17-keypoint pose model with IoU 0.45 NMS in SightForge."
+      },
+      {
+        id: "bytetrack",
+        name: "ByteTrack",
+        categoryId: "ml-cv",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge"],
+        evidenceSummary: "Multi-frame persistent subject identity association across detections in SightForge."
+      },
+      {
+        id: "pytorch",
+        name: "PyTorch",
+        categoryId: "ml-cv",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge", "memory-in-motion"],
+        evidenceSummary: "Neural network tensor execution underlying YOLOv8 inference and sequence memory studies."
+      },
+      {
+        id: "computer-vision",
+        name: "Computer Vision",
+        categoryId: "ml-cv",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge"],
+        evidenceSummary: "End-to-end detection, skeletal pose extraction, NMS thresholding, and frame synchronization."
+      },
+      {
+        id: "machine-learning",
+        name: "Machine Learning",
+        categoryId: "ml-cv",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge", "memory-in-motion"],
+        evidenceSummary: "Applied vision inference pipelines and O(1) vs O(T) sequence modeling analysis."
+      },
+      {
+        id: "deep-learning",
+        name: "Deep Learning",
+        categoryId: "ml-cv",
+        evidenceScope: "project",
+        evidenceProjects: ["sightforge", "memory-in-motion"],
+        evidenceSummary: "Convolutional detection heads, pose keypoint regression, and Hebbian fast-weight interpretability."
+      }
+    ]
   },
   {
     id: "tools",
-    category: "TOOLS",
-    label: "Tools & DevOps",
-    description: "Version control, automated testing, containerization, design tooling, and edge deployment.",
-    skills: ["Git", "GitHub", "Vitest", "Docker", "VS Code", "Figma", "Vercel"]
+    code: "05",
+    category: "05 — DEVELOPMENT TOOLS",
+    label: "Development Tools",
+    description:
+      "Version control, automated testing, containerization, design tooling, and edge deployment workflows.",
+    items: [
+      {
+        id: "git",
+        name: "Git",
+        categoryId: "tools",
+        evidenceScope: "repository",
+        evidenceProjects: ["operon", "mausam", "sightforge", "memory-in-motion", "axiom", "inkloom", "campus-connect", "sayam-solves"],
+        evidenceSummary: "Scoped feature branching, pull request reviews, and commit hygiene across all 8 verified projects."
+      },
+      {
+        id: "github",
+        name: "GitHub",
+        categoryId: "tools",
+        evidenceScope: "repository",
+        evidenceProjects: ["operon", "mausam", "sightforge", "memory-in-motion", "axiom", "inkloom", "campus-connect", "sayam-solves"],
+        evidenceSummary: "Public repository hosting, GitHub Actions telemetry workflows, and pull request verification on @codesbysayam."
+      },
+      {
+        id: "vitest",
+        name: "Vitest",
+        categoryId: "tools",
+        evidenceScope: "project",
+        evidenceProjects: ["campus-connect"],
+        evidenceSummary: "Automated unit and Supertest HTTP integration testing in CampusConnect and this portfolio backend."
+      },
+      {
+        id: "docker",
+        name: "Docker",
+        categoryId: "tools",
+        evidenceScope: "project",
+        evidenceProjects: ["inkloom", "sightforge"],
+        evidenceSummary: "Containerized workspace definitions verified in Inkloom and local service packaging."
+      },
+      {
+        id: "vscode",
+        name: "VS Code",
+        categoryId: "tools",
+        evidenceScope: "toolchain",
+        evidenceProjects: ["operon", "mausam", "sightforge", "memory-in-motion", "axiom", "campus-connect", "sayam-solves"],
+        evidenceSummary: "Primary development IDE for TypeScript, Python/FastAPI debugging, and C++ workflows."
+      },
+      {
+        id: "figma",
+        name: "Figma",
+        categoryId: "tools",
+        evidenceScope: "toolchain",
+        evidenceProjects: ["mausam", "memory-in-motion", "axiom"],
+        evidenceSummary: "Interface layout exploration, spacing hierarchy, and editorial typography prototypes."
+      },
+      {
+        id: "vercel",
+        name: "Vercel",
+        categoryId: "tools",
+        evidenceScope: "project",
+        evidenceProjects: ["operon", "mausam", "memory-in-motion", "axiom", "campus-connect"],
+        evidenceSummary: "Continuous edge preview and production deployments for 5 shipped web applications."
+      }
+    ]
   },
   {
-    id: "core-engineering",
-    category: "CORE ENGINEERING",
-    label: "Core Engineering",
-    description: "Foundational computer science principles, policy governance, complexity bounds, and API integration.",
-    skills: ["Data Structures & Algorithms", "Control Planes & Audit", "API Integration", "Responsive Development", "Version Control", "System Architecture"]
+    id: "core-cs",
+    code: "06",
+    category: "06 — CORE COMPUTER SCIENCE",
+    label: "Core Computer Science",
+    description:
+      "Foundational computer science principles, state-machine governance, complexity bounds, and API integration.",
+    items: [
+      {
+        id: "dsa",
+        name: "Data Structures & Algorithms",
+        categoryId: "core-cs",
+        evidenceScope: "repository",
+        evidenceProjects: ["sayam-solves"],
+        evidenceSummary: "Dynamic programming, binary search, and string algorithms documented in SayamSolves."
+      },
+      {
+        id: "system-architecture",
+        name: "System Architecture",
+        categoryId: "core-cs",
+        evidenceScope: "project",
+        evidenceProjects: ["operon", "axiom", "sightforge", "mausam"],
+        evidenceSummary: "Decoupled client/service boundaries, atomic CV frame contracts, and multi-source telemetry aggregation."
+      },
+      {
+        id: "api-integration",
+        name: "API Integration",
+        categoryId: "core-cs",
+        evidenceScope: "project",
+        evidenceProjects: ["mausam", "sightforge", "operon", "axiom"],
+        evidenceSummary: "Meteorological feeds, FastAPI CV streams, and REST dispatch APIs with resilient fallback caching."
+      },
+      {
+        id: "responsive-web",
+        name: "Responsive Web Development",
+        categoryId: "core-cs",
+        evidenceScope: "project",
+        evidenceProjects: ["mausam", "memory-in-motion", "axiom", "operon", "campus-connect"],
+        evidenceSummary: "Fluid layout grids, clamp() scale responsiveness, and WCAG AA contrast parity from 320px to 2560px."
+      },
+      {
+        id: "control-planes",
+        name: "Control Planes & Audit",
+        categoryId: "core-cs",
+        evidenceScope: "project",
+        evidenceProjects: ["operon", "axiom"],
+        evidenceSummary: "Deterministic HITL approval gates, policy engines, sandbox simulation, and tamper-evident audit chains."
+      },
+      {
+        id: "version-control",
+        name: "Version Control",
+        categoryId: "core-cs",
+        evidenceScope: "repository",
+        evidenceProjects: ["operon", "mausam", "sightforge", "memory-in-motion", "axiom", "inkloom", "campus-connect", "sayam-solves"],
+        evidenceSummary: "Main/master branch governance, pull-request audit history, and reproducible build manifests."
+      }
+    ]
   }
 ];
+
+export const ENGINEERING_STACK_CATEGORIES: EngineeringStackGroup[] = RAW_STACK_GROUPS.map(
+  (group) => ({
+    ...group,
+    skills: group.items.map((item) => item.name)
+  })
+);
+
+export const TOTAL_VERIFIED_TECHNOLOGIES: number = ENGINEERING_STACK_CATEGORIES.reduce(
+  (sum, grp) => sum + grp.items.length,
+  0
+);
+

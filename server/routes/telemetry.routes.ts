@@ -3,6 +3,10 @@ import fs from "fs";
 import path from "path";
 import AdmZip from "adm-zip";
 import { env } from "../config/env.ts";
+import {
+  getCanonicalGitHubTelemetry,
+  LANGUAGE_PALETTE,
+} from "../services/githubTelemetry.ts";
 
 const TELEMETRY_CACHE = {
   github: { timestamp: 0, data: null as any },
@@ -184,18 +188,17 @@ const VERIFIED_GITHUB_BASELINE = {
     },
   ],
   languages: [
-    { name: "TypeScript", percent: 94.5, bytes: 18035088, color: "#3178c6" },
-    { name: "Python", percent: 2.1, bytes: 404953, color: "#3572A5" },
-    { name: "CSS", percent: 1.4, bytes: 265714, color: "#563d7c" },
-    { name: "JavaScript", percent: 0.9, bytes: 178128, color: "#f1e05a" },
-    { name: "HTML", percent: 0.4, bytes: 78193, color: "#e34c26" },
-    { name: "C", percent: 0.4, bytes: 68573, color: "#555555" },
-    { name: "Jupyter Notebook", percent: 0.2, bytes: 33736, color: "#DA5B0B" },
-    { name: "PLpgSQL", percent: 0.1, bytes: 13419, color: "#336791" },
-    { name: "Makefile", percent: 0.0, bytes: 5200, color: "#427819" },
-    { name: "C++", percent: 0.0, bytes: 2037, color: "#f43f5e" },
-    { name: "Dockerfile", percent: 0.0, bytes: 600, color: "#384d54" },
-    { name: "Shell", percent: 0.0, bytes: 569, color: "#89e051" },
+    { name: "TypeScript", percent: 93.8, bytes: 16648487, color: LANGUAGE_PALETTE.TypeScript },
+    { name: "Python", percent: 2.3, bytes: 407336, color: LANGUAGE_PALETTE.Python },
+    { name: "CSS", percent: 1.9, bytes: 337396, color: LANGUAGE_PALETTE.CSS },
+    { name: "JavaScript", percent: 0.9, bytes: 166714, color: LANGUAGE_PALETTE.JavaScript },
+    { name: "HTML", percent: 0.5, bytes: 81176, color: LANGUAGE_PALETTE.HTML },
+    { name: "C", percent: 0.4, bytes: 69249, color: LANGUAGE_PALETTE.C },
+    { name: "Jupyter Notebook", percent: 0.2, bytes: 33736, color: LANGUAGE_PALETTE["Jupyter Notebook"] },
+    { name: "PLpgSQL", percent: 0.03, bytes: 6114, color: LANGUAGE_PALETTE.PLpgSQL },
+    { name: "Makefile", percent: 0.03, bytes: 5200, color: LANGUAGE_PALETTE.Makefile },
+    { name: "C++", percent: 0.01, bytes: 2037, color: LANGUAGE_PALETTE["C++"] },
+    { name: "Shell", percent: 0.003, bytes: 569, color: LANGUAGE_PALETTE.Shell },
   ],
   contributionCalendar: [] as any[],
   isLive: false,
@@ -246,18 +249,7 @@ const VERIFIED_LEETCODE_BASELINE = {
 };
 
 const LANGUAGE_COLOR_MAP: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Python: "#3572A5",
-  CSS: "#563d7c",
-  HTML: "#e34c26",
-  C: "#555555",
-  "Jupyter Notebook": "#DA5B0B",
-  PLpgSQL: "#336791",
-  Makefile: "#427819",
-  "C++": "#f43f5e",
-  Dockerfile: "#384d54",
-  Shell: "#89e051",
+  ...LANGUAGE_PALETTE,
 };
 
 function getLocalGitHubSnapshot(): any {
@@ -404,48 +396,34 @@ export function createTelemetryRouter(): Router {
     }
   });
 
+  router.get("/api/github/telemetry", async (req, res) => {
+    try {
+      const force =
+        req.query.refresh === "1" ||
+        req.query.refresh === "true" ||
+        req.query.force === "1" ||
+        req.query.force === "true";
+
+      const telemetry = await getCanonicalGitHubTelemetry({ force });
+      res.setHeader(
+        "Cache-Control",
+        force ? "no-store" : "public, max-age=180, stale-while-revalidate=600"
+      );
+      return res.json(telemetry);
+    } catch {
+      return res.status(500).json({
+        status: "error",
+        errorMessage: "Unable to load GitHub telemetry right now.",
+      });
+    }
+  });
+
   router.get("/api/github/profile", async (req, res) => {
-    const force = req.query.t !== undefined || req.query.force !== undefined;
-    const snapshot = await getDynamicGitHubSnapshot(force);
-    if (snapshot) {
-      const profile = snapshot.profile || {};
-      const repos = snapshot.repositories || [];
-      const events = snapshot.events || [];
-      const languages = snapshot.languages || {};
-
-      const aggregatedBytes: Record<string, number> = {};
-      for (const repoName of Object.keys(languages)) {
-        const map = languages[repoName] || {};
-        for (const [lang, bytes] of Object.entries(map)) {
-          if (typeof bytes === "number") {
-            aggregatedBytes[lang] = (aggregatedBytes[lang] || 0) + bytes;
-          }
-        }
-      }
-      const totalLangBytes = Object.values(aggregatedBytes).reduce(
-        (a, b) => a + b,
-        0
-      );
-      const formattedLangs = Object.entries(aggregatedBytes)
-        .map(([name, bytes]) => ({
-          name,
-          bytes,
-          percent:
-            totalLangBytes > 0
-              ? Number(((bytes / totalLangBytes) * 100).toFixed(1))
-              : 0,
-          color: LANGUAGE_COLOR_MAP[name] || "#3178c6",
-        }))
-        .sort((a, b) => b.bytes - a.bytes);
-
-      const totalStars = repos.reduce(
-        (sum: number, r: any) => sum + (r.stargazers_count || 0),
-        0
-      );
-      const totalForks = repos.reduce(
-        (sum: number, r: any) => sum + (r.forks_count || 0),
-        0
-      );
+    const force = req.query.t !== undefined || req.query.force !== undefined || req.query.refresh === "1";
+    try {
+      const telemetry = await getCanonicalGitHubTelemetry({ force });
+      const snapshot = getLocalGitHubSnapshot();
+      const events = snapshot?.events || [];
 
       const recentCommits = events
         .filter((ev: any) => ev.type === "PushEvent")
@@ -461,117 +439,117 @@ export function createTelemetryRouter(): Router {
           sha: ev.id ? String(ev.id).slice(0, 7) : "main",
         }));
 
+      const repoMap = new Map<string, any>(
+        Array.isArray(snapshot?.repositories)
+          ? snapshot.repositories.map((r: any) => [r.full_name || r.name, r])
+          : []
+      );
+
       return res.json({
-        username: profile.login || "codesbysayam",
-        name: profile.name || "Sayam Mukherjee",
-        avatarUrl: profile.avatar_url || VERIFIED_GITHUB_BASELINE.avatarUrl,
-        bio: profile.bio || VERIFIED_GITHUB_BASELINE.bio,
+        username: telemetry.username,
+        name: telemetry.name,
+        avatarUrl: telemetry.avatarUrl,
+        bio: telemetry.bio || VERIFIED_GITHUB_BASELINE.bio,
         location: "Kolkata, India",
-        publicRepos: profile.public_repos ?? repos.length,
-        followers: profile.followers ?? 0,
-        following: profile.following ?? 0,
-        totalStars,
-        totalForks,
+        publicRepos: telemetry.totalRepos,
+        followers: snapshot?.profile?.followers ?? 1,
+        following: snapshot?.profile?.following ?? 0,
+        totalStars: telemetry.totalStars,
+        totalForks: telemetry.totalForks,
+        totalCodeBytes: telemetry.totalCodeBytes,
         commitsThisYear: null,
         totalContributionsThisYear: null,
         currentStreak: null,
         longestStreak: null,
-        repositories: repos.map((r: any) => ({
-          name: r.name,
-          fullName: r.full_name,
-          description: r.description || "Public repository by Sayam Mukherjee.",
-          stars: r.stargazers_count || 0,
-          forks: r.forks_count || 0,
-          language: r.language || "TypeScript",
-          url: r.html_url,
-          updatedAt: r.updated_at,
-          topics: r.topics || [],
+        repositories: telemetry.repositories.map((r) => {
+          const snapRepo = repoMap.get(r.fullName) || repoMap.get(r.name);
+          return {
+            name: r.name,
+            fullName: r.fullName,
+            description: snapRepo?.description || "Public repository by Sayam Mukherjee.",
+            stars: r.stars,
+            forks: r.forks,
+            language: r.language || "TypeScript",
+            url: r.url,
+            updatedAt: r.updatedAt,
+            topics: snapRepo?.topics || [],
+          };
+        }),
+        recentCommits: recentCommits.length > 0 ? recentCommits : VERIFIED_GITHUB_BASELINE.recentCommits,
+        languages: telemetry.languages.map((l) => ({
+          name: l.name,
+          bytes: l.bytes,
+          percent: Number(l.percentage.toFixed(l.percentage < 0.1 ? 2 : 1)),
+          formattedPercentage: l.formattedPercentage,
+          color: l.color,
         })),
-        recentCommits,
-        languages: formattedLangs,
         contributionCalendar: [],
-        isLive: true,
-        lastSynced: snapshot.syncedAt
-          ? new Date(snapshot.syncedAt).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-          : "Recently synced",
+        isLive: telemetry.source === "github-api",
+        lastSynced: telemetry.generatedAt,
       });
+    } catch {
+      return res.json(VERIFIED_GITHUB_BASELINE);
     }
-    return res.json(VERIFIED_GITHUB_BASELINE);
   });
 
-  router.get("/api/github/languages", async (_req, res) => {
-    const snapshot = await getDynamicGitHubSnapshot();
-    if (snapshot && snapshot.languages) {
-      const aggregatedBytes: Record<string, number> = {};
-      for (const repoName of Object.keys(snapshot.languages)) {
-        const map = snapshot.languages[repoName] || {};
-        for (const [lang, bytes] of Object.entries(map)) {
-          if (typeof bytes === "number") {
-            aggregatedBytes[lang] = (aggregatedBytes[lang] || 0) + bytes;
-          }
-        }
-      }
-      const totalBytes = Object.values(aggregatedBytes).reduce(
-        (a, b) => a + b,
-        0
-      );
-      const languages = Object.entries(aggregatedBytes)
-        .map(([language, value]) => ({
-          language,
-          bytes: value,
-          percentage:
-            totalBytes > 0 ? Number(((value / totalBytes) * 100).toFixed(1)) : 0,
-          color: LANGUAGE_COLOR_MAP[language] || "#69734A",
-        }))
-        .sort((a, b) => b.bytes - a.bytes);
-
+  router.get("/api/github/languages", async (req, res) => {
+    try {
+      const force = req.query.refresh === "1" || req.query.force !== undefined;
+      const telemetry = await getCanonicalGitHubTelemetry({ force });
       return res.json({
-        languages,
-        totalBytes,
-        source: snapshot.source || "github-live",
-        lastSynced: snapshot.syncedAt || new Date().toISOString(),
+        languages: telemetry.languages.map((l) => ({
+          language: l.name,
+          bytes: l.bytes,
+          percentage: Number(l.percentage.toFixed(l.percentage < 0.1 ? 2 : 1)),
+          formattedPercentage: l.formattedPercentage,
+          repoCount: l.repoCount,
+          repos: l.repos,
+          color: l.color,
+        })),
+        totalBytes: telemetry.totalCodeBytes,
+        source: telemetry.source,
+        lastSynced: telemetry.generatedAt,
+      });
+    } catch {
+      const fallbackResult = VERIFIED_GITHUB_BASELINE.languages.map((l) => ({
+        language: l.name,
+        bytes: l.bytes,
+        percentage: l.percent,
+        color: l.color,
+      }));
+      return res.json({
+        languages: fallbackResult,
+        totalBytes: 17758014,
+        source: "verified-baseline",
+        lastSynced: "Verified Baseline",
       });
     }
-
-    const fallbackResult = VERIFIED_GITHUB_BASELINE.languages.map((l) => ({
-      language: l.name,
-      bytes: l.bytes,
-      percentage: l.percent,
-      color: l.color,
-    }));
-    return res.json({
-      languages: fallbackResult,
-      totalBytes: 19086210,
-      source: "verified-baseline",
-      lastSynced: "Verified Baseline",
-    });
   });
 
   router.get("/api/github-stats", async (_req, res) => {
     try {
-      const snapshot = await getDynamicGitHubSnapshot();
-      const repos = snapshot.repositories || [];
-      const totalStars = snapshot.totalStars ?? 6;
-      const totalForks = snapshot.totalForks ?? 0;
+      const telemetry = await getCanonicalGitHubTelemetry();
+      const snap = getLocalGitHubSnapshot();
+      const snapMap = new Map<string, any>(
+        Array.isArray(snap?.repositories)
+          ? snap.repositories.map((r: any) => [r.name, r])
+          : []
+      );
       return res.json({
-        repositories: repos.length || 11,
-        stars: totalStars,
-        forks: totalForks,
+        repositories: telemetry.totalRepos || 11,
+        stars: telemetry.totalStars,
+        forks: telemetry.totalForks,
+        totalCodeBytes: telemetry.totalCodeBytes,
         commitsThisYear: null,
-        languages: [
-          { name: "TypeScript", percent: 94.5 },
-          { name: "Python", percent: 2.1 },
-          { name: "CSS", percent: 1.4 },
-          { name: "JavaScript", percent: 0.9 },
-          { name: "HTML", percent: 0.4 },
-        ],
-        pinnedRepos: repos.slice(0, 4).map((r: any) => ({
+        languages: telemetry.languages.slice(0, 6).map((l) => ({
+          name: l.name,
+          percent: Number(l.percentage.toFixed(l.percentage < 0.1 ? 2 : 1)),
+          bytes: l.bytes,
+        })),
+        pinnedRepos: telemetry.repositories.slice(0, 4).map((r) => ({
           name: r.name,
-          stars: r.stargazers_count || 0,
-          description: r.description || "",
+          stars: r.stars,
+          description: snapMap.get(r.name)?.description || "",
           language: r.language || "TypeScript",
         })),
       });
@@ -580,7 +558,7 @@ export function createTelemetryRouter(): Router {
         repositories: 11,
         stars: 6,
         forks: 0,
-        languages: [{ name: "TypeScript", percent: 100 }],
+        languages: [{ name: "TypeScript", percent: 93.8 }],
         pinnedRepos: [],
       });
     }

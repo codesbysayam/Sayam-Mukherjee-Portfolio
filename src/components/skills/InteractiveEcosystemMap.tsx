@@ -41,9 +41,9 @@ const ECOSYSTEM_CHAINS: EcoNode[] = [
     domain: "Civic & Climate Telemetry",
     projectId: "mausam",
     projectName: "MAUSAM",
-    repoName: "codesbysayam/mausam_sample",
-    repoUrl: "https://github.com/codesbysayam/mausam_sample",
-    evidence: "SIH 2026 platform unifying Doppler nowcasting, NAQI, INCOIS & SACHET (canonical mausam_sample)."
+    repoName: "codesbysayam/mausam_sih-26",
+    repoUrl: "https://github.com/codesbysayam/mausam_sih-26",
+    evidence: "SIH 2026 platform unifying Doppler nowcasting, NAQI, INCOIS & SACHET (canonical mausam_sih-26)."
   },
   {
     id: "sightforge-chain",

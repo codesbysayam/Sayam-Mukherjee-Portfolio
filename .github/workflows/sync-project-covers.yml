@@ -1,0 +1,42 @@
+name: Sync Live Project Covers
+
+on:
+  schedule:
+    - cron: "0 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  capture-covers:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies & Chromium
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Capture live project covers
+        run: npm run capture:covers
+
+      - name: Commit updated project covers
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/images/project-covers
+          if ! git diff --cached --quiet; then
+            git commit -m "chore: refresh live project cover captures"
+            git push
+          else
+            echo "No project cover changes detected."
+          fi

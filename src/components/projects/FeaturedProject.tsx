@@ -52,12 +52,22 @@ function FeaturedProjectComponent({
   const media = useMemo(() => getProjectMedia(project.id), [project.id]);
   const lifecycle = useMemo(() => computeProjectLifecycle(project, repo), [project, repo]);
   const [shared, setShared] = useState(false);
+  const [resolvedSrc, setResolvedSrc] = useState(media.src);
   const [imgError, setImgError] = useState(false);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
+    setResolvedSrc(media.src);
     setImgError(false);
-  }, [project.id]);
+  }, [media.src, project.id]);
+
+  const handleImageError = () => {
+    if (media.fallbackSrc && resolvedSrc !== media.fallbackSrc) {
+      setResolvedSrc(media.fallbackSrc);
+      return;
+    }
+    setImgError(true);
+  };
 
   const handleShare = async () => {
     const shareUrl = project.liveUrl || project.githubUrl;
@@ -282,11 +292,13 @@ function FeaturedProjectComponent({
               >
                 {!imgError ? (
                   <img
-                    src={media.src}
+                    src={resolvedSrc}
                     alt={media.alt}
                     referrerPolicy="no-referrer"
-                    onError={() => setImgError(true)}
-                    className="project-screenshot w-full aspect-[16/10] h-full object-cover object-top"
+                    onError={handleImageError}
+                    className={`project-screenshot w-full aspect-[16/10] h-full ${
+                      media.objectFit === "contain" ? "!object-contain bg-[#151713]" : "object-cover"
+                    } ${media.objectPosition || "object-top"}`}
                   />
                 ) : (
                   <div className="w-full aspect-[16/10] flex items-center justify-center p-6 text-center bg-[#151713]">

@@ -979,18 +979,17 @@ export const VERIFIED_GITHUB_FALLBACK: GitHubStatsData = {
     }
   ],
   languages: [
-    { name: "TypeScript", percent: 94.5, bytes: 18035088, color: "#3178c6" },
-    { name: "Python", percent: 2.1, bytes: 404953, color: "#3572A5" },
-    { name: "CSS", percent: 1.4, bytes: 265714, color: "#563d7c" },
-    { name: "JavaScript", percent: 0.9, bytes: 178128, color: "#f1e05a" },
-    { name: "HTML", percent: 0.4, bytes: 78193, color: "#e34c26" },
-    { name: "C", percent: 0.4, bytes: 68573, color: "#555555" },
-    { name: "Jupyter Notebook", percent: 0.2, bytes: 33736, color: "#DA5B0B" },
-    { name: "PLpgSQL", percent: 0.1, bytes: 13419, color: "#336791" },
-    { name: "Makefile", percent: 0.0, bytes: 5200, color: "#427819" },
-    { name: "C++", percent: 0.0, bytes: 2037, color: "#f43f5e" },
-    { name: "Dockerfile", percent: 0.0, bytes: 600, color: "#384d54" },
-    { name: "Shell", percent: 0.0, bytes: 569, color: "#89e051" }
+    { name: "TypeScript", percent: 93.8, bytes: 16648487, color: "#69734A" },
+    { name: "Python", percent: 2.3, bytes: 407336, color: "#3E4A35" },
+    { name: "CSS", percent: 1.9, bytes: 337396, color: "#8D947E" },
+    { name: "JavaScript", percent: 0.9, bytes: 166714, color: "#A9C52F" },
+    { name: "HTML", percent: 0.5, bytes: 81176, color: "#585B52" },
+    { name: "C", percent: 0.4, bytes: 69249, color: "#777A70" },
+    { name: "Jupyter Notebook", percent: 0.2, bytes: 33736, color: "#B5B8AA" },
+    { name: "PLpgSQL", percent: 0.03, bytes: 6114, color: "#4D5E10" },
+    { name: "Makefile", percent: 0.03, bytes: 5200, color: "#51564A" },
+    { name: "C++", percent: 0.01, bytes: 2037, color: "#C7E34A" },
+    { name: "Shell", percent: 0.003, bytes: 569, color: "#8EA82A" }
   ],
   contributionCalendar: [],
   isLive: true,
@@ -1008,11 +1007,16 @@ export async function fetchGitHubStats(force = false): Promise<GitHubStatsData> 
     const events = snapshot.events || [];
     const languages = snapshot.languages || {};
 
+    const forkedFullNames = new Set(
+      repos.filter((r) => r.fork).map((r) => r.full_name || `codesbysayam/${r.name}`)
+    );
+
     const aggregatedBytes: Record<string, number> = {};
     for (const repoName of Object.keys(languages)) {
+      if (forkedFullNames.has(repoName)) continue;
       const map = languages[repoName] || {};
       for (const [lang, bytes] of Object.entries(map)) {
-        if (typeof bytes === "number") {
+        if (typeof bytes === "number" && bytes > 0) {
           aggregatedBytes[lang] = (aggregatedBytes[lang] || 0) + bytes;
         }
       }
@@ -1020,12 +1024,16 @@ export async function fetchGitHubStats(force = false): Promise<GitHubStatsData> 
     const totalLangBytes = Object.values(aggregatedBytes).reduce((a, b) => a + b, 0);
 
     const formattedLangs: GitHubLanguageShare[] = Object.entries(aggregatedBytes)
-      .map(([name, bytes]) => ({
-        name,
-        bytes,
-        percent: totalLangBytes > 0 ? Number(((bytes / totalLangBytes) * 100).toFixed(1)) : 0,
-        color: LANGUAGE_COLOR_MAP[name] || "#69734A"
-      }))
+      .map(([name, bytes]) => {
+        const rawPct = totalLangBytes > 0 ? (bytes / totalLangBytes) * 100 : 0;
+        const precision = rawPct < 0.01 ? 3 : rawPct < 0.1 ? 2 : 1;
+        return {
+          name,
+          bytes,
+          percent: Number(rawPct.toFixed(precision)),
+          color: LANGUAGE_COLOR_MAP[name] || "#69734A"
+        };
+      })
       .sort((a, b) => b.bytes - a.bytes);
 
     const pushEvents = events.filter(e => e.type === "PushEvent");
@@ -1105,15 +1113,19 @@ export async function fetchGitHubLanguages(force = false): Promise<GitHubLanguag
   try {
     const snapshot = await loadGitHubSnapshot(force);
     if (snapshot && snapshot.languages) {
+      const forkedNames = new Set(
+        (snapshot.repositories || [])
+          .filter((r: any) => Boolean(r.fork))
+          .map((r: any) => r.full_name || `codesbysayam/${r.name}`)
+      );
       const aggregatedBytes: Record<string, number> = {};
       for (const [key, val] of Object.entries(snapshot.languages)) {
-        if (typeof val === "number") {
-          // Flat map: { TypeScript: 145000, Python: 31000 }
+        if (forkedNames.has(key)) continue;
+        if (typeof val === "number" && val > 0) {
           aggregatedBytes[key] = (aggregatedBytes[key] || 0) + val;
         } else if (val && typeof val === "object") {
-          // Nested map: { "codesbysayam/Operon": { TypeScript: 384000 } }
           for (const [lang, bytes] of Object.entries(val)) {
-            if (typeof bytes === "number") {
+            if (typeof bytes === "number" && bytes > 0) {
               aggregatedBytes[lang] = (aggregatedBytes[lang] || 0) + bytes;
             }
           }
@@ -1121,12 +1133,16 @@ export async function fetchGitHubLanguages(force = false): Promise<GitHubLanguag
       }
       const totalBytes = Object.values(aggregatedBytes).reduce((a, b) => a + b, 0);
       const languages = Object.entries(aggregatedBytes)
-        .map(([language, value]) => ({
-          language,
-          bytes: value,
-          percentage: totalBytes > 0 ? Number(((value / totalBytes) * 100).toFixed(1)) : 0,
-          color: LANGUAGE_COLOR_MAP[language] || "#69734A"
-        }))
+        .map(([language, value]) => {
+          const rawPct = totalBytes > 0 ? (value / totalBytes) * 100 : 0;
+          const precision = rawPct < 0.01 ? 3 : rawPct < 0.1 ? 2 : 1;
+          return {
+            language,
+            bytes: value,
+            percentage: Number(rawPct.toFixed(precision)),
+            color: LANGUAGE_COLOR_MAP[language] || "#69734A"
+          };
+        })
         .sort((a, b) => b.bytes - a.bytes);
 
       return {
@@ -1141,21 +1157,13 @@ export async function fetchGitHubLanguages(force = false): Promise<GitHubLanguag
   }
 
   return {
-    languages: [
-      { language: "TypeScript", bytes: 18035088, percentage: 94.5, color: "#3178c6" },
-      { language: "Python", bytes: 404953, percentage: 2.1, color: "#3572A5" },
-      { language: "CSS", bytes: 265714, percentage: 1.4, color: "#563d7c" },
-      { language: "JavaScript", bytes: 178128, percentage: 0.9, color: "#f1e05a" },
-      { language: "HTML", bytes: 78193, percentage: 0.4, color: "#e34c26" },
-      { language: "C", bytes: 68573, percentage: 0.4, color: "#555555" },
-      { language: "Jupyter Notebook", bytes: 33736, percentage: 0.2, color: "#DA5B0B" },
-      { language: "PLpgSQL", bytes: 13419, percentage: 0.1, color: "#336791" },
-      { language: "Makefile", bytes: 5200, percentage: 0.0, color: "#427819" },
-      { language: "C++", bytes: 2037, percentage: 0.0, color: "#f43f5e" },
-      { language: "Dockerfile", bytes: 600, percentage: 0.0, color: "#384d54" },
-      { language: "Shell", bytes: 569, percentage: 0.0, color: "#89e051" }
-    ],
-    totalBytes: 19086210,
+    languages: VERIFIED_GITHUB_FALLBACK.languages.map((l) => ({
+      language: l.name,
+      bytes: l.bytes,
+      percentage: l.percent,
+      color: l.color || "#69734A"
+    })),
+    totalBytes: 17758014,
     source: "verified-baseline",
     lastSynced: "Verified Baseline"
   };

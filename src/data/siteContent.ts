@@ -218,9 +218,9 @@ export const PROJECTS: readonly ProjectContent[] = [
     title: "MAUSAM",
     subtitle: "Weather Intelligence, Doppler Nowcasting & Civic Hazard Platform",
     shortDescription:
-      "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM AI.",
+      "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM.",
     description:
-      "Built for Smart India Hackathon (SIH 2026) with Team ALGNITE, MAUSAM consolidates hyper-local weather telemetry, Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality indices, INCOIS marine advisories, and Ask MAUSAM AI guidance (active repo: codesbysayam/mausam_sih-26; earlier snapshot: mausam_sample).",
+      "Built for Smart India Hackathon (SIH 2026) with Team ALGNITE, MAUSAM consolidates hyper-local weather telemetry, Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality indices, INCOIS marine advisories, and Ask MAUSAM guidance (active repo: codesbysayam/mausam_sih-26; earlier snapshot: mausam_sample).",
     whyItExists:
       "Weather, air quality, coastal tide, and disaster warnings are fragmented across separate portals; MAUSAM unifies them for citizens, farmers, and coastal communities.",
     whatIBuilt:
@@ -231,7 +231,7 @@ export const PROJECTS: readonly ProjectContent[] = [
     status: "Live · SIH 2026",
     statusType: "hackathon",
     technologies: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "C", "PLpgSQL", "Vercel"],
-    techStack: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "Ask MAUSAM AI"],
+    techStack: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "Ask MAUSAM"],
     tags: ["SIH 2026", "Team ALGNITE", "Doppler Nowcasting", "NAQI / INCOIS", "SACHET / NDMA"],
     repository: "mausam_sih-26",
     githubRepoName: "mausam_sih-26",

@@ -74,7 +74,7 @@ export default function CodingProfiles() {
             onClick={() => setActiveTab("github")}
             className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer ${
               activeTab === "github"
-                ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D]"
+                ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
             }`}
           >
@@ -95,7 +95,7 @@ export default function CodingProfiles() {
             onClick={() => setActiveTab("leetcode")}
             className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer ${
               activeTab === "leetcode"
-                ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D]"
+                ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
             }`}
           >
@@ -118,7 +118,7 @@ export default function CodingProfiles() {
             onClick={() => setActiveTab("codolio")}
             className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer group ${
               activeTab === "codolio"
-                ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D]"
+                ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
             }`}
           >
@@ -139,7 +139,7 @@ export default function CodingProfiles() {
             onClick={() => setActiveTab("linkedin")}
             className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer group ${
               activeTab === "linkedin"
-                ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D]"
+                ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
             }`}
           >

@@ -1,5 +1,5 @@
 import React, { memo } from "react";
-import { Bot, RotateCcw, X } from "lucide-react";
+import { Compass, RotateCcw, X } from "lucide-react";
 
 interface AssistantHeaderProps {
   onClear: () => void;
@@ -16,7 +16,7 @@ export const AssistantHeader = memo(function AssistantHeader({
     <header className="assistant-header flex items-center justify-between px-3.5 sm:px-4 py-2.5 sm:py-3 border-b border-[var(--border)] bg-[var(--surface-2)]">
       <div className="flex items-center gap-2.5 min-w-0">
         <div className="flex items-center justify-center w-8 h-8 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)] shrink-0">
-          <Bot className="w-4 h-4" />
+          <Compass className="w-4 h-4" />
         </div>
         <div className="min-w-0 flex flex-col justify-center">
           <h2
@@ -26,7 +26,7 @@ export const AssistantHeader = memo(function AssistantHeader({
             Sayam&apos;s Guide
           </h2>
           <div className="flex items-center gap-1.5 text-[11px] text-[var(--text-muted)] mt-1 leading-none font-mono">
-            <span className="truncate">Portfolio Assistant</span>
+            <span className="truncate">Portfolio Guide</span>
             <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>
             <span className="text-[var(--accent)] font-semibold">Ready</span>
           </div>

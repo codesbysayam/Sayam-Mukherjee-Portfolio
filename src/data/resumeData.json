@@ -73,7 +73,7 @@
       "period": "Aug 2026",
       "role": "Full-Stack & Agent Architecture",
       "description": "Multi-agent operations platform coordinating Support, Finance, HR, and Ops agents behind Human-in-the-Loop approval checkpoints and audit logs.",
-      "technologies": ["TypeScript", "React", "Node.js", "Express", "Multi-Agent AI", "Gemini API"],
+      "technologies": ["TypeScript", "React", "Node.js", "Express", "Multi-Agent Systems", "REST APIs"],
       "sourceUrl": "https://github.com/codesbysayam/Operon",
       "demoUrl": "https://operonpro.vercel.app"
     },
@@ -83,7 +83,7 @@
       "subtitle": "Weather Intelligence, Doppler Nowcasting & Civic Hazards",
       "period": "Aug 2026",
       "role": "Frontend & Systems Integration (Team ALGNITE)",
-      "description": "Unified Doppler nowcasting, SACHET/NDMA civic alerts, CPCB NAQI, INCOIS marine state, and Ask MAUSAM AI in canonical repo mausam_sample.",
+      "description": "Unified Doppler nowcasting, SACHET/NDMA civic alerts, CPCB NAQI, INCOIS marine state, and Ask MAUSAM in canonical repo mausam_sample.",
       "technologies": ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "PLpgSQL"],
       "sourceUrl": "https://github.com/codesbysayam/mausam_sample",
       "demoUrl": "https://mausamgovt.vercel.app"

@@ -40,7 +40,7 @@ The repository is organised around a central content/data layer, reusable React 
 1. Present selected engineering work with accurate descriptions, technology context, source links, and live demonstrations where available.
 2. Provide a responsive experience across desktop, tablet, and mobile.
 3. Keep project, profile, credential, and journal content maintainable in source-controlled data modules.
-4. Provide server-side endpoints for contact submissions, portfolio data, certificates, telemetry, and the portfolio assistant.
+4. Provide server-side endpoints for contact submissions, portfolio data, certificates, telemetry, and the deterministic portfolio guide.
 5. Display GitHub activity through generated snapshots and server-side telemetry rather than requiring every visitor to call GitHub directly.
 
 ## Routes and features
@@ -83,7 +83,7 @@ A not-found view and protected administrative functionality are also present. Ro
 - `src/components/skills/` — skills, stack, evidence, and technology visualisations.
 - `src/components/ecosystem/` — ecosystem page.
 - `src/components/journal/` — journal cards, filters, and listing components.
-- `src/components/assistant/` — portfolio assistant interface.
+- `src/components/assistant/` — deterministic portfolio guide interface.
 - `src/components/layout/` — full-screen navigation.
 - `src/components/common/` — shared navigation, modal, card, reading-progress, and utility components.
 - `src/pages/` — journal detail, legal, and not-found views.
@@ -151,13 +151,13 @@ Route handlers live under `server/routes/` and are mounted by `server/app.ts`.
 | `/api/testimonials` | POST | Testimonial submission |
 | `/api/analytics/visit` | POST | Visit analytics |
 | `/api/admin/*` | GET/POST | Administrative authentication and protected operations |
+| `/api/github/telemetry` | GET | Canonical unified GitHub repository, size, star/fork, and language byte telemetry |
 | `/api/github/*` | GET | GitHub profile, repository, language, event, and pulse telemetry |
-| `/api/github-stats` | GET | GitHub statistics |
+| `/api/github-stats` | GET | Canonical GitHub statistics summary |
 | `/api/leetcode/profile` | GET | LeetCode profile data |
 | `/api/codolio/profile` | GET | Codolio profile data |
 | `/api/export-project` | GET | Project export response |
-| `/api/assistant` | POST | Portfolio assistant endpoint |
-| `/api/gemini/chat` | POST | Deterministic chat response endpoint in the current server app |
+| `/api/assistant` | POST | Deterministic knowledge-grounded Portfolio Guide endpoint |
 | `/api/youtube/channels` | GET | YouTube channel data |
 
 Consult each route file for request schemas, authentication requirements, response fields, and current behaviour. This table is a navigation aid, not a replacement for route contracts.
@@ -178,13 +178,13 @@ When changing project media, confirm that the screenshot belongs to the correct 
 
 ## GitHub data pipeline
 
-GitHub information is handled through generated snapshots and server-side telemetry:
+GitHub information is handled through a canonical server-side telemetry pipeline and generated fallback snapshots:
 
-- `scripts/sync-github.mjs` fetches public GitHub profile, repository, language, and activity data for `codesbysayam`.
-- `public/data/github.json` is the primary generated snapshot.
-- `public/github-data.json` is a compatibility snapshot.
-- `src/services/github.ts`, `src/services/githubSnapshot.ts`, `src/lib/github.ts`, `src/lib/githubCache.ts`, and `src/lib/githubSnapshot.ts` provide data access and cache helpers.
-- `src/hooks/useGithub.ts` and related hooks expose GitHub data to UI components.
+- `server/services/githubTelemetry.ts` exposes the unified telemetry builder, SSRF-checked GitHub API fetcher, `Link` pagination, 15-minute server cache (with a 30-second manual refresh cooldown), and sub-0.1% percentage formatter (`<0.01%` precision).
+- `GET /api/github/telemetry` serves the canonical payload consumed by both the Projects GitHub Telemetry section (`ProjectStatsOverview`) and the Skills Language Composition section (`CodebaseLanguageDistribution`), alongside aligned `/api/github/languages` and `/api/github-stats` routes.
+- **Repository & Language Filtering Policy:** All 11 public repositories appear in **Repository Activity**, whereas **Language Composition** aggregates source bytes exclusively across owned non-fork repositories (`10` owned repos; public fork `inkloom` is excluded from owned code totals).
+- `scripts/sync-github.mjs` refreshes `public/data/github.json` and `public/github-data.json` fallback snapshots.
+- `src/services/githubTelemetry.ts` and `src/hooks/useGitHubTelemetry.ts` synchronize client views onto the shared telemetry model with automatic fallback to `/data/github.json`.
 - `.github/workflows/sync-github.yml` schedules an hourly sync and supports manual dispatch. It uses the workflow's `GITHUB_TOKEN` and commits changed snapshot files.
 
 Visitors do not need a browser-side GitHub token for static snapshot display. Keep write-capable credentials in GitHub Actions secrets or server-side environment configuration; never expose them in frontend code or public assets.
@@ -211,7 +211,7 @@ Visitors do not need a browser-side GitHub token for static snapshot display. Ke
 - Firebase client SDK and Firebase Admin SDK
 - Firestore-backed repositories and persistence helpers
 - Zod request validation
-- Google GenAI SDK for the optional server-side assistant integration
+- Deterministic portfolio knowledge engine
 - Vercel serverless adapter and Vercel Analytics
 
 ### Tooling
@@ -243,6 +243,8 @@ Visitors do not need a browser-side GitHub token for static snapshot display. Ke
 ├── schema/
 │   └── certificates.sql            # Certificate schema reference
 ├── scripts/
+│   ├── capture-project-covers.mjs  # SSRF-safe live project cover capture
+│   ├── project-cover-targets.json  # Public deployment URLs for cover capture
 │   ├── preflight.mjs               # Project validation pipeline
 │   ├── sync-github.mjs             # GitHub snapshot generator
 │   └── generate_build_manifest.js  # Build manifest generator
@@ -326,14 +328,13 @@ The checked-in `.env.example` currently documents:
 
 | Variable | Purpose | Required for basic frontend build? |
 |---|---|---:|
-| `GEMINI_API_KEY` | Optional server-side Gemini assistant integration | No |
 | `APP_URL` | Canonical application origin | No |
 
 Other runtime values read by `server/config/env.ts` include `PORT`, `DEFAULT_APP_PORT`, `NODE_ENV`, `DISABLE_HMR`, `VERCEL`, and `YOUTUBE_API_KEY`, where applicable.
 
 Firebase applet configuration is read from `firebase-applet-config.json`, not from `.env.example`. Startup diagnostics check for the Firebase project ID and API key when starting the non-serverless server.
 
-**Frontend-only design and animation changes should not introduce mandatory API keys.** Do not add a Gemini, Resend, SMTP, or other provider requirement unless the change genuinely introduces that backend integration.
+**Frontend-only design and animation changes should not introduce mandatory API keys.** Do not add external AI, Resend, SMTP, or other provider requirements unless the change genuinely introduces that backend integration.
 
 ## Commands
 
@@ -345,6 +346,7 @@ Firebase applet configuration is read from `firebase-applet-config.json`, not fr
 | `npm run lint` | Run `tsc --noEmit` (configured TypeScript check) |
 | `npm run preflight` | Run the preflight validation pipeline |
 | `npm run sync:github` | Refresh GitHub snapshot JSON files |
+| `npm run capture:covers` | Capture live project cover screenshots with Playwright |
 | `npm run manifest` | Generate build manifest |
 | `npm run validate:data` | Run Python portfolio data validator |
 | `npm run build:c` | Compile optional C metrics utility |
@@ -355,6 +357,7 @@ Firebase applet configuration is read from `firebase-applet-config.json`, not fr
 Run checks relevant to the change:
 
 ```bash
+npx vitest run
 npm run lint
 npm run validate:data
 npm run build
@@ -366,7 +369,7 @@ For the broader preflight pipeline:
 npm run preflight
 ```
 
-The repository includes `tests/api.security.test.ts` and Vitest/Supertest dependencies. Check the current test configuration and available scripts before assuming a dedicated test command exists.
+Automated Vitest suites in `tests/api.security.test.ts` and `tests/github.telemetry.test.ts` cover API authorization/validation and canonical GitHub telemetry calculation/cross-endpoint consistency.
 
 For UI and motion changes, also verify:
 

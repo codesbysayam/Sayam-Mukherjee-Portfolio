@@ -29,7 +29,7 @@ const PROJECT_EVIDENCE_DATA: EvidenceRow[] = [
     projectTitle: "MAUSAM",
     projectSubtitle: "Weather Intelligence (SIH 2026)",
     skills: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "PLpgSQL"],
-    evidence: "Unified Doppler nowcasting, SACHET/NDMA alerts, CPCB NAQI, INCOIS marine state, and Ask MAUSAM AI in active repo codesbysayam/mausam_sih-26 (alongside SIH snapshot mausam_sample).",
+    evidence: "Unified Doppler nowcasting, SACHET/NDMA alerts, CPCB NAQI, INCOIS marine state, and Ask MAUSAM in active repo codesbysayam/mausam_sih-26 (alongside SIH snapshot mausam_sample).",
     githubUrl: "https://github.com/codesbysayam/mausam_sih-26",
     liveUrl: "https://mausamgovt.vercel.app",
     statusBadge: "Live · SIH 2026"

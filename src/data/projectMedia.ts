@@ -10,22 +10,27 @@ import portfolioImg from "../assets/images/og_preview_image_1789846807253.jpg";
 
 export interface ProjectMediaEntry {
   src: string;
+  fallbackSrc?: string;
   alt: string;
   caption: string;
   aspect: string;
+  objectFit?: "cover" | "contain";
+  objectPosition?: string;
   isMissing?: boolean;
 }
 
 export const PROJECT_MEDIA: Record<string, ProjectMediaEntry> = {
   operon: {
-    src: operonImg,
+    src: "/images/project-covers/operon.jpg",
+    fallbackSrc: operonImg,
     alt: "OPERON Control Center multi-agent task dispatcher across Support, Finance, HR, and Ops with human-in-the-loop approval gates",
     caption: "Live production interface: Multi-agent HITL approval state machine (operonpro.vercel.app)",
     aspect: "16:10",
   },
   mausam: {
-    src: mausamImg,
-    alt: "MAUSAM 3D atmospheric intelligence map with Indian stations, wind vectors, Doppler nowcasting, and Ask MAUSAM AI",
+    src: "/images/project-covers/mausam.jpg",
+    fallbackSrc: mausamImg,
+    alt: "MAUSAM 3D atmospheric intelligence map with Indian stations, wind vectors, Doppler nowcasting, and Ask MAUSAM",
     caption: "Live deployment: SIH 2026 atmospheric & hazard platform by Team ALGNITE (mausamgovt.vercel.app)",
     aspect: "16:10",
   },
@@ -36,25 +41,29 @@ export const PROJECT_MEDIA: Record<string, ProjectMediaEntry> = {
     aspect: "16:10",
   },
   "memory-in-motion": {
-    src: memoryInMotionImg,
+    src: "/images/project-covers/memory-in-motion.jpg",
+    fallbackSrc: memoryInMotionImg,
     alt: "Memory in Motion visual research essay contrasting fixed-size recurrent memory and Hebbian fast weights",
     caption: "Live deployment: DataForge 2026 IIT Kharagpur mechanistic lab (memoryinmotion.vercel.app)",
     aspect: "16:10",
   },
   axiom: {
-    src: axiomImg,
+    src: "/images/project-covers/axiom.jpg",
+    fallbackSrc: axiomImg,
     alt: "AXIOM autonomous operations control plane with deterministic policy engine, sandbox simulation, and audit chain",
     caption: "Live deployment: WCC Launchpad 30 autonomous operations control plane (axiomwcc.vercel.app)",
     aspect: "16:10",
   },
   inkloom: {
-    src: inkloomImg,
+    src: "/images/project-covers/inkloom.jpg",
+    fallbackSrc: inkloomImg,
     alt: "INKLOOM constructed AI logo design and geometric composition system landing workspace",
     caption: "Live early-access workspace: Constructed AI logo systems (inkloom.art · forked master branch)",
     aspect: "16:10",
   },
   "campus-connect": {
-    src: campusConnectImg,
+    src: "/images/project-covers/campus-connect.jpg",
+    fallbackSrc: campusConnectImg,
     alt: "CampusConnect student event discovery catalog showing Hack the Campus, seat counters, and filters",
     caption: "Live deployment: College event discovery & organizer dashboard (campusconnect1273.vercel.app)",
     aspect: "16:10",

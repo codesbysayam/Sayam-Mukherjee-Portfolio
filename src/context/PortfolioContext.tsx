@@ -260,7 +260,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
     if (metaThemeColor) {
       metaThemeColor.setAttribute(
         "content",
-        t === "light" ? "#F4F4ED" : "#20231D"
+        t === "light" ? "#F2F1E9" : "#1F241D"
       );
     }
   };
@@ -319,7 +319,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const savedTheme = (localStorage.getItem("sayam_theme") ||
       localStorage.getItem("theme")) as "dark" | "light" | null;
-    const resolvedTheme = savedTheme === "dark" ? "dark" : "light";
+    const resolvedTheme = savedTheme === "light" ? "light" : "dark";
     setTheme(resolvedTheme);
     applyTheme(resolvedTheme);
 

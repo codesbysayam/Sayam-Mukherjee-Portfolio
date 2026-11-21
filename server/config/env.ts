@@ -87,9 +87,6 @@ export const env = {
   },
 
   // Lazy optional integrations
-  get geminiApiKey(): string {
-    return (process.env.GEMINI_API_KEY || "").trim();
-  },
   get youtubeApiKey(): string {
     return (process.env.YOUTUBE_API_KEY || "").trim();
   },

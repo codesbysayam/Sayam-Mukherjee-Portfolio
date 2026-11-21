@@ -164,9 +164,9 @@ export const PROJECTS: ProjectItem[] = [
     title: "MAUSAM",
     subtitle: "Weather Intelligence, Doppler Nowcasting & Civic Hazard Platform",
     shortDescription:
-      "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM AI.",
+      "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, and Ask MAUSAM.",
     longDescription:
-      "Built for Smart India Hackathon (SIH 2026) with Team ALGNITE, MAUSAM consolidates hyper-local weather telemetry, Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality indices, INCOIS marine & coastal advisories, and agrometeorological soil/crop metrics into a single responsive interface supplemented by Ask MAUSAM AI.",
+      "Built for Smart India Hackathon (SIH 2026) with Team ALGNITE, MAUSAM consolidates hyper-local weather telemetry, Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality indices, INCOIS marine & coastal advisories, and agrometeorological soil/crop metrics into a single responsive interface supplemented by Ask MAUSAM.",
     problem:
       "Critical meteorological, air-quality, coastal tide, and disaster warnings are fragmented across disconnected portals (IMD, CPCB, INCOIS, SACHET), creating friction for farmers, fishermen, and citizens during severe weather.",
     solution:
@@ -181,7 +181,7 @@ export const PROJECTS: ProjectItem[] = [
       "Multi-domain weather dashboard covering atmospheric forecasts, Doppler nowcasting & UV",
       "Civic hazard & environmental layer aggregating SACHET/NDMA alerts & CPCB NAQI metrics",
       "Maritime & agricultural modules surfacing INCOIS coastal states & soil moisture advisories",
-      "Ask MAUSAM AI query interface translating raw meteorological telemetry into plain advisories",
+      "Ask MAUSAM query interface translating raw meteorological telemetry into plain advisories",
     ],
     engineeringDecisions: [
       "Consolidated national agency domain indicators (NDMA SACHET, CPCB NAQI, INCOIS) into modular view layers so agricultural, marine, and urban residents inspect tailored alerts cleanly.",
@@ -203,7 +203,7 @@ export const PROJECTS: ProjectItem[] = [
     status: "Live · SIH 2026",
     statusType: "hackathon",
     technologies: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "C", "PLpgSQL", "Vercel"],
-    techStack: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "Ask MAUSAM AI"],
+    techStack: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "Ask MAUSAM"],
     tech: ["TypeScript", "React", "Python", "Tailwind CSS"],
     tags: ["SIH 2026", "Team ALGNITE", "Doppler Nowcasting", "NAQI / INCOIS", "SACHET / NDMA"],
     repository: "mausam_sih-26",
@@ -226,13 +226,13 @@ export const PROJECTS: ProjectItem[] = [
     highlights: [
       "Doppler radar nowcasting, SACHET/NDMA alerts, and CPCB NAQI air quality integration",
       "INCOIS marine/coastal sea-state monitoring and agrometeorological soil advisories",
-      "Ask MAUSAM AI assistant translating complex atmospheric telemetry for end users",
+      "Ask MAUSAM advisory module translating complex atmospheric telemetry for end users",
       "Deployed publicly at mausamgovt.vercel.app by Team ALGNITE for SIH 2026",
     ],
     features: [
       "Doppler radar nowcasting, SACHET/NDMA alerts, and CPCB NAQI air quality integration",
       "INCOIS marine/coastal sea-state monitoring and agrometeorological soil advisories",
-      "Ask MAUSAM AI assistant translating complex atmospheric telemetry for end users",
+      "Ask MAUSAM advisory module translating complex atmospheric telemetry for end users",
     ],
     role: "Frontend & Systems Integration Developer (Team ALGNITE)",
     evolutionStage: {

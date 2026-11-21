@@ -224,7 +224,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
 
   if (q.includes("mausam")) {
     return `**MAUSAM | Smart Weather Intelligence Platform:**\n\n` +
-      `• **What it is:** SIH 2026 atmospheric intelligence platform by Team ALGNITE unifying Doppler radar nowcasting, SACHET/NDMA alerts, CPCB NAQI air quality, INCOIS marine state, soil moisture, and Ask MAUSAM AI.\n` +
+      `• **What it is:** SIH 2026 atmospheric intelligence platform by Team ALGNITE unifying Doppler radar nowcasting, SACHET/NDMA alerts, CPCB NAQI air quality, INCOIS marine state, soil moisture, and Ask MAUSAM query guidance.\n` +
       `• **Repository Disclosure:** Active canonical repo is \`codesbysayam/mausam_sih-26\` (with \`mausam_sample\` retained as an earlier SIH 2026 snapshot).\n` +
       `• **Technologies:** TypeScript, React, Python, Tailwind CSS, Weather APIs, C, PLpgSQL.\n` +
       `• [Live Platform](https://mausamgovt.vercel.app) · [Canonical Repository](https://github.com/codesbysayam/mausam_sih-26)`;
@@ -340,7 +340,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Programming Languages:** C++, Python, TypeScript, JavaScript, Java, SQL, HTML5, CSS3\n` +
       `• **Frontend:** React, Next.js, Tailwind CSS, Vite, Motion\n` +
       `• **Backend & Systems:** Node.js, Express, REST APIs, SSE (Server-Sent Events)\n` +
-      `• **AI & Machine Learning:** PyTorch, OpenCV, YOLOv8, Scikit-Learn, Gemini API (@google/genai)\n` +
+      `• **Machine Learning & Vision:** PyTorch, OpenCV, YOLOv8, Scikit-Learn, Multi-Agent Orchestration\n` +
       `• **Developer Tools & Cloud:** Git, GitHub, Docker, Linux, VS Code, EdgeOne, Vercel\n` +
       `• **Creative Media:** Adobe Photoshop, Adobe Premiere Pro, Figma, Visual User Psychology`;
   }

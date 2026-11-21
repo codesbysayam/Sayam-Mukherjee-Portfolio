@@ -70,7 +70,7 @@ function MobileBottomNavComponent({
               aria-current={isActive ? "page" : undefined}
               className={`relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-[6px] transition-all duration-150 cursor-pointer active:scale-[0.95] ${
                 isActive
-                  ? "bg-[#C7E34A] text-[#20231D] font-bold"
+                  ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
                   : "text-[var(--text-muted)] hover:text-[var(--text)] active:bg-[var(--surface)]"
               }`}
             >

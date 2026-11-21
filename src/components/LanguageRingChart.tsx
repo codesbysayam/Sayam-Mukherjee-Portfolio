@@ -1,12 +1,14 @@
 import { useEffect, useRef, useState, useMemo, memo } from "react";
 import * as d3 from "d3";
 import { Code2 } from "lucide-react";
-import { fetchGitHubStats, GitHubLanguageShare } from "../services/github";
+import { useGitHubTelemetry } from "../hooks/useGitHubTelemetry";
+import { formatPercentage } from "../services/githubTelemetry";
 import { usePortfolio } from "../context/PortfolioContext";
 
 export interface LanguageDatum {
   name: string;
   percentage: number;
+  formattedPercentage: string;
   color: string;
   description: string;
 }
@@ -27,76 +29,69 @@ function LanguageRingChartComponent({
 
   const [hoveredLang, setHoveredLang] = useState<LanguageDatum | null>(null);
   const [selectedLang, setSelectedLang] = useState<LanguageDatum | null>(null);
-  const [rawLanguages, setRawLanguages] = useState<GitHubLanguageShare[]>([]);
-
-  useEffect(() => {
-    let isMounted = true;
-    async function loadLangs() {
-      try {
-        const stats = await fetchGitHubStats();
-        if (isMounted && stats.languages?.length) {
-          setRawLanguages(stats.languages);
-        }
-      } catch (err) {
-        console.warn("Could not load dynamic repo languages:", err);
-      }
-    }
-    loadLangs();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
+  const { telemetry } = useGitHubTelemetry();
 
   const languagesData: LanguageDatum[] = useMemo(() => {
     const palette: Record<string, string> = {
-      TypeScript: "#3178c6",
-      "C++": "#b94a48",
-      JavaScript: "#d4b429",
-      CSS: "#69734A",
-      HTML: "#d65d3b",
-      Python: "#3572A5",
+      TypeScript: "#69734A",
+      Python: "#3E4A35",
+      CSS: "#8D947E",
+      JavaScript: "#A9C52F",
+      HTML: "#585B52",
+      C: "#777A70",
+      "Jupyter Notebook": "#B5B8AA",
+      PLpgSQL: "#4D5E10",
+      Makefile: "#51564A",
+      "C++": "#C7E34A",
+      Shell: "#8EA82A",
     };
 
-    if (rawLanguages.length > 0) {
-      const descriptions: Record<string, string> = {
-        TypeScript:
-          "Primary language for full-stack architecture, React frontend, and type-safe systems.",
-        "C++":
-          "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves).",
-        JavaScript:
-          "Modern ES6+ scripting, Node.js runtime operations, and dynamic UI interactions.",
-        CSS: "Tailwind CSS styling, custom transitions, and responsive visual design.",
-        HTML: "Semantic web structure, DOM hierarchies, and accessibility standards.",
-        Python: "Computer vision research (YOLOv8/OpenCV) and systems programming.",
-      };
+    const descriptions: Record<string, string> = {
+      TypeScript:
+        "Primary language for full-stack architecture, React interfaces, and server APIs.",
+      Python:
+        "YOLOv8 computer vision inference, FastAPI backend, and climate utilities.",
+      CSS: "Design token architecture, typography clamp scales, and responsive layout grids.",
+      JavaScript:
+        "Build automation, serverless scripts, and browser/runtime utilities.",
+      HTML: "Semantic entry points, accessibility landmarks, and document metadata.",
+      C: "Systems programming utilities and low-level metrics helpers.",
+      "Jupyter Notebook": "Exploratory data notebooks and telemetry experiments.",
+      PLpgSQL: "Relational schemas and database migrations across hosted platforms.",
+      Makefile: "Containerized workspace automation and inference build commands.",
+      "C++": "Data structures and algorithmic solutions in sayam-solves.",
+      Shell: "Workflow and environment setup scripts.",
+    };
 
-      return rawLanguages.map((l) => ({
+    if (telemetry?.languages?.length) {
+      return telemetry.languages.slice(0, 8).map((l) => ({
         name: l.name,
-        percentage: l.percent,
+        percentage: l.percentage,
+        formattedPercentage: l.formattedPercentage || formatPercentage(l.percentage),
         color: palette[l.name] || l.color || "#69734A",
         description:
           descriptions[l.name] ||
-          "Verified codebase share across public repositories.",
+          `Verified across ${l.repoCount} public owned ${l.repoCount === 1 ? "repository" : "repositories"}.`,
       }));
     }
 
     return [
       {
         name: "TypeScript",
-        percentage: 75,
-        color: "#3178c6",
-        description:
-          "Primary language across public repositories (Mausam, Portfolio, Operon).",
+        percentage: 93.8,
+        formattedPercentage: "93.8%",
+        color: "#69734A",
+        description: descriptions.TypeScript,
       },
       {
-        name: "C++",
-        percentage: 25,
-        color: "#b94a48",
-        description:
-          "High-performance systems programming, data structures, and algorithmic problem solving (sayam-solves).",
+        name: "Python",
+        percentage: 2.3,
+        formattedPercentage: "2.3%",
+        color: "#3E4A35",
+        description: descriptions.Python,
       },
     ];
-  }, [rawLanguages]);
+  }, [telemetry]);
 
   useEffect(() => {
     if (!svgRef.current || languagesData.length === 0) return;
@@ -198,7 +193,7 @@ function LanguageRingChartComponent({
           <svg ref={svgRef} width={220} height={220} className="overflow-visible" />
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none text-center px-1">
             <span className="text-base font-extrabold text-[var(--text)] font-display tabular-nums leading-tight">
-              {activeDisplay?.percentage}%
+              {activeDisplay?.formattedPercentage}
             </span>
             <span className="text-[10px] text-[var(--text-muted)] font-mono tracking-tight mt-0.5 truncate max-w-[90px]">
               {activeDisplay?.name}
@@ -226,7 +221,7 @@ function LanguageRingChartComponent({
                   <span className="text-[var(--text)] font-medium">{lang.name}</span>
                 </div>
                 <span className="text-[var(--text-muted)] font-bold tabular-nums">
-                  {lang.percentage}%
+                  {lang.formattedPercentage}
                 </span>
               </div>
             ))}

@@ -26,41 +26,16 @@
   animation-play-state: paused;
 }
 
-/* Asymmetric 12-Column Editorial Gallery Grid for Projects */
+/* Balanced Editorial Gallery Grid for Projects */
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: clamp(1.5rem, 2.8vw, 2.5rem);
+  gap: clamp(1.5rem, 2.5vw, 2.25rem);
 }
 
 @media (min-width: 768px) {
   .projects-grid {
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-
-  .projects-grid > .project-slot {
-    grid-column: span 6;
-  }
-
-  .projects-grid > .project-slot:nth-child(4n + 1) {
-    grid-column: span 7;
-  }
-
-  .projects-grid > .project-slot:nth-child(4n + 2) {
-    grid-column: span 5;
-  }
-
-  .projects-grid > .project-slot:nth-child(4n + 3) {
-    grid-column: span 5;
-  }
-
-  .projects-grid > .project-slot:nth-child(4n + 4) {
-    grid-column: span 7;
-  }
-
-  /* When last row has only a single odd item, let it span cleanly */
-  .projects-grid > .project-slot:last-child:nth-child(odd) {
-    grid-column: span 12;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -101,50 +76,9 @@
   clip-path: inset(0 0 0 0);
 }
 
-/* Engineering Visualization SVG Transitions */
-@keyframes viz-flow {
-  from {
-    stroke-dashoffset: 56;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes viz-pulse {
-  0%,
-  100% {
-    opacity: 0.48;
-  }
-  50% {
-    opacity: 0.14;
-  }
-}
-
-.viz-signal-flow {
-  animation: viz-flow 1.8s linear infinite;
-}
-
-.viz-signal-flow-slow {
-  animation: viz-flow 3.4s linear infinite reverse;
-}
-
-.viz-pulse-ring {
-  animation: viz-pulse 2.6s ease-in-out infinite;
-}
-
-.viz-paused .viz-signal-flow,
-.viz-paused .viz-signal-flow-slow,
-.viz-paused .viz-pulse-ring {
-  animation-play-state: paused;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .contour-path,
-  .contour-path--slow,
-  .viz-signal-flow,
-  .viz-signal-flow-slow,
-  .viz-pulse-ring {
+  .contour-path--slow {
     animation: none !important;
   }
 

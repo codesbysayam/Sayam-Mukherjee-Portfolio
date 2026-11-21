@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
-  Cpu, GitBranch, Users, ExternalLink, Eye, CloudRain, Binary, CheckCircle2, Brain, Shield, Sparkles, GraduationCap
+  Cpu, GitBranch, Users, ExternalLink, Eye, CloudRain, Binary, CheckCircle2, Brain, Shield, Sparkles, GraduationCap,
+  FolderGit2, ArrowUpRight, BookOpen
 } from "lucide-react";
 import { SectionHeading } from "../ui/SectionHeading";
 import { ContourBackground } from "../motion/ContourBackground";
@@ -77,15 +78,15 @@ const BLUEPRINTS: Record<BlueprintId, SystemBlueprint> = {
   mausam: {
     id: "mausam",
     title: "MAUSAM Meteorological Intelligence Platform",
-    subtitle: "Doppler nowcasting, SACHET/NDMA, NAQI, INCOIS & Ask MAUSAM AI",
+    subtitle: "Doppler nowcasting, SACHET/NDMA, NAQI, INCOIS & Ask MAUSAM",
     category: "Weather & Geospatial Systems",
     status: "Live · SIH 2026 (mausam_sih-26)",
     purpose:
-      "Consolidates Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality, INCOIS coastal/marine state, and agrometeorological metrics with Ask MAUSAM AI into one responsive TypeScript platform.",
+      "Consolidates Doppler radar nowcasting, SACHET/NDMA civic alerts, CPCB/NAQI air quality, INCOIS coastal/marine state, and agrometeorological metrics with Ask MAUSAM into one responsive TypeScript platform.",
     nodes: [
       { name: "Multi-Agency Telemetry", description: "Doppler nowcasting, NAQI, SACHET/NDMA, INCOIS feeds", type: "input" },
       { name: "Python & TS Normalizers", description: "Standardizes units across atmospheric & marine metrics", type: "process" },
-      { name: "Ask MAUSAM AI Engine", description: "Translates raw telemetry into actionable guidance", type: "process" },
+      { name: "Ask MAUSAM Query Engine", description: "Translates raw telemetry into actionable guidance", type: "process" },
       { name: "Hazard Threshold Evaluator", description: "Computes localized air, UV, soil & coastal alerts", type: "decision" },
       { name: "Client State Cache", description: "Fast meteorological slice recall", type: "storage" },
       { name: "Geospatial Weather UI", description: "Responsive dashboard served on mausamgovt.vercel.app", type: "output" }
@@ -660,66 +661,325 @@ export function EcosystemPage() {
         </StaggerGroup>
       </section>
 
-      {/* 5. SIH 2026 CASE STUDY */}
+      {/* 5. TEAM ENGINEERING & COLLABORATION — MAUSAM (SIH 2026) */}
       <section id="ecosystem-sih" className="space-y-6">
         <div className="space-y-2">
-          <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
-            Phase 04 · Team Collaboration Case Study
-          </span>
-          <h2 className="text-2xl font-bold font-display text-[var(--text)]">
-            Smart India Hackathon (SIH 2026) Architecture
+          <div className="flex flex-wrap items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
+            <span className="font-semibold text-[var(--accent)] uppercase tracking-wider">
+              Team Engineering &amp; Collaboration
+            </span>
+            <span aria-hidden="true">·</span>
+            <span className="uppercase tracking-wider">
+              Smart India Hackathon 2026 — MAUSAM
+            </span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold font-display text-[var(--text)]">
+            TEAM ENGINEERING &amp; COLLABORATION
           </h2>
-          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
-            How Team Algnite coordinated rapid full-stack delivery under competition constraints.
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-3xl font-sans leading-relaxed">
+            Smart India Hackathon 2026 — MAUSAM · Team Algnite. Consolidated atmospheric, coastal, air-quality, and hazard advisories under rapid multi-contributor sprint constraints.
           </p>
         </div>
 
-        <div className="card p-4 sm:p-8 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-[var(--border)]">
-            <div className="flex items-center gap-3">
-              <div className="p-2.5 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)]">
-                <Users className="w-5 h-5" aria-hidden="true" />
+        <div className="card p-5 sm:p-8 space-y-8">
+          {/* 5.1 Project Context */}
+          <div className="space-y-4 pb-6 border-b border-[var(--border)]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-[6px] bg-[var(--surface)] border border-[var(--border)] text-[var(--accent)]">
+                  <Users className="w-5 h-5" aria-hidden="true" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold font-display text-[var(--text)]">
+                    01 · Project Context &amp; Domain Scope
+                  </h3>
+                  <span className="text-xs font-mono text-[var(--text-muted)]">
+                    Team Algnite · Frontend &amp; Systems Integration
+                  </span>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-bold font-display text-[var(--text)]">
-                  Team Algnite Collaboration Mechanics
-                </h3>
-                <span className="text-xs font-mono text-[var(--text-muted)]">
-                  SIH 2026 National Hackathon Qualification
+              <span className="text-xs font-mono text-[var(--accent)] font-semibold">
+                5.47 MB Polyglot Repository · Live on Vercel
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm font-sans text-[var(--text-secondary)] leading-relaxed">
+              <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-1.5">
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                  Problem &amp; Fragmentation
+                </div>
+                <p className="text-xs leading-relaxed">
+                  Critical weather warnings, CPCB NAQI air quality, INCOIS marine conditions, and NDMA SACHET alerts live across disconnected agency portals, adding friction during severe weather events.
+                </p>
+              </div>
+              <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-1.5">
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                  Target Communities
+                </div>
+                <p className="text-xs leading-relaxed">
+                  Designed for agriculturalists tracking soil moisture &amp; UV, coastal fishing communities needing sea-state advisories, and urban residents checking hyper-local air quality and rain radar.
+                </p>
+              </div>
+              <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-1.5">
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                  Sprint Constraints
+                </div>
+                <p className="text-xs leading-relaxed">
+                  Polyglot TypeScript, Python, PLpgSQL, and C data utilities developed across multiple parallel contributors while keeping <span className="font-mono text-[var(--text)]">mausamgovt.vercel.app</span> continuously deployable.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* 5.2 Collaboration Timeline */}
+          <div className="space-y-4 pb-6 border-b border-[var(--border)]">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-base font-bold font-display text-[var(--text)]">
+                02 · Collaboration &amp; Delivery Timeline
+              </h3>
+              <span className="text-xs font-mono text-[var(--text-muted)]">
+                5 Coordinated Engineering Stages
+              </span>
+            </div>
+
+            <ol className="collaboration-timeline" aria-label="MAUSAM Team Algnite collaboration timeline">
+              <li className="collaboration-step">
+                <span className="collaboration-step__index">01</span>
+                <div className="space-y-1">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                    Contract &amp; Schema Definition
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+                    Typed TypeScript meteorological interfaces separated Python data utilities from React UI views cleanly.
+                  </p>
+                </div>
+              </li>
+              <li className="collaboration-step">
+                <span className="collaboration-step__index">02</span>
+                <div className="space-y-1">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                    Parallel Domain Modules
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+                    Built independent views for Doppler nowcasting, NAQI metrics, INCOIS marine conditions, and agrometeorology.
+                  </p>
+                </div>
+              </li>
+              <li className="collaboration-step">
+                <span className="collaboration-step__index">03</span>
+                <div className="space-y-1">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                    Hazard &amp; Ask MAUSAM Layer
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+                    Integrated SACHET alert thresholds alongside plain-language advisory synthesis via Ask MAUSAM.
+                  </p>
+                </div>
+              </li>
+              <li className="collaboration-step">
+                <span className="collaboration-step__index">04</span>
+                <div className="space-y-1">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                    Audit &amp; PR #1 Merge
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+                    Consolidated reconstruction via <span className="font-mono text-[var(--accent)]">audit/mausam-full-site-reconstruction</span> (PR #1).
+                  </p>
+                </div>
+              </li>
+              <li className="collaboration-step">
+                <span className="collaboration-step__index">05</span>
+                <div className="space-y-1">
+                  <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-[var(--text)]">
+                    Production Edge Build
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
+                    Strict TypeScript build validation and live deployment at <span className="font-mono text-[var(--text)]">mausamgovt.vercel.app</span>.
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          {/* 5.3 Engineering Workstreams */}
+          <div className="space-y-4 pb-6 border-b border-[var(--border)]">
+            <h3 className="text-base font-bold font-display text-[var(--text)]">
+              03 · Team Algnite Engineering Workstreams
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2.5">
+                <div className="space-y-2">
+                  <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--accent)] font-bold">
+                    Workstream 01 · Schema Contracts
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
+                    Shared TypeScript payload definitions decoupled Python environmental normalization scripts from client UI components, allowing parallel interface assembly.
+                  </p>
+                </div>
+                <span className="text-[11px] font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">
+                  TypeScript + PLpgSQL Models
+                </span>
+              </div>
+
+              <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2.5">
+                <div className="space-y-2">
+                  <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--accent)] font-bold">
+                    Workstream 02 · Branch &amp; PR Audit
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
+                    Tracked work across <span className="font-mono text-[var(--text)]">mausam_sample</span> (initial sprint) into the canonical <span className="font-mono text-[var(--text)]">mausam_sih-26</span> repo with full-site reconstruction reviewed on branch <span className="font-mono text-[var(--accent)]">audit/mausam-full-site-reconstruction</span> (PR #1).
+                  </p>
+                </div>
+                <span className="text-[11px] font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">
+                  codesbysayam/mausam_sih-26 · PR #1
+                </span>
+              </div>
+
+              <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-2.5">
+                <div className="space-y-2">
+                  <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--accent)] font-bold">
+                    Workstream 03 · Edge Delivery
+                  </h4>
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
+                    Automated Vercel preview and production builds verified static type soundness and responsive rendering before merging updates to <span className="font-mono text-[var(--text)]">main</span>.
+                  </p>
+                </div>
+                <span className="text-[11px] font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border)]">
+                  Vercel Edge · mausamgovt.vercel.app
                 </span>
               </div>
             </div>
-            <span className="text-xs font-mono text-[var(--accent)] font-bold uppercase tracking-wider self-start sm:self-auto">
-              Verified Submission
-            </span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text)] font-bold">
-                01. Contract-First API Mocking
-              </h4>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
-                Defined strict TypeScript interfaces for meteorological payloads in hour one, letting UI development proceed in parallel with data ingestion.
-              </p>
+          {/* 5.4 Real MAUSAM System Architecture Diagram */}
+          <div className="space-y-4 pb-6 border-b border-[var(--border)]">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <h3 className="text-base font-bold font-display text-[var(--text)]">
+                04 · MAUSAM System Architecture Diagram
+              </h3>
+              <span className="text-xs font-mono text-[var(--text-muted)]">
+                Multi-Source Telemetry Pipeline
+              </span>
             </div>
 
-            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text)] font-bold">
-                02. Feature Isolation &amp; Git Hygiene
-              </h4>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
-                Used scoped branch naming (<span className="font-mono text-[var(--accent)]">feat/aqi-thresholds</span>, <span className="font-mono text-[var(--accent)]">feat/tide-chart</span>) and pull request reviews for conflict-free shipping.
-              </p>
-            </div>
+            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] overflow-x-auto">
+              <svg
+                role="img"
+                aria-label="MAUSAM system architecture diagram showing external weather agency feeds flowing through Python and TypeScript ingestion normalizers, hazard evaluators and Ask MAUSAM, client telemetry cache, and the geospatial dashboard UI."
+                viewBox="0 0 960 220"
+                className="w-full min-w-[640px] h-auto"
+              >
+                <defs>
+                  <marker
+                    id="mausam-arrow"
+                    markerWidth="8"
+                    markerHeight="8"
+                    refX="7"
+                    refY="4"
+                    orient="auto"
+                  >
+                    <path d="M 0 1 L 7 4 L 0 7 z" fill="var(--accent)" />
+                  </marker>
+                </defs>
 
-            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] space-y-2">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text)] font-bold">
-                03. Automated Edge CI/CD
-              </h4>
-              <p className="text-xs text-[var(--text-secondary)] leading-relaxed font-sans">
-                Continuous preview deployments on Vercel with strict TypeScript checking ensured judges always accessed a working live build.
-              </p>
+                {/* Connectors */}
+                <line x1="185" y1="110" x2="225" y2="110" stroke="var(--accent)" strokeWidth="1.75" markerEnd="url(#mausam-arrow)" />
+                <line x1="395" y1="110" x2="435" y2="110" stroke="var(--accent)" strokeWidth="1.75" markerEnd="url(#mausam-arrow)" />
+                <line x1="605" y1="110" x2="645" y2="110" stroke="var(--accent)" strokeWidth="1.75" markerEnd="url(#mausam-arrow)" />
+                <line x1="775" y1="110" x2="815" y2="110" stroke="var(--accent)" strokeWidth="1.75" markerEnd="url(#mausam-arrow)" />
+
+                {/* Node 1: External Agency Feeds */}
+                <rect x="10" y="34" width="175" height="152" rx="8" fill="var(--surface-2)" stroke="var(--border-strong)" strokeWidth="1.25" />
+                <text x="24" y="58" fill="var(--accent)" fontSize="10" fontWeight="700" fontFamily="monospace">01 · AGENCY FEEDS</text>
+                <text x="24" y="84" fill="var(--text)" fontSize="11.5" fontWeight="700" fontFamily="sans-serif">External Telemetry</text>
+                <text x="24" y="108" fill="var(--text-secondary)" fontSize="10.5" fontFamily="monospace">• IMD Doppler Radar</text>
+                <text x="24" y="128" fill="var(--text-secondary)" fontSize="10.5" fontFamily="monospace">• CPCB NAQI Index</text>
+                <text x="24" y="148" fill="var(--text-secondary)" fontSize="10.5" fontFamily="monospace">• INCOIS Sea State</text>
+                <text x="24" y="168" fill="var(--text-secondary)" fontSize="10.5" fontFamily="monospace">• NDMA SACHET Alerts</text>
+
+                {/* Node 2: Ingestion Normalizers */}
+                <rect x="225" y="44" width="170" height="132" rx="8" fill="var(--surface-2)" stroke="var(--border-strong)" strokeWidth="1.25" />
+                <text x="239" y="68" fill="var(--accent)" fontSize="10" fontWeight="700" fontFamily="monospace">02 · NORMALIZATION</text>
+                <text x="239" y="92" fill="var(--text)" fontSize="11.5" fontWeight="700" fontFamily="sans-serif">Polyglot Parsers</text>
+                <text x="239" y="116" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">Python &amp; TypeScript</text>
+                <text x="239" y="134" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">ingestion adapters</text>
+                <text x="239" y="156" fill="var(--text-muted)" fontSize="10" fontFamily="monospace">Typed JSON + PLpgSQL</text>
+
+                {/* Node 3: Hazard Evaluators & Ask MAUSAM */}
+                <rect x="435" y="44" width="170" height="132" rx="8" fill="var(--surface-2)" stroke="var(--accent)" strokeWidth="1.5" />
+                <text x="449" y="68" fill="var(--accent)" fontSize="10" fontWeight="700" fontFamily="monospace">03 · SYNTHESIS</text>
+                <text x="449" y="92" fill="var(--text)" fontSize="11.5" fontWeight="700" fontFamily="sans-serif">Hazard &amp; Ask MAUSAM</text>
+                <text x="449" y="116" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">Threshold rules for UV,</text>
+                <text x="449" y="134" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">AQI, soil &amp; storm surges</text>
+                <text x="449" y="156" fill="var(--text-muted)" fontSize="10" fontFamily="monospace">Advisory Query Layer</text>
+
+                {/* Node 4: Telemetry Cache */}
+                <rect x="645" y="54" width="130" height="112" rx="8" fill="var(--surface-2)" stroke="var(--border-strong)" strokeWidth="1.25" />
+                <text x="659" y="78" fill="var(--accent)" fontSize="10" fontWeight="700" fontFamily="monospace">04 · CACHE</text>
+                <text x="659" y="102" fill="var(--text)" fontSize="11.5" fontWeight="700" fontFamily="sans-serif">Client State</text>
+                <text x="659" y="124" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">Offline-resilient</text>
+                <text x="659" y="142" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">region state cache</text>
+
+                {/* Node 5: Geospatial Dashboard UI */}
+                <rect x="815" y="44" width="135" height="132" rx="8" fill="var(--surface-2)" stroke="var(--border-strong)" strokeWidth="1.25" />
+                <text x="829" y="68" fill="var(--accent)" fontSize="10" fontWeight="700" fontFamily="monospace">05 · CLIENT UI</text>
+                <text x="829" y="92" fill="var(--text)" fontSize="11.5" fontWeight="700" fontFamily="sans-serif">Dashboard</text>
+                <text x="829" y="116" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">React + Tailwind</text>
+                <text x="829" y="134" fill="var(--text-secondary)" fontSize="10.5" fontFamily="sans-serif">Nowcast &amp; Alerts</text>
+                <text x="829" y="156" fill="var(--text-muted)" fontSize="10" fontFamily="monospace">Vercel Edge UI</text>
+              </svg>
+            </div>
+          </div>
+
+          {/* 5.5 Verified Project Evidence */}
+          <div className="space-y-3">
+            <h3 className="text-base font-bold font-display text-[var(--text)]">
+              05 · Verified Project Evidence
+            </h3>
+            <div className="flex flex-wrap items-center gap-3">
+              <a
+                href="https://github.com/codesbysayam/mausam_sih-26"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-primary !text-xs font-mono"
+              >
+                <FolderGit2 className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Canonical Repo: mausam_sih-26</span>
+                <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              </a>
+              <a
+                href="https://github.com/codesbysayam/mausam_sample"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-secondary !text-xs font-mono"
+              >
+                <FolderGit2 className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Earlier Sprint: mausam_sample</span>
+                <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              </a>
+              <a
+                href="https://mausamgovt.vercel.app"
+                target="_blank"
+                rel="noreferrer"
+                className="btn btn-secondary !text-xs font-mono"
+              >
+                <span>Live Deployment: mausamgovt.vercel.app</span>
+                <ExternalLink className="w-3 h-3" aria-hidden="true" />
+              </a>
+              <button
+                type="button"
+                onClick={() => {
+                  window.history.pushState(null, "", "/journal/why-i-wanted-mausam-to-feel-useful");
+                  window.dispatchEvent(new PopStateEvent("popstate"));
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                className="btn btn-secondary !text-xs font-mono cursor-pointer"
+              >
+                <BookOpen className="w-3.5 h-3.5" aria-hidden="true" />
+                <span>Read Engineering Journal Note</span>
+                <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+              </button>
             </div>
           </div>
         </div>

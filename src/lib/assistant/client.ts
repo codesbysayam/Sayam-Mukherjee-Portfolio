@@ -1,5 +1,5 @@
 /**
- * Client service for Sayam's Portfolio Assistant
+ * Client service for Sayam's Portfolio Guide
  * 
  * Handles real-time SSE streaming, chunk aggregation, cancellation via AbortSignal,
  * and error resilience.

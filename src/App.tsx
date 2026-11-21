@@ -33,7 +33,7 @@ import { EditorialReveal } from "./motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "./motion/tokens";
 
 const ProjectsShowcase = lazyWithRetry(() => import("./components/ProjectsShowcase"));
-const AIChatBot = lazyWithRetry(() => import("./components/AssistantChat"));
+const PortfolioGuide = lazyWithRetry(() => import("./components/AssistantChat"));
 const SkillsSection = lazyWithRetry(() => import("./components/SkillsSection"));
 const EcosystemSection = lazyWithRetry(() => import("./components/EcosystemSection"));
 const BlogsSection = lazyWithRetry(() => import("./components/BlogsSection"));
@@ -464,19 +464,14 @@ function AppContent() {
             <button
               type="button"
               onClick={() => navigateToTab("home")}
-              className="flex items-center gap-2.5 text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
+              className="flex items-center gap-2.5 text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
               aria-label="Sayam Mukherjee Home"
             >
-              <span className="w-8 h-8 rounded-[6px] bg-[#C7E34A] text-[#151713] font-display font-extrabold text-xs flex items-center justify-center tracking-tight shrink-0">
+              <span className="w-8 h-8 rounded-[6px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-display font-extrabold text-xs flex items-center justify-center tracking-tight shrink-0">
                 SM
               </span>
-              <span className="flex flex-col">
-                <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none">
-                  Sayam Mukherjee
-                </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-[var(--text-muted)] mt-1 hidden sm:block">
-                  CSE · AI &amp; ML · KIIT
-                </span>
+              <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none whitespace-nowrap">
+                Sayam Mukherjee
               </span>
             </button>
 
@@ -504,7 +499,7 @@ function AppContent() {
                     {isActive && (
                       <motion.span
                         layoutId="activeNavUnderline"
-                        className="absolute left-0 right-0 bottom-0 h-[2px] bg-[#C7E34A]"
+                        className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--accent-fill)]"
                         transition={{ type: "spring", stiffness: 420, damping: 34 }}
                       />
                     )}
@@ -577,7 +572,7 @@ function AppContent() {
                 className={`hidden sm:inline-flex items-center justify-center min-h-[40px] px-4 rounded-[6px] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-[0.97] ${
                   activeTab === "contact"
                     ? "bg-[var(--text)] text-[var(--bg)]"
-                    : "bg-[#C7E34A] text-[#151713] hover:bg-[#A9C52F] active:bg-[#9BB827]"
+                    : "bg-[var(--accent-fill)] text-[var(--accent-contrast)] hover:bg-[var(--accent-strong)]"
                 }`}
               >
                 Contact
@@ -625,7 +620,7 @@ function AppContent() {
           <main
             id="main-content"
             tabIndex={-1}
-            className="site-main relative z-10 w-full min-w-0 flex-1 pt-6 sm:pt-8 pb-16 sm:pb-24 overflow-x-clip focus:outline-none"
+            className="site-main relative z-10 w-full min-w-0 flex-1 pt-5 sm:pt-8 pb-28 sm:pb-24 overflow-x-clip focus:outline-none"
           >
             <RouteTransition routeKey={activeTab}>
             {activeTab === "home" && (
@@ -809,9 +804,9 @@ function AppContent() {
         )}
 
         {!isLegalPage && (
-          <ErrorBoundary sectionName="AI Assistant">
+          <ErrorBoundary sectionName="Portfolio Guide">
             <Suspense fallback={null}>
-              <AIChatBot />
+              <PortfolioGuide />
             </Suspense>
           </ErrorBoundary>
         )}

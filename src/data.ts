@@ -105,7 +105,7 @@ export const SAYAM_DATA = {
     {
       id: 'mausam',
       title: 'MAUSAM',
-      description: 'SIH 2026 platform unifying Doppler nowcasting, SACHET/NDMA alerts, NAQI, INCOIS marine state & Ask MAUSAM AI.',
+      description: 'SIH 2026 platform unifying Doppler nowcasting, SACHET/NDMA alerts, NAQI, INCOIS marine state & Ask MAUSAM.',
       longDescription: 'Active repository verified at codesbysayam/mausam_sih-26 alongside earlier SIH baseline codesbysayam/mausam_sample.',
       tags: ['TypeScript', 'React', 'Python', 'Tailwind CSS', 'PLpgSQL'],
       category: 'full_stack',

@@ -271,7 +271,7 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       title: "MAUSAM | Smart Weather Intelligence Platform",
       category: "Environmental Telemetry & SIH 2026",
       description:
-        "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, soil moisture, and Ask MAUSAM AI.",
+        "SIH 2026 atmospheric intelligence platform unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI air quality, INCOIS marine state, soil moisture, and Ask MAUSAM query guidance.",
       technologies: [
         "TypeScript",
         "React",
@@ -449,7 +449,7 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       "OpenCV",
       "YOLOv8",
       "Scikit-Learn",
-      "Gemini API (@google/genai)",
+      "Multi-Agent Orchestration",
       "In-Context Learning",
     ],
     developerToolsAndDevOps: [

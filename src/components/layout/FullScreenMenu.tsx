@@ -4,10 +4,11 @@ import { X, ArrowUpRight, Search, Sun, Moon, FileText } from "lucide-react";
 import ContourBackground from "../motion/ContourBackground";
 import { NAVIGATION, SOCIAL_LINKS, CONTACT_INFO } from "../../data/siteContent";
 import { MOTION_EASE, MOTION_DURATION, usePrefersReducedMotion } from "../../motion/tokens";
-import operonImg from "../../assets/projects/operon-live.png";
-import mausamImg from "../../assets/projects/mausam-live.png";
-import memoryImg from "../../assets/projects/memory-in-motion-live.png";
 import sightforgeImg from "../../assets/projects/sightforge-cover.png";
+
+const operonImg = "/images/project-covers/operon.jpg";
+const mausamImg = "/images/project-covers/mausam.jpg";
+const memoryImg = "/images/project-covers/memory-in-motion.jpg";
 
 export type FullScreenMenuTab =
   | "home"
@@ -338,9 +339,10 @@ export function FullScreenMenu({
                           <img
                             src={activePreview.image}
                             alt={activePreview.alt}
+                            referrerPolicy="no-referrer"
                             className={`h-full w-full object-cover ${
                               isPortraitPreview
-                                ? "object-[50%_18%] grayscale contrast-[1.1]"
+                                ? "object-[50%_18%] contrast-[1.04]"
                                 : "object-top"
                             }`}
                           />
@@ -369,14 +371,16 @@ export function FullScreenMenu({
                       <img
                         src={operonImg}
                         alt="OPERON multi-agent platform"
-                        className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                        referrerPolicy="no-referrer"
+                        className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-[1.03]"
                       />
                     </div>
                     <div className="rounded-[8px] overflow-hidden border border-[#41443A] bg-[#151713] aspect-[16/10]">
                       <img
                         src={mausamImg}
                         alt="MAUSAM weather intelligence platform"
-                        className="h-full w-full object-cover object-top grayscale hover:grayscale-0 transition-all duration-500"
+                        referrerPolicy="no-referrer"
+                        className="h-full w-full object-cover object-top transition-transform duration-500 hover:scale-[1.03]"
                       />
                     </div>
                   </div>

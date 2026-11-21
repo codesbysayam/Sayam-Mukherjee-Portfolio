@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-11-21T13:55:19.183Z",
+  "viewport": "1440x900",
+  "targets": [
+    {
+      "id": "operon",
+      "url": "https://operonpro.vercel.app/",
+      "output": "/images/project-covers/operon.jpg",
+      "status": "captured",
+      "capturedAt": "2026-11-21T13:54:47.765Z"
+    },
+    {
+      "id": "mausam",
+      "url": "https://mausamgovt.vercel.app/",
+      "output": "/images/project-covers/mausam.jpg",
+      "status": "captured",
+      "capturedAt": "2026-11-21T13:54:50.771Z"
+    },
+    {
+      "id": "memory-in-motion",
+      "url": "https://memoryinmotion.vercel.app/",
+      "output": "/images/project-covers/memory-in-motion.jpg",
+      "status": "captured",
+      "capturedAt": "2026-11-21T13:55:02.880Z"
+    },
+    {
+      "id": "axiom",
+      "url": "https://axiomwcc.vercel.app/",
+      "output": "/images/project-covers/axiom.jpg",
+      "status": "captured",
+      "capturedAt": "2026-11-21T13:55:07.019Z"
+    },
+    {
+      "id": "inkloom",
+      "url": "https://inkloom.art/",
+      "output": "/images/project-covers/inkloom.jpg",
+      "status": "captured",
+      "capturedAt": "2026-11-21T13:55:10.397Z"
+    },
+    {
+      "id": "campus-connect",
+      "url": "https://campusconnect1273.vercel.app/",
+      "output": "/images/project-covers/campus-connect.jpg",
+      "status": "captured",
+      "capturedAt": "2026-11-21T13:55:13.988Z"
+    }
+  ]
+}

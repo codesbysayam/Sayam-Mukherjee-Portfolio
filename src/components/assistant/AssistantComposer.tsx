@@ -67,7 +67,7 @@ export const AssistantComposer = memo(function AssistantComposer({
           onKeyDown={handleKeyDown}
           placeholder="Ask about Sayam’s projects, education, skills, GitHub..."
           className="w-full bg-transparent text-base sm:text-sm text-[var(--text)] placeholder:text-[var(--text-faint)] resize-none outline-none leading-relaxed max-h-[110px] py-1 font-sans"
-          aria-label="Ask Sayam's Portfolio Assistant"
+          aria-label="Ask Sayam's Portfolio Guide"
         />
 
         <div className="flex items-center gap-1.5 shrink-0 pb-0.5">
@@ -92,7 +92,7 @@ export const AssistantComposer = memo(function AssistantComposer({
               type="button"
               onClick={handleSendClick}
               disabled={text.trim().length === 0 || disabled}
-              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] flex items-center justify-center bg-[#C7E34A] text-[#20231D] hover:bg-[#A9C52F] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[#C7E34A]"
+              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] flex items-center justify-center bg-[var(--accent-fill)] text-[var(--accent-contrast)] hover:bg-[var(--accent-strong)] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
               title="Send message (Enter)"
               aria-label="Send message"
             >

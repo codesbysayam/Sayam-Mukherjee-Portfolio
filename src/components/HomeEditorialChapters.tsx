@@ -9,7 +9,6 @@ import { ProjectMedia } from "./projects/ProjectMedia";
 import { computeProjectLifecycle } from "../utils/projectLifecycle";
 import {
   EditorialReveal,
-  HorizontalTrack,
   MagneticAction,
   MaskMediaReveal,
   StaggerGroup,
@@ -17,7 +16,7 @@ import {
   TextMaskReveal,
 } from "../motion/Reveal";
 import { ContourBackground } from "./motion/ContourBackground";
-import { EngineeringVisualization } from "./visualization/EngineeringVisualization";
+import { EngineeringProfile } from "./about/EngineeringProfile";
 import { SectionHeading } from "./ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
@@ -195,7 +194,13 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
           </div>
 
           <EditorialReveal delay={0.14} className="min-w-0 w-full">
-            <EngineeringVisualization />
+            <EngineeringProfile
+              onNavigateTab={onNavigateTab}
+              onSelectProject={(projectId) => {
+                const match = PROJECTS.find((p) => p.id === projectId);
+                if (match) setSelectedProject(match);
+              }}
+            />
           </EditorialReveal>
         </div>
       </section>
@@ -259,11 +264,12 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                         alt={media.alt}
                         loading="lazy"
                         decoding="async"
+                        referrerPolicy="no-referrer"
                         className="!h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
                       />
                       <span
                         aria-hidden="true"
-                        className="absolute bottom-3.5 right-3.5 w-10 h-10 rounded-full bg-[#C7E34A] text-[#151713] flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg"
+                        className="absolute bottom-3.5 right-3.5 w-10 h-10 rounded-[6px] bg-[#C7E34A] text-[#151713] flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg"
                       >
                         <ArrowUpRight className="w-4 h-4" />
                       </span>
@@ -338,16 +344,16 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
             );
           })()}
 
-          {/* SECONDARY FEATURED WORK: HORIZONTAL EDITORIAL RAIL */}
-          <div className="space-y-4">
+          {/* SECONDARY FEATURED WORK: BALANCED CASE-STUDY GRID */}
+          <div className="space-y-5">
             <div className="flex items-center justify-between text-xs font-mono text-[#B5B8AA]">
               <span className="uppercase tracking-[0.14em] text-[#C7E34A]">
                 Featured Case Studies · 02 — 04
               </span>
-              <span className="hidden sm:inline">Scroll horizontally or inspect any card</span>
+              <span className="hidden sm:inline">Select any case study to inspect architecture</span>
             </div>
 
-            <HorizontalTrack>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {secondaryFeatured.map((project, index) => {
                 const media = getProjectMedia(project.id);
                 const repo = findRepoForProject(project);
@@ -436,7 +442,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                   </motion.article>
                 );
               })}
-            </HorizontalTrack>
+            </div>
           </div>
         </div>
       </section>
@@ -477,7 +483,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                   onClick={() => setActiveSkillId(skill.id)}
                   className={`px-3 py-1.5 text-xs font-mono rounded-[6px] transition-colors cursor-pointer whitespace-nowrap ${
                     isSelected
-                      ? "bg-[#C7E34A] text-[#151713] font-bold"
+                      ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
                       : "text-[var(--text-muted)] hover:text-[var(--text)]"
                   }`}
                 >

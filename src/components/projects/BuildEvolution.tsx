@@ -44,7 +44,7 @@ const EVOLUTION_STAGES: EvolutionStage[] = [
     projectId: "mausam",
     domain: "SIH 2026 / Team ALGNITE",
     narrative:
-      "Engineered for Smart India Hackathon 2026 unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI, INCOIS marine state, and Ask MAUSAM AI.",
+      "Engineered for Smart India Hackathon 2026 unifying Doppler radar nowcasting, SACHET/NDMA alerts, NAQI, INCOIS marine state, and Ask MAUSAM.",
     tech: ["TypeScript", "React", "Python", "Tailwind CSS"],
   },
   {
