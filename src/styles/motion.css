@@ -101,9 +101,50 @@
   clip-path: inset(0 0 0 0);
 }
 
+/* Engineering Visualization SVG Transitions */
+@keyframes viz-flow {
+  from {
+    stroke-dashoffset: 56;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes viz-pulse {
+  0%,
+  100% {
+    opacity: 0.48;
+  }
+  50% {
+    opacity: 0.14;
+  }
+}
+
+.viz-signal-flow {
+  animation: viz-flow 1.8s linear infinite;
+}
+
+.viz-signal-flow-slow {
+  animation: viz-flow 3.4s linear infinite reverse;
+}
+
+.viz-pulse-ring {
+  animation: viz-pulse 2.6s ease-in-out infinite;
+}
+
+.viz-paused .viz-signal-flow,
+.viz-paused .viz-signal-flow-slow,
+.viz-paused .viz-pulse-ring {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .contour-path,
-  .contour-path--slow {
+  .contour-path--slow,
+  .viz-signal-flow,
+  .viz-signal-flow-slow,
+  .viz-pulse-ring {
     animation: none !important;
   }
 

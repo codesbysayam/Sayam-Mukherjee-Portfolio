@@ -529,8 +529,15 @@ a.card:active,
 @media (min-width: 1280px) {
   .site-layout--with-nav {
     width: min(100%, 1680px);
-    grid-template-columns: minmax(0, 1fr) minmax(112px, 144px);
-    column-gap: clamp(20px, 2.4vw, 44px);
+    grid-template-columns: minmax(0, 1fr) minmax(108px, 132px);
+    column-gap: clamp(18px, 2.2vw, 40px);
+  }
+}
+
+@media (min-width: 1440px) {
+  .site-layout--with-nav {
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 148px);
+    column-gap: clamp(24px, 2.6vw, 48px);
   }
 }
 
@@ -548,7 +555,7 @@ a.card:active,
 
 .section-navigation {
   position: sticky;
-  top: 7rem;
+  top: max(6.5rem, calc(50vh - 8.5rem));
   width: 100%;
   min-width: 0;
   align-self: start;

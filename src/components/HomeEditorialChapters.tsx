@@ -12,10 +12,12 @@ import {
   HorizontalTrack,
   MagneticAction,
   MaskMediaReveal,
-  ScrollScaleImage,
+  StaggerGroup,
+  StaggerItem,
   TextMaskReveal,
 } from "../motion/Reveal";
 import { ContourBackground } from "./motion/ContourBackground";
+import { EngineeringVisualization } from "./visualization/EngineeringVisualization";
 import { SectionHeading } from "./ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
@@ -104,12 +106,12 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
       <section
         id="home-about-chapter"
         aria-labelledby="home-about-heading"
-        className="relative overflow-hidden w-full border-t border-[var(--border)] py-12 sm:py-16 lg:py-20"
+        className="relative overflow-hidden w-full border-t border-[var(--border)] py-12 sm:py-16 lg:py-24"
       >
         <ContourBackground density="subtle" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          <div className="lg:col-span-7 space-y-6">
+        <div className="relative z-10 mx-auto w-full max-w-[1680px] grid grid-cols-1 lg:grid-cols-[minmax(0,1.08fr)_minmax(380px,0.82fr)] xl:grid-cols-[minmax(0,1.06fr)_minmax(440px,0.84fr)] 2xl:grid-cols-[minmax(0,1.08fr)_minmax(490px,0.85fr)] gap-10 lg:gap-12 xl:gap-16 items-center">
+          <div className="min-w-0 space-y-6 sm:space-y-7">
             <EditorialReveal delay={0}>
               <span className="inline-block editorial-overline text-[var(--accent)]">
                 01 / A Little About Me
@@ -118,56 +120,58 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
 
             <h2
               id="home-about-heading"
-              className="font-display text-3xl sm:text-5xl lg:text-[3.25rem] font-extrabold tracking-[-0.03em] leading-[1.03] text-[var(--text)]"
+              className="font-display font-extrabold text-[clamp(2.25rem,5.8vw,2.75rem)] md:text-[clamp(2.75rem,5.6vw,3.45rem)] lg:text-[clamp(3.2rem,4.3vw,4.6rem)] leading-[1.03] tracking-[-0.04em] text-[var(--text)] text-balance"
             >
-              <TextMaskReveal>Building systems from</TextMaskReveal>{" "}
+              <TextMaskReveal immediate={false}>Building systems from</TextMaskReveal>{" "}
               <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
                 first principles
               </span>{" "}
               with disciplined execution.
             </h2>
 
-            <EditorialReveal delay={0.12}>
-              <p className="text-base sm:text-lg leading-relaxed text-[var(--text-secondary)] max-w-2xl">
+            <EditorialReveal delay={0.1}>
+              <p className="text-[15.5px] sm:text-[17px] lg:text-[18px] leading-[1.65] text-[var(--text-secondary)] max-w-[65ch]">
                 I am a 2nd-year Computer Science &amp; Engineering (AI &amp; ML) undergraduate at KIIT University, Bhubaneswar, originally from Hooghly, West Bengal. Alongside maintaining a 9.06 first-year CGPA, I engineer full-stack React and TypeScript systems, multi-agent human-in-the-loop workflows, and daily C++ algorithmic implementations.
               </p>
             </EditorialReveal>
 
             {/* Hairline Editorial Ledger Rows */}
-            <EditorialReveal delay={0.16}>
-              <div className="border-t border-[var(--border)] divide-y divide-[var(--border)] max-w-2xl">
-                <div className="hairline-row py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                    Academic Benchmark
+            <StaggerGroup
+              stagger={0.07}
+              delayChildren={0.12}
+              className="border-t border-b border-[var(--border)] divide-y divide-[var(--border)] max-w-[64ch]"
+            >
+              <StaggerItem className="hairline-row py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-6">
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] shrink-0">
+                  Academic Benchmark
+                </span>
+                <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 sm:justify-end sm:text-right">
+                  <span className="text-2xl sm:text-[1.75rem] font-extrabold font-display tabular-nums text-[var(--text)]">
+                    9.06
                   </span>
-                  <div className="flex items-baseline gap-2.5 sm:text-right">
-                    <span className="text-2xl sm:text-3xl font-extrabold font-display tabular-nums text-[var(--text)]">
-                      9.06
-                    </span>
-                    <span className="text-xs font-mono text-[var(--text-muted)]">
-                      / 10.0 CGPA · Year 1 · KIIT CSE (AI &amp; ML)
-                    </span>
-                  </div>
+                  <span className="text-xs font-mono text-[var(--text-muted)]">
+                    / 10.0 CGPA · Year 1 · KIIT CSE (AI &amp; ML)
+                  </span>
                 </div>
+              </StaggerItem>
 
-                <div className="hairline-row py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)]">
-                    Verified Engineering Output
+              <StaggerItem className="hairline-row py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-6">
+                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] shrink-0">
+                  Verified Engineering Output
+                </span>
+                <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 sm:justify-end sm:text-right">
+                  <span className="text-2xl sm:text-[1.75rem] font-extrabold font-display tabular-nums text-[var(--accent)]">
+                    {PROJECTS.length} Builds
                   </span>
-                  <div className="flex items-baseline gap-2.5 sm:text-right">
-                    <span className="text-2xl sm:text-3xl font-extrabold font-display tabular-nums text-[var(--accent)]">
-                      {PROJECTS.length} Builds
-                    </span>
-                    <span className="text-xs font-mono text-[var(--text-muted)]">
-                      Mapped directly to public repositories
-                    </span>
-                  </div>
+                  <span className="text-xs font-mono text-[var(--text-muted)]">
+                    Mapped directly to public repositories
+                  </span>
                 </div>
-              </div>
-            </EditorialReveal>
+              </StaggerItem>
+            </StaggerGroup>
 
             <EditorialReveal delay={0.2}>
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <div className="pt-1 flex flex-wrap items-center gap-4">
                 <MagneticAction strength={0.16}>
                   <button
                     type="button"
@@ -181,7 +185,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigateTab("skills")}
-                  className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors cursor-pointer py-2"
+                  className="inline-flex items-center gap-2 min-h-[44px] px-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors cursor-pointer"
                 >
                   <span>Inspect Technical Stack</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -190,21 +194,9 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
             </EditorialReveal>
           </div>
 
-          <div className="lg:col-span-5 space-y-4">
-            <ScrollScaleImage className="rounded-[8px] overflow-hidden bg-[#151713] aspect-[4/4.4]">
-              <img
-                src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
-                alt="Sayam Mukherjee editorial portrait"
-                loading="lazy"
-                decoding="async"
-                className="h-full w-full object-cover object-[50%_18%] grayscale hover:grayscale-0 transition-all duration-700"
-              />
-            </ScrollScaleImage>
-            <div className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] pt-1 border-t border-[var(--border)]">
-              <span>Bhubaneswar, Odisha · India</span>
-              <span className="tabular-nums text-[var(--text)] font-semibold">B.Tech&apos;29</span>
-            </div>
-          </div>
+          <EditorialReveal delay={0.14} className="min-w-0 w-full">
+            <EngineeringVisualization />
+          </EditorialReveal>
         </div>
       </section>
 
