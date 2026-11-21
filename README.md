@@ -440,3 +440,8 @@ When changing the codebase:
 ---
 
 Maintained alongside the portfolio source repository. Update this document whenever the actual application routes, backend contracts, workflows, or setup requirements change.
+
+
+## Motion & interaction design specification
+
+The portfolio-wide animation and interaction blueprint is maintained in [DESIGN.md](./DESIGN.md). It documents the motion architecture, GSAP/ Motion for React / Three.js responsibilities, arc carousel, parallax, pinned 3D stage, pinned headings, sideways narratives, stacking cards, focus frames, sliders, scroll-triggered project demonstrations, responsive fallbacks, accessibility and implementation prompts.
