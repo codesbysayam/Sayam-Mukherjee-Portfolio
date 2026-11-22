@@ -2,6 +2,9 @@
 
 This guide supersedes the previous one-shot implementation prompt. Use the phases in order. Do not paste all phases as one request.
 
+**Detailed code recipes:** [docs/MOTION_CODE_RECIPES.md](./MOTION_CODE_RECIPES.md) — scoped GSAP hook, pinned heading, horizontal narrative, stacking cards and Three.js progress bridge.
+
+
 Repository: https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio
 Branch: main
 Design specification: ./DESIGN.md
