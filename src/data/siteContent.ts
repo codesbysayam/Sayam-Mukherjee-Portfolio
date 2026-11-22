@@ -34,7 +34,7 @@ export const CONTACT_INFO = {
   location: "Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)",
   university: "Kalinga Institute of Industrial Technology, Bhubaneswar",
   program: "B.Tech in Computer Science & Engineering (AI & ML)",
-  semester: "2nd Year, 3rd Semester",
+  semester: "2nd Year, 4th Semester",
   cgpa: "9.06",
 } as const;
 
@@ -95,7 +95,7 @@ export const ABOUT_CONTENT = {
   storyTitle: "Building Practical Systems from Solid Fundamentals",
   quote:
     "I believe great engineering is not about writing the maximum amount of code, but about constructing reliable boundaries where systems fail gracefully and users feel empowered.",
-  bio: "I am a 2nd Year (3rd Semester) Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar (hometown: Hooghly, West Bengal), passionate about building scalable software, intelligent systems, and meaningful digital experiences. I enjoy transforming ideas into real-world products through continuous learning, disciplined execution, and creative problem-solving.",
+  bio: "I am a 2nd Year (4th Semester) Computer Science Engineering student at Kalinga Institute of Industrial Technology, Bhubaneswar (hometown: Hooghly, West Bengal), passionate about building scalable software, intelligent systems, and meaningful digital experiences. I enjoy transforming ideas into real-world products through continuous learning, disciplined execution, and creative problem-solving.",
   strengths: [
     {
       title: "Rapid System Synthesis",
@@ -136,7 +136,7 @@ export const ABOUT_CONTENT = {
   stats: {
     cgpa: "9.06",
     university: "Kalinga Institute of Industrial Technology, Bhubaneswar",
-    semester: "2nd Year, 3rd Semester",
+    semester: "2nd Year, 4th Semester",
     location: "Bhubaneswar, Odisha (Hometown: Hooghly, West Bengal)",
     focus: ["C++", "DSA", "Computer Vision", "Full Stack"],
   },
