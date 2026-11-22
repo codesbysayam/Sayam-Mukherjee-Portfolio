@@ -96,7 +96,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     }
 
     return `**सायम मुखर्जी के बारे में (About Sayam Mukherjee):**\n\n` +
-      `सायम KIIT भुवनेश्वर में **B.Tech Computer Science & Engineering (AI & ML)** के द्वितीय वर्ष (3rd Semester) के छात्र हैं (प्रथम वर्ष CGPA: **9.06**)।\n\n` +
+      `सायम KIIT भुवनेश्वर में **B.Tech Computer Science & Engineering (AI & ML)** के द्वितीय वर्ष (4th Semester) के छात्र हैं (प्रथम वर्ष CGPA: **9.06**)।\n\n` +
       `वे मुख्य रूप से एजेंटिक AI सिस्टम्स (**OPERON**), स्मार्ट पर्यावरण टेलीमेट्री (**MAUSAM** SIH 2026) और C++ एल्गोरिदम (**SayamSolves**) पर कार्य करते हैं।\n\n` +
       `संपर्क: [wrickbusiness@gmail.com](mailto:wrickbusiness@gmail.com) | [GitHub](https://github.com/codesbysayam) | [LinkedIn](https://www.linkedin.com/in/sayammukherjee-portfolio/)`;
   }
