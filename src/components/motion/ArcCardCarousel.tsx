@@ -80,22 +80,33 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
     };
 
     update();
+
+    if (typeof ResizeObserver === "undefined") {
+      window.addEventListener("resize", update, { passive: true });
+      return () => window.removeEventListener("resize", update);
+    }
+
     const observer = new ResizeObserver(update);
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
-  const finishPointer = useCallback(() => {
-    if (pointerId.current === null) return;
+  const finishPointer = useCallback(
+    (shouldCommit: boolean) => {
+      if (pointerId.current === null) return;
 
-    const threshold = Math.max(42, stageWidth * 0.07);
-    if (dragOffset <= -threshold) select(safeIndex + 1);
-    else if (dragOffset >= threshold) select(safeIndex - 1);
+      if (shouldCommit) {
+        const threshold = Math.max(42, stageWidth * 0.07);
+        if (dragOffset <= -threshold) select(safeIndex + 1);
+        else if (dragOffset >= threshold) select(safeIndex - 1);
+      }
 
-    setIsDragging(false);
-    setDragOffset(0);
-    pointerId.current = null;
-  }, [dragOffset, safeIndex, select, stageWidth]);
+      setIsDragging(false);
+      setDragOffset(0);
+      pointerId.current = null;
+    },
+    [dragOffset, safeIndex, select, stageWidth]
+  );
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (items.length < 2) return;
@@ -161,9 +172,9 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
         onKeyDown={handleKeyDown}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerUp={finishPointer}
-        onPointerCancel={finishPointer}
-        onLostPointerCapture={finishPointer}
+        onPointerUp={() => finishPointer(true)}
+        onPointerCancel={() => finishPointer(false)}
+        onLostPointerCapture={() => finishPointer(false)}
         onClickCapture={handleClickCapture}
       >
         {items.map((item, index) => {
