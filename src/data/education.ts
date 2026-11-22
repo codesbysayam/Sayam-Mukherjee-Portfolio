@@ -82,7 +82,7 @@ export const universityEducation: UniversityEducation = {
   expectedGraduation: "2029",
   cgpa: "9.06",
   cgpaScale: "10.0",
-  status: "Undergraduate (2nd Year, 3rd Sem)",
+  status: "Undergraduate (2nd Year, 4th Sem)",
   description: "Core coursework in Data Structures & Algorithms, Object-Oriented Programming, Computer Organization, and Discrete Mathematics.",
   schoolName: "Aditya Birla Vani Bharati",
 };
