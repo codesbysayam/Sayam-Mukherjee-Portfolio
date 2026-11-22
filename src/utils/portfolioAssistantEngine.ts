@@ -69,7 +69,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
         `1. **विश्वविद्यालय (KIIT University):**\n` +
         `   • **संस्थान:** Kalinga Institute of Industrial Technology (KIIT), भुवनेश्वर\n` +
         `   • **डिग्री:** B.Tech Computer Science & Engineering (विशेषज्ञता: AI & ML)\n` +
-        `   • **वर्तमान स्थिति:** द्वितीय वर्ष (2nd Year, 3rd Semester)\n` +
+        `   • **वर्तमान स्थिति:** द्वितीय वर्ष (2nd Year, 4th Semester)\n` +
         `   • **प्रथम वर्ष CGPA:** **9.06** / 10.0\n` +
         `   • **अपेक्षित स्नातक:** 2029\n\n` +
         `2. **कक्षा 12 (CBSE Class 12):**\n` +
@@ -177,7 +177,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `• **Institution:** Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar\n` +
       `• **Degree:** B.Tech Computer Science and Engineering\n` +
       `• **Specialization:** Artificial Intelligence & Machine Learning (AI & ML)\n` +
-      `• **Current Standing:** Undergraduate (2nd Year, 3rd Semester)\n` +
+      `• **Current Standing:** Undergraduate (2nd Year, 4th Semester)\n` +
       `• **First-Year CGPA:** **9.06** / 10.0\n` +
       `• **Expected Graduation:** 2029\n` +
       `• **Core Coursework:** Data Structures & Algorithms, Object-Oriented Programming, Computer Organization, Discrete Mathematics, Linear Algebra, and Optimization Techniques.`;
@@ -196,7 +196,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `### 1. Higher Education (KIIT University)\n` +
       `• **Institution:** Kalinga Institute of Industrial Technology (KIIT), Bhubaneswar\n` +
       `• **Degree:** B.Tech in Computer Science and Engineering (AI & ML)\n` +
-      `• **Status:** Undergraduate (2nd Year, 3rd Semester)\n` +
+      `• **Status:** Undergraduate (2nd Year, 4th Semester)\n` +
       `• **First-Year CGPA:** **9.06** / 10.0\n` +
       `• **Expected Graduation:** 2029\n\n` +
       `### 2. CBSE Class 12 Board Examination\n` +
