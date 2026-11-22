@@ -1,8 +1,11 @@
-import { useState, useRef, memo } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import AcademicRecord from "./AcademicRecord";
 import { EditorialReveal, MaskMediaReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 import { ContourBackground } from "./motion/ContourBackground";
+import { PinnedHeadingSection } from "./motion/PinnedHeadingSection";
+import { HorizontalNarrative, type NarrativeStop } from "./motion/HorizontalNarrative";
+import { requestScrollTriggerRefresh } from "../motion/gsapRegistry";
 import { SectionHeading } from "./ui/SectionHeading";
 import { usePrefersReducedMotion } from "../motion/tokens";
 import {
@@ -109,8 +112,63 @@ function ChronologicalTimeline({ items }: { items: JourneyMilestone[] }) {
   );
 }
 
+const JOURNEY_HORIZONTAL_STOPS: NarrativeStop[] = [
+  {
+    id: "stop-2013",
+    index: "01",
+    eyebrow: "2013 · Athletics",
+    title: "Competitive Table Tennis",
+    body: "Started formal table tennis training, advancing to represent my district and win 3× first-position championships.",
+    meta: "Focus: Reflex discipline & rally composure",
+  },
+  {
+    id: "stop-2021",
+    index: "02",
+    eyebrow: "2021 · Innovation",
+    title: "Toycathon National Finals · Top 15",
+    body: "Ranked among the Top 15 teams nationally in Toycathon organized by the Government of India.",
+    meta: "Focus: Early product & system prototyping",
+  },
+  {
+    id: "stop-youtube",
+    index: "03",
+    eyebrow: "2021–2026 · Media",
+    title: "12K+ Historical YouTube Reach",
+    body: "Scaled Technical AZ (2.06K+) and Daily Decipher (10K+ subscribers) producing clear technical narratives.",
+    meta: "Focus: Visual storytelling & audience clarity",
+  },
+  {
+    id: "stop-kiit",
+    index: "04",
+    eyebrow: "2025 · University",
+    title: "KIIT B.Tech CSE · 9.06 CGPA",
+    body: "Completed first year of Computer Science & Engineering (AI & ML) at KIIT Bhubaneswar with a 9.06 CGPA.",
+    meta: "Focus: Linear algebra, C++ & core systems",
+  },
+  {
+    id: "stop-technex",
+    index: "05",
+    eyebrow: "2026 · National Finals",
+    title: "Technex'26 IIT BHU · 5/6 Finals",
+    body: "Advanced to finals across 5 out of 6 technical competitions at IIT (BHU) Varanasi.",
+    meta: "Focus: Rapid multi-domain problem solving",
+  },
+  {
+    id: "stop-systems",
+    index: "06",
+    eyebrow: "2026 · Production",
+    title: "8 Verified Flagship Systems",
+    body: "Shipped Operon, Mausam (SIH 2026), SightForge, Memory-in-Motion, AXIOM, Inkloom, CampusConnect & SayamSolves.",
+    meta: "Focus: Human-in-the-loop & reliable code",
+  },
+];
+
 function AboutSectionComponent() {
   const [activeTab, setActiveTab] = useState<"narrative" | "timeline" | "education">("narrative");
+
+  useEffect(() => {
+    requestScrollTriggerRefresh(220);
+  }, [activeTab]);
 
   const values = [
     { name: "Continuous Learning", desc: "A disciplined commitment to expand domain mastery daily.", icon: BookOpen },
@@ -399,6 +457,13 @@ function AboutSectionComponent() {
               </div>
             </div>
 
+            {/* Sideways Milestone Progression */}
+            <HorizontalNarrative
+              eyebrow="Milestone Progression · 2013 — 2026"
+              title="From competitive rallies to verified systems"
+              stops={JOURNEY_HORIZONTAL_STOPS}
+            />
+
             {/* Operating Values & Principles */}
             <div id="about-values" className="space-y-5">
               <EditorialReveal className="space-y-1">
@@ -529,19 +594,43 @@ function AboutSectionComponent() {
             transition={{ duration: 0.18 }}
             className="space-y-8"
           >
-            <div className="space-y-1.5">
-              <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
-                Lived Chronology
-              </span>
-              <h3 className="text-2xl font-bold font-display text-[var(--text)]">
-                Engineering &amp; Life Milestones (2011 – Present)
-              </h3>
-              <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans max-w-2xl">
-                An authentic chronological account of schooling, athletic achievements, entrepreneurial ventures, and software systems.
-              </p>
-            </div>
+            <PinnedHeadingSection
+              heading={
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider block">
+                      Lived Chronology
+                    </span>
+                    <h3 className="text-2xl sm:text-3xl font-bold font-display text-[var(--text)] leading-tight">
+                      Engineering &amp; Life Milestones{" "}
+                      <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+                        (2011 – Present)
+                      </span>
+                    </h3>
+                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans leading-relaxed max-w-md">
+                      An authentic chronological account of schooling, athletic achievements, entrepreneurial ventures, and software systems.
+                    </p>
+                  </div>
 
-            <ChronologicalTimeline items={engineeringJourney} />
+                  <div className="pt-3 border-t border-[var(--border)] grid grid-cols-2 gap-3 text-xs font-mono">
+                    <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+                      <span className="text-[var(--text-muted)] block text-[10px] uppercase">Milestones</span>
+                      <span className="text-base font-bold text-[var(--text)] tabular-nums">
+                        {engineeringJourney.length} Entries
+                      </span>
+                    </div>
+                    <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
+                      <span className="text-[var(--text-muted)] block text-[10px] uppercase">Span</span>
+                      <span className="text-base font-bold text-[var(--accent)] tabular-nums">
+                        2011 — 2026
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              }
+            >
+              <ChronologicalTimeline items={engineeringJourney} />
+            </PinnedHeadingSection>
           </motion.div>
         )}
 

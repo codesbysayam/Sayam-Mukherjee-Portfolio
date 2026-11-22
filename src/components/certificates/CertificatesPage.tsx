@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from "motion/react";
 import { Certificate, CertificateCategory, CertificateStats } from "../../types/certificates";
 import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 import AchievementGrid from "./AchievementGrid";
+import { AchievementCard } from "./AchievementCard";
 import CertificateViewerModal from "./CertificateViewerModal";
 import AcademicRecord from "../AcademicRecord";
 import { LineReveal, StaggerGroup, StaggerItem, EditorialReveal } from "../../motion/Reveal";
 import { ContourBackground } from "../motion/ContourBackground";
+import { MotionSlider } from "../motion/MotionSlider";
 import { SectionHeading } from "../ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
@@ -269,6 +271,11 @@ export default function CertificatesPage() {
     return items;
   }, [certificates, stats.competitions, stats.achievements, stats.academic, stats.technical]);
 
+  const featuredCertificates = useMemo(
+    () => certificates.filter((c) => c.featured),
+    [certificates]
+  );
+
   const CATEGORIES: { id: CertificateCategory; label: string }[] = useMemo(() => {
     const list: { id: CertificateCategory; label: string }[] = [
       { id: "ALL", label: "All Credentials" },
@@ -387,6 +394,25 @@ export default function CertificatesPage() {
             );
           })}
         </StaggerGroup>
+
+        {/* Featured Credentials Horizontal Spotlight */}
+        {featuredCertificates.length > 0 && (
+          <div className="pt-2">
+            <MotionSlider
+              label="Featured Credentials"
+              columnsClassName="auto-cols-[90%] sm:auto-cols-[58%] lg:auto-cols-[46%]"
+            >
+              {featuredCertificates.map((cert) => (
+                <AchievementCard
+                  key={cert.id}
+                  record={cert}
+                  onView={(c) => setViewingCertificate(c)}
+                  className="h-full"
+                />
+              ))}
+            </MotionSlider>
+          </div>
+        )}
 
         {/* Filter Controls */}
         <div

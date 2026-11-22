@@ -1,4 +1,4 @@
-import { memo, useMemo, useState, Suspense } from "react";
+import { memo, useEffect, useMemo, useRef, useState, Suspense } from "react";
 import { motion } from "motion/react";
 import { ArrowUpRight, ArrowDown, RotateCw, Github, GitCommit, Cpu, UserCheck } from "lucide-react";
 import { useGithub } from "../hooks/useGithub";
@@ -17,6 +17,7 @@ import {
   TextMaskReveal,
 } from "../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
+import { ensureGsapRegistered, gsap, MOTION_BREAKPOINTS } from "../motion/gsapRegistry";
 
 const HeroOrbitalSculpture = lazyWithRetry(() => import("./motion/HeroOrbitalSculpture"));
 
@@ -32,6 +33,45 @@ function HeroSectionComponent({
 }: HeroSectionProps) {
   const reduced = usePrefersReducedMotion();
   const [stageMode, setStageMode] = useState<"portrait" | "orbital">("portrait");
+  const heroSectionRef = useRef<HTMLElement>(null);
+  const bgParallaxRef = useRef<HTMLDivElement>(null);
+  const midParallaxRef = useRef<HTMLDivElement>(null);
+  const fgStageParallaxRef = useRef<HTMLDivElement>(null);
+  const heroProgressRef = useRef(0);
+
+  useEffect(() => {
+    const heroEl = heroSectionRef.current;
+    if (!heroEl || reduced) return;
+
+    ensureGsapRegistered();
+    const mm = gsap.matchMedia();
+
+    mm.add(MOTION_BREAKPOINTS.desktop, () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroEl,
+          start: "top top",
+          end: "bottom top",
+          scrub: 0.45,
+          onUpdate: (self) => {
+            heroProgressRef.current = self.progress;
+          },
+        },
+      });
+
+      if (bgParallaxRef.current) {
+        tl.to(bgParallaxRef.current, { yPercent: 12, ease: "none" }, 0);
+      }
+      if (midParallaxRef.current) {
+        tl.to(midParallaxRef.current, { y: -28, ease: "none" }, 0);
+      }
+      if (fgStageParallaxRef.current) {
+        tl.to(fgStageParallaxRef.current, { y: -44, ease: "none" }, 0);
+      }
+    });
+
+    return () => mm.revert();
+  }, [reduced]);
 
   const {
     user,
@@ -81,15 +121,25 @@ function HeroSectionComponent({
   return (
     <section
       id="hero"
+      ref={heroSectionRef}
       aria-label="Hero Introduction"
-      className="relative w-full min-h-0 lg:min-h-[calc(100svh-7rem)] flex flex-col justify-between overflow-hidden bg-[var(--bg)] py-4 sm:py-8 lg:py-12"
+      className="relative w-full min-h-0 lg:min-h-[calc(100svh-7rem)] flex flex-col justify-between overflow-x-clip bg-[var(--bg)] py-4 sm:py-8 lg:py-12"
     >
-      {/* Animated Topographic Contour Canvas */}
-      <ContourBackground density="medium" tone="adaptive" />
+      {/* Background Plane: Topographic Contours (Slow Parallax Layer) */}
+      <div
+        ref={bgParallaxRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 overflow-hidden will-change-transform"
+      >
+        <ContourBackground density="medium" tone="adaptive" />
+      </div>
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-center my-auto py-1 sm:py-2">
-        {/* LEFT MONUMENTAL EDITORIAL COLUMN */}
-        <div className="lg:col-span-7 flex flex-col justify-start text-left min-w-0">
+      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-12 items-start lg:items-center my-auto py-1 sm:py-2">
+        {/* MIDGROUND PLANE: MONUMENTAL EDITORIAL COLUMN */}
+        <div
+          ref={midParallaxRef}
+          className="lg:col-span-7 flex flex-col justify-start text-left min-w-0 will-change-transform"
+        >
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -174,18 +224,22 @@ function HeroSectionComponent({
           </motion.div>
         </div>
 
-        {/* RIGHT GALLERY-SCALE PORTRAIT / 3D ORBITAL STAGE (UNBOXED EDITORIAL COMPOSITION) */}
-        <motion.div
-          initial={reduced ? false : { opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            duration: MOTION_DURATION.enter,
-            delay: 0.16,
-            ease: MOTION_EASE.out,
-          }}
-          className="lg:col-span-5 flex flex-col gap-3 w-full min-w-0 lg:items-end"
+        {/* FOREGROUND PLANE: STICKY PORTRAIT / 3D ORBITAL STAGE */}
+        <div
+          ref={fgStageParallaxRef}
+          className="lg:col-span-5 lg:sticky lg:top-24 w-full min-w-0 will-change-transform"
         >
-          <div className="w-full min-w-0 max-w-[470px] space-y-3">
+          <motion.div
+            initial={reduced ? false : { opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: MOTION_DURATION.enter,
+              delay: 0.16,
+              ease: MOTION_EASE.out,
+            }}
+            className="flex flex-col gap-3 w-full min-w-0 lg:items-end"
+          >
+            <div className="w-full min-w-0 max-w-[470px] space-y-3">
             {/* Clean External Mode Controls (Never overlaid with backdrop-blur on WebGL canvas) */}
             <div className="flex items-center justify-between gap-2 text-[11px] font-mono">
               <span className="text-[var(--text-muted)] uppercase tracking-[0.12em]">
@@ -244,7 +298,7 @@ function HeroSectionComponent({
                         </div>
                       }
                     >
-                      <HeroOrbitalSculpture />
+                      <HeroOrbitalSculpture scrollProgressRef={heroProgressRef} />
                     </Suspense>
                   </div>
                 )}
@@ -297,8 +351,9 @@ function HeroSectionComponent({
                 </button>
               </div>
             </div>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        </div>
       </div>
 
       {/* BOTTOM VERIFIED PROOF STRIP + RESTRAINED SCROLL CUE */}

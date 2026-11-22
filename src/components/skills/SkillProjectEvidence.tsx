@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { ExternalLink, Github, ArrowUpRight, Filter, ArrowRight } from "lucide-react";
-import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import React, { useState, useEffect } from "react";
+import { ExternalLink, Github, ArrowUpRight, Filter } from "lucide-react";
+import { StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { PinnedHeadingSection } from "../motion/PinnedHeadingSection";
+import { requestScrollTriggerRefresh } from "../../motion/gsapRegistry";
 
 interface EvidenceRow {
   id: string;
@@ -114,123 +116,91 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
       )
     : PROJECT_EVIDENCE_DATA;
 
+  useEffect(() => {
+    requestScrollTriggerRefresh(90);
+  }, [selectedSkillFilter]);
+
   return (
-    <section id="skill-evidence" className="space-y-6">
-      {/* Section Header */}
-      <EditorialReveal className="space-y-2">
-        <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
-          <span className="font-semibold uppercase tracking-wider text-[var(--accent)]">
-            Project Evidence
-          </span>
-          <span aria-hidden="true">/</span>
-          <span>{PROJECT_EVIDENCE_DATA.length} Verified Projects</span>
+    <PinnedHeadingSection
+      id="skill-evidence"
+      heading={
+        <div className="space-y-5">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)]">
+              <span className="font-semibold uppercase tracking-wider text-[var(--accent)]">
+                Project Evidence
+              </span>
+              <span aria-hidden="true">/</span>
+              <span>{filteredRows.length} of {PROJECT_EVIDENCE_DATA.length} Verified Projects</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[var(--text)] font-display leading-tight">
+              Skill Application &amp;{" "}
+              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+                Evidence Matrix
+              </span>
+            </h2>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans leading-relaxed max-w-md">
+              How engineering capabilities translate directly into verified production repositories and documented system designs.
+            </p>
+          </div>
+
+          {/* Filter Row (Pinned alongside rows on lg+) */}
+          <div className="space-y-2.5 pt-3 border-t border-[var(--border)]">
+            <span className="text-[11px] font-mono text-[var(--text-muted)] flex items-center gap-1.5 uppercase tracking-wider">
+              <Filter className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
+              <span>Filter by Capability</span>
+            </span>
+
+            <div className="flex flex-wrap items-center gap-1.5 text-xs font-mono">
+              <button
+                type="button"
+                onClick={() => setSelectedSkillFilter(null)}
+                className={`btn !min-h-[34px] !py-1 !px-2.5 !text-xs active:scale-[0.97] ${
+                  selectedSkillFilter === null ? "btn-primary" : "btn-secondary"
+                }`}
+              >
+                All ({PROJECT_EVIDENCE_DATA.length})
+              </button>
+
+              {keySkills.map((skill) => (
+                <button
+                  key={skill}
+                  type="button"
+                  onClick={() => setSelectedSkillFilter(selectedSkillFilter === skill ? null : skill)}
+                  className={`btn !min-h-[34px] !py-1 !px-2.5 !text-xs whitespace-nowrap active:scale-[0.97] ${
+                    selectedSkillFilter === skill ? "btn-primary" : "btn-secondary"
+                  }`}
+                >
+                  {skill}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
-          <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--text)] font-display">
-            Skill Application &amp; Evidence Matrix
-          </h2>
-          <span className="text-xs font-mono text-[var(--text-muted)]">
-            Skill → Project → Evidence
-          </span>
-        </div>
-        <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans leading-relaxed">
-          How engineering capabilities translate directly into verified production repositories and documented system designs.
-        </p>
-      </EditorialReveal>
-
-      {/* Filter Row */}
-      <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none text-xs font-mono">
-        <span className="text-[var(--text-muted)] flex items-center gap-1 shrink-0 mr-1">
-          <Filter className="w-3.5 h-3.5" aria-hidden="true" />
-          <span>Filter:</span>
-        </span>
-
-        <button
-          type="button"
-          onClick={() => setSelectedSkillFilter(null)}
-          className={`btn !min-h-[36px] !py-1 !px-3 !text-xs active:scale-[0.97] ${
-            selectedSkillFilter === null ? "btn-primary" : "btn-secondary"
-          }`}
-        >
-          All ({PROJECT_EVIDENCE_DATA.length})
-        </button>
-
-        {keySkills.map((skill) => (
-          <button
-            key={skill}
-            type="button"
-            onClick={() => setSelectedSkillFilter(selectedSkillFilter === skill ? null : skill)}
-            className={`btn !min-h-[36px] !py-1 !px-3 !text-xs whitespace-nowrap active:scale-[0.97] ${
-              selectedSkillFilter === skill ? "btn-primary" : "btn-secondary"
-            }`}
-          >
-            {skill}
-          </button>
-        ))}
-      </div>
-
-      {/* Relationship Matrix */}
-      <StaggerGroup key={selectedSkillFilter || "all"} className="space-y-3.5">
+      }
+    >
+      <StaggerGroup key={selectedSkillFilter || "all"} className="space-y-4">
         {filteredRows.map((row) => (
           <StaggerItem
             key={row.id}
-            className="card p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-5 transition-colors hover:border-[var(--border-strong)]"
+            className="card p-5 sm:p-6 space-y-4 transition-colors hover:border-[var(--border-strong)]"
           >
-            {/* Column 1: SKILL STACK */}
-            <div className="lg:w-1/4 space-y-1.5 shrink-0">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold block">
-                Skills Applied
-              </span>
-              <div className="flex flex-wrap gap-1.5">
-                {(row.skills || []).map((s) => (
-                  <span
-                    key={s}
-                    className="px-2 py-0.5 rounded-[4px] text-xs font-mono bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)]"
-                  >
-                    {s}
+            <div className="flex flex-wrap items-start justify-between gap-3 pb-3 border-b border-[var(--border)]">
+              <div className="space-y-0.5 min-w-0">
+                <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                  <span className="text-[var(--accent)] font-semibold uppercase tracking-wider">
+                    {row.statusBadge}
                   </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="hidden lg:flex items-center text-[var(--text-muted)] shrink-0">
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </div>
-
-            {/* Column 2: VERIFIED PROJECT */}
-            <div className="lg:w-1/4 space-y-1 shrink-0">
-              <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold block">
-                Verified Project
-              </span>
-              <div className="space-y-0.5">
-                <h3 className="text-base font-bold text-[var(--text)] font-display">
+                </div>
+                <h3 className="text-lg font-bold text-[var(--text)] font-display">
                   {row.projectTitle}
                 </h3>
-                <p className="text-xs text-[var(--text-secondary)] font-sans">
+                <p className="text-xs text-[var(--text-muted)] font-sans">
                   {row.projectSubtitle}
                 </p>
-                <span className="inline-block text-[11px] font-mono text-[var(--accent)] font-semibold pt-0.5">
-                  {row.statusBadge}
-                </span>
-              </div>
-            </div>
-
-            <div className="hidden lg:flex items-center text-[var(--text-muted)] shrink-0">
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </div>
-
-            {/* Column 3: ARCHITECTURAL EVIDENCE */}
-            <div className="lg:w-2/5 flex flex-col justify-between space-y-3">
-              <div className="space-y-0.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold block">
-                  Architectural Evidence
-                </span>
-                <p className="text-xs sm:text-[13px] text-[var(--text-secondary)] leading-relaxed font-sans">
-                  {row.evidence}
-                </p>
               </div>
 
-              <div className="flex items-center gap-2 pt-0.5 flex-wrap">
+              <div className="flex items-center gap-2 flex-wrap shrink-0">
                 {row.githubUrl && (
                   <a
                     href={row.githubUrl}
@@ -240,7 +210,7 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
                     title="View GitHub Repository"
                   >
                     <Github className="w-3.5 h-3.5" aria-hidden="true" />
-                    <span>Repository</span>
+                    <span>Repo</span>
                   </a>
                 )}
                 {row.liveUrl && (
@@ -267,10 +237,25 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
                 )}
               </div>
             </div>
+
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
+              {row.evidence}
+            </p>
+
+            <div className="flex flex-wrap gap-1.5 pt-1">
+              {(row.skills || []).map((s) => (
+                <span
+                  key={s}
+                  className="px-2 py-0.5 rounded-[4px] text-[11px] font-mono bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)]"
+                >
+                  {s}
+                </span>
+              ))}
+            </div>
           </StaggerItem>
         ))}
       </StaggerGroup>
-    </section>
+    </PinnedHeadingSection>
   );
 }
 

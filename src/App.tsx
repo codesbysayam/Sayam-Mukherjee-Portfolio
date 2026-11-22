@@ -28,6 +28,7 @@ import ScrollStoryThread, {
 } from "./components/motion/ScrollStoryThread";
 import RouteTransition from "./components/motion/RouteTransition";
 import PointerTrailCanvas from "./components/motion/PointerTrailCanvas";
+import { requestScrollTriggerRefresh } from "./motion/gsapRegistry";
 import { MotionProvider } from "./motion/MotionProvider";
 import { EditorialReveal } from "./motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "./motion/tokens";
@@ -117,6 +118,13 @@ function AppContent() {
   useEffect(() => {
     trackVisit("Home Portfolio");
     clearChunkReloadFlag();
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready
+        .then(() => {
+          requestScrollTriggerRefresh(80);
+        })
+        .catch(() => {});
+    }
   }, []);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);

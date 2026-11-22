@@ -7,6 +7,7 @@ import { ProjectMetricsSummary } from "./ProjectMetricsSummary";
 import { calculateReadingTime } from "../../utils/readingTime";
 import { computeProjectLifecycle } from "../../utils/projectLifecycle";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
+import { FocusFrame } from "../motion/FocusFrame";
 import {
   Star, GitFork, ExternalLink, Github, ArrowRight,
   CheckCircle2, Calendar, Layers, Share2, Check, Clock, ArrowLeftRight
@@ -266,51 +267,70 @@ function FeaturedProjectComponent({
 
         {/* RIGHT COLUMN: Artwork Preview & Repository Telemetry (5 cols) */}
         <div className="lg:col-span-5 space-y-4">
-          <div className="rounded-[10px] overflow-hidden border border-[#41443A] bg-[#151713]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={project.id}
-                initial={
-                  reduced
-                    ? false
-                    : { clipPath: "inset(0 100% 0 0)", scale: 1.035, opacity: 0.7 }
-                }
-                animate={{
-                  clipPath: "inset(0 0% 0 0)",
-                  scale: 1,
-                  opacity: 1,
-                }}
-                exit={
-                  reduced
-                    ? undefined
-                    : { clipPath: "inset(0 0 0 100%)", opacity: 0.6 }
-                }
-                transition={{
-                  duration: MOTION_DURATION.enter,
-                  ease: MOTION_EASE.emphasis,
-                }}
-              >
-                {!imgError ? (
-                  <img
-                    src={resolvedSrc}
-                    alt={media.alt}
-                    referrerPolicy="no-referrer"
-                    onError={handleImageError}
-                    className={`project-screenshot w-full aspect-[16/10] h-full ${
-                      media.objectFit === "contain" ? "!object-contain bg-[#151713]" : "object-cover"
-                    } ${media.objectPosition || "object-top"}`}
-                  />
-                ) : (
-                  <div className="w-full aspect-[16/10] flex items-center justify-center p-6 text-center bg-[#151713]">
-                    <span className="font-mono text-xs text-[#B5B8AA]">{project.title}</span>
-                  </div>
-                )}
-              </motion.div>
-            </AnimatePresence>
-            <div className="px-4 py-2.5 border-t border-[#41443A] text-[11px] font-mono text-[#B5B8AA]">
-              {media.caption}
+          <FocusFrame
+            darkSurface
+            eyebrow="Featured Media Frame"
+            title={project.title}
+            summary={media.caption}
+            expandedContent={
+              project.architecture?.length ? (
+                <ul className="space-y-1.5 text-xs font-mono text-[#D4D6CA]">
+                  {project.architecture.slice(0, 3).map((step, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-[#C7E34A] font-bold">0{i + 1}.</span>
+                      <span>{step}</span>
+                    </li>
+                  ))}
+                </ul>
+              ) : null
+            }
+          >
+            <div className="overflow-hidden bg-[#151713]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={project.id}
+                  initial={
+                    reduced
+                      ? false
+                      : { clipPath: "inset(0 100% 0 0)", scale: 1.035, opacity: 0.7 }
+                  }
+                  animate={{
+                    clipPath: "inset(0 0% 0 0)",
+                    scale: 1,
+                    opacity: 1,
+                  }}
+                  exit={
+                    reduced
+                      ? undefined
+                      : { clipPath: "inset(0 0 0 100%)", opacity: 0.6 }
+                  }
+                  transition={{
+                    duration: MOTION_DURATION.enter,
+                    ease: MOTION_EASE.emphasis,
+                  }}
+                >
+                  {!imgError ? (
+                    <img
+                      src={resolvedSrc}
+                      alt={media.alt}
+                      referrerPolicy="no-referrer"
+                      onError={handleImageError}
+                      className={`project-screenshot w-full aspect-[16/10] h-full ${
+                        media.objectFit === "contain" ? "!object-contain bg-[#151713]" : "object-cover"
+                      } ${media.objectPosition || "object-top"}`}
+                    />
+                  ) : (
+                    <div className="w-full aspect-[16/10] flex items-center justify-center p-6 text-center bg-[#151713]">
+                      <span className="font-mono text-xs text-[#B5B8AA]">{project.title}</span>
+                    </div>
+                  )}
+                </motion.div>
+              </AnimatePresence>
+              <div className="px-4 py-2.5 border-t border-[#41443A] text-[11px] font-mono text-[#B5B8AA]">
+                {media.caption}
+              </div>
             </div>
-          </div>
+          </FocusFrame>
 
           <div className="p-4 sm:p-5 rounded-[10px] bg-[#151713] border border-[#41443A] space-y-2">
             <div className="flex items-center justify-between text-xs font-mono">

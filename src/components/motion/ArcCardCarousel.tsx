@@ -1,251 +1,342 @@
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type KeyboardEvent,
-  type MouseEvent,
-  type PointerEvent as ReactPointerEvent,
-  type ReactNode,
-} from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "motion/react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Github, Layers } from "lucide-react";
+import type { ProjectItem } from "../../data/projects";
+import { getProjectMedia } from "../../data/projectMedia";
+import type { GitHubRepo } from "../../services/github";
 import { usePrefersReducedMotion } from "../../motion/tokens";
+import { gsap, Flip } from "../../motion/gsapRegistry";
 import "./arc-card-carousel.css";
 
-export interface ArcCarouselItem {
-  id: string;
-  title: string;
+interface ArcCardCarouselProps {
+  projects: ProjectItem[];
+  repoMap?: Record<string, GitHubRepo>;
+  onSelectProject: (project: ProjectItem) => void;
+  title?: string;
 }
 
-interface ArcCardCarouselProps<T extends ArcCarouselItem> {
-  items: T[];
-  renderCard: (item: T, index: number, active: boolean) => ReactNode;
-  ariaLabel?: string;
-  onActiveChange?: (item: T, index: number) => void;
-  className?: string;
-}
-
-/**
- * Finite, accessible arc carousel.
- * Native vertical scrolling is preserved; horizontal pointer movement selects slides.
- */
-export function ArcCardCarousel<T extends ArcCarouselItem>({
-  items,
-  renderCard,
-  ariaLabel = "Featured items",
-  onActiveChange,
-  className = "",
-}: ArcCardCarouselProps<T>) {
-  const reducedMotion = usePrefersReducedMotion();
-  const stageRef = useRef<HTMLDivElement>(null);
-  const pointerStartX = useRef(0);
-  const pointerId = useRef<number | null>(null);
-  const draggedRef = useRef(false);
+export function ArcCardCarousel({
+  projects,
+  repoMap = {},
+  onSelectProject,
+  title = "Interactive Project Arc Deck",
+}: ArcCardCarouselProps) {
+  const reduced = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [stageWidth, setStageWidth] = useState(900);
-  const [dragOffset, setDragOffset] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const safeIndex = Math.min(activeIndex, Math.max(0, items.length - 1));
-
-  const select = useCallback(
-    (nextIndex: number) => {
-      if (items.length === 0) return;
-      const next = Math.max(0, Math.min(items.length - 1, nextIndex));
-      setActiveIndex(next);
-      setDragOffset(0);
-      const item = items[next];
-      if (item) onActiveChange?.(item, next);
-    },
-    [items, onActiveChange]
-  );
+  const [isMobile, setIsMobile] = useState(false);
+  const [dragOffsetPx, setDragOffsetPx] = useState(0);
+  const dragStartXRef = useRef<number | null>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (items.length === 0) {
-      setActiveIndex(0);
-      return;
-    }
-    if (activeIndex > items.length - 1) {
-      setActiveIndex(items.length - 1);
-    }
-  }, [activeIndex, items.length]);
-
-  useEffect(() => {
-    const node = stageRef.current;
-    if (!node) return;
-
-    const update = () => {
-      const width = node.getBoundingClientRect().width;
-      if (width > 0) setStageWidth(width);
-    };
-
-    update();
-
-    if (typeof ResizeObserver === "undefined") {
-      window.addEventListener("resize", update, { passive: true });
-      return () => window.removeEventListener("resize", update);
-    }
-
-    const observer = new ResizeObserver(update);
-    observer.observe(node);
-    return () => observer.disconnect();
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
-  const finishPointer = useCallback(
-    (shouldCommit: boolean) => {
-      if (pointerId.current === null) return;
+  useEffect(() => {
+    if (activeIndex >= projects.length && projects.length > 0) {
+      setActiveIndex(0);
+    }
+  }, [projects.length, activeIndex]);
 
-      if (shouldCommit) {
-        const threshold = Math.max(42, stageWidth * 0.07);
-        if (dragOffset <= -threshold) select(safeIndex + 1);
-        else if (dragOffset >= threshold) select(safeIndex - 1);
+  const count = projects.length;
+  const activeProject = projects[activeIndex] ?? projects[0] ?? null;
+
+  const stepTo = useCallback(
+    (nextIndex: number) => {
+      if (count <= 0) return;
+      const wrapped = ((nextIndex % count) + count) % count;
+
+      if (!reduced && detailsRef.current) {
+        const state = Flip.getState(detailsRef.current);
+        setActiveIndex(wrapped);
+        requestAnimationFrame(() => {
+          Flip.from(state, {
+            duration: 0.34,
+            ease: "power2.out",
+            simple: true,
+          });
+        });
+      } else {
+        setActiveIndex(wrapped);
       }
-
-      setIsDragging(false);
-      setDragOffset(0);
-      pointerId.current = null;
     },
-    [dragOffset, safeIndex, select, stageWidth]
+    [count, reduced]
   );
 
-  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (items.length < 2) return;
-    if (event.pointerType === "mouse" && event.button !== 0) return;
+  const handlePrev = useCallback(() => stepTo(activeIndex - 1), [activeIndex, stepTo]);
+  const handleNext = useCallback(() => stepTo(activeIndex + 1), [activeIndex, stepTo]);
 
-    pointerStartX.current = event.clientX;
-    pointerId.current = event.pointerId;
-    draggedRef.current = false;
-    setIsDragging(true);
-    event.currentTarget.setPointerCapture(event.pointerId);
-  };
-
-  const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (pointerId.current !== event.pointerId) return;
-
-    const delta = event.clientX - pointerStartX.current;
-    if (Math.abs(delta) > 5) draggedRef.current = true;
-
-    const atFirstAndDraggingRight = safeIndex === 0 && delta > 0;
-    const atLastAndDraggingLeft = safeIndex === items.length - 1 && delta < 0;
-    const resistance =
-      atFirstAndDraggingRight || atLastAndDraggingLeft ? 0.28 : 1;
-
-    setDragOffset(delta * resistance);
-  };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "ArrowRight") {
-      event.preventDefault();
-      select(safeIndex + 1);
-    } else if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      select(safeIndex - 1);
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      select(0);
-    } else if (event.key === "End") {
-      event.preventDefault();
-      select(items.length - 1);
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      handlePrev();
+    } else if (e.key === "ArrowRight") {
+      e.preventDefault();
+      handleNext();
     }
   };
 
-  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
-    if (!draggedRef.current) return;
-    event.preventDefault();
-    event.stopPropagation();
-    draggedRef.current = false;
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement)?.closest("button, a")) return;
+    dragStartXRef.current = e.clientX;
+    setDragOffsetPx(0);
   };
 
-  if (items.length === 0) return null;
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (dragStartXRef.current === null) return;
+    const delta = e.clientX - dragStartXRef.current;
+    setDragOffsetPx(Math.max(-140, Math.min(140, delta)));
+  };
 
-  const step = Math.min(330, Math.max(150, stageWidth * 0.31));
+  const handlePointerUp = () => {
+    if (dragStartXRef.current === null) return;
+    const delta = dragOffsetPx;
+    dragStartXRef.current = null;
+    setDragOffsetPx(0);
+    if (delta > 48) {
+      handlePrev();
+    } else if (delta < -48) {
+      handleNext();
+    }
+  };
+
+  const activeMedia = useMemo(
+    () => (activeProject ? getProjectMedia(activeProject.id) : null),
+    [activeProject]
+  );
+
+  if (!activeProject) return null;
+
+  const activeRepo =
+    repoMap[activeProject.githubRepoName?.toLowerCase() || ""] || null;
 
   return (
-    <section className={"arc-carousel " + className} aria-label={ariaLabel}>
+    <section
+      aria-roledescription="carousel"
+      aria-label={title}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+      className="arc-carousel-shell p-4 sm:p-6 space-y-5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+    >
+      {/* Top Deck Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-[var(--border)]">
+        <div className="flex items-center gap-2.5 text-xs font-mono">
+          <Layers className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />
+          <span className="uppercase tracking-[0.12em] font-semibold text-[var(--accent)]">
+            {title}
+          </span>
+          <span className="text-[var(--text-faint)]" aria-hidden="true">·</span>
+          <span className="text-[var(--text-muted)] tabular-nums">
+            {String(activeIndex + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+          </span>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <span className="hidden md:inline text-[11px] font-mono text-[var(--text-muted)] mr-1">
+            Drag arc or use Arrow keys
+          </span>
+          <button
+            type="button"
+            onClick={handlePrev}
+            disabled={count <= 1}
+            aria-label="Previous project in arc"
+            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            disabled={count <= 1}
+            aria-label="Next project in arc"
+            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40"
+          >
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* 3D Arc Stage */}
       <div
-        ref={stageRef}
-        className={"arc-carousel__stage" + (isDragging ? " is-dragging" : "")}
-        role="group"
-        aria-roledescription="carousel"
-        aria-label={ariaLabel}
-        tabIndex={0}
-        onKeyDown={handleKeyDown}
+        className="arc-carousel-stage cursor-grab active:cursor-grabbing"
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
-        onPointerUp={() => finishPointer(true)}
-        onPointerCancel={() => finishPointer(false)}
-        onLostPointerCapture={() => finishPointer(false)}
-        onClickCapture={handleClickCapture}
+        onPointerUp={handlePointerUp}
+        onPointerLeave={handlePointerUp}
       >
-        {items.map((item, index) => {
-          const offset = index - safeIndex;
-          const visible = Math.abs(offset) <= 2;
-          const isActive = index === safeIndex;
-          const x = offset * step + dragOffset;
-          const y = Math.abs(offset) * 22;
-          const rotateZ = offset * -5.5;
-          const scale = Math.max(0.78, 1 - Math.abs(offset) * 0.085);
-          const opacity = visible
-            ? Math.max(0.28, 1 - Math.abs(offset) * 0.27)
-            : 0;
+        {projects.map((project, index) => {
+          // Circular shortest offset around activeIndex
+          let offset = index - activeIndex;
+          if (count > 2) {
+            if (offset > count / 2) offset -= count;
+            if (offset < -count / 2) offset += count;
+          }
+
+          const absOffset = Math.abs(offset);
+          if (absOffset > 2) return null;
+
+          const isActive = offset === 0;
+          const media = getProjectMedia(project.id);
+
+          const dragFraction = dragOffsetPx / 180;
+          const shiftedOffset = offset + dragFraction;
+
+          const xSpacing = isMobile ? 168 : 258;
+          const x = reduced ? offset * 280 : shiftedOffset * xSpacing;
+          const y = reduced ? 0 : Math.abs(shiftedOffset) * Math.abs(shiftedOffset) * (isMobile ? 18 : 24);
+          const rotateZ = reduced ? 0 : shiftedOffset * (isMobile ? 5.5 : 7.5);
+          const scale = reduced ? (isActive ? 1 : 0.92) : Math.max(0.76, 1 - Math.abs(shiftedOffset) * 0.11);
+          const opacity = absOffset > 2 ? 0 : Math.max(0.32, 1 - absOffset * 0.28);
+          const zIndex = 20 - absOffset * 5;
 
           return (
             <motion.article
-              key={item.id}
-              className="arc-carousel__card"
-              aria-label={
-                index + 1 + " of " + items.length + ": " + item.title
-              }
-              aria-hidden={!visible}
-              inert={!visible}
+              key={project.id}
+              data-active={isActive}
               style={{
+                zIndex,
+                transformOrigin: "center bottom",
+              }}
+              animate={{
                 x,
                 y,
-                rotateZ,
+                rotate: rotateZ,
                 scale,
                 opacity,
-                zIndex: items.length - Math.abs(offset),
-                pointerEvents: visible ? "auto" : "none",
               }}
-              animate={{ x, y, rotateZ, scale, opacity }}
-              transition={{
-                duration: reducedMotion || isDragging ? 0 : 0.52,
-                ease: [0.22, 1, 0.36, 1],
+              transition={
+                reduced
+                  ? { duration: 0 }
+                  : {
+                      type: "spring",
+                      stiffness: 260,
+                      damping: 26,
+                      mass: 0.75,
+                    }
+              }
+              onClick={() => {
+                if (isActive) {
+                  onSelectProject(project);
+                } else {
+                  stepTo(index);
+                }
               }}
-              data-active={isActive ? "true" : "false"}
+              className="arc-card-slot cursor-pointer select-none"
             >
-              {renderCard(item, index, isActive)}
+              <div className="arc-card-media">
+                {!media.isMissing && media.src ? (
+                  <img
+                    src={media.src}
+                    alt={media.alt}
+                    loading="lazy"
+                    decoding="async"
+                    referrerPolicy="no-referrer"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center p-4 font-mono text-xs text-[#F4F4ED]">
+                    {project.title}
+                  </div>
+                )}
+
+                <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-[4px] bg-[#151713]/85 text-[#C7E34A] border border-[#41443A] font-mono text-[10px] font-bold uppercase tracking-wider">
+                  {project.categoryFilter}
+                </span>
+              </div>
+
+              <div className="p-4 space-y-2">
+                <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)]">
+                  <span className="truncate">{project.status}</span>
+                  <span className="tabular-nums font-semibold text-[var(--accent)]">
+                    0{index + 1}
+                  </span>
+                </div>
+
+                <h3 className="font-display text-base sm:text-lg font-extrabold text-[var(--text)] truncate">
+                  {project.title}
+                </h3>
+
+                <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
+                  {project.shortDescription}
+                </p>
+
+                <div className="pt-2 border-t border-[var(--border)] flex items-center justify-between text-[11px] font-mono">
+                  <span className="text-[var(--text-muted)] truncate">
+                    {project.techStack.slice(0, 3).join(" · ")}
+                  </span>
+                  <span className="text-[var(--accent)] font-bold shrink-0 inline-flex items-center gap-1">
+                    {isActive ? "Open" : "Focus"}
+                    <ArrowUpRight className="w-3 h-3" />
+                  </span>
+                </div>
+              </div>
             </motion.article>
           );
         })}
       </div>
 
-      <div className="arc-carousel__controls">
-        <button
-          type="button"
-          onClick={() => select(safeIndex - 1)}
-          disabled={safeIndex === 0}
-          aria-label="Previous item"
-        >
-          Previous
-        </button>
+      {/* Synchronized Active Project Dock + Dot Controls */}
+      <div
+        ref={detailsRef}
+        className="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-3 border-t border-[var(--border)]"
+      >
+        <div className="space-y-1 min-w-0">
+          <div className="flex items-center gap-2 text-xs font-mono">
+            <span className="font-bold text-[var(--text)]">{activeProject.title}</span>
+            <span className="text-[var(--text-faint)]">·</span>
+            <span className="text-[var(--text-muted)] truncate">
+              {activeMedia?.caption || activeProject.subtitle}
+            </span>
+          </div>
+          {activeRepo && (
+            <div className="text-[11px] font-mono text-[var(--text-muted)] tabular-nums">
+              GitHub: {activeRepo.full_name} · {activeRepo.stargazers_count} stars · {activeRepo.forks_count} forks
+            </div>
+          )}
+        </div>
 
-        <span
-          className="arc-carousel__status"
-          aria-live="polite"
-          aria-atomic="true"
-        >
-          {safeIndex + 1} / {items.length}
-        </span>
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1.5 mr-2" role="tablist" aria-label="Select project slide">
+            {projects.map((p, idx) => (
+              <button
+                key={p.id}
+                type="button"
+                role="tab"
+                aria-selected={idx === activeIndex}
+                aria-label={`Focus ${p.title}`}
+                onClick={() => stepTo(idx)}
+                className={`h-2 rounded-full transition-all cursor-pointer ${
+                  idx === activeIndex
+                    ? "w-6 bg-[var(--accent)]"
+                    : "w-2 bg-[var(--border-strong)] hover:bg-[var(--text-muted)]"
+                }`}
+              />
+            ))}
+          </div>
 
-        <button
-          type="button"
-          onClick={() => select(safeIndex + 1)}
-          disabled={safeIndex === items.length - 1}
-          aria-label="Next item"
-        >
-          Next
-        </button>
+          <button
+            type="button"
+            onClick={() => onSelectProject(activeProject)}
+            className="btn btn-primary !min-h-[38px] !py-1.5 !px-3.5 !text-xs"
+          >
+            <span>Inspect Case Study</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </button>
+
+          <a
+            href={activeProject.githubUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3 !text-xs"
+          >
+            <Github className="w-3.5 h-3.5" />
+            <span>GitHub</span>
+          </a>
+        </div>
       </div>
     </section>
   );

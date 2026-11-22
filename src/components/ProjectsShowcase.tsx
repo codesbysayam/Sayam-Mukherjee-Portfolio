@@ -12,6 +12,8 @@ import { ProjectStatsOverview } from "./projects/ProjectStatsOverview";
 import { StaggerGroup, StaggerItem } from "../motion/Reveal";
 import { SectionHeading } from "./ui/SectionHeading";
 import { ContourBackground } from "./motion/ContourBackground";
+import { ArcCardCarousel } from "./motion/ArcCardCarousel";
+import { requestScrollTriggerRefresh } from "../motion/gsapRegistry";
 
 type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "SYSTEMS" | "DSA";
 
@@ -39,6 +41,10 @@ function ProjectsShowcaseComponent({
     }
     onClearInitialProject?.();
   }, [initialProjectId, onClearInitialProject]);
+
+  useEffect(() => {
+    requestScrollTriggerRefresh(80);
+  }, [selectedCategory, selectedTech, searchQuery]);
 
   const { repos, stats, user, snapshot, loading: githubLoading } = useGithub();
 
@@ -233,6 +239,16 @@ function ProjectsShowcaseComponent({
             selectedTech={selectedTech}
           />
         </section>
+      )}
+
+      {/* 3B. INTERACTIVE 3D ARC CARD DECK */}
+      {filteredProjects.length > 1 && (
+        <ArcCardCarousel
+          projects={filteredProjects}
+          repoMap={repoMap}
+          onSelectProject={setSelectedCaseStudy}
+          title="3D Arc Project Deck"
+        />
       )}
 
       {/* 4. PROJECT EXPLORER */}

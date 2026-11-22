@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type MutableRefObject } from "react";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { useDeviceCapability, usePrefersReducedMotion } from "../../motion/tokens";
@@ -61,7 +61,13 @@ function StaticSculptureFallback() {
   );
 }
 
-export default function HeroOrbitalSculpture() {
+interface HeroOrbitalSculptureProps {
+  scrollProgressRef?: MutableRefObject<number>;
+}
+
+export default function HeroOrbitalSculpture({
+  scrollProgressRef,
+}: HeroOrbitalSculptureProps = {}) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
   const prefersReduced = usePrefersReducedMotion();
@@ -471,15 +477,21 @@ export default function HeroOrbitalSculpture() {
       lastTime = now;
       elapsed += dt;
 
+      // Read normalized scroll progress from external ScrollTrigger controller when provided
+      const activeScroll = scrollProgressRef
+        ? THREE.MathUtils.clamp(scrollProgressRef.current, 0, 1.4)
+        : scrollFactor;
+
       // Update wave shader uniform
       if (primaryMat.userData.shader) {
         primaryMat.userData.shader.uniforms.uTime.value = elapsed;
-        primaryMat.userData.shader.uniforms.uEnergy.value = pointerInside ? 0.072 : 0.048;
+        primaryMat.userData.shader.uniforms.uEnergy.value =
+          (pointerInside ? 0.072 : 0.048) + activeScroll * 0.032;
       }
 
       // Exponential damping for pointer parallax + scroll alignment
-      const targetRotY = dragRotY + pointerX * 0.34 + elapsed * 0.16;
-      const targetRotX = dragRotX - pointerY * 0.24 - scrollFactor * 0.32;
+      const targetRotY = dragRotY + pointerX * 0.34 + elapsed * 0.16 + activeScroll * 0.65;
+      const targetRotX = dragRotX - pointerY * 0.24 - activeScroll * 0.36;
 
       sculptureGroup.rotation.y = THREE.MathUtils.damp(
         sculptureGroup.rotation.y,
@@ -490,6 +502,12 @@ export default function HeroOrbitalSculpture() {
       sculptureGroup.rotation.x = THREE.MathUtils.damp(
         sculptureGroup.rotation.x,
         targetRotX,
+        4.8,
+        dt
+      );
+      sculptureGroup.position.y = THREE.MathUtils.damp(
+        sculptureGroup.position.y,
+        -activeScroll * 0.18,
         4.8,
         dt
       );

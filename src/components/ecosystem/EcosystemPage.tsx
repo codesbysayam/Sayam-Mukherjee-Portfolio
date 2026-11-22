@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Cpu, GitBranch, Users, ExternalLink, Eye, CloudRain, Binary, CheckCircle2, Brain, Shield, Sparkles, GraduationCap,
@@ -6,6 +6,9 @@ import {
 } from "lucide-react";
 import { SectionHeading } from "../ui/SectionHeading";
 import { ContourBackground } from "../motion/ContourBackground";
+import { StackingCards } from "../motion/StackingCards";
+import { PinnedHeadingSection } from "../motion/PinnedHeadingSection";
+import { requestScrollTriggerRefresh } from "../../motion/gsapRegistry";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
@@ -328,6 +331,26 @@ export function EcosystemPage() {
   const reduced = usePrefersReducedMotion();
   const blueprint = BLUEPRINTS[activeBlueprint];
 
+  useEffect(() => {
+    requestScrollTriggerRefresh(110);
+  }, [activeBlueprint]);
+
+  const flagshipLayerIds: BlueprintId[] = [
+    "operon",
+    "mausam",
+    "sightforge",
+    "memory-in-motion",
+    "axiom",
+  ];
+
+  const handleInspectFromStack = (id: BlueprintId) => {
+    setActiveBlueprint(id);
+    const el = document.getElementById("ecosystem-blueprints");
+    if (el) {
+      el.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" });
+    }
+  };
+
   return (
     <div className="w-full space-y-12 sm:space-y-16 pb-12">
       {/* 1. HEADER */}
@@ -605,21 +628,103 @@ export function EcosystemPage() {
         </AnimatePresence>
       </section>
 
-      {/* 4. RELATIONAL INTERCONNECT MATRIX */}
-      <section id="ecosystem-matrix" className="space-y-6">
-        <div className="space-y-2">
+      {/* 3B. STACKING ARCHITECTURE LAYERS (GSAP STICKY DECK) */}
+      <section id="ecosystem-stack" className="space-y-6">
+        <EditorialReveal className="space-y-2">
           <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
-            Phase 03 · Interdisciplinary Coupling
+            Phase 02B · Architectural Progression
           </span>
           <h2 className="text-2xl font-bold font-display text-[var(--text)]">
-            Relational Interconnect Matrix
+            Flagship System Stack
           </h2>
           <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl font-sans">
-            How distinct engineering layers coordinate across my software systems.
+            Scroll through the five primary system architectures from autonomous human-gated execution to mechanistic interpretability.
           </p>
-        </div>
+        </EditorialReveal>
 
-        <StaggerGroup className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <StackingCards
+          items={flagshipLayerIds.map((id) => {
+            const bp = BLUEPRINTS[id];
+            return {
+              id: bp.id,
+              render: (_isReduced, idx) => (
+                <article className="rounded-[12px] border border-[var(--border-strong)] bg-[var(--surface-2)] p-5 sm:p-7 space-y-4 shadow-sm">
+                  <div className="flex flex-wrap items-start justify-between gap-3 pb-3 border-b border-[var(--border)]">
+                    <div className="space-y-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-2 text-[11px] font-mono">
+                        <span className="text-[var(--accent)] font-bold">
+                          LAYER 0{idx + 1}
+                        </span>
+                        <span aria-hidden="true" className="text-[var(--text-faint)]">·</span>
+                        <span className="text-[var(--text-muted)] uppercase tracking-wider">
+                          {bp.category}
+                        </span>
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-bold font-display text-[var(--text)]">
+                        {bp.title}
+                      </h3>
+                      <p className="text-xs font-mono text-[var(--text-muted)]">
+                        {bp.subtitle}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleInspectFromStack(bp.id)}
+                      className={`btn !min-h-[38px] !py-1.5 !px-3.5 !text-xs font-mono shrink-0 ${
+                        activeBlueprint === bp.id ? "btn-primary" : "btn-secondary"
+                      }`}
+                    >
+                      <span>{activeBlueprint === bp.id ? "Active in Explorer" : "Load Blueprint"}</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
+                    </button>
+                  </div>
+
+                  <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
+                    {bp.purpose}
+                  </p>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1 text-xs font-mono">
+                    {bp.stats.map((st) => (
+                      <div
+                        key={st.label}
+                        className="px-3 py-2 rounded-[6px] bg-[var(--surface)] border border-[var(--border)]"
+                      >
+                        <span className="text-[10px] text-[var(--text-muted)] uppercase block">
+                          {st.label}
+                        </span>
+                        <span className="font-semibold text-[var(--text)]">{st.value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              ),
+            };
+          })}
+        />
+      </section>
+
+      {/* 4. RELATIONAL INTERCONNECT MATRIX */}
+      <PinnedHeadingSection
+        id="ecosystem-matrix"
+        heading={
+          <div className="space-y-3">
+            <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider block">
+              Phase 03 · Interdisciplinary Coupling
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold font-display text-[var(--text)] leading-tight">
+              Relational{" "}
+              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
+                Interconnect Matrix
+              </span>
+            </h2>
+            <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-md font-sans leading-relaxed">
+              How distinct engineering layers coordinate across my software systems — linking computer vision, algorithmic invariants, HITL gates, and resilient telemetry caches.
+            </p>
+          </div>
+        }
+      >
+        <StaggerGroup className="grid grid-cols-1 gap-4">
           {[
             {
               domainA: "AI & Computer Vision",
@@ -659,7 +764,7 @@ export function EcosystemPage() {
             </StaggerItem>
           ))}
         </StaggerGroup>
-      </section>
+      </PinnedHeadingSection>
 
       {/* 5. TEAM ENGINEERING & COLLABORATION — MAUSAM (SIH 2026) */}
       <section id="ecosystem-sih" className="space-y-6">

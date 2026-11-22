@@ -92,10 +92,12 @@ describe("Canonical GitHub Telemetry Service & API Consistency", () => {
     expect(statsRes.status).toBe(200);
 
     const telemetry = telemetryRes.body;
-    expect(telemetry.totalRepos).toBe(11);
-    expect(telemetry.ownedReposCount).toBe(10);
-    expect(telemetry.forkedReposCount).toBe(1);
-    expect(telemetry.totalCodeBytes).toBe(17758014);
+    const expectedFromSnapshot = buildTelemetryFromSnapshot(snapshot!);
+    expect(telemetry.totalRepos).toBe(expectedFromSnapshot.totalRepos);
+    expect(telemetry.ownedReposCount).toBe(expectedFromSnapshot.ownedReposCount);
+    expect(telemetry.forkedReposCount).toBe(expectedFromSnapshot.forkedReposCount);
+    expect(telemetry.totalCodeBytes).toBe(expectedFromSnapshot.totalCodeBytes);
+    expect(telemetry.totalCodeBytes).toBeGreaterThan(0);
 
     // Every non-zero language must format above 0%
     for (const lang of telemetry.languages) {

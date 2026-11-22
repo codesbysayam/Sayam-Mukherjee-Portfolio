@@ -8,6 +8,7 @@ import ReadingProgressBar from "../common/ReadingProgressBar";
 import { calculateReadingTime } from "../../utils/readingTime";
 import { computeProjectLifecycle } from "../../utils/projectLifecycle";
 import { ContourBackground } from "../motion/ContourBackground";
+import { MotionSlider } from "../motion/MotionSlider";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
   X,
@@ -433,20 +434,27 @@ function ProjectCaseStudyModalComponent({
             </div>
           </div>
 
-          {/* 4. System Architecture & Pipeline */}
+          {/* 4. System Architecture & Pipeline Slider */}
           {project.architecture && project.architecture.length > 0 && (
-            <div id="cs-architecture" className="space-y-2.5 scroll-mt-4">
-              <h4 className="text-xs font-mono uppercase tracking-widest text-[var(--accent)] font-semibold">
-                04 · System Architecture &amp; Pipeline
-              </h4>
-              <ul className="space-y-2 text-xs">
+            <div id="cs-architecture" className="space-y-3 scroll-mt-4">
+              <MotionSlider
+                label="04 · System Architecture & Pipeline Stages"
+                columnsClassName="auto-cols-[88%] sm:auto-cols-[68%]"
+              >
                 {project.architecture.map((arch, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5 bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] font-mono">
-                    <span className="text-[var(--accent)] font-bold tabular-nums">0{idx + 1}.</span>
-                    <span className="leading-relaxed text-[var(--text-secondary)]">{arch}</span>
-                  </li>
+                  <div
+                    key={idx}
+                    className="h-full bg-[var(--surface)] p-4 rounded-[8px] border border-[var(--border)] flex flex-col justify-between gap-2.5"
+                  >
+                    <span className="font-mono text-[11px] text-[var(--accent)] font-bold uppercase tracking-wider tabular-nums">
+                      Stage 0{idx + 1}
+                    </span>
+                    <p className="text-xs sm:text-sm leading-relaxed text-[var(--text)] font-mono">
+                      {arch}
+                    </p>
+                  </div>
                 ))}
-              </ul>
+              </MotionSlider>
             </div>
           )}
 

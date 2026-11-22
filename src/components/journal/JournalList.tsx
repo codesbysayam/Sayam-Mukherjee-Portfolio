@@ -1,11 +1,12 @@
 import React, { useState, useMemo, memo } from "react";
-import { SearchX, Clock } from "lucide-react";
+import { SearchX, Clock, LayoutGrid, GalleryHorizontalEnd } from "lucide-react";
 import { journalEntries } from "../../data/journal";
 import { JournalCard } from "./JournalCard";
 import { JournalFilters } from "./JournalFilters";
 import { calculateReadingTime, STANDARD_READING_SPEED_WPM } from "../../utils/readingTime";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 import { ContourBackground } from "../motion/ContourBackground";
+import { MotionSlider } from "../motion/MotionSlider";
 import { SectionHeading } from "../ui/SectionHeading";
 
 interface JournalListProps {
@@ -27,6 +28,7 @@ export const JournalList = memo(function JournalList({
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+  const [viewMode, setViewMode] = useState<"slider" | "grid">("slider");
 
   const filteredEntries = useMemo(() => {
     let result = [...journalEntries];
@@ -180,22 +182,75 @@ export const JournalList = memo(function JournalList({
           )}
 
           {gridEntries.length > 0 && (
-            <StaggerGroup
-              key={`${selectedCategory}-${sortOrder}-${gridEntries.length}`}
-              stagger={0.045}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
-            >
-              {gridEntries.map((entry, idx) => (
-                <StaggerItem key={entry.slug} className="h-full">
-                  <JournalCard
-                    entry={entry}
-                    onClick={onSelectEntry}
-                    featured={false}
-                    index={idx}
-                  />
-                </StaggerItem>
-              ))}
-            </StaggerGroup>
+            <div className="space-y-4">
+              <div className="flex items-center justify-between gap-2 text-xs font-mono">
+                <span className="text-[var(--text-muted)] uppercase tracking-wider">
+                  Archive Notes ({gridEntries.length})
+                </span>
+                <div className="flex items-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] p-0.5">
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("slider")}
+                    aria-pressed={viewMode === "slider"}
+                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
+                      viewMode === "slider"
+                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
+                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    }`}
+                  >
+                    <GalleryHorizontalEnd className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>Slider</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("grid")}
+                    aria-pressed={viewMode === "grid"}
+                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
+                      viewMode === "grid"
+                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
+                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    }`}
+                  >
+                    <LayoutGrid className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>Grid</span>
+                  </button>
+                </div>
+              </div>
+
+              {viewMode === "slider" ? (
+                <MotionSlider
+                  label="Field Notes"
+                  columnsClassName="auto-cols-[90%] sm:auto-cols-[62%] lg:auto-cols-[48%]"
+                >
+                  {gridEntries.map((entry, idx) => (
+                    <JournalCard
+                      key={entry.slug}
+                      entry={entry}
+                      onClick={onSelectEntry}
+                      featured={false}
+                      index={idx}
+                    />
+                  ))}
+                </MotionSlider>
+              ) : (
+                <StaggerGroup
+                  key={`${selectedCategory}-${sortOrder}-${gridEntries.length}`}
+                  stagger={0.045}
+                  className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
+                >
+                  {gridEntries.map((entry, idx) => (
+                    <StaggerItem key={entry.slug} className="h-full">
+                      <JournalCard
+                        entry={entry}
+                        onClick={onSelectEntry}
+                        featured={false}
+                        index={idx}
+                      />
+                    </StaggerItem>
+                  ))}
+                </StaggerGroup>
+              )}
+            </div>
           )}
         </div>
       )}

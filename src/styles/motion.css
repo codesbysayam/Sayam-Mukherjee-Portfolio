@@ -86,4 +86,78 @@
     clip-path: none !important;
     transition: none !important;
   }
+
+  .motion-slider-track {
+    scroll-behavior: auto !important;
+  }
+
+  .focus-frame-panel {
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   TOUCH & KEYBOARD SCROLL-SNAP SLIDER (.motion-slider)
+   ========================================================================== */
+
+.motion-slider-track {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.motion-slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.motion-slider-slide {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+/* ==========================================================================
+   FOCUS FRAME ARCHITECTURAL EXPAND / INSPECT CONTAINER
+   ========================================================================== */
+
+.focus-frame-shell {
+  position: relative;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.focus-frame-shell[data-focused="true"] {
+  border-color: var(--accent);
+  box-shadow: 0 24px 60px -24px rgba(15, 18, 12, 0.35);
+}
+
+/* ==========================================================================
+   HORIZONTAL NARRATIVE SNAP STRIP (MOBILE FALLBACK & DESKTOP TRACK)
+   ========================================================================== */
+
+.horizontal-narrative-mobile-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(82%, 340px);
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 0.5rem;
+}
+
+.horizontal-narrative-mobile-track::-webkit-scrollbar {
+  display: none;
+}
+
+.horizontal-narrative-mobile-track > * {
+  scroll-snap-align: start;
 }

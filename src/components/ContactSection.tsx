@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { showToast } from "./Toast";
 import { ContactForm } from "./ContactForm";
-import ClosingFluidCanvas from "./motion/ClosingFluidCanvas";
 import { ContourBackground } from "./motion/ContourBackground";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 
@@ -153,7 +152,6 @@ export default function ContactSection() {
       className="relative w-full py-6 sm:py-10 font-sans text-[var(--text)] overflow-hidden rounded-[12px]"
     >
       <ContourBackground density="medium" />
-      <ClosingFluidCanvas tone="adaptive" />
 
       {/* Editorial Hero Header */}
       <EditorialReveal>

@@ -1,7 +1,8 @@
-import { type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { useMotionSettings } from "../../motion/MotionProvider";
 import { MOTION_DURATION, MOTION_EASE } from "../../motion/tokens";
+import { requestScrollTriggerRefresh } from "../../motion/gsapRegistry";
 
 interface RouteTransitionProps {
   routeKey: string;
@@ -10,11 +11,16 @@ interface RouteTransitionProps {
 
 /**
  * Architectural cross-route transition:
- * Pairs GPU-composited scene entry/exit with an asymmetric Ink curtain wipe
- * and a Signal Lime top rule, strictly non-blocking and reduced-motion safe.
+ * Uses opacity fade on the route flow container (keeping it transform-free so
+ * GSAP ScrollTrigger pins always measure against the viewport cleanly) paired
+ * with a non-blocking Ink curtain wipe and Signal Lime hairline sweep.
  */
 export default function RouteTransition({ routeKey, children }: RouteTransitionProps) {
   const { reducedMotion } = useMotionSettings();
+
+  useEffect(() => {
+    requestScrollTriggerRefresh(140);
+  }, [routeKey]);
 
   if (reducedMotion) {
     return (
@@ -28,20 +34,21 @@ export default function RouteTransition({ routeKey, children }: RouteTransitionP
     <AnimatePresence mode="wait">
       <motion.div
         key={routeKey}
-        initial={{ opacity: 0, y: 12 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -10 }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
         transition={{
           duration: MOTION_DURATION.normal,
           ease: MOTION_EASE.out,
         }}
+        onAnimationComplete={() => requestScrollTriggerRefresh(60)}
         className="relative w-full min-h-[60vh]"
       >
         {/* Architectural Ink curtain pass on route entry */}
         <motion.div
           key={`curtain-${routeKey}`}
           aria-hidden="true"
-          initial={{ scaleY: 0.24, opacity: 0.45 }}
+          initial={{ scaleY: 0.22, opacity: 0.42 }}
           animate={{ scaleY: 0, opacity: 0 }}
           transition={{
             duration: MOTION_DURATION.reveal,

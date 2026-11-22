@@ -16,6 +16,7 @@ import {
   TextMaskReveal,
 } from "../motion/Reveal";
 import { ContourBackground } from "./motion/ContourBackground";
+import { FocusFrame } from "./motion/FocusFrame";
 import { EngineeringProfile } from "./about/EngineeringProfile";
 import { SectionHeading } from "./ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
@@ -252,29 +253,50 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                 className="border-t border-b border-[#41443A] py-8 sm:py-10 mb-10 group"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-                  <MaskMediaReveal className="lg:col-span-7 relative aspect-[16/10] w-full overflow-hidden rounded-[8px] border border-[#41443A] bg-[#20231D]">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedProject(featuredLead)}
-                      aria-label={`Open ${featuredLead.title} case study`}
-                      className="block h-full w-full cursor-pointer text-left"
+                  <div className="lg:col-span-7 min-w-0">
+                    <FocusFrame
+                      darkSurface
+                      eyebrow="Lead System · Live Preview"
+                      title={featuredLead.title}
+                      summary={media.caption}
+                      expandedContent={
+                        featuredLead.architecture?.length ? (
+                          <ul className="space-y-1.5 text-xs font-mono text-[#D4D6CA]">
+                            {featuredLead.architecture.slice(0, 3).map((step, i) => (
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="text-[#C7E34A] font-bold">0{i + 1}.</span>
+                                <span>{step}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null
+                      }
                     >
-                      <img
-                        src={media.src}
-                        alt={media.alt}
-                        loading="lazy"
-                        decoding="async"
-                        referrerPolicy="no-referrer"
-                        className="!h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-                      />
-                      <span
-                        aria-hidden="true"
-                        className="absolute bottom-3.5 right-3.5 w-10 h-10 rounded-[6px] bg-[#C7E34A] text-[#151713] flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg"
-                      >
-                        <ArrowUpRight className="w-4 h-4" />
-                      </span>
-                    </button>
-                  </MaskMediaReveal>
+                      <MaskMediaReveal className="relative aspect-[16/10] w-full overflow-hidden bg-[#20231D]">
+                        <button
+                          type="button"
+                          onClick={() => setSelectedProject(featuredLead)}
+                          aria-label={`Open ${featuredLead.title} case study`}
+                          className="block h-full w-full cursor-pointer text-left"
+                        >
+                          <img
+                            src={media.src}
+                            alt={media.alt}
+                            loading="lazy"
+                            decoding="async"
+                            referrerPolicy="no-referrer"
+                            className="!h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
+                          />
+                          <span
+                            aria-hidden="true"
+                            className="absolute bottom-3.5 right-3.5 w-10 h-10 rounded-[6px] bg-[#C7E34A] text-[#151713] flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg"
+                          >
+                            <ArrowUpRight className="w-4 h-4" />
+                          </span>
+                        </button>
+                      </MaskMediaReveal>
+                    </FocusFrame>
+                  </div>
 
                   <div className="lg:col-span-5 flex flex-col justify-between gap-6">
                     <div className="space-y-4">
