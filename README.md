@@ -445,3 +445,10 @@ Maintained alongside the portfolio source repository. Update this document whene
 ## Motion & interaction design specification
 
 The portfolio-wide animation and interaction blueprint is maintained in [DESIGN.md](./DESIGN.md). It documents the motion architecture, GSAP/ Motion for React / Three.js responsibilities, arc carousel, parallax, pinned 3D stage, pinned headings, sideways narratives, stacking cards, focus frames, sliders, scroll-triggered project demonstrations, responsive fallbacks, accessibility and implementation prompts.
+
+
+## Motion implementation guides
+
+- [DESIGN.md](./DESIGN.md) — portfolio-wide motion direction and architecture.
+- [AI Studio execution guide](./docs/AI_STUDIO_EXECUTION.md) — phased prompts to implement and validate one stage at a time.
+- [Motion code recipes](./docs/MOTION_CODE_RECIPES.md) — detailed React, GSAP ScrollTrigger and Three.js integration patterns.
