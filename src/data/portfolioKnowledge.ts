@@ -172,7 +172,7 @@ export const portfolioKnowledge: PortfolioKnowledge = {
     currentResidence: "Bhubaneswar, Odisha, India",
     primaryEmail: "wrickbusiness@gmail.com",
     academicEmail: "24051052@kiit.ac.in",
-    academicIdentity: "2nd Year, 3rd Semester B.Tech Undergraduate at KIIT",
+    academicIdentity: "2nd Year, 4th Semester B.Tech Undergraduate at KIIT",
   },
 
   education: {
@@ -182,7 +182,7 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       location: "Bhubaneswar, Odisha",
       degree: "B.Tech Computer Science and Engineering",
       specialization: "AI & ML",
-      currentStatus: "Undergraduate (2nd Year, 3rd Sem)",
+      currentStatus: "Undergraduate (2nd Year, 4th Sem)",
       expectedGraduation: "2029",
       firstYearCGPA: "9.06",
       cgpaScale: "10.0",
