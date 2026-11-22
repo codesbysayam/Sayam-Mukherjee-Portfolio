@@ -23,6 +23,7 @@ import { SAYAM_DATA } from "../data";
 import { youtubeChannels } from "../data/channels";
 import { PROJECTS } from "../data/projects";
 import { INITIAL_CERTIFICATES } from "../data/initialCertificates";
+import { journalEntries } from "../data/journal";
 
 export type CommandItemType =
   | "command"
@@ -68,6 +69,7 @@ interface CommandMenuProps {
       | "contact"
       | "privacy"
       | "terms"
+      | "github"
       | "showcase"
   ) => void;
   onOpenResume: () => void;
@@ -430,8 +432,31 @@ export default function CommandMenu({
     );
   }, [onNavigate, onClose]);
 
+  const allArticles = useMemo(() => {
+    const mappedJournal = journalEntries.map((entry) => ({
+      id: entry.id,
+      slug: entry.slug,
+      title: entry.title,
+      category: entry.category,
+      readTime: entry.readingTime,
+      excerpt: entry.summary,
+      tags: [entry.category, entry.date],
+    }));
+    const mappedExtended = EXTENDED_DATA.blogArticles.map((art) => ({
+      id: art.id,
+      slug: art.id,
+      title: art.title,
+      category: art.category || "Journal",
+      readTime: art.readTime,
+      excerpt: art.excerpt || "",
+      tags: art.tags || [],
+    }));
+    const seen = new Set(mappedJournal.map((a) => a.id));
+    return [...mappedJournal, ...mappedExtended.filter((a) => !seen.has(a.id))];
+  }, []);
+
   const articleItems = useMemo<UnifiedSearchItem[]>(() => {
-    return EXTENDED_DATA.blogArticles.map((art) => ({
+    return allArticles.map((art) => ({
       id: `article-${art.id}`,
       type: "article" as const,
       title: art.title,
@@ -440,13 +465,21 @@ export default function CommandMenu({
       category: "Engineering Notes & Journal",
       icon: FileText,
       action: () => {
-        onNavigate("journal");
         try {
-          localStorage.setItem("portfolio_selected_article_id", art.id);
+          localStorage.setItem("portfolio_selected_article_id", art.slug);
           window.dispatchEvent(
-            new CustomEvent("portfolio_select_article", { detail: { id: art.id } })
+            new CustomEvent("portfolio-navigate-route", {
+              detail: { tab: "journal", path: `/journal/${art.slug}` },
+            })
           );
-        } catch {}
+          window.dispatchEvent(
+            new CustomEvent("portfolio_select_article", {
+              detail: { id: art.id, slug: art.slug },
+            })
+          );
+        } catch {
+          onNavigate("journal");
+        }
         onClose();
       },
       searchTarget: [
@@ -456,13 +489,13 @@ export default function CommandMenu({
         ...(art.tags || []),
       ].join(" "),
     }));
-  }, [onNavigate, onClose]);
+  }, [allArticles, onNavigate, onClose]);
 
   const bookmarkedArticles = useMemo(() => {
-    return EXTENDED_DATA.blogArticles.filter((art) =>
-      bookmarkedIds.includes(art.id)
+    return allArticles.filter(
+      (art) => bookmarkedIds.includes(art.id) || bookmarkedIds.includes(art.slug)
     );
-  }, [bookmarkedIds]);
+  }, [allArticles, bookmarkedIds]);
 
   const bookmarkItems = useMemo<UnifiedSearchItem[]>(() => {
     return bookmarkedArticles.map((art) => ({
@@ -474,13 +507,21 @@ export default function CommandMenu({
       category: "Saved Reading List",
       icon: Bookmark,
       action: () => {
-        onNavigate("journal");
         try {
-          localStorage.setItem("portfolio_selected_article_id", art.id);
+          localStorage.setItem("portfolio_selected_article_id", art.slug);
           window.dispatchEvent(
-            new CustomEvent("portfolio_select_article", { detail: { id: art.id } })
+            new CustomEvent("portfolio-navigate-route", {
+              detail: { tab: "journal", path: `/journal/${art.slug}` },
+            })
           );
-        } catch {}
+          window.dispatchEvent(
+            new CustomEvent("portfolio_select_article", {
+              detail: { id: art.id, slug: art.slug },
+            })
+          );
+        } catch {
+          onNavigate("journal");
+        }
         onClose();
       },
       searchTarget: [

@@ -35,18 +35,35 @@ export function parseServerPort(): number {
     const val = parseInt(process.argv[portArgIndex + 1], 10);
     if (!Number.isNaN(val) && val > 0) return val;
   }
-  if (process.env.DEFAULT_APP_PORT) {
-    const defaultPort = parseInt(process.env.DEFAULT_APP_PORT, 10);
-    if (!Number.isNaN(defaultPort) && defaultPort > 0) return defaultPort;
+
+  const rawPort = process.env.PORT ? parseInt(process.env.PORT, 10) : NaN;
+  const hasValidPort = !Number.isNaN(rawPort) && rawPort > 0;
+  const defaultPort = process.env.DEFAULT_APP_PORT
+    ? parseInt(process.env.DEFAULT_APP_PORT, 10)
+    : NaN;
+  const hasValidDefaultPort = !Number.isNaN(defaultPort) && defaultPort > 0;
+
+  if (process.env.NODE_ENV === "production") {
+    if (
+      hasValidPort &&
+      (!hasValidDefaultPort || process.env.PORT !== process.env.NGINX_PORT)
+    ) {
+      return rawPort;
+    }
+    if (hasValidDefaultPort) return defaultPort;
+    return 3000;
+  }
+
+  if (hasValidDefaultPort) {
+    return defaultPort;
   }
   if (
-    process.env.NODE_ENV !== "production" &&
     process.env.NGINX_PORT &&
     process.env.PORT === process.env.NGINX_PORT
   ) {
     return 3000;
   }
-  return Number(process.env.PORT) || 3000;
+  return hasValidPort ? rawPort : 3000;
 }
 
 export interface EnvironmentDiagnostic {

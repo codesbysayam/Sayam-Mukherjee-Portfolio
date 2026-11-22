@@ -297,13 +297,30 @@ function AppContent() {
     }
   }, [isLegalPage]);
 
-  const navigateToTab = (tab: TabType) => {
+  const navigateToTab = (
+    tab: TabType,
+    options?: { customPath?: string; preserveJournalSlug?: boolean }
+  ) => {
+    const defaultPath = tab === "home" ? "/" : tab === "404" ? "/404" : `/${tab}`;
+    const targetPath = options?.customPath || defaultPath;
+    const isSameTab = activeTab === tab;
+
     setActiveTab(tab);
-    const targetPath = tab === "home" ? "/" : tab === "404" ? "/404" : `/${tab}`;
+
     if (window.location.pathname !== targetPath && window.location.pathname !== "/admin") {
       window.history.pushState(null, "", targetPath);
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    if (tab === "journal" && !options?.customPath && !options?.preserveJournalSlug) {
+      window.dispatchEvent(new CustomEvent("portfolio-journal-reset"));
+    }
+
+    if (isSameTab) {
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? "auto" : "smooth",
+      });
+    }
   };
 
   useEffect(() => {
@@ -327,14 +344,17 @@ function AppContent() {
     ];
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (isLegalPage) return;
-      const target = e.target as HTMLElement;
+      if (isLegalPage || isMenuOpen || isCommandMenuOpen || isResumeModalOpen) return;
+      const target = e.target as HTMLElement | null;
       if (
         !target ||
         target.tagName === "INPUT" ||
         target.tagName === "TEXTAREA" ||
+        target.tagName === "SELECT" ||
         target.isContentEditable ||
         target.closest('[role="textbox"]') ||
+        target.closest('[role="dialog"]') ||
+        target.closest('[aria-roledescription="carousel"]') ||
         target.closest(".chat-input-container")
       ) {
         return;
@@ -362,34 +382,23 @@ function AppContent() {
 
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        setActiveTab((prev) => {
-          const currentIndex = tabsList.indexOf(prev);
-          const nextIndex = (currentIndex + 1) % tabsList.length;
-          const nextTab = tabsList[nextIndex];
-          const targetPath = nextTab === "home" ? "/" : `/${nextTab}`;
-          if (window.location.pathname !== targetPath && window.location.pathname !== "/admin") {
-            window.history.pushState(null, "", targetPath);
-          }
-          return nextTab;
-        });
+        const currentIndex = tabsList.indexOf(activeTab);
+        const nextIndex = currentIndex === -1 ? 0 : (currentIndex + 1) % tabsList.length;
+        navigateToTab(tabsList[nextIndex]);
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
-        setActiveTab((prev) => {
-          const currentIndex = tabsList.indexOf(prev);
-          const prevIndex = (currentIndex - 1 + tabsList.length) % tabsList.length;
-          const prevTab = tabsList[prevIndex];
-          const targetPath = prevTab === "home" ? "/" : `/${prevTab}`;
-          if (window.location.pathname !== targetPath && window.location.pathname !== "/admin") {
-            window.history.pushState(null, "", targetPath);
-          }
-          return prevTab;
-        });
+        const currentIndex = tabsList.indexOf(activeTab);
+        const prevIndex =
+          currentIndex === -1
+            ? tabsList.length - 1
+            : (currentIndex - 1 + tabsList.length) % tabsList.length;
+        navigateToTab(tabsList[prevIndex]);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isLegalPage]);
+  }, [isLegalPage, isMenuOpen, isCommandMenuOpen, isResumeModalOpen, activeTab, prefersReducedMotion]);
 
   useEffect(() => {
     const handleTabNavigate = (e: CustomEvent<string>) => {
@@ -397,17 +406,48 @@ function AppContent() {
         navigateToTab(e.detail as TabType);
       }
     };
+    const handleRouteNavigate = (
+      e: CustomEvent<{ tab?: TabType; path?: string }>
+    ) => {
+      const detail = e.detail;
+      if (!detail) return;
+      if (detail.path && typeof window !== "undefined") {
+        if (detail.tab) {
+          navigateToTab(detail.tab, {
+            customPath: detail.path,
+            preserveJournalSlug: true,
+          });
+          window.dispatchEvent(
+            new CustomEvent("portfolio-journal-sync", { detail: { path: detail.path } })
+          );
+          return;
+        }
+        window.history.pushState(null, "", detail.path);
+        setActiveTab(getInitialTab());
+        window.dispatchEvent(
+          new CustomEvent("portfolio-journal-sync", { detail: { path: detail.path } })
+        );
+      } else if (detail.tab) {
+        navigateToTab(detail.tab);
+      }
+    };
     window.addEventListener("portfolio-navigate-tab", handleTabNavigate as EventListener);
-    return () =>
+    window.addEventListener("portfolio-navigate-route", handleRouteNavigate as EventListener);
+    return () => {
       window.removeEventListener("portfolio-navigate-tab", handleTabNavigate as EventListener);
-  }, []);
+      window.removeEventListener("portfolio-navigate-route", handleRouteNavigate as EventListener);
+    };
+  }, [activeTab, prefersReducedMotion]);
 
   useEffect(() => {
     setIsMenuOpen(false);
   }, [activeTab]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "instant" });
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+    });
     trackVisit(`${activeTab.toUpperCase()} Page`);
   }, [activeTab]);
 
@@ -683,7 +723,11 @@ function AppContent() {
               <NotFound onNavigateTab={(tab) => navigateToTab(tab as TabType)} />
             )}
 
-            <ErrorBoundary sectionName="Main Tab View">
+            <ErrorBoundary
+              key={activeTab}
+              sectionName="Main Tab View"
+              onReset={() => navigateToTab(activeTab)}
+            >
               <Suspense fallback={<PageLoading />}>
                 {activeTab === "about" && (
                   <ErrorBoundary sectionName="About Section">

@@ -5,7 +5,7 @@ import type { ProjectItem } from "../../data/projects";
 import { getProjectMedia } from "../../data/projectMedia";
 import type { GitHubRepo } from "../../services/github";
 import { usePrefersReducedMotion } from "../../motion/tokens";
-import { gsap, Flip } from "../../motion/gsapRegistry";
+import { ensureGsapRegistered, Flip } from "../../motion/gsapRegistry";
 import "./arc-card-carousel.css";
 
 interface ArcCardCarouselProps {
@@ -52,9 +52,11 @@ export function ArcCardCarousel({
       const wrapped = ((nextIndex % count) + count) % count;
 
       if (!reduced && detailsRef.current) {
+        ensureGsapRegistered();
         const state = Flip.getState(detailsRef.current);
         setActiveIndex(wrapped);
         requestAnimationFrame(() => {
+          if (!detailsRef.current?.isConnected) return;
           Flip.from(state, {
             duration: 0.34,
             ease: "power2.out",
@@ -74,9 +76,11 @@ export function ArcCardCarousel({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowLeft") {
       e.preventDefault();
+      e.stopPropagation();
       handlePrev();
     } else if (e.key === "ArrowRight") {
       e.preventDefault();
+      e.stopPropagation();
       handleNext();
     }
   };

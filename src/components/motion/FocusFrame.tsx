@@ -1,7 +1,7 @@
 import { useId, useRef, useState, type ReactNode } from "react";
 import { Maximize2, Minimize2 } from "lucide-react";
 import { usePrefersReducedMotion } from "../../motion/tokens";
-import { Flip, requestScrollTriggerRefresh } from "../../motion/gsapRegistry";
+import { ensureGsapRegistered, Flip, requestScrollTriggerRefresh } from "../../motion/gsapRegistry";
 
 interface FocusFrameProps {
   title: string;
@@ -35,9 +35,11 @@ export function FocusFrame({
   const toggleFocus = () => {
     const el = frameRef.current;
     if (!reduced && el) {
+      ensureGsapRegistered();
       const state = Flip.getState(el);
       setFocused((prev) => !prev);
       requestAnimationFrame(() => {
+        if (!el.isConnected) return;
         Flip.from(state, {
           duration: 0.42,
           ease: "power3.out",

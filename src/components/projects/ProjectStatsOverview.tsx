@@ -1,4 +1,4 @@
-import { useState, useMemo, memo } from "react";
+import { useState, useEffect, useMemo, memo } from "react";
 import {
   ResponsiveContainer,
   BarChart,
@@ -154,6 +154,16 @@ function ProjectStatsOverviewComponent(_props: ProjectStatsOverviewProps) {
   const [repoMetric, setRepoMetric] = useState<"activity" | "volume">("activity");
   const [selectedRepoName, setSelectedRepoName] = useState<string | null>(null);
   const [showAllLanguages, setShowAllLanguages] = useState(false);
+  const [isCompactViewport, setIsCompactViewport] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia("(max-width: 639px)");
+    const sync = () => setIsCompactViewport(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   const axisColor = isLight ? "#51564A" : "#B5B8AA";
   const gridColor = isLight ? "#D4D4C7" : "#41483B";
@@ -435,7 +445,7 @@ function ProjectStatsOverviewComponent(_props: ProjectStatsOverviewProps) {
                 <BarChart
                   layout="vertical"
                   data={topLanguagesChart}
-                  margin={{ top: 4, right: 22, left: 6, bottom: 4 }}
+                  margin={{ top: 4, right: isCompactViewport ? 14 : 22, left: 4, bottom: 4 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke={gridColor} />
                   <XAxis
@@ -443,16 +453,19 @@ function ProjectStatsOverviewComponent(_props: ProjectStatsOverviewProps) {
                     domain={[0, 100]}
                     unit="%"
                     stroke={axisColor}
-                    fontSize={11}
+                    fontSize={isCompactViewport ? 10 : 11}
                     fontFamily="monospace"
                   />
                   <YAxis
                     dataKey="name"
                     type="category"
                     stroke={axisColor}
-                    fontSize={11}
+                    fontSize={isCompactViewport ? 10 : 11}
                     fontFamily="monospace"
-                    width={122}
+                    width={isCompactViewport ? 88 : 122}
+                    tickFormatter={(val: string) =>
+                      isCompactViewport && val.length > 11 ? `${val.slice(0, 10)}…` : val
+                    }
                     tickLine={false}
                   />
                   <Tooltip
@@ -562,7 +575,7 @@ function ProjectStatsOverviewComponent(_props: ProjectStatsOverviewProps) {
                 <BarChart
                   layout="vertical"
                   data={repoRows}
-                  margin={{ top: 4, right: 34, left: 6, bottom: 4 }}
+                  margin={{ top: 4, right: isCompactViewport ? 18 : 34, left: 4, bottom: 4 }}
                   onClick={(state: any) => {
                     if (state?.activePayload?.[0]?.payload?.name) {
                       setSelectedRepoName(state.activePayload[0].payload.name);
@@ -573,7 +586,7 @@ function ProjectStatsOverviewComponent(_props: ProjectStatsOverviewProps) {
                   <XAxis
                     type="number"
                     stroke={axisColor}
-                    fontSize={11}
+                    fontSize={isCompactViewport ? 10 : 11}
                     fontFamily="monospace"
                     allowDecimals={repoMetric === "volume"}
                     unit={repoMetric === "volume" ? " KB" : ""}
@@ -587,9 +600,12 @@ function ProjectStatsOverviewComponent(_props: ProjectStatsOverviewProps) {
                     dataKey="label"
                     type="category"
                     stroke={axisColor}
-                    fontSize={11}
+                    fontSize={isCompactViewport ? 10 : 11}
                     fontFamily="monospace"
-                    width={175}
+                    width={isCompactViewport ? 112 : 175}
+                    tickFormatter={(val: string) =>
+                      isCompactViewport && val.length > 14 ? `${val.slice(0, 13)}…` : val
+                    }
                     interval={0}
                     tickLine={false}
                   />

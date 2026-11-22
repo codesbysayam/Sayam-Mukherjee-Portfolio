@@ -1075,9 +1075,14 @@ export function EcosystemPage() {
               <button
                 type="button"
                 onClick={() => {
-                  window.history.pushState(null, "", "/journal/why-i-wanted-mausam-to-feel-useful");
-                  window.dispatchEvent(new PopStateEvent("popstate"));
-                  window.scrollTo({ top: 0, behavior: "smooth" });
+                  window.dispatchEvent(
+                    new CustomEvent("portfolio-navigate-route", {
+                      detail: {
+                        tab: "journal",
+                        path: "/journal/why-i-wanted-mausam-to-feel-useful",
+                      },
+                    })
+                  );
                 }}
                 className="btn btn-secondary !text-xs font-mono cursor-pointer"
               >

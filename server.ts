@@ -62,15 +62,14 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), "dist");
     const indexHtml = path.join(distPath, "index.html");
-    if (fs.existsSync(distPath)) {
-      app.use(express.static(distPath));
+    if (!fs.existsSync(indexHtml)) {
+      throw new Error(
+        `Production build missing ${indexHtml}. Run "npm run build" before starting in production mode.`
+      );
     }
+    app.use(express.static(distPath));
     app.get("*", (req, res) => {
-      if (fs.existsSync(indexHtml)) {
-        res.sendFile(indexHtml);
-      } else {
-        res.status(404).json({ error: "Route not found", path: req.path });
-      }
+      res.sendFile(indexHtml);
     });
   }
 
@@ -84,12 +83,15 @@ async function startServer() {
   }, CACHE_TTL_MS);
 
   httpServer.on("error", (err: any) => {
-    if (err.code === "EADDRINUSE") {
+    if (err.code === "EADDRINUSE" && !env.isProduction) {
       console.warn(
         `[Server] Port ${env.port} already bound or transitioning. Dev server process remains resilient.`
       );
-    } else {
-      console.error("[Server] HTTP server encountered an error:", err);
+      return;
+    }
+    console.error("[Server] Fatal HTTP server error:", err);
+    if (env.isProduction) {
+      process.exit(1);
     }
   });
 
@@ -99,5 +101,8 @@ async function startServer() {
 }
 
 if (!env.isServerless && !env.isTest) {
-  void startServer();
+  startServer().catch((err) => {
+    console.error("[Startup] Failed to start server:", err);
+    process.exit(1);
+  });
 }
