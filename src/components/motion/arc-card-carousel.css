@@ -1,0 +1,116 @@
+.arc-carousel {
+  width: 100%;
+  min-width: 0;
+}
+
+.arc-carousel__stage {
+  position: relative;
+  width: 100%;
+  height: clamp(340px, 42vw, 510px);
+  overflow: hidden;
+  isolation: isolate;
+  perspective: 1400px;
+  touch-action: pan-y;
+  cursor: grab;
+  outline: none;
+}
+
+.arc-carousel__stage:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
+  border-radius: 14px;
+}
+
+.arc-carousel__stage.is-dragging {
+  cursor: grabbing;
+  user-select: none;
+}
+
+.arc-carousel__card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(520px, 58vw);
+  min-width: 280px;
+  transform-origin: 50% 55%;
+  will-change: transform, opacity;
+}
+
+.arc-carousel__card[data-active="true"] {
+  filter: none;
+}
+
+.arc-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 12px;
+}
+
+.arc-carousel__controls button {
+  min-height: 42px;
+  padding: 9px 16px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  background: var(--surface);
+  font: inherit;
+  font-size: 12px;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease,
+    opacity 180ms ease;
+}
+
+.arc-carousel__controls button:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.arc-carousel__controls button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.arc-carousel__controls button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.arc-carousel__status {
+  min-width: 54px;
+  color: var(--text-muted);
+  font: 11px/1.2 var(--font-mono);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .arc-carousel__stage {
+    height: 390px;
+    perspective: 1000px;
+  }
+
+  .arc-carousel__card {
+    width: min(82vw, 420px);
+    min-width: 0;
+  }
+
+  .arc-carousel__controls {
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arc-carousel__card,
+  .arc-carousel__controls button {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .arc-carousel__card {
+    will-change: auto;
+  }
+}
