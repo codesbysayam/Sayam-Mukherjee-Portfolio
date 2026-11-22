@@ -1,12 +1,16 @@
 import {
   useCallback,
+  useEffect,
   useRef,
   useState,
+  type KeyboardEvent,
+  type MouseEvent,
   type PointerEvent as ReactPointerEvent,
   type ReactNode,
 } from "react";
 import { motion } from "motion/react";
 import { usePrefersReducedMotion } from "../../motion/tokens";
+import "./arc-card-carousel.css";
 
 export interface ArcCarouselItem {
   id: string;
@@ -23,10 +27,7 @@ interface ArcCardCarouselProps<T extends ArcCarouselItem> {
 
 /**
  * Finite, accessible arc carousel.
- * - No autoplay.
- * - Pointer drag is horizontal; vertical page scrolling remains native.
- * - Only the active and adjacent cards are exposed to keyboard navigation.
- * - Layout is measured with ResizeObserver and adapts to the available width.
+ * Native vertical scrolling is preserved; horizontal pointer movement selects slides.
  */
 export function ArcCardCarousel<T extends ArcCarouselItem>({
   items,
@@ -59,6 +60,31 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
     [items, onActiveChange]
   );
 
+  useEffect(() => {
+    if (items.length === 0) {
+      setActiveIndex(0);
+      return;
+    }
+    if (activeIndex > items.length - 1) {
+      setActiveIndex(items.length - 1);
+    }
+  }, [activeIndex, items.length]);
+
+  useEffect(() => {
+    const node = stageRef.current;
+    if (!node) return;
+
+    const update = () => {
+      const width = node.getBoundingClientRect().width;
+      if (width > 0) setStageWidth(width);
+    };
+
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
   const finishPointer = useCallback(() => {
     if (pointerId.current === null) return;
 
@@ -88,16 +114,15 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
     const delta = event.clientX - pointerStartX.current;
     if (Math.abs(delta) > 5) draggedRef.current = true;
 
+    const atFirstAndDraggingRight = safeIndex === 0 && delta > 0;
+    const atLastAndDraggingLeft = safeIndex === items.length - 1 && delta < 0;
     const resistance =
-      (safeIndex === 0 && delta > 0) ||
-      (safeIndex === items.length - 1 && delta < 0)
-        ? 0.28
-        : 1;
+      atFirstAndDraggingRight || atLastAndDraggingLeft ? 0.28 : 1;
 
     setDragOffset(delta * resistance);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === "ArrowRight") {
       event.preventDefault();
       select(safeIndex + 1);
@@ -113,38 +138,12 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
     }
   };
 
-  const handleClickCapture = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
     if (!draggedRef.current) return;
     event.preventDefault();
     event.stopPropagation();
     draggedRef.current = false;
   };
-
-  // Measure the stage rather than assuming a desktop card width.
-  // ResizeObserver is scoped to this component and cleaned up automatically.
-  const setStageNode = useCallback((node: HTMLDivElement | null) => {
-    const previous = stageRef.current;
-    if (previous && previous !== node) {
-      // The observer is owned by the effect below; the ref only tracks the node.
-    }
-    stageRef.current = node;
-  }, []);
-
-  React.useEffect(() => {
-    const node = stageRef.current;
-    if (!node) return;
-
-    const update = () => {
-      const width = node.getBoundingClientRect().width;
-      if (width > 0) setStageWidth(width);
-    };
-
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, []);
 
   if (items.length === 0) return null;
 
@@ -153,7 +152,7 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
   return (
     <section className={"arc-carousel " + className} aria-label={ariaLabel}>
       <div
-        ref={setStageNode}
+        ref={stageRef}
         className={"arc-carousel__stage" + (isDragging ? " is-dragging" : "")}
         role="group"
         aria-roledescription="carousel"
@@ -171,30 +170,33 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
           const offset = index - safeIndex;
           const visible = Math.abs(offset) <= 2;
           const isActive = index === safeIndex;
+          const x = offset * step + dragOffset;
+          const y = Math.abs(offset) * 22;
+          const rotateZ = offset * -5.5;
+          const scale = Math.max(0.78, 1 - Math.abs(offset) * 0.085);
+          const opacity = visible
+            ? Math.max(0.28, 1 - Math.abs(offset) * 0.27)
+            : 0;
 
           return (
             <motion.article
               key={item.id}
               className="arc-carousel__card"
-              aria-label={(index + 1) + " of " + items.length + ": " + item.title}
+              aria-label={
+                index + 1 + " of " + items.length + ": " + item.title
+              }
               aria-hidden={!visible}
               inert={!visible}
               style={{
-                x: offset * step + dragOffset,
-                y: Math.abs(offset) * 22,
-                rotateZ: offset * -5.5,
-                scale: Math.max(0.78, 1 - Math.abs(offset) * 0.085),
-                opacity: visible ? Math.max(0.28, 1 - Math.abs(offset) * 0.27) : 0,
+                x,
+                y,
+                rotateZ,
+                scale,
+                opacity,
                 zIndex: items.length - Math.abs(offset),
                 pointerEvents: visible ? "auto" : "none",
               }}
-              animate={{
-                x: offset * step + dragOffset,
-                y: Math.abs(offset) * 22,
-                rotateZ: offset * -5.5,
-                scale: Math.max(0.78, 1 - Math.abs(offset) * 0.085),
-                opacity: visible ? Math.max(0.28, 1 - Math.abs(offset) * 0.27) : 0,
-              }}
+              animate={{ x, y, rotateZ, scale, opacity }}
               transition={{
                 duration: reducedMotion || isDragging ? 0 : 0.52,
                 ease: [0.22, 1, 0.36, 1],
@@ -217,7 +219,11 @@ export function ArcCardCarousel<T extends ArcCarouselItem>({
           Previous
         </button>
 
-        <span className="arc-carousel__status" aria-live="polite" aria-atomic="true">
+        <span
+          className="arc-carousel__status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {safeIndex + 1} / {items.length}
         </span>
 
