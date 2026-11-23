@@ -1,9 +1,26 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, ExternalLink } from "lucide-react";
 import { EditorialSectionHeader } from "../common/EditorialSectionHeader";
 import { ContourBackground } from "../motion/ContourBackground";
+import { PinnedHeadingSection } from "../motion/PinnedHeadingSection";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
+import { requestScrollTriggerRefresh } from "../../motion/gsapRegistry";
 import { SOCIAL_LINKS } from "../../data/siteContent";
+
+const CORE_MARQUEE_STACK = [
+  "TypeScript",
+  "React 19",
+  "Next.js 15",
+  "Python",
+  "FastAPI",
+  "PyTorch",
+  "YOLOv8 & ByteTrack",
+  "Node.js",
+  "PostgreSQL",
+  "C++20",
+  "GSAP ScrollTrigger",
+  "Three.js",
+];
 
 interface CapabilityGroup {
   id: string;
@@ -154,9 +171,18 @@ interface SkillsPageProps {
 export function SkillsPage(_props: SkillsPageProps) {
   const [selectedGroupId, setSelectedGroupId] = useState<string>("all");
 
+  useEffect(() => {
+    requestScrollTriggerRefresh(120);
+  }, [selectedGroupId]);
+
   const visibleGroups = useMemo(() => {
     if (selectedGroupId === "all") return CAPABILITY_GROUPS;
     return CAPABILITY_GROUPS.filter((g) => g.id === selectedGroupId);
+  }, [selectedGroupId]);
+
+  const activeGroupMeta = useMemo(() => {
+    if (selectedGroupId === "all") return null;
+    return CAPABILITY_GROUPS.find((g) => g.id === selectedGroupId) || null;
   }, [selectedGroupId]);
 
   const navigateTo = (tab: "projects" | "ecosystem") => {
@@ -181,53 +207,101 @@ export function SkillsPage(_props: SkillsPageProps) {
             description="A structured overview of the languages, frameworks, machine learning tools, and computer science foundations I work with—organized by discipline without redundant telemetry or noise."
           />
 
-          {/* Compact group filter bar */}
+          {/* Subtle Pause-on-Hover Technology Ribbon */}
           <div
-            className="flex flex-wrap items-center gap-1.5 pt-3 border-t border-[var(--border)]"
-            role="group"
-            aria-label="Filter capability groups"
+            className="tech-marquee-wrapper pt-3 border-t border-[var(--border)]"
+            aria-label="Core engineering technologies"
           >
-            <button
-              type="button"
-              onClick={() => setSelectedGroupId("all")}
-              aria-pressed={selectedGroupId === "all"}
-              className={`px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer ${
-                selectedGroupId === "all"
-                  ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
-                  : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
-              }`}
-            >
-              All Areas ({CAPABILITY_GROUPS.length})
-            </button>
-
-            {CAPABILITY_GROUPS.map((group) => {
-              const isSelected = selectedGroupId === group.id;
-              return (
-                <button
-                  key={group.id}
-                  type="button"
-                  onClick={() => setSelectedGroupId(isSelected ? "all" : group.id)}
-                  aria-pressed={isSelected}
-                  className={`px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer ${
-                    isSelected
-                      ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
-                      : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
-                  }`}
+            <div className="tech-marquee-track py-1">
+              {CORE_MARQUEE_STACK.map((item) => (
+                <span
+                  key={item}
+                  className="shrink-0 px-3 py-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] font-mono text-xs text-[var(--text-secondary)]"
                 >
-                  {group.index} · {group.title}
-                </button>
-              );
-            })}
+                  {item}
+                </span>
+              ))}
+              {CORE_MARQUEE_STACK.map((item) => (
+                <span
+                  key={`dup-${item}`}
+                  aria-hidden="true"
+                  className="shrink-0 px-3 py-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] font-mono text-xs text-[var(--text-secondary)] hidden motion-safe:inline-flex"
+                >
+                  {item}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </header>
 
-      {/* 2. EIGHT-GROUP CAPABILITY INDEX */}
-      <section id="capability-index" aria-label="Technical capability index" className="space-y-6">
+      {/* 2. PINNED DISCIPLINE NAVIGATOR + CAPABILITY INDEX */}
+      <PinnedHeadingSection
+        id="capability-index"
+        heading={
+          <div className="card p-5 sm:p-6 space-y-5">
+            <div className="space-y-2 border-b border-[var(--border)] pb-4">
+              <span className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)] block">
+                {activeGroupMeta ? `Area ${activeGroupMeta.index}` : "Eight Core Disciplines"}
+              </span>
+              <h2 className="font-display text-xl sm:text-2xl font-extrabold text-[var(--text)] leading-tight">
+                {activeGroupMeta ? activeGroupMeta.title : "Capability Matrix"}
+              </h2>
+              <p className="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-sans">
+                {activeGroupMeta
+                  ? activeGroupMeta.summary
+                  : "Filter by engineering discipline to inspect specific languages, frameworks, ML pipelines, and foundational CS practices."}
+              </p>
+            </div>
+
+            <div
+              className="flex flex-wrap lg:flex-col gap-1.5"
+              role="group"
+              aria-label="Filter capability groups"
+            >
+              <button
+                type="button"
+                onClick={() => setSelectedGroupId("all")}
+                aria-pressed={selectedGroupId === "all"}
+                className={`px-3 py-2 rounded-[6px] text-xs font-mono border text-left transition-colors cursor-pointer ${
+                  selectedGroupId === "all"
+                    ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
+                    : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
+                }`}
+              >
+                All Areas ({CAPABILITY_GROUPS.length})
+              </button>
+
+              {CAPABILITY_GROUPS.map((group) => {
+                const isSelected = selectedGroupId === group.id;
+                return (
+                  <button
+                    key={group.id}
+                    type="button"
+                    onClick={() => setSelectedGroupId(isSelected ? "all" : group.id)}
+                    aria-pressed={isSelected}
+                    className={`px-3 py-2 rounded-[6px] text-xs font-mono border text-left transition-colors cursor-pointer flex items-center justify-between gap-2 ${
+                      isSelected
+                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
+                        : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
+                    }`}
+                  >
+                    <span className="truncate">{group.index} · {group.title}</span>
+                    <span className="text-[10px] opacity-75 tabular-nums shrink-0">
+                      {group.capabilities.length}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        }
+      >
         <StaggerGroup
           key={selectedGroupId}
+          immediate
           stagger={0.04}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-1 gap-5"
         >
           {visibleGroups.map((group) => (
             <StaggerItem
@@ -274,7 +348,7 @@ export function SkillsPage(_props: SkillsPageProps) {
             </StaggerItem>
           ))}
         </StaggerGroup>
-      </section>
+      </PinnedHeadingSection>
 
       {/* 3. CONTEXTUAL FOOTER LINKS (NO PROJECT CARDS OR REPO GRIDS) */}
       <section

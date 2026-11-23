@@ -3,15 +3,18 @@ import { AnimatePresence } from "motion/react";
 import { PROJECTS, ProjectItem, getProjectById } from "../data/projects";
 import { useGithub } from "../hooks/useGithub";
 import { GitHubRepo } from "../services/github";
-import { Search, X, Code2 } from "lucide-react";
+import { Search, X, Code2, ArrowRight, Github, ExternalLink, Star, GitFork } from "lucide-react";
 
 import { FeaturedProject } from "./projects/FeaturedProject";
 import { ProjectCard } from "./projects/ProjectCard";
+import { ProjectMedia } from "./projects/ProjectMedia";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
+import { getProjectMedia } from "../data/projectMedia";
 import { StaggerGroup, StaggerItem } from "../motion/Reveal";
 import { EditorialSectionHeader } from "./common/EditorialSectionHeader";
 import { ContourBackground } from "./motion/ContourBackground";
 import { ArcCardCarousel } from "./motion/ArcCardCarousel";
+import { StackingCards, type StackingCardEntry } from "./motion/StackingCards";
 import { requestScrollTriggerRefresh } from "../motion/gsapRegistry";
 
 type FilterCategory = "ALL" | "AI / ML" | "FULL-STACK" | "SYSTEMS" | "DSA";
@@ -180,6 +183,148 @@ function ProjectsShowcaseComponent({
       );
     });
   }, [selectedCategory, selectedTech, searchQuery]);
+
+  const useStackSequence = filteredProjects.length >= 2;
+  const stackedProjects = useMemo(
+    () => (useStackSequence ? filteredProjects.slice(0, 4) : []),
+    [useStackSequence, filteredProjects]
+  );
+  const gridProjects = useMemo(
+    () => (useStackSequence ? filteredProjects.slice(4) : filteredProjects),
+    [useStackSequence, filteredProjects]
+  );
+
+  const stackedProjectEntries: StackingCardEntry[] = useMemo(() => {
+    return stackedProjects.map((project, idx) => {
+      const repo = repoMap[project.githubRepoName?.toLowerCase() || ""] || null;
+      const media = getProjectMedia(project.id);
+      const isLead = project.id === featuredProject.id;
+
+      return {
+        id: project.id,
+        render: () => (
+          <article className="card bg-[var(--surface-2)] border-[var(--border-strong)] shadow-xl overflow-hidden">
+            <div className="grid grid-cols-1 lg:grid-cols-12">
+              <div className="lg:col-span-5 bg-[#151713] border-b lg:border-b-0 lg:border-r border-[var(--border)] flex flex-col justify-between">
+                <ProjectMedia
+                  project={project}
+                  media={media}
+                  repo={repo}
+                  isFeaturedCandidate={isLead}
+                  onPreview={() => setSelectedCaseStudy(project)}
+                  className="h-full !border-b-0"
+                />
+              </div>
+
+              <div className="lg:col-span-7 p-5 sm:p-7 flex flex-col justify-between gap-4">
+                <div className="space-y-3">
+                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                    <span className="font-bold text-[var(--accent)] uppercase tracking-wider tabular-nums">
+                      {String(idx + 1).padStart(2, "0")} · {project.categoryLabel || project.category}
+                      {isLead ? " · SPOTLIGHT" : ""}
+                    </span>
+                    <div className="flex items-center gap-2 text-[var(--text-muted)]">
+                      <span>{project.status}</span>
+                      {repo && (
+                        <>
+                          <span aria-hidden="true">·</span>
+                          <span className="inline-flex items-center gap-1 tabular-nums">
+                            <Star className="w-3 h-3 text-[var(--accent)]" aria-hidden="true" />
+                            {repo.stargazers_count}
+                          </span>
+                          <span className="inline-flex items-center gap-1 tabular-nums">
+                            <GitFork className="w-3 h-3" aria-hidden="true" />
+                            {repo.forks_count}
+                          </span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-extrabold font-display text-[var(--text)] tracking-tight">
+                      {project.title}
+                    </h3>
+                    {project.subtitle && (
+                      <p className="text-xs font-mono text-[var(--text-muted)] mt-0.5">
+                        {project.subtitle}
+                      </p>
+                    )}
+                  </div>
+
+                  <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
+                    {project.shortDescription}
+                  </p>
+
+                  <p className="text-xs text-[var(--text-muted)] leading-relaxed border-l-2 border-[var(--accent)] pl-3">
+                    {project.solution}
+                  </p>
+                </div>
+
+                <div className="space-y-3 pt-3 border-t border-[var(--border)]">
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.techStack.slice(0, 6).map((tech) => {
+                      const isActive =
+                        selectedTech !== "ALL" &&
+                        selectedTech.toLowerCase() === tech.toLowerCase();
+                      return (
+                        <button
+                          key={tech}
+                          type="button"
+                          onClick={() => setSelectedTech(isActive ? "ALL" : tech)}
+                          className={`text-xs font-mono px-2 py-0.5 rounded-[4px] border cursor-pointer transition-colors ${
+                            isActive
+                              ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
+                              : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--border-strong)]"
+                          }`}
+                        >
+                          {tech}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3 !text-xs"
+                      >
+                        <Github className="w-3.5 h-3.5" aria-hidden="true" />
+                        <span>GitHub ↗</span>
+                      </a>
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3 !text-xs"
+                        >
+                          <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
+                          <span>Live ↗</span>
+                        </a>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCaseStudy(project)}
+                      className="btn btn-primary !min-h-[38px] !py-1.5 !px-4 !text-xs group"
+                    >
+                      <span>Case Study</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+        ),
+      };
+    });
+  }, [stackedProjects, repoMap, featuredProject.id, selectedTech]);
 
   return (
     <div className="w-full space-y-10 sm:space-y-12 pb-10">
@@ -395,7 +540,7 @@ function ProjectsShowcaseComponent({
           </div>
         )}
 
-        {/* Explorer Project Cards Grid */}
+        {/* Stacked Lead Builds Sequence (01-04) + Remaining Archive Grid */}
         {filteredProjects.length === 0 ? (
           <div className="card p-12 text-center space-y-4">
             <div className="w-12 h-12 rounded-[8px] mx-auto flex items-center justify-center border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)]">
@@ -422,32 +567,70 @@ function ProjectsShowcaseComponent({
             </button>
           </div>
         ) : (
-          <StaggerGroup
-            key={`${selectedCategory}-${selectedTech}-${filteredProjects.length}`}
-            className={
-              filteredProjects.length >= 4 && selectedCategory === "ALL" && selectedTech === "ALL" && !searchQuery.trim()
-                ? "projects-grid"
-                : "grid grid-cols-1 md:grid-cols-2 gap-6"
-            }
-          >
-            {filteredProjects.map((project, idx) => {
-              const repo = repoMap[project.githubRepoName?.toLowerCase() || ""] || null;
-              const isLead = project.id === featuredProject.id;
-              return (
-                <StaggerItem key={project.id} className="project-slot h-full">
-                  <ProjectCard
-                    project={project}
-                    repo={repo}
-                    index={idx}
-                    onSelectCaseStudy={setSelectedCaseStudy}
-                    onSelectTech={(tech) => setSelectedTech(tech)}
-                    selectedTech={selectedTech}
-                    isFeaturedCandidate={isLead}
-                  />
-                </StaggerItem>
-              );
-            })}
-          </StaggerGroup>
+          <div className="space-y-10">
+            {stackedProjectEntries.length >= 2 && (
+              <div id="projects-stack" className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[var(--text-muted)]">
+                  <span className="uppercase tracking-[0.12em] font-semibold text-[var(--accent)]">
+                    Lead Systems Stack · Scroll Depth Sequence
+                  </span>
+                  <span className="tabular-nums">
+                    01–{String(stackedProjectEntries.length).padStart(2, "0")} of{" "}
+                    {String(filteredProjects.length).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <StackingCards
+                  items={stackedProjectEntries}
+                  className="project-stacking-sequence"
+                />
+              </div>
+            )}
+
+            {gridProjects.length > 0 && (
+              <div className="space-y-5">
+                {stackedProjectEntries.length >= 2 && (
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-t border-[var(--border)] pt-6 text-xs font-mono text-[var(--text-muted)]">
+                    <span className="uppercase tracking-[0.12em] font-semibold text-[var(--text)]">
+                      Remaining Project Index
+                    </span>
+                    <span className="tabular-nums">
+                      {String(stackedProjectEntries.length + 1).padStart(2, "0")}–
+                      {String(filteredProjects.length).padStart(2, "0")}
+                    </span>
+                  </div>
+                )}
+
+                <StaggerGroup
+                  key={`${selectedCategory}-${selectedTech}-${gridProjects.length}`}
+                  className={
+                    gridProjects.length >= 4 && selectedCategory === "ALL" && selectedTech === "ALL" && !searchQuery.trim()
+                      ? "projects-grid"
+                      : "grid grid-cols-1 md:grid-cols-2 gap-6"
+                  }
+                >
+                  {gridProjects.map((project, idx) => {
+                    const repo = repoMap[project.githubRepoName?.toLowerCase() || ""] || null;
+                    const isLead = project.id === featuredProject.id;
+                    const displayIndex = stackedProjectEntries.length + idx;
+                    return (
+                      <StaggerItem key={project.id} className="project-slot h-full">
+                        <ProjectCard
+                          project={project}
+                          repo={repo}
+                          index={displayIndex}
+                          onSelectCaseStudy={setSelectedCaseStudy}
+                          onSelectTech={(tech) => setSelectedTech(tech)}
+                          selectedTech={selectedTech}
+                          isFeaturedCandidate={isLead}
+                        />
+                      </StaggerItem>
+                    );
+                  })}
+                </StaggerGroup>
+              </div>
+            )}
+          </div>
         )}
       </section>
 

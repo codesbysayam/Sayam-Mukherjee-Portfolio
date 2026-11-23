@@ -107,15 +107,16 @@ Project media is stored in `src/assets/projects/`; profile imagery is stored in 
 
 ## Motion and interaction system
 
-The project uses **Motion for React (`motion/react`)** and includes a shared motion foundation:
+The project uses **Motion for React (`motion/react`)** paired with **GSAP (`ScrollTrigger`, `Flip`)** and **Three.js** through a shared motion foundation:
 
 - `src/motion/tokens.ts` — durations, easing curves, reveal distances, reduced-motion preference, device capability, and fine-pointer detection.
+- `src/motion/gsapRegistry.ts` — centralized GSAP plugin registration (`ScrollTrigger`, `Flip`), `MOTION_BREAKPOINTS`, and debounced refresh helpers.
 - `src/motion/motion-tokens.ts` — compatibility exports for motion tokens.
 - `src/motion/motion-presets.ts` — reusable reveal, stagger, modal, hover, and tap presets.
 - `src/motion/MotionProvider.tsx` — shared motion configuration and device/reduced-motion context.
-- `src/motion/Reveal.tsx` — reusable editorial reveal primitives.
-- `src/styles/motion.css` — contour flow, image reveal, editorial utilities, and reduced-motion CSS.
-- `src/components/motion/` — contour backgrounds, route transitions, orbital sculpture, pointer trail, scroll story thread, and closing fluid canvas.
+- `src/motion/Reveal.tsx` — reusable editorial reveal, scroll-scale, magnetic CTA, and pointer-reactive primitives.
+- `src/styles/motion.css` — contour flow, image reveal, horizontal snap strip, stacking card sequence, marquee ribbon, editorial utilities, and reduced-motion CSS.
+- `src/components/motion/` — contour backgrounds, route transitions, 3D orbital sculpture, horizontal narrative, pinned headings, 3D arc card carousel, stacking cards, focus frames, motion slider, scroll story thread, and closing fluid canvas.
 
 Motion should be purposeful and consistent. Prefer transforms and opacity for routine transitions, pause expensive effects when offscreen, avoid competing animation systems, and provide reduced-motion behaviour. WebGL/Canvas effects must be progressively enhanced and must not block content or navigation.
 
@@ -198,6 +199,7 @@ Visitors do not need a browser-side GitHub token for static snapshot display. Ke
 - Vite 6
 - Tailwind CSS 4
 - Motion for React 12
+- GSAP (ScrollTrigger, Flip)
 - Three.js
 - D3
 - Recharts

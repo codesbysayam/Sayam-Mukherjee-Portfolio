@@ -5,6 +5,7 @@ import { calculateReadingTime } from "../utils/readingTime";
 import Breadcrumbs from "../components/common/Breadcrumbs";
 import ReadingProgressBar from "../components/common/ReadingProgressBar";
 import { EditorialReveal, LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { usePrefersReducedMotion } from "../motion/tokens";
 
 interface JournalDetailProps {
   slug: string;
@@ -13,6 +14,7 @@ interface JournalDetailProps {
 }
 
 export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProps) {
+  const reduced = usePrefersReducedMotion();
   const [copied, setCopied] = useState(false);
   const articleRef = useRef<HTMLElement>(null);
 
@@ -37,8 +39,8 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
   }, [entry]);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [slug]);
+    window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+  }, [slug, reduced]);
 
   const handleCopyLink = async () => {
     try {

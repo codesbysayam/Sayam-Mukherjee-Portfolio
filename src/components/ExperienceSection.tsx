@@ -7,7 +7,7 @@ import {
   Briefcase, Youtube, Users, GitBranch,
   ExternalLink, ArrowUpRight, ArrowRight
 } from "lucide-react";
-import { LineReveal } from "../motion/Reveal";
+import { LineReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 
 interface ExperienceSectionProps {
@@ -63,13 +63,21 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-all duration-200 cursor-pointer group ${
+                  className={`relative w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors duration-200 cursor-pointer group ${
                     isSelected
-                      ? "bg-[#20231D] dark:bg-[#C7E34A] border-[#20231D] dark:border-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D]"
+                      ? "border-[#20231D] dark:border-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D]"
                       : "bg-transparent border-transparent text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  {isSelected && (
+                    <motion.span
+                      layoutId="experience-active-pill"
+                      transition={{ duration: reduced ? 0 : 0.24, ease: MOTION_EASE.out }}
+                      className="absolute inset-0 rounded-[7px] bg-[#20231D] dark:bg-[#C7E34A]"
+                      aria-hidden="true"
+                    />
+                  )}
+                  <div className="relative z-10 flex items-center gap-3">
                     <div
                       className={`p-2 rounded-[6px] border ${
                         isSelected
@@ -81,7 +89,7 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                     </div>
                     <span className="text-xs sm:text-sm font-bold font-display">{tab.label}</span>
                   </div>
-                  <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+                  <ArrowUpRight className="relative z-10 w-3.5 h-3.5 opacity-60 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                 </button>
               );
             })}
@@ -121,31 +129,31 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                       </span>
                     </div>
 
-                    <ul className="space-y-3.5">
+                    <StaggerGroup immediate stagger={0.04} className="space-y-3.5">
                       {activeTab === "Content Creation" ? (
                         <>
-                          <li className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
+                          <StaggerItem className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
                             <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[var(--accent)]" aria-hidden="true" />
                             <span>
                               Produced technical tutorials, algorithmic breakdowns, and visual explainer series across educational YouTube channels (Technical AZ, Daily Decipher, and Obsidian Optics).
                             </span>
-                          </li>
-                          <li className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
+                          </StaggerItem>
+                          <StaggerItem className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
                             <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[var(--accent)]" aria-hidden="true" />
                             <span>
                               Practiced visual storytelling, clear pacing, and audience-centered framing—lessons that carry directly into software interface design.
                             </span>
-                          </li>
+                          </StaggerItem>
                         </>
                       ) : (
                         currentExperience.description.map((bullet, idx) => (
-                          <li key={idx} className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
+                          <StaggerItem key={idx} className="text-xs sm:text-sm flex items-start gap-3 leading-relaxed text-[var(--text-secondary)]">
                             <span className="w-1.5 h-1.5 rounded-full shrink-0 mt-2 bg-[var(--accent)]" aria-hidden="true" />
                             <span>{bullet}</span>
-                          </li>
+                          </StaggerItem>
                         ))
                       )}
-                    </ul>
+                    </StaggerGroup>
                   </div>
 
                   {/* Subtle inline capabilities */}

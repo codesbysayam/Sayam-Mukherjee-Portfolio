@@ -39,8 +39,11 @@ export function HorizontalNarrative({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const mobileTrackRef = useRef<HTMLDivElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
+  const activeStepRef = useRef(0);
   const [activeStep, setActiveStep] = useState(0);
+  const [mobileStep, setMobileStep] = useState(0);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
@@ -73,7 +76,10 @@ export function HorizontalNarrative({
               stops.length - 1,
               Math.floor(self.progress * stops.length)
             );
-            setActiveStep(nextIdx);
+            if (activeStepRef.current !== nextIdx) {
+              activeStepRef.current = nextIdx;
+              setActiveStep(nextIdx);
+            }
           },
         },
       });
@@ -81,6 +87,20 @@ export function HorizontalNarrative({
 
     return () => mm.revert();
   }, [stops.length, reduced]);
+
+  const scrollMobileTo = (targetIndex: number) => {
+    const track = mobileTrackRef.current;
+    if (!track) return;
+    const clamped = Math.max(0, Math.min(stops.length - 1, targetIndex));
+    const cards = Array.from(track.children) as HTMLElement[];
+    const card = cards[clamped];
+    if (!card) return;
+    setMobileStep(clamped);
+    track.scrollTo({
+      left: card.offsetLeft,
+      behavior: reduced ? "auto" : "smooth",
+    });
+  };
 
   if (reduced) {
     return (
@@ -200,9 +220,9 @@ export function HorizontalNarrative({
         </div>
       </div>
 
-      {/* Tablet / Mobile Touch Scroll-Snap Fallback */}
+      {/* Tablet / Mobile Touch Scroll-Snap Fallback with Keyboard Controls */}
       <div className="lg:hidden space-y-3">
-        <div className="flex items-baseline justify-between gap-2">
+        <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)] font-semibold block">
               {eyebrow}
@@ -211,12 +231,64 @@ export function HorizontalNarrative({
               {title}
             </h3>
           </div>
-          <span className="font-mono text-[11px] text-[var(--text-muted)]">
-            Swipe →
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[11px] text-[var(--text-muted)] tabular-nums">
+              {String(mobileStep + 1).padStart(2, "0")} / {String(stops.length).padStart(2, "0")}
+            </span>
+            <button
+              type="button"
+              onClick={() => scrollMobileTo(mobileStep - 1)}
+              disabled={mobileStep <= 0}
+              aria-label="Previous milestone"
+              className="px-2.5 py-1.5 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] text-xs font-mono font-bold text-[var(--text)] disabled:opacity-35 cursor-pointer disabled:cursor-not-allowed"
+            >
+              Prev
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollMobileTo(mobileStep + 1)}
+              disabled={mobileStep >= stops.length - 1}
+              aria-label="Next milestone"
+              className="px-2.5 py-1.5 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] text-xs font-mono font-bold text-[var(--text)] disabled:opacity-35 cursor-pointer disabled:cursor-not-allowed"
+            >
+              Next
+            </button>
+          </div>
         </div>
 
-        <div className="horizontal-narrative-mobile-track">
+        <div
+          ref={mobileTrackRef}
+          tabIndex={0}
+          role="region"
+          aria-label={title}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowRight") {
+              e.preventDefault();
+              scrollMobileTo(mobileStep + 1);
+            } else if (e.key === "ArrowLeft") {
+              e.preventDefault();
+              scrollMobileTo(mobileStep - 1);
+            }
+          }}
+          onScroll={() => {
+            const track = mobileTrackRef.current;
+            if (!track) return;
+            const cards = Array.from(track.children) as HTMLElement[];
+            if (!cards.length) return;
+            const center = track.scrollLeft + track.clientWidth * 0.3;
+            let best = 0;
+            let bestDist = Infinity;
+            cards.forEach((c, idx) => {
+              const d = Math.abs(c.offsetLeft - center);
+              if (d < bestDist) {
+                bestDist = d;
+                best = idx;
+              }
+            });
+            setMobileStep(best);
+          }}
+          className="horizontal-narrative-mobile-track focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[8px]"
+        >
           {stops.map((stop) => (
             <article
               key={stop.id}

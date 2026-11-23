@@ -161,3 +161,68 @@
 .horizontal-narrative-mobile-track > * {
   scroll-snap-align: start;
 }
+
+/* ==========================================================================
+   STACKING CARDS EXHIBITION SEQUENCE (.project-stacking-sequence)
+   ========================================================================== */
+
+.project-stacking-sequence {
+  position: relative;
+}
+
+.project-stacking-sequence .stacking-card-item {
+  will-change: transform, opacity;
+  transform-origin: center top;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-stacking-sequence .stacking-card-item {
+    will-change: auto;
+  }
+}
+
+/* ==========================================================================
+   TECHNICAL CAPABILITY MARQUEE RIBBON (.tech-marquee)
+   ========================================================================== */
+
+@keyframes tech-marquee-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.tech-marquee-wrapper {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 5%, #000 95%, transparent 100%);
+}
+
+.tech-marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  animation: tech-marquee-scroll 34s linear infinite;
+}
+
+.tech-marquee-wrapper:hover .tech-marquee-track,
+.tech-marquee-wrapper:focus-within .tech-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-marquee-wrapper {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .tech-marquee-track {
+    animation: none !important;
+    flex-wrap: wrap;
+    width: auto;
+  }
+}
+

@@ -12,7 +12,12 @@ import {
   TextMaskReveal,
 } from "../motion/Reveal";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
-import { ensureGsapRegistered, gsap, MOTION_BREAKPOINTS } from "../motion/gsapRegistry";
+import {
+  ensureGsapRegistered,
+  gsap,
+  MOTION_BREAKPOINTS,
+  requestScrollTriggerRefresh,
+} from "../motion/gsapRegistry";
 
 const HeroOrbitalSculpture = lazyWithRetry(() => import("./motion/HeroOrbitalSculpture"));
 
@@ -28,9 +33,11 @@ function HeroSectionComponent({
 }: HeroSectionProps) {
   const reduced = usePrefersReducedMotion();
   const [stageMode, setStageMode] = useState<"portrait" | "orbital">("portrait");
+  const [portraitFailed, setPortraitFailed] = useState(false);
   const heroSectionRef = useRef<HTMLElement>(null);
   const bgParallaxRef = useRef<HTMLDivElement>(null);
   const midParallaxRef = useRef<HTMLDivElement>(null);
+  const stagePinRef = useRef<HTMLDivElement>(null);
   const fgStageParallaxRef = useRef<HTMLDivElement>(null);
   const heroProgressRef = useRef(0);
 
@@ -48,6 +55,7 @@ function HeroSectionComponent({
           start: "top top",
           end: "bottom top",
           scrub: 0.45,
+          invalidateOnRefresh: true,
           onUpdate: (self) => {
             heroProgressRef.current = self.progress;
           },
@@ -61,12 +69,42 @@ function HeroSectionComponent({
         tl.to(midParallaxRef.current, { y: -28, ease: "none" }, 0);
       }
       if (fgStageParallaxRef.current) {
-        tl.to(fgStageParallaxRef.current, { y: -44, ease: "none" }, 0);
+        tl.to(fgStageParallaxRef.current, { y: -32, ease: "none" }, 0);
       }
+    });
+
+    mm.add(MOTION_BREAKPOINTS.wide, () => {
+      const stageEl = stagePinRef.current;
+      if (!stageEl) return;
+
+      const availableTravel = Math.max(
+        0,
+        Math.min(180, heroEl.offsetHeight - stageEl.offsetHeight - 130)
+      );
+
+      if (availableTravel < 64) return;
+
+      gsap.to(stageEl, {
+        ease: "none",
+        scrollTrigger: {
+          trigger: heroEl,
+          pin: stageEl,
+          pinSpacing: false,
+          start: "top top+=84",
+          end: () => `+=${Math.max(64, Math.min(180, heroEl.offsetHeight - stageEl.offsetHeight - 130))}`,
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
     });
 
     return () => mm.revert();
   }, [reduced]);
+
+  const handleStageModeChange = (nextMode: "portrait" | "orbital") => {
+    setStageMode(nextMode);
+    requestScrollTriggerRefresh(100);
+  };
 
   const scrollToOverview = () => {
     const target = document.getElementById("home-about-chapter");
@@ -155,7 +193,7 @@ function HeroSectionComponent({
             }}
             className="mt-6 sm:mt-8 flex flex-wrap items-center gap-4"
           >
-            <MagneticAction strength={0.16}>
+            <MagneticAction strength={5}>
               <button
                 type="button"
                 onClick={onViewWork}
@@ -190,97 +228,115 @@ function HeroSectionComponent({
         </div>
 
         {/* Portrait / 3D Core Visual Stage */}
-        <div
-          ref={fgStageParallaxRef}
-          className="lg:col-span-5 w-full min-w-0 will-change-transform"
-        >
-          <motion.div
-            initial={reduced ? false : { opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: MOTION_DURATION.enter,
-              delay: 0.16,
-              ease: MOTION_EASE.out,
-            }}
-            className="flex flex-col gap-3 w-full min-w-0 lg:items-end"
+        <div ref={stagePinRef} className="lg:col-span-5 w-full min-w-0">
+          <div
+            ref={fgStageParallaxRef}
+            className="w-full min-w-0 will-change-transform"
           >
-            <div className="w-full min-w-0 max-w-[440px] space-y-2.5">
-              <div className="flex items-center justify-between gap-2 text-[11px] font-mono">
-                <span className="text-[var(--text-muted)] uppercase tracking-[0.12em]">
-                  {stageMode === "portrait" ? "Portrait" : "3D Orbital Core"}
-                </span>
+            <motion.div
+              initial={reduced ? false : { opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: MOTION_DURATION.enter,
+                delay: 0.16,
+                ease: MOTION_EASE.out,
+              }}
+              className="flex flex-col gap-3 w-full min-w-0 lg:items-end"
+            >
+              <div className="w-full min-w-0 max-w-[440px] space-y-2.5">
+                <div className="flex items-center justify-between gap-2 text-[11px] font-mono">
+                  <span className="text-[var(--text-muted)] uppercase tracking-[0.12em]">
+                    {stageMode === "portrait" ? "Portrait" : "3D Orbital Core"}
+                  </span>
 
-                <div className="flex items-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] p-0.5">
-                  <button
-                    type="button"
-                    onClick={() => setStageMode("portrait")}
-                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                      stageMode === "portrait"
-                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
-                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
-                    }`}
-                    aria-pressed={stageMode === "portrait"}
-                  >
-                    <UserCheck className="w-3 h-3" aria-hidden="true" />
-                    <span>Portrait</span>
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setStageMode("orbital")}
-                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
-                      stageMode === "orbital"
-                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
-                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
-                    }`}
-                    aria-pressed={stageMode === "orbital"}
-                  >
-                    <Cpu className="w-3 h-3" aria-hidden="true" />
-                    <span>3D Core</span>
-                  </button>
+                  <div className="flex items-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] p-0.5">
+                    <button
+                      type="button"
+                      onClick={() => handleStageModeChange("portrait")}
+                      className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                        stageMode === "portrait"
+                          ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
+                          : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                      }`}
+                      aria-pressed={stageMode === "portrait"}
+                    >
+                      <UserCheck className="w-3 h-3" aria-hidden="true" />
+                      <span>Portrait</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleStageModeChange("orbital")}
+                      className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                        stageMode === "orbital"
+                          ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
+                          : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                      }`}
+                      aria-pressed={stageMode === "orbital"}
+                    >
+                      <Cpu className="w-3 h-3" aria-hidden="true" />
+                      <span>3D Core</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
 
-              <PointerReactiveVisual maxTiltDeg={4} className="w-full">
-                <div className="relative aspect-[4/4.4] w-full overflow-hidden rounded-[8px] bg-[#151713]">
-                  {stageMode === "portrait" ? (
-                    <ImageCurtainReveal immediate delay={0.18} className="h-full w-full">
-                      <img
-                        src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
-                        alt="Sayam Mukherjee portrait"
-                        loading="eager"
-                        decoding="async"
-                        className="h-full w-full object-cover object-[50%_18%] contrast-[1.04]"
-                      />
-                    </ImageCurtainReveal>
-                  ) : (
-                    <div className="h-full w-full bg-[#151713]">
-                      <Suspense
-                        fallback={
-                          <div className="flex h-full w-full items-center justify-center bg-[#151713] font-mono text-xs uppercase tracking-wider text-[#B5B8AA]">
-                            Loading 3D Core...
-                          </div>
-                        }
-                      >
-                        <HeroOrbitalSculpture scrollProgressRef={heroProgressRef} />
-                      </Suspense>
-                    </div>
-                  )}
-
-                  {stageMode === "portrait" && (
-                    <>
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#151713]/85 via-[#151713]/30 to-transparent" />
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-3 text-[#F4F4ED]">
-                        <div className="flex items-center justify-between gap-2 text-[11px] font-mono uppercase tracking-[0.1em]">
-                          <span className="font-semibold">Sayam Mukherjee</span>
-                          <span className="text-[#C7E34A]">Bhubaneswar · Hooghly</span>
+                <PointerReactiveVisual maxTiltDeg={4} className="w-full">
+                  <div className="relative aspect-[4/4.4] w-full overflow-hidden rounded-[8px] bg-[#151713]">
+                    {stageMode === "portrait" ? (
+                      portraitFailed ? (
+                        <div className="flex h-full w-full flex-col items-center justify-center bg-[#151713] p-6 text-center text-[#F4F4ED]">
+                          <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#C7E34A]">
+                            SM · 2026
+                          </span>
+                          <span className="mt-2 font-display text-2xl font-bold tracking-tight">
+                            Sayam Mukherjee
+                          </span>
+                          <span className="mt-1 font-mono text-[11px] text-[#B5B8AA]">
+                            CSE (AI &amp; ML) · KIIT University
+                          </span>
                         </div>
+                      ) : (
+                        <ImageCurtainReveal immediate delay={0.18} className="h-full w-full">
+                          <img
+                            src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
+                            alt="Sayam Mukherjee portrait"
+                            loading="eager"
+                            decoding="async"
+                            referrerPolicy="no-referrer"
+                            onError={() => setPortraitFailed(true)}
+                            className="h-full w-full object-cover object-[50%_18%] contrast-[1.04]"
+                          />
+                        </ImageCurtainReveal>
+                      )
+                    ) : (
+                      <div className="h-full w-full bg-[#151713]">
+                        <Suspense
+                          fallback={
+                            <div className="flex h-full w-full items-center justify-center bg-[#151713] font-mono text-xs uppercase tracking-wider text-[#B5B8AA]">
+                              Loading 3D Core...
+                            </div>
+                          }
+                        >
+                          <HeroOrbitalSculpture scrollProgressRef={heroProgressRef} />
+                        </Suspense>
                       </div>
-                    </>
-                  )}
-                </div>
-              </PointerReactiveVisual>
-            </div>
-          </motion.div>
+                    )}
+
+                    {stageMode === "portrait" && (
+                      <>
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#151713]/85 via-[#151713]/30 to-transparent" />
+                        <div className="pointer-events-none absolute inset-x-0 bottom-0 px-4 py-3 text-[#F4F4ED]">
+                          <div className="flex items-center justify-between gap-2 text-[11px] font-mono uppercase tracking-[0.1em]">
+                            <span className="font-semibold">Sayam Mukherjee</span>
+                            <span className="text-[#C7E34A]">Bhubaneswar · Hooghly</span>
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                </PointerReactiveVisual>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
 

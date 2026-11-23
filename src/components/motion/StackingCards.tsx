@@ -3,6 +3,7 @@ import {
   ensureGsapRegistered,
   gsap,
   MOTION_BREAKPOINTS,
+  requestScrollTriggerRefresh,
 } from "../../motion/gsapRegistry";
 import { usePrefersReducedMotion } from "../../motion/tokens";
 
@@ -41,20 +42,29 @@ export function StackingCards({ items, className = "" }: StackingCardsProps) {
         const nextCard = cardEls[idx + 1];
 
         gsap.to(card, {
-          scale: 0.94,
-          opacity: 0.58,
+          scale: 0.945,
+          opacity: 0.62,
           ease: "none",
           scrollTrigger: {
             trigger: nextCard,
-            start: "top 75%",
-            end: "top 22%",
+            start: "top 78%",
+            end: "top 24%",
             scrub: true,
+            invalidateOnRefresh: true,
           },
         });
       });
     });
 
-    return () => mm.revert();
+    const ro = new ResizeObserver(() => {
+      requestScrollTriggerRefresh(90);
+    });
+    ro.observe(container);
+
+    return () => {
+      ro.disconnect();
+      mm.revert();
+    };
   }, [items.length, reduced]);
 
   return (
@@ -65,8 +75,8 @@ export function StackingCards({ items, className = "" }: StackingCardsProps) {
           data-stack-card
           className={
             reduced
-              ? "relative"
-              : "relative lg:sticky lg:top-24 will-change-transform origin-top"
+              ? "stacking-card-item relative"
+              : "stacking-card-item relative lg:sticky lg:top-24 will-change-transform origin-top"
           }
           style={{
             zIndex: idx + 1,

@@ -12,6 +12,7 @@ interface ArcCardCarouselProps {
   projects: ProjectItem[];
   repoMap?: Record<string, GitHubRepo>;
   onSelectProject: (project: ProjectItem) => void;
+  onActiveChange?: (project: ProjectItem) => void;
   title?: string;
 }
 
@@ -19,6 +20,7 @@ export function ArcCardCarousel({
   projects,
   repoMap = {},
   onSelectProject,
+  onActiveChange,
   title = "Interactive Project Arc Deck",
 }: ArcCardCarouselProps) {
   const reduced = usePrefersReducedMotion();
@@ -26,6 +28,8 @@ export function ArcCardCarousel({
   const [isMobile, setIsMobile] = useState(false);
   const [dragOffsetPx, setDragOffsetPx] = useState(0);
   const dragStartXRef = useRef<number | null>(null);
+  const dragDeltaRef = useRef(0);
+  const didDragRef = useRef(false);
   const detailsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -49,12 +53,15 @@ export function ArcCardCarousel({
   const stepTo = useCallback(
     (nextIndex: number) => {
       if (count <= 0) return;
-      const wrapped = ((nextIndex % count) + count) % count;
+      const clamped = Math.max(0, Math.min(count - 1, nextIndex));
+      if (clamped === activeIndex) return;
 
+      const targetProject = projects[clamped];
       if (!reduced && detailsRef.current) {
         ensureGsapRegistered();
         const state = Flip.getState(detailsRef.current);
-        setActiveIndex(wrapped);
+        setActiveIndex(clamped);
+        if (targetProject) onActiveChange?.(targetProject);
         requestAnimationFrame(() => {
           if (!detailsRef.current?.isConnected) return;
           Flip.from(state, {
@@ -64,10 +71,11 @@ export function ArcCardCarousel({
           });
         });
       } else {
-        setActiveIndex(wrapped);
+        setActiveIndex(clamped);
+        if (targetProject) onActiveChange?.(targetProject);
       }
     },
-    [count, reduced]
+    [count, activeIndex, projects, onActiveChange, reduced]
   );
 
   const handlePrev = useCallback(() => stepTo(activeIndex - 1), [activeIndex, stepTo]);
@@ -88,25 +96,36 @@ export function ArcCardCarousel({
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement)?.closest("button, a")) return;
     dragStartXRef.current = e.clientX;
+    dragDeltaRef.current = 0;
+    didDragRef.current = false;
     setDragOffsetPx(0);
   };
 
   const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (dragStartXRef.current === null) return;
-    const delta = e.clientX - dragStartXRef.current;
-    setDragOffsetPx(Math.max(-140, Math.min(140, delta)));
+    const rawDelta = e.clientX - dragStartXRef.current;
+    if (Math.abs(rawDelta) > 8) {
+      didDragRef.current = true;
+    }
+    const clampedDelta = Math.max(-140, Math.min(140, rawDelta));
+    dragDeltaRef.current = clampedDelta;
+    setDragOffsetPx(clampedDelta);
   };
 
   const handlePointerUp = () => {
     if (dragStartXRef.current === null) return;
-    const delta = dragOffsetPx;
+    const delta = dragDeltaRef.current;
     dragStartXRef.current = null;
+    dragDeltaRef.current = 0;
     setDragOffsetPx(0);
-    if (delta > 48) {
+    if (delta > 48 && activeIndex > 0) {
       handlePrev();
-    } else if (delta < -48) {
+    } else if (delta < -48 && activeIndex < count - 1) {
       handleNext();
     }
+    window.setTimeout(() => {
+      didDragRef.current = false;
+    }, 0);
   };
 
   const activeMedia = useMemo(
@@ -147,18 +166,18 @@ export function ArcCardCarousel({
           <button
             type="button"
             onClick={handlePrev}
-            disabled={count <= 1}
+            disabled={count <= 1 || activeIndex <= 0}
             aria-label="Previous project in arc"
-            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40"
+            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
           <button
             type="button"
             onClick={handleNext}
-            disabled={count <= 1}
+            disabled={count <= 1 || activeIndex >= count - 1}
             aria-label="Next project in arc"
-            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40"
+            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -171,16 +190,11 @@ export function ArcCardCarousel({
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
         onPointerLeave={handlePointerUp}
       >
         {projects.map((project, index) => {
-          // Circular shortest offset around activeIndex
-          let offset = index - activeIndex;
-          if (count > 2) {
-            if (offset > count / 2) offset -= count;
-            if (offset < -count / 2) offset += count;
-          }
-
+          const offset = index - activeIndex;
           const absOffset = Math.abs(offset);
           if (absOffset > 2) return null;
 
@@ -224,6 +238,7 @@ export function ArcCardCarousel({
                     }
               }
               onClick={() => {
+                if (didDragRef.current) return;
                 if (isActive) {
                   onSelectProject(project);
                 } else {
@@ -256,7 +271,7 @@ export function ArcCardCarousel({
                 <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)]">
                   <span className="truncate">{project.status}</span>
                   <span className="tabular-nums font-semibold text-[var(--accent)]">
-                    0{index + 1}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
 

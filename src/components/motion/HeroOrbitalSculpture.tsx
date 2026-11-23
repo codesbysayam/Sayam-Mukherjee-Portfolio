@@ -490,8 +490,8 @@ export default function HeroOrbitalSculpture({
       }
 
       // Exponential damping for pointer parallax + scroll alignment
-      const targetRotY = dragRotY + pointerX * 0.34 + elapsed * 0.16 + activeScroll * 0.65;
-      const targetRotX = dragRotX - pointerY * 0.24 - activeScroll * 0.36;
+      const targetRotY = dragRotY + pointerX * 0.34 + elapsed * 0.16 + activeScroll * 0.72;
+      const targetRotX = dragRotX - pointerY * 0.24 - activeScroll * 0.38;
 
       sculptureGroup.rotation.y = THREE.MathUtils.damp(
         sculptureGroup.rotation.y,
@@ -507,10 +507,26 @@ export default function HeroOrbitalSculpture({
       );
       sculptureGroup.position.y = THREE.MathUtils.damp(
         sculptureGroup.position.y,
-        -activeScroll * 0.18,
+        -activeScroll * 0.2,
         4.8,
         dt
       );
+
+      // Subtle camera elevation and studio rim-light energy response to scroll progress
+      camera.position.y = THREE.MathUtils.damp(
+        camera.position.y,
+        0.25 + activeScroll * 0.22 - pointerY * 0.08,
+        4.2,
+        dt
+      );
+      camera.position.x = THREE.MathUtils.damp(
+        camera.position.x,
+        pointerX * 0.12,
+        4.2,
+        dt
+      );
+      camera.lookAt(0, 0, 0);
+      rimLight.intensity = 1.55 + Math.min(activeScroll, 1) * 0.55;
 
       // Gentle gimbal counter-rotation and core spin
       gimbalMesh.rotation.z += dt * 0.22;
@@ -518,16 +534,16 @@ export default function HeroOrbitalSculpture({
       coreMesh.rotation.x += dt * 0.35;
       coreMesh.rotation.y -= dt * 0.42;
 
-      // Subtle particle orbit reacting softly to pointer
+      // Subtle particle orbit reacting softly to pointer and scroll depth
       particleField.rotation.y = THREE.MathUtils.damp(
         particleField.rotation.y,
-        elapsed * 0.09 + pointerX * 0.18,
+        elapsed * 0.09 + pointerX * 0.18 + activeScroll * 0.24,
         3.2,
         dt
       );
       particleField.rotation.x = THREE.MathUtils.damp(
         particleField.rotation.x,
-        -pointerY * 0.14 + scrollFactor * 0.12,
+        -pointerY * 0.14 + activeScroll * 0.14,
         3.2,
         dt
       );

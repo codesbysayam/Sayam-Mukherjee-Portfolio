@@ -707,11 +707,9 @@ function AppContent() {
                 {activeTab === "about" && (
                   <ErrorBoundary sectionName="About Section">
                     <div className="space-y-12 py-2">
-                      <EditorialReveal immediate delay={0}>
-                        <AboutSection
-                          onNavigateTab={(tab) => navigateToTab(tab)}
-                        />
-                      </EditorialReveal>
+                      <AboutSection
+                        onNavigateTab={(tab) => navigateToTab(tab)}
+                      />
                       <EditorialReveal delay={0.08}>
                         <ExperienceSection
                           onNavigateToShowcase={() => navigateToTab("showcase")}
@@ -745,12 +743,10 @@ function AppContent() {
                 {activeTab === "projects" && (
                   <div className="py-2">
                     <ErrorBoundary sectionName="Projects Showcase">
-                      <EditorialReveal immediate delay={0}>
-                        <ProjectsShowcase
-                          initialProjectId={focusedProjectId}
-                          onClearInitialProject={() => setFocusedProjectId(null)}
-                        />
-                      </EditorialReveal>
+                      <ProjectsShowcase
+                        initialProjectId={focusedProjectId}
+                        onClearInitialProject={() => setFocusedProjectId(null)}
+                      />
                     </ErrorBoundary>
                   </div>
                 )}

@@ -6,49 +6,33 @@
 - Production domain: https://sayammukherjee.in
 - Repository: https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio
 - Current verified Git state: Upstream linked at `codesbysayam/Sayam-Mukherjee-Portfolio`. Local AI Studio container runs without embedded `.git` tracking; local checkpoints and manifests are preserved on disk.
-- Last successful build: Production build succeeded (`npm run build` completed via Vite 6.2.3 and esbuild)
-- Last successful test run: `npm run lint` (0 errors) and `npm run validate:data` (PASS: 4 projects, 3 skills, 2 experiences verified, 0 broken references)
+- Last successful build: Production build succeeded (`npm run build` / Vite `6.4.6` and `esbuild`)
+- Last successful test run: `vitest run` (`4` files, `38` tests passed), `npm run validate:data` (`PASS`, `8` projects, `11` GitHub repositories synced, `0` errors), and `npm run preflight` (all 5 checks passed)
 
 ## Active task
 
-- Task ID: TASK-CERT-001
-- Objective: Add WCC Launchpad 30 certificate record to the existing certificate system (initialCertificates, siteContent, data_store.json, portfolioKnowledge, assistantKnowledge, assistant engine, systemInstruction, llms.txt) preserving all existing records and reactive counts.
+- Task ID: TASK-MOTION-002
+- Objective: Complete full-site Motion (`motion/react`) + GSAP (`ScrollTrigger`, `Flip`) + Three.js architectural integration, integrate orphaned `StackingCards` into Projects, fix `ArcCardCarousel` / `FocusFrame` / `HeroSection` / `AboutSection` / `SkillsPage` / `EcosystemPage` / `ContentCreatorSection` motion and accessibility gaps, and complete clean `npm install` + dev server verification.
 - Status: COMPLETED
-- Files inspected:
-  - `src/types/certificates.ts`
-  - `src/data/initialCertificates.ts`
-  - `src/data/siteContent.ts`
-  - `src/components/CertificationsSection.tsx`
-  - `src/components/certificates/CertificatesPage.tsx`
-  - `src/components/certificates/CertificateViewerModal.tsx`
-  - `src/data/portfolioKnowledge.ts`
-  - `src/data/assistantKnowledge.ts`
-  - `src/utils/portfolioAssistantEngine.ts`
-  - `src/lib/assistant/systemInstruction.ts`
-  - `data_store.json`
-  - `public/llms.txt`
 - Files changed:
-  - `src/data/initialCertificates.ts`: Added authentic `wcc-launchpad-30-participation-2026` record (Team Leader of Team ALGNITE, 36-hour hackathon, AXIOM platform, Certificate ID: `L30-PTQXNX`, Credential URL: `https://heavy-sapphire-gc08crqu.edgeone.dev/`).
-  - `src/data/siteContent.ts`: Added matching certificate record to maintain symmetry in content stores.
-  - `data_store.json`: Added `wcc-launchpad-30-participation-2026` to `certificateVault` for server-side persistence and API endpoints (`/api/certificates`).
-  - `src/data/portfolioKnowledge.ts`: Added WCC Launchpad 30 entry under verified credentials.
-  - `src/data/assistantKnowledge.ts`: Added `wcc-launchpad-axiom` Q&A item for AI assistant.
-  - `src/utils/portfolioAssistantEngine.ts`: Updated Team ALGNITE descriptions, added Launchpad 30 query handler, and updated verified credentials summary list.
-  - `src/lib/assistant/systemInstruction.ts`: Added section 17 rules for WCC Launchpad 30 & Team ALGNITE (AXIOM).
-  - `public/llms.txt`: Added WCC Launchpad 30 under Verified Credentials.
-- Implementation notes:
-  - Preserved 100% of existing certificates (DataForge, GDG Deploy or Die, IGNITHON 2.0, MATLAB Workshop, Toycathon, Technex, Grade Report, Table Tennis).
-  - Reused existing CertificateViewerModal and CertificateCard components without duplicate UI designs.
-  - Certificate counts and filter tags dynamically and reactively update from data sources.
+  - `src/App.tsx`: Removed `EditorialReveal` transform wrappers around `AboutSection` and `ProjectsShowcase` so GSAP pins never render inside transformed ancestors.
+  - `src/styles/motion.css`: Added `.project-stacking-sequence` and accessible pause-on-hover/reduced-motion `.tech-marquee-*` rules.
+  - `src/components/HeroSection.tsx` & `src/components/motion/HeroOrbitalSculpture.tsx`: Added wide-desktop Hero visual stage pinning with separated inner parallax transform ownership, upgraded `HeroOrbitalSculpture` scroll-driven camera elevation and rim lighting, increased `MagneticAction` pull strength (`5`), added `ScrollTrigger` refresh on mode switch, and added portrait fallback.
+  - `src/components/AboutSection.tsx`, `src/components/motion/HorizontalNarrative.tsx`, `src/components/motion/PinnedHeadingSection.tsx`, & `src/components/ExperienceSection.tsx`: Switched About tab panels to opacity-only transitions for pin safety, added `ScrollScaleImage` portrait depth inside `MaskMediaReveal`, added `activeStepRef` guard + mobile Prev/Next keyboard controls in `HorizontalNarrative`, added `ResizeObserver` refresh to `PinnedHeadingSection`, and added `layoutId` indicator + staggered bullets in `ExperienceSection`.
+  - `src/components/ProjectsShowcase.tsx`, `src/components/motion/ArcCardCarousel.tsx`, `src/components/motion/StackingCards.tsx`, & `src/components/motion/FocusFrame.tsx`: Integrated `StackingCards` for projects `01–04` with remaining projects in the Explorer Grid (zero duplication), fixed `ArcCardCarousel` to finite non-wrapping bounds with ref-backed drag delta & click suppression, added `ResizeObserver` refresh to `StackingCards`, and added `Escape` collapse + focus return to `FocusFrame`.
+  - `src/components/skills/SkillsPage.tsx`, `src/components/ecosystem/EcosystemPage.tsx`, `src/components/ContentCreatorSection.tsx`, `src/components/certificates/CertificateViewerModal.tsx`, `src/pages/JournalDetail.tsx`, & `src/components/SiteFooter.tsx`: Wrapped Skills `#capability-index` in `PinnedHeadingSection` with an accessible tech marquee ribbon, animated Ecosystem SVG pipeline nodes and `pathLength` connectors, upgraded `ContentCreatorSection` video library to `MotionSlider`, added modal preview crossfade + `referrerPolicy` in `CertificateViewerModal`, and respected `prefers-reduced-motion` in `scrollTo` calls.
+  - `README.md`: Updated Motion stack and frontend dependency list to include GSAP (`ScrollTrigger`, `Flip`).
 
 ## Validation
 
-- Type check (`npm run lint` / `tsc --noEmit`): Verified PASS (0 errors)
-- Applet compilation & Vite build: Verified PASS (clean build)
-- Full project preflight (`npm run preflight`): Verified PASS (Python data validation, TypeScript check, manifest generation, and production asset bundle all passed)
-- Incomplete work: None.
+- Clean dependency reinstall (`rm -rf node_modules package-lock.json && npm install`): Verified PASS (`677` packages installed cleanly)
+- Academic status audit (`grep -rnE "3rd [Ss]em" src data_store.json public`): Verified `0` stale references (`2nd Year, 4th Semester` preserved)
+- Data validation (`npm run validate:data`): Verified PASS (`8` projects, `11` GitHub repos, `0` errors/warnings)
+- Automated tests (`npx vitest run`): Verified PASS (`4` test files, `38` tests passed)
+- Preflight (`npm run preflight`): Verified PASS (Data Validator, `tsc --noEmit`, Manifest Generator, Vite Build, C Native Metrics)
+- Incomplete work: Interactive Playwright/browser visual scroll-pin inspection was not executed in a headless browser session; static compilation, SSR/API tests, and live HTTP endpoint health on port `3000` were verified directly.
 - Known issues: None.
-- Next safe action: Dev server restarted and running on port 3000. Ready for user interaction.
+- Next safe action: Co-execute `compile_applet` + `lint_applet` and verify live dev server endpoints on port `3000`.
 
 ## Update rules
 

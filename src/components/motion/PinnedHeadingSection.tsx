@@ -3,6 +3,7 @@ import {
   ensureGsapRegistered,
   gsap,
   MOTION_BREAKPOINTS,
+  requestScrollTriggerRefresh,
   ScrollTrigger,
 } from "../../motion/gsapRegistry";
 import { usePrefersReducedMotion } from "../../motion/tokens";
@@ -55,7 +56,16 @@ export function PinnedHeadingSection({
       });
     });
 
-    return () => mm.revert();
+    const ro = new ResizeObserver(() => {
+      requestScrollTriggerRefresh(90);
+    });
+    ro.observe(contentEl);
+    ro.observe(pinEl);
+
+    return () => {
+      ro.disconnect();
+      mm.revert();
+    };
   }, [reduced]);
 
   return (

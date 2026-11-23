@@ -437,7 +437,16 @@ export function EcosystemPage() {
                   const x = 12 + idx * 230;
                   const isGate = idx === 2;
                   return (
-                    <g key={stage.code}>
+                    <motion.g
+                      key={stage.code}
+                      initial={reduced ? false : { opacity: 0, y: 6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: reduced ? 0 : MOTION_DURATION.normal,
+                        delay: reduced ? 0 : idx * 0.06,
+                        ease: MOTION_EASE.out,
+                      }}
+                    >
                       <rect
                         x={x}
                         y={16}
@@ -482,7 +491,7 @@ export function EcosystemPage() {
                       </foreignObject>
 
                       {idx < pattern.stages.length - 1 && (
-                        <line
+                        <motion.line
                           x1={x + 200}
                           y1={78}
                           x2={x + 228}
@@ -490,9 +499,16 @@ export function EcosystemPage() {
                           stroke="var(--accent)"
                           strokeWidth="1.6"
                           markerEnd={`url(#eco-arrow-${pattern.id})`}
+                          initial={reduced ? false : { pathLength: 0, opacity: 0 }}
+                          animate={{ pathLength: 1, opacity: 1 }}
+                          transition={{
+                            duration: reduced ? 0 : MOTION_DURATION.normal,
+                            delay: reduced ? 0 : idx * 0.08 + 0.08,
+                            ease: MOTION_EASE.out,
+                          }}
                         />
                       )}
-                    </g>
+                    </motion.g>
                   );
                 })}
               </svg>

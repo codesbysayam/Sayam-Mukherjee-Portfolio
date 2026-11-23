@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
-import { EditorialReveal, MaskMediaReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { EditorialReveal, MaskMediaReveal, ScrollScaleImage, StaggerGroup, StaggerItem } from "../motion/Reveal";
 import { ContourBackground } from "./motion/ContourBackground";
 import { PinnedHeadingSection } from "./motion/PinnedHeadingSection";
 import { HorizontalNarrative, type NarrativeStop } from "./motion/HorizontalNarrative";
@@ -167,6 +167,7 @@ interface AboutSectionProps {
 
 function AboutSectionComponent({ onNavigateTab }: AboutSectionProps) {
   const [activeTab, setActiveTab] = useState<"narrative" | "timeline" | "education">("narrative");
+  const [portraitFailed, setPortraitFailed] = useState(false);
 
   useEffect(() => {
     requestScrollTriggerRefresh(220);
@@ -388,9 +389,9 @@ function AboutSectionComponent({ onNavigateTab }: AboutSectionProps) {
         {activeTab === "narrative" && (
           <motion.div
             key="narrative-tab"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
             className="space-y-12"
           >
@@ -399,15 +400,30 @@ function AboutSectionComponent({ onNavigateTab }: AboutSectionProps) {
               {/* Portrait & Grounded Facts */}
               <div className="lg:col-span-4 space-y-5">
                 <MaskMediaReveal immediate delay={0.1} className="aspect-[4/5] w-full rounded-[10px] overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)]">
-                  <img
-                    src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
-                    alt="Portrait of Sayam Mukherjee, Computer Science and Engineering student at KIIT"
-                    width={400}
-                    height={500}
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover object-[50%_20%]"
-                  />
+                  {portraitFailed ? (
+                    <div className="flex h-full w-full flex-col items-center justify-center bg-[#151713] p-6 text-center text-[#F4F4ED]">
+                      <span className="font-mono text-xs uppercase tracking-[0.2em] text-[#C7E34A]">
+                        SM · Hooghly / Bhubaneswar
+                      </span>
+                      <span className="mt-2 font-display text-xl font-bold tracking-tight">
+                        Sayam Mukherjee
+                      </span>
+                    </div>
+                  ) : (
+                    <ScrollScaleImage className="w-full h-full">
+                      <img
+                        src="https://inevitable-jade-qvzysrme.edgeone.dev/IMG_2636.jpeg"
+                        alt="Portrait of Sayam Mukherjee, Computer Science and Engineering student at KIIT"
+                        width={400}
+                        height={500}
+                        loading="lazy"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
+                        onError={() => setPortraitFailed(true)}
+                        className="w-full h-full object-cover object-[50%_20%]"
+                      />
+                    </ScrollScaleImage>
+                  )}
                 </MaskMediaReveal>
 
                 <dl className="divide-y divide-[var(--border)] border-y border-[var(--border)] text-xs font-mono">
@@ -595,9 +611,9 @@ function AboutSectionComponent({ onNavigateTab }: AboutSectionProps) {
         {activeTab === "timeline" && (
           <motion.div
             key="timeline-tab"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
             className="space-y-8"
           >
@@ -629,9 +645,9 @@ function AboutSectionComponent({ onNavigateTab }: AboutSectionProps) {
         {activeTab === "education" && (
           <motion.div
             key="education-tab"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.18 }}
             className="space-y-6"
           >

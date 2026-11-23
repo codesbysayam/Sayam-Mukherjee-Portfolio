@@ -1,4 +1,4 @@
-import { useState, useRef, memo } from "react";
+import { useState, memo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { EXTENDED_DATA } from "../data/extendedData";
 import { LINKS } from "../config/links";
@@ -6,8 +6,9 @@ import { youtubeChannels } from "../data/channels";
 import { YouTubeChannelCard } from "./YouTubeChannelCard";
 import { YouTubeChannelAnalyticsSection } from "./YouTubeAnalyticsCard";
 import { getCreatorSummary } from "../utils/contentCreatorStats";
-import { EditorialReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
+import { StaggerGroup, StaggerItem } from "../motion/Reveal";
 import { ContourBackground } from "./motion/ContourBackground";
+import { MotionSlider } from "./motion/MotionSlider";
 import { SectionHeading } from "./ui/SectionHeading";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
 import {
@@ -17,8 +18,6 @@ import {
   Compass,
   ArrowRight,
   ArrowLeft,
-  ChevronLeft,
-  ChevronRight,
 } from "lucide-react";
 
 interface ContentCreatorSectionProps {
@@ -37,18 +36,6 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
     "Visual Media & Optics",
     "Algorithmic Explanations",
   ];
-
-  const carouselRef = useRef<HTMLDivElement>(null);
-
-  const scrollCarousel = (direction: "left" | "right") => {
-    if (carouselRef.current) {
-      const scrollAmount = 300;
-      carouselRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth",
-      });
-    }
-  };
 
   return (
     <div className="space-y-12 font-sans py-2" id="creator-showcase">
@@ -245,112 +232,85 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
       {/* Verified YouTube Studio Analytics Snapshot */}
       <YouTubeChannelAnalyticsSection />
 
-      {/* Featured Video Library Carousel */}
-      <div className="space-y-4">
-        <div className="flex justify-between items-center">
-          <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block">
-            FEATURED VIDEO LIBRARY
-          </span>
-
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => scrollCarousel("left")}
-              aria-label="Scroll left"
-              className="btn btn-secondary min-h-[44px] min-w-[44px] p-1.5"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollCarousel("right")}
-              aria-label="Scroll right"
-              className="btn btn-secondary min-h-[44px] min-w-[44px] p-1.5"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        <div
-          ref={carouselRef}
-          className="flex gap-6 overflow-x-auto pb-4 scrollbar-none snap-x"
-        >
-          {EXTENDED_DATA.youtubeVideos.map((video) => (
+      {/* Featured Video Library Slider */}
+      <MotionSlider
+        label="Featured Video Library"
+        columnsClassName="auto-cols-[84%] sm:auto-cols-[48%] lg:auto-cols-[34%]"
+      >
+        {EXTENDED_DATA.youtubeVideos.map((video) => (
+          <div
+            key={video.id}
+            className="card overflow-hidden flex flex-col justify-between group h-full"
+            style={{
+              backgroundColor: "var(--surface-2)",
+              borderColor: "var(--border)",
+            }}
+          >
             <div
-              key={video.id}
-              className="w-[min(288px,82vw)] shrink-0 snap-start card overflow-hidden flex flex-col justify-between group h-full"
-              style={{
-                backgroundColor: "var(--surface-2)",
-                borderColor: "var(--border)",
-              }}
+              className="relative aspect-video w-full overflow-hidden"
+              style={{ backgroundColor: "#151713" }}
             >
-              <div
-                className="relative aspect-video w-full overflow-hidden"
-                style={{ backgroundColor: "#151713" }}
+              <img
+                src={video.thumbnailUrl}
+                alt={video.title}
+                loading="lazy"
+                decoding="async"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#151713]/85 via-transparent to-transparent" />
+
+              <span
+                className="absolute bottom-2.5 right-2.5 border text-[10px] font-mono px-1.5 py-0.5 rounded-[4px]"
+                style={{
+                  backgroundColor: "#151713",
+                  borderColor: "#41443A",
+                  color: "#F4F4ED",
+                }}
               >
-                <img
-                  src={video.thumbnailUrl}
-                  alt={video.title}
-                  loading="lazy"
-                  decoding="async"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#151713]/85 via-transparent to-transparent" />
+                {video.duration}
+              </span>
 
-                <span
-                  className="absolute bottom-2.5 right-2.5 border text-[10px] font-mono px-1.5 py-0.5 rounded-[4px]"
-                  style={{
-                    backgroundColor: "#151713",
-                    borderColor: "#41443A",
-                    color: "#F4F4ED",
-                  }}
+              <div className="absolute inset-0 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 bg-[#151713]/45 md:bg-[#151713]/60 transition-opacity">
+                <a
+                  href={video.watchUrl || LINKS.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Watch ${video.title} on YouTube`}
+                  className="w-12 h-12 rounded-full bg-[#C7E34A] text-[#20231D] flex items-center justify-center hover:scale-105 active:scale-95 active:bg-[#A9C52F] transition-transform cursor-pointer shadow-lg"
                 >
-                  {video.duration}
-                </span>
-
-                <div className="absolute inset-0 flex items-center justify-center opacity-100 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100 bg-[#151713]/45 md:bg-[#151713]/60 transition-opacity">
-                  <a
-                    href={video.watchUrl || LINKS.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Watch ${video.title} on YouTube`}
-                    className="w-12 h-12 rounded-full bg-[#C7E34A] text-[#20231D] flex items-center justify-center hover:scale-105 active:scale-95 active:bg-[#A9C52F] transition-transform cursor-pointer shadow-lg"
-                  >
-                    <Play className="w-5 h-5 ml-0.5" />
-                  </a>
-                </div>
-              </div>
-
-              <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
-                <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-2 font-display">
-                  {video.title}
-                </h4>
-
-                <div
-                  className="flex items-center justify-between pt-2 border-t text-[10px] font-mono text-[var(--text-muted)]"
-                  style={{ borderColor: "var(--border)" }}
-                >
-                  <span className="flex items-center gap-1">
-                    <Eye className="w-3.5 h-3.5" />
-                    {video.views} views
-                  </span>
-
-                  <a
-                    href={video.watchUrl || LINKS.youtube}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[var(--accent)] hover:underline active:opacity-75 font-bold cursor-pointer py-1"
-                  >
-                    Watch Now ↗
-                  </a>
-                </div>
+                  <Play className="w-5 h-5 ml-0.5" />
+                </a>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
+
+            <div className="p-4 space-y-3 flex-1 flex flex-col justify-between">
+              <h4 className="text-xs font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors line-clamp-2 font-display">
+                {video.title}
+              </h4>
+
+              <div
+                className="flex items-center justify-between pt-2 border-t text-[10px] font-mono text-[var(--text-muted)]"
+                style={{ borderColor: "var(--border)" }}
+              >
+                <span className="flex items-center gap-1">
+                  <Eye className="w-3.5 h-3.5" />
+                  {video.views} views
+                </span>
+
+                <a
+                  href={video.watchUrl || LINKS.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[var(--accent)] hover:underline active:opacity-75 font-bold cursor-pointer py-1"
+                >
+                  Watch Now ↗
+                </a>
+              </div>
+            </div>
+          </div>
+        ))}
+      </MotionSlider>
 
       {/* Verified Studio Audit Snapshot (21 October 2026) */}
       <div

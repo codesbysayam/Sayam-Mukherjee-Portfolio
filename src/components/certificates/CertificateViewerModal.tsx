@@ -336,13 +336,21 @@ export default function CertificateViewerModal({
                   borderColor: "var(--border)",
                 }}
               >
-                <img
-                  src={certificate.imageUrl}
-                  alt={certificate.imageAlt || `${certificate.title} credential document`}
-                  style={{ transform: `scale(${zoom})`, transformOrigin: "center" }}
-                  className="max-h-[380px] w-auto object-contain transition-transform duration-150"
-                  onError={() => setImageError(true)}
-                />
+                <AnimatePresence mode="wait">
+                  <motion.img
+                    key={certificate.id}
+                    src={certificate.imageUrl}
+                    alt={certificate.imageAlt || `${certificate.title} credential document`}
+                    referrerPolicy="no-referrer"
+                    initial={prefersReduced ? false : { opacity: 0.25 }}
+                    animate={{ opacity: 1 }}
+                    exit={prefersReduced ? undefined : { opacity: 0.25 }}
+                    transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast }}
+                    style={{ transform: `scale(${zoom})`, transformOrigin: "center" }}
+                    className="max-h-[380px] w-auto object-contain transition-transform duration-150"
+                    onError={() => setImageError(true)}
+                  />
+                </AnimatePresence>
               </div>
             ) : certificate.pdfUrl ? (
               <div

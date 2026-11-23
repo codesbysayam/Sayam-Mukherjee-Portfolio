@@ -1,4 +1,4 @@
-import { useId, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { Maximize2, Minimize2 } from "lucide-react";
 import { usePrefersReducedMotion } from "../../motion/tokens";
 import { ensureGsapRegistered, Flip, requestScrollTriggerRefresh } from "../../motion/gsapRegistry";
@@ -30,28 +30,49 @@ export function FocusFrame({
   const reduced = usePrefersReducedMotion();
   const [focused, setFocused] = useState(false);
   const frameRef = useRef<HTMLDivElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const panelId = useId();
 
-  const toggleFocus = () => {
-    const el = frameRef.current;
-    if (!reduced && el) {
-      ensureGsapRegistered();
-      const state = Flip.getState(el);
-      setFocused((prev) => !prev);
-      requestAnimationFrame(() => {
-        if (!el.isConnected) return;
-        Flip.from(state, {
-          duration: 0.42,
-          ease: "power3.out",
-          nested: true,
-          onComplete: () => requestScrollTriggerRefresh(60),
+  const setFocusState = useCallback(
+    (nextFocused: boolean) => {
+      const el = frameRef.current;
+      if (!reduced && el) {
+        ensureGsapRegistered();
+        const state = Flip.getState(el);
+        setFocused(nextFocused);
+        requestAnimationFrame(() => {
+          if (!el.isConnected) return;
+          Flip.from(state, {
+            duration: 0.42,
+            ease: "power3.out",
+            nested: true,
+            onComplete: () => requestScrollTriggerRefresh(60),
+          });
         });
-      });
-    } else {
-      setFocused((prev) => !prev);
-      requestScrollTriggerRefresh(60);
-    }
+      } else {
+        setFocused(nextFocused);
+        requestScrollTriggerRefresh(60);
+      }
+    },
+    [reduced]
+  );
+
+  const toggleFocus = () => {
+    setFocusState(!focused);
   };
+
+  useEffect(() => {
+    if (!focused) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setFocusState(false);
+        toggleButtonRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [focused, setFocusState]);
 
   return (
     <div
@@ -86,6 +107,7 @@ export function FocusFrame({
         </div>
 
         <button
+          ref={toggleButtonRef}
           type="button"
           onClick={toggleFocus}
           aria-expanded={focused}

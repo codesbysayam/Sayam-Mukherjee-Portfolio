@@ -1,8 +1,8 @@
 {
   "appName": "Sayam Mukherjee | Engineering Portfolio & Ecosystem",
   "version": "0.0.0",
-  "generatedAt": "2026-11-23T17:27:42.928Z",
-  "environment": "production",
+  "generatedAt": "2026-11-23T18:24:17.794Z",
+  "environment": "development",
   "storageBackend": "firestore",
   "projectCount": 8,
   "projects": [

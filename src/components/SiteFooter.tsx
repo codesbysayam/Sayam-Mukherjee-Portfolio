@@ -4,6 +4,7 @@ import { SAYAM_DATA } from "../data";
 import { SOCIAL_LINKS } from "../data/siteContent";
 import ClosingFluidCanvas from "./motion/ClosingFluidCanvas";
 import { EditorialReveal, LineReveal } from "../motion/Reveal";
+import { usePrefersReducedMotion } from "../motion/tokens";
 
 export interface SiteFooterProps {
   onNavigateTab: (
@@ -31,6 +32,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
   theme,
   toggleTheme,
 }) => {
+  const reduced = usePrefersReducedMotion();
   const currentYear = new Date().getFullYear();
 
   const handleLinkClick = (
@@ -53,7 +55,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
   };
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
   };
 
   return (
