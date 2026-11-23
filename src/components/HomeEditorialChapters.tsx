@@ -118,7 +118,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
                 <button
                   type="button"
                   onClick={() => onNavigateTab("about")}
-                  className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer group min-h-[40px]"
+                  className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer group min-h-[44px]"
                 >
                   <span>Read Full Background</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
@@ -151,7 +151,7 @@ export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
               <button
                 type="button"
                 onClick={() => onNavigateTab(item.tab)}
-                className="w-full py-5 sm:py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-8 text-left group cursor-pointer transition-colors hover:bg-[var(--surface)]/60 px-2 sm:px-3 -mx-2 sm:-mx-3 rounded-[6px]"
+                className="w-full min-h-[44px] py-5 sm:py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-8 text-left group cursor-pointer transition-colors hover:bg-[var(--surface)]/60 px-2.5 sm:px-3 rounded-[6px]"
               >
                 <div className="flex items-baseline gap-4 min-w-0">
                   <span className="font-mono text-xs text-[var(--accent)] font-semibold tabular-nums shrink-0">

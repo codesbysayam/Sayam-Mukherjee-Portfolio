@@ -68,7 +68,7 @@ export default function CookieConsent() {
       id="cookie-consent-banner"
       role="region"
       aria-label="Privacy & cookies preference"
-      className="fixed bottom-[calc(68px+env(safe-area-inset-bottom,0px)+0.75rem)] xl:bottom-6 left-[max(0.75rem,env(safe-area-inset-left,0.75rem))] sm:left-6 right-[max(0.75rem,env(safe-area-inset-right,0.75rem))] sm:right-auto z-50 max-w-[560px] w-[calc(100%-1.5rem)] sm:w-full font-sans select-text"
+      className="fixed bottom-[calc(68px+env(safe-area-inset-bottom,0px)+0.75rem)] md:bottom-20 left-[max(0.75rem,env(safe-area-inset-left,0.75rem))] sm:left-6 right-[max(0.75rem,env(safe-area-inset-right,0.75rem))] sm:right-auto z-50 max-w-[540px] w-[calc(100%-1.5rem)] sm:w-full font-sans select-text"
     >
       <div className="card p-4 sm:p-5 shadow-xl bg-[var(--surface-2)] border-[var(--border-strong)]">
         {!showPreferences ? (
@@ -86,7 +86,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={handleAcceptAll}
-                className="btn btn-primary min-h-[40px] px-4 py-2 text-xs"
+                className="btn btn-primary min-h-[44px] px-4 py-2 text-xs"
               >
                 Accept
               </button>
@@ -94,7 +94,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={handleRejectNonEssential}
-                className="btn btn-secondary min-h-[40px] px-3.5 py-2 text-xs"
+                className="btn btn-secondary min-h-[44px] px-3.5 py-2 text-xs"
               >
                 Reject optional
               </button>
@@ -102,7 +102,7 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={() => setShowPreferences(true)}
-                className="btn btn-ghost min-h-[40px] px-3 py-2 text-xs"
+                className="btn btn-ghost min-h-[44px] px-3 py-2 text-xs"
               >
                 Preferences
               </button>
@@ -128,7 +128,7 @@ export default function CookieConsent() {
                 <div className="space-y-0.5">
                   <div className="font-semibold text-[var(--text)] flex items-center gap-1.5">
                     <span>Essential local storage</span>
-                    <span className="text-[10px] font-mono text-[var(--text-faint)] uppercase tracking-wider">
+                    <span className="text-[11px] font-mono text-[var(--text-faint)] uppercase tracking-wider">
                       (Required)
                     </span>
                   </div>
@@ -140,7 +140,7 @@ export default function CookieConsent() {
                   type="checkbox"
                   checked={true}
                   disabled
-                  className="mt-1 accent-[#69734A] cursor-not-allowed"
+                  className="mt-1 w-4 h-4 accent-[var(--accent)] cursor-not-allowed"
                   aria-label="Essential storage (Always active)"
                 />
               </div>
@@ -158,7 +158,7 @@ export default function CookieConsent() {
                   type="checkbox"
                   checked={analyticsAllowed}
                   onChange={(e) => setAnalyticsAllowed(e.target.checked)}
-                  className="mt-1 w-4 h-4 accent-[#69734A] cursor-pointer"
+                  className="mt-1 w-5 h-5 accent-[var(--accent)] cursor-pointer"
                   aria-label="Optional analytics"
                 />
               </div>
@@ -168,14 +168,14 @@ export default function CookieConsent() {
               <button
                 type="button"
                 onClick={handleSaveCustom}
-                className="btn btn-primary min-h-[40px] px-4 py-2 text-xs"
+                className="btn btn-primary min-h-[44px] px-4 py-2 text-xs"
               >
                 Save preferences
               </button>
               <button
                 type="button"
                 onClick={() => setShowPreferences(false)}
-                className="btn btn-ghost min-h-[40px] px-3 py-2 text-xs"
+                className="btn btn-ghost min-h-[44px] px-3 py-2 text-xs"
               >
                 Cancel
               </button>

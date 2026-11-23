@@ -39,7 +39,7 @@ export function AcademicRecord({ className = "", includeUniversity = true }: Aca
               <Building2 className="w-4 h-4" aria-hidden="true" />
               <span>University Education</span>
             </div>
-            <span className="px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold text-[11px] tracking-wide">
+            <span className="px-2.5 py-1 rounded-[4px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold text-[11px] tracking-wide">
               {universityEducation.status}
             </span>
           </div>
@@ -58,23 +58,23 @@ export function AcademicRecord({ className = "", includeUniversity = true }: Aca
               </p>
             </div>
 
-            <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+            <div className="lg:col-span-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3 pt-1">
               <div className="p-3 sm:p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] text-center min-w-0">
-                <span className="text-[10px] uppercase font-mono text-[var(--text-muted)] block">First-Year CGPA</span>
+                <span className="text-[11px] uppercase font-mono text-[var(--text-muted)] block">First-Year CGPA</span>
                 <span className="text-xl sm:text-2xl font-extrabold text-[var(--text)] block mt-0.5 font-display tabular-nums">
                   {universityEducation.cgpa}
                 </span>
-                <span className="text-[10px] font-mono text-[var(--text-muted)] block break-words">
+                <span className="text-[11px] font-mono text-[var(--text-muted)] block break-words">
                   Scale of {universityEducation.cgpaScale}
                 </span>
               </div>
 
               <div className="p-3 sm:p-3.5 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] text-center min-w-0">
-                <span className="text-[10px] uppercase font-mono text-[var(--text-muted)] block">Graduation</span>
+                <span className="text-[11px] uppercase font-mono text-[var(--text-muted)] block">Graduation</span>
                 <span className="text-lg sm:text-xl font-extrabold text-[var(--text)] block mt-0.5 font-display tabular-nums">
                   {universityEducation.expectedGraduation}
                 </span>
-                <span className="text-[10px] font-mono text-[var(--text-muted)] block break-words">
+                <span className="text-[11px] font-mono text-[var(--text-muted)] block break-words">
                   Expected Completion
                 </span>
               </div>

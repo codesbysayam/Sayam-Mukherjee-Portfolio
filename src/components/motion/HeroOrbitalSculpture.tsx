@@ -586,7 +586,7 @@ export default function HeroOrbitalSculpture({
   return (
     <div
       ref={containerRef}
-      className="relative h-full w-full min-h-[210px] overflow-hidden bg-[#151713] select-none touch-pan-y"
+      className="relative h-full w-full min-h-[160px] sm:min-h-[210px] overflow-hidden bg-[#151713] select-none touch-pan-y"
       aria-label="Interactive 3D Machined Logic Core sculpture"
     >
       {shouldUseStatic ? (
@@ -596,7 +596,7 @@ export default function HeroOrbitalSculpture({
       )}
 
       {/* Subtle corner technical caption — unobstructed center */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between px-3 py-2 bg-gradient-to-t from-[#151713]/90 to-transparent text-[10px] font-mono uppercase tracking-[0.1em] text-[#B5B8AA]">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between px-3 py-2 bg-gradient-to-t from-[#151713]/90 to-transparent text-[11px] font-mono uppercase tracking-[0.1em] text-[#B5B8AA]">
         <span>Logic Core · Three.js</span>
         <span className="text-[#C7E34A]">
           {shouldUseStatic ? "Static Mode" : "Drag / Hover"}

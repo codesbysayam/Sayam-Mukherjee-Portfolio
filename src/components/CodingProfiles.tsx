@@ -68,11 +68,11 @@ export default function CodingProfiles() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         {/* Left Side Controller Tabs */}
-        <div className="lg:col-span-3 flex flex-col gap-2 card p-3">
+        <div className="lg:col-span-3 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-col gap-2 card p-3">
           <button
             type="button"
             onClick={() => setActiveTab("github")}
-            className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer ${
+            className={`w-full min-h-[44px] flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer ${
               activeTab === "github"
                 ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
@@ -82,18 +82,18 @@ export default function CodingProfiles() {
               <Github className="w-4 h-4 shrink-0" />
               <div className="flex flex-col min-w-0">
                 <span className="text-xs font-bold font-display">GitHub Workspace</span>
-                <span className={`text-[10px] font-mono ${activeTab === "github" ? "text-[#20231D]/80" : "text-[var(--text-faint)]"}`}>
+                <span className={`text-[11px] font-mono ${activeTab === "github" ? "text-[var(--accent-contrast)]/80" : "text-[var(--text-faint)]"}`}>
                   @codesbysayam
                 </span>
               </div>
             </div>
-            <span className="text-[10px] font-mono font-semibold shrink-0">Live</span>
+            <span className="text-[11px] font-mono font-semibold shrink-0">Live</span>
           </button>
 
           <button
             type="button"
             onClick={() => setActiveTab("leetcode")}
-            className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer ${
+            className={`w-full min-h-[44px] flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer ${
               activeTab === "leetcode"
                 ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
@@ -103,12 +103,12 @@ export default function CodingProfiles() {
               <Code className="w-4 h-4 shrink-0" />
               <div className="flex flex-col min-w-0">
                 <span className="text-xs font-bold font-display">LeetCode Challenges</span>
-                <span className={`text-[10px] font-mono ${activeTab === "leetcode" ? "text-[#20231D]/80" : "text-[var(--text-faint)]"}`}>
+                <span className={`text-[11px] font-mono ${activeTab === "leetcode" ? "text-[var(--accent-contrast)]/80" : "text-[var(--text-faint)]"}`}>
                   Deliberate DSA
                 </span>
               </div>
             </div>
-            <span className="text-[10px] font-mono font-semibold tabular-nums shrink-0">
+            <span className="text-[11px] font-mono font-semibold tabular-nums shrink-0">
               {leetcodeData.totalSolved} Solved
             </span>
           </button>
@@ -116,7 +116,7 @@ export default function CodingProfiles() {
           <button
             type="button"
             onClick={() => setActiveTab("codolio")}
-            className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer group ${
+            className={`w-full min-h-[44px] flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer group ${
               activeTab === "codolio"
                 ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
@@ -126,7 +126,7 @@ export default function CodingProfiles() {
               <Layers className="w-4 h-4 shrink-0" />
               <div className="flex flex-col min-w-0">
                 <span className="text-xs font-bold font-display">Codolio Registry</span>
-                <span className={`text-[10px] font-mono ${activeTab === "codolio" ? "text-[#20231D]/80" : "text-[var(--text-faint)]"}`}>
+                <span className={`text-[11px] font-mono ${activeTab === "codolio" ? "text-[var(--accent-contrast)]/80" : "text-[var(--text-faint)]"}`}>
                   Verified Profile
                 </span>
               </div>
@@ -137,7 +137,7 @@ export default function CodingProfiles() {
           <button
             type="button"
             onClick={() => setActiveTab("linkedin")}
-            className={`w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer group ${
+            className={`w-full min-h-[44px] flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors cursor-pointer group ${
               activeTab === "linkedin"
                 ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                 : "bg-transparent border-transparent text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
@@ -147,7 +147,7 @@ export default function CodingProfiles() {
               <Linkedin className="w-4 h-4 shrink-0" />
               <div className="flex flex-col min-w-0">
                 <span className="text-xs font-bold font-display">LinkedIn Connect</span>
-                <span className={`text-[10px] font-mono ${activeTab === "linkedin" ? "text-[#20231D]/80" : "text-[var(--text-faint)]"}`}>
+                <span className={`text-[11px] font-mono ${activeTab === "linkedin" ? "text-[var(--accent-contrast)]/80" : "text-[var(--text-faint)]"}`}>
                   Professional Network
                 </span>
               </div>
@@ -189,7 +189,7 @@ export default function CodingProfiles() {
                     href="https://leetcode.com/u/codesbysayam/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-primary min-h-[38px] px-4 py-2 text-xs"
+                    className="btn btn-primary min-h-[44px] px-4 py-2 text-xs"
                   >
                     <span>Verify on LeetCode</span>
                     <ExternalLink className="w-3.5 h-3.5 shrink-0" />
@@ -199,40 +199,40 @@ export default function CodingProfiles() {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 tabular-nums">
                 <div className="bg-[var(--surface)] border border-[var(--border)] p-4 rounded-[8px] text-center">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-mono block">
+                  <span className="text-[11px] text-[var(--text-muted)] uppercase font-mono block">
                     Total Solved
                   </span>
                   <span className="text-2xl font-bold text-[var(--text)] block mt-1 font-display">
                     {leetcodeData.totalSolved}
                   </span>
-                  <span className="text-[10px] text-[var(--text-faint)] font-mono">Verified count</span>
+                  <span className="text-[11px] text-[var(--text-faint)] font-mono">Verified count</span>
                 </div>
                 <div className="bg-[var(--surface)] border border-[var(--border)] p-4 rounded-[8px] text-center">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-mono block">
+                  <span className="text-[11px] text-[var(--text-muted)] uppercase font-mono block">
                     Easy
                   </span>
                   <span className="text-2xl font-bold text-[var(--success)] block mt-1 font-display">
                     {leetcodeData.easySolved}
                   </span>
-                  <span className="text-[10px] text-[var(--text-faint)] font-mono">Foundations</span>
+                  <span className="text-[11px] text-[var(--text-faint)] font-mono">Foundations</span>
                 </div>
                 <div className="bg-[var(--surface)] border border-[var(--border)] p-4 rounded-[8px] text-center">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-mono block">
+                  <span className="text-[11px] text-[var(--text-muted)] uppercase font-mono block">
                     Medium
                   </span>
                   <span className="text-2xl font-bold text-[var(--warning)] block mt-1 font-display">
                     {leetcodeData.mediumSolved}
                   </span>
-                  <span className="text-[10px] text-[var(--text-faint)] font-mono">Intuition</span>
+                  <span className="text-[11px] text-[var(--text-faint)] font-mono">Intuition</span>
                 </div>
                 <div className="bg-[var(--surface)] border border-[var(--border)] p-4 rounded-[8px] text-center">
-                  <span className="text-[10px] text-[var(--text-muted)] uppercase font-mono block">
+                  <span className="text-[11px] text-[var(--text-muted)] uppercase font-mono block">
                     Hard
                   </span>
                   <span className="text-2xl font-bold text-[var(--danger)] block mt-1 font-display">
                     {leetcodeData.hardSolved}
                   </span>
-                  <span className="text-[10px] text-[var(--text-faint)] font-mono">Optimization</span>
+                  <span className="text-[11px] text-[var(--text-faint)] font-mono">Optimization</span>
                 </div>
               </div>
 
@@ -270,7 +270,7 @@ export default function CodingProfiles() {
                         <span className="text-[11px] font-semibold text-[var(--text-secondary)]">
                           {sub.difficulty || "Accepted"}
                         </span>
-                        <span className="text-[var(--success)] font-bold uppercase text-[10px]">
+                        <span className="text-[var(--success)] font-bold uppercase text-[11px]">
                           Accepted
                         </span>
                       </div>
@@ -302,7 +302,7 @@ export default function CodingProfiles() {
                   href="https://codolio.com/profile/codesbysayam"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary min-h-[38px] px-4 py-2 text-xs"
+                  className="btn btn-primary min-h-[44px] px-4 py-2 text-xs"
                 >
                   <span>View Codolio Profile</span>
                   <ExternalLink className="w-3.5 h-3.5 shrink-0" />
@@ -363,7 +363,7 @@ export default function CodingProfiles() {
                   href="https://www.linkedin.com/in/sayammukherjee-portfolio/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary min-h-[38px] px-4 py-2 text-xs"
+                  className="btn btn-primary min-h-[44px] px-4 py-2 text-xs"
                 >
                   <span>Connect on LinkedIn</span>
                   <ExternalLink className="w-3.5 h-3.5 shrink-0" />

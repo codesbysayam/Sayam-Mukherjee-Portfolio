@@ -49,8 +49,8 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Interactive Track Selector */}
-          <div className="lg:col-span-4 card p-3 flex flex-col gap-1.5" role="tablist" aria-label="Experience tracks">
-            <span className="text-[11px] font-mono uppercase tracking-wider px-3 py-1.5 block text-[var(--text-muted)]">
+          <div className="lg:col-span-4 card p-3 grid grid-cols-1 sm:grid-cols-2 lg:flex lg:flex-col gap-1.5" role="tablist" aria-label="Experience tracks">
+            <span className="sm:col-span-2 text-[11px] font-mono uppercase tracking-wider px-3 py-1.5 block text-[var(--text-muted)]">
               Tracks
             </span>
             {tabs.map((tab) => {
@@ -63,9 +63,9 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                   role="tab"
                   aria-selected={isSelected}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`relative w-full flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors duration-200 cursor-pointer group ${
+                  className={`relative w-full min-h-[44px] flex items-center justify-between p-3.5 rounded-[8px] border text-left transition-colors duration-200 cursor-pointer group ${
                     isSelected
-                      ? "border-[#20231D] dark:border-[#C7E34A] text-[#F4F4ED] dark:text-[#20231D]"
+                      ? "border-[var(--accent-fill)] text-[var(--accent-contrast)]"
                       : "bg-transparent border-transparent text-[var(--text-secondary)] hover:text-[var(--text)] hover:bg-[var(--surface)]"
                   }`}
                 >
@@ -73,7 +73,7 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                     <motion.span
                       layoutId="experience-active-pill"
                       transition={{ duration: reduced ? 0 : 0.24, ease: MOTION_EASE.out }}
-                      className="absolute inset-0 rounded-[7px] bg-[#20231D] dark:bg-[#C7E34A]"
+                      className="absolute inset-0 rounded-[7px] bg-[var(--accent-fill)]"
                       aria-hidden="true"
                     />
                   )}
@@ -81,7 +81,7 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                     <div
                       className={`p-2 rounded-[6px] border ${
                         isSelected
-                          ? "bg-white/10 dark:bg-[#20231D]/15 border-white/15 dark:border-[#20231D]/20"
+                          ? "bg-[var(--accent-contrast)]/12 border-[var(--accent-contrast)]/20"
                           : "bg-[var(--surface)] border-[var(--border)]"
                       }`}
                     >
@@ -190,7 +190,7 @@ function ExperienceSectionComponent({ onNavigateToShowcase }: ExperienceSectionP
                       <button
                         type="button"
                         onClick={handleShowcaseClick}
-                        className="inline-flex items-center gap-1.5 text-xs font-mono font-bold text-[var(--accent)] hover:underline cursor-pointer"
+                        className="inline-flex items-center gap-1.5 min-h-[44px] text-xs font-mono font-bold text-[var(--accent)] hover:underline cursor-pointer"
                         aria-label="View YouTube video showcase"
                       >
                         <span>View Video Showcase</span>

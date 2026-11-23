@@ -129,11 +129,11 @@ function HeroSectionComponent({
         <ContourBackground density="subtle" tone="adaptive" />
       </div>
 
-      <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start lg:items-center my-auto py-1 sm:py-2">
+      <div className="hero-landscape-grid relative z-10 grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 lg:gap-12 items-start md:items-center my-auto py-1 sm:py-2">
         {/* Editorial Intro Column */}
         <div
           ref={midParallaxRef}
-          className="lg:col-span-7 flex flex-col justify-start text-left min-w-0 will-change-transform"
+          className="md:col-span-7 flex flex-col justify-start text-left min-w-0 will-change-transform"
         >
           <motion.p
             initial={reduced ? false : { opacity: 0, y: 10 }}
@@ -146,7 +146,7 @@ function HeroSectionComponent({
 
           <h1
             className="editorial-display-xl text-[var(--text)]"
-            style={{ fontSize: "clamp(1.95rem, 6.1vw, 5.6rem)" }}
+            style={{ fontSize: "clamp(1.95rem, 5.1vw, 5.4rem)" }}
           >
             <TextMaskReveal immediate delay={0.04}>SAYAM</TextMaskReveal>
             <br />
@@ -228,7 +228,7 @@ function HeroSectionComponent({
         </div>
 
         {/* Portrait / 3D Core Visual Stage */}
-        <div ref={stagePinRef} className="lg:col-span-5 w-full min-w-0">
+        <div ref={stagePinRef} className="md:col-span-5 w-full min-w-0">
           <div
             ref={fgStageParallaxRef}
             className="w-full min-w-0 will-change-transform"
@@ -241,9 +241,9 @@ function HeroSectionComponent({
                 delay: 0.16,
                 ease: MOTION_EASE.out,
               }}
-              className="flex flex-col gap-3 w-full min-w-0 lg:items-end"
+              className="flex flex-col gap-3 w-full min-w-0 md:items-end"
             >
-              <div className="w-full min-w-0 max-w-[440px] space-y-2.5">
+              <div className="w-full min-w-0 max-w-[440px] mx-auto md:mx-0 md:ml-auto space-y-2.5">
                 <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
                   <span className="text-[var(--text-muted)] uppercase tracking-[0.12em]">
                     {stageMode === "portrait" ? "Portrait" : "3D Orbital Core"}
@@ -253,7 +253,7 @@ function HeroSectionComponent({
                     <button
                       type="button"
                       onClick={() => handleStageModeChange("portrait")}
-                      className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                      className={`inline-flex items-center gap-1.5 rounded-[4px] min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                         stageMode === "portrait"
                           ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
                           : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -266,7 +266,7 @@ function HeroSectionComponent({
                     <button
                       type="button"
                       onClick={() => handleStageModeChange("orbital")}
-                      className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[10px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
+                      className={`inline-flex items-center gap-1.5 rounded-[4px] min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 text-[11px] font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer ${
                         stageMode === "orbital"
                           ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)]"
                           : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -280,7 +280,7 @@ function HeroSectionComponent({
                 </div>
 
                 <PointerReactiveVisual maxTiltDeg={4} className="w-full">
-                  <div className="relative aspect-[4/4.4] w-full overflow-hidden rounded-[8px] bg-[#151713]">
+                  <div className="hero-stage-frame relative aspect-[4/4.4] w-full overflow-hidden rounded-[8px] bg-[#151713]">
                     {stageMode === "portrait" ? (
                       portraitFailed ? (
                         <div className="flex h-full w-full flex-col items-center justify-center bg-[#151713] p-6 text-center text-[#F4F4ED]">
@@ -360,7 +360,7 @@ function HeroSectionComponent({
           <button
             type="button"
             onClick={scrollToOverview}
-            className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded px-1.5 py-1"
+            className="inline-flex items-center gap-1.5 min-h-[44px] font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded px-2 py-1"
           >
             <span>Overview</span>
             <ArrowDown className="w-3.5 h-3.5 text-[var(--accent)] transition-transform duration-200 group-hover:translate-y-0.5" aria-hidden="true" />

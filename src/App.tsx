@@ -489,7 +489,7 @@ function AppContent() {
         {/* Skip Link */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[#C7E34A] focus:text-[#20231D] focus:rounded-[6px] focus:font-mono focus:text-xs focus:font-bold"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--accent-fill)] focus:text-[var(--accent-contrast)] focus:rounded-[6px] focus:font-mono focus:text-xs focus:font-bold"
         >
           Skip to main content
         </a>
@@ -514,21 +514,58 @@ function AppContent() {
             <button
               type="button"
               onClick={() => navigateToTab("home")}
-              className="flex items-center gap-2 sm:gap-2.5 text-left min-w-0 shrink cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
+              className="flex items-center gap-2 sm:gap-2.5 text-left min-w-0 shrink cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[4px] py-1 min-h-[44px] active:opacity-80 active:scale-[0.98] transition-all"
               aria-label="Sayam Mukherjee Home"
             >
               <span className="w-8 h-8 rounded-[6px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-display font-extrabold text-xs flex items-center justify-center tracking-tight shrink-0">
                 SM
               </span>
-              <span className="font-display text-xs sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none truncate">
+              <span className="hidden md:inline lg:hidden font-display text-sm font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none">
+                Sayam
+              </span>
+              <span className="md:hidden lg:inline font-display text-xs sm:text-sm xl:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none truncate">
                 Sayam Mukherjee
               </span>
             </button>
 
-            {/* Center Typographic Nav Links */}
+            {/* Tablet Hybrid Navigation (768px - 1023px) */}
+            <nav
+              aria-label="Tablet primary navigation"
+              className="hidden md:flex lg:hidden items-center gap-2 shrink-0"
+            >
+              {NAVIGATION.filter((tab) =>
+                ["home", "projects", "skills", "journal"].includes(tab.id)
+              ).map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={`tablet-${tab.id}`}
+                    type="button"
+                    onClick={() => navigateToTab(tab.id as TabType)}
+                    aria-current={isActive ? "page" : undefined}
+                    className={`relative min-h-[44px] px-2.5 text-[12.5px] font-semibold tracking-wide transition-all cursor-pointer whitespace-nowrap select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[4px] active:scale-[0.97] ${
+                      isActive
+                        ? "text-[var(--text)]"
+                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    }`}
+                  >
+                    <span>{tab.label}</span>
+                    {isActive && (
+                      <motion.span
+                        layoutId="activeTabletNavUnderline"
+                        className="absolute left-1.5 right-1.5 bottom-1.5 h-[2px] bg-[var(--accent-fill)]"
+                        transition={{ type: "spring", stiffness: 420, damping: 34 }}
+                      />
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
+
+            {/* Full Inline Navigation (1024px+ Tablet Landscape & Desktop) */}
             <nav
               aria-label="Primary navigation"
-              className="hidden xl:flex items-center gap-5 shrink-0"
+              className="hidden lg:flex items-center gap-3 xl:gap-5 shrink-0"
             >
               {NAVIGATION.filter((tab) => tab.id !== "contact").map((tab) => {
                 const isActive = activeTab === tab.id;
@@ -539,7 +576,7 @@ function AppContent() {
                     onClick={() => navigateToTab(tab.id as TabType)}
                     title={`${tab.label} (Press '${tab.shortcut}')`}
                     aria-current={isActive ? "page" : undefined}
-                    className={`relative py-2 px-1 text-[13px] font-semibold tracking-wide transition-all cursor-pointer whitespace-nowrap select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px] active:scale-[0.97] active:opacity-80 ${
+                    className={`relative min-h-[44px] py-2 px-1 text-[12.5px] xl:text-[13px] font-semibold tracking-wide transition-all cursor-pointer whitespace-nowrap select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[4px] active:scale-[0.97] active:opacity-80 ${
                       isActive
                         ? "text-[var(--text)]"
                         : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -549,7 +586,7 @@ function AppContent() {
                     {isActive && (
                       <motion.span
                         layoutId="activeNavUnderline"
-                        className="absolute left-0 right-0 bottom-0 h-[2px] bg-[var(--accent-fill)]"
+                        className="absolute left-0 right-0 bottom-1.5 h-[2px] bg-[var(--accent-fill)]"
                         transition={{ type: "spring", stiffness: 420, damping: 34 }}
                       />
                     )}
@@ -559,23 +596,23 @@ function AppContent() {
             </nav>
 
             {/* Right Controls */}
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex items-center gap-1.5 xl:gap-2 shrink-0">
               <button
                 type="button"
                 onClick={() => setIsCommandMenuOpen(true)}
-                className="hidden sm:flex items-center gap-2 min-h-[40px] px-2.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--text)] active:scale-[0.97] active:bg-[var(--surface)] transition-all cursor-pointer"
+                className="hidden sm:flex items-center justify-center gap-2 min-h-[44px] min-w-[44px] px-2.5 border border-[var(--border-strong)] rounded-[6px] text-xs font-mono text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--text)] active:scale-[0.97] active:bg-[var(--surface)] transition-all cursor-pointer"
                 title="Search Workspace (Ctrl+K or ⌘K)"
                 aria-label="Search Workspace"
               >
                 <Search className="w-3.5 h-3.5" />
-                <span className="hidden lg:inline">⌘K</span>
+                <span className="hidden xl:inline">⌘K</span>
               </button>
 
               <motion.button
                 type="button"
                 whileTap={prefersReducedMotion ? undefined : { scale: 0.94 }}
                 onClick={toggleTheme}
-                className="min-h-[40px] min-w-[40px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer overflow-hidden"
+                className="min-h-[44px] min-w-[44px] flex items-center justify-center border border-[var(--border-strong)] rounded-[6px] text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer overflow-hidden"
                 title={theme === "dark" ? "Switch to Paper theme" : "Switch to Ink theme"}
                 aria-label="Toggle visual theme"
               >
@@ -589,7 +626,7 @@ function AppContent() {
                       transition={{ duration: MOTION_DURATION.fast, ease: MOTION_EASE.out }}
                       className="flex items-center justify-center"
                     >
-                      <Sun className="w-4 h-4 text-[#C7E34A]" />
+                      <Sun className="w-4 h-4 text-[var(--accent)]" />
                     </motion.span>
                   ) : (
                     <motion.span
@@ -609,17 +646,18 @@ function AppContent() {
               <button
                 type="button"
                 onClick={() => setIsResumeModalOpen(true)}
-                className="hidden md:inline-flex items-center gap-1.5 min-h-[40px] px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] transition-all cursor-pointer"
+                className="hidden md:inline-flex items-center justify-center gap-1.5 min-h-[44px] min-w-[44px] px-2.5 xl:px-3 border border-[var(--border-strong)] rounded-[6px] text-xs font-semibold text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] transition-all cursor-pointer"
                 aria-label="Open official verified resume viewer"
+                title="View Verified Résumé"
               >
                 <ResumeGlyph className="w-3.5 h-3.5 shrink-0" />
-                <span>Résumé</span>
+                <span className="hidden xl:inline">Résumé</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => navigateToTab("contact")}
-                className={`hidden sm:inline-flex items-center justify-center min-h-[40px] px-4 rounded-[6px] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-[0.97] ${
+                className={`hidden sm:inline-flex items-center justify-center min-h-[44px] px-3 xl:px-4 rounded-[6px] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer active:scale-[0.97] ${
                   activeTab === "contact"
                     ? "bg-[var(--text)] text-[var(--bg)]"
                     : "bg-[var(--accent-fill)] text-[var(--accent-contrast)] hover:bg-[var(--accent-strong)]"
@@ -634,11 +672,11 @@ function AppContent() {
                 onClick={() => setIsMenuOpen(true)}
                 aria-expanded={isMenuOpen}
                 aria-controls="fullscreen-navigation-overlay"
-                className="min-h-[42px] px-3 flex items-center gap-2 border border-[var(--border-strong)] rounded-[6px] bg-[var(--surface)] hover:border-[#C7E34A] hover:text-[var(--accent)] text-[var(--text)] active:scale-[0.95] cursor-pointer transition-all font-mono text-xs font-semibold uppercase tracking-wider"
+                className="min-h-[44px] min-w-[44px] px-2.5 xl:px-3 flex items-center justify-center gap-2 border border-[var(--border-strong)] rounded-[6px] bg-[var(--surface)] hover:border-[var(--accent)] hover:text-[var(--accent)] text-[var(--text)] active:scale-[0.95] cursor-pointer transition-all font-mono text-xs font-semibold uppercase tracking-wider"
                 aria-label="Open full-screen navigation menu"
               >
                 <Menu className="w-4 h-4" />
-                <span className="hidden sm:inline">Menu</span>
+                <span className="hidden sm:inline lg:hidden xl:inline">Menu</span>
               </button>
             </div>
           </div>
@@ -670,7 +708,7 @@ function AppContent() {
           <main
             id="main-content"
             tabIndex={-1}
-            className="site-main relative z-10 w-full min-w-0 flex-1 pt-5 sm:pt-8 pb-28 sm:pb-24 overflow-x-clip focus:outline-none"
+            className="site-main relative z-10 w-full min-w-0 flex-1 pt-5 sm:pt-8 pb-24 md:pb-16 xl:pb-20 overflow-x-clip focus:outline-none"
           >
             <RouteTransition routeKey={activeTab}>
             {activeTab === "home" && (
@@ -893,13 +931,13 @@ function AppContent() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 12 }}
               transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed bottom-6 left-6 z-[60] w-72 rounded-[10px] border border-[#41443A] bg-[#20231D] text-[#F4F4ED] p-4 shadow-2xl hidden sm:flex flex-col gap-3 font-sans select-none pointer-events-none"
+              className="fixed bottom-6 left-6 z-[60] w-72 rounded-[10px] border border-[var(--border-strong)] bg-[var(--surface-2)] text-[var(--text)] p-4 shadow-2xl hidden sm:flex flex-col gap-3 font-sans select-none pointer-events-none"
             >
-              <div className="flex items-center justify-between pb-2 border-b border-[#41443A]">
-                <span className="text-[11px] font-bold tracking-[0.12em] font-mono uppercase text-[#C7E34A]">
+              <div className="flex items-center justify-between pb-2 border-b border-[var(--border)]">
+                <span className="text-[11px] font-bold tracking-[0.12em] font-mono uppercase text-[var(--accent)]">
                   Navigation Shortcuts
                 </span>
-                <span className="text-[10px] font-mono text-[#B5B8AA]">⌘ / CTRL</span>
+                <span className="text-[11px] font-mono text-[var(--text-muted)]">⌘ / CTRL</span>
               </div>
 
               <div className="grid grid-cols-2 gap-2 text-[11px] font-mono">
@@ -917,10 +955,10 @@ function AppContent() {
                 ].map(([label, shortcut]) => (
                   <div
                     key={label}
-                    className="flex items-center justify-between gap-1.5 px-2 py-1 rounded bg-[#151713] border border-[#41443A]"
+                    className="flex items-center justify-between gap-1.5 px-2 py-1 rounded bg-[var(--surface)] border border-[var(--border)]"
                   >
-                    <span className="text-[#D4D6CA]">{label}</span>
-                    <kbd className="text-[10px] text-[#C7E34A]">{shortcut}</kbd>
+                    <span className="text-[var(--text-secondary)]">{label}</span>
+                    <kbd className="text-[11px] text-[var(--accent)] font-semibold">{shortcut}</kbd>
                   </div>
                 ))}
               </div>

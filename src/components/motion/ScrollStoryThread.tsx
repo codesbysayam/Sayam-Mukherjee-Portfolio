@@ -134,7 +134,7 @@ export default function ScrollStoryThread({
           <motion.span
             aria-hidden="true"
             style={{ scaleY, originY: 0 }}
-            className="absolute right-0 top-1 bottom-1 w-[2px] rounded-full bg-[#C7E34A]"
+            className="absolute right-0 top-1 bottom-1 w-[2px] rounded-full bg-[var(--accent-fill)]"
           />
         )}
 
@@ -147,10 +147,10 @@ export default function ScrollStoryThread({
               onClick={() => scrollToSection(chapter.id)}
               aria-current={isActive ? "location" : undefined}
               title={`${chapter.code} ${chapter.label}`}
-              className="group flex items-center justify-end gap-2 text-right cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded px-1 py-0.5 active:scale-[0.97] transition-transform"
+              className="group flex items-center justify-end gap-2 text-right cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded px-1 py-0.5 active:scale-[0.97] transition-transform"
             >
               <span
-                className={`font-mono text-[10px] tracking-[0.08em] uppercase whitespace-nowrap transition-colors duration-150 ${
+                className={`font-mono text-[11px] tracking-[0.08em] uppercase whitespace-nowrap transition-colors duration-150 ${
                   isActive
                     ? "text-[var(--text)] font-bold opacity-100"
                     : "text-[var(--text-faint)] opacity-80 group-hover:opacity-100 group-hover:text-[var(--text-muted)]"
@@ -164,14 +164,14 @@ export default function ScrollStoryThread({
                     layoutId={`scrollStoryDot-${routeKey}`}
                     transition={{ duration: 0.22, ease: MOTION_EASE.out }}
                     aria-hidden="true"
-                    className="h-2 w-2 rounded-full bg-[#C7E34A] ring-2 ring-[#C7E34A]/30"
+                    className="h-2 w-2 rounded-full bg-[var(--accent-fill)] ring-2 ring-[var(--accent-fill)]/30"
                   />
                 ) : (
                   <span
                     aria-hidden="true"
                     className={`h-1.5 w-1.5 rounded-full transition-transform ${
                       isActive
-                        ? "bg-[#C7E34A] scale-125"
+                        ? "bg-[var(--accent-fill)] scale-125"
                         : "bg-[var(--border-strong)] group-hover:bg-[var(--text-muted)]"
                     }`}
                   />

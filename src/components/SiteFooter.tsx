@@ -61,7 +61,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
   return (
     <footer
       id="site-footer"
-      className="relative overflow-hidden w-full bg-[#151713] text-[#F4F4ED] border-t border-[#41443A] font-sans pb-[calc(76px+env(safe-area-inset-bottom,0px))] xl:pb-[max(2.5rem,env(safe-area-inset-bottom,2.5rem))]"
+      className="relative overflow-hidden w-full bg-[#151713] text-[#F4F4ED] border-t border-[#41443A] font-sans pb-[calc(76px+env(safe-area-inset-bottom,0px))] md:pb-[max(2.5rem,env(safe-area-inset-bottom,2.5rem))]"
       style={{
         paddingTop: "clamp(2.75rem, 5vw, 4.5rem)",
       }}
@@ -70,7 +70,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
       <div
         className="relative z-10 w-full mx-auto space-y-10"
         style={{
-          width: "min(100%, var(--content-max, 1440px))",
+          width: "min(100%, var(--container-standard, 1440px))",
           paddingInline: "var(--page-gutter, clamp(1rem, 4vw, 3rem))",
         }}
       >
@@ -108,7 +108,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                   <button
                     type="button"
                     onClick={toggleTheme}
-                    className="min-h-[40px] px-3.5 rounded-[6px] border border-[#41443A] bg-[#20231D] text-[#F4F4ED] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer inline-flex items-center gap-2 text-xs font-mono"
+                    className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-[#20231D] text-[#F4F4ED] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer inline-flex items-center gap-2 text-xs font-mono"
                     title={theme === "dark" ? "Switch to Paper theme" : "Switch to Ink theme"}
                     aria-label={theme === "dark" ? "Switch to light theme" : "Switch to dark theme"}
                   >
@@ -129,7 +129,7 @@ export const SiteFooter: React.FC<SiteFooterProps> = ({
                 <button
                   type="button"
                   onClick={scrollToTop}
-                  className="min-h-[40px] px-3.5 rounded-[6px] border border-[#41443A] bg-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:border-[#F4F4ED] transition-colors cursor-pointer inline-flex items-center gap-1.5 text-xs font-mono group"
+                  className="min-h-[44px] px-3.5 rounded-[6px] border border-[#41443A] bg-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:border-[#F4F4ED] transition-colors cursor-pointer inline-flex items-center gap-1.5 text-xs font-mono group"
                   aria-label="Back to top"
                 >
                   <ArrowUp className="w-3.5 h-3.5 transition-transform duration-200 group-hover:-translate-y-0.5" />

@@ -53,7 +53,7 @@ function ChronologicalTimeline({ items }: { items: JourneyMilestone[] }) {
             ? { scaleY: 1, originY: 0 }
             : { scaleY: spineScaleY, originY: 0 }
         }
-        className="absolute left-0 top-0 bottom-0 w-[2px] bg-[#C7E34A]"
+        className="absolute left-0 top-0 bottom-0 w-[2px] bg-[var(--accent-fill)]"
       />
 
       {items.map((item, idx) => {
@@ -71,10 +71,10 @@ function ChronologicalTimeline({ items }: { items: JourneyMilestone[] }) {
               <div
                 className={`absolute -left-[31px] sm:-left-[39px] top-4 w-3.5 h-3.5 rounded-full border-2 transition-colors ${
                   isCurrent
-                    ? "bg-[#C7E34A] border-[#20231D] dark:border-[#151713]"
+                    ? "bg-[var(--accent-fill)] border-[var(--bg)]"
                     : isFuture
                     ? "bg-[var(--accent)] border-[var(--bg)]"
-                    : "bg-[var(--surface)] border-[var(--border-strong)] group-hover:border-[#C7E34A]"
+                    : "bg-[var(--surface)] border-[var(--border-strong)] group-hover:border-[var(--accent)]"
                 }`}
               />
 
@@ -700,7 +700,7 @@ function AboutSectionComponent({ onNavigateTab }: AboutSectionProps) {
                 <button
                   type="button"
                   onClick={() => handleNavigate("certificates")}
-                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer"
                 >
                   <span>View Certificates &amp; Academic Records</span>
                   <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
