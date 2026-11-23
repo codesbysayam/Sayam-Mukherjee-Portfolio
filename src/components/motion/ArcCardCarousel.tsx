@@ -26,6 +26,7 @@ export function ArcCardCarousel({
   const reduced = usePrefersReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [isCompactPhone, setIsCompactPhone] = useState(false);
   const [dragOffsetPx, setDragOffsetPx] = useState(0);
   const dragStartXRef = useRef<number | null>(null);
   const dragDeltaRef = useRef(0);
@@ -34,11 +35,19 @@ export function ArcCardCarousel({
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const mq = window.matchMedia("(max-width: 767px)");
-    const sync = () => setIsMobile(mq.matches);
+    const mqMobile = window.matchMedia("(max-width: 767px)");
+    const mqCompact = window.matchMedia("(max-width: 420px)");
+    const sync = () => {
+      setIsMobile(mqMobile.matches);
+      setIsCompactPhone(mqCompact.matches);
+    };
     sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
+    mqMobile.addEventListener("change", sync);
+    mqCompact.addEventListener("change", sync);
+    return () => {
+      mqMobile.removeEventListener("change", sync);
+      mqCompact.removeEventListener("change", sync);
+    };
   }, []);
 
   useEffect(() => {
@@ -204,7 +213,7 @@ export function ArcCardCarousel({
           const dragFraction = dragOffsetPx / 180;
           const shiftedOffset = offset + dragFraction;
 
-          const xSpacing = isMobile ? 168 : 258;
+          const xSpacing = isCompactPhone ? 132 : isMobile ? 164 : 258;
           const x = reduced ? offset * 280 : shiftedOffset * xSpacing;
           const y = reduced ? 0 : Math.abs(shiftedOffset) * Math.abs(shiftedOffset) * (isMobile ? 18 : 24);
           const rotateZ = reduced ? 0 : shiftedOffset * (isMobile ? 5.5 : 7.5);

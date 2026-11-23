@@ -59,11 +59,14 @@ html[data-theme="light"] {
   --page-gutter: clamp(16px, 4vw, 72px);
   --page-padding: clamp(1rem, 3.5vw, 3.5rem);
   --content-max: 1440px;
+  --content-width: 1380px;
   --wide-max: 1680px;
   --reading-max: 760px;
 
   --content-max-width: var(--content-max);
   --content-padding: var(--page-gutter);
+  --card-gap: clamp(14px, 2.2vw, 28px);
+  --section-gap: clamp(44px, 7vw, 112px);
   --section-space: clamp(3.5rem, 6vw, 6.5rem);
 
   --shadow: 0 8px 24px rgba(32, 35, 29, 0.06);
@@ -1222,13 +1225,290 @@ a.card:active,
 
 @media (max-width: 1279px) {
   body:not(.has-legal-page) {
-    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(70px + env(safe-area-inset-bottom, 0px));
   }
 }
 
-@media (max-height: 520px) and (orientation: landscape) {
+/* ==========================================================================
+   UNIVERSAL RESPONSIVE UTILITIES & MULTI-ASPECT VIEWPORT ADAPTATIONS
+   ========================================================================== */
+
+.section-container {
+  width: 100%;
+  max-width: var(--content-width, 1380px);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter, clamp(16px, 4vw, 72px));
+}
+
+.responsive-grid {
+  display: grid;
+  gap: var(--card-gap, clamp(14px, 2.2vw, 28px));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 272px), 1fr));
+}
+
+.responsive-heading {
+  font-size: clamp(1.75rem, 4.4vw, 3.8rem);
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  overflow-wrap: break-word;
+}
+
+.responsive-copy {
+  font-size: clamp(0.95rem, 1.05vw, 1.1rem);
+  line-height: 1.65;
+  max-width: 66ch;
+}
+
+.responsive-card {
+  padding: clamp(16px, 2.4vw, 28px);
+  border-radius: 12px;
+  min-width: 0;
+}
+
+.full-screen-hero {
+  min-height: 100svh;
+  min-height: 100dvh;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+pre code {
+  white-space: pre;
+}
+
+/* ==========================================================================
+   SKILL CONSTELLATION — DARK EDITORIAL KNOWLEDGE GRAPH
+   ========================================================================== */
+
+.skill-graph {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(190, 205, 150, 0.16);
+  border-radius: 20px;
+  background:
+    radial-gradient(
+      ellipse at 50% 48%,
+      rgba(190, 225, 65, 0.075),
+      transparent 46%
+    ),
+    #151a16;
+  --graph-surface: #151a16;
+  --graph-node-bg: #252c25;
+  --graph-node-hover: #2d352d;
+  --graph-node-border: rgba(210, 225, 180, 0.24);
+  --graph-node-text: #e7eadf;
+  --graph-edge: rgba(190, 205, 150, 0.22);
+  --graph-edge-active: #c8e942;
+  --graph-active-fill: #d2ed49;
+  --graph-active-text: #151a16;
+}
+
+html.light .skill-graph,
+html[data-theme="light"] .skill-graph {
+  border: 1px solid var(--border);
+  background:
+    radial-gradient(
+      ellipse at 50% 48%,
+      rgba(164, 190, 50, 0.09),
+      transparent 48%
+    ),
+    #f7f6ef;
+  --graph-surface: #f7f6ef;
+  --graph-node-bg: #ffffff;
+  --graph-node-hover: #f2f1e9;
+  --graph-node-border: rgba(32, 35, 29, 0.18);
+  --graph-node-text: #20231d;
+  --graph-edge: rgba(32, 35, 29, 0.18);
+  --graph-edge-active: #4d5e10;
+  --graph-active-fill: #a4be32;
+  --graph-active-text: #171b12;
+}
+
+.skill-graph svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.skill-node,
+.skill-cluster {
+  cursor: pointer;
+  outline: none;
+  transition:
+    opacity 220ms ease,
+    filter 220ms ease;
+}
+
+.skill-node .skill-node-capsule {
+  fill: var(--graph-node-bg);
+  stroke: var(--graph-node-border);
+  stroke-width: 1;
+  transition:
+    fill 220ms ease,
+    stroke 220ms ease,
+    stroke-width 220ms ease;
+}
+
+.skill-node .skill-node-label {
+  fill: var(--graph-node-text);
+  font-size: 12px;
+  font-weight: 600;
+  pointer-events: none;
+  transition: fill 220ms ease;
+}
+
+.skill-node:hover .skill-node-capsule,
+.skill-node:focus-visible .skill-node-capsule,
+.skill-node[data-active="true"] .skill-node-capsule {
+  fill: var(--graph-active-fill);
+  stroke: var(--graph-active-fill);
+  stroke-width: 1.5;
+}
+
+.skill-node:hover .skill-node-label,
+.skill-node:focus-visible .skill-node-label,
+.skill-node[data-active="true"] .skill-node-label {
+  fill: var(--graph-active-text);
+}
+
+.skill-node[data-related="true"]:not([data-active="true"]) .skill-node-capsule {
+  fill: var(--graph-node-hover);
+  stroke: var(--graph-edge-active);
+  stroke-width: 1.25;
+}
+
+.skill-connection {
+  fill: none;
+  stroke: var(--graph-edge);
+  stroke-width: 1.1;
+  transition:
+    stroke 250ms ease,
+    opacity 250ms ease,
+    stroke-width 250ms ease;
+}
+
+.skill-connection[data-active="true"] {
+  stroke: var(--graph-edge-active);
+  stroke-width: 1.85;
+  opacity: 1;
+}
+
+.skill-graph:has(.skill-node:hover)
+  .skill-node:not(:hover):not([data-active="true"]):not([data-related="true"]) {
+  opacity: 0.55;
+}
+
+@keyframes skillOrbitCw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes skillOrbitCcw {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+.skill-orbit-cw {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: skillOrbitCw 72s linear infinite;
+}
+
+.skill-orbit-ccw {
+  transform-box: view-box;
+  transform-origin: center;
+  animation: skillOrbitCcw 96s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-node,
+  .skill-cluster,
+  .skill-node .skill-node-capsule,
+  .skill-node .skill-node-label,
+  .skill-connection {
+    transition: none;
+  }
+
+  .skill-orbit-cw,
+  .skill-orbit-ccw {
+    animation: none;
+  }
+}
+
+@media (max-width: 1023px) {
+  .full-screen-hero {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 374px) {
+  .btn {
+    padding: 0.625rem 0.95rem;
+    font-size: 0.8125rem;
+  }
+
+  .mobile-bottom-nav button {
+    min-height: 44px;
+    padding-inline: 2px;
+  }
+}
+
+/* Short-landscape viewports (e.g. 568x320 phone landscape or compact split windows) */
+@media (max-height: 519px) and (orientation: landscape) {
+  .full-screen-hero {
+    min-height: auto !important;
+    padding-block: 16px !important;
+  }
+
+  .desktop-only-pinning {
+    position: static !important;
+    top: auto !important;
+    transform: none !important;
+  }
+
   header .header-inner {
-    min-height: 56px !important;
+    min-height: 52px !important;
+  }
+}
+
+/* Ultra-short phone landscape: reclaim chrome so content occupies >=85% height */
+@media (max-height: 440px) and (orientation: landscape) {
+  header.sticky {
+    position: relative !important;
+  }
+
+  .mobile-bottom-nav {
+    display: none !important;
+  }
+
+  body:not(.has-legal-page) {
+    padding-bottom: 0 !important;
+  }
+}
+
+/* Ultrawide 21:9 & 2560x1440 balance */
+@media (min-aspect-ratio: 21/9) {
+  .site-layout,
+  .site-layout--with-nav,
+  .section-container,
+  header .header-inner {
+    max-width: 1520px;
   }
 }
 

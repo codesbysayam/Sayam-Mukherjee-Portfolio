@@ -11,17 +11,13 @@
 
 ## Active task
 
-- Task ID: TASK-MOTION-002
-- Objective: Complete full-site Motion (`motion/react`) + GSAP (`ScrollTrigger`, `Flip`) + Three.js architectural integration, integrate orphaned `StackingCards` into Projects, fix `ArcCardCarousel` / `FocusFrame` / `HeroSection` / `AboutSection` / `SkillsPage` / `EcosystemPage` / `ContentCreatorSection` motion and accessibility gaps, and complete clean `npm install` + dev server verification.
+- Task ID: TASK-SKILL-CONSTELLATION-004
+- Objective: Redesign `SkillConstellation.tsx` and `.skill-graph` styling into a responsive, collision-free dark editorial knowledge graph fixing left-side label clipping, bottom node crowding, edge-label intersections, graph controls (search, zoom, focus category, reset/clear), rich technology detail panel (description, practical application, project connections, related technologies), and mobile 6-cluster explorer + bottom sheet.
 - Status: COMPLETED
 - Files changed:
-  - `src/App.tsx`: Removed `EditorialReveal` transform wrappers around `AboutSection` and `ProjectsShowcase` so GSAP pins never render inside transformed ancestors.
-  - `src/styles/motion.css`: Added `.project-stacking-sequence` and accessible pause-on-hover/reduced-motion `.tech-marquee-*` rules.
-  - `src/components/HeroSection.tsx` & `src/components/motion/HeroOrbitalSculpture.tsx`: Added wide-desktop Hero visual stage pinning with separated inner parallax transform ownership, upgraded `HeroOrbitalSculpture` scroll-driven camera elevation and rim lighting, increased `MagneticAction` pull strength (`5`), added `ScrollTrigger` refresh on mode switch, and added portrait fallback.
-  - `src/components/AboutSection.tsx`, `src/components/motion/HorizontalNarrative.tsx`, `src/components/motion/PinnedHeadingSection.tsx`, & `src/components/ExperienceSection.tsx`: Switched About tab panels to opacity-only transitions for pin safety, added `ScrollScaleImage` portrait depth inside `MaskMediaReveal`, added `activeStepRef` guard + mobile Prev/Next keyboard controls in `HorizontalNarrative`, added `ResizeObserver` refresh to `PinnedHeadingSection`, and added `layoutId` indicator + staggered bullets in `ExperienceSection`.
-  - `src/components/ProjectsShowcase.tsx`, `src/components/motion/ArcCardCarousel.tsx`, `src/components/motion/StackingCards.tsx`, & `src/components/motion/FocusFrame.tsx`: Integrated `StackingCards` for projects `01–04` with remaining projects in the Explorer Grid (zero duplication), fixed `ArcCardCarousel` to finite non-wrapping bounds with ref-backed drag delta & click suppression, added `ResizeObserver` refresh to `StackingCards`, and added `Escape` collapse + focus return to `FocusFrame`.
-  - `src/components/skills/SkillsPage.tsx`, `src/components/ecosystem/EcosystemPage.tsx`, `src/components/ContentCreatorSection.tsx`, `src/components/certificates/CertificateViewerModal.tsx`, `src/pages/JournalDetail.tsx`, & `src/components/SiteFooter.tsx`: Wrapped Skills `#capability-index` in `PinnedHeadingSection` with an accessible tech marquee ribbon, animated Ecosystem SVG pipeline nodes and `pathLength` connectors, upgraded `ContentCreatorSection` video library to `MotionSlider`, added modal preview crossfade + `referrerPolicy` in `CertificateViewerModal`, and respected `prefers-reduced-motion` in `scrollTo` calls.
-  - `README.md`: Updated Motion stack and frontend dependency list to include GSAP (`ScrollTrigger`, `Flip`).
+  - `src/index.css`: Added dual-theme `.skill-graph`, `.skill-node`, `.skill-cluster`, `.skill-connection`, and subtle `prefers-reduced-motion`-safe `.skill-orbit-cw` / `.skill-orbit-ccw` CSS rules preserving `#151a16` charcoal + `#d2ed49` acid-lime dark palette and full light-mode contrast parity.
+  - `src/components/skills/SkillConstellation.tsx`: Rebuilt layout in `1200x760` coordinate space using symmetrical 6-sector elliptical geometry, bounding-box collision solver (`resolveOverviewCollisions`), untruncated dynamic capsule widths, rim-anchored curved SVG edges with halo-protected cluster labels, subtle secondary category accents, search across all `38` technologies (auto-expanding non-core clusters in Focus Category view), SVG `viewBox` zoom (`85%`–`145%`) + Reset/Clear controls, `SKILLS_DATA`-grounded detail inspector, `ResizeObserver` cleanup, and responsive `<768px` Mobile Cluster Explorer + dismissible bottom sheet (`role="dialog"`, `Escape` close).
+  - `tests/navigation.ssr.test.tsx`: Extended Skills Observatory SSR test to verify `CSE · AI/ML`, `SYSTEMS CORE`, untruncated `System Architecture` / `Control Planes & Audit` / `Data Structures & Algorithms`, and `Practical Application`.
 
 ## Validation
 
@@ -29,10 +25,10 @@
 - Academic status audit (`grep -rnE "3rd [Ss]em" src data_store.json public`): Verified `0` stale references (`2nd Year, 4th Semester` preserved)
 - Data validation (`npm run validate:data`): Verified PASS (`8` projects, `11` GitHub repos, `0` errors/warnings)
 - Automated tests (`npx vitest run`): Verified PASS (`4` test files, `38` tests passed)
-- Preflight (`npm run preflight`): Verified PASS (Data Validator, `tsc --noEmit`, Manifest Generator, Vite Build, C Native Metrics)
-- Incomplete work: Interactive Playwright/browser visual scroll-pin inspection was not executed in a headless browser session; static compilation, SSR/API tests, and live HTTP endpoint health on port `3000` were verified directly.
+- Preflight (`npm run preflight`): Verified PASS (Data Validator, `tsc --noEmit`, Manifest Generator, Vite Build `3151` modules, C Native Metrics)
+- Incomplete work: Visual browser screenshots across `390px`, `768px`, `1024px`, `1440px`, and `1920px` could not be executed automatically because neither headless Chromium nor Playwright is installed in this container (`NO_CHROMIUM`, `NO_PLAYWRIGHT`). Mathematical bounding-box collision resolution, CSS/SVG compilation, SSR rendering, Vitest suite, and live HTTP server endpoints on port `3000` were verified directly.
 - Known issues: None.
-- Next safe action: Co-execute `compile_applet` + `lint_applet` and verify live dev server endpoints on port `3000`.
+- Next safe action: Final co-executed `compile_applet` + `lint_applet` and live `/skills` HTTP health check on port `3000`.
 
 ## Update rules
 

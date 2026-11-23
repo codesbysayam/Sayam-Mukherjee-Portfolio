@@ -33,7 +33,7 @@ export function StackingCards({ items, className = "" }: StackingCardsProps) {
     ensureGsapRegistered();
 
     const mm = gsap.matchMedia();
-    mm.add(MOTION_BREAKPOINTS.desktop, () => {
+    mm.add(MOTION_BREAKPOINTS.desktopTall, () => {
       const cardEls = gsap.utils.toArray<HTMLElement>("[data-stack-card]", container);
       if (cardEls.length < 2) return;
 
@@ -76,7 +76,7 @@ export function StackingCards({ items, className = "" }: StackingCardsProps) {
           className={
             reduced
               ? "stacking-card-item relative"
-              : "stacking-card-item relative lg:sticky lg:top-24 will-change-transform origin-top"
+              : "stacking-card-item desktop-only-pinning relative lg:sticky lg:top-24 will-change-transform origin-top"
           }
           style={{
             zIndex: idx + 1,

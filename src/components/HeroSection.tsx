@@ -48,7 +48,7 @@ function HeroSectionComponent({
     ensureGsapRegistered();
     const mm = gsap.matchMedia();
 
-    mm.add(MOTION_BREAKPOINTS.desktop, () => {
+    mm.add(MOTION_BREAKPOINTS.desktopTall, () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: heroEl,
@@ -118,7 +118,7 @@ function HeroSectionComponent({
       id="hero"
       ref={heroSectionRef}
       aria-label="Hero Introduction"
-      className="relative w-full min-h-0 lg:min-h-[calc(100svh-8rem)] flex flex-col justify-between overflow-x-clip bg-[var(--bg)] py-4 sm:py-8 lg:py-10"
+      className="full-screen-hero relative w-full min-h-0 lg:min-h-[calc(100svh-8rem)] flex flex-col justify-between overflow-x-clip bg-[var(--bg)] py-4 sm:py-8 lg:py-10"
     >
       {/* Background Plane: Topographic Contours */}
       <div
@@ -146,7 +146,7 @@ function HeroSectionComponent({
 
           <h1
             className="editorial-display-xl text-[var(--text)]"
-            style={{ fontSize: "clamp(2.35rem, 6.4vw, 5.8rem)" }}
+            style={{ fontSize: "clamp(1.95rem, 6.1vw, 5.6rem)" }}
           >
             <TextMaskReveal immediate delay={0.04}>SAYAM</TextMaskReveal>
             <br />
@@ -244,7 +244,7 @@ function HeroSectionComponent({
               className="flex flex-col gap-3 w-full min-w-0 lg:items-end"
             >
               <div className="w-full min-w-0 max-w-[440px] space-y-2.5">
-                <div className="flex items-center justify-between gap-2 text-[11px] font-mono">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono">
                   <span className="text-[var(--text-muted)] uppercase tracking-[0.12em]">
                     {stageMode === "portrait" ? "Portrait" : "3D Orbital Core"}
                   </span>

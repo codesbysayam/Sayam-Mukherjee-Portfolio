@@ -1,5 +1,7 @@
 import React, { memo } from "react";
+import { motion } from "motion/react";
 import { Search, X, ArrowUpDown } from "lucide-react";
+import { usePrefersReducedMotion } from "../../motion/tokens";
 
 interface JournalFiltersProps {
   searchQuery: string;
@@ -22,33 +24,30 @@ export const JournalFilters = memo(function JournalFilters({
   onSortChange,
   totalResults,
 }: JournalFiltersProps) {
+  const reduced = usePrefersReducedMotion();
+
   return (
-    <div className="space-y-4 pt-2 pb-6 border-b" style={{ borderColor: "var(--border)" }}>
+    <div className="space-y-4 pt-2 pb-6 border-b border-[var(--border)]">
       {/* Search + Sort Row */}
       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <div className="relative flex-1 max-w-md">
           <Search
-            className="w-4 h-4 text-[var(--text-faint)] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
+            className="w-4 h-4 text-[var(--text-muted)] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"
             aria-hidden="true"
           />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            placeholder="Search entries by topic, title, or keywords..."
-            className="w-full border rounded-[6px] pl-9 pr-9 py-2 text-sm outline-none transition-colors font-sans"
-            style={{
-              backgroundColor: "var(--surface-2)",
-              borderColor: "var(--border)",
-              color: "var(--text)",
-            }}
+            placeholder="Search essays by topic, title, or architecture…"
+            className="w-full min-h-[42px] border rounded-[6px] pl-9 pr-9 py-2 text-sm bg-[var(--surface-2)] border-[var(--border-strong)] text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)] transition-colors font-sans"
             aria-label="Search journal entries"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => onSearchChange("")}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 min-w-[32px] min-h-[32px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
               aria-label="Clear search query"
             >
               <X className="w-4 h-4" />
@@ -58,7 +57,7 @@ export const JournalFilters = memo(function JournalFilters({
 
         <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0">
           <span className="text-xs font-mono text-[var(--text-muted)] tabular-nums">
-            {totalResults} {totalResults === 1 ? "entry" : "entries"}
+            {totalResults} {totalResults === 1 ? "essay" : "essays"}
           </span>
 
           <div className="flex items-center gap-1.5 text-xs font-mono text-[var(--text-muted)]">
@@ -77,7 +76,7 @@ export const JournalFilters = memo(function JournalFilters({
         </div>
       </div>
 
-      {/* Category Filter Tabs */}
+      {/* Category Filter Tabs with layoutId animated indicator */}
       <div
         className="flex flex-wrap items-center gap-1.5 pt-1"
         role="tablist"
@@ -92,15 +91,20 @@ export const JournalFilters = memo(function JournalFilters({
               role="tab"
               aria-selected={isSelected}
               onClick={() => onCategoryChange(cat)}
-              className="px-3 py-1.5 rounded-[6px] text-xs font-mono tracking-wider transition-colors cursor-pointer border"
-              style={{
-                backgroundColor: isSelected ? "#C7E34A" : "var(--surface-2)",
-                borderColor: isSelected ? "#C7E34A" : "var(--border)",
-                color: isSelected ? "#20231D" : "var(--text-muted)",
-                fontWeight: isSelected ? 700 : 500,
-              }}
+              className={`relative px-3 py-1.5 rounded-[6px] text-xs font-mono tracking-wider transition-colors cursor-pointer border ${
+                isSelected
+                  ? "border-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
+                  : "border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
+              }`}
             >
-              {cat}
+              {isSelected && (
+                <motion.span
+                  layoutId={reduced ? undefined : "journalCategoryActiveBg"}
+                  transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                  className="absolute inset-0 rounded-[5px] bg-[var(--accent-fill)] z-0"
+                />
+              )}
+              <span className="relative z-10">{cat}</span>
             </button>
           );
         })}

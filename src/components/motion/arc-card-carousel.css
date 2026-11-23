@@ -26,6 +26,15 @@
   }
 }
 
+@media (max-width: 390px) {
+  .arc-carousel-stage {
+    height: 344px;
+  }
+  .arc-card-slot {
+    width: min(80vw, 290px);
+  }
+}
+
 .arc-card-slot {
   position: absolute;
   width: min(82vw, 355px);

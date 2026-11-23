@@ -6,7 +6,8 @@ let registered = false;
 
 export const MOTION_BREAKPOINTS = {
   desktop: "(min-width: 1024px)",
-  wide: "(min-width: 1280px)",
+  desktopTall: "(min-width: 1024px) and (min-height: 520px)",
+  wide: "(min-width: 1280px) and (min-height: 520px)",
   tabletUp: "(min-width: 768px)",
   mobile: "(max-width: 1023px)",
   reducedMotion: "(prefers-reduced-motion: reduce)",

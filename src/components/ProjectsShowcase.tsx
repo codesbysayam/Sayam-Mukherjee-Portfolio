@@ -256,7 +256,7 @@ function ProjectsShowcaseComponent({
                     {project.shortDescription}
                   </p>
 
-                  <p className="text-xs text-[var(--text-muted)] leading-relaxed border-l-2 border-[var(--accent)] pl-3">
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed rounded-[6px] border border-[var(--border)] bg-[var(--surface)] px-3 py-2">
                     {project.solution}
                   </p>
                 </div>

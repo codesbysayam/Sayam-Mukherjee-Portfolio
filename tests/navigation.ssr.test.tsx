@@ -62,18 +62,26 @@ describe("Portfolio Navigation Tabs, Journal Entries & Interactive Component SSR
     expect(html).not.toContain("Verified Repository Statistics");
   });
 
-  it("renders Skills tab cleanly with all 8 capability groups and without GitHub percentage telemetry", () => {
+  it("renders Skills Observatory cleanly with constellation, capability matrix, project evidence, active learning, and workflow", () => {
     const html = renderWithProviders(<SkillsSection />);
+    expect(html).toContain("Interactive Skill Constellation");
+    expect(html).toContain("CSE · AI/ML");
+    expect(html).toContain("SYSTEMS CORE");
+    expect(html).toContain("System Architecture");
+    expect(html).toContain("Control Planes &amp; Audit");
+    expect(html).toContain("Data Structures &amp; Algorithms");
+    expect(html).toContain("Practical Application");
     expect(html).toContain("Programming Languages");
     expect(html).toContain("Frontend Engineering");
-    expect(html).toContain("Backend Engineering");
-    expect(html).toContain("AI &amp; Machine Learning");
-    expect(html).toContain("Computer Vision");
-    expect(html).toContain("Data &amp; Databases");
-    expect(html).toContain("Developer Tools &amp; Workflow");
+    expect(html).toContain("Backend &amp; Data");
+    expect(html).toContain("Machine Learning &amp; Computer Vision");
+    expect(html).toContain("Development Tools");
     expect(html).toContain("Core Computer Science");
+    expect(html).toContain("Evidence Matrix");
+    expect(html).toContain("Currently Developing");
+    expect(html).toContain("From Idea to Verified Deployment");
     expect(html).not.toContain("LANGUAGES IN PRACTICE");
-    expect(html).not.toContain("Technology → Domain → Project → Repository");
+    expect(html).not.toContain("System Archite…");
   });
 
   it("renders Ecosystem tab cleanly with conceptual architectural patterns instead of a duplicate project directory", () => {

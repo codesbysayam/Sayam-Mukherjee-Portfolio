@@ -55,9 +55,9 @@ function MobileBottomNavComponent({
   return (
     <nav
       aria-label="Mobile Bottom Navigation"
-      className="xl:hidden fixed bottom-0 left-0 right-0 z-40 select-none border-t border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-md text-[var(--text)] pb-[env(safe-area-inset-bottom,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)] shadow-[0_-6px_20px_rgba(32,35,29,0.08)]"
+      className="mobile-bottom-nav xl:hidden fixed bottom-0 left-0 right-0 z-40 select-none border-t border-[var(--border)] bg-[var(--bg)]/95 backdrop-blur-md text-[var(--text)] pb-[env(safe-area-inset-bottom,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)] shadow-[0_-6px_20px_rgba(32,35,29,0.08)]"
     >
-      <div className="w-full min-h-[56px] px-1 sm:px-2 py-1 flex items-center justify-around gap-0.5">
+      <div className="w-full min-h-[52px] px-1 sm:px-2 py-1 flex items-center justify-around gap-0.5">
         {PRIMARY_DESTINATIONS.map((dest) => {
           const isActive = activeTab === dest.id;
           const Icon = dest.icon;
@@ -68,7 +68,7 @@ function MobileBottomNavComponent({
               type="button"
               onClick={() => onNavigate(dest.id)}
               aria-current={isActive ? "page" : undefined}
-              className={`relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[48px] py-1 px-0.5 rounded-[6px] transition-all duration-150 cursor-pointer active:scale-[0.95] ${
+              className={`relative flex flex-col items-center justify-center flex-1 min-w-0 min-h-[44px] py-1 px-0.5 rounded-[6px] transition-all duration-150 cursor-pointer active:scale-[0.95] ${
                 isActive
                   ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
                   : "text-[var(--text-muted)] hover:text-[var(--text)] active:bg-[var(--surface)]"

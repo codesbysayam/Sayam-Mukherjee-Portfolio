@@ -98,10 +98,23 @@ const PROJECT_EVIDENCE_DATA: EvidenceRow[] = [
 
 interface SkillProjectEvidenceProps {
   onSelectProject?: (projectId: string) => void;
+  selectedSkillFilter?: string | null;
+  onSkillFilterChange?: (skill: string | null) => void;
 }
 
-export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidenceProps) {
-  const [selectedSkillFilter, setSelectedSkillFilter] = useState<string | null>(null);
+export function SkillProjectEvidence({
+  onSelectProject,
+  selectedSkillFilter: controlledFilter,
+  onSkillFilterChange,
+}: SkillProjectEvidenceProps) {
+  const [internalFilter, setInternalFilter] = useState<string | null>(null);
+  const selectedSkillFilter =
+    controlledFilter !== undefined ? controlledFilter : internalFilter;
+
+  const setSelectedSkillFilter = (next: string | null) => {
+    setInternalFilter(next);
+    onSkillFilterChange?.(next);
+  };
 
   const keySkills = [
     "TypeScript", "React", "Next.js 15", "Next.js", "FastAPI", "Python",
@@ -109,11 +122,15 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
   ];
 
   const filteredRows = selectedSkillFilter
-    ? PROJECT_EVIDENCE_DATA.filter((r) =>
-        (r.skills || []).some(
-          (s) => s.toLowerCase() === selectedSkillFilter.toLowerCase()
-        )
-      )
+    ? PROJECT_EVIDENCE_DATA.filter((r) => {
+        const needle = selectedSkillFilter.toLowerCase();
+        return (
+          (r.skills || []).some(
+            (s) => s.toLowerCase() === needle || s.toLowerCase().includes(needle) || needle.includes(s.toLowerCase())
+          ) ||
+          r.evidence.toLowerCase().includes(needle)
+        );
+      })
     : PROJECT_EVIDENCE_DATA;
 
   useEffect(() => {
@@ -179,7 +196,24 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
         </div>
       }
     >
-      <StaggerGroup key={selectedSkillFilter || "all"} className="space-y-4">
+      {filteredRows.length === 0 ? (
+        <div className="card p-6 sm:p-8 text-center space-y-3">
+          <p className="text-sm font-semibold text-[var(--text)] font-display">
+            No standalone shipped project card directly matched &ldquo;{selectedSkillFilter}&rdquo;
+          </p>
+          <p className="text-xs text-[var(--text-secondary)]">
+            This foundation supports academic coursework or underlying tooling across the workspace.
+          </p>
+          <button
+            type="button"
+            onClick={() => setSelectedSkillFilter(null)}
+            className="btn btn-secondary !min-h-[36px] !py-1.5 !px-3 !text-xs font-mono"
+          >
+            Show All Verified Projects
+          </button>
+        </div>
+      ) : (
+      <StaggerGroup key={selectedSkillFilter || "all"} immediate className="space-y-4">
         {filteredRows.map((row) => (
           <StaggerItem
             key={row.id}
@@ -244,17 +278,24 @@ export function SkillProjectEvidence({ onSelectProject }: SkillProjectEvidencePr
 
             <div className="flex flex-wrap gap-1.5 pt-1">
               {(row.skills || []).map((s) => (
-                <span
+                <button
                   key={s}
-                  className="px-2 py-0.5 rounded-[4px] text-[11px] font-mono bg-[var(--surface)] text-[var(--text-secondary)] border border-[var(--border)]"
+                  type="button"
+                  onClick={() => setSelectedSkillFilter(selectedSkillFilter === s ? null : s)}
+                  className={`px-2 py-0.5 rounded-[4px] text-[11px] font-mono border cursor-pointer transition-colors ${
+                    selectedSkillFilter?.toLowerCase() === s.toLowerCase()
+                      ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
+                      : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--border-strong)]"
+                  }`}
                 >
                   {s}
-                </span>
+                </button>
               ))}
             </div>
           </StaggerItem>
         ))}
       </StaggerGroup>
+      )}
     </PinnedHeadingSection>
   );
 }

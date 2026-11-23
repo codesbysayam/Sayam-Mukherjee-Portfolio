@@ -1,5 +1,6 @@
 import React, { useState, useMemo, memo } from "react";
-import { SearchX, LayoutGrid, GalleryHorizontalEnd } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { SearchX, LayoutGrid, GalleryHorizontalEnd, BookOpenText } from "lucide-react";
 import { journalEntries } from "../../data/journal";
 import { JournalCard } from "./JournalCard";
 import { JournalFilters } from "./JournalFilters";
@@ -7,6 +8,8 @@ import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal"
 import { ContourBackground } from "../motion/ContourBackground";
 import { MotionSlider } from "../motion/MotionSlider";
 import { EditorialSectionHeader } from "../common/EditorialSectionHeader";
+import { calculateReadingTime } from "../../utils/readingTime";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
 interface JournalListProps {
   onSelectEntry: (slug: string) => void;
@@ -24,10 +27,15 @@ const CATEGORIES = [
 export const JournalList = memo(function JournalList({
   onSelectEntry,
 }: JournalListProps) {
+  const reduced = usePrefersReducedMotion();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
-  const [viewMode, setViewMode] = useState<"slider" | "grid">("slider");
+  const [viewMode, setViewMode] = useState<"slider" | "grid">("grid");
+
+  const totalMinutes = useMemo(() => {
+    return journalEntries.reduce((sum, entry) => sum + calculateReadingTime(entry).minutes, 0);
+  }, []);
 
   const filteredEntries = useMemo(() => {
     let result = [...journalEntries];
@@ -43,8 +51,11 @@ export const JournalList = memo(function JournalList({
     const q = searchQuery.toLowerCase().trim();
     if (q) {
       result = result.filter((entry) => {
-        const fullContentText = entry.content
-          .flatMap((s) => [s.heading || "", ...s.paragraphs])
+        const fullContentText = [
+          entry.subtitle || "",
+          ...(entry.topics || []),
+          ...entry.content.flatMap((s) => [s.heading || "", ...s.paragraphs]),
+        ]
           .join(" ")
           .toLowerCase();
 
@@ -82,22 +93,29 @@ export const JournalList = memo(function JournalList({
   };
 
   return (
-    <div className="space-y-8 max-w-5xl mx-auto">
-      {/* Editorial Masthead Header */}
-      <header className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-4">
+    <div className="space-y-8 w-full max-w-6xl mx-auto">
+      {/* Editorial Publication Masthead */}
+      <header className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-5">
         <ContourBackground density="subtle" />
 
-        <div className="relative z-10">
+        <div className="relative z-10 space-y-5">
           <EditorialSectionHeader
             level="h1"
-            eyebrow="06 · Technical Writing & Field Notes"
+            eyebrow="06 · Technical Writing & Publication"
             title="Engineering"
             italicHighlight="Journal."
-            description="Reflections on software architecture, interface clarity, research exploration, and lessons from building real projects."
+            description="Architecture field notes, post-build engineering reflections, and systems lessons grounded in shipped repositories and university study."
           >
-            <span className="text-xs font-mono text-[var(--text-muted)]">
-              {journalEntries.length} Essays · Sayam Mukherjee
-            </span>
+            <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-mono text-[var(--text-muted)] tabular-nums">
+              <span className="inline-flex items-center gap-1.5 text-[var(--text)] font-semibold">
+                <BookOpenText className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
+                <span>Issues 01–0{journalEntries.length}</span>
+              </span>
+              <span aria-hidden="true">·</span>
+              <span>{journalEntries.length} Published Notes</span>
+              <span aria-hidden="true">·</span>
+              <span>~{totalMinutes} min total reading</span>
+            </div>
           </EditorialSectionHeader>
         </div>
       </header>
@@ -114,20 +132,14 @@ export const JournalList = memo(function JournalList({
       />
 
       {filteredEntries.length === 0 ? (
-        <div
-          className="card py-16 text-center space-y-4 p-8"
-          style={{
-            backgroundColor: "var(--surface-2)",
-            borderColor: "var(--border)",
-          }}
-        >
-          <SearchX className="w-8 h-8 text-[var(--text-faint)] mx-auto" aria-hidden="true" />
+        <div className="card py-14 text-center space-y-4 p-8 bg-[var(--surface-2)] border-[var(--border)]">
+          <SearchX className="w-8 h-8 text-[var(--text-muted)] mx-auto" aria-hidden="true" />
           <div className="space-y-1">
             <h3 className="text-base font-semibold text-[var(--text)] font-display">
-              No journal entries match your search.
+              No journal essays match your search.
             </h3>
             <p className="text-xs text-[var(--text-muted)] font-mono">
-              Try adjusting your query or resetting category filters.
+              Try adjusting your keywords or clearing category filters.
             </p>
           </div>
           <button
@@ -135,11 +147,11 @@ export const JournalList = memo(function JournalList({
             onClick={handleClearFilters}
             className="btn btn-primary text-xs font-mono"
           >
-            Clear Search
+            Reset Discovery Filters
           </button>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-8">
           {featuredEntry && (
             <EditorialReveal immediate className="mb-2">
               <JournalCard
@@ -152,24 +164,11 @@ export const JournalList = memo(function JournalList({
 
           {gridEntries.length > 0 && (
             <div className="space-y-4">
-              <div className="flex items-center justify-between gap-2 text-xs font-mono">
-                <span className="text-[var(--text-muted)] uppercase tracking-wider">
-                  Archive Notes ({gridEntries.length})
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono border-b border-[var(--border)] pb-3">
+                <span className="text-[var(--text-muted)] uppercase tracking-wider font-semibold">
+                  {featuredEntry ? `Issue Archive (${gridEntries.length})` : `Filtered Essays (${gridEntries.length})`}
                 </span>
                 <div className="flex items-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] p-0.5">
-                  <button
-                    type="button"
-                    onClick={() => setViewMode("slider")}
-                    aria-pressed={viewMode === "slider"}
-                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
-                      viewMode === "slider"
-                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
-                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
-                    }`}
-                  >
-                    <GalleryHorizontalEnd className="w-3.5 h-3.5" aria-hidden="true" />
-                    <span>Slider</span>
-                  </button>
                   <button
                     type="button"
                     onClick={() => setViewMode("grid")}
@@ -183,42 +182,73 @@ export const JournalList = memo(function JournalList({
                     <LayoutGrid className="w-3.5 h-3.5" aria-hidden="true" />
                     <span>Grid</span>
                   </button>
+                  <button
+                    type="button"
+                    onClick={() => setViewMode("slider")}
+                    aria-pressed={viewMode === "slider"}
+                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
+                      viewMode === "slider"
+                        ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
+                        : "text-[var(--text-muted)] hover:text-[var(--text)]"
+                    }`}
+                  >
+                    <GalleryHorizontalEnd className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>Slider</span>
+                  </button>
                 </div>
               </div>
 
-              {viewMode === "slider" ? (
-                <MotionSlider
-                  label="Field Notes"
-                  columnsClassName="auto-cols-[90%] sm:auto-cols-[62%] lg:auto-cols-[48%]"
-                >
-                  {gridEntries.map((entry, idx) => (
-                    <JournalCard
-                      key={entry.slug}
-                      entry={entry}
-                      onClick={onSelectEntry}
-                      featured={false}
-                      index={idx}
-                    />
-                  ))}
-                </MotionSlider>
-              ) : (
-                <StaggerGroup
-                  key={`${selectedCategory}-${sortOrder}-${gridEntries.length}`}
-                  stagger={0.045}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6"
-                >
-                  {gridEntries.map((entry, idx) => (
-                    <StaggerItem key={entry.slug} className="h-full">
-                      <JournalCard
-                        entry={entry}
-                        onClick={onSelectEntry}
-                        featured={false}
-                        index={idx}
-                      />
-                    </StaggerItem>
-                  ))}
-                </StaggerGroup>
-              )}
+              <AnimatePresence mode="wait" initial={false}>
+                {viewMode === "slider" ? (
+                  <motion.div
+                    key="journal-slider"
+                    initial={reduced ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduced ? undefined : { opacity: 0, y: -6 }}
+                    transition={{ duration: reduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                  >
+                    <MotionSlider
+                      label="Field Notes"
+                      columnsClassName="auto-cols-[90%] sm:auto-cols-[62%] lg:auto-cols-[48%]"
+                    >
+                      {gridEntries.map((entry, idx) => (
+                        <JournalCard
+                          key={entry.slug}
+                          entry={entry}
+                          onClick={onSelectEntry}
+                          featured={false}
+                          index={idx}
+                        />
+                      ))}
+                    </MotionSlider>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key={`journal-grid-${selectedCategory}-${sortOrder}-${searchQuery}`}
+                    initial={reduced ? false : { opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={reduced ? undefined : { opacity: 0, y: -6 }}
+                    transition={{ duration: reduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                  >
+                    <StaggerGroup
+                      immediate
+                      stagger={0.04}
+                      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5"
+                    >
+                      {gridEntries.map((entry, idx) => (
+                        <StaggerItem key={entry.slug} className="h-full">
+                          <JournalCard
+                            entry={entry}
+                            onClick={onSelectEntry}
+                            featured={false}
+                            index={idx}
+                          />
+                        </StaggerItem>
+                      ))}
+                    </StaggerGroup>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           )}
         </div>

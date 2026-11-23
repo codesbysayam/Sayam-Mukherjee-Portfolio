@@ -44,17 +44,27 @@ export function HorizontalNarrative({
   const activeStepRef = useRef(0);
   const [activeStep, setActiveStep] = useState(0);
   const [mobileStep, setMobileStep] = useState(0);
+  const [isTallDesktop, setIsTallDesktop] = useState(true);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mq = window.matchMedia(MOTION_BREAKPOINTS.desktopTall);
+    const sync = () => setIsTallDesktop(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   useEffect(() => {
     const wrapper = wrapperRef.current;
     const viewport = viewportRef.current;
     const track = trackRef.current;
-    if (!wrapper || !viewport || !track || reduced || stops.length < 2) return;
+    if (!wrapper || !viewport || !track || reduced || !isTallDesktop || stops.length < 2) return;
 
     ensureGsapRegistered();
 
     const mm = gsap.matchMedia();
-    mm.add(MOTION_BREAKPOINTS.desktop, () => {
+    mm.add(MOTION_BREAKPOINTS.desktopTall, () => {
       const getShift = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
       if (getShift() <= 8) return;
 
@@ -86,7 +96,7 @@ export function HorizontalNarrative({
     });
 
     return () => mm.revert();
-  }, [stops.length, reduced]);
+  }, [stops.length, reduced, isTallDesktop]);
 
   const scrollMobileTo = (targetIndex: number) => {
     const track = mobileTrackRef.current;
@@ -146,10 +156,10 @@ export function HorizontalNarrative({
 
   return (
     <section className={`space-y-5 ${className}`}>
-      {/* Desktop Pinned Horizontal Stage */}
+      {/* Desktop Pinned Horizontal Stage (hidden in short-landscape viewports) */}
       <div
         ref={wrapperRef}
-        className="hidden lg:block rounded-[12px] border border-[var(--border-strong)] bg-[var(--surface-2)] p-6 space-y-5 overflow-hidden"
+        className={`${isTallDesktop ? "hidden lg:block" : "hidden"} rounded-[12px] border border-[var(--border-strong)] bg-[var(--surface-2)] p-6 space-y-5 overflow-hidden`}
       >
         <div className="flex items-end justify-between gap-4 border-b border-[var(--border)] pb-4">
           <div className="space-y-1">
@@ -220,8 +230,8 @@ export function HorizontalNarrative({
         </div>
       </div>
 
-      {/* Tablet / Mobile Touch Scroll-Snap Fallback with Keyboard Controls */}
-      <div className="lg:hidden space-y-3">
+      {/* Tablet / Mobile / Short-Landscape Touch Scroll-Snap Fallback with Keyboard Controls */}
+      <div className={`${isTallDesktop ? "lg:hidden" : "block"} space-y-3`}>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
             <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[var(--accent)] font-semibold block">

@@ -20,7 +20,9 @@ import {
   FolderGit2,
   X,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { EditorialReveal } from "../../motion/Reveal";
+import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
 interface EngineeringStackSectionProps {
   selectedTech?: string | null;
@@ -49,6 +51,7 @@ export function EngineeringStackSection({
   onSelectTech,
   onNavigateToProject,
 }: EngineeringStackSectionProps) {
+  const reduced = usePrefersReducedMotion();
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -211,8 +214,14 @@ export function EngineeringStackSection({
       </div>
 
       {/* Inline Verified Project Evidence Panel */}
+      <AnimatePresence mode="wait" initial={false}>
       {selectedDetail && (
-        <div
+        <motion.div
+          key={selectedDetail.item.id}
+          initial={reduced ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={reduced ? undefined : { opacity: 0, y: -6 }}
+          transition={{ duration: reduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
           className="card p-5 space-y-4 border border-[var(--accent)] bg-[var(--surface-2)]"
           role="region"
           aria-label={`Verified evidence for ${selectedDetail.item.name}`}
@@ -310,8 +319,9 @@ export function EngineeringStackSection({
               Verified academic engineering foundation at KIIT University (B.Tech CSE) rather than a standalone deployed web repository.
             </div>
           )}
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* Equal-Height 6-Category Technology Grid */}
       {filteredGroups.length === 0 ? (
@@ -328,13 +338,22 @@ export function EngineeringStackSection({
         </div>
       ) : (
         <div className="technology-grid">
+          <AnimatePresence mode="popLayout" initial={false}>
           {filteredGroups.map((group) => {
             const icon = CATEGORY_ICONS[group.id] || (
               <Code2 className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />
             );
 
             return (
-              <article key={group.id} className="card technology-card">
+              <motion.article
+                key={group.id}
+                layout={!reduced}
+                initial={reduced ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduced ? undefined : { opacity: 0, scale: 0.98 }}
+                transition={{ duration: reduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
+                className="card technology-card"
+              >
                 <div className="space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-start gap-2.5 min-w-0">
@@ -382,9 +401,10 @@ export function EngineeringStackSection({
                     );
                   })}
                 </div>
-              </article>
+              </motion.article>
             );
           })}
+          </AnimatePresence>
         </div>
       )}
     </section>

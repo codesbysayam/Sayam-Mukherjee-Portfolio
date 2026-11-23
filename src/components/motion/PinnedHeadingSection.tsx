@@ -40,7 +40,7 @@ export function PinnedHeadingSection({
     ensureGsapRegistered();
 
     const mm = gsap.matchMedia();
-    mm.add(MOTION_BREAKPOINTS.desktop, () => {
+    mm.add(MOTION_BREAKPOINTS.desktopTall, () => {
       const distance = () =>
         Math.max(0, contentEl.offsetHeight - pinEl.offsetHeight);
 
@@ -74,7 +74,7 @@ export function PinnedHeadingSection({
       ref={sectionRef}
       className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start ${className}`}
     >
-      <div ref={pinColumnRef} className="lg:col-span-5 min-w-0">
+      <div ref={pinColumnRef} className="desktop-only-pinning lg:col-span-5 min-w-0">
         {heading}
       </div>
       <div ref={contentColumnRef} className="lg:col-span-7 min-w-0">

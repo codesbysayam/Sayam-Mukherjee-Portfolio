@@ -75,9 +75,12 @@ const ROUTE_CHAPTERS: Partial<Record<string, ChapterAnchor[]>> = {
     { id: "about-experience", code: "02", label: "Experience" },
   ],
   skills: [
-    { id: "skills-hero", code: "00", label: "Overview" },
-    { id: "capability-index", code: "01", label: "Capabilities" },
-    { id: "skills-context", code: "02", label: "Practice" },
+    { id: "skills-hero", code: "00", label: "Observatory" },
+    { id: "skill-constellation", code: "01", label: "Constellation" },
+    { id: "capability-index", code: "02", label: "Matrix" },
+    { id: "skill-evidence", code: "03", label: "Practice" },
+    { id: "currently-developing", code: "04", label: "Learning" },
+    { id: "engineering-workflow", code: "05", label: "Workflow" },
   ],
   ecosystem: [
     { id: "ecosystem-hero", code: "00", label: "Architecture" },
@@ -114,6 +117,16 @@ function AppContent() {
         })
         .catch(() => {});
     }
+
+    const handleViewportRecalc = () => {
+      requestScrollTriggerRefresh(140);
+    };
+    window.addEventListener("resize", handleViewportRecalc, { passive: true });
+    window.addEventListener("orientationchange", handleViewportRecalc, { passive: true });
+    return () => {
+      window.removeEventListener("resize", handleViewportRecalc);
+      window.removeEventListener("orientationchange", handleViewportRecalc);
+    };
   }, []);
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -501,13 +514,13 @@ function AppContent() {
             <button
               type="button"
               onClick={() => navigateToTab("home")}
-              className="flex items-center gap-2.5 text-left shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
+              className="flex items-center gap-2 sm:gap-2.5 text-left min-w-0 shrink cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)] rounded-[4px] py-1 active:opacity-80 active:scale-[0.98] transition-all"
               aria-label="Sayam Mukherjee Home"
             >
               <span className="w-8 h-8 rounded-[6px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-display font-extrabold text-xs flex items-center justify-center tracking-tight shrink-0">
                 SM
               </span>
-              <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none whitespace-nowrap">
+              <span className="font-display text-xs sm:text-base font-extrabold tracking-[0.04em] uppercase text-[var(--text)] leading-none truncate">
                 Sayam Mukherjee
               </span>
             </button>
