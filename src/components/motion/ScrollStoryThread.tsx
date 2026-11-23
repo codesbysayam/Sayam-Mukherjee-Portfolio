@@ -10,12 +10,8 @@ export interface ChapterAnchor {
 
 export const HOME_CHAPTERS: ChapterAnchor[] = [
   { id: "hero", code: "00", label: "Intro" },
-  { id: "home-about-chapter", code: "01", label: "About" },
-  { id: "home-work-chapter", code: "02", label: "Work" },
-  { id: "home-duality-chapter", code: "03", label: "Explore" },
-  { id: "live-build-feed", code: "04", label: "GitHub" },
-  { id: "credentials-home-preview", code: "05", label: "Proof" },
-  { id: "faq-section", code: "06", label: "FAQ" },
+  { id: "home-about-chapter", code: "01", label: "Perspective" },
+  { id: "home-index-chapter", code: "02", label: "Directory" },
 ];
 
 interface ScrollStoryThreadProps {

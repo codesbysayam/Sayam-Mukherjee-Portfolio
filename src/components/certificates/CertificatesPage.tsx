@@ -3,26 +3,18 @@ import { motion, AnimatePresence } from "motion/react";
 import { Certificate, CertificateCategory, CertificateStats } from "../../types/certificates";
 import { INITIAL_CERTIFICATES } from "../../data/initialCertificates";
 import AchievementGrid from "./AchievementGrid";
-import { AchievementCard } from "./AchievementCard";
 import CertificateViewerModal from "./CertificateViewerModal";
 import AcademicRecord from "../AcademicRecord";
-import { LineReveal, StaggerGroup, StaggerItem, EditorialReveal } from "../../motion/Reveal";
+import { LineReveal, EditorialReveal } from "../../motion/Reveal";
 import { ContourBackground } from "../motion/ContourBackground";
-import { MotionSlider } from "../motion/MotionSlider";
-import { SectionHeading } from "../ui/SectionHeading";
+import { EditorialSectionHeader } from "../common/EditorialSectionHeader";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 import {
-  Award,
   Search,
   RotateCcw,
-  Trophy,
-  Layers,
   X,
   ChevronDown,
   ArrowUpDown,
-  BookOpen,
-  GraduationCap,
-  Sparkles,
 } from "lucide-react";
 
 export default function CertificatesPage() {
@@ -216,66 +208,6 @@ export default function CertificatesPage() {
     setSearchQuery("");
   };
 
-  const statCards = useMemo(() => {
-    const items = [
-      {
-        label: "Total Credentials",
-        count: certificates.length,
-        icon: Award,
-        category: "ALL" as CertificateCategory,
-      },
-      {
-        label: "Competitions",
-        count: stats.competitions,
-        icon: Trophy,
-        category: "COMPETITIONS" as CertificateCategory,
-      },
-      {
-        label: "Achievements",
-        count: stats.achievements,
-        icon: BookOpen,
-        category: "ACHIEVEMENTS" as CertificateCategory,
-      },
-    ];
-
-    if (stats.academic && stats.academic > 0) {
-      items.push({
-        label: "Grade Reports",
-        count: stats.academic,
-        icon: GraduationCap,
-        category: "ACADEMIC RECORD" as CertificateCategory,
-      });
-    }
-
-    if (stats.technical > 0) {
-      items.push({
-        label: "Certifications",
-        count: stats.technical,
-        icon: Layers,
-        category: "CERTIFICATIONS" as CertificateCategory,
-      });
-    }
-
-    const workshopsCount = certificates.filter(
-      (c) => c.category.toUpperCase() === "WORKSHOPS" || c.category.toUpperCase() === "WORKSHOP"
-    ).length;
-    if (workshopsCount > 0) {
-      items.push({
-        label: "Workshops",
-        count: workshopsCount,
-        icon: Sparkles,
-        category: "WORKSHOPS" as CertificateCategory,
-      });
-    }
-
-    return items;
-  }, [certificates, stats.competitions, stats.achievements, stats.academic, stats.technical]);
-
-  const featuredCertificates = useMemo(
-    () => certificates.filter((c) => c.featured),
-    [certificates]
-  );
-
   const CATEGORIES: { id: CertificateCategory; label: string }[] = useMemo(() => {
     const list: { id: CertificateCategory; label: string }[] = [
       { id: "ALL", label: "All Credentials" },
@@ -308,15 +240,12 @@ export default function CertificatesPage() {
         <ContourBackground density="subtle" />
 
         <div className="relative z-10">
-          <SectionHeading
+          <EditorialSectionHeader
             level="h1"
-            immediate
-            index="05"
-            eyebrow="Credentials & Milestones"
+            eyebrow="05 · Credentials & Academic Records"
             title="Certificates &"
-            italicHighlight="Achievements."
-            description="A verified ledger of technical certifications, national competition honours, academic transcripts, and documented engineering milestones."
-            withDivider={false}
+            italicHighlight="verified milestones."
+            description="An organized ledger of academic transcripts, competition honors, and verified technical credentials with issuer details and source records."
           />
         </div>
       </header>
@@ -326,93 +255,20 @@ export default function CertificatesPage() {
         <AcademicRecord />
       </div>
 
-      {/* 3. Credentials Vault */}
+      {/* 3. Credentials Ledger */}
       <section
         className="space-y-6 pt-8 scroll-mt-24"
         id="credentials-vault"
       >
         <LineReveal />
         <EditorialReveal>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
-              <Trophy className="w-4 h-4 shrink-0" />
-              <span>Competitions &amp; Verified Credentials</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)] font-display">
-              Competitions &amp;{" "}
-              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-                Milestones
-              </span>
-            </h2>
-            <p className="text-sm text-[var(--text-muted)]">
-              Verified national hackathons, research pathways, and athletic achievements.
-            </p>
-          </div>
+          <EditorialSectionHeader
+            eyebrow="Archival Ledger"
+            title="Competitions &"
+            italicHighlight="credentials."
+            description="Filter by category, issuer, or year, or inspect full credential documents."
+          />
         </EditorialReveal>
-
-        {/* Stat Filter Cards */}
-        <StaggerGroup
-          stagger={0.04}
-          className={`grid grid-cols-1 sm:grid-cols-3 ${
-            statCards.length >= 4 ? "lg:grid-cols-4" : ""
-          } gap-3 sm:gap-4`}
-        >
-          {statCards.map((item, idx) => {
-            const Icon = item.icon;
-            const isSelected = selectedCategory === item.category;
-
-            return (
-              <StaggerItem key={idx}>
-                <motion.button
-                  type="button"
-                  whileTap={prefersReduced ? undefined : { scale: 0.985 }}
-                  onClick={() => setSelectedCategory(item.category)}
-                  className="w-full h-full rounded-[10px] p-4 sm:p-5 flex flex-col justify-between space-y-2.5 transition-colors text-left border cursor-pointer"
-                  style={{
-                    backgroundColor: isSelected ? "#20231D" : "var(--surface-2)",
-                    borderColor: isSelected ? "#C7E34A" : "var(--border)",
-                    color: isSelected ? "#F4F4ED" : "var(--text)",
-                  }}
-                >
-                  <div className="flex items-center justify-between w-full">
-                    <span
-                      className="text-xs font-mono uppercase tracking-wider"
-                      style={{ color: isSelected ? "#D4D6CA" : "var(--text-muted)" }}
-                    >
-                      {item.label}
-                    </span>
-                    <Icon
-                      className="w-4 h-4 shrink-0"
-                      style={{ color: isSelected ? "#C7E34A" : "var(--accent)" }}
-                    />
-                  </div>
-                  <div className="text-2xl sm:text-3xl font-extrabold tracking-tight tabular-nums font-display">
-                    {item.count}
-                  </div>
-                </motion.button>
-              </StaggerItem>
-            );
-          })}
-        </StaggerGroup>
-
-        {/* Featured Credentials Horizontal Spotlight */}
-        {featuredCertificates.length > 0 && (
-          <div className="pt-2">
-            <MotionSlider
-              label="Featured Credentials"
-              columnsClassName="auto-cols-[90%] sm:auto-cols-[58%] lg:auto-cols-[46%]"
-            >
-              {featuredCertificates.map((cert) => (
-                <AchievementCard
-                  key={cert.id}
-                  record={cert}
-                  onView={(c) => setViewingCertificate(c)}
-                  className="h-full"
-                />
-              ))}
-            </MotionSlider>
-          </div>
-        )}
 
         {/* Filter Controls */}
         <div

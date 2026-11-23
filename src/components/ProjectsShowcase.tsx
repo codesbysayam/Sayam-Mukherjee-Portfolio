@@ -8,9 +8,8 @@ import { Search, X, Code2 } from "lucide-react";
 import { FeaturedProject } from "./projects/FeaturedProject";
 import { ProjectCard } from "./projects/ProjectCard";
 import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
-import { ProjectStatsOverview } from "./projects/ProjectStatsOverview";
 import { StaggerGroup, StaggerItem } from "../motion/Reveal";
-import { SectionHeading } from "./ui/SectionHeading";
+import { EditorialSectionHeader } from "./common/EditorialSectionHeader";
 import { ContourBackground } from "./motion/ContourBackground";
 import { ArcCardCarousel } from "./motion/ArcCardCarousel";
 import { requestScrollTriggerRefresh } from "../motion/gsapRegistry";
@@ -46,7 +45,7 @@ function ProjectsShowcaseComponent({
     requestScrollTriggerRefresh(80);
   }, [selectedCategory, selectedTech, searchQuery]);
 
-  const { repos, stats, user, snapshot, loading: githubLoading } = useGithub();
+  const { repos } = useGithub();
 
   const repoMap = useMemo(() => {
     const map: Record<string, GitHubRepo> = {};
@@ -191,40 +190,28 @@ function ProjectsShowcaseComponent({
       >
         <ContourBackground density="subtle" />
 
-        <div className="relative z-10 space-y-5">
-          <SectionHeading
+        <div className="relative z-10 space-y-4">
+          <EditorialSectionHeader
             level="h1"
-            immediate
-            index="02"
-            eyebrow="Engineering Archive · 8 Verified Codebases"
+            eyebrow="02 · Selected Work"
             title="Engineering Projects"
-            italicHighlight="& software systems."
-            description="Multi-agent platforms, weather & hazard intelligence, real-time YOLOv8 computer vision, mechanistic memory labs, control planes, and synced C++ algorithms—every card backed directly by a public GitHub repository."
-            withDivider={false}
-          />
-
-          <div className="flex items-center gap-2.5 text-xs font-mono text-[var(--text-muted)] pt-3 border-t border-[var(--border)] flex-wrap tabular-nums">
-            <span className="font-semibold text-[var(--text)]">{PROJECTS.length} Verified Systems</span>
-            <span aria-hidden="true">·</span>
-            <span className="text-[var(--accent)] font-semibold">Live GitHub Telemetry</span>
-            <span aria-hidden="true">·</span>
-            <span>{user?.public_repos || 11} Public Repositories Total</span>
-            <span className="hidden sm:inline" aria-hidden="true">·</span>
-            <span className="hidden sm:inline">AI / ML · Full-Stack · Systems · DSA</span>
-          </div>
+            italicHighlight="& case studies."
+            description="Systems built across autonomous workflows, climate intelligence, computer vision, mechanistic interpretability, and full-stack software—each linked directly to source code and live deployments."
+          >
+            <button
+              type="button"
+              onClick={() =>
+                window.dispatchEvent(
+                  new CustomEvent("portfolio-navigate-tab", { detail: "github" })
+                )
+              }
+              className="text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--accent)] underline cursor-pointer"
+            >
+              GitHub Telemetry &amp; Feed ↗
+            </button>
+          </EditorialSectionHeader>
         </div>
       </section>
-
-      {/* 2. PROJECT STATS METRICS OVERVIEW */}
-      <div id="projects-overview">
-        <ProjectStatsOverview
-          repos={repos}
-          stats={stats}
-          user={user}
-          snapshot={snapshot}
-          loading={githubLoading}
-        />
-      </div>
 
       {/* 3. FEATURED PROJECT */}
       {selectedCategory === "ALL" && !searchQuery.trim() && (

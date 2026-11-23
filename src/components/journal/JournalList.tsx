@@ -1,13 +1,12 @@
 import React, { useState, useMemo, memo } from "react";
-import { SearchX, Clock, LayoutGrid, GalleryHorizontalEnd } from "lucide-react";
+import { SearchX, LayoutGrid, GalleryHorizontalEnd } from "lucide-react";
 import { journalEntries } from "../../data/journal";
 import { JournalCard } from "./JournalCard";
 import { JournalFilters } from "./JournalFilters";
-import { calculateReadingTime, STANDARD_READING_SPEED_WPM } from "../../utils/readingTime";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 import { ContourBackground } from "../motion/ContourBackground";
 import { MotionSlider } from "../motion/MotionSlider";
-import { SectionHeading } from "../ui/SectionHeading";
+import { EditorialSectionHeader } from "../common/EditorialSectionHeader";
 
 interface JournalListProps {
   onSelectEntry: (slug: string) => void;
@@ -82,54 +81,24 @@ export const JournalList = memo(function JournalList({
     setSelectedCategory("All");
   };
 
-  const totalReadingStats = useMemo(() => {
-    let totalMinutes = 0;
-    let totalWords = 0;
-    for (const entry of journalEntries) {
-      const s = calculateReadingTime(entry);
-      totalMinutes += s.minutes;
-      totalWords += s.words;
-    }
-    return { totalMinutes, totalWords };
-  }, []);
-
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       {/* Editorial Masthead Header */}
-      <header className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-5">
+      <header className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-4">
         <ContourBackground density="subtle" />
 
-        <div className="relative z-10 space-y-5">
-          <SectionHeading
+        <div className="relative z-10">
+          <EditorialSectionHeader
             level="h1"
-            immediate
-            index="06"
-            eyebrow="Technical Field Notes · Observations & Systems Design"
+            eyebrow="06 · Technical Writing & Field Notes"
             title="Engineering"
             italicHighlight="Journal."
-            description="Personal reflections on software architecture, interface craft, academic rigor, and machine learning experiments. Authentic engineering observations written directly from practice."
-            rightSlot={
-              <span className="text-xs font-mono text-[var(--text-muted)]">
-                Written by Sayam Mukherjee
-              </span>
-            }
-            withDivider={false}
-          />
-
-          {/* Reading stats */}
-          <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 pt-3 border-t border-[var(--border)] text-xs font-mono text-[var(--text-muted)]">
-            <span className="inline-flex items-center gap-1.5 text-[var(--text-secondary)] font-semibold tabular-nums">
-              <Clock className="w-3.5 h-3.5 text-[var(--accent)]" aria-hidden="true" />
-              <span>
-                ~{totalReadingStats.totalMinutes} mins total reading time (
-                {totalReadingStats.totalWords} words)
-              </span>
+            description="Reflections on software architecture, interface clarity, research exploration, and lessons from building real projects."
+          >
+            <span className="text-xs font-mono text-[var(--text-muted)]">
+              {journalEntries.length} Essays · Sayam Mukherjee
             </span>
-            <span aria-hidden="true">·</span>
-            <span className="text-[var(--text-faint)]">
-              Estimated at standard {STANDARD_READING_SPEED_WPM} WPM
-            </span>
-          </div>
+          </EditorialSectionHeader>
         </div>
       </header>
 

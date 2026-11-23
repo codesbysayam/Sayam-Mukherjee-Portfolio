@@ -169,6 +169,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
     q.includes("kiit") ||
     q.includes("college") ||
     q.includes("university") ||
+    q.includes("semester") ||
     q.includes("b.tech") ||
     (q.includes("where") && (q.includes("study") || q.includes("studied") || q.includes("studying"))) ||
     (q.includes("what") && (q.includes("study") || q.includes("degree") || q.includes("major")))

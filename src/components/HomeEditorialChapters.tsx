@@ -1,676 +1,181 @@
-import React, { useMemo, useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { ArrowRight, ArrowUpRight, Github, Code2, Cpu, Tv, Trophy, Sparkles } from "lucide-react";
-import { PROJECTS, ProjectItem } from "../data/projects";
-import { getProjectMedia } from "../data/projectMedia";
-import { useGithub } from "../hooks/useGithub";
-import { ProjectCaseStudyModal } from "./projects/ProjectCaseStudyModal";
-import { ProjectMedia } from "./projects/ProjectMedia";
-import { computeProjectLifecycle } from "../utils/projectLifecycle";
-import {
-  EditorialReveal,
-  MagneticAction,
-  MaskMediaReveal,
-  StaggerGroup,
-  StaggerItem,
-  TextMaskReveal,
-} from "../motion/Reveal";
-import { ContourBackground } from "./motion/ContourBackground";
-import { FocusFrame } from "./motion/FocusFrame";
-import { EngineeringProfile } from "./about/EngineeringProfile";
-import { SectionHeading } from "./ui/SectionHeading";
-import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../motion/tokens";
+import React from "react";
+import { ArrowRight } from "lucide-react";
+import { EditorialReveal, StaggerGroup, StaggerItem, TextMaskReveal } from "../motion/Reveal";
+import { EditorialSectionHeader } from "./common/EditorialSectionHeader";
+
+export type HomeNavTarget =
+  | "about"
+  | "projects"
+  | "skills"
+  | "ecosystem"
+  | "certificates"
+  | "journal"
+  | "showcase"
+  | "contact";
 
 interface HomeEditorialChaptersProps {
-  onNavigateTab: (
-    tab: "about" | "projects" | "skills" | "ecosystem" | "journal" | "showcase" | "contact"
-  ) => void;
+  onNavigateTab: (tab: HomeNavTarget) => void;
 }
 
-const CONSTELLATION_SKILLS = [
+const DIRECTORY_ITEMS: Array<{
+  index: string;
+  tab: HomeNavTarget;
+  title: string;
+  subtitle: string;
+  actionLabel: string;
+}> = [
   {
-    id: "typescript",
-    label: "TypeScript",
-    note: "Type-safe full-stack UI & state planes",
-    matchTerms: ["TypeScript", "Next.js", "React"],
+    index: "01",
+    tab: "projects",
+    title: "Selected Projects",
+    subtitle:
+      "Case studies, architecture notes, screenshots, and source repositories across full-stack, AI, and systems work.",
+    actionLabel: "View Projects",
   },
   {
-    id: "python",
-    label: "Python",
-    note: "FastAPI inference services & numerical analysis",
-    matchTerms: ["Python", "FastAPI", "YOLOv8"],
+    index: "02",
+    tab: "skills",
+    title: "Technical Capabilities",
+    subtitle:
+      "Structured capability index spanning programming languages, frontend & backend engineering, ML, computer vision, and core CS.",
+    actionLabel: "Explore Skills",
   },
   {
-    id: "ai-agents",
-    label: "Multi-Agent & ML",
-    note: "Human-in-the-loop governance & recurrent state",
-    matchTerms: ["Multi-Agent", "AI", "Neural", "Recurrent", "In-Context", "YOLOv8"],
+    index: "03",
+    tab: "ecosystem",
+    title: "Systems & Architecture",
+    subtitle:
+      "How data flow, API boundaries, state transitions, human-in-the-loop gates, and failure recovery come together in practice.",
+    actionLabel: "Read Principles",
   },
   {
-    id: "cpp",
-    label: "C++ & DSA",
-    note: "Low-overhead algorithmic foundations",
-    matchTerms: ["C++", "Algorithms", "Data Structures"],
+    index: "04",
+    tab: "journal",
+    title: "Engineering Journal",
+    subtitle:
+      "Long-form reflections on building software, product lessons, research experiments, and design clarity.",
+    actionLabel: "Read Essays",
   },
   {
-    id: "visualization",
-    label: "D3 & Telemetry",
-    note: "Interactive scientific charts & live canvases",
-    matchTerms: ["D3", "KaTeX", "Canvas", "Visualization", "Telemetry"],
+    index: "05",
+    tab: "certificates",
+    title: "Credentials & Academic Record",
+    subtitle:
+      "Verified competition milestones, technical certificates, and academic transcripts.",
+    actionLabel: "Inspect Records",
   },
-] as const;
+  {
+    index: "06",
+    tab: "contact",
+    title: "Contact & Collaboration",
+    subtitle:
+      "Direct email channels and inquiry form for engineering internships, product builds, and technical conversations.",
+    actionLabel: "Get in Touch",
+  },
+];
 
 export const HomeEditorialChapters: React.FC<HomeEditorialChaptersProps> = ({
   onNavigateTab,
 }) => {
-  const { repos } = useGithub();
-  const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
-  const [activeSkillId, setActiveSkillId] = useState<string>(CONSTELLATION_SKILLS[0].id);
-  const reduced = usePrefersReducedMotion();
-
-  const featuredLead = PROJECTS.find((p) => p.id === "operon") || PROJECTS[0];
-  const secondaryFeatured = PROJECTS.filter((p) =>
-    ["mausam", "sightforge", "memory-in-motion"].includes(p.id)
-  );
-  const homeFeaturedPool = [featuredLead, ...secondaryFeatured];
-
-  const findRepoForProject = (project: ProjectItem) => {
-    const repoName = (project.githubRepoName || project.repository || "").toLowerCase();
-    return repos.find((r) => r.name.toLowerCase() === repoName) || null;
-  };
-
-  const activeSkill = useMemo(
-    () => CONSTELLATION_SKILLS.find((s) => s.id === activeSkillId) || CONSTELLATION_SKILLS[0],
-    [activeSkillId]
-  );
-
-  const connectedProjects = useMemo(() => {
-    return PROJECTS.filter((project) => {
-      const haystack = [
-        ...project.techStack,
-        project.categoryFilter,
-        project.shortDescription,
-        project.subtitle,
-      ]
-        .join(" ")
-        .toLowerCase();
-      return activeSkill.matchTerms.some((term) => haystack.includes(term.toLowerCase()));
-    });
-  }, [activeSkill]);
-
   return (
     <>
-      {/* ====================================================================
-          CHAPTER 01: OPEN EDITORIAL ABOUT SPREAD (UNBOXED PAPER RHYTHM)
-          ==================================================================== */}
+      {/* 01. PERSONAL STATEMENT & APPROACH */}
       <section
         id="home-about-chapter"
         aria-labelledby="home-about-heading"
-        className="relative overflow-hidden w-full border-t border-[var(--border)] py-12 sm:py-16 lg:py-24"
+        className="w-full border-t border-[var(--border)] py-12 sm:py-16"
       >
-        <ContourBackground density="subtle" />
-
-        <div className="relative z-10 mx-auto w-full max-w-[1680px] grid grid-cols-1 lg:grid-cols-[minmax(0,1.08fr)_minmax(380px,0.82fr)] xl:grid-cols-[minmax(0,1.06fr)_minmax(440px,0.84fr)] 2xl:grid-cols-[minmax(0,1.08fr)_minmax(490px,0.85fr)] gap-10 lg:gap-12 xl:gap-16 items-center">
-          <div className="min-w-0 space-y-6 sm:space-y-7">
-            <EditorialReveal delay={0}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          <div className="lg:col-span-5 space-y-3">
+            <EditorialReveal>
               <span className="inline-block editorial-overline text-[var(--accent)]">
-                01 / A Little About Me
+                01 · Perspective
               </span>
             </EditorialReveal>
-
             <h2
               id="home-about-heading"
-              className="font-display font-extrabold text-[clamp(2.25rem,5.8vw,2.75rem)] md:text-[clamp(2.75rem,5.6vw,3.45rem)] lg:text-[clamp(3.2rem,4.3vw,4.6rem)] leading-[1.03] tracking-[-0.04em] text-[var(--text)] text-balance"
+              className="font-display font-extrabold text-[clamp(1.85rem,3.6vw,3rem)] leading-[1.08] tracking-[-0.03em] text-[var(--text)] text-balance"
             >
-              <TextMaskReveal immediate={false}>Building systems from</TextMaskReveal>{" "}
+              <TextMaskReveal immediate={false}>Building software from</TextMaskReveal>{" "}
               <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-                first principles
-              </span>{" "}
-              with disciplined execution.
+                first principles.
+              </span>
             </h2>
+          </div>
 
-            <EditorialReveal delay={0.1}>
-              <p className="text-[15.5px] sm:text-[17px] lg:text-[18px] leading-[1.65] text-[var(--text-secondary)] max-w-[65ch]">
-                I am a 2nd-year Computer Science &amp; Engineering (AI &amp; ML) undergraduate at KIIT University, Bhubaneswar, originally from Hooghly, West Bengal. Alongside maintaining a 9.06 first-year CGPA, I engineer full-stack React and TypeScript systems, multi-agent human-in-the-loop workflows, and daily C++ algorithmic implementations.
+          <div className="lg:col-span-7 space-y-5">
+            <EditorialReveal delay={0.08}>
+              <p className="text-base sm:text-[17px] leading-[1.7] text-[var(--text-secondary)] max-w-[64ch]">
+                I am a Computer Science &amp; Engineering undergraduate specializing in AI &amp; ML at KIIT University, originally from Hooghly, West Bengal. My work sits at the intersection of clear interface engineering, predictable backend contracts, and applied machine learning.
+              </p>
+              <p className="mt-4 text-sm sm:text-base leading-[1.7] text-[var(--text-muted)] max-w-[64ch]">
+                Whether designing human-gated agent workflows, unifying public weather streams, or practicing algorithmic efficiency in C++, I care about systems that remain transparent to the people using them.
               </p>
             </EditorialReveal>
 
-            {/* Hairline Editorial Ledger Rows */}
-            <StaggerGroup
-              stagger={0.07}
-              delayChildren={0.12}
-              className="border-t border-b border-[var(--border)] divide-y divide-[var(--border)] max-w-[64ch]"
-            >
-              <StaggerItem className="hairline-row py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-6">
-                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] shrink-0">
-                  Academic Benchmark
-                </span>
-                <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 sm:justify-end sm:text-right">
-                  <span className="text-2xl sm:text-[1.75rem] font-extrabold font-display tabular-nums text-[var(--text)]">
-                    9.06
-                  </span>
-                  <span className="text-xs font-mono text-[var(--text-muted)]">
-                    / 10.0 CGPA · Year 1 · KIIT CSE (AI &amp; ML)
-                  </span>
-                </div>
-              </StaggerItem>
-
-              <StaggerItem className="hairline-row py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1.5 sm:gap-6">
-                <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-[var(--text-muted)] shrink-0">
-                  Verified Engineering Output
-                </span>
-                <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-0.5 sm:justify-end sm:text-right">
-                  <span className="text-2xl sm:text-[1.75rem] font-extrabold font-display tabular-nums text-[var(--accent)]">
-                    {PROJECTS.length} Builds
-                  </span>
-                  <span className="text-xs font-mono text-[var(--text-muted)]">
-                    Mapped directly to public repositories
-                  </span>
-                </div>
-              </StaggerItem>
-            </StaggerGroup>
-
-            <EditorialReveal delay={0.2}>
-              <div className="pt-1 flex flex-wrap items-center gap-4">
-                <MagneticAction strength={0.16}>
-                  <button
-                    type="button"
-                    onClick={() => onNavigateTab("about")}
-                    className="btn btn-primary group"
-                  >
-                    <span>Read Full Story</span>
-                    <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-                  </button>
-                </MagneticAction>
+            <EditorialReveal delay={0.14}>
+              <div className="pt-2 flex flex-wrap items-center gap-6">
                 <button
                   type="button"
-                  onClick={() => onNavigateTab("skills")}
-                  className="inline-flex items-center gap-2 min-h-[44px] px-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors cursor-pointer"
+                  onClick={() => onNavigateTab("about")}
+                  className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer group min-h-[40px]"
                 >
-                  <span>Inspect Technical Stack</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>Read Full Background</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
                 </button>
               </div>
             </EditorialReveal>
           </div>
-
-          <EditorialReveal delay={0.14} className="min-w-0 w-full">
-            <EngineeringProfile
-              onNavigateTab={onNavigateTab}
-              onSelectProject={(projectId) => {
-                const match = PROJECTS.find((p) => p.id === projectId);
-                if (match) setSelectedProject(match);
-              }}
-            />
-          </EditorialReveal>
         </div>
       </section>
 
-      {/* ====================================================================
-          CHAPTER 02: SELECTED ENGINEERING WORK (DEEP INK CONTRAST CHAPTER)
-          ==================================================================== */}
+      {/* 02. EDITORIAL PUBLICATION INDEX (CLEAN SECTION NAVIGATION) */}
       <section
-        id="home-work-chapter"
-        aria-labelledby="home-featured-work-heading"
-        className="relative overflow-hidden w-full bg-[#151713] text-[#F4F4ED] rounded-[10px] px-5 py-12 sm:px-10 sm:py-16 lg:px-12"
+        id="home-index-chapter"
+        aria-labelledby="home-index-heading"
+        className="w-full border-t border-[var(--border)] py-12 sm:py-16 space-y-8"
       >
-        <ContourBackground density="medium" tone="lime-on-dark" />
+        <EditorialSectionHeader
+          eyebrow="02 · Directory"
+          title="Explore the"
+          italicHighlight="portfolio."
+          description="Each section focuses on one aspect of my engineering background—without repeated widgets or clutter."
+        />
 
-        <div className="relative z-10">
-          <SectionHeading
-            index="02"
-            eyebrow="Selected Engineering Work"
-            title="Systems built for"
-            italicHighlight="clarity & control."
-            description="From multi-agent enterprise lifecycles with human approval checkpoints to regional climate telemetry and local computer-vision pipelines."
-            darkSurface
-            className="mb-12"
-            rightSlot={
-              <MagneticAction strength={0.14}>
-                <button
-                  type="button"
-                  onClick={() => onNavigateTab("projects")}
-                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-[6px] bg-[#C7E34A] text-[#151713] font-bold text-sm hover:bg-[#A9C52F] active:bg-[#9BB827] active:scale-[0.98] transition-all cursor-pointer group"
-                >
-                  <span>VIEW ALL {PROJECTS.length} PROJECTS</span>
-                  <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-                </button>
-              </MagneticAction>
-            }
-          />
-
-          {/* LEAD FEATURED CASE STUDY: OPERON */}
-          {(() => {
-            const media = getProjectMedia(featuredLead.id);
-            const leadRepo = findRepoForProject(featuredLead);
-            const leadLifecycle = computeProjectLifecycle(featuredLead, leadRepo);
-            return (
-              <motion.article
-                initial={reduced ? false : { opacity: 0, y: 18 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: "some" }}
-                transition={{ duration: MOTION_DURATION.enter, ease: MOTION_EASE.out }}
-                className="border-t border-b border-[#41443A] py-8 sm:py-10 mb-10 group"
+        <StaggerGroup
+          stagger={0.04}
+          className="border-t border-b border-[var(--border)] divide-y divide-[var(--border)]"
+        >
+          {DIRECTORY_ITEMS.map((item) => (
+            <StaggerItem key={item.tab}>
+              <button
+                type="button"
+                onClick={() => onNavigateTab(item.tab)}
+                className="w-full py-5 sm:py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-8 text-left group cursor-pointer transition-colors hover:bg-[var(--surface)]/60 px-2 sm:px-3 -mx-2 sm:-mx-3 rounded-[6px]"
               >
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-                  <div className="lg:col-span-7 min-w-0">
-                    <FocusFrame
-                      darkSurface
-                      eyebrow="Lead System · Live Preview"
-                      title={featuredLead.title}
-                      summary={media.caption}
-                      expandedContent={
-                        featuredLead.architecture?.length ? (
-                          <ul className="space-y-1.5 text-xs font-mono text-[#D4D6CA]">
-                            {featuredLead.architecture.slice(0, 3).map((step, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <span className="text-[#C7E34A] font-bold">0{i + 1}.</span>
-                                <span>{step}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : null
-                      }
-                    >
-                      <MaskMediaReveal className="relative aspect-[16/10] w-full overflow-hidden bg-[#20231D]">
-                        <button
-                          type="button"
-                          onClick={() => setSelectedProject(featuredLead)}
-                          aria-label={`Open ${featuredLead.title} case study`}
-                          className="block h-full w-full cursor-pointer text-left"
-                        >
-                          <img
-                            src={media.src}
-                            alt={media.alt}
-                            loading="lazy"
-                            decoding="async"
-                            referrerPolicy="no-referrer"
-                            className="!h-full w-full object-cover object-top transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03]"
-                          />
-                          <span
-                            aria-hidden="true"
-                            className="absolute bottom-3.5 right-3.5 w-10 h-10 rounded-[6px] bg-[#C7E34A] text-[#151713] flex items-center justify-center opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 shadow-lg"
-                          >
-                            <ArrowUpRight className="w-4 h-4" />
-                          </span>
-                        </button>
-                      </MaskMediaReveal>
-                    </FocusFrame>
-                  </div>
-
-                  <div className="lg:col-span-5 flex flex-col justify-between gap-6">
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
-                        <span className="text-[#C7E34A] uppercase tracking-[0.12em] font-semibold">
-                          01 · LEAD SYSTEM · {featuredLead.categoryFilter}
-                        </span>
-                        <span title={leadLifecycle.title} className="text-[#B5B8AA]">
-                          {leadLifecycle.label} · {featuredLead.status}
-                        </span>
-                      </div>
-
-                      <h3 className="text-3xl sm:text-4xl font-extrabold font-display tracking-tight text-[#F4F4ED]">
-                        {featuredLead.title}
-                      </h3>
-
-                      <p className="text-sm font-mono text-[#B5B8AA]">
-                        {featuredLead.subtitle}
-                      </p>
-
-                      <p className="text-sm sm:text-base leading-relaxed text-[#D4D6CA]">
-                        {featuredLead.shortDescription}
-                      </p>
-
-                      <div className="pt-3 border-t border-[#41443A] flex flex-wrap gap-x-4 gap-y-1.5 text-xs font-mono text-[#B5B8AA]">
-                        {featuredLead.techStack.slice(0, 5).map((tech) => (
-                          <span key={tech}>· {tech}</span>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-3 pt-2">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedProject(featuredLead)}
-                        className="inline-flex items-center gap-2 min-h-[44px] px-4 py-2 rounded-[6px] bg-[#C7E34A] text-[#151713] text-xs font-bold uppercase tracking-wider hover:bg-[#A9C52F] active:bg-[#9BB827] active:scale-[0.98] transition-all cursor-pointer group/btn"
-                      >
-                        <span>Read Case Study</span>
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-1" />
-                      </button>
-
-                      {featuredLead.liveUrl && (
-                        <a
-                          href={featuredLead.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 min-h-[44px] px-4 py-2 rounded-[6px] border border-[#41443A] text-[#F4F4ED] text-xs font-semibold hover:bg-[#F4F4ED] hover:text-[#151713] transition-all"
-                        >
-                          <span>Live Demo</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </a>
-                      )}
-
-                      <a
-                        href={featuredLead.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 min-h-[44px] px-3 text-[#B5B8AA] text-xs font-semibold hover:text-[#C7E34A] transition-colors"
-                      >
-                        <Github className="w-3.5 h-3.5" />
-                        <span>Source</span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </motion.article>
-            );
-          })()}
-
-          {/* SECONDARY FEATURED WORK: BALANCED CASE-STUDY GRID */}
-          <div className="space-y-5">
-            <div className="flex items-center justify-between text-xs font-mono text-[#B5B8AA]">
-              <span className="uppercase tracking-[0.14em] text-[#C7E34A]">
-                Featured Case Studies · 02 — 04
-              </span>
-              <span className="hidden sm:inline">Select any case study to inspect architecture</span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {secondaryFeatured.map((project, index) => {
-                const media = getProjectMedia(project.id);
-                const repo = findRepoForProject(project);
-                return (
-                  <motion.article
-                    key={project.id}
-                    initial={reduced ? false : { opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: "some" }}
-                    transition={{
-                      duration: MOTION_DURATION.enter,
-                      delay: index * 0.06,
-                      ease: MOTION_EASE.out,
-                    }}
-                    className="project-card flex flex-col justify-between rounded-[8px] border border-[#41443A] focus-within:border-[#C7E34A] hover:border-[#69734A] bg-[#20231D] group transition-colors"
-                  >
-                    <div>
-                      <MaskMediaReveal delay={index * 0.05} className="w-full">
-                        <ProjectMedia
-                          project={project}
-                          media={media}
-                          repo={repo}
-                          onPreview={() => setSelectedProject(project)}
-                          className="!border-[#41443A]"
-                          imgClassName="group-hover:scale-[1.03]"
-                        />
-                      </MaskMediaReveal>
-
-                      <div className="p-5 sm:p-6 space-y-3">
-                        <div className="flex items-center justify-between gap-2 text-[11px] font-mono text-[#B5B8AA]">
-                          <span className="text-[#C7E34A] font-semibold uppercase tracking-wider">
-                            0{index + 2} · {project.categoryFilter}
-                          </span>
-                          <span>{project.status}</span>
-                        </div>
-
-                        <h3 className="text-xl font-extrabold font-display text-[#F4F4ED]">
-                          {project.title}
-                        </h3>
-
-                        <p className="text-xs sm:text-sm leading-relaxed text-[#D4D6CA]">
-                          {project.shortDescription}
-                        </p>
-
-                        <div className="pt-1 flex flex-wrap gap-x-3 gap-y-1 text-[11px] font-mono text-[#B5B8AA]">
-                          {project.techStack.slice(0, 4).map((tech) => (
-                            <span key={tech}>· {tech}</span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-3 border-t border-[#41443A] flex items-center justify-between gap-2">
-                      <button
-                        type="button"
-                        onClick={() => setSelectedProject(project)}
-                        className="text-xs font-mono font-bold uppercase tracking-wider text-[#C7E34A] hover:underline active:opacity-75 active:scale-[0.97] transition-all inline-flex items-center gap-1 cursor-pointer min-h-[44px] group/cs"
-                      >
-                        <span>Case Study</span>
-                        <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/cs:translate-x-1" />
-                      </button>
-
-                      <div className="flex items-center gap-3 text-xs font-mono">
-                        {project.liveUrl && (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#F4F4ED] hover:text-[#C7E34A] inline-flex items-center gap-1 transition-all min-h-[40px] px-1.5"
-                          >
-                            <span>Live</span>
-                            <ArrowUpRight className="w-3 h-3" />
-                          </a>
-                        )}
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-[#B5B8AA] hover:text-[#F4F4ED] inline-flex items-center gap-1 transition-all min-h-[40px] px-1.5"
-                        >
-                          <Github className="w-3.5 h-3.5" />
-                          <span>Repo</span>
-                        </a>
-                      </div>
-                    </div>
-                  </motion.article>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ====================================================================
-          INTERACTIVE SKILL-TO-PROJECT CONSTELLATION
-          ==================================================================== */}
-      <section
-        aria-label="Interactive Skill to Project Constellation"
-        className="w-full border-t border-[var(--border)] py-10 sm:py-14 space-y-7"
-      >
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div className="space-y-1.5">
-            <span className="editorial-overline text-[var(--accent)] flex items-center gap-1.5">
-              <Sparkles className="w-3.5 h-3.5" /> Interactive Evidence Matrix
-            </span>
-            <h2 className="font-display text-2xl sm:text-3xl font-extrabold tracking-tight text-[var(--text)]">
-              Inspect skills linked to{" "}
-              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-                shipped systems.
-              </span>
-            </h2>
-          </div>
-
-          <div
-            className="flex flex-wrap items-center gap-1.5 p-1 rounded-[8px] border border-[var(--border)] bg-[var(--surface)]"
-            role="tablist"
-            aria-label="Select technical competency"
-          >
-            {CONSTELLATION_SKILLS.map((skill) => {
-              const isSelected = skill.id === activeSkillId;
-              return (
-                <button
-                  key={skill.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => setActiveSkillId(skill.id)}
-                  className={`px-3 py-1.5 text-xs font-mono rounded-[6px] transition-colors cursor-pointer whitespace-nowrap ${
-                    isSelected
-                      ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
-                      : "text-[var(--text-muted)] hover:text-[var(--text)]"
-                  }`}
-                >
-                  {skill.label}
-                </button>
-              );
-            })}
-          </div>
-        </div>
-
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSkill.id}
-            initial={reduced ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduced ? undefined : { opacity: 0, y: -6 }}
-            transition={{ duration: reduced ? 0 : MOTION_DURATION.fast, ease: MOTION_EASE.out }}
-            className="space-y-4"
-          >
-            <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-[var(--text-muted)] pb-2 border-b border-[var(--border)]">
-              <span>{activeSkill.note}</span>
-              <span className="tabular-nums text-[var(--accent)] font-semibold">
-                {connectedProjects.length} Connected{" "}
-                {connectedProjects.length === 1 ? "Project" : "Projects"}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {connectedProjects.map((project) => (
-                <button
-                  key={project.id}
-                  type="button"
-                  onClick={() => setSelectedProject(project)}
-                  className="text-left p-5 rounded-[8px] border border-[var(--border)] hover:border-[var(--accent)] bg-[var(--surface)]/50 hover:bg-[var(--surface)] transition-all cursor-pointer flex flex-col justify-between gap-3 group"
-                >
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-wider text-[var(--accent)]">
-                      <span>{project.categoryFilter}</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors" />
-                    </div>
-                    <h3 className="font-display text-lg font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
-                      {project.title}
+                <div className="flex items-baseline gap-4 min-w-0">
+                  <span className="font-mono text-xs text-[var(--accent)] font-semibold tabular-nums shrink-0">
+                    {item.index}
+                  </span>
+                  <div className="space-y-1 min-w-0">
+                    <h3 className="font-display text-lg sm:text-xl font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+                      {item.title}
                     </h3>
-                    <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
-                      {project.shortDescription}
+                    <p className="text-xs sm:text-sm text-[var(--text-secondary)] max-w-2xl leading-relaxed">
+                      {item.subtitle}
                     </p>
                   </div>
-                  <div className="text-[11px] font-mono text-[var(--text-muted)] truncate">
-                    {project.techStack.slice(0, 4).join(" · ")}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
+                </div>
+
+                <span className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--text-muted)] group-hover:text-[var(--accent)] shrink-0 pl-8 sm:pl-0">
+                  <span>{item.actionLabel}</span>
+                  <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                </span>
+              </button>
+            </StaggerItem>
+          ))}
+        </StaggerGroup>
       </section>
-
-      {/* ====================================================================
-          CHAPTER 03: BUILD / EXPLORE DUALITY BAND (OPEN EDITORIAL SPLIT)
-          ==================================================================== */}
-      <section
-        id="home-duality-chapter"
-        aria-label="Engineering vs Creative Exploration"
-        className="w-full border-t border-[var(--border)] py-10 sm:py-14 grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-0 md:divide-x md:divide-[var(--border)]"
-      >
-        <EditorialReveal delay={0} className="md:pr-8 lg:pr-12 flex flex-col justify-between gap-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
-                03A / BUILD
-              </span>
-              <Cpu className="w-5 h-5 text-[var(--accent)]" />
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-[var(--text)]">
-              Architecture,{" "}
-              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-                Algorithms &amp; AI
-              </span>
-            </h3>
-            <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
-              Deep practice across C++20 pointer mechanics, React + TypeScript system interfaces, Express backends, and YOLOv8 edge computer vision pipelines.
-            </p>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-3 text-xs font-mono text-[var(--text-muted)] border-t border-[var(--border)]">
-              <span className="flex items-center gap-1.5">
-                <Code2 className="w-3.5 h-3.5 text-[var(--accent)]" /> C++20 · TypeScript · Python
-              </span>
-              <span>React · Node · Express · PyTorch</span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => onNavigateTab("skills")}
-              className="btn btn-primary group"
-            >
-              <span>Skills &amp; Stack</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </button>
-            <button
-              type="button"
-              onClick={() => onNavigateTab("ecosystem")}
-              className="btn btn-secondary"
-            >
-              <span>System Blueprints</span>
-            </button>
-          </div>
-        </EditorialReveal>
-
-        <EditorialReveal delay={0.08} className="md:pl-8 lg:pl-12 pt-8 md:pt-0 border-t md:border-t-0 border-[var(--border)] flex flex-col justify-between gap-6">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent)]">
-                03B / EXPLORE
-              </span>
-              <Tv className="w-5 h-5 text-[var(--accent)]" />
-            </div>
-            <h3 className="text-2xl sm:text-3xl font-extrabold font-display tracking-tight text-[var(--text)]">
-              Visual Media,{" "}
-              <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
-                Notes &amp; Athletics
-              </span>
-            </h3>
-            <p className="text-sm sm:text-base leading-relaxed text-[var(--text-secondary)]">
-              Outside engineering: directing digital media on Obsidian Optics (153,049 snapshot views as of Oct 2026), publishing technical reflections, and competing as a 3× inter-school table tennis champion.
-            </p>
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-3 text-xs font-mono text-[var(--text-muted)] border-t border-[var(--border)]">
-              <span className="flex items-center gap-1.5">
-                <Trophy className="w-3.5 h-3.5 text-[var(--accent)]" /> 3× Table Tennis Champion
-              </span>
-              <span>Obsidian Optics · Journal</span>
-            </div>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => onNavigateTab("showcase")}
-              className="btn btn-secondary group"
-            >
-              <span>YouTube Showcase</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </button>
-            <button
-              type="button"
-              onClick={() => onNavigateTab("journal")}
-              className="btn btn-secondary"
-            >
-              <span>Engineering Journal</span>
-            </button>
-          </div>
-        </EditorialReveal>
-      </section>
-
-      <AnimatePresence>
-        {selectedProject && (
-          <ProjectCaseStudyModal
-            project={selectedProject}
-            repo={findRepoForProject(selectedProject)}
-            projects={homeFeaturedPool}
-            onSelectProject={setSelectedProject}
-            onClose={() => setSelectedProject(null)}
-          />
-        )}
-      </AnimatePresence>
     </>
   );
 };

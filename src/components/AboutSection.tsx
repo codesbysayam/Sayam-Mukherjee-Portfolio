@@ -1,18 +1,18 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
-import AcademicRecord from "./AcademicRecord";
 import { EditorialReveal, MaskMediaReveal, StaggerGroup, StaggerItem } from "../motion/Reveal";
 import { ContourBackground } from "./motion/ContourBackground";
 import { PinnedHeadingSection } from "./motion/PinnedHeadingSection";
 import { HorizontalNarrative, type NarrativeStop } from "./motion/HorizontalNarrative";
+import { EditorialSectionHeader } from "./common/EditorialSectionHeader";
 import { requestScrollTriggerRefresh } from "../motion/gsapRegistry";
-import { SectionHeading } from "./ui/SectionHeading";
 import { usePrefersReducedMotion } from "../motion/tokens";
+import { universityEducation, schoolEducation } from "../data/education";
 import {
   GraduationCap, Award, Calendar, Shield, Compass,
   Sparkles, CheckCircle2, BookOpen, User, Target,
   Trophy, Medal, Video, Briefcase, Youtube, Code, Building2, Star, Rocket,
-  Flame, Quote, Camera
+  Flame, Quote, Camera, ArrowRight
 } from "lucide-react";
 
 interface JourneyMilestone {
@@ -42,12 +42,10 @@ function ChronologicalTimeline({ items }: { items: JourneyMilestone[] }) {
       ref={timelineRef}
       className="relative ml-3 sm:ml-6 pl-6 sm:pl-8 space-y-6 py-2"
     >
-      {/* Static track spine */}
       <span
         aria-hidden="true"
         className="absolute left-0 top-0 bottom-0 w-[2px] bg-[var(--border)]"
       />
-      {/* Scroll-drawn Signal Lime spine */}
       <motion.span
         aria-hidden="true"
         style={
@@ -91,8 +89,8 @@ function ChronologicalTimeline({ items }: { items: JourneyMilestone[] }) {
                     <span>{item.category}</span>
                   </div>
                   {isCurrent && (
-                    <span className="px-2 py-0.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] text-[10px] font-bold uppercase tracking-wider">
-                      Active Phase
+                    <span className="text-[11px] font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
+                      Current
                     </span>
                   )}
                 </div>
@@ -118,52 +116,56 @@ const JOURNEY_HORIZONTAL_STOPS: NarrativeStop[] = [
     index: "01",
     eyebrow: "2013 · Athletics",
     title: "Competitive Table Tennis",
-    body: "Started formal table tennis training, advancing to represent my district and win 3× first-position championships.",
-    meta: "Focus: Reflex discipline & rally composure",
+    body: "Started formal table tennis training, progressing to district representation and developing composure under fast rally pressure.",
+    meta: "Focus: Reflex discipline & patience",
   },
   {
     id: "stop-2021",
     index: "02",
-    eyebrow: "2021 · Innovation",
-    title: "Toycathon National Finals · Top 15",
-    body: "Ranked among the Top 15 teams nationally in Toycathon organized by the Government of India.",
-    meta: "Focus: Early product & system prototyping",
+    eyebrow: "2021 · Early Prototyping",
+    title: "Toycathon National Finals",
+    body: "Reached the national Top 15 in Toycathon, learning how to frame practical problem statements into testable prototypes.",
+    meta: "Focus: Structured product thinking",
   },
   {
     id: "stop-youtube",
     index: "03",
-    eyebrow: "2021–2026 · Media",
-    title: "12K+ Historical YouTube Reach",
-    body: "Scaled Technical AZ (2.06K+) and Daily Decipher (10K+ subscribers) producing clear technical narratives.",
-    meta: "Focus: Visual storytelling & audience clarity",
+    eyebrow: "2021–2026 · Communication",
+    title: "Technical Media & Teaching",
+    body: "Started Technical AZ and Daily Decipher to break down technical ideas visually, discovering how clarity shapes user trust.",
+    meta: "Focus: Narrative & visual clarity",
   },
   {
     id: "stop-kiit",
     index: "04",
     eyebrow: "2025 · University",
-    title: "KIIT B.Tech CSE · 9.06 CGPA",
-    body: "Completed first year of Computer Science & Engineering (AI & ML) at KIIT Bhubaneswar with a 9.06 CGPA.",
-    meta: "Focus: Linear algebra, C++ & core systems",
+    title: "KIIT B.Tech CSE (AI & ML)",
+    body: "Began undergraduate study in Computer Science & Engineering at KIIT Bhubaneswar, grounding practical software work in theory.",
+    meta: "Focus: Mathematics, C++ & systems",
   },
   {
     id: "stop-technex",
     index: "05",
-    eyebrow: "2026 · National Finals",
-    title: "Technex'26 IIT BHU · 5/6 Finals",
-    body: "Advanced to finals across 5 out of 6 technical competitions at IIT (BHU) Varanasi.",
-    meta: "Focus: Rapid multi-domain problem solving",
+    eyebrow: "2026 · Collaboration",
+    title: "Hackathons & Team Engineering",
+    body: "Collaborated across campus and national techfests such as Technex'26 IIT BHU and SIH 2026 under tight sprint constraints.",
+    meta: "Focus: Rapid multi-role execution",
   },
   {
     id: "stop-systems",
     index: "06",
-    eyebrow: "2026 · Production",
-    title: "8 Verified Flagship Systems",
-    body: "Shipped Operon, Mausam (SIH 2026), SightForge, Memory-in-Motion, AXIOM, Inkloom, CampusConnect & SayamSolves.",
-    meta: "Focus: Human-in-the-loop & reliable code",
+    eyebrow: "Present · Craft",
+    title: "End-to-End Systems Focus",
+    body: "Exploring human-in-the-loop workflows, full-stack TypeScript architectures, computer vision pipelines, and algorithmic rigor.",
+    meta: "Focus: Maintainable engineering",
   },
 ];
 
-function AboutSectionComponent() {
+interface AboutSectionProps {
+  onNavigateTab?: (tab: "certificates" | "projects" | "contact") => void;
+}
+
+function AboutSectionComponent({ onNavigateTab }: AboutSectionProps) {
   const [activeTab, setActiveTab] = useState<"narrative" | "timeline" | "education">("narrative");
 
   useEffect(() => {
@@ -171,51 +173,51 @@ function AboutSectionComponent() {
   }, [activeTab]);
 
   const values = [
-    { name: "Continuous Learning", desc: "A disciplined commitment to expand domain mastery daily.", icon: BookOpen },
-    { name: "Integrity", desc: "Honesty and alignment between architecture, actions, and ethics.", icon: Shield },
-    { name: "Curiosity", desc: "Digging deeply into the 'why' of complex systems and neural mechanics.", icon: Compass },
-    { name: "Consistency", desc: "Compounding value through quiet, relentless daily problem solving.", icon: Flame },
-    { name: "Discipline", desc: "Commanding attention and deep work over instant superficial distractions.", icon: Target },
-    { name: "Collaboration", desc: "Empowering engineering peers and succeeding as a cohesive unit.", icon: Sparkles }
+    { name: "Continuous Learning", desc: "A steady commitment to understanding fundamentals beneath abstractions.", icon: BookOpen },
+    { name: "Integrity", desc: "Alignment between design decisions, communication, and honest engineering claims.", icon: Shield },
+    { name: "Curiosity", desc: "Digging into how complex systems behave under failure and edge conditions.", icon: Compass },
+    { name: "Consistency", desc: "Compounding capability through quiet, regular daily problem solving.", icon: Flame },
+    { name: "Discipline", desc: "Protecting deep focus time for writing, reading, and careful debugging.", icon: Target },
+    { name: "Collaboration", desc: "Communicating clearly across teammates so everyone ships with confidence.", icon: Sparkles }
   ];
 
   const strengths = [
-    { title: "Rapid System Synthesis", desc: "Turns documentation, technical papers, and API specifications into clean, working prototypes." },
-    { title: "Rigorous Algorithmic Discipline", desc: "Approaches data structures with space-time bounds awareness, focusing on understanding core principles rather than memorizing solutions." },
-    { title: "Full-Cycle Ownership", desc: "Connects frontend interface details with server-side logic from first concept through deployment and monitoring." },
-    { title: "Resilience Under Pressure", desc: "Proven under high-stakes hackathon deadlines (SIH 2026, Technex'26 IIT BHU) without compromising architecture or team morale." }
+    { title: "Rapid System Synthesis", desc: "Turns documentation, technical papers, and API specifications into clean, working implementations." },
+    { title: "Algorithmic Discipline", desc: "Approaches data structures with space-time bounds awareness rather than memorizing patterns." },
+    { title: "Full-Cycle Ownership", desc: "Connects frontend interface details with backend contracts from initial design through deployment." },
+    { title: "Composure Under Constraints", desc: "Maintains clean structure and steady communication during time-boxed sprints and competitions." }
   ];
 
   const improvements = [
     {
       title: "Over-Polishing & Perfectionism",
       area: "Time Management",
-      desc: "Prone to spending extra hours obsessing over micro-spacing or aesthetic details. Actively mitigated by establishing strict MVP timeboxes before refactoring."
+      desc: "Prone to spending extra hours refining visual micro-details. Mitigated by setting strict prototype timeboxes before polishing."
     },
     {
       title: "Breadth vs. Depth Scheduling",
-      area: "Cognitive Load",
-      desc: "Desire to master AI theory, market mechanics, and web systems simultaneously can fracture focus. Managed through structured priority sprints."
+      area: "Focus Allocation",
+      desc: "Interest across ML theory, systems, and web interfaces can compete for time. Managed through dedicated study blocks."
     },
     {
-      title: "Enterprise Scale Exposure",
-      area: "Industry Experience",
-      desc: "While skilled at building and shipping standalone full-stack apps, still expanding hands-on familiarity with multi-team legacy enterprise codebases."
+      title: "Large-Team Codebase Scale",
+      area: "Industry Exposure",
+      desc: "Experienced in building standalone and small-team systems; continuing to grow familiarity with large multi-team production repositories."
     }
   ];
 
   const extracurriculars = [
-    { name: "Competitive Table Tennis", desc: "District-level representative; trains agility, reflex speed, and mental composure under rally pressure.", icon: Trophy },
-    { name: "Content Creation (YouTube)", desc: "Grew Daily Decipher to 10K+ subscribers and Technical AZ to 2.06K+, distilling complex ideas into clear narratives.", icon: Youtube },
-    { name: "Financial Markets & Analysis", desc: "Studies quantitative market trends, macroeconomic liquidity cycles, and algorithmic trading foundations.", icon: Briefcase },
-    { name: "Nature & Urban Photography", desc: "Cultivates observational patience, composition geometry, and lighting discipline outside the terminal.", icon: Camera }
+    { name: "Competitive Table Tennis", desc: "District-level representative; trains agility, reflex speed, and calm decision-making under rally pressure.", icon: Trophy },
+    { name: "Educational Media", desc: "Created technical explainer videos on YouTube, practicing concise storytelling and visual clarity.", icon: Youtube },
+    { name: "Financial Markets Study", desc: "Reads about market structure, macroeconomic liquidity cycles, and quantitative reasoning.", icon: Briefcase },
+    { name: "Nature & Urban Photography", desc: "Practices observational patience, framing geometry, and lighting attention away from screens.", icon: Camera }
   ];
 
   const engineeringJourney: JourneyMilestone[] = [
     {
       period: "2011",
       title: "Began Formal Schooling",
-      description: "Started my formal educational journey with early curiosity for natural sciences and mathematics.",
+      description: "Started formal education with early curiosity toward mathematics and natural sciences.",
       category: "Education",
       icon: BookOpen,
       status: "past"
@@ -223,7 +225,7 @@ function AboutSectionComponent() {
     {
       period: "2013",
       title: "Began Table Tennis Training",
-      description: "Started competitive table tennis training, instilling lifelong disciplines of hand-eye reflex and deliberate practice.",
+      description: "Started competitive table tennis training, instilling habits of deliberate repetition and focus.",
       category: "Athletics",
       icon: Trophy,
       status: "past"
@@ -231,100 +233,108 @@ function AboutSectionComponent() {
     {
       period: "2019",
       title: "Represented District in Table Tennis",
-      description: "Selected to represent my district in competitive table tennis tournaments.",
+      description: "Selected to represent Hooghly district in competitive table tennis tournaments.",
       category: "Athletics",
       icon: Medal,
       status: "past"
     },
     {
       period: "2021",
-      title: "Toycathon National Finals · Top 15",
-      description: "Reached national finals and achieved a Top 15 ranking in Toycathon, an innovation competition organized by the Govt. of India.",
+      title: "Toycathon National Finals",
+      description: "Reached national finals (Top 15) in Toycathon, an innovation challenge organized by the Government of India.",
       category: "Innovation",
       icon: Award,
       status: "past"
     },
     {
       period: "2021–2023",
-      title: "Content Creator · Technical AZ",
-      description: "Founded and scaled Technical AZ on YouTube to 2.06K+ subscribers, producing tutorials on emerging consumer technologies and software.",
-      category: "Content Creation",
+      title: "Technical AZ (YouTube)",
+      description: "Produced tutorials and consumer technology explainers on Technical AZ, learning visual communication firsthand.",
+      category: "Media",
       icon: Video,
       status: "past"
     },
     {
       period: "2021–2023",
-      title: "Founded Social Media Agency & Growth Panel",
-      description: "Operated an independent digital marketing panel providing audience growth solutions and client consulting.",
-      category: "Entrepreneurship",
+      title: "Freelance Digital Media & Client Work",
+      description: "Worked with independent creators and small teams on visual strategy and thumbnail design.",
+      category: "Freelancing",
       icon: Briefcase,
       status: "past"
     },
     {
       period: "2023",
-      title: "92.6% in CBSE Class 10 Board Examinations",
-      description: "Completed secondary education with top honors at Aditya Birla Vani Bharati.",
+      title: "CBSE Class 10 Completion",
+      description: "Completed secondary school examinations at Aditya Birla Vani Bharati.",
       category: "Academics",
       icon: GraduationCap,
       status: "past"
     },
     {
       period: "2023–2026",
-      title: "Content Creator · Daily Decipher",
-      description: "Founded Daily Decipher on YouTube, producing educational breakdowns and growing an organic community of 10K+ subscribers.",
-      category: "Content Creation",
+      title: "Daily Decipher (YouTube)",
+      description: "Launched Daily Decipher to turn complex topics into accessible visual breakdowns for an organic learner audience.",
+      category: "Media",
       icon: Youtube,
       status: "past"
     },
     {
       period: "2025",
-      title: "86.2% in CBSE Class 12 Board Examinations",
-      description: "Completed the CBSE Class 12 Board Examination with 86.2% in the Science stream at Aditya Birla Vani Bharati.",
+      title: "CBSE Class 12 Completion (Science)",
+      description: "Completed higher secondary studies in Science at Aditya Birla Vani Bharati.",
       category: "Academics",
       icon: GraduationCap,
       status: "past"
     },
     {
       period: "2025",
-      title: "Commenced Open Source & Project Building",
-      description: "Began crafting production web apps, exploring deep learning architectures, and deepening algorithmic rigor in C++.",
+      title: "Deepened Software & Algorithmic Practice",
+      description: "Shifted focus toward building full-stack web systems, studying machine learning, and practicing C++ algorithms.",
       category: "Engineering",
       icon: Code,
       status: "past"
     },
     {
       period: "2025 – Present",
-      title: "B.Tech CSE at KIIT Bhubaneswar",
-      description: "Enrolled in undergraduate Computer Science Engineering at Kalinga Institute of Industrial Technology, Bhubaneswar. Focusing on core systems, data structures, and AI engineering.",
+      title: "B.Tech CSE (AI & ML) at KIIT Bhubaneswar",
+      description: "Undergraduate study at Kalinga Institute of Industrial Technology focusing on systems engineering, data structures, and applied AI.",
       category: "University",
       icon: Building2,
       status: "present"
     },
     {
       period: "2026",
-      title: "Technex'26 · IIT BHU Finalist in 5/6 Competitions",
-      description: "Competed at IIT Varanasi's national techfest, advancing to the finals across 5 separate technical challenges.",
-      category: "Competitions",
+      title: "Inter-Collegiate Technical Competitions",
+      description: "Participated in national sprints including Technex'26 at IIT (BHU) and Smart India Hackathon workflows.",
+      category: "Collaboration",
       icon: Star,
       status: "past"
     },
     {
-      period: "2026",
-      title: "Engineered 8 Flagship Systems (Operon, Mausam, SightForge, AXIOM & more)",
-      description: "Built the Operon multi-agent engine, Mausam meteorological platform for SIH 2026, SightForge dual-service YOLOv8 tracker, Memory-in-Motion, AXIOM control plane, Inkloom studio, CampusConnect, and SayamSolves C++ archive.",
-      category: "Projects",
+      period: "Present",
+      title: "Systems, AI Tooling & Full-Stack Engineering",
+      description: "Continuing to refine human-in-the-loop workflow software, vision pipelines, and clean frontend engineering.",
+      category: "Practice",
       icon: Rocket,
       status: "present"
     },
     {
       period: "Horizon",
-      title: "AI Systems Engineering & Startup Impact",
-      description: "Aiming to design high-throughput machine learning infrastructure, lead high-impact engineering ventures, and contribute meaningfully to foundational open source.",
-      category: "Vision",
+      title: "AI Systems & Reliable Software Craft",
+      description: "Aiming to contribute to thoughtful engineering teams working on resilient AI tooling and developer infrastructure.",
+      category: "Direction",
       icon: Target,
       status: "future"
     }
   ];
+
+  const handleNavigate = (tab: "certificates" | "projects" | "contact") => {
+    if (onNavigateTab) {
+      onNavigateTab(tab);
+    } else {
+      window.dispatchEvent(new CustomEvent("portfolio-navigate-tab", { detail: tab }));
+    }
+  };
 
   return (
     <div className="w-full space-y-12 sm:space-y-14 pb-12">
@@ -336,23 +346,20 @@ function AboutSectionComponent() {
         <ContourBackground density="subtle" />
 
         <div className="relative z-10 space-y-6">
-          <SectionHeading
+          <EditorialSectionHeader
             level="h1"
-            immediate
-            index="01"
-            eyebrow="Biography & Human Core"
-            title="MORE THAN JUST CODE —"
-            italicHighlight="engineer, builder & athlete."
-            description="Undergraduate Computer Science student at KIIT Bhubaneswar, content creator with 12K+ historical community reach across channels, district table tennis athlete, and software systems engineer."
-            withDivider={false}
+            eyebrow="01 · Background & Approach"
+            title="Background,"
+            italicHighlight="journey & engineering principles."
+            description="Computer Science undergraduate at KIIT University originally from Hooghly, West Bengal—shaped by competitive table tennis, visual communication, and systems-minded software development."
           />
 
-          {/* Editorial Tabs */}
+          {/* Section View Switcher */}
           <div className="flex flex-wrap gap-2 pt-3 border-t border-[var(--border)]" role="tablist" aria-label="About sections">
             {[
-              { id: "narrative", label: "Personal Narrative & Values", icon: User },
-              { id: "timeline", label: "Chronological Timeline (2011–2026)", icon: Calendar },
-              { id: "education", label: "Academics & Honors", icon: GraduationCap }
+              { id: "narrative", label: "Narrative & Approach", icon: User },
+              { id: "timeline", label: "Timeline (2011–Present)", icon: Calendar },
+              { id: "education", label: "Academic Background", icon: GraduationCap }
             ].map((tab) => {
               const Icon = tab.icon;
               const isSelected = activeTab === tab.id;
@@ -389,7 +396,7 @@ function AboutSectionComponent() {
           >
             {/* Open Editorial Biography Spread */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start pb-10 border-b border-[var(--border)]">
-              {/* Portrait & Hairline Ledger */}
+              {/* Portrait & Grounded Facts */}
               <div className="lg:col-span-4 space-y-5">
                 <MaskMediaReveal immediate delay={0.1} className="aspect-[4/5] w-full rounded-[10px] overflow-hidden border border-[var(--border-strong)] bg-[var(--surface)]">
                   <img
@@ -405,20 +412,20 @@ function AboutSectionComponent() {
 
                 <dl className="divide-y divide-[var(--border)] border-y border-[var(--border)] text-xs font-mono">
                   <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
-                    <dt className="text-[var(--text-muted)] shrink-0">Location</dt>
+                    <dt className="text-[var(--text-muted)] shrink-0">Hometown / Study</dt>
                     <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">Hooghly / Bhubaneswar</dd>
                   </div>
                   <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
-                    <dt className="text-[var(--text-muted)] shrink-0">Institution</dt>
-                    <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">KIIT University (B.Tech CSE)</dd>
+                    <dt className="text-[var(--text-muted)] shrink-0">University</dt>
+                    <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">KIIT University</dd>
                   </div>
                   <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
-                    <dt className="text-[var(--text-muted)] shrink-0">First-Year CGPA</dt>
-                    <dd className="font-semibold text-[var(--accent)] tabular-nums text-right">9.06 / 10.0</dd>
+                    <dt className="text-[var(--text-muted)] shrink-0">Degree Track</dt>
+                    <dd className="font-semibold text-[var(--text)] text-right break-words min-w-0">B.Tech CSE (AI &amp; ML)</dd>
                   </div>
                   <div className="flex flex-wrap justify-between gap-2 py-2.5 min-w-0">
-                    <dt className="text-[var(--text-muted)] shrink-0">LeetCode</dt>
-                    <dd className="font-semibold text-[var(--text)] tabular-nums text-right">100% Acceptance Rate</dd>
+                    <dt className="text-[var(--text-muted)] shrink-0">Outside Code</dt>
+                    <dd className="font-semibold text-[var(--accent)] text-right">Table Tennis · Photography</dd>
                   </div>
                 </dl>
               </div>
@@ -435,15 +442,15 @@ function AboutSectionComponent() {
                   </h2>
                 </div>
 
-                <div className="space-y-4 text-sm sm:text-[15px] text-[var(--text-secondary)] leading-relaxed font-sans max-w-[66ch]">
+                <div className="space-y-4 text-sm sm:text-[15.5px] text-[var(--text-secondary)] leading-[1.7] font-sans max-w-[66ch]">
                   <p>
-                    I am a Computer Science undergraduate at KIIT Bhubaneswar interested in autonomous AI agents, practical computer vision, and reliable full-stack applications. Originally from Hooghly, West Bengal, I grew up balancing competitive table tennis with self-taught programming and digital media.
+                    I am a Computer Science undergraduate at KIIT University in Bhubaneswar, originally from Hooghly, West Bengal. Growing up, my routine was split between competitive table tennis halls and experimenting with software, video editing, and visual design on my computer.
                   </p>
                   <p>
-                    At age 16, I started my first tech YouTube channel, <strong>Technical AZ</strong>, growing it to over 2,000 subscribers before launching <strong>Daily Decipher</strong>, which reached an organic audience of over 10,000 learners. Producing technical breakdowns and working with early clients taught me early on how people actually interact with technology: they value clarity, speed, and real utility over buzzwords.
+                    Starting YouTube channels in my teens taught me something that still shapes how I build software today: complexity is easy, clarity is hard. If an interface or explanation forces people to work too hard to understand what is happening, it fails regardless of how clever the underlying machinery is.
                   </p>
                   <p>
-                    In my software projects, I stick to that same practical focus. Whether building <strong>Operon</strong> (a multi-agent operational platform with human approvals), <strong>Mausam</strong> (climate analytics for SIH 2026), <strong>SightForge</strong> (YOLOv8 tracking), <strong>Memory-in-Motion</strong> (3D educational physics), <strong>AXIOM</strong> (governed AI execution), <strong>Inkloom</strong>, <strong>CampusConnect</strong>, or <strong>SayamSolves</strong> (C++ algorithmic archive), my priority is building reliable code that solves actual problems.
+                    Today, I apply that mindset across full-stack TypeScript web applications, machine learning and computer vision workflows, and daily C++ algorithmic practice—focusing on predictable state boundaries, thoughtful ergonomics, and systems that fail gracefully.
                   </p>
                 </div>
 
@@ -451,7 +458,7 @@ function AboutSectionComponent() {
                 <blockquote className="mt-6 py-4 border-y border-[var(--border)] flex items-start gap-3.5 max-w-[66ch]">
                   <Quote className="w-5 h-5 text-[var(--accent)] shrink-0 mt-0.5" aria-hidden="true" />
                   <p className="text-sm sm:text-base font-serif-editorial italic leading-relaxed text-[var(--text)]">
-                    &ldquo;Great engineering is not about writing the maximum amount of code — it is about constructing reliable boundaries where systems fail gracefully and people stay in control.&rdquo;
+                    &ldquo;Good engineering is less about maximizing lines of code and more about constructing clear boundaries where systems remain understandable and people stay in control.&rdquo;
                   </p>
                 </blockquote>
               </div>
@@ -459,8 +466,8 @@ function AboutSectionComponent() {
 
             {/* Sideways Milestone Progression */}
             <HorizontalNarrative
-              eyebrow="Milestone Progression · 2013 — 2026"
-              title="From competitive rallies to verified systems"
+              eyebrow="Progression · 2013 — Present"
+              title="From competitive rallies to systems engineering"
               stops={JOURNEY_HORIZONTAL_STOPS}
             />
 
@@ -468,10 +475,10 @@ function AboutSectionComponent() {
             <div id="about-values" className="space-y-5">
               <EditorialReveal className="space-y-1">
                 <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
-                  Core Principles
+                  Working Philosophy
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold font-display text-[var(--text)]">
-                  Values &amp; Working Philosophy
+                  Values &amp; Engineering Habits
                 </h3>
               </EditorialReveal>
 
@@ -495,15 +502,15 @@ function AboutSectionComponent() {
               </StaggerGroup>
             </div>
 
-            {/* Strengths & Honest Areas of Improvement */}
+            {/* Strengths & Honest Areas of Growth */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <div className="card p-6 space-y-4">
                 <div className="space-y-1 border-b border-[var(--border)] pb-3">
                   <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider">
-                    Proven Capacities
+                    Strengths
                   </span>
                   <h3 className="text-lg font-bold font-display text-[var(--text)]">
-                    Core Strengths
+                    How I Work
                   </h3>
                 </div>
 
@@ -530,7 +537,7 @@ function AboutSectionComponent() {
                     Self-Reflection
                   </span>
                   <h3 className="text-lg font-bold font-display text-[var(--text)]">
-                    Areas of Continuous Improvement
+                    Areas of Ongoing Growth
                   </h3>
                 </div>
 
@@ -561,7 +568,7 @@ function AboutSectionComponent() {
                   Beyond the Terminal
                 </span>
                 <h3 className="text-xl sm:text-2xl font-bold font-display text-[var(--text)]">
-                  Athletics, Media &amp; Inquiries
+                  Interests &amp; Athletics
                 </h3>
               </EditorialReveal>
 
@@ -599,32 +606,17 @@ function AboutSectionComponent() {
                 <div className="space-y-4">
                   <div className="space-y-1.5">
                     <span className="text-xs font-mono font-semibold text-[var(--accent)] uppercase tracking-wider block">
-                      Lived Chronology
+                      Chronology
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-bold font-display text-[var(--text)] leading-tight">
-                      Engineering &amp; Life Milestones{" "}
+                      Personal &amp; Academic Journey{" "}
                       <span className="font-serif-editorial italic font-normal text-[var(--accent)]">
                         (2011 – Present)
                       </span>
                     </h3>
                     <p className="text-xs sm:text-sm text-[var(--text-secondary)] font-sans leading-relaxed max-w-md">
-                      An authentic chronological account of schooling, athletic achievements, entrepreneurial ventures, and software systems.
+                      Key milestones across schooling, athletics, technical communication, and undergraduate engineering.
                     </p>
-                  </div>
-
-                  <div className="pt-3 border-t border-[var(--border)] grid grid-cols-2 gap-3 text-xs font-mono">
-                    <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
-                      <span className="text-[var(--text-muted)] block text-[10px] uppercase">Milestones</span>
-                      <span className="text-base font-bold text-[var(--text)] tabular-nums">
-                        {engineeringJourney.length} Entries
-                      </span>
-                    </div>
-                    <div className="p-3 rounded-[8px] bg-[var(--surface)] border border-[var(--border)]">
-                      <span className="text-[var(--text-muted)] block text-[10px] uppercase">Span</span>
-                      <span className="text-base font-bold text-[var(--accent)] tabular-nums">
-                        2011 — 2026
-                      </span>
-                    </div>
                   </div>
                 </div>
               }
@@ -641,32 +633,63 @@ function AboutSectionComponent() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.18 }}
-            className="space-y-8"
+            className="space-y-6"
           >
-            <AcademicRecord />
+            <div className="card p-6 sm:p-8 space-y-6">
+              <div className="space-y-2 border-b border-[var(--border)] pb-4">
+                <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--accent)]">
+                  University Study
+                </span>
+                <h3 className="text-xl font-bold font-display text-[var(--text)]">
+                  {universityEducation.degree} — {universityEducation.specialization}
+                </h3>
+                <p className="text-xs font-mono text-[var(--text-muted)]">
+                  {universityEducation.institution} · Expected {universityEducation.expectedGraduation}
+                </p>
+              </div>
 
-            <div className="space-y-4">
-              <h4 className="text-xs font-mono uppercase tracking-wider text-[var(--text-muted)] font-semibold">
-                Verified Honors &amp; Competitions
-              </h4>
-              <StaggerGroup className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                {[
-                  { title: "Technex'26 IIT BHU", desc: "Finalist across 5 out of 6 challenges at IIT Varanasi techfest" },
-                  { title: "Toycathon National Finals", desc: "Top 15 ranking in Govt. of India national innovation hackathon" },
-                  { title: "Smart India Hackathon", desc: "Team Algnite member developing the Mausam platform (2026)" },
-                  { title: "District Table Tennis", desc: "Selected and represented district at competitive table tennis tournaments" }
-                ].map((h, i) => (
-                  <StaggerItem key={i} className="card p-5 space-y-2">
-                    <CheckCircle2 className="w-4 h-4 text-[var(--accent)]" aria-hidden="true" />
-                    <h5 className="text-sm font-bold font-display text-[var(--text)]">
-                      {h.title}
-                    </h5>
-                    <p className="text-xs text-[var(--text-secondary)] font-sans leading-relaxed">
-                      {h.desc}
+              <p className="text-sm text-[var(--text-secondary)] leading-relaxed max-w-[66ch]">
+                {universityEducation.description} Completed first-year coursework with a{" "}
+                <span className="font-semibold text-[var(--text)]">
+                  {universityEducation.cgpa} / {universityEducation.cgpaScale} CGPA
+                </span>
+                , focusing on core data structures, object-oriented programming, discrete mathematics, and applied machine learning foundations.
+              </p>
+
+              <div className="pt-4 border-t border-[var(--border)] grid grid-cols-1 md:grid-cols-2 gap-4">
+                {schoolEducation.map((rec) => (
+                  <div
+                    key={rec.id}
+                    className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] space-y-1.5"
+                  >
+                    <div className="flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
+                      <span>{rec.title}</span>
+                      <span>{rec.session}</span>
+                    </div>
+                    <div className="text-sm font-bold font-display text-[var(--text)]">
+                      {rec.institution}
+                    </div>
+                    <p className="text-xs text-[var(--text-secondary)]">
+                      {rec.board} · {rec.percentage}
+                      {rec.stream ? ` (${rec.stream})` : ""}
                     </p>
-                  </StaggerItem>
+                  </div>
                 ))}
-              </StaggerGroup>
+              </div>
+
+              <div className="pt-4 border-t border-[var(--border)] flex flex-wrap items-center justify-between gap-4">
+                <p className="text-xs text-[var(--text-muted)] font-mono">
+                  Official board mark sheets, competition certificates, and full academic records live in Credentials.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => handleNavigate("certificates")}
+                  className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer"
+                >
+                  <span>View Certificates &amp; Academic Records</span>
+                  <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
+                </button>
+              </div>
             </div>
           </motion.div>
         )}

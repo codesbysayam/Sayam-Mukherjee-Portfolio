@@ -9,7 +9,6 @@ import ExperienceSection from "./components/ExperienceSection";
 import HeroSection from "./components/HeroSection";
 import HomeEditorialChapters from "./components/HomeEditorialChapters";
 import LiveBuildFeed from "./components/LiveBuildFeed";
-import CertificationsSection from "./components/CertificationsSection";
 import ContactSection from "./components/ContactSection";
 import { ErrorBoundary, RootErrorBoundary } from "./components/ErrorBoundary";
 import AppErrorBoundary from "./components/AppErrorBoundary";
@@ -39,12 +38,10 @@ const SkillsSection = lazyWithRetry(() => import("./components/SkillsSection"));
 const EcosystemSection = lazyWithRetry(() => import("./components/EcosystemSection"));
 const BlogsSection = lazyWithRetry(() => import("./components/BlogsSection"));
 const ContentCreatorSection = lazyWithRetry(() => import("./components/ContentCreatorSection"));
-const TestimonialsSection = lazyWithRetry(() => import("./components/TestimonialsSection"));
 const AdminDashboard = lazyWithRetry(() => import("./components/AdminDashboard"));
 import ResumeModal from "./components/ResumeModal";
 const CommandMenu = lazyWithRetry(() => import("./components/CommandMenu"));
 const CertificatesPage = lazyWithRetry(() => import("./components/certificates/CertificatesPage"));
-const CredentialsHomePreview = lazyWithRetry(() => import("./components/certificates/CredentialsHomePreview"));
 const GitHubStats = lazyWithRetry(() => import("./components/GitHubStats"));
 import PrivacyPage from "./pages/Privacy";
 import TermsPage from "./pages/Terms";
@@ -53,7 +50,6 @@ import LegalRouteErrorBoundary from "./components/legal/LegalRouteErrorBoundary"
 import SiteFooter from "./components/SiteFooter";
 import BackToTop from "./components/BackToTop";
 const CookieConsent = lazyWithRetry(() => import("./components/CookieConsent"));
-import ExpandableFAQ from "./components/ExpandableFAQ";
 const FloatingContactButton = lazyWithRetry(() => import("./components/FloatingContactButton"));
 import MobileBottomNav from "./components/common/MobileBottomNav";
 
@@ -77,28 +73,22 @@ const ROUTE_CHAPTERS: Partial<Record<string, ChapterAnchor[]>> = {
     { id: "about-hero", code: "00", label: "Identity" },
     { id: "about-values", code: "01", label: "Principles" },
     { id: "about-experience", code: "02", label: "Experience" },
-    { id: "about-achievements", code: "03", label: "Milestones" },
   ],
   skills: [
     { id: "skills-hero", code: "00", label: "Overview" },
-    { id: "language-distribution", code: "01", label: "Telemetry" },
-    { id: "engineering-stack", code: "02", label: "Stack" },
-    { id: "ecosystem-map", code: "03", label: "Map" },
-    { id: "skill-evidence", code: "04", label: "Evidence" },
-    { id: "coding-profiles", code: "05", label: "Profiles" },
+    { id: "capability-index", code: "01", label: "Capabilities" },
+    { id: "skills-context", code: "02", label: "Practice" },
   ],
   ecosystem: [
     { id: "ecosystem-hero", code: "00", label: "Architecture" },
-    { id: "ecosystem-pipeline", code: "01", label: "Pipeline" },
-    { id: "ecosystem-blueprints", code: "02", label: "Blueprints" },
-    { id: "ecosystem-matrix", code: "03", label: "Matrix" },
-    { id: "ecosystem-sih", code: "04", label: "SIH 2026" },
+    { id: "ecosystem-pipeline", code: "01", label: "Workflow" },
+    { id: "ecosystem-patterns", code: "02", label: "Patterns" },
+    { id: "ecosystem-boundaries", code: "03", label: "Practices" },
   ],
   projects: [
     { id: "projects-header", code: "00", label: "Archive" },
-    { id: "projects-overview", code: "01", label: "Metrics" },
-    { id: "projects-featured", code: "02", label: "Featured" },
-    { id: "projects-explorer", code: "03", label: "Explorer" },
+    { id: "projects-featured", code: "01", label: "Featured" },
+    { id: "projects-explorer", code: "02", label: "Explorer" },
   ],
   certificates: [
     { id: "certificates-hero", code: "00", label: "Credentials" },
@@ -107,7 +97,6 @@ const ROUTE_CHAPTERS: Partial<Record<string, ChapterAnchor[]>> = {
   ],
   journal: [
     { id: "journal-section", code: "00", label: "Journal" },
-    { id: "endorsements-section", code: "01", label: "Peer Notes" },
   ],
 };
 
@@ -683,20 +672,6 @@ function AppContent() {
                   <HomeEditorialChapters
                     onNavigateTab={(tab) => navigateToTab(tab)}
                   />
-
-                  <LiveBuildFeed />
-
-                  <ErrorBoundary sectionName="Credentials Spotlight">
-                    <Suspense fallback={null}>
-                      <CredentialsHomePreview
-                        onNavigateToCertificates={() => navigateToTab("certificates")}
-                      />
-                    </Suspense>
-                  </ErrorBoundary>
-
-                  <ErrorBoundary sectionName="Expandable FAQ">
-                    <ExpandableFAQ />
-                  </ErrorBoundary>
                 </div>
               </ErrorBoundary>
             )}
@@ -733,16 +708,13 @@ function AppContent() {
                   <ErrorBoundary sectionName="About Section">
                     <div className="space-y-12 py-2">
                       <EditorialReveal immediate delay={0}>
-                        <AboutSection />
+                        <AboutSection
+                          onNavigateTab={(tab) => navigateToTab(tab)}
+                        />
                       </EditorialReveal>
                       <EditorialReveal delay={0.08}>
                         <ExperienceSection
                           onNavigateToShowcase={() => navigateToTab("showcase")}
-                        />
-                      </EditorialReveal>
-                      <EditorialReveal delay={0.12}>
-                        <CertificationsSection
-                          onNavigateToCertificates={() => navigateToTab("certificates")}
                         />
                       </EditorialReveal>
                     </div>
@@ -792,23 +764,25 @@ function AppContent() {
                 )}
 
                 {activeTab === "github" && (
-                  <div className="py-2">
+                  <div className="space-y-12 py-2">
                     <ErrorBoundary sectionName="GitHub Repositories & Telemetry">
                       <EditorialReveal immediate delay={0}>
                         <GitHubStats />
+                      </EditorialReveal>
+                    </ErrorBoundary>
+                    <ErrorBoundary sectionName="Live GitHub Repository Feed">
+                      <EditorialReveal delay={0.08}>
+                        <LiveBuildFeed />
                       </EditorialReveal>
                     </ErrorBoundary>
                   </div>
                 )}
 
                 {activeTab === "journal" && (
-                  <div className="space-y-12 py-2">
+                  <div className="py-2">
                     <ErrorBoundary sectionName="Journal & Engineering Reflections">
                       <EditorialReveal immediate delay={0}>
                         <BlogsSection />
-                      </EditorialReveal>
-                      <EditorialReveal delay={0.08}>
-                        <TestimonialsSection />
                       </EditorialReveal>
                     </ErrorBoundary>
                   </div>
