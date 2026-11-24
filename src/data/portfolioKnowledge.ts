@@ -579,35 +579,6 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       verificationLink: "https://wecodecoders.in/verify/L30-PTQXNX",
     },
     {
-      title: "WCC Launchpad 30",
-      issuer: "We Code Coders / inkloom",
-      year: "2026",
-      date: "4–5 October 2026",
-      category: "COMPETITIONS",
-      type: "Certificate of Participation",
-      event: "WCC Launchpad 30",
-      format: "36-Hour Hackathon",
-      team: "ALGNITE",
-      role: "Team Member",
-      participant: "Shinibali Kumar",
-      teamLeader: "Sayam Mukherjee",
-      teamMember: "Shinibali Kumar",
-      organizer: "We Code Coders",
-      coOrganizer: "inkloom",
-      credentialId: "L30-F3RFRC",
-      associatedProjects: [
-        {
-          name: "AXIOM",
-          url: "https://axiomwcc.vercel.app",
-          description: "Agentic AI platform built by Team ALGNITE during the 36-hour hackathon, contributing to workflow, agent execution logic, and policy validation."
-        }
-      ],
-      description:
-        "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
-      note: "Official Certificate of Participation (Certificate ID: L30-F3RFRC, issued 15 October 2026) awarded to Shinibali Kumar as Team Member of Team ALGNITE on Product / Research and Presentation / Demo tracks.",
-      verificationLink: "https://wecodecoders.in/verify/L30-F3RFRC",
-    },
-    {
       title: "MATLAB Workshop",
       issuer: "IEEE KIIT Student Branch / IEEE PES KIIT Student Branch Chapter",
       year: "2026",
@@ -632,13 +603,15 @@ export const portfolioKnowledge: PortfolioKnowledge = {
       note: "Individual workshop participation record. No team, no team members, and no associated team projects. Recognized for active participation and successful completion.",
     },
     {
-      title: "National Finalist | Toycathon",
-      issuer: "Ministry of Education & AICTE, Govt. of India",
+      title: "Toycathon 2021",
+      issuer: "Ministry of Education's Innovation Cell / AICTE",
       year: "2021",
       category: "COMPETITIONS",
+      type: "Certificate of Participation",
+      team: "ABVB TECHIES",
+      role: "Team Member",
       description:
-        "Reached National Grand Finale among thousands of competing collegiate teams in the national Toycathon innovation challenge.",
-      credentialId: "TC-2021-FIN",
+        "Certificate of Participation for Toycathon 2021 as Team ABVB TECHIES (Aditya Birla Vani Bharati).",
     },
     {
       title: "Multi-Event Finalist | Technex'26",

@@ -22,22 +22,31 @@
 
 @media (max-width: 639px) {
   .arc-carousel-stage {
-    height: 360px;
+    height: 356px;
   }
 }
 
 @media (max-width: 390px) {
   .arc-carousel-stage {
-    height: 344px;
+    height: 332px;
   }
   .arc-card-slot {
-    width: min(80vw, 290px);
+    width: min(76vw, 268px);
+  }
+}
+
+@media (max-height: 460px) and (orientation: landscape) {
+  .arc-carousel-stage {
+    height: 300px;
+  }
+  .arc-card-slot {
+    width: min(56vw, 310px);
   }
 }
 
 .arc-card-slot {
   position: absolute;
-  width: min(82vw, 355px);
+  width: min(80vw, 355px);
   border-radius: 12px;
   border: 1px solid var(--border-strong);
   background: var(--surface);

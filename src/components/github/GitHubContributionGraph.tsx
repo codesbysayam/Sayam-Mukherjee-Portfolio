@@ -199,7 +199,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
       .attr("x", 0)
       .attr("y", (d) => d.row * WEEK_STEP + CELL_SIZE - 2)
       .attr("fill", textFaint)
-      .attr("font-size", "9px")
+      .attr("font-size", "10px")
       .attr("font-family", "var(--font-mono), monospace")
       .text((d) => d.label);
 
@@ -366,9 +366,9 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
               <button
                 type="button"
                 onClick={() => setFilterMode("all")}
-                className={`px-2.5 py-1 text-[11px] font-mono rounded-[4px] transition-colors cursor-pointer whitespace-nowrap ${
+                className={`min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 text-[11px] font-mono rounded-[4px] transition-colors cursor-pointer whitespace-nowrap ${
                   filterMode === "all"
-                    ? "bg-[var(--accent)] text-[var(--ink-on-accent,#151713)] font-semibold"
+                    ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-semibold"
                     : "text-[var(--text-muted)] hover:text-[var(--text)]"
                 }`}
               >
@@ -377,9 +377,9 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
               <button
                 type="button"
                 onClick={() => setFilterMode("active")}
-                className={`px-2.5 py-1 text-[11px] font-mono rounded-[4px] transition-colors cursor-pointer whitespace-nowrap ${
+                className={`min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 text-[11px] font-mono rounded-[4px] transition-colors cursor-pointer whitespace-nowrap ${
                   filterMode === "active"
-                    ? "bg-[var(--accent)] text-[var(--ink-on-accent,#151713)] font-semibold"
+                    ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-semibold"
                     : "text-[var(--text-muted)] hover:text-[var(--text)]"
                 }`}
               >
@@ -407,7 +407,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
         {/* Summary KPI Strip derived cleanly from real calendar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
           <div className="hairline-row py-2.5 px-3 border rounded-[6px] border-[var(--border)] bg-[var(--surface)]/40">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
               <CalendarDays className="w-3 h-3 text-[var(--accent)]" />
               Active Days
             </span>
@@ -416,7 +416,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
             </p>
           </div>
           <div className="hairline-row py-2.5 px-3 border rounded-[6px] border-[var(--border)] bg-[var(--surface)]/40">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
               <Sparkles className="w-3 h-3 text-[var(--accent)]" />
               Peak Output Day
             </span>
@@ -425,7 +425,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
             </p>
           </div>
           <div className="hairline-row py-2.5 px-3 border rounded-[6px] border-[var(--border)] bg-[var(--surface)]/40">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
               <Flame className="w-3 h-3 text-[var(--accent)]" />
               Longest Streak
             </span>
@@ -434,7 +434,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
             </p>
           </div>
           <div className="hairline-row py-2.5 px-3 border rounded-[6px] border-[var(--border)] bg-[var(--surface)]/40">
-            <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
+            <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
               <Activity className="w-3 h-3 text-[var(--accent)]" />
               Current Streak
             </span>
@@ -480,7 +480,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
                     <button
                       type="button"
                       onClick={() => setSelectedDay(null)}
-                      className="ml-2.5 text-[11px] text-[var(--accent)] hover:underline cursor-pointer"
+                      className="ml-2.5 min-h-[32px] [@media(pointer:coarse)]:min-h-[44px] inline-flex items-center text-[11px] text-[var(--accent)] hover:underline cursor-pointer"
                     >
                       Clear selection
                     </button>
@@ -499,7 +499,7 @@ export const GitHubContributionGraph = memo(function GitHubContributionGraph({
                 </motion.span>
               )}
             </AnimatePresence>
-            <span className="text-[var(--text-muted)] text-[10px] tabular-nums">
+            <span className="text-[var(--text-muted)] text-[11px] tabular-nums">
               {analytics.peakDay
                 ? `Peak: ${analytics.peakDay.count} on ${analytics.peakDay.date}`
                 : "D3 v7 GraphQL telemetry"}

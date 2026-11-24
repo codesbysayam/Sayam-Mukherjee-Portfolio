@@ -338,7 +338,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? "name-error" : undefined}
             placeholder="e.g. Elena Rostova"
-            className="w-full px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
+            className="w-full min-h-[44px] sm:min-h-[40px] px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
             style={{
               ...inputStyle,
               borderColor:
@@ -376,7 +376,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
             aria-invalid={!!errors.email}
             aria-describedby={errors.email ? "email-error" : undefined}
             placeholder="elena@organization.org"
-            className="w-full px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
+            className="w-full min-h-[44px] sm:min-h-[40px] px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
             style={{
               ...inputStyle,
               borderColor:
@@ -410,7 +410,7 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
           id="contact_topic"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
-          className="w-full px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
+          className="w-full min-h-[44px] sm:min-h-[40px] px-3.5 py-2.5 rounded-[6px] text-base sm:text-sm font-sans border focus:outline-none transition-colors"
           style={inputStyle}
         >
           <option value="Project Inquiry">Project Inquiry / Freelance</option>
@@ -505,14 +505,14 @@ export function ContactForm({ onSuccess }: ContactFormProps) {
                 type="button"
                 onClick={() => void submitInquiry()}
                 disabled={isSubmitting}
-                className="btn btn-secondary min-h-[32px] px-2.5 py-1 text-[11px] font-mono disabled:opacity-50"
+                className="btn btn-secondary min-h-[44px] sm:min-h-[36px] px-3 py-1.5 text-[11px] font-mono disabled:opacity-50"
               >
                 <RefreshCw className="w-3 h-3" />
                 <span>Retry</span>
               </button>
               <a
                 href={mailtoFallback}
-                className="btn btn-secondary min-h-[32px] px-2.5 py-1 text-[11px] font-mono"
+                className="btn btn-secondary min-h-[44px] sm:min-h-[36px] px-3 py-1.5 text-[11px] font-mono"
               >
                 <Mail className="w-3 h-3" />
                 <span>Open Mail</span>

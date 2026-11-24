@@ -224,17 +224,17 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         exit={{ opacity: 0, scale: 0.96, y: 16 }}
         transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
         onClick={(e) => e.stopPropagation()}
-        className="relative bg-[var(--bg)] border border-[var(--border-strong)] rounded-[12px] w-full max-w-4xl shadow-2xl flex flex-col h-[92dvh] sm:h-[90dvh] max-h-[920px] overflow-hidden text-[var(--text)]"
+        className="relative bg-[var(--bg)] border border-[var(--border-strong)] rounded-[12px] w-full max-w-4xl shadow-2xl flex flex-col h-[94dvh] sm:h-[90dvh] max-h-[min(920px,calc(100dvh-16px))] overflow-hidden text-[var(--text)]"
       >
         
         {/* REFINED TOP HEADER */}
-        <header className="px-4 sm:px-6 py-3.5 bg-[var(--surface-2)] border-b border-[var(--border)] flex flex-wrap items-center justify-between z-30 shrink-0 gap-2 sm:gap-3">
+        <header className="px-4 sm:px-6 py-3 [@media(max-height:440px)]:py-2 bg-[var(--surface-2)] border-b border-[var(--border)] flex flex-wrap items-center justify-between z-30 shrink-0 gap-2 sm:gap-3">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-9 h-9 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] flex items-center justify-center shrink-0">
               <ResumeGlyph className="w-5 h-5 text-[var(--accent)]" />
             </div>
             <div className="min-w-0">
-              <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-[var(--accent)] font-semibold block leading-none mb-1">
+              <span className="text-[11px] font-mono uppercase tracking-[0.14em] text-[var(--accent)] font-semibold block leading-none mb-1">
                 Résumé / Profile
               </span>
               <h2 id="resume-modal-title" className="text-sm sm:text-base font-bold text-[var(--text)] font-display tracking-tight truncate flex items-center gap-2">
@@ -254,7 +254,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={RESUME_CONFIG.ariaLabel}
-                className="btn btn-primary min-h-[40px] px-3 sm:px-4 py-2 text-xs"
+                className="btn btn-primary min-h-[44px] sm:min-h-[40px] px-3 sm:px-4 py-2 text-xs"
               >
                 <ExternalLink className="w-3.5 h-3.5 shrink-0" />
                 <span>{RESUME_CONFIG.label} <span className="hidden sm:inline">(PDF)</span></span>
@@ -264,7 +264,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                 onClick={handlePrint}
                 type="button"
                 aria-label="Save or print resume as A4 PDF"
-                className="btn btn-primary min-h-[40px] px-3 sm:px-4 py-2 text-xs"
+                className="btn btn-primary min-h-[44px] sm:min-h-[40px] px-3 sm:px-4 py-2 text-xs"
                 title="Save or print resume as A4 PDF"
               >
                 <Printer className="w-3.5 h-3.5 shrink-0" />
@@ -276,7 +276,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               onClick={handlePrint}
               type="button"
               aria-label="Print resume document"
-              className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center bg-[var(--surface)] hover:bg-[var(--surface-3)] border border-[var(--border)] rounded-[6px] text-[var(--text-secondary)] hover:text-[var(--text)] cursor-pointer transition-colors"
+              className="p-2 min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center bg-[var(--surface)] hover:bg-[var(--surface-3)] border border-[var(--border)] rounded-[6px] text-[var(--text-secondary)] hover:text-[var(--text)] cursor-pointer transition-colors"
               title="Print document"
             >
               <Printer className="w-4 h-4" />
@@ -286,7 +286,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
               onClick={onClose}
               type="button"
               aria-label="Close resume modal (or press Esc)"
-              className="p-2 min-w-[40px] min-h-[40px] flex items-center justify-center bg-[var(--surface)] hover:bg-[var(--surface-3)] border border-[var(--border)] rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer transition-colors"
+              className="p-2 min-w-[44px] min-h-[44px] sm:min-w-[40px] sm:min-h-[40px] flex items-center justify-center bg-[var(--surface)] hover:bg-[var(--surface-3)] border border-[var(--border)] rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -297,7 +297,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
         <ReadingProgressBar containerRef={webBodyRef} height={2} className="shrink-0 z-30" />
 
         {/* VERIFIED HIGHLIGHTS SUMMARY STRIP */}
-        <div className="bg-[var(--surface)] border-b border-[var(--border)] px-4 sm:px-6 py-2 overflow-x-auto no-scrollbar shrink-0">
+        <div className="bg-[var(--surface)] border-b border-[var(--border)] px-4 sm:px-6 py-2 overflow-x-auto no-scrollbar shrink-0 [@media(max-height:440px)]:hidden">
           <div className="flex items-center gap-5 text-xs font-mono min-w-max tabular-nums">
             {RESUME_DATA.highlights.map((h, i) => (
               <div key={i} className="flex items-center gap-1.5 text-[var(--text-muted)]">
@@ -363,7 +363,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <button
                     type="button"
                     onClick={() => copyToClipboard(RESUME_DATA.contact.email, "email")}
-                    className="flex items-center gap-1.5 hover:text-[var(--text)] transition-colors cursor-pointer group/btn max-w-full min-w-0"
+                    className="flex items-center gap-1.5 min-h-[40px] [@media(pointer:coarse)]:min-h-[44px] hover:text-[var(--text)] transition-colors cursor-pointer group/btn max-w-full min-w-0"
                     title="Click to copy email address"
                   >
                     <Mail className="w-3.5 h-3.5 text-[var(--accent)] shrink-0" />
@@ -378,7 +378,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                   <button
                     type="button"
                     onClick={() => copyToClipboard(RESUME_DATA.contact.phone, "phone")}
-                    className="flex items-center gap-1.5 hover:text-[var(--text)] transition-colors cursor-pointer group/btn"
+                    className="flex items-center gap-1.5 min-h-[40px] [@media(pointer:coarse)]:min-h-[44px] hover:text-[var(--text)] transition-colors cursor-pointer group/btn"
                     title="Click to copy phone number"
                   >
                     <Phone className="w-3.5 h-3.5 text-[var(--accent)] shrink-0" />
@@ -566,7 +566,7 @@ export default function ResumeModal({ isOpen, onClose }: ResumeModalProps) {
                         href={cert.credentialUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 text-[11px] font-mono font-semibold text-[var(--accent)] hover:underline underline-offset-4 transition-colors"
+                        className="inline-flex items-center gap-1.5 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] text-[11px] font-mono font-semibold text-[var(--accent)] hover:underline underline-offset-4 transition-colors"
                       >
                         <span>Verify Credential</span>
                         <ExternalLink className="w-3 h-3 shrink-0" />

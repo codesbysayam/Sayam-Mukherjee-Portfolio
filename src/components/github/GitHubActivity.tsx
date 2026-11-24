@@ -122,7 +122,7 @@ export const GitHubActivity = memo(function GitHubActivity({
                         href={`https://github.com/codesbysayam/${item.repoName}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-[var(--accent)] hover:underline inline-flex items-center gap-0.5 truncate max-w-[200px]"
+                        className="text-[var(--accent)] hover:underline inline-flex items-center gap-0.5 truncate max-w-[200px] min-h-[36px] [@media(pointer:coarse)]:min-h-[44px]"
                       >
                         <span>{item.repoName}</span>
                         <ExternalLink className="w-2.5 h-2.5 shrink-0 opacity-70" />
@@ -139,7 +139,7 @@ export const GitHubActivity = memo(function GitHubActivity({
               </div>
             </div>
 
-            <span className="text-[10px] font-mono text-[var(--text-muted)] shrink-0 flex items-center gap-1 mt-1 tabular-nums">
+            <span className="text-[11px] font-mono text-[var(--text-muted)] shrink-0 flex items-center gap-1 mt-1 tabular-nums">
               <Clock className="w-3 h-3 text-[var(--text-faint)]" />
               {formatRelativeTime(item.createdAt)}
             </span>
@@ -148,7 +148,7 @@ export const GitHubActivity = memo(function GitHubActivity({
           ))}
         </StaggerGroup>
 
-        <p className="text-[10px] font-mono text-[var(--text-faint)] text-center pt-1">
+        <p className="text-[11px] font-mono text-[var(--text-faint)] text-center pt-1">
           Public event telemetry sourced directly from api.github.com/users/codesbysayam/events/public
         </p>
       </div>

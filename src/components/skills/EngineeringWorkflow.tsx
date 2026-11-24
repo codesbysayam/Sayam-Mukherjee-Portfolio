@@ -161,7 +161,7 @@ export function EngineeringWorkflow() {
                   <h3 className="text-xs sm:text-sm font-semibold text-[var(--text)] font-display group-hover:text-[var(--accent)] transition-colors">
                     {stage.name}
                   </h3>
-                  <div className="text-[10px] font-mono text-[var(--accent)] font-medium">
+                  <div className="text-[11px] font-mono text-[var(--accent)] font-medium">
                     {stage.tools}
                   </div>
                 </div>

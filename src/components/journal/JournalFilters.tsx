@@ -40,14 +40,14 @@ export const JournalFilters = memo(function JournalFilters({
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
             placeholder="Search essays by topic, title, or architecture…"
-            className="w-full min-h-[42px] border rounded-[6px] pl-9 pr-9 py-2 text-sm bg-[var(--surface-2)] border-[var(--border-strong)] text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)] transition-colors font-sans"
+            className="w-full min-h-[44px] sm:min-h-[42px] border rounded-[6px] pl-9 pr-11 py-2 text-base sm:text-xs bg-[var(--surface-2)] border-[var(--border-strong)] text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)] transition-colors font-sans"
             aria-label="Search journal entries"
           />
           {searchQuery && (
             <button
               type="button"
               onClick={() => onSearchChange("")}
-              className="absolute right-2 top-1/2 -translate-y-1/2 min-w-[32px] min-h-[32px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
+              className="absolute right-0.5 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
               aria-label="Clear search query"
             >
               <X className="w-4 h-4" />
@@ -67,7 +67,7 @@ export const JournalFilters = memo(function JournalFilters({
               onClick={() =>
                 onSortChange(sortOrder === "newest" ? "oldest" : "newest")
               }
-              className="hover:text-[var(--accent)] transition-colors cursor-pointer capitalize font-medium underline underline-offset-4"
+              className="inline-flex items-center min-h-[44px] sm:min-h-[36px] px-2 hover:text-[var(--accent)] transition-colors cursor-pointer capitalize font-medium underline underline-offset-4"
               aria-label={`Sort order: currently ${sortOrder}`}
             >
               {sortOrder}
@@ -91,7 +91,7 @@ export const JournalFilters = memo(function JournalFilters({
               role="tab"
               aria-selected={isSelected}
               onClick={() => onCategoryChange(cat)}
-              className={`relative px-3 py-1.5 rounded-[6px] text-xs font-mono tracking-wider transition-colors cursor-pointer border ${
+              className={`relative inline-flex items-center min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] text-xs font-mono tracking-wider transition-colors cursor-pointer border ${
                 isSelected
                   ? "border-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
                   : "border-[var(--border)] bg-[var(--surface-2)] text-[var(--text-muted)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"

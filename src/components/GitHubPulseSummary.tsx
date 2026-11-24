@@ -71,30 +71,30 @@ function GitHubPulseSummaryComponent({
 
         <span
           id="github-pulse-window-badge"
-          className="inline-flex items-center gap-1 text-[10px] font-mono font-medium px-2 py-0.5 rounded-[4px] border"
+          className="inline-flex items-center gap-1 text-[11px] font-mono font-medium px-2 py-0.5 rounded-[4px] border"
           style={{
             backgroundColor: "var(--surface)",
             borderColor: "var(--border)",
             color: "var(--text-secondary)",
           }}
         >
-          <Calendar className="w-2.5 h-2.5 text-[var(--accent)]" />
+          <Calendar className="w-3 h-3 text-[var(--accent)]" />
           {pulse.periodLabel || "Last 7 Days"}
         </span>
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-2 gap-2.5" id="github-pulse-metrics-grid">
+      <div className="grid grid-cols-1 min-[420px]:grid-cols-2 gap-2.5" id="github-pulse-metrics-grid">
         <div
           id="github-pulse-commits-tile"
-          className="rounded-[8px] border p-2.5 flex flex-col justify-between"
+          className="rounded-[8px] border p-2.5 flex flex-col justify-between min-w-0"
           style={{
             backgroundColor: "var(--surface)",
             borderColor: "var(--border)",
           }}
         >
           <div className="flex items-center justify-between gap-1 mb-1">
-            <span className="text-[10px] font-mono font-semibold uppercase tracking-wide truncate text-[var(--text-muted)]">
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-wide truncate text-[var(--text-muted)]">
               Commits (7d)
             </span>
             <GitCommit className="w-3.5 h-3.5 shrink-0 text-[var(--accent)]" />
@@ -107,26 +107,26 @@ function GitHubPulseSummaryComponent({
             >
               {loading ? "..." : pulse.commitsCount}
             </span>
-            <span className="text-[10px] font-mono truncate font-semibold text-[var(--accent)]">
+            <span className="text-[11px] font-mono truncate font-semibold text-[var(--accent)]">
               {pulse.dailyCadence}
             </span>
           </div>
 
-          <div className="text-[10px] mt-1 truncate text-[var(--text-faint)]">
+          <div className="text-[11px] mt-1 truncate text-[var(--text-faint)]">
             Git pushes verified
           </div>
         </div>
 
         <div
           id="github-pulse-repos-tile"
-          className="rounded-[8px] border p-2.5 flex flex-col justify-between"
+          className="rounded-[8px] border p-2.5 flex flex-col justify-between min-w-0"
           style={{
             backgroundColor: "var(--surface)",
             borderColor: "var(--border)",
           }}
         >
           <div className="flex items-center justify-between gap-1 mb-1">
-            <span className="text-[10px] font-mono font-semibold uppercase tracking-wide truncate text-[var(--text-muted)]">
+            <span className="text-[11px] font-mono font-semibold uppercase tracking-wide truncate text-[var(--text-muted)]">
               Active Repos (7d)
             </span>
             <FolderGit2 className="w-3.5 h-3.5 shrink-0 text-[var(--accent)]" />
@@ -139,12 +139,12 @@ function GitHubPulseSummaryComponent({
             >
               {loading ? "..." : pulse.activeReposCount}
             </span>
-            <span className="text-[10px] font-mono font-medium truncate text-[var(--accent)]">
+            <span className="text-[11px] font-mono font-medium truncate text-[var(--accent)]">
               touched
             </span>
           </div>
 
-          <div className="text-[10px] mt-1 truncate text-[var(--text-faint)]">
+          <div className="text-[11px] mt-1 truncate text-[var(--text-faint)]">
             This week&apos;s codebase
           </div>
         </div>
@@ -152,11 +152,11 @@ function GitHubPulseSummaryComponent({
 
       {/* Velocity Sparkline */}
       <div className="space-y-1.5 pt-0.5" id="github-pulse-sparkline-row">
-        <div className="flex items-center justify-between text-[9px] font-mono uppercase tracking-wider">
+        <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider">
           <span className="text-[var(--text-muted)] font-semibold">
             7-Day Activity Velocity
           </span>
-          <span className="font-mono text-[9px] font-bold text-[var(--accent)]">
+          <span className="font-mono text-[11px] font-bold text-[var(--accent)]">
             {pulse.dailyCadence}
           </span>
         </div>
@@ -181,14 +181,14 @@ function GitHubPulseSummaryComponent({
                   className="w-full rounded-[2px] transition-all duration-300"
                   style={{
                     height: `${heightPercent}%`,
-                    backgroundColor: isPeak ? "#C7E34A" : "var(--border-strong)",
+                    backgroundColor: isPeak ? "var(--accent-fill)" : "var(--border-strong)",
                   }}
                 />
-                <span className="text-[8px] font-mono leading-none text-[var(--text-faint)]">
+                <span className="text-[10px] font-mono leading-none text-[var(--text-faint)]">
                   {bar.day}
                 </span>
                 <span
-                  className="absolute -top-7 opacity-0 group-hover/bar:opacity-100 transition-opacity text-[9px] font-mono px-1.5 py-0.5 rounded-[4px] pointer-events-none whitespace-nowrap z-20"
+                  className="absolute -top-7 opacity-0 group-hover/bar:opacity-100 transition-opacity text-[11px] font-mono px-1.5 py-0.5 rounded-[4px] pointer-events-none whitespace-nowrap z-20"
                   style={{ backgroundColor: "#20231D", color: "#F4F4ED" }}
                 >
                   {bar.fullDay}: {bar.count} commits
@@ -202,7 +202,7 @@ function GitHubPulseSummaryComponent({
       {/* Active Repositories */}
       {pulse.activeRepos && pulse.activeRepos.length > 0 && (
         <div id="github-pulse-repos-stream" className="space-y-1.5 pt-0.5">
-          <div className="flex items-center justify-between text-[9px] font-mono uppercase tracking-wider">
+          <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider">
             <span className="text-[var(--text-muted)] font-semibold">
               Active Projects (7d)
             </span>
@@ -220,7 +220,7 @@ function GitHubPulseSummaryComponent({
                 target="_blank"
                 rel="noopener noreferrer"
                 title={`${repo.name}: ${repo.commitsCount} commit${repo.commitsCount > 1 ? "s" : ""} in the last 7 days`}
-                className="group/chip inline-flex items-center gap-1.5 px-2 py-1 rounded-[6px] border text-[10px] font-sans transition-colors hover:border-[var(--border-strong)]"
+                className="group/chip inline-flex items-center gap-1.5 px-2.5 py-1 min-h-[34px] [@media(pointer:coarse)]:min-h-[44px] rounded-[6px] border text-[11px] font-sans transition-colors hover:border-[var(--border-strong)]"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -236,7 +236,7 @@ function GitHubPulseSummaryComponent({
                   {repo.name}
                 </span>
                 <span
-                  className="text-[9px] font-mono px-1 rounded-[3px] font-semibold shrink-0 tabular-nums"
+                  className="text-[11px] font-mono px-1 rounded-[3px] font-semibold shrink-0 tabular-nums"
                   style={{
                     backgroundColor: "var(--surface-2)",
                     color: "var(--accent)",
@@ -244,7 +244,7 @@ function GitHubPulseSummaryComponent({
                 >
                   +{repo.commitsCount}
                 </span>
-                <ArrowUpRight className="w-2.5 h-2.5 opacity-40 group-hover/chip:opacity-100 transition-opacity shrink-0 -ml-0.5" />
+                <ArrowUpRight className="w-3 h-3 opacity-40 group-hover/chip:opacity-100 transition-opacity shrink-0 -ml-0.5" />
               </a>
             ))}
           </div>

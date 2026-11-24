@@ -17,6 +17,8 @@ export interface ProjectMetrics {
   linesOfCode?: string;
 }
 
+export type ProjectDifficulty = "Foundational" | "Intermediate" | "Advanced" | "Research";
+
 export interface ProjectItem {
   id: string;
   name?: string;
@@ -36,6 +38,7 @@ export interface ProjectItem {
   categoryLabel: string;
   categoryFilter: "AI / ML" | "FULL-STACK" | "SYSTEMS" | "DSA";
   secondaryCategories?: Array<"AI / ML" | "FULL-STACK" | "SYSTEMS" | "DSA">;
+  difficulty?: ProjectDifficulty;
   status: string;
   statusType: "live" | "active" | "hackathon" | "opensource";
   technologies?: string[];
@@ -116,6 +119,7 @@ export const PROJECTS: ProjectItem[] = [
     categoryLabel: "Multi-Agent Systems",
     categoryFilter: "AI / ML",
     secondaryCategories: ["FULL-STACK", "SYSTEMS"],
+    difficulty: "Advanced",
     status: "Live · Deploy or Die",
     statusType: "live",
     technologies: ["TypeScript", "React", "Node.js", "Express", "Multi-Agent AI", "Gemini API", "Tailwind CSS", "Vite", "Vercel"],
@@ -200,6 +204,7 @@ export const PROJECTS: ProjectItem[] = [
     categoryLabel: "Civic & Climate Tech",
     categoryFilter: "FULL-STACK",
     secondaryCategories: ["AI / ML", "SYSTEMS"],
+    difficulty: "Advanced",
     status: "Live · SIH 2026",
     statusType: "hackathon",
     technologies: ["TypeScript", "React", "Python", "Tailwind CSS", "Weather APIs", "C", "PLpgSQL", "Vercel"],
@@ -284,6 +289,7 @@ export const PROJECTS: ProjectItem[] = [
     categoryLabel: "Computer Vision & AI",
     categoryFilter: "AI / ML",
     secondaryCategories: ["SYSTEMS", "FULL-STACK"],
+    difficulty: "Advanced",
     status: "Open Source · Dual-Service",
     statusType: "opensource",
     technologies: ["Next.js 15", "React 19", "TypeScript", "FastAPI", "Python", "YOLOv8", "ByteTrack", "PostgreSQL"],
@@ -363,6 +369,7 @@ export const PROJECTS: ProjectItem[] = [
     categoryLabel: "AI Research Lab",
     categoryFilter: "AI / ML",
     secondaryCategories: ["FULL-STACK"],
+    difficulty: "Research",
     status: "Live · IIT KGP DataForge",
     statusType: "hackathon",
     technologies: ["TypeScript", "React", "KaTeX", "D3.js", "Python", "Tailwind CSS", "Vercel"],
@@ -446,6 +453,7 @@ export const PROJECTS: ProjectItem[] = [
     categoryLabel: "Control Plane Systems",
     categoryFilter: "SYSTEMS",
     secondaryCategories: ["AI / ML", "FULL-STACK"],
+    difficulty: "Advanced",
     status: "Live · WCC Launchpad 30",
     statusType: "hackathon",
     technologies: ["TypeScript", "React", "Control Plane", "Policy Engine", "Audit Chain", "CSS", "Vercel"],
@@ -529,6 +537,7 @@ export const PROJECTS: ProjectItem[] = [
     categoryLabel: "Design AI (Fork)",
     categoryFilter: "AI / ML",
     secondaryCategories: ["FULL-STACK"],
+    difficulty: "Intermediate",
     status: "Early Access · Fork (master)",
     statusType: "opensource",
     technologies: ["TypeScript", "React", "PLpgSQL", "Docker", "CSS", "Design Systems"],
@@ -610,6 +619,7 @@ export const PROJECTS: ProjectItem[] = [
     categoryLabel: "Full-Stack Platform",
     categoryFilter: "FULL-STACK",
     secondaryCategories: ["SYSTEMS"],
+    difficulty: "Intermediate",
     status: "Live · Demo Deployed",
     statusType: "live",
     technologies: ["Next.js", "TypeScript", "React", "Vitest", "Tailwind CSS", "Vercel"],
@@ -690,6 +700,7 @@ export const PROJECTS: ProjectItem[] = [
     category: "Competitive Programming & DSA",
     categoryLabel: "C++ & Algorithms",
     categoryFilter: "DSA",
+    difficulty: "Foundational",
     status: "Active · 3 Repo / 4 LC",
     statusType: "active",
     technologies: ["C++", "DSA", "Algorithms", "Dynamic Programming", "Binary Search", "LeetHub V2"],

@@ -157,15 +157,6 @@ export const EXTENDED_DATA = {
       iconName: 'TrendingUp'
     },
     {
-      id: 'ach-toycathon',
-      title: 'Finalist – Toycathon',
-      date: 'Past',
-      organization: 'Government of India',
-      description: 'Reached the finals of the national Toycathon competition organized by the Government of India.',
-      category: 'Hackathons',
-      iconName: 'Code'
-    },
-    {
       id: 'ach-certs',
       title: 'Professional Certifications',
       date: 'Ongoing',

@@ -27,6 +27,7 @@ export default function CertificatesPage() {
   const [selectedIssuer, setSelectedIssuer] = useState<string>("ALL");
   const [sortBy, setSortBy] = useState<"newest" | "oldest" | "title">("newest");
   const [viewingCertificate, setViewingCertificate] = useState<Certificate | null>(null);
+  const [modalMode, setModalMode] = useState<"details" | "inspect">("details");
 
   useEffect(() => {
     fetch("/api/certificates")
@@ -62,6 +63,9 @@ export default function CertificatesPage() {
   const availableYears = useMemo(() => {
     const years = new Set<string>();
     certificates.forEach((c) => {
+      if (c.year) {
+        years.add(String(c.year));
+      }
       if (c.issueDate) {
         const match = c.issueDate.match(/\b(19\d\d|20\d\d)\b/);
         if (match) years.add(match[1]);
@@ -94,7 +98,11 @@ export default function CertificatesPage() {
         const catB = selectedCategory.toUpperCase().replace(/S$/, "");
         if (catA !== catB) return false;
       }
-      if (selectedYear !== "ALL" && !cert.issueDate.includes(selectedYear)) {
+      if (
+        selectedYear !== "ALL" &&
+        !(cert.issueDate || "").includes(selectedYear) &&
+        String(cert.year || "") !== selectedYear
+      ) {
         return false;
       }
       if (
@@ -128,6 +136,12 @@ export default function CertificatesPage() {
         const matchesRecipient = cert.recipient ? cert.recipient.toLowerCase().includes(q) : false;
         const matchesRole = cert.role ? cert.role.toLowerCase().includes(q) : false;
         const matchesDate = cert.date ? cert.date.toLowerCase().includes(q) : false;
+        const matchesFacilitator = cert.facilitator ? cert.facilitator.toLowerCase().includes(q) : false;
+        const matchesSessionLeader = cert.sessionLeader ? cert.sessionLeader.toLowerCase().includes(q) : false;
+        const matchesAchievementClaim = cert.achievementClaim
+          ? cert.achievementClaim.toLowerCase().includes(q)
+          : false;
+        const matchesSourceNote = cert.sourceNote ? cert.sourceNote.toLowerCase().includes(q) : false;
         const matchesSignatories = Array.isArray(cert.signatories)
           ? cert.signatories.some((s) =>
               typeof s === "string"
@@ -178,6 +192,10 @@ export default function CertificatesPage() {
           !matchesRecipient &&
           !matchesRole &&
           !matchesDate &&
+          !matchesFacilitator &&
+          !matchesSessionLeader &&
+          !matchesAchievementClaim &&
+          !matchesSourceNote &&
           !matchesSignatories &&
           !matchesAssociatedProjects
         ) {
@@ -188,8 +206,20 @@ export default function CertificatesPage() {
     });
 
     return result.sort((a, b) => {
-      if (sortBy === "newest") return (b.issueDate || "").localeCompare(a.issueDate || "");
-      if (sortBy === "oldest") return (a.issueDate || "").localeCompare(b.issueDate || "");
+      const dateA = a.issueDate || (a.year ? String(a.year) : "");
+      const dateB = b.issueDate || (b.year ? String(b.year) : "");
+      if (sortBy === "newest") {
+        if (!dateA && !dateB) return a.title.localeCompare(b.title);
+        if (!dateA) return 1;
+        if (!dateB) return -1;
+        return dateB.localeCompare(dateA);
+      }
+      if (sortBy === "oldest") {
+        if (!dateA && !dateB) return a.title.localeCompare(b.title);
+        if (!dateA) return 1;
+        if (!dateB) return -1;
+        return dateA.localeCompare(dateB);
+      }
       if (sortBy === "title") return a.title.localeCompare(b.title);
       return 0;
     });
@@ -286,19 +316,19 @@ export default function CertificatesPage() {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedCategory(cat.id)}
-                  className="px-3.5 py-2 rounded-[6px] text-xs font-sans font-semibold whitespace-nowrap cursor-pointer flex items-center gap-2 transition-all border active:scale-[0.97]"
+                  className="px-3.5 py-2 min-h-[44px] sm:min-h-[38px] rounded-[6px] text-xs font-sans font-semibold whitespace-nowrap cursor-pointer flex items-center gap-2 transition-all border active:scale-[0.97]"
                   style={{
-                    backgroundColor: isSelected ? "#C7E34A" : "var(--surface)",
-                    borderColor: isSelected ? "#C7E34A" : "var(--border)",
-                    color: isSelected ? "#20231D" : "var(--text-secondary)",
+                    backgroundColor: isSelected ? "var(--accent-fill)" : "var(--surface)",
+                    borderColor: isSelected ? "var(--accent-fill)" : "var(--border)",
+                    color: isSelected ? "var(--accent-contrast)" : "var(--text-secondary)",
                   }}
                 >
                   <span>{cat.label}</span>
                   <span
                     className="text-[11px] px-1.5 py-0.5 rounded-[4px] font-mono tabular-nums"
                     style={{
-                      backgroundColor: isSelected ? "rgba(32,35,29,0.12)" : "var(--surface-2)",
-                      color: isSelected ? "#20231D" : "var(--text-muted)",
+                      backgroundColor: isSelected ? "rgba(23,27,18,0.14)" : "var(--surface-2)",
+                      color: isSelected ? "var(--accent-contrast)" : "var(--text-muted)",
                     }}
                   >
                     {count}
@@ -317,7 +347,7 @@ export default function CertificatesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search credentials, projects, issuers..."
-                className="w-full rounded-[6px] pl-10 pr-10 py-2.5 text-base sm:text-xs font-sans border transition-colors focus:outline-none"
+                className="w-full min-h-[44px] sm:min-h-[40px] rounded-[6px] pl-10 pr-11 py-2 text-base sm:text-xs font-sans border transition-colors focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -328,7 +358,7 @@ export default function CertificatesPage() {
                 <button
                   type="button"
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] active:scale-95 active:opacity-80 cursor-pointer"
+                  className="absolute right-0.5 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] active:scale-95 active:opacity-80 cursor-pointer"
                   title="Clear search"
                   aria-label="Clear search"
                 >
@@ -341,7 +371,7 @@ export default function CertificatesPage() {
               <select
                 value={selectedYear}
                 onChange={(e) => setSelectedYear(e.target.value)}
-                className="w-full rounded-[6px] px-3.5 py-2.5 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer border focus:outline-none"
+                className="w-full min-h-[44px] sm:min-h-[40px] rounded-[6px] px-3.5 py-2 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer border focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -363,7 +393,7 @@ export default function CertificatesPage() {
               <select
                 value={selectedIssuer}
                 onChange={(e) => setSelectedIssuer(e.target.value)}
-                className="w-full rounded-[6px] px-3.5 py-2.5 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
+                className="w-full min-h-[44px] sm:min-h-[40px] rounded-[6px] px-3.5 py-2 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -385,7 +415,7 @@ export default function CertificatesPage() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as "newest" | "oldest" | "title")}
-                className="w-full rounded-[6px] px-3.5 py-2.5 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
+                className="w-full min-h-[44px] sm:min-h-[40px] rounded-[6px] px-3.5 py-2 text-base sm:text-xs font-sans transition-colors appearance-none cursor-pointer truncate border focus:outline-none"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -422,7 +452,7 @@ export default function CertificatesPage() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="flex items-center gap-1.5 font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--accent)] hover:underline active:scale-95 active:opacity-80 cursor-pointer"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-2 font-mono text-[11px] font-semibold uppercase tracking-wider text-[var(--accent)] hover:underline active:scale-95 active:opacity-80 cursor-pointer"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Reset Filters</span>
@@ -437,7 +467,14 @@ export default function CertificatesPage() {
         <div className="space-y-6">
           <AchievementGrid
             records={filteredCertificates}
-            onView={(c) => setViewingCertificate(c)}
+            onViewDetails={(record) => {
+              setModalMode("details");
+              setViewingCertificate(record as Certificate);
+            }}
+            onInspect={(record) => {
+              setModalMode("inspect");
+              setViewingCertificate(record as Certificate);
+            }}
             onResetFilters={handleResetFilters}
             columns={2}
           />
@@ -447,6 +484,7 @@ export default function CertificatesPage() {
       <CertificateViewerModal
         certificate={viewingCertificate}
         certificates={filteredCertificates}
+        initialMode={modalMode}
         onSelectCertificate={setViewingCertificate}
         onClose={() => setViewingCertificate(null)}
       />

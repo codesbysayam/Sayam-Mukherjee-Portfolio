@@ -2,33 +2,49 @@ import React from "react";
 import { motion } from "motion/react";
 import { AchievementRecord, Certificate } from "../../types/certificates";
 import { AchievementMetadata } from "./AchievementMetadata";
-import { CredentialPreview } from "./CredentialPreview";
+import { AchievementRecordDetails } from "./CredentialPreview";
 import { AchievementTags } from "./AchievementTags";
 import { AchievementActions } from "./AchievementActions";
 import { MOTION_DURATION, MOTION_EASE, usePrefersReducedMotion } from "../../motion/tokens";
 
-export interface AchievementCardProps {
+export interface CertificateAchievementCardProps {
   record?: AchievementRecord;
   certificate?: Certificate;
+  onViewDetails?: (record: AchievementRecord) => void;
   onInspect?: (record: AchievementRecord) => void;
   onView?: (cert: Certificate) => void;
   className?: string;
 }
 
-export function AchievementCard({
+export type AchievementCardProps = CertificateAchievementCardProps;
+
+export function CertificateAchievementCard({
   record,
   certificate,
+  onViewDetails,
   onInspect,
   onView,
   className = "",
-}: AchievementCardProps) {
+}: CertificateAchievementCardProps) {
   const prefersReduced = usePrefersReducedMotion();
   const item: AchievementRecord = (record || certificate) as AchievementRecord;
   if (!item) return null;
 
+  const handleViewDetails = () => {
+    if (onViewDetails) {
+      onViewDetails(item);
+    } else if (onInspect) {
+      onInspect(item);
+    } else if (onView) {
+      onView(item as Certificate);
+    }
+  };
+
   const handleInspect = () => {
     if (onInspect) {
       onInspect(item);
+    } else if (onViewDetails) {
+      onViewDetails(item);
     } else if (onView) {
       onView(item as Certificate);
     }
@@ -52,6 +68,7 @@ export function AchievementCard({
     tags = [],
     event,
     platform,
+    credentialType,
   } = item;
 
   const cleanTitle = (rawTitle: string) => {
@@ -79,78 +96,91 @@ export function AchievementCard({
 
   const displayDescription = overview || description || fullDescription || "";
   const displayCategory = category ? category.replace(/S$/, "") : "ACHIEVEMENT";
-  const displayYear = issueDate || year ? `${issueDate || year}` : "";
+  const displayYear = year ? String(year) : issueDate ? `${issueDate}` : "";
+  const categoryLabel = displayYear ? `${displayCategory} · ${displayYear}` : displayCategory;
+  const credentialLabel = credentialType
+    ? platform
+      ? `${credentialType} · ${platform}`
+      : credentialType
+    : platform || "Verified Credential";
 
   return (
     <motion.article
       id={`achievement-card-${id}`}
       whileHover={prefersReduced ? undefined : { y: -3 }}
       transition={{ duration: MOTION_DURATION.fast, ease: MOTION_EASE.out }}
-      className={`achievement-card card group relative flex flex-col justify-between overflow-hidden h-full ${className}`}
+      className={`achievement-card card group relative overflow-hidden ${className}`}
       style={{
         backgroundColor: "var(--surface-2)",
         borderColor: "var(--border)",
       }}
     >
-      {/* Main Card Body */}
-      <div className="achievement-card__body p-6 flex flex-col flex-1 gap-3.5">
-        {/* Category & Year Eyebrow */}
-        <div className="achievement-card__eyebrow flex items-center justify-between gap-3 text-xs">
-          <span className="font-mono font-semibold tracking-wider uppercase text-[11px] text-[var(--accent)]">
-            {displayCategory}
-            {displayYear ? ` · ${displayYear}` : ""}
+      <div className="achievement-card__body">
+        {/* A. Header */}
+        <header className="achievement-card__header">
+          <span className="achievement-card__category font-mono font-semibold tracking-wider uppercase text-[11px] text-[var(--accent)]">
+            {categoryLabel}
           </span>
 
-          {platform && (
-            <span className="font-mono text-[11px] text-[var(--text-muted)]">
-              {platform}
-            </span>
+          <span
+            className="achievement-card__credential font-mono text-[11px] text-[var(--text-muted)] text-right uppercase tracking-wider"
+            title={credentialLabel}
+          >
+            {credentialLabel}
+          </span>
+        </header>
+
+        {/* B. Identity */}
+        <section className="achievement-card__identity space-y-1">
+          <h3
+            onClick={handleViewDetails}
+            className="achievement-card__title text-lg sm:text-xl font-bold tracking-tight leading-snug cursor-pointer transition-colors text-[var(--text)] group-hover:text-[var(--accent)] active:opacity-75 font-display"
+          >
+            {displayTitle}
+          </h3>
+
+          {organizerSponsor && (
+            <p className="achievement-card__organizer text-sm font-medium text-[var(--text-secondary)]">
+              {organizerSponsor}
+            </p>
           )}
-        </div>
+        </section>
 
-        {/* Event / Achievement Title */}
-        <h3
-          onClick={handleInspect}
-          className="achievement-card__title text-lg sm:text-xl font-bold tracking-tight leading-snug cursor-pointer transition-colors m-0 text-[var(--text)] group-hover:text-[var(--accent)] active:opacity-75 font-display"
-        >
-          {displayTitle}
-        </h3>
-
-        {/* Organizer / Sponsor Subtitle */}
-        {organizerSponsor && (
-          <p className="achievement-card__organizer text-sm font-medium -mt-1 m-0 text-[var(--text-secondary)]">
-            {organizerSponsor}
-          </p>
-        )}
-
-        {/* Standardized Metadata Strip */}
+        {/* C. Metadata */}
         <AchievementMetadata record={item} />
 
-        {/* Credential Preview or Associated Engineering Projects */}
-        <CredentialPreview record={item} onInspect={handleInspect} />
-
-        {/* Balanced Description Preview */}
-        {displayDescription && (
-          <p className="achievement-card__description text-sm leading-relaxed m-0 line-clamp-3 text-[var(--text-muted)]">
+        {/* D. Overview */}
+        <section className="achievement-card__overview">
+          <p className="achievement-card__description text-sm leading-relaxed m-0 text-[var(--text-muted)]">
             {displayDescription}
           </p>
-        )}
+        </section>
 
-        {/* Tags */}
-        <div className="mt-auto pt-1">
+        {/* E. Record Details (Consistent text-only information area; no project panels) */}
+        <section className="achievement-card__details">
+          <AchievementRecordDetails record={item} />
+        </section>
+
+        {/* F. Relevant Topics */}
+        <section className="achievement-card__topics">
           <AchievementTags
             tags={tags}
             skills={skills}
             maxVisible={4}
             onInspect={handleInspect}
           />
-        </div>
+        </section>
       </div>
 
-      {/* Standardized Card Action Footer */}
-      <AchievementActions record={item} onInspect={handleInspect} />
+      {/* G. Footer */}
+      <AchievementActions
+        record={item}
+        onViewDetails={handleViewDetails}
+        onInspect={handleInspect}
+      />
     </motion.article>
   );
 }
 
-export default AchievementCard;
+export const AchievementCard = CertificateAchievementCard;
+export default CertificateAchievementCard;

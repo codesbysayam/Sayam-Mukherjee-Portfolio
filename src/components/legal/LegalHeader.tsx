@@ -29,8 +29,9 @@ export const LegalHeader: React.FC<LegalHeaderProps> = ({
         />
         {onNavigateHome && (
           <button
+            type="button"
             onClick={onNavigateHome}
-            className="group inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors cursor-pointer"
+            className="group inline-flex items-center gap-2 min-h-[44px] sm:min-h-[38px] px-1 text-xs sm:text-sm font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-3.5 h-3.5 transition-transform group-hover:-translate-x-1" />
             <span>Back to portfolio</span>

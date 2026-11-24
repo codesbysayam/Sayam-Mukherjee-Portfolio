@@ -179,11 +179,11 @@ function LanguageRingChartComponent({
         className="flex items-center justify-between border-b pb-3"
         style={{ borderColor: "var(--border)" }}
       >
-        <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
+        <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] flex items-center gap-1.5">
           <Code2 className="w-3.5 h-3.5 text-[var(--accent)]" />
           Codebase Language Breakdown
         </span>
-        <span className="text-[10px] font-mono text-[var(--text-faint)]">
+        <span className="text-[11px] font-mono text-[var(--text-faint)]">
           Live Git Distribution
         </span>
       </div>
@@ -195,7 +195,7 @@ function LanguageRingChartComponent({
             <span className="text-base font-extrabold text-[var(--text)] font-display tabular-nums leading-tight">
               {activeDisplay?.formattedPercentage}
             </span>
-            <span className="text-[10px] text-[var(--text-muted)] font-mono tracking-tight mt-0.5 truncate max-w-[90px]">
+            <span className="text-[11px] text-[var(--text-muted)] font-mono tracking-tight mt-0.5 truncate max-w-[90px]">
               {activeDisplay?.name}
             </span>
           </div>
@@ -204,10 +204,11 @@ function LanguageRingChartComponent({
         {showLegend && (
           <div className="space-y-2 w-full sm:w-auto">
             {languagesData.map((lang, idx) => (
-              <div
+              <button
                 key={idx}
+                type="button"
                 onClick={() => setSelectedLang(lang)}
-                className="flex items-center justify-between gap-4 p-2.5 rounded-[6px] border hover:border-[var(--border-strong)] transition-colors cursor-pointer text-xs font-mono"
+                className="w-full min-h-[44px] flex items-center justify-between gap-4 px-3 py-2 rounded-[6px] border hover:border-[var(--border-strong)] transition-colors cursor-pointer text-xs font-mono text-left"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -223,7 +224,7 @@ function LanguageRingChartComponent({
                 <span className="text-[var(--text-muted)] font-bold tabular-nums">
                   {lang.formattedPercentage}
                 </span>
-              </div>
+              </button>
             ))}
           </div>
         )}

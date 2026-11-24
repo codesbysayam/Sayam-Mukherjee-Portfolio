@@ -123,7 +123,7 @@ export function GitHubActivityHeatmapComponent({
       .attr("y", (d) => 20 + d.row * (cellSize + cellGap) + cellSize - 2)
       .attr("text-anchor", "end")
       .attr("fill", isDark ? "#B5B8AA" : "#585B52")
-      .attr("font-size", "8.5px")
+      .attr("font-size", "10px")
       .attr("font-family", '"IBM Plex Mono", monospace')
       .text((d) => d.label);
 
@@ -210,7 +210,7 @@ export function GitHubActivityHeatmapComponent({
                 Live GitHub Activity
               </h3>
               <span
-                className="text-[10px] px-2 py-0.5 rounded-[4px] font-mono font-semibold border"
+                className="text-[11px] px-2 py-0.5 rounded-[4px] font-mono font-semibold border"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border-strong)",
@@ -227,14 +227,14 @@ export function GitHubActivityHeatmapComponent({
         </div>
 
         <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-          <span className="hidden sm:inline text-[10px] text-[var(--text-faint)] font-mono">
+          <span className="hidden sm:inline text-[11px] text-[var(--text-faint)] font-mono">
             Last synced: {statsData.lastSynced || "Recently"}
           </span>
           <button
             type="button"
             onClick={handleManualRefresh}
             disabled={isRefreshing}
-            className="btn btn-secondary min-h-[40px] px-3 py-1.5 text-xs font-mono disabled:opacity-50"
+            className="btn btn-secondary min-h-[44px] px-3 py-1.5 text-xs font-mono disabled:opacity-50"
             title="Force refresh real-time GitHub telemetry"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${isRefreshing ? "animate-spin" : ""}`} />
@@ -244,7 +244,7 @@ export function GitHubActivityHeatmapComponent({
             href={`https://github.com/${username}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary min-h-[40px] px-3.5 py-1.5 text-xs font-mono"
+            className="btn btn-primary min-h-[44px] px-3.5 py-1.5 text-xs font-mono"
           >
             <span>Verify on GitHub</span>
             <ExternalLink className="w-3.5 h-3.5" />
@@ -258,13 +258,13 @@ export function GitHubActivityHeatmapComponent({
           className="border p-3.5 rounded-[8px]"
           style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
         >
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
             CONTRIBUTIONS (2026)
           </span>
           <span className="text-xl font-extrabold text-[var(--accent)] font-display tabular-nums mt-1 block">
             {statsData.totalContributionsThisYear ?? "—"}
           </span>
-          <span className="text-[10px] text-[var(--text-faint)] font-mono">
+          <span className="text-[11px] text-[var(--text-faint)] font-mono">
             Public GitHub telemetry
           </span>
         </div>
@@ -273,13 +273,13 @@ export function GitHubActivityHeatmapComponent({
           className="border p-3.5 rounded-[8px]"
           style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
         >
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
             PUBLIC REPOSITORIES
           </span>
           <span className="text-xl font-extrabold text-[var(--text)] font-display tabular-nums mt-1 block">
             {statsData.publicRepos}
           </span>
-          <span className="text-[10px] text-[var(--text-faint)] font-mono">
+          <span className="text-[11px] text-[var(--text-faint)] font-mono">
             Verified public repos
           </span>
         </div>
@@ -288,14 +288,14 @@ export function GitHubActivityHeatmapComponent({
           className="border p-3.5 rounded-[8px]"
           style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
         >
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
             CURRENT STREAK
           </span>
           <span className="text-xl font-extrabold text-[var(--text)] font-display tabular-nums mt-1 block">
             {statsData.currentStreak ?? 0}{" "}
             {statsData.currentStreak === 1 ? "day" : "days"}
           </span>
-          <span className="text-[10px] text-[var(--text-faint)] font-mono">
+          <span className="text-[11px] text-[var(--text-faint)] font-mono">
             Consecutive active coding
           </span>
         </div>
@@ -304,14 +304,14 @@ export function GitHubActivityHeatmapComponent({
           className="border p-3.5 rounded-[8px]"
           style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
         >
-          <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+          <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
             LONGEST STREAK
           </span>
           <span className="text-xl font-extrabold text-[var(--accent)] font-display tabular-nums mt-1 block">
             {statsData.longestStreak ?? 0}{" "}
             {statsData.longestStreak === 1 ? "day" : "days"}
           </span>
-          <span className="text-[10px] text-[var(--text-faint)] font-mono">
+          <span className="text-[11px] text-[var(--text-faint)] font-mono">
             Verified continuous run
           </span>
         </div>
@@ -323,14 +323,14 @@ export function GitHubActivityHeatmapComponent({
         style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
       >
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <span className="text-[10px] font-mono uppercase text-[var(--text-muted)] tracking-wider flex items-center gap-1.5">
+          <span className="text-[11px] font-mono uppercase text-[var(--text-muted)] tracking-wider flex items-center gap-1.5">
             <Calendar className="w-3.5 h-3.5 text-[var(--accent)]" />
             Contribution Activity Matrix (Past 16 Weeks)
           </span>
 
           {hoveredDay && (
             <span
-              className="text-[10px] font-mono px-2 py-0.5 rounded-[4px] border tabular-nums"
+              className="text-[11px] font-mono px-2 py-0.5 rounded-[4px] border tabular-nums"
               style={{
                 backgroundColor: "var(--surface-2)",
                 borderColor: "var(--border-strong)",
@@ -343,12 +343,12 @@ export function GitHubActivityHeatmapComponent({
           )}
         </div>
 
-        <div className="w-full overflow-x-auto py-2">
-          <svg ref={svgRef} className="mx-auto min-w-[500px]" />
+        <div className="w-full py-2">
+          <svg ref={svgRef} className="w-full max-w-[680px] h-auto mx-auto block" />
         </div>
 
         <div
-          className="flex items-center justify-between text-[10px] font-mono text-[var(--text-muted)] pt-2 border-t"
+          className="flex items-center justify-between text-[11px] font-mono text-[var(--text-muted)] pt-2 border-t"
           style={{ borderColor: "var(--border)" }}
         >
           <span>Less</span>
@@ -383,7 +383,7 @@ export function GitHubActivityHeatmapComponent({
 
       {/* Recent Commits */}
       <div className="space-y-3">
-        <span className="text-[10px] font-mono uppercase text-[var(--text-muted)] tracking-wider block">
+        <span className="text-[11px] font-mono uppercase text-[var(--text-muted)] tracking-wider block">
           RECENT REPOSITORY COMMITS
         </span>
 
@@ -406,7 +406,7 @@ export function GitHubActivityHeatmapComponent({
                   {commit.message}
                 </span>
               </div>
-              <div className="flex items-center gap-3 shrink-0 text-[10px] text-[var(--text-muted)]">
+              <div className="flex items-center gap-3 shrink-0 text-[11px] text-[var(--text-muted)]">
                 <span className="text-[var(--accent)] font-semibold">
                   {commit.repo.replace("codesbysayam/", "")}
                 </span>
@@ -438,14 +438,14 @@ export function MiniActivityHeatmap({
   return (
     <div className="space-y-3 font-mono text-xs">
       <div className="flex items-center justify-between text-[var(--text-muted)]">
-        <span className="text-[10px] uppercase tracking-wider text-[var(--accent)] font-bold">
+        <span className="text-[11px] uppercase tracking-wider text-[var(--accent)] font-bold">
           Live GitHub Cadence
         </span>
         {onExpandClick && (
           <button
             type="button"
             onClick={onExpandClick}
-            className="text-[10px] text-[var(--accent)] hover:underline flex items-center gap-1 transition-colors cursor-pointer"
+            className="min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] text-[11px] text-[var(--accent)] hover:underline flex items-center gap-1 transition-colors cursor-pointer"
           >
             Full Telemetry <ArrowUpRight className="w-3 h-3" />
           </button>
@@ -469,7 +469,7 @@ export function MiniActivityHeatmap({
         })}
       </div>
       <div
-        className="flex items-center justify-between text-[10px] text-[var(--text-muted)] pt-1 border-t"
+        className="flex items-center justify-between text-[11px] text-[var(--text-muted)] pt-1 border-t"
         style={{ borderColor: "var(--border)" }}
       >
         <span>@codesbysayam</span>

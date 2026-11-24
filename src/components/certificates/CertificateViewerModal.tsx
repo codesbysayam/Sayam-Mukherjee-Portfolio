@@ -20,11 +20,13 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  Eye,
 } from "lucide-react";
 
 interface CertificateViewerModalProps {
   certificate: Certificate | null;
   certificates?: Certificate[];
+  initialMode?: "details" | "inspect";
   onSelectCertificate?: (certificate: Certificate) => void;
   onClose: () => void;
 }
@@ -32,6 +34,7 @@ interface CertificateViewerModalProps {
 export default function CertificateViewerModal({
   certificate,
   certificates,
+  initialMode = "details",
   onSelectCertificate,
   onClose,
 }: CertificateViewerModalProps) {
@@ -40,6 +43,7 @@ export default function CertificateViewerModal({
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [copiedId, setCopiedId] = useState(false);
   const [imageError, setImageError] = useState(false);
+  const [showDocumentViewer, setShowDocumentViewer] = useState(false);
   const touchStartXRef = useRef<number | null>(null);
 
   useBodyScrollLock(Boolean(certificate));
@@ -80,14 +84,26 @@ export default function CertificateViewerModal({
     setZoom(1);
     setCopiedId(false);
     setImageError(false);
+    setShowDocumentViewer(false);
     setIsFullscreen(false);
   }, [certificate]);
 
-  const isPdf = Boolean(
-    certificate?.pdfUrl ||
-      (certificate?.imageUrl && certificate.imageUrl.endsWith(".pdf"))
+  const isPdfFile = Boolean(
+    certificate?.pdfUrl && /\.pdf(?:$|\?)/i.test(certificate.pdfUrl)
   );
-  const fileUrl = certificate?.imageUrl || certificate?.pdfUrl;
+  const isPdf = Boolean(
+    isPdfFile ||
+      (certificate?.imageUrl && certificate.imageUrl.toLowerCase().endsWith(".pdf"))
+  );
+  const fileUrl = certificate?.imageUrl || (isPdfFile ? certificate?.pdfUrl : undefined);
+  const modalSourceUrl = (
+    certificate?.certificateUrl ||
+    certificate?.pdfUrl ||
+    certificate?.credentialUrl ||
+    ""
+  ).trim();
+  const hasModalSourceUrl =
+    /^https?:\/\//i.test(modalSourceUrl) || modalSourceUrl.startsWith("/");
 
   const cleanModalTitle = (rawTitle: string) => {
     if (!rawTitle) return "";
@@ -99,13 +115,6 @@ export default function CertificateViewerModal({
       .trim();
     if (!cleaned && certificate?.event) return certificate.event;
     return cleaned || rawTitle;
-  };
-
-  const formatCredentialTypeDisplay = (type?: string) => {
-    if (!type) return "";
-    if (type.toLowerCase() === "certificate of participation") return "Participation";
-    if (type.toLowerCase() === "certificate of completion") return "Completion";
-    return type.replace(/^Certificate of\s+/i, "");
   };
 
   const formatCredentialTypeBadge = (type?: string) => {
@@ -205,7 +214,10 @@ export default function CertificateViewerModal({
                 {cleanModalTitle(certificate.title)}
               </h2>
               <p className="text-xs font-mono sm:truncate leading-normal mt-0.5 text-[var(--text-muted)]">
-                {certificate.issuer} · {certificate.year || certificate.issueDate}
+                {certificate.issuer}
+                {certificate.year || certificate.issueDate
+                  ? ` · ${certificate.year || certificate.issueDate}`
+                  : ""}
               </p>
             </div>
 
@@ -221,7 +233,7 @@ export default function CertificateViewerModal({
                   <button
                     type="button"
                     onClick={() => handleStep(-1)}
-                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer hover:text-[var(--accent)]"
+                    className="min-w-[38px] min-h-[38px] [@media(pointer:coarse)]:min-w-[44px] [@media(pointer:coarse)]:min-h-[44px] flex items-center justify-center rounded cursor-pointer hover:text-[var(--accent)]"
                     title="Previous credential (Left Arrow)"
                     aria-label="Previous credential"
                   >
@@ -233,7 +245,7 @@ export default function CertificateViewerModal({
                   <button
                     type="button"
                     onClick={() => handleStep(1)}
-                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer hover:text-[var(--accent)]"
+                    className="min-w-[38px] min-h-[38px] [@media(pointer:coarse)]:min-w-[44px] [@media(pointer:coarse)]:min-h-[44px] flex items-center justify-center rounded cursor-pointer hover:text-[var(--accent)]"
                     title="Next credential (Right Arrow)"
                     aria-label="Next credential"
                   >
@@ -242,7 +254,7 @@ export default function CertificateViewerModal({
                 </div>
               )}
 
-              {!isPdf && fileUrl && !imageError && (
+              {showDocumentViewer && !isPdf && fileUrl && !imageError && (
                 <div
                   className="flex items-center gap-0.5 sm:gap-1 p-0.5 sm:p-1 rounded-[6px] border"
                   style={{
@@ -254,7 +266,7 @@ export default function CertificateViewerModal({
                     type="button"
                     onClick={handleZoomOut}
                     disabled={zoom <= 0.5}
-                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
+                    className="min-w-[38px] min-h-[38px] [@media(pointer:coarse)]:min-w-[44px] [@media(pointer:coarse)]:min-h-[44px] flex items-center justify-center rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
                     title="Zoom Out"
                     aria-label="Zoom Out"
                   >
@@ -267,7 +279,7 @@ export default function CertificateViewerModal({
                     type="button"
                     onClick={handleZoomIn}
                     disabled={zoom >= 3}
-                    className="min-w-[34px] min-h-[34px] sm:min-w-[36px] sm:min-h-[36px] flex items-center justify-center rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
+                    className="min-w-[38px] min-h-[38px] [@media(pointer:coarse)]:min-w-[44px] [@media(pointer:coarse)]:min-h-[44px] flex items-center justify-center rounded cursor-pointer disabled:opacity-30 hover:text-[var(--accent)]"
                     title="Zoom In"
                     aria-label="Zoom In"
                   >
@@ -279,7 +291,7 @@ export default function CertificateViewerModal({
               <button
                 type="button"
                 onClick={toggleFullscreen}
-                className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -298,7 +310,7 @@ export default function CertificateViewerModal({
               <button
                 type="button"
                 onClick={onClose}
-                className="min-w-[40px] min-h-[40px] flex items-center justify-center rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
+                className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-[6px] border transition-colors cursor-pointer hover:border-[var(--border-strong)]"
                 style={{
                   backgroundColor: "var(--surface-2)",
                   borderColor: "var(--border)",
@@ -328,65 +340,43 @@ export default function CertificateViewerModal({
             }}
             className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6"
           >
-            {certificate.imageUrl && !imageError ? (
-              <div
-                className="relative w-full min-h-[200px] sm:min-h-[260px] max-h-[440px] rounded-[10px] border overflow-auto p-3 sm:p-4 flex items-center justify-center"
-                style={{
-                  backgroundColor: "var(--surface)",
-                  borderColor: "var(--border)",
-                }}
-              >
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={certificate.id}
-                    src={certificate.imageUrl}
-                    alt={certificate.imageAlt || `${certificate.title} credential document`}
-                    referrerPolicy="no-referrer"
-                    initial={prefersReduced ? false : { opacity: 0.25 }}
-                    animate={{ opacity: 1 }}
-                    exit={prefersReduced ? undefined : { opacity: 0.25 }}
-                    transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast }}
-                    style={{ transform: `scale(${zoom})`, transformOrigin: "center" }}
-                    className="max-h-[380px] w-auto object-contain transition-transform duration-150"
-                    onError={() => setImageError(true)}
-                  />
-                </AnimatePresence>
-              </div>
-            ) : certificate.pdfUrl ? (
-              <div
-                className="p-5 sm:p-6 rounded-[10px] border flex flex-col items-center justify-center text-center space-y-3"
-                style={{
-                  backgroundColor: "var(--surface)",
-                  borderColor: "var(--border)",
-                }}
-              >
+            {showDocumentViewer && certificate.imageUrl && !imageError ? (
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                    Certificate Document Viewer
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setShowDocumentViewer(false)}
+                    className="btn btn-secondary !min-h-[36px] !py-1 !px-3 text-xs"
+                  >
+                    Hide Document Preview
+                  </button>
+                </div>
                 <div
-                  className="w-12 h-12 rounded-[10px] flex items-center justify-center border"
+                  className="relative w-full min-h-[160px] sm:min-h-[240px] max-h-[min(48dvh,420px)] rounded-[10px] border overflow-auto p-3 sm:p-4 flex items-center justify-center"
                   style={{
-                    backgroundColor: "var(--surface-2)",
+                    backgroundColor: "var(--surface)",
                     borderColor: "var(--border)",
-                    color: "var(--accent)",
                   }}
                 >
-                  <FileText className="w-6 h-6" />
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={certificate.id}
+                      src={certificate.imageUrl}
+                      alt={certificate.imageAlt || `${certificate.title} credential document`}
+                      referrerPolicy="no-referrer"
+                      initial={prefersReduced ? false : { opacity: 0.25 }}
+                      animate={{ opacity: 1 }}
+                      exit={prefersReduced ? undefined : { opacity: 0.25 }}
+                      transition={{ duration: prefersReduced ? 0 : MOTION_DURATION.fast }}
+                      style={{ transform: `scale(${zoom})`, transformOrigin: "center" }}
+                      className="max-h-[min(42dvh,380px)] w-auto object-contain transition-transform duration-150"
+                      onError={() => setImageError(true)}
+                    />
+                  </AnimatePresence>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-sm text-[var(--text)]">
-                    Official PDF Document
-                  </h4>
-                  <p className="text-xs mt-1 text-[var(--text-muted)]">
-                    Official PDF document for this achievement is available.
-                  </p>
-                </div>
-                <a
-                  href={certificate.pdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-primary text-xs"
-                >
-                  <span>Open PDF in new tab</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </a>
               </div>
             ) : (
               <div
@@ -402,33 +392,127 @@ export default function CertificateViewerModal({
                     style={{
                       backgroundColor: "var(--surface-2)",
                       borderColor: "var(--border)",
-                      color: "var(--text-muted)",
+                      color: "var(--accent)",
                     }}
                   >
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-xs sm:text-sm text-[var(--text)]">
-                      Verified Credential Record
+                      {initialMode === "inspect"
+                        ? "Inspect Record · Archival & Project Details"
+                        : "Text-First Credential Record"}
                     </h4>
                     <p className="text-xs mt-0.5 text-[var(--text-muted)] leading-relaxed">
-                      Structured metadata, credential details, and associated links are documented below.
+                      {initialMode === "inspect"
+                        ? "Complete record details, associated projects, issuer context, and verification references."
+                        : "Structured metadata, issuing organization details, and topics are documented below."}
                     </p>
                   </div>
                 </div>
-                {certificate.credentialUrl && (
-                  <a
-                    href={certificate.credentialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-secondary text-xs shrink-0"
-                  >
-                    <span>Verify with Issuer</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                )}
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  {certificate.imageUrl && !imageError && (
+                    <button
+                      type="button"
+                      onClick={() => setShowDocumentViewer(true)}
+                      className="btn btn-primary text-xs shrink-0"
+                    >
+                      <Eye className="w-3.5 h-3.5" />
+                      <span>Inspect Certificate</span>
+                    </button>
+                  )}
+                  {isPdfFile && certificate.pdfUrl && (
+                    <a
+                      href={certificate.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary text-xs shrink-0"
+                    >
+                      <span>Open PDF</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  )}
+                  {certificate.credentialUrl ? (
+                    <a
+                      href={certificate.credentialUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary text-xs shrink-0"
+                    >
+                      <span>Verify with Issuer</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ) : hasModalSourceUrl ? (
+                    <a
+                      href={modalSourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-secondary text-xs shrink-0"
+                    >
+                      <span>Open Source</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  ) : null}
+                </div>
               </div>
             )}
+
+            {initialMode === "inspect" &&
+              certificate.associatedProjects &&
+              certificate.associatedProjects.length > 0 && (
+                <div
+                  className="p-4 sm:p-5 rounded-[10px] border space-y-3"
+                  style={{
+                    backgroundColor: "var(--surface)",
+                    borderColor: "var(--border-strong)",
+                  }}
+                >
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-[11px] font-mono font-semibold uppercase tracking-wider text-[var(--accent)]">
+                      Associated {certificate.associatedProjects.length > 1 ? "Projects" : "Project"}
+                      {certificate.team ? ` · Team ${certificate.team}` : ""}
+                    </span>
+                    {(certificate.track || certificate.pathway || certificate.format) && (
+                      <span
+                        className="text-[11px] font-mono px-2 py-0.5 rounded-[4px] border"
+                        style={metaCellStyle}
+                      >
+                        {certificate.track || certificate.pathway || certificate.format}
+                      </span>
+                    )}
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    {certificate.associatedProjects.map((p, idx) => (
+                      <a
+                        key={idx}
+                        href={p.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-3.5 rounded-[8px] border flex flex-col justify-between group transition-colors cursor-pointer hover:border-[var(--accent)]"
+                        style={{
+                          backgroundColor: "var(--surface-2)",
+                          borderColor: "var(--border)",
+                        }}
+                      >
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="font-semibold text-sm text-[var(--text)] group-hover:text-[var(--accent)]">
+                            {p.name}
+                          </span>
+                          <ExternalLink className="w-3.5 h-3.5 text-[var(--accent)] shrink-0" />
+                        </div>
+                        {p.description && (
+                          <p className="text-xs mt-1.5 leading-relaxed text-[var(--text-secondary)]">
+                            {p.description}
+                          </p>
+                        )}
+                        <span className="text-[11px] font-mono text-[var(--accent)] mt-2.5 truncate">
+                          {p.url}
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
 
             {/* Structured Information */}
             <div className="space-y-4">
@@ -439,7 +523,7 @@ export default function CertificateViewerModal({
                   </span>
                   {certificate.credentialType && (
                     <span
-                      className="text-[10px] px-2 py-0.5 rounded-[4px] border font-mono uppercase font-semibold"
+                      className="text-[11px] px-2 py-0.5 rounded-[4px] border font-mono uppercase font-semibold"
                       style={{
                         backgroundColor: "var(--surface)",
                         borderColor: "var(--border-strong)",
@@ -451,10 +535,20 @@ export default function CertificateViewerModal({
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 font-mono text-[var(--text-muted)]">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span>{certificate.issueDate || certificate.year}</span>
-                </div>
+                {(certificate.eventDateDisplay ||
+                  certificate.date ||
+                  certificate.issueDate ||
+                  certificate.year) && (
+                  <div className="flex items-center gap-2 font-mono text-[var(--text-muted)]">
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>
+                      {certificate.eventDateDisplay ||
+                        certificate.date ||
+                        certificate.issueDate ||
+                        certificate.year}
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div>
@@ -470,21 +564,21 @@ export default function CertificateViewerModal({
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-3">
                 {certificate.credentialType && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Credential Type
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
-                      {formatCredentialTypeDisplay(certificate.credentialType)}
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
+                      {certificate.credentialType}
                     </span>
                   </div>
                 )}
 
                 {certificate.event && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Event
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
                       {certificate.event}
                     </span>
                   </div>
@@ -492,33 +586,56 @@ export default function CertificateViewerModal({
 
                 {certificate.format && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Format
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
                       {certificate.format}
                     </span>
                   </div>
                 )}
 
-                {(certificate.date || certificate.year || certificate.issueDate) && (
+                {(certificate.eventDateDisplay ||
+                  certificate.date ||
+                  certificate.year ||
+                  certificate.issueDate) && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
-                      Date
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                      {certificate.issueDate &&
+                      /^\d{4}-\d{2}-\d{2}$/.test(certificate.issueDate) &&
+                      (certificate.eventDateDisplay || certificate.date)
+                        ? "Event Date"
+                        : "Date"}
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
-                      {certificate.date || certificate.year || certificate.issueDate}
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
+                      {certificate.eventDateDisplay ||
+                        certificate.date ||
+                        certificate.year ||
+                        certificate.issueDate}
                     </span>
                   </div>
                 )}
 
+                {certificate.issueDate &&
+                  /^\d{4}-\d{2}-\d{2}$/.test(certificate.issueDate) &&
+                  (certificate.eventDateDisplay || certificate.date) && (
+                    <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
+                      <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                        Issue Date
+                      </span>
+                      <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
+                        {certificate.issueDate}
+                      </span>
+                    </div>
+                  )}
+
                 {certificate.venue && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Venue
                     </span>
                     <span
-                      className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]"
+                      className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]"
                       title={certificate.venue}
                     >
                       {certificate.venue}
@@ -528,10 +645,10 @@ export default function CertificateViewerModal({
 
                 {certificate.organizer && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Organizer
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
                       {certificate.organizer}
                     </span>
                   </div>
@@ -539,11 +656,11 @@ export default function CertificateViewerModal({
 
                 {(certificate.coOrganizer || certificate.associatedOrganizer) && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Associated Organization
                     </span>
                     <span
-                      className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]"
+                      className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]"
                       title={certificate.coOrganizer || certificate.associatedOrganizer}
                     >
                       {certificate.coOrganizer || certificate.associatedOrganizer}
@@ -551,12 +668,34 @@ export default function CertificateViewerModal({
                   </div>
                 )}
 
+                {certificate.facilitator && (
+                  <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                      Facilitator
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
+                      {certificate.facilitator}
+                    </span>
+                  </div>
+                )}
+
+                {certificate.sessionLeader && (
+                  <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                      Session Led By
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
+                      {certificate.sessionLeader}
+                    </span>
+                  </div>
+                )}
+
                 {(certificate.recipient || certificate.participant) && (
                   <div className="p-3 rounded-[8px] border" style={metaCellStyle}>
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--text-muted)]">
                       Certificate Holder
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
                       {certificate.recipient || certificate.participant}
                     </span>
                   </div>
@@ -570,10 +709,10 @@ export default function CertificateViewerModal({
                       borderColor: "var(--border-strong)",
                     }}
                   >
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--accent)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--accent)]">
                       Team
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
                       {certificate.team}
                     </span>
                   </div>
@@ -587,10 +726,10 @@ export default function CertificateViewerModal({
                       borderColor: "var(--border-strong)",
                     }}
                   >
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--accent)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--accent)]">
                       Role
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
                       {certificate.role}
                     </span>
                   </div>
@@ -604,10 +743,10 @@ export default function CertificateViewerModal({
                       borderColor: "var(--border-strong)",
                     }}
                   >
-                    <span className="text-[10px] font-mono uppercase tracking-wider block text-[var(--accent)]">
+                    <span className="text-[11px] font-mono uppercase tracking-wider block text-[var(--accent)]">
                       Academic Session
                     </span>
-                    <span className="text-xs sm:text-sm font-bold mt-1 block truncate text-[var(--text)]">
+                    <span className="text-xs sm:text-sm font-bold mt-1 block break-words text-[var(--text)]">
                       {certificate.session}
                     </span>
                   </div>
@@ -662,6 +801,35 @@ export default function CertificateViewerModal({
                   <p className="text-sm leading-relaxed text-[var(--text-secondary)]">
                     {displayDescription}
                   </p>
+                </div>
+              )}
+
+              {certificate.achievementClaim && (
+                <div className="space-y-1.5 pt-1">
+                  <span className="text-[11px] font-mono font-semibold uppercase tracking-wider block text-[var(--accent)]">
+                    LinkedIn / Separate Achievement
+                  </span>
+                  <div
+                    className="p-3.5 rounded-[8px] border text-sm leading-relaxed text-[var(--text)]"
+                    style={{
+                      backgroundColor: "var(--surface)",
+                      borderColor: "var(--border-strong)",
+                    }}
+                  >
+                    {certificate.achievementClaim}
+                  </div>
+                </div>
+              )}
+
+              {certificate.sourceNote && (
+                <div
+                  className="p-3.5 rounded-[8px] border text-xs leading-relaxed text-[var(--text-secondary)]"
+                  style={metaCellStyle}
+                >
+                  <span className="font-mono font-semibold uppercase tracking-wider text-[11px] block mb-1 text-[var(--text-muted)]">
+                    Credential Record Note
+                  </span>
+                  <span>{certificate.sourceNote}</span>
                 </div>
               )}
 
@@ -757,7 +925,9 @@ export default function CertificateViewerModal({
                 </div>
               )}
 
-              {certificate.associatedProjects && certificate.associatedProjects.length > 0 && (
+              {initialMode !== "inspect" &&
+                certificate.associatedProjects &&
+                certificate.associatedProjects.length > 0 && (
                 <div className="space-y-2 pt-1">
                   <span className="text-[11px] font-mono font-semibold uppercase tracking-wider block text-[var(--accent)]">
                     Associated Team Projects ({certificate.team || "Team Project"})
@@ -783,7 +953,7 @@ export default function CertificateViewerModal({
                             {p.description}
                           </p>
                         )}
-                        <span className="text-[10px] font-mono text-[var(--accent)] mt-2 truncate">
+                        <span className="text-[11px] font-mono text-[var(--accent)] mt-2 truncate">
                           {p.url.replace(/^https?:\/\//, "")}
                         </span>
                       </a>
@@ -854,7 +1024,7 @@ export default function CertificateViewerModal({
                   <button
                     type="button"
                     onClick={handleCopyId}
-                    className="flex items-center gap-1.5 text-[var(--accent)] hover:underline cursor-pointer font-mono font-semibold"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-2 -mr-2 text-[var(--accent)] hover:underline cursor-pointer font-mono font-semibold"
                   >
                     {copiedId ? (
                       <Check className="w-3.5 h-3.5" />
@@ -884,17 +1054,17 @@ export default function CertificateViewerModal({
               Close
             </button>
 
-            <div className="flex items-center gap-2.5">
-              {fileUrl && (
+            <div className="flex flex-wrap items-center gap-2.5">
+              {isPdfFile && certificate.pdfUrl && (
                 <a
-                  href={fileUrl}
-                  download={`${certificate.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-certificate`}
+                  href={certificate.pdfUrl}
+                  download={`${certificate.title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-certificate.pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-secondary text-xs sm:text-sm"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Download</span>
+                  <span>Download PDF</span>
                 </a>
               )}
 
@@ -903,9 +1073,21 @@ export default function CertificateViewerModal({
                   href={certificate.credentialUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-primary text-xs sm:text-sm"
+                  className="btn btn-secondary text-xs sm:text-sm"
                 >
                   <span>Verify with Issuer</span>
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              )}
+
+              {hasModalSourceUrl && (
+                <a
+                  href={modalSourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary text-xs sm:text-sm"
+                >
+                  <span>Open Source</span>
                   <ExternalLink className="w-4 h-4" />
                 </a>
               )}

@@ -736,7 +736,7 @@ export function SkillConstellation({
             <button
               type="button"
               onClick={() => onSelectTech(null)}
-              className="btn btn-secondary !min-h-[36px] !py-1.5 !px-3 !text-xs font-mono"
+              className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs font-mono"
             >
               <X className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Clear Selection</span>
@@ -746,7 +746,7 @@ export function SkillConstellation({
             <button
               type="button"
               onClick={handleResetView}
-              className="btn btn-secondary !min-h-[36px] !py-1.5 !px-3 !text-xs font-mono"
+              className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs font-mono"
             >
               <RotateCcw className="w-3.5 h-3.5" aria-hidden="true" />
               <span>Reset View</span>
@@ -769,14 +769,14 @@ export function SkillConstellation({
               onChange={(e) => handleSearchChange(e.target.value)}
               placeholder="Search node across all 38 technologies…"
               aria-label="Search technology in skill constellation"
-              className="w-full min-h-[40px] pl-9 pr-8 py-2 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-xs font-mono text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)]"
+              className="w-full min-h-[44px] sm:min-h-[40px] pl-9 pr-10 py-2 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-base sm:text-xs font-mono text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)]"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => setSearchQuery("")}
                 aria-label="Clear constellation search"
-                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+                className="absolute right-0.5 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
@@ -789,7 +789,7 @@ export function SkillConstellation({
                 type="button"
                 onClick={() => setFocusCategoryOnly((prev) => !prev)}
                 aria-pressed={focusCategoryOnly}
-                className={`hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border text-xs font-mono transition-colors cursor-pointer ${
+                className={`hidden lg:inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 rounded-[6px] border text-xs font-mono transition-colors cursor-pointer ${
                   focusCategoryOnly
                     ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                     : "bg-[var(--surface)] text-[var(--text)] border-[var(--border-strong)] hover:border-[var(--accent)]"
@@ -809,13 +809,13 @@ export function SkillConstellation({
               </button>
             )}
 
-            <div className="hidden md:flex items-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] p-0.5">
+            <div className="hidden lg:flex items-center gap-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] p-0.5">
               <button
                 type="button"
                 onClick={() => setZoomLevel((z) => Math.max(0.85, Number((z - 0.15).toFixed(2))))}
                 disabled={zoomLevel <= 0.85}
                 aria-label="Zoom out skill graph"
-                className="p-1.5 rounded-[4px] text-[var(--text-secondary)] hover:text-[var(--text)] disabled:opacity-40 cursor-pointer"
+                className="min-w-[38px] min-h-[38px] flex items-center justify-center rounded-[4px] text-[var(--text-secondary)] hover:text-[var(--text)] disabled:opacity-40 cursor-pointer"
               >
                 <ZoomOut className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
@@ -827,7 +827,7 @@ export function SkillConstellation({
                 onClick={() => setZoomLevel((z) => Math.min(1.45, Number((z + 0.15).toFixed(2))))}
                 disabled={zoomLevel >= 1.45}
                 aria-label="Zoom in skill graph"
-                className="p-1.5 rounded-[4px] text-[var(--text-secondary)] hover:text-[var(--text)] disabled:opacity-40 cursor-pointer"
+                className="min-w-[38px] min-h-[38px] flex items-center justify-center rounded-[4px] text-[var(--text-secondary)] hover:text-[var(--text)] disabled:opacity-40 cursor-pointer"
               >
                 <ZoomIn className="w-3.5 h-3.5" aria-hidden="true" />
               </button>
@@ -835,9 +835,9 @@ export function SkillConstellation({
           </div>
         </div>
 
-        {/* Category Filter Buttons (Desktop & Tablet) */}
+        {/* Category Filter Buttons (Desktop 1024px+) */}
         <div
-          className="hidden md:flex flex-wrap items-center gap-1.5"
+          className="hidden lg:flex flex-wrap items-center gap-1.5"
           role="group"
           aria-label="Filter constellation by engineering discipline"
         >
@@ -848,7 +848,7 @@ export function SkillConstellation({
               setFocusCategoryOnly(false);
             }}
             aria-pressed={activeDisciplineFilter === "all"}
-            className={`px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
+            className={`min-h-[38px] px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
               activeDisciplineFilter === "all"
                 ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                 : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
@@ -866,7 +866,7 @@ export function SkillConstellation({
                 type="button"
                 onClick={() => handleSelectDiscipline(grp.id)}
                 aria-pressed={isSelected}
-                className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
+                className={`inline-flex items-center gap-2 min-h-[38px] px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer whitespace-nowrap shrink-0 ${
                   isSelected
                     ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                     : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
@@ -888,9 +888,11 @@ export function SkillConstellation({
         </div>
       </div>
 
-      {/* MOBILE CLUSTER EXPLORER (< 768px — avoids force-shrinking the radial SVG on narrow screens) */}
-      <div className="md:hidden space-y-4">
-        <div className="card p-4 space-y-3 bg-[var(--surface-2)]">
+      {/* DESKTOP & TABLET HYBRID WORKSPACE (Mobile stacked + bottom sheet; Tablet 768-1023px 2-col cluster explorer + inspector; Desktop 1024px+ radial SVG + inspector) */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-5 items-stretch">
+        {/* MOBILE & TABLET CLUSTER EXPLORER (< 1024px — prevents ultra-shrunk SVG labels on tablet portrait & compact phones) */}
+        <div className="md:col-span-7 lg:hidden flex flex-col">
+        <div className="card p-4 sm:p-5 space-y-3.5 bg-[var(--surface-2)] flex-1">
           <div className="flex items-center justify-between gap-2 border-b border-[var(--border)] pb-3">
             <div>
               <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--accent)] block">
@@ -966,9 +968,12 @@ export function SkillConstellation({
                   <button
                     key={item.id}
                     type="button"
-                    onClick={() =>
-                      handleSelectTechNode(item.name, activeMobileGroup.id, true)
-                    }
+                    onClick={() => {
+                      const openSheet =
+                        typeof window !== "undefined" &&
+                        window.matchMedia("(max-width: 767px)").matches;
+                      handleSelectTechNode(item.name, activeMobileGroup.id, openSheet);
+                    }}
                     className={`min-h-[44px] w-full text-left px-3.5 py-2.5 rounded-[8px] border flex items-center justify-between gap-3 cursor-pointer transition-colors ${
                       isSelected
                         ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)]"
@@ -998,14 +1003,12 @@ export function SkillConstellation({
             </div>
           </div>
         </div>
-      </div>
+        </div>
 
-      {/* DESKTOP & TABLET MAIN GRAPH + DETAIL WORKSPACE */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch">
-        {/* SVG Knowledge Graph Stage (>= 768px) */}
+        {/* SVG Knowledge Graph Stage (>= 1024px) */}
         <div
           ref={graphContainerRef}
-          className="hidden md:flex lg:col-span-8 skill-graph p-4 sm:p-5 flex-col justify-between gap-3"
+          className="hidden lg:flex lg:col-span-8 skill-graph p-4 sm:p-5 flex-col justify-between gap-3"
         >
           <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] font-mono text-[var(--text-muted)]">
             <div className="flex items-center gap-2 uppercase tracking-wider">
@@ -1472,8 +1475,8 @@ export function SkillConstellation({
           </div>
         </div>
 
-        {/* Right Detail Profile Panel (Desktop Adjacent / Tablet Stacked) */}
-        <div className="lg:col-span-4 flex flex-col">
+        {/* Right Detail Profile Panel (Desktop 1024px+ 4 cols / Tablet 768-1023px 5 cols / Mobile below cards) */}
+        <div className="md:col-span-5 lg:col-span-4 flex flex-col">
           <AnimatePresence mode="wait" initial={false}>
             <motion.aside
               key={inspectorDetail.item.id}
@@ -1533,7 +1536,7 @@ export function SkillConstellation({
 
                 {/* Practical Application */}
                 <div className="p-3.5 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] space-y-1">
-                  <span className="text-[10px] font-mono uppercase tracking-[0.12em] text-[var(--text-muted)] block">
+                  <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-[var(--text-muted)] block">
                     Practical Application
                   </span>
                   <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -1552,7 +1555,7 @@ export function SkillConstellation({
                         key={relName}
                         type="button"
                         onClick={() => onSelectTech(relName)}
-                        className="px-2.5 py-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-[11px] font-mono text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors cursor-pointer"
+                        className="min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-[11px] font-mono text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors cursor-pointer"
                       >
                         {relName}
                       </button>
@@ -1583,7 +1586,7 @@ export function SkillConstellation({
                               {proj.title}
                             </span>
                             <span className="text-[var(--text-faint)]">·</span>
-                            <span className="text-[10px] text-[var(--accent)] truncate">
+                            <span className="text-[11px] text-[var(--accent)] truncate">
                               {proj.categoryLabel}
                             </span>
                           </div>
@@ -1598,7 +1601,7 @@ export function SkillConstellation({
                             target="_blank"
                             rel="noopener noreferrer"
                             aria-label={`View ${proj.title} GitHub repository`}
-                            className="p-1.5 rounded-[6px] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--border-strong)] transition-colors"
+                            className="min-w-[40px] min-h-[40px] [@media(pointer:coarse)]:min-w-[44px] [@media(pointer:coarse)]:min-h-[44px] inline-flex items-center justify-center rounded-[6px] border border-[var(--border)] text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--border-strong)] transition-colors"
                           >
                             <FolderGit2 className="w-3.5 h-3.5" aria-hidden="true" />
                           </a>
@@ -1606,7 +1609,7 @@ export function SkillConstellation({
                             <button
                               type="button"
                               onClick={() => onNavigateToProject(proj.id)}
-                              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-mono text-[11px] font-bold hover:bg-[var(--accent-strong)] transition-colors cursor-pointer"
+                              className="min-h-[40px] [@media(pointer:coarse)]:min-h-[44px] inline-flex items-center gap-1 px-2.5 py-1.5 rounded-[6px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-mono text-[11px] font-bold hover:bg-[var(--accent-strong)] transition-colors cursor-pointer"
                             >
                               <span>Inspect</span>
                               <ArrowUpRight className="w-3 h-3" aria-hidden="true" />
@@ -1677,7 +1680,7 @@ export function SkillConstellation({
               </p>
 
               <div className="p-3 rounded-[8px] border border-[var(--border)] bg-[var(--surface)] space-y-1">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
+                <span className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)] block">
                   Practical Application
                 </span>
                 <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
@@ -1695,7 +1698,7 @@ export function SkillConstellation({
                       key={`mob-rel-${relName}`}
                       type="button"
                       onClick={() => onSelectTech(relName)}
-                      className="min-h-[36px] px-3 py-1 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)] cursor-pointer"
+                      className="min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-xs font-mono text-[var(--text-secondary)] hover:text-[var(--accent)] cursor-pointer"
                     >
                       {relName}
                     </button>
@@ -1729,7 +1732,7 @@ export function SkillConstellation({
                               setMobileSheetOpen(false);
                               onNavigateToProject(proj.id);
                             }}
-                            className="min-h-[40px] inline-flex items-center gap-1 px-3 py-1.5 rounded-[6px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] text-xs font-mono font-bold shrink-0 cursor-pointer"
+                            className="min-h-[44px] inline-flex items-center gap-1 px-3 py-1.5 rounded-[6px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] text-xs font-mono font-bold shrink-0 cursor-pointer"
                           >
                             <span>Inspect</span>
                             <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />

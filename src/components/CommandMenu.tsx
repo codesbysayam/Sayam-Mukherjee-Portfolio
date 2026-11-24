@@ -389,28 +389,40 @@ export default function CommandMenu({
   }, [onNavigate, onClose]);
 
   const achievementItems = useMemo<UnifiedSearchItem[]>(() => {
-    return INITIAL_CERTIFICATES.map((cert) => ({
-      id: `cert-${cert.id}`,
-      type: "achievement",
-      title: cert.title,
-      subtitle: `${cert.issuer} · ${cert.category} (${cert.year || cert.issueDate})`,
-      badge: "ACHIEVEMENT",
-      category: "Achievements & Honors",
-      icon: Award,
-      action: () => {
-        onNavigate("certificates");
-        onClose();
-      },
-      searchTarget: [
-        cert.title,
-        cert.issuer,
-        cert.category,
-        cert.event || "",
-        cert.credentialId || "",
-        cert.description || "",
-        ...(cert.skills || []),
-      ].join(" "),
-    }));
+    return INITIAL_CERTIFICATES.map((cert) => {
+      const yearOrDate = cert.year || cert.issueDate;
+      return {
+        id: `cert-${cert.id}`,
+        type: "achievement",
+        title: cert.title,
+        subtitle: `${cert.issuer} · ${cert.category}${yearOrDate ? ` (${yearOrDate})` : ""}`,
+        badge: "ACHIEVEMENT",
+        category: "Achievements & Honors",
+        icon: Award,
+        action: () => {
+          onNavigate("certificates");
+          onClose();
+        },
+        searchTarget: [
+          cert.title,
+          cert.issuer,
+          cert.category,
+          cert.credentialType || "",
+          cert.event || "",
+          cert.theme || "",
+          cert.team || "",
+          cert.organizer || "",
+          cert.coOrganizer || "",
+          cert.facilitator || "",
+          cert.sessionLeader || "",
+          cert.achievementClaim || "",
+          cert.credentialId || "",
+          cert.description || "",
+          cert.overview || "",
+          ...(cert.skills || []),
+        ].join(" "),
+      };
+    });
   }, [onNavigate, onClose]);
 
   const skillItems = useMemo<UnifiedSearchItem[]>(() => {
@@ -764,13 +776,18 @@ export default function CommandMenu({
                 }
                 className="w-full bg-transparent text-base sm:text-sm text-[#F4F4ED] placeholder-[#B5B8AA] outline-none border-none p-0 focus:ring-0"
               />
-              <span className="text-[10px] font-mono text-[#B5B8AA] bg-[#20231D] border border-[#41443A] px-2 py-0.5 rounded-[4px] uppercase shrink-0">
+              <button
+                type="button"
+                onClick={onClose}
+                aria-label="Close command palette"
+                className="text-[11px] font-mono text-[#B5B8AA] hover:text-[#F4F4ED] bg-[#20231D] border border-[#41443A] hover:border-[#C7E34A] px-2.5 min-h-[34px] [@media(pointer:coarse)]:min-h-[44px] rounded-[4px] uppercase shrink-0 cursor-pointer transition-colors"
+              >
                 ESC
-              </span>
+              </button>
             </div>
 
             {/* Tabs Navigation */}
-            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none px-3 py-2.5 border-b border-[#41443A] bg-[#151713]/80 text-xs">
+            <div className="flex items-center gap-1.5 overflow-x-auto scrollbar-none px-3 py-2 border-b border-[#41443A] bg-[#151713]/80 text-xs">
               {(
                 [
                   ["all", "ALL"],
@@ -785,7 +802,7 @@ export default function CommandMenu({
                   key={tabKey}
                   type="button"
                   onClick={() => setActiveMenuTab(tabKey)}
-                  className={`min-h-[36px] sm:min-h-0 py-1 px-2.5 text-[10px] font-mono rounded-[4px] transition-all shrink-0 cursor-pointer border active:scale-[0.96] ${
+                  className={`min-h-[44px] sm:min-h-[36px] py-1.5 px-2.5 text-[11px] font-mono rounded-[4px] transition-all shrink-0 cursor-pointer border active:scale-[0.96] ${
                     activeMenuTab === tabKey
                       ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D] font-bold"
                       : "bg-transparent border-transparent text-[#B5B8AA] hover:text-[#F4F4ED] hover:bg-[#20231D] active:bg-[#262922]"
@@ -799,14 +816,14 @@ export default function CommandMenu({
             {/* Results List */}
             <div
               role="listbox"
-              className="flex-1 overflow-y-auto p-2 space-y-2 max-h-[340px]"
+              className="flex-1 min-h-0 overflow-y-auto p-2 space-y-2 max-h-[340px]"
             >
               {filteredItems.length > 0 ? (
                 <div>
                   {Array.from(new Set(filteredItems.map((item) => item.category))).map(
                     (category) => (
                       <div key={category} className="space-y-1 mb-3">
-                        <div className="text-[10px] font-mono text-[#B5B8AA] px-3 tracking-wider uppercase font-semibold mt-1">
+                        <div className="text-[11px] font-mono text-[#B5B8AA] px-3 tracking-wider uppercase font-semibold mt-1">
                           {category}
                         </div>
                         {filteredItems
@@ -826,7 +843,7 @@ export default function CommandMenu({
                                 aria-selected={isSelected}
                                 onClick={item.action}
                                 onMouseEnter={() => setSelectedIndex(globalIdx)}
-                                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-[6px] text-left transition-all cursor-pointer border active:scale-[0.985] active:bg-[#262922] ${
+                                className={`w-full min-h-[44px] flex items-center justify-between px-3 py-2.5 rounded-[6px] text-left transition-all cursor-pointer border active:scale-[0.985] active:bg-[#262922] ${
                                   isSelected
                                     ? "bg-[#151713] border-[#C7E34A]/60 text-[#F4F4ED]"
                                     : "bg-transparent text-[#D4D6CA] hover:text-[#F4F4ED] border-transparent"
@@ -848,7 +865,7 @@ export default function CommandMenu({
                                         {item.title}
                                       </span>
                                       <span
-                                        className={`text-[9px] font-mono px-1.5 py-0.5 rounded-[3px] border uppercase tracking-wider shrink-0 ${getBadgeStyle(
+                                        className={`text-[10px] font-mono px-1.5 py-0.5 rounded-[3px] border uppercase tracking-wider shrink-0 ${getBadgeStyle(
                                           item.type
                                         )}`}
                                       >
@@ -865,13 +882,13 @@ export default function CommandMenu({
 
                                 <div className="flex items-center gap-2 shrink-0">
                                   {item.externalUrl && (
-                                    <span className="hidden sm:inline-flex items-center gap-1 text-[10px] font-mono text-[#B5B8AA]">
+                                    <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-[#B5B8AA]">
                                       Visit ↗
                                     </span>
                                   )}
                                   {isSelected && (
                                     <div className="flex items-center gap-1">
-                                      <span className="text-[9px] text-[#B5B8AA] font-mono bg-[#20231D] border border-[#41443A] px-1.5 py-0.5 rounded">
+                                      <span className="text-[10px] text-[#B5B8AA] font-mono bg-[#20231D] border border-[#41443A] px-1.5 py-0.5 rounded">
                                         ENTER
                                       </span>
                                       <ArrowRight className="w-3 h-3 text-[#C7E34A]" />
@@ -907,9 +924,9 @@ export default function CommandMenu({
                               setActiveMenuTab("channels");
                               setSelectedIndex(0);
                             }}
-                            className="text-[10px] font-mono px-2.5 py-1 rounded-[4px] border border-[#41443A] text-[#F4F4ED] hover:border-[#C7E34A] active:scale-[0.96] active:border-[#C7E34A] transition-all cursor-pointer flex items-center gap-1"
+                            className="text-[11px] font-mono px-3 min-h-[40px] [@media(pointer:coarse)]:min-h-[44px] py-1.5 rounded-[4px] border border-[#41443A] text-[#F4F4ED] hover:border-[#C7E34A] active:scale-[0.96] active:border-[#C7E34A] transition-all cursor-pointer flex items-center gap-1.5"
                           >
-                            <Youtube className="w-3 h-3 text-red-400" />
+                            <Youtube className="w-3.5 h-3.5 text-red-400" />
                             <span>Channels ({crossTabChannels.length})</span>
                           </button>
                         )}
@@ -919,7 +936,7 @@ export default function CommandMenu({
                             setActiveMenuTab("all");
                             setSelectedIndex(0);
                           }}
-                          className="text-[10px] font-mono px-2.5 py-1 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold active:scale-[0.96] active:bg-[#9BB827] transition-all cursor-pointer"
+                          className="text-[11px] font-mono px-3 min-h-[40px] [@media(pointer:coarse)]:min-h-[44px] py-1.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold active:scale-[0.96] active:bg-[#9BB827] transition-all cursor-pointer"
                         >
                           Search Across All
                         </button>
@@ -931,7 +948,7 @@ export default function CommandMenu({
             </div>
 
             {/* Footer */}
-            <div className="px-4 py-2.5 border-t border-[#41443A] bg-[#151713] flex items-center justify-between text-[10px] font-mono text-[#B5B8AA]">
+            <div className="px-4 py-2.5 border-t border-[#41443A] bg-[#151713] flex items-center justify-between text-[11px] font-mono text-[#B5B8AA] [@media(max-height:420px)]:hidden">
               <span className="truncate pr-2">
                 Sayam Mukherjee · Command Hub
               </span>

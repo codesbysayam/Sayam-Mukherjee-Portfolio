@@ -164,7 +164,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
 
       <article
         ref={articleRef}
-        className="max-w-5xl mx-auto space-y-8 sm:space-y-10 py-2 sm:py-4 font-sans text-[var(--text-secondary)]"
+        className="max-w-[var(--container-standard)] mx-auto space-y-8 sm:space-y-10 py-2 sm:py-4 font-sans text-[var(--text-secondary)]"
       >
         <Breadcrumbs
           items={[
@@ -179,7 +179,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
           <button
             type="button"
             onClick={onBack}
-            className="btn btn-secondary !min-h-[40px] !px-3.5 !py-1.5 text-xs font-mono"
+            className="btn btn-secondary !min-h-[44px] sm:!min-h-[40px] !px-3.5 !py-1.5 text-xs font-mono"
           >
             <ArrowLeft className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Back to Journal</span>
@@ -188,7 +188,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
           <button
             type="button"
             onClick={handleCopyLink}
-            className="btn btn-secondary !min-h-[40px] !px-3.5 !py-1.5 text-xs font-mono"
+            className="btn btn-secondary !min-h-[44px] sm:!min-h-[40px] !px-3.5 !py-1.5 text-xs font-mono"
             title="Copy article link"
             aria-label="Copy link to journal entry"
           >
@@ -278,13 +278,49 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
 
         {/* Two-Column Publication Body + Sticky Desktop Table of Contents */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
-          {/* Table of Contents (Sticky on tall lg+ viewports; inline summary on compact screens) */}
+          {/* Table of Contents: Collapsible drawer on <1024px; sticky sidebar on lg+ */}
           {tocItems.length > 0 && (
             <aside
               aria-label="Article table of contents"
               className="lg:col-span-4 desktop-only-pinning lg:sticky lg:top-24 min-w-0"
             >
-              <div className="card p-4 sm:p-5 space-y-3 bg-[var(--surface-2)] border-[var(--border)]">
+              <details className="lg:hidden card p-4 bg-[var(--surface-2)] border-[var(--border)] group">
+                <summary className="list-none flex items-center justify-between gap-3 text-[11px] font-mono uppercase tracking-wider text-[var(--accent)] font-semibold cursor-pointer min-h-[44px] -my-1.5">
+                  <span className="inline-flex items-center gap-1.5">
+                    <List className="w-3.5 h-3.5" aria-hidden="true" />
+                    <span>In This Essay ({tocItems.length} Sections)</span>
+                  </span>
+                  <span className="text-[var(--text-muted)] group-open:hidden">Expand</span>
+                  <span className="text-[var(--text-muted)] hidden group-open:inline">Hide</span>
+                </summary>
+                <div className="pt-3 mt-3 border-t border-[var(--border)] space-y-3">
+                  <ol className="space-y-1">
+                    {tocItems.map((item) => {
+                      const isCurrent = activeSectionId === item.id;
+                      return (
+                        <li key={item.id}>
+                          <button
+                            type="button"
+                            onClick={() => scrollToSection(item.id)}
+                            className={`w-full min-h-[44px] text-left px-3 py-2 rounded-[6px] text-xs font-mono transition-colors cursor-pointer flex items-baseline gap-2.5 ${
+                              isCurrent
+                                ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
+                                : "text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text)]"
+                            }`}
+                          >
+                            <span className="text-[11px] opacity-80 tabular-nums shrink-0">
+                              0{item.index}
+                            </span>
+                            <span className="leading-snug">{item.title}</span>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
+              </details>
+
+              <div className="hidden lg:block card p-4 sm:p-5 space-y-3 bg-[var(--surface-2)] border-[var(--border)]">
                 <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-wider text-[var(--accent)] font-semibold border-b border-[var(--border)] pb-2.5">
                   <span className="inline-flex items-center gap-1.5">
                     <List className="w-3.5 h-3.5" aria-hidden="true" />
@@ -309,7 +345,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
                               : "text-[var(--text-secondary)] hover:bg-[var(--surface)] hover:text-[var(--text)]"
                           }`}
                         >
-                          <span className="text-[10px] opacity-80 tabular-nums shrink-0">
+                          <span className="text-[11px] opacity-80 tabular-nums shrink-0">
                             0{item.index}
                           </span>
                           <span className="leading-snug">{item.title}</span>
@@ -320,7 +356,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
                 </ol>
 
                 {entry.topics && entry.topics.length > 0 && (
-                  <div className="pt-2.5 border-t border-[var(--border)] flex flex-wrap gap-1.5 text-[10px] font-mono text-[var(--text-muted)]">
+                  <div className="pt-2.5 border-t border-[var(--border)] flex flex-wrap gap-1.5 text-[11px] font-mono text-[var(--text-muted)]">
                     {entry.topics.map((topic, idx) => (
                       <React.Fragment key={topic}>
                         {idx > 0 && <span aria-hidden="true">·</span>}
@@ -396,7 +432,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
                           <button
                             type="button"
                             onClick={() => handleCopyCode(section.codeSnippet!.code, idx)}
-                            className="inline-flex items-center gap-1 px-2 py-1 rounded-[4px] border border-[#41483B] hover:border-[#C7E34A] text-[#EAE9DF] hover:text-[#C7E34A] transition-colors cursor-pointer shrink-0"
+                            className="inline-flex items-center gap-1 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 rounded-[4px] border border-[#41483B] hover:border-[#C7E34A] text-[#EAE9DF] hover:text-[#C7E34A] transition-colors cursor-pointer shrink-0"
                             aria-label={`Copy ${section.codeSnippet.title} snippet`}
                           >
                             {copiedCodeIdx === idx ? (
@@ -428,7 +464,7 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
               <button
                 type="button"
                 onClick={onBack}
-                className="btn btn-secondary !min-h-[40px] text-xs font-mono w-fit"
+                className="btn btn-secondary !min-h-[44px] sm:!min-h-[40px] text-xs font-mono w-fit"
               >
                 <ArrowLeft className="w-4 h-4" aria-hidden="true" />
                 <span>Back to Journal</span>
@@ -453,9 +489,9 @@ export function JournalDetail({ slug, onBack, onSelectEntry }: JournalDetailProp
                   <button
                     type="button"
                     onClick={() => onSelectEntry(rel.slug)}
-                    className="card group p-4 sm:p-5 text-left w-full cursor-pointer hover:-translate-y-0.5 h-full bg-[var(--surface-2)] border-[var(--border)] space-y-1.5"
+                    className="card group p-4 sm:p-5 text-left w-full min-h-[44px] cursor-pointer hover:-translate-y-0.5 h-full bg-[var(--surface-2)] border-[var(--border)] space-y-1.5"
                   >
-                    <span className="text-[10px] font-mono text-[var(--accent)] uppercase tracking-wider block">
+                    <span className="text-[11px] font-mono text-[var(--accent)] uppercase tracking-wider block">
                       {rel.issueNumber ? `${rel.issueNumber} · ` : ""}{rel.category} · {rel.date}
                     </span>
                     <h4 className="text-sm sm:text-base font-bold text-[var(--text)] group-hover:text-[var(--accent)] font-display line-clamp-1 transition-colors">

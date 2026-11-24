@@ -1,89 +1,93 @@
 import React from "react";
 import { AchievementRecord } from "../../types/certificates";
-import { ExternalLink, Eye, Download } from "lucide-react";
+import { ExternalLink, Eye, FileSearch } from "lucide-react";
 
 interface AchievementActionsProps {
   record: AchievementRecord;
+  onViewDetails?: () => void;
   onInspect?: () => void;
   className?: string;
 }
 
 export function AchievementActions({
   record,
+  onViewDetails,
   onInspect,
   className = "",
 }: AchievementActionsProps) {
-  const { id, title, credentialUrl, verificationUrl, downloadUrl, pdfUrl } = record;
+  const { id, title, credentialUrl, verificationUrl, certificateUrl, pdfUrl } = record;
 
-  const primaryUrl = credentialUrl || verificationUrl;
-  const primaryLabel = credentialUrl
-    ? "View Credential"
-    : verificationUrl
-      ? "Verify Record"
-      : "View Details";
+  const rawSourceUrl = (
+    certificateUrl ||
+    credentialUrl ||
+    pdfUrl ||
+    verificationUrl ||
+    ""
+  ).trim();
+  const hasValidSourceUrl =
+    /^https?:\/\//i.test(rawSourceUrl) || rawSourceUrl.startsWith("/");
 
-  const effectiveDownloadUrl = downloadUrl || pdfUrl;
+  const handleViewDetails = onViewDetails || onInspect;
+  const handleInspect = onInspect || onViewDetails;
 
   return (
-    <div
-      className={`achievement-card__actions px-6 py-4 border-t flex flex-wrap sm:flex-nowrap items-stretch gap-2.5 ${className}`}
+    <footer
+      className={`achievement-card__footer ${className}`}
       style={{
         backgroundColor: "var(--surface)",
         borderColor: "var(--border)",
       }}
     >
-      {primaryUrl ? (
-        <a
-          id={`btn-primary-${id}`}
-          href={primaryUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="btn btn-primary flex-1 text-xs sm:text-sm"
-          aria-label={`${primaryLabel} for ${title}`}
-        >
-          <span>{primaryLabel}</span>
-          <ExternalLink className="w-4 h-4 shrink-0" />
-        </a>
-      ) : (
-        <button
-          id={`btn-primary-inspect-${id}`}
-          type="button"
-          onClick={onInspect}
-          className="btn btn-primary flex-1 text-xs sm:text-sm"
-          aria-label={`View Details for ${title}`}
-        >
-          <Eye className="w-4 h-4 shrink-0" />
-          <span>View Details</span>
-        </button>
-      )}
+      <button
+        id={`btn-view-details-${id}`}
+        type="button"
+        onClick={handleViewDetails}
+        className="achievement-card__button achievement-card__button--primary"
+        aria-label={`View Details for ${title}`}
+      >
+        <Eye className="w-4 h-4 shrink-0" aria-hidden="true" />
+        <span>View Details</span>
+      </button>
 
       <button
-        id={`btn-secondary-inspect-${id}`}
+        id={`btn-inspect-record-${id}`}
         type="button"
-        onClick={onInspect}
-        className="btn btn-secondary flex-1 text-xs sm:text-sm"
+        onClick={handleInspect}
+        className="achievement-card__button achievement-card__button--secondary"
         aria-label={`Inspect Record for ${title}`}
       >
-        <Eye className="w-4 h-4 shrink-0" />
+        <FileSearch className="w-4 h-4 shrink-0" aria-hidden="true" />
         <span>Inspect Record</span>
       </button>
 
-      {effectiveDownloadUrl && (
+      {hasValidSourceUrl ? (
         <a
-          id={`btn-download-${id}`}
-          href={effectiveDownloadUrl}
-          download={`${title.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-document`}
+          id={`btn-open-source-${id}`}
+          href={rawSourceUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="btn btn-secondary px-3.5 text-xs sm:text-sm shrink-0"
-          title="Download Official Document"
-          aria-label={`Download document for ${title}`}
+          className="achievement-card__button achievement-card__button--secondary"
+          title="Open original certificate or source page"
+          aria-label={`Open source for ${title}`}
         >
-          <Download className="w-4 h-4 shrink-0" />
-          <span className="hidden md:inline">Download</span>
+          <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
+          <span>Open Source</span>
         </a>
+      ) : (
+        <button
+          id={`btn-open-source-unavailable-${id}`}
+          type="button"
+          disabled
+          aria-disabled="true"
+          title="No source URL provided for this record"
+          className="achievement-card__button achievement-card__button--secondary achievement-card__button--disabled"
+          aria-label={`Source unavailable for ${title}`}
+        >
+          <ExternalLink className="w-4 h-4 shrink-0" aria-hidden="true" />
+          <span>Open Source</span>
+        </button>
       )}
-    </div>
+    </footer>
   );
 }
 

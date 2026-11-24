@@ -93,7 +93,7 @@ export const JournalList = memo(function JournalList({
   };
 
   return (
-    <div className="space-y-8 w-full max-w-6xl mx-auto">
+    <div className="space-y-8 w-full max-w-[var(--container-standard)] mx-auto">
       {/* Editorial Publication Masthead */}
       <header className="relative py-4 sm:py-6 border-b border-[var(--border)] space-y-5">
         <ContourBackground density="subtle" />
@@ -173,7 +173,7 @@ export const JournalList = memo(function JournalList({
                     type="button"
                     onClick={() => setViewMode("grid")}
                     aria-pressed={viewMode === "grid"}
-                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
                       viewMode === "grid"
                         ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
                         : "text-[var(--text-muted)] hover:text-[var(--text)]"
@@ -186,7 +186,7 @@ export const JournalList = memo(function JournalList({
                     type="button"
                     onClick={() => setViewMode("slider")}
                     aria-pressed={viewMode === "slider"}
-                    className={`inline-flex items-center gap-1.5 rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
+                    className={`inline-flex items-center gap-1.5 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] rounded-[4px] px-2.5 py-1 text-[11px] font-mono transition-colors cursor-pointer ${
                       viewMode === "slider"
                         ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
                         : "text-[var(--text-muted)] hover:text-[var(--text)]"

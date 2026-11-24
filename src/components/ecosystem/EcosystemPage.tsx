@@ -381,7 +381,7 @@ export function EcosystemPage() {
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => setActivePatternId(item.id)}
-                className={`btn !min-h-[40px] !py-1.5 !px-3.5 !text-xs font-mono ${
+                className={`btn !min-h-[44px] sm:!min-h-[40px] !py-1.5 !px-3.5 !text-xs font-mono ${
                   isSelected ? "btn-primary" : "btn-secondary"
                 }`}
               >
@@ -412,8 +412,41 @@ export function EcosystemPage() {
               </p>
             </div>
 
-            {/* Clean Conceptual SVG Flow Diagram */}
-            <div className="p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] overflow-x-auto">
+            {/* Mobile Vertical Pipeline (<768px) — avoids horizontal SVG panning on phones */}
+            <div className="md:hidden space-y-2.5">
+              {pattern.stages.map((stage, idx) => {
+                const isGate = idx === 2;
+                return (
+                  <div key={stage.code} className="relative">
+                    <div
+                      className="rounded-[8px] border p-3.5 space-y-1"
+                      style={{
+                        backgroundColor: "var(--surface)",
+                        borderColor: isGate ? "var(--accent)" : "var(--border-strong)",
+                      }}
+                    >
+                      <span className="font-mono text-[11px] font-bold text-[var(--accent)] block">
+                        {stage.code}
+                      </span>
+                      <h4 className="text-sm font-bold text-[var(--text)] font-display">
+                        {stage.name}
+                      </h4>
+                      <p className="text-xs text-[var(--text-secondary)] leading-relaxed">
+                        {stage.role}
+                      </p>
+                    </div>
+                    {idx < pattern.stages.length - 1 && (
+                      <div className="flex justify-center py-0.5" aria-hidden="true">
+                        <span className="w-px h-3 bg-[var(--accent)]/60" />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Clean Conceptual SVG Flow Diagram (768px+ tablets & desktop) */}
+            <div className="hidden md:block p-4 rounded-[8px] bg-[var(--surface)] border border-[var(--border)] overflow-x-auto">
               <svg
                 role="img"
                 aria-label={`${pattern.title} data flow diagram`}
@@ -461,7 +494,7 @@ export function EcosystemPage() {
                         x={x + 14}
                         y={40}
                         fill="var(--accent)"
-                        fontSize="10"
+                        fontSize="11"
                         fontWeight="700"
                         fontFamily="monospace"
                       >
@@ -548,7 +581,7 @@ export function EcosystemPage() {
               <button
                 type="button"
                 onClick={handleOpenProjects}
-                className="inline-flex items-center gap-1.5 text-[var(--accent)] font-semibold hover:underline cursor-pointer"
+                className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] text-[var(--accent)] font-semibold hover:underline cursor-pointer"
               >
                 <span>Inspect Case Studies in Projects</span>
                 <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />

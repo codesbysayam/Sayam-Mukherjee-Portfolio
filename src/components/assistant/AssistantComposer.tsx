@@ -72,7 +72,7 @@ export const AssistantComposer = memo(function AssistantComposer({
 
         <div className="flex items-center gap-1.5 shrink-0 pb-0.5">
           {isOverWarningThreshold && (
-            <span className="text-[10px] font-mono text-[var(--warning)] pr-1 tabular-nums">
+            <span className="text-[11px] font-mono text-[var(--warning)] pr-1 tabular-nums">
               {text.length}/{MAX_CHAR_LIMIT}
             </span>
           )}
@@ -81,7 +81,7 @@ export const AssistantComposer = memo(function AssistantComposer({
             <button
               type="button"
               onClick={onStop}
-              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] flex items-center justify-center bg-[var(--surface)] border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] sm:w-10 sm:h-10 sm:min-w-[40px] sm:min-h-[40px] rounded-[6px] flex items-center justify-center bg-[var(--surface)] border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer"
               title="Stop generating"
               aria-label="Stop response"
             >
@@ -92,7 +92,7 @@ export const AssistantComposer = memo(function AssistantComposer({
               type="button"
               onClick={handleSendClick}
               disabled={text.trim().length === 0 || disabled}
-              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] flex items-center justify-center bg-[var(--accent-fill)] text-[var(--accent-contrast)] hover:bg-[var(--accent-strong)] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] sm:w-10 sm:h-10 sm:min-w-[40px] sm:min-h-[40px] rounded-[6px] flex items-center justify-center bg-[var(--accent-fill)] text-[var(--accent-contrast)] hover:bg-[var(--accent-strong)] disabled:opacity-30 disabled:pointer-events-none transition-colors cursor-pointer focus-visible:outline-2 focus-visible:outline-[var(--accent)]"
               title="Send message (Enter)"
               aria-label="Send message"
             >
@@ -102,7 +102,7 @@ export const AssistantComposer = memo(function AssistantComposer({
         </div>
       </div>
 
-      <div className="flex items-center justify-between px-1 pt-1.5 text-[10px] text-[var(--text-muted)] font-mono">
+      <div className="assistant-composer-hint flex items-center justify-between px-1 pt-1.5 text-[11px] text-[var(--text-muted)] font-mono">
         <span>Enter = send · Shift + Enter = new line</span>
         <span className="text-[var(--text-faint)]">Verified data</span>
       </div>

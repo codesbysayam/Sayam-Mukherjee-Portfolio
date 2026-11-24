@@ -18,10 +18,31 @@ function normalizeSlug(title: string): string {
     .slice(0, 32);
 }
 
+const RETIRED_CERTIFICATE_IDS = new Set([
+  "wcc-launchpad-30-shinibali-kumar",
+  "comp-toycathon-2021",
+  "ach-toycathon",
+]);
+
+const RETIRED_CREDENTIAL_IDS = new Set([
+  "L30-F3RFRC",
+  "TC-2021-FIN",
+]);
+
+function isRetiredCertificate(cert: Partial<Certificate>): boolean {
+  if (cert.id && RETIRED_CERTIFICATE_IDS.has(cert.id)) return true;
+  if (cert.credentialId && RETIRED_CREDENTIAL_IDS.has(cert.credentialId.trim().toUpperCase())) {
+    return true;
+  }
+  return false;
+}
+
 async function getMergedCertificates(bearerToken?: string): Promise<StoredCertificate[]> {
   const byId = new Map<string, StoredCertificate>();
   for (const cert of INITIAL_CERTIFICATES) {
-    byId.set(cert.id, { ...cert, published: true });
+    if (!isRetiredCertificate(cert)) {
+      byId.set(cert.id, { ...cert, published: true });
+    }
   }
 
   try {
@@ -32,7 +53,7 @@ async function getMergedCertificates(bearerToken?: string): Promise<StoredCertif
         : { whereEquals: { field: "published", value: true } }
     );
     for (const cert of dbCerts) {
-      if (cert && cert.id) {
+      if (cert && cert.id && !isRetiredCertificate(cert)) {
         byId.set(cert.id, cert);
       }
     }
@@ -40,7 +61,9 @@ async function getMergedCertificates(bearerToken?: string): Promise<StoredCertif
     // Fallback to verified baseline catalog if collection has no readable overrides yet
   }
 
-  return Array.from(byId.values()).filter((c) => c.published !== false);
+  return Array.from(byId.values()).filter(
+    (c) => c.published !== false && !isRetiredCertificate(c)
+  );
 }
 
 export async function listCertificates(filters?: {
@@ -54,8 +77,9 @@ export async function listCertificates(filters?: {
   let result = await getMergedCertificates();
 
   if (filters?.category && filters.category !== "ALL") {
+    const targetCat = filters.category.toUpperCase().replace(/S$/, "");
     result = result.filter(
-      (c) => c.category.toUpperCase() === filters.category!.toUpperCase()
+      (c) => c.category.toUpperCase().replace(/S$/, "") === targetCat
     );
   }
   if (filters?.issuer && filters.issuer !== "ALL") {
@@ -64,7 +88,11 @@ export async function listCertificates(filters?: {
     );
   }
   if (filters?.year && filters.year !== "ALL") {
-    result = result.filter((c) => c.issueDate.includes(filters.year!));
+    result = result.filter(
+      (c) =>
+        (c.issueDate || "").includes(filters.year!) ||
+        String(c.year || "") === filters.year!
+    );
   }
   if (filters?.skill && filters.skill !== "ALL") {
     result = result.filter((c) =>
@@ -84,6 +112,12 @@ export async function listCertificates(filters?: {
         Boolean(c.overview && c.overview.toLowerCase().includes(q)) ||
         Boolean(c.fullDescription && c.fullDescription.toLowerCase().includes(q)) ||
         Boolean(c.event && c.event.toLowerCase().includes(q)) ||
+        Boolean(c.theme && c.theme.toLowerCase().includes(q)) ||
+        Boolean(c.team && c.team.toLowerCase().includes(q)) ||
+        Boolean(c.organizer && c.organizer.toLowerCase().includes(q)) ||
+        Boolean(c.facilitator && c.facilitator.toLowerCase().includes(q)) ||
+        Boolean(c.sessionLeader && c.sessionLeader.toLowerCase().includes(q)) ||
+        Boolean(c.achievementClaim && c.achievementClaim.toLowerCase().includes(q)) ||
         Boolean(c.project && c.project.toLowerCase().includes(q)) ||
         Boolean(c.track && c.track.toLowerCase().includes(q)) ||
         c.skills.some((s) => s.toLowerCase().includes(q)) ||
@@ -91,7 +125,14 @@ export async function listCertificates(filters?: {
     );
   }
 
-  return result.sort((a, b) => b.issueDate.localeCompare(a.issueDate));
+  return result.sort((a, b) => {
+    const dateA = a.issueDate || (a.year ? String(a.year) : "");
+    const dateB = b.issueDate || (b.year ? String(b.year) : "");
+    if (!dateA && !dateB) return a.title.localeCompare(b.title);
+    if (!dateA) return 1;
+    if (!dateB) return -1;
+    return dateB.localeCompare(dateA);
+  });
 }
 
 export async function getCertificateById(id: string): Promise<Certificate | null> {

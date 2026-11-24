@@ -47,9 +47,9 @@ export const GitHubOverview = memo(function GitHubOverview({ stats }: GitHubOver
             <span
               className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full border-2 flex items-center justify-center"
               style={{
-                backgroundColor: "#C7E34A",
+                backgroundColor: "var(--accent-fill)",
                 borderColor: "var(--surface-2)",
-                color: "#20231D",
+                color: "var(--accent-contrast)",
               }}
               title="Verified public GitHub account"
             >

@@ -54,7 +54,7 @@ export const GitHubDataStatus = memo(function GitHubDataStatus({
           type="button"
           onClick={onRefresh}
           disabled={refreshing}
-          className="btn btn-secondary min-h-[36px] px-3 py-1.5 text-xs font-mono disabled:opacity-50"
+          className="btn btn-secondary min-h-[44px] sm:min-h-[38px] px-3 py-1.5 text-xs font-mono disabled:opacity-50"
           title="Reload GitHub snapshot from /data/github.json"
           aria-label="Refresh Data"
         >

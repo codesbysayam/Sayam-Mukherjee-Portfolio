@@ -175,7 +175,7 @@ export const JournalCard = memo(function JournalCard({
           <span>Read Essay</span>
           <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </span>
-        <span className="text-[10px] text-[var(--text-muted)] tabular-nums">
+        <span className="text-[11px] text-[var(--text-muted)] tabular-nums">
           {readingStats.words} words
         </span>
       </div>

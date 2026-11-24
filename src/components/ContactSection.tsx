@@ -111,7 +111,7 @@ export default function ContactSection() {
               ].map((item) => (
                 <div
                   key={item.key}
-                  className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface-2)] flex items-center justify-between gap-3"
+                  className="p-4 rounded-[8px] border border-[var(--border)] bg-[var(--surface-2)] flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                 >
                   <div className="min-w-0 space-y-0.5">
                     <span className="text-[11px] font-mono text-[var(--text-muted)] block">
@@ -130,7 +130,7 @@ export default function ContactSection() {
                     type="button"
                     onClick={() => copyEmail(item.email, item.key)}
                     aria-label={`Copy ${item.email}`}
-                    className="btn btn-secondary !min-h-[36px] !px-2.5 !py-1 !text-xs font-mono shrink-0"
+                    className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !px-3 !py-1.5 !text-xs font-mono shrink-0 self-start sm:self-center"
                   >
                     {copiedKey === item.key ? (
                       <>
@@ -160,7 +160,7 @@ export default function ContactSection() {
                     href={profile.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors py-1"
+                    className="inline-flex items-center gap-1 min-h-[44px] sm:min-h-[36px] px-1 -ml-1 text-[var(--text-secondary)] hover:text-[var(--accent)] transition-colors py-1"
                   >
                     <span>{profile.name}</span>
                     <ExternalLink className="w-3 h-3" aria-hidden="true" />

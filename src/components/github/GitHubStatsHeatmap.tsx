@@ -362,7 +362,7 @@ export const GitHubStatsHeatmap = memo(function GitHubStatsHeatmap({
       .attr("y", (d) => (yScale(d.row) ?? 0) + cellHeight * 0.78)
       .attr("text-anchor", "end")
       .attr("fill", palette.axisFill)
-      .attr("font-size", "9.5px")
+      .attr("font-size", "10.5px")
       .attr("font-family", "var(--font-mono)")
       .text((d) => d.label);
 
@@ -554,7 +554,7 @@ export const GitHubStatsHeatmap = memo(function GitHubStatsHeatmap({
 
         {/* D3 Contribution Grid */}
         <div className="relative overflow-x-auto pb-1 scrollbar-thin">
-          <div className="min-w-[680px] select-none">
+          <div className="min-w-[580px] sm:min-w-0 select-none">
             <svg ref={svgRef} className="block w-full h-auto overflow-visible" />
           </div>
         </div>

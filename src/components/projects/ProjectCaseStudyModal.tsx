@@ -145,7 +145,7 @@ function ProjectCaseStudyModalComponent({
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-[max(0.75rem,env(safe-area-inset-top,0.75rem))] sm:p-6 md:p-8"
+      className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-2 sm:p-6 md:p-8"
       role="dialog"
       aria-modal="true"
       aria-labelledby="case-study-modal-title"
@@ -207,7 +207,7 @@ function ProjectCaseStudyModalComponent({
             </span>
             <span
               title={lifecycle.title}
-              className={`px-2 py-0.5 rounded-[4px] font-bold uppercase tracking-wider text-[10px] ${lifecycle.badgeClass}`}
+              className={`px-2 py-0.5 rounded-[4px] font-bold uppercase tracking-wider text-[11px] ${lifecycle.badgeClass}`}
             >
               {lifecycle.label}
             </span>
@@ -230,7 +230,7 @@ function ProjectCaseStudyModalComponent({
                 <button
                   type="button"
                   onClick={() => handleStep(-1)}
-                  className="w-8 h-8 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text-muted)] flex items-center justify-center transition-all cursor-pointer"
+                  className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text-muted)] flex items-center justify-center transition-all cursor-pointer"
                   aria-label="Previous project case study"
                   title="Previous case study (Left Arrow)"
                 >
@@ -242,7 +242,7 @@ function ProjectCaseStudyModalComponent({
                 <button
                   type="button"
                   onClick={() => handleStep(1)}
-                  className="w-8 h-8 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text-muted)] flex items-center justify-center transition-all cursor-pointer"
+                  className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] border border-[var(--border)] bg-[var(--surface)] hover:border-[var(--border-strong)] hover:text-[var(--text)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text-muted)] flex items-center justify-center transition-all cursor-pointer"
                   aria-label="Next project case study"
                   title="Next case study (Right Arrow)"
                 >
@@ -254,7 +254,7 @@ function ProjectCaseStudyModalComponent({
             <button
               type="button"
               onClick={onClose}
-              className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-[6px] bg-[var(--surface)] hover:bg-[var(--text)] active:scale-95 active:bg-[var(--text)] active:text-[var(--bg)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text)] hover:text-[var(--bg)] transition-all cursor-pointer"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-[6px] bg-[var(--surface)] hover:bg-[var(--text)] active:scale-95 active:bg-[var(--text)] active:text-[var(--bg)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text)] hover:text-[var(--bg)] transition-all cursor-pointer"
               title="Close modal (Esc)"
               aria-label="Close case study modal"
             >
@@ -290,7 +290,7 @@ function ProjectCaseStudyModalComponent({
                   });
                 }
               }}
-              className="px-2.5 py-1 rounded-[4px] border border-transparent hover:border-[var(--border-strong)] hover:text-[var(--text)] active:text-[var(--accent)] transition-colors cursor-pointer whitespace-nowrap"
+              className="min-h-[38px] px-2.5 py-1 rounded-[4px] border border-transparent hover:border-[var(--border-strong)] hover:text-[var(--text)] active:text-[var(--accent)] transition-colors cursor-pointer whitespace-nowrap"
             >
               {sec.label}
             </button>
@@ -337,7 +337,7 @@ function ProjectCaseStudyModalComponent({
                     <button
                       type="button"
                       onClick={() => setIsLightboxOpen(true)}
-                      className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[6px] bg-[#151713]/88 hover:bg-[#20231D] text-[#F4F4ED] border border-[#565A4E] text-[11px] font-mono backdrop-blur-sm transition-all active:scale-95 cursor-pointer"
+                      className="absolute bottom-3 right-3 inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] bg-[#151713]/88 hover:bg-[#20231D] text-[#F4F4ED] border border-[#565A4E] text-[11px] font-mono backdrop-blur-sm transition-all active:scale-95 cursor-pointer"
                       aria-label={`Expand preview image for ${project.title}`}
                     >
                       <Maximize2 className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
@@ -347,7 +347,7 @@ function ProjectCaseStudyModalComponent({
                 ) : (
                   <div className="w-full aspect-[16/10] flex flex-col items-center justify-center gap-1 p-6 bg-[#151713]">
                     <span className="font-mono text-xs font-semibold text-[#F4F4ED]">{project.title}</span>
-                    <span className="font-mono text-[10px] text-[#8C8F82] uppercase tracking-wider">Preview Unavailable</span>
+                    <span className="font-mono text-[11px] text-[#8C8F82] uppercase tracking-wider">Preview Unavailable</span>
                   </div>
                 )}
               </motion.div>
@@ -359,7 +359,7 @@ function ProjectCaseStudyModalComponent({
                   <button
                     type="button"
                     onClick={() => handleStep(-1)}
-                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text)] font-semibold cursor-pointer"
+                    className="min-h-[44px] min-w-[56px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text)] font-semibold cursor-pointer"
                     aria-label="Previous project"
                   >
                     Prev
@@ -367,7 +367,7 @@ function ProjectCaseStudyModalComponent({
                   <button
                     type="button"
                     onClick={() => handleStep(1)}
-                    className="min-h-[40px] min-w-[52px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text)] font-semibold cursor-pointer"
+                    className="min-h-[44px] min-w-[56px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] active:scale-95 active:bg-[var(--surface-2)] text-[var(--text)] font-semibold cursor-pointer"
                     aria-label="Next project"
                   >
                     Next
@@ -637,7 +637,7 @@ function ProjectCaseStudyModalComponent({
                   e.stopPropagation();
                   setIsLightboxOpen(false);
                 }}
-                className="w-10 h-10 rounded-[6px] bg-[#20231D] hover:bg-[#C7E34A] hover:text-[#20231D] border border-[#565A4E] flex items-center justify-center transition-colors cursor-pointer shrink-0"
+                className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-[6px] bg-[#20231D] hover:bg-[#C7E34A] hover:text-[#20231D] border border-[#565A4E] flex items-center justify-center transition-colors cursor-pointer shrink-0"
                 aria-label="Close full-resolution preview"
               >
                 <X className="w-4 h-4" />

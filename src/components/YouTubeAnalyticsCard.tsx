@@ -133,7 +133,7 @@ export function YouTubeAnalyticsCard({
                 {channel.name}
               </h3>
               <span
-                className="text-[10px] font-mono px-2 py-0.5 rounded-[4px] border font-semibold"
+                className="text-[11px] font-mono px-2 py-0.5 rounded-[4px] border font-semibold"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border-strong)",
@@ -154,7 +154,7 @@ export function YouTubeAnalyticsCard({
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`Visit ${channel.name} on YouTube`}
-          className="btn btn-secondary min-h-[34px] px-3 py-1.5 text-xs font-mono shrink-0"
+          className="btn btn-secondary min-h-[44px] sm:min-h-[36px] px-3 py-1.5 text-xs font-mono shrink-0"
         >
           <span>Visit Channel</span>
           <ExternalLink className="w-3 h-3" />
@@ -168,7 +168,7 @@ export function YouTubeAnalyticsCard({
             <Sparkles className="w-3 h-3" />
             <span>Lifetime Telemetry</span>
           </h4>
-          <span className="text-[10px] font-mono text-[var(--text-faint)]">
+          <span className="text-[11px] font-mono text-[var(--text-faint)]">
             {isObsidian ? "Exact studio metric" : "Not exposed in screenshot"}
           </span>
         </div>
@@ -208,7 +208,7 @@ export function YouTubeAnalyticsCard({
             <span>Selected Period Performance</span>
           </h4>
           <span
-            className="text-[10px] font-mono text-[var(--text-secondary)] border px-2 py-0.5 rounded-[4px]"
+            className="text-[11px] font-mono text-[var(--text-secondary)] border px-2 py-0.5 rounded-[4px]"
             style={{
               backgroundColor: "var(--surface)",
               borderColor: "var(--border)",
@@ -254,7 +254,7 @@ export function YouTubeAnalyticsCard({
             />
             <span>Realtime Snapshot (Studio Panel)</span>
           </h4>
-          <span className="text-[10px] font-mono text-[var(--text-faint)]">
+          <span className="text-[11px] font-mono text-[var(--text-faint)]">
             Captured 21 Oct 2026 &bull; Static snapshot
           </span>
         </div>
@@ -312,7 +312,7 @@ export function YouTubeChannelAnalyticsSection() {
             className="w-1.5 h-1.5 rounded-full"
             style={{ backgroundColor: "var(--accent)" }}
           />
-          <span className="text-[10px] font-mono text-[var(--text-faint)]">
+          <span className="text-[11px] font-mono text-[var(--text-faint)]">
             Verified Studio Records
           </span>
         </div>

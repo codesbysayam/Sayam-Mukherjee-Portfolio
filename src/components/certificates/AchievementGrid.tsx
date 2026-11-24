@@ -1,12 +1,13 @@
 import React from "react";
 import { AchievementRecord, Certificate } from "../../types/certificates";
-import { AchievementCard } from "./AchievementCard";
+import { CertificateAchievementCard } from "./AchievementCard";
 import { Award, RotateCcw } from "lucide-react";
 import { EditorialReveal, StaggerGroup, StaggerItem } from "../../motion/Reveal";
 
 export interface AchievementGridProps {
   records?: (AchievementRecord | Certificate)[];
   certificates?: Certificate[];
+  onViewDetails?: (record: AchievementRecord) => void;
   onInspect?: (record: AchievementRecord) => void;
   onView?: (cert: Certificate) => void;
   onResetFilters?: () => void;
@@ -19,6 +20,7 @@ export interface AchievementGridProps {
 export function AchievementGrid({
   records,
   certificates,
+  onViewDetails,
   onInspect,
   onView,
   onResetFilters,
@@ -84,8 +86,9 @@ export function AchievementGrid({
     >
       {items.map((item) => (
         <StaggerItem key={item.id} className="h-full">
-          <AchievementCard
+          <CertificateAchievementCard
             record={item as AchievementRecord}
+            onViewDetails={onViewDetails}
             onInspect={onInspect}
             onView={onView}
           />

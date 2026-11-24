@@ -105,8 +105,8 @@ export function ProjectTechMatrix() {
         </p>
       </div>
 
-      {/* Desktop Matrix View */}
-      <div className="hidden md:block card overflow-hidden">
+      {/* Desktop Matrix View (1024px+ to avoid horizontal scroll on 768px-900px tablets) */}
+      <div className="hidden lg:block card overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full min-w-[820px] text-left border-collapse">
             <thead>
@@ -128,7 +128,7 @@ export function ProjectTechMatrix() {
                       <div className="truncate max-w-[110px] mx-auto font-display font-bold">
                         {p.title}
                       </div>
-                      <span className="text-[10px] text-[var(--text-faint)] font-normal uppercase block">
+                      <span className="text-[11px] text-[var(--text-faint)] font-normal uppercase block">
                         {p.statusType}
                       </span>
                     </th>
@@ -153,7 +153,7 @@ export function ProjectTechMatrix() {
                       <span className={`font-semibold ${isRowHovered ? "text-[var(--accent)]" : "text-[var(--text)]"}`}>
                         {tech.name}
                       </span>
-                      <span className="text-[10px] text-[var(--text-faint)] uppercase">
+                      <span className="text-[11px] text-[var(--text-faint)] uppercase">
                         {tech.category}
                       </span>
                     </td>
@@ -171,7 +171,7 @@ export function ProjectTechMatrix() {
                         >
                           {hasTech ? (
                             <span
-                              className="inline-flex items-center justify-center w-5 h-5 rounded-[4px] bg-[#C7E34A] text-[#20231D] border border-[#A9C52F]"
+                              className="inline-flex items-center justify-center w-5 h-5 rounded-[4px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] border border-[var(--accent-strong)]"
                               title={`${tech.name} verified in ${project.title}`}
                             >
                               <Check className="w-3 h-3" />
@@ -192,7 +192,7 @@ export function ProjectTechMatrix() {
         <div className="p-4 border-t border-[var(--border)] bg-[var(--surface)] flex items-center justify-between text-xs font-mono text-[var(--text-muted)]">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5">
-              <span className="w-4 h-4 rounded-[4px] bg-[#C7E34A] text-[#20231D] border border-[#A9C52F] flex items-center justify-center">
+              <span className="w-4 h-4 rounded-[4px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] border border-[var(--accent-strong)] flex items-center justify-center">
                 <Check className="w-2.5 h-2.5" />
               </span>
               <span>Verified in codebase</span>
@@ -206,8 +206,8 @@ export function ProjectTechMatrix() {
         </div>
       </div>
 
-      {/* Mobile Responsive Accordion */}
-      <div className="block md:hidden space-y-3">
+      {/* Mobile & Tablet Portrait Accordion */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:hidden gap-3">
         {verifiedProjects.map((project) => {
           const isExpanded = expandedProject === project.id;
           const activeTechs = MATRIX_TECHNOLOGIES.filter((t) => checkTechInProject(t, project));
@@ -220,7 +220,7 @@ export function ProjectTechMatrix() {
               <button
                 type="button"
                 onClick={() => setExpandedProject(isExpanded ? null : project.id)}
-                className="w-full p-4 flex items-center justify-between text-left hover:bg-[var(--surface)] active:bg-[var(--surface-2)] transition-colors cursor-pointer"
+                className="w-full min-h-[52px] p-4 flex items-center justify-between text-left hover:bg-[var(--surface)] active:bg-[var(--surface-2)] transition-colors cursor-pointer"
               >
                 <div>
                   <div className="text-sm font-bold text-[var(--text)] font-display">

@@ -177,7 +177,7 @@ export function ArcCardCarousel({
             onClick={handlePrev}
             disabled={count <= 1 || activeIndex <= 0}
             aria-label="Previous project in arc"
-            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ArrowLeft className="w-4 h-4" />
           </button>
@@ -186,7 +186,7 @@ export function ArcCardCarousel({
             onClick={handleNext}
             disabled={count <= 1 || activeIndex >= count - 1}
             aria-label="Next project in arc"
-            className="w-9 h-9 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] hover:border-[var(--accent)] text-[var(--text)] flex items-center justify-center transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ArrowRight className="w-4 h-4" />
           </button>
@@ -213,9 +213,9 @@ export function ArcCardCarousel({
           const dragFraction = dragOffsetPx / 180;
           const shiftedOffset = offset + dragFraction;
 
-          const xSpacing = isCompactPhone ? 132 : isMobile ? 164 : 258;
-          const x = reduced ? offset * 280 : shiftedOffset * xSpacing;
-          const y = reduced ? 0 : Math.abs(shiftedOffset) * Math.abs(shiftedOffset) * (isMobile ? 18 : 24);
+          const xSpacing = isCompactPhone ? 108 : isMobile ? 148 : 258;
+          const x = reduced ? offset * (isCompactPhone ? 240 : 280) : shiftedOffset * xSpacing;
+          const y = reduced ? 0 : Math.abs(shiftedOffset) * Math.abs(shiftedOffset) * (isMobile ? 16 : 24);
           const rotateZ = reduced ? 0 : shiftedOffset * (isMobile ? 5.5 : 7.5);
           const scale = reduced ? (isActive ? 1 : 0.92) : Math.max(0.76, 1 - Math.abs(shiftedOffset) * 0.11);
           const opacity = absOffset > 2 ? 0 : Math.max(0.32, 1 - absOffset * 0.28);
@@ -271,7 +271,7 @@ export function ArcCardCarousel({
                   </div>
                 )}
 
-                <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-[4px] bg-[#151713]/85 text-[#C7E34A] border border-[#41443A] font-mono text-[10px] font-bold uppercase tracking-wider">
+                <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-[4px] bg-[#151713]/88 text-[#C7E34A] border border-[#41443A] font-mono text-[11px] font-bold uppercase tracking-wider">
                   {project.categoryFilter}
                 </span>
               </div>
@@ -328,7 +328,7 @@ export function ArcCardCarousel({
         </div>
 
         <div className="flex flex-wrap items-center gap-2 shrink-0">
-          <div className="flex items-center gap-1.5 mr-2" role="tablist" aria-label="Select project slide">
+          <div className="flex items-center gap-0.5 mr-1" role="tablist" aria-label="Select project slide">
             {projects.map((p, idx) => (
               <button
                 key={p.id}
@@ -337,19 +337,23 @@ export function ArcCardCarousel({
                 aria-selected={idx === activeIndex}
                 aria-label={`Focus ${p.title}`}
                 onClick={() => stepTo(idx)}
-                className={`h-2 rounded-full transition-all cursor-pointer ${
-                  idx === activeIndex
-                    ? "w-6 bg-[var(--accent)]"
-                    : "w-2 bg-[var(--border-strong)] hover:bg-[var(--text-muted)]"
-                }`}
-              />
+                className="min-w-[32px] min-h-[44px] [@media(pointer:coarse)]:min-w-[40px] flex items-center justify-center cursor-pointer group"
+              >
+                <span
+                  className={`block h-2 rounded-full transition-all ${
+                    idx === activeIndex
+                      ? "w-6 bg-[var(--accent)]"
+                      : "w-2 bg-[var(--border-strong)] group-hover:bg-[var(--text-muted)]"
+                  }`}
+                />
+              </button>
             ))}
           </div>
 
           <button
             type="button"
             onClick={() => onSelectProject(activeProject)}
-            className="btn btn-primary !min-h-[38px] !py-1.5 !px-3.5 !text-xs"
+            className="btn btn-primary !min-h-[44px] sm:!min-h-[40px] !py-1.5 !px-3.5 !text-xs"
           >
             <span>Inspect Case Study</span>
             <ArrowUpRight className="w-3.5 h-3.5" />
@@ -359,7 +363,7 @@ export function ArcCardCarousel({
             href={activeProject.githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-secondary !min-h-[38px] !py-1.5 !px-3 !text-xs"
+            className="btn btn-secondary !min-h-[44px] sm:!min-h-[40px] !py-1.5 !px-3 !text-xs"
           >
             <Github className="w-3.5 h-3.5" />
             <span>GitHub</span>

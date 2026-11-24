@@ -66,7 +66,7 @@ export function Unavailable({
               type="button"
               onClick={handleRetry}
               disabled={activeLoading}
-              className="btn btn-primary min-h-[34px] px-3 py-1.5 text-xs disabled:opacity-50"
+              className="btn btn-primary min-h-[44px] sm:min-h-[38px] px-3 py-1.5 text-xs disabled:opacity-50"
             >
               <RotateCw className={`w-3 h-3 ${activeLoading ? "animate-spin" : ""}`} />
               <span>{activeLoading ? "Retrying..." : "Retry"}</span>
@@ -77,7 +77,7 @@ export function Unavailable({
             href={profileUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-secondary min-h-[34px] px-3 py-1.5 text-xs"
+            className="btn btn-secondary min-h-[44px] sm:min-h-[38px] px-3 py-1.5 text-xs"
           >
             <span>GitHub Profile</span>
             <ArrowUpRight className="w-3 h-3" />

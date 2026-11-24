@@ -141,7 +141,7 @@ function LiveBuildFeedComponent() {
             onClick={() => refresh()}
             disabled={loading}
             title="Refresh repositories"
-            className="inline-flex items-center gap-2 min-h-[40px] px-4 py-2 rounded-[6px] text-xs font-mono font-semibold border border-[var(--border-strong)] bg-transparent hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] active:text-[var(--text)] transition-all disabled:opacity-40 cursor-pointer self-start md:self-auto"
+            className="inline-flex items-center gap-2 min-h-[44px] sm:min-h-[40px] px-4 py-2 rounded-[6px] text-xs font-mono font-semibold border border-[var(--border-strong)] bg-transparent hover:bg-[var(--text)] hover:text-[var(--bg)] active:scale-[0.97] active:bg-[var(--surface-3)] active:text-[var(--text)] transition-all disabled:opacity-40 cursor-pointer self-start md:self-auto"
           >
             <RotateCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
             <span>Sync Feed</span>
@@ -177,9 +177,9 @@ function LiveBuildFeedComponent() {
                       key={lang}
                       type="button"
                       onClick={() => handleLanguageChange(lang)}
-                      className={`px-3 py-1.5 min-h-[40px] sm:min-h-[36px] rounded-[6px] text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 border active:scale-[0.96] ${
+                      className={`px-3 py-1.5 min-h-[44px] sm:min-h-[36px] rounded-[6px] text-xs font-mono transition-all cursor-pointer flex items-center gap-1.5 border active:scale-[0.96] ${
                         isSelected
-                          ? "bg-[#C7E34A] border-[#C7E34A] text-[#20231D] font-bold"
+                          ? "bg-[var(--accent-fill)] border-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold"
                           : "bg-transparent hover:bg-[var(--surface)] active:bg-[var(--surface-3)] text-[var(--text-muted)] hover:text-[var(--text)] border-[var(--border)]"
                       }`}
                     >
@@ -205,14 +205,14 @@ function LiveBuildFeedComponent() {
                   onChange={(e) => handleQueryChange(e.target.value)}
                   placeholder="Filter repositories..."
                   aria-label="Search repositories"
-                  className="w-full pl-8 pr-9 py-2 rounded-[6px] text-base sm:text-xs font-mono bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] placeholder-[var(--text-faint)] focus:outline-none focus:border-[var(--text)]"
+                  className="w-full min-h-[44px] sm:min-h-[40px] pl-8 pr-11 py-2 rounded-[6px] text-base sm:text-xs font-mono bg-[var(--bg)] border border-[var(--border)] text-[var(--text)] placeholder-[var(--text-faint)] focus:outline-none focus:border-[var(--text)]"
                 />
                 {query && (
                   <button
                     type="button"
                     onClick={() => handleQueryChange("")}
                     aria-label="Clear repository filter"
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 min-w-[36px] min-h-[36px] flex items-center justify-center text-[var(--text-faint)] hover:text-[var(--text)] active:scale-[0.92] transition-all cursor-pointer"
+                    className="absolute right-0.5 top-1/2 -translate-y-1/2 min-w-[44px] min-h-[44px] flex items-center justify-center text-[var(--text-faint)] hover:text-[var(--text)] active:scale-[0.92] transition-all cursor-pointer"
                   >
                     <X className="w-3.5 h-3.5" />
                   </button>
@@ -223,7 +223,7 @@ function LiveBuildFeedComponent() {
                 <button
                   type="button"
                   onClick={() => setPageSize(isViewAll ? 6 : "ALL")}
-                  className="px-3 py-2 min-h-[40px] text-xs font-mono font-semibold rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] active:scale-[0.97] active:bg-[var(--surface-3)] text-[var(--text)] transition-all cursor-pointer"
+                  className="px-3 py-2 min-h-[44px] sm:min-h-[40px] text-xs font-mono font-semibold rounded-[6px] border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] active:scale-[0.97] active:bg-[var(--surface-3)] text-[var(--text)] transition-all cursor-pointer"
                 >
                   {isViewAll ? "Show 6 / page" : `View All (${totalFiltered})`}
                 </button>
@@ -265,7 +265,7 @@ function LiveBuildFeedComponent() {
                     <div className="space-y-2.5 min-w-0">
                       <div className="flex items-center justify-between gap-2 text-[11px] font-mono">
                         {isLatest ? (
-                          <span className="px-2 py-0.5 rounded-[4px] bg-[#C7E34A] text-[#20231D] font-bold tracking-wider uppercase">
+                          <span className="px-2 py-0.5 rounded-[4px] bg-[var(--accent-fill)] text-[var(--accent-contrast)] font-bold tracking-wider uppercase">
                             Latest Push
                           </span>
                         ) : (
@@ -328,7 +328,7 @@ function LiveBuildFeedComponent() {
                         href={repo.html_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-semibold text-[var(--text)] hover:underline active:opacity-75 active:scale-[0.97] transition-all inline-flex items-center gap-0.5 py-1"
+                        className="font-semibold text-[var(--text)] hover:underline active:opacity-75 active:scale-[0.97] transition-all inline-flex items-center gap-0.5 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-1"
                       >
                         <span>Open ↗</span>
                       </a>
@@ -349,7 +349,7 @@ function LiveBuildFeedComponent() {
                     handleQueryChange("");
                     handleLanguageChange("ALL");
                   }}
-                  className="text-xs font-mono underline font-semibold text-[var(--text)] active:opacity-75 cursor-pointer"
+                  className="min-h-[44px] px-3 text-xs font-mono underline font-semibold text-[var(--text)] active:opacity-75 cursor-pointer"
                 >
                   Reset filters
                 </button>
@@ -365,14 +365,14 @@ function LiveBuildFeedComponent() {
               {totalFiltered !== repos.length && ` (${repos.length} total)`}
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-3">
               {!isViewAll && totalPages > 1 && (
                 <div className="flex items-center gap-1.5">
                   <button
                     type="button"
                     disabled={safeCurrentPage <= 1}
                     onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                    className="min-h-[40px] px-3 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] active:scale-[0.96] active:bg-[var(--surface-3)] transition-all text-[var(--text)] flex items-center gap-1 cursor-pointer"
+                    className="min-h-[44px] sm:min-h-[40px] px-3 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] active:scale-[0.96] active:bg-[var(--surface-3)] transition-all text-[var(--text)] flex items-center gap-1 cursor-pointer"
                   >
                     <ChevronLeft className="w-3 h-3" />
                     <span>Prev</span>
@@ -384,7 +384,7 @@ function LiveBuildFeedComponent() {
                     type="button"
                     disabled={safeCurrentPage >= totalPages}
                     onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                    className="min-h-[40px] px-3 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] active:scale-[0.96] active:bg-[var(--surface-3)] transition-all text-[var(--text)] flex items-center gap-1 cursor-pointer"
+                    className="min-h-[44px] sm:min-h-[40px] px-3 py-1.5 rounded-[4px] disabled:opacity-30 disabled:cursor-not-allowed border border-[var(--border-strong)] bg-transparent hover:bg-[var(--surface)] active:scale-[0.96] active:bg-[var(--surface-3)] transition-all text-[var(--text)] flex items-center gap-1 cursor-pointer"
                   >
                     <span>Next</span>
                     <ChevronRight className="w-3 h-3" />
@@ -396,7 +396,7 @@ function LiveBuildFeedComponent() {
                 href={GITHUB_PROFILE_REPOS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 font-semibold text-[var(--text)] hover:underline active:opacity-75 transition-opacity"
+                className="inline-flex items-center gap-1 min-h-[44px] sm:min-h-[36px] font-semibold text-[var(--text)] hover:underline active:opacity-75 transition-opacity"
               >
                 <span>View All on GitHub</span>
                 <ArrowRight className="w-3.5 h-3.5" />

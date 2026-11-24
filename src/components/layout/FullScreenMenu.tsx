@@ -229,7 +229,7 @@ export function FullScreenMenu({
 
           {/* Top Bar */}
           <div
-            className="relative z-10 w-full flex items-center justify-between gap-4 py-5 border-b border-[#41443A]/70 shrink-0"
+            className="relative z-10 w-full flex items-center justify-between gap-2 sm:gap-4 py-4 sm:py-5 border-b border-[#41443A]/70 shrink-0"
             style={{
               width: "min(100%, var(--content-max, 1440px))",
               marginInline: "auto",
@@ -239,29 +239,29 @@ export function FullScreenMenu({
             <button
               type="button"
               onClick={() => handleSelectRoute("home")}
-              className="flex items-center gap-3 text-left cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px]"
+              className="min-h-[44px] min-w-0 flex items-center gap-2.5 sm:gap-3 text-left cursor-pointer group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A] rounded-[4px]"
             >
               <span className="w-9 h-9 rounded-[6px] bg-[#C7E34A] text-[#151713] font-display font-extrabold text-sm flex items-center justify-center tracking-tight shrink-0">
                 SM
               </span>
-              <div className="flex flex-col">
-                <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[#F4F4ED] leading-none">
+              <div className="flex flex-col min-w-0">
+                <span className="font-display text-sm sm:text-base font-extrabold tracking-[0.04em] uppercase text-[#F4F4ED] leading-none truncate">
                   Sayam Mukherjee
                 </span>
-                <span className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#B5B8AA] mt-1">
+                <span className="hidden min-[380px]:block font-mono text-[11px] uppercase tracking-[0.12em] text-[#B5B8AA] mt-1 truncate">
                   CSE · AI &amp; ML · KIIT University
                 </span>
               </div>
             </button>
 
-            <div className="flex items-center gap-2 sm:gap-2.5">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               <button
                 type="button"
                 onClick={() => {
                   onClose();
                   onOpenSearch();
                 }}
-                className="hidden sm:inline-flex items-center gap-2 min-h-[42px] px-3 rounded-[6px] border border-[#41443A] bg-[#151713]/70 text-xs font-mono text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-2 min-h-[44px] px-3 rounded-[6px] border border-[#41443A] bg-[#151713]/70 text-xs font-mono text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer"
                 aria-label="Open command palette search"
               >
                 <Search className="w-3.5 h-3.5" />
@@ -271,7 +271,7 @@ export function FullScreenMenu({
               <button
                 type="button"
                 onClick={toggleTheme}
-                className="min-h-[42px] px-3 rounded-[6px] border border-[#41443A] bg-[#151713]/70 text-xs font-mono text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer inline-flex items-center gap-1.5"
+                className="min-h-[44px] min-w-[44px] px-2.5 sm:px-3 rounded-[6px] border border-[#41443A] bg-[#151713]/70 text-xs font-mono text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A] transition-colors cursor-pointer inline-flex items-center justify-center gap-1.5"
                 aria-label={theme === "dark" ? "Switch to Paper light mode" : "Switch to Ink dark mode"}
               >
                 {theme === "dark" ? (
@@ -293,9 +293,9 @@ export function FullScreenMenu({
                   onClose();
                   onOpenResume();
                 }}
-                className="inline-flex items-center gap-1.5 min-h-[42px] px-3.5 rounded-[6px] bg-[#C7E34A] text-[#151713] hover:bg-[#A9C52F] text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer"
+                className="inline-flex items-center gap-1.5 min-h-[44px] px-3 sm:px-3.5 rounded-[6px] bg-[#C7E34A] text-[#151713] hover:bg-[#A9C52F] text-xs font-mono font-bold uppercase tracking-wider transition-colors cursor-pointer"
               >
-                <FileText className="w-3.5 h-3.5" />
+                <FileText className="w-3.5 h-3.5 shrink-0" />
                 <span>Résumé</span>
               </button>
 
@@ -314,7 +314,7 @@ export function FullScreenMenu({
 
           {/* Center Main Split: Dynamic Route Preview (Desktop) + Oversized Route Index */}
           <div
-            className="relative z-10 flex-1 w-full py-8 sm:py-10 flex items-center"
+            className="relative z-10 flex-1 w-full py-5 sm:py-10 [@media(max-height:500px)]:py-4 flex items-center"
             style={{
               width: "min(100%, var(--content-max, 1440px))",
               marginInline: "auto",
@@ -350,14 +350,14 @@ export function FullScreenMenu({
                         <div className="absolute inset-0 bg-gradient-to-t from-[#151713] via-[#151713]/20 to-transparent pointer-events-none" />
                         <div className="absolute inset-x-0 bottom-0 p-4 flex items-end justify-between gap-3">
                           <div className="min-w-0">
-                            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#C7E34A] block">
+                            <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-[#C7E34A] block">
                               {activePreview.eyebrow}
                             </span>
                             <p className="font-display text-lg font-extrabold text-[#F4F4ED] tracking-tight truncate">
                               {activePreview.headline}
                             </p>
                           </div>
-                          <span className="font-mono text-[10px] uppercase tracking-wider text-[#B5B8AA] shrink-0">
+                          <span className="font-mono text-[11px] uppercase tracking-wider text-[#B5B8AA] shrink-0">
                             {activePreview.meta}
                           </span>
                         </div>
@@ -424,7 +424,7 @@ export function FullScreenMenu({
                           onFocus={() => setHoveredRoute(item.id)}
                           onClick={() => handleSelectRoute(item.id as FullScreenMenuTab)}
                           aria-current={isActive ? "page" : undefined}
-                          className="group relative w-full text-left flex items-baseline justify-between gap-4 py-1 cursor-pointer focus-visible:outline-none focus-visible:text-[#C7E34A]"
+                          className="group relative w-full text-left flex items-baseline justify-between gap-4 py-1.5 min-h-[44px] cursor-pointer focus-visible:outline-none focus-visible:text-[#C7E34A]"
                         >
                           <div className="relative inline-flex items-baseline gap-3 sm:gap-4">
                             <span className="font-mono text-xs text-[#8C8F82] group-hover:text-[#C7E34A] tabular-nums transition-colors">
@@ -436,7 +436,7 @@ export function FullScreenMenu({
                                   ? "text-[#F4F4ED]/65"
                                   : "text-[#F4F4ED] group-hover:text-[#C7E34A]"
                               }`}
-                              style={{ fontSize: "clamp(1.85rem, 3.8vw, 3.35rem)" }}
+                              style={{ fontSize: "clamp(1.65rem, 3.8vw, 3.35rem)" }}
                             >
                               {item.label}
                               {isActive && (
@@ -475,7 +475,7 @@ export function FullScreenMenu({
                     onMouseEnter={() => setHoveredRoute("github")}
                     onFocus={() => setHoveredRoute("github")}
                     onClick={() => handleSelectRoute("github")}
-                    className={`px-3 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
+                    className={`min-h-[44px] sm:min-h-[38px] inline-flex items-center px-3.5 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
                       activeTab === "github"
                         ? "border-[#C7E34A] text-[#151713] bg-[#C7E34A] font-bold"
                         : "border-[#41443A] text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A]"
@@ -488,7 +488,7 @@ export function FullScreenMenu({
                     onMouseEnter={() => setHoveredRoute("showcase")}
                     onFocus={() => setHoveredRoute("showcase")}
                     onClick={() => handleSelectRoute("showcase")}
-                    className={`px-3 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
+                    className={`min-h-[44px] sm:min-h-[38px] inline-flex items-center px-3.5 py-1.5 rounded-[4px] border transition-colors cursor-pointer ${
                       activeTab === "showcase"
                         ? "border-[#C7E34A] text-[#151713] bg-[#C7E34A] font-bold"
                         : "border-[#41443A] text-[#D4D6CA] hover:border-[#C7E34A] hover:text-[#C7E34A]"
@@ -503,7 +503,7 @@ export function FullScreenMenu({
 
           {/* Bottom Metadata & Socials Bar */}
           <div
-            className="relative z-10 w-full border-t border-[#41443A]/70 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-xs font-mono text-[#B5B8AA] shrink-0"
+            className="relative z-10 w-full border-t border-[#41443A]/70 py-4 sm:py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 text-xs font-mono text-[#B5B8AA] shrink-0"
             style={{
               width: "min(100%, var(--content-max, 1440px))",
               marginInline: "auto",
@@ -515,13 +515,13 @@ export function FullScreenMenu({
               <span aria-hidden="true">·</span>
               <a
                 href={`mailto:${CONTACT_INFO.email}`}
-                className="text-[#C7E34A] hover:underline"
+                className="text-[#C7E34A] hover:underline inline-flex items-center min-h-[44px] sm:min-h-[36px]"
               >
                 {CONTACT_INFO.email}
               </a>
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2 uppercase tracking-wider">
+            <div className="flex flex-wrap items-center gap-x-5 gap-y-1 uppercase tracking-wider">
               {[
                 { label: "GitHub", url: SOCIAL_LINKS.github },
                 { label: "LinkedIn", url: SOCIAL_LINKS.linkedin },
@@ -535,7 +535,7 @@ export function FullScreenMenu({
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[#D4D6CA] hover:text-[#C7E34A] transition-colors inline-flex items-center gap-1"
+                  className="text-[#D4D6CA] hover:text-[#C7E34A] transition-colors inline-flex items-center gap-1 min-h-[44px] sm:min-h-[36px]"
                 >
                   <span>{social.label}</span>
                   <ArrowUpRight className="w-3 h-3 opacity-60" />

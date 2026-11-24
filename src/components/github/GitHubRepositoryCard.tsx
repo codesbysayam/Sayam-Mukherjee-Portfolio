@@ -69,7 +69,7 @@ export const GitHubRepositoryCard = memo(function GitHubRepositoryCard({
 
             {isFork && (
               <span
-                className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-[4px] border font-semibold"
+                className="text-[11px] font-mono uppercase px-2 py-0.5 rounded-[4px] border font-semibold"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -82,7 +82,7 @@ export const GitHubRepositoryCard = memo(function GitHubRepositoryCard({
 
             {isArchived && (
               <span
-                className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-[4px] border flex items-center gap-1"
+                className="text-[11px] font-mono uppercase px-2 py-0.5 rounded-[4px] border flex items-center gap-1"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -99,7 +99,7 @@ export const GitHubRepositoryCard = memo(function GitHubRepositoryCard({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Open ${repo.name} on GitHub`}
-            className="p-1.5 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors shrink-0"
+            className="min-w-[40px] min-h-[40px] [@media(pointer:coarse)]:min-w-[44px] [@media(pointer:coarse)]:min-h-[44px] flex items-center justify-center rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors shrink-0 -mr-1.5"
             title="Open on GitHub"
           >
             <ExternalLink className="w-4 h-4" />
@@ -131,7 +131,7 @@ export const GitHubRepositoryCard = memo(function GitHubRepositoryCard({
             {repo.topics.slice(0, 4).map((topic) => (
               <span
                 key={topic}
-                className="text-[10px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded-[4px] border"
+                className="text-[11px] font-mono text-[var(--text-muted)] px-2 py-0.5 rounded-[4px] border"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -141,7 +141,7 @@ export const GitHubRepositoryCard = memo(function GitHubRepositoryCard({
               </span>
             ))}
             {repo.topics.length > 4 && (
-              <span className="text-[10px] font-mono text-[var(--text-faint)] self-center">
+              <span className="text-[11px] font-mono text-[var(--text-faint)] self-center">
                 +{repo.topics.length - 4}
               </span>
             )}

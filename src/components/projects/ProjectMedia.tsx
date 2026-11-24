@@ -60,7 +60,7 @@ export function ProjectMedia({
   ) : (
     <div className="w-full h-full flex flex-col items-center justify-center gap-1 p-4 bg-[#151713] text-center">
       <span className="font-mono text-xs font-semibold text-[#F4F4ED]">{project.title}</span>
-      <span className="font-mono text-[10px] text-[#8C8F82] uppercase tracking-wider">Preview Unavailable</span>
+      <span className="font-mono text-[11px] text-[#8C8F82] uppercase tracking-wider">Preview Unavailable</span>
     </div>
   );
 

@@ -178,7 +178,7 @@ function LanguageRoleCard({ lang, username }: LanguageCardProps) {
               type="button"
               onClick={() => setExpanded((prev) => !prev)}
               aria-expanded={expanded}
-              className="px-2 py-0.5 rounded-[4px] border border-[var(--border-strong)] bg-[var(--surface-3)] text-[11px] font-mono font-semibold text-[var(--accent)] hover:opacity-90 cursor-pointer"
+              className="min-h-[34px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 rounded-[4px] border border-[var(--border-strong)] bg-[var(--surface-3)] text-[11px] font-mono font-semibold text-[var(--accent)] hover:opacity-90 cursor-pointer"
             >
               {expanded ? "Show fewer" : `+${lang.repos.length - 4} more`}
             </button>
@@ -402,7 +402,7 @@ export function CodebaseLanguageDistribution() {
               type="button"
               onClick={() => void refresh()}
               disabled={refreshing}
-              className="btn btn-secondary !min-h-[32px] !py-1 !px-2.5 !text-[11px] font-mono"
+              className="btn btn-secondary !min-h-[44px] sm:!min-h-[36px] !py-1 !px-3 !text-[11px] font-mono"
               aria-label="Refresh language composition telemetry"
             >
               <RefreshCw

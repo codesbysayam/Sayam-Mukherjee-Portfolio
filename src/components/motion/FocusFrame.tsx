@@ -91,7 +91,7 @@ export function FocusFrame({
       >
         <div className="min-w-0 space-y-0.5">
           <span
-            className={`font-mono text-[10px] font-semibold uppercase tracking-[0.12em] block ${
+            className={`font-mono text-[11px] font-semibold uppercase tracking-[0.12em] block ${
               darkSurface ? "text-[#C7E34A]" : "text-[var(--accent)]"
             }`}
           >
@@ -112,7 +112,7 @@ export function FocusFrame({
           onClick={toggleFocus}
           aria-expanded={focused}
           aria-controls={panelId}
-          className={`inline-flex items-center gap-1.5 min-h-[36px] px-3 py-1 rounded-[6px] border text-[11px] font-mono font-semibold transition-colors cursor-pointer ${
+          className={`inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[38px] px-3 py-1.5 rounded-[6px] border text-[11px] font-mono font-semibold transition-colors cursor-pointer ${
             darkSurface
               ? "border-[#41443A] bg-[#151713] hover:border-[#C7E34A] text-[#F4F4ED]"
               : "border-[var(--border-strong)] bg-[var(--surface-2)] hover:border-[var(--accent)] text-[var(--text)]"

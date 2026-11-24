@@ -201,7 +201,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "tell me about technex",
       "has he won any competitions"
     ],
-    answer: "Highlights include reaching the National Grand Finale of Toycathon 2021, qualifying as a finalist in 5 of 6 competitions at Technex'26 (IIT BHU), participating in IGNITHON 2.0 (12-hour offline hackathon at KIIT as Team Leader of ALGNITE), and leading the web development of OPERON for Deploy or Die (GDG KIIT).",
+    answer: "Highlights include participating in Toycathon 2021 (Certificate of Participation for Team ABVB TECHIES), qualifying as a finalist in 5 of 6 competitions at Technex'26 (IIT BHU), participating in IGNITHON 2.0 (12-hour offline hackathon at KIIT as Team Leader of ALGNITE), leading Team ALGNITE for AXIOM at WCC Launchpad 30, and leading the web development of OPERON for Deploy or Die (GDG KIIT).",
     suggestions: ["⚡ Projects", "🎓 Education", "📩 Contact"],
   },
   {
@@ -243,25 +243,7 @@ export const KNOWLEDGE_INTENTS: KnowledgeIntent[] = [
       "what certificate did sayam get in launchpad",
       "what role did sayam have in wcc launchpad"
     ],
-    answer: "Sayam participated in WCC Launchpad 30, a 36-hour hackathon held on 4–5 October 2026 organized by We Code Coders with title sponsor inkloom. He led Team ALGNITE as Team Leader across the Frontend, Backend, and AI / ML categories, leading the development and primary architecture of AXIOM (Agentic AI platform). Teammate Shinibali Kumar participated as Team Member across Product / Research and Presentation / Demo. Sayam received an individual Certificate of Participation (Certificate ID: L30-PTQXNX, verify at https://wecodecoders.in/verify/L30-PTQXNX).",
-    suggestions: ["🏆 Achievements", "⚡ Projects", "💻 GitHub"],
-  },
-  {
-    id: "shinibali-kumar-launchpad-axiom",
-    title: "Shinibali Kumar & Team ALGNITE (WCC Launchpad 30)",
-    keywords: [
-      "shinibali", "shinibali kumar", "l30-f3rfrc", "f3rfrc", "shinibali certificate",
-      "shinibali launchpad", "teammate shinibali", "product research", "presentation demo"
-    ],
-    phrases: [
-      "tell me about shinibali kumar",
-      "who is shinibali kumar",
-      "what was shinibali kumar's role in launchpad 30",
-      "what certificate did shinibali kumar receive",
-      "what did shinibali contribute to axiom",
-      "tell me about shinibali's certificate"
-    ],
-    answer: "Shinibali Kumar is Sayam Mukherjee's teammate in Team ALGNITE. For WCC Launchpad 30 (36-hour hackathon on 4–5 October 2026), Shinibali participated as a Team Member across the Product / Research and Presentation / Demo tracks. Shinibali contributed to the technical development and validation of AXIOM by working on the workflow and agent execution logic, supporting policy and evaluation design, validating system behaviour across scenarios, testing multi-agent workflows with human approval and policy control, and preparing the project for demonstration. Shinibali holds an individual Certificate of Participation (Certificate ID: L30-F3RFRC, verified at https://wecodecoders.in/verify/L30-F3RFRC).",
+    answer: "Sayam participated in WCC Launchpad 30, a 36-hour hackathon held on 4–5 October 2026 organized by We Code Coders with title sponsor inkloom. He led Team ALGNITE as Team Leader across the Frontend, Backend, and AI / ML categories, leading the development and primary architecture of AXIOM (Agentic AI platform). Sayam received an individual Certificate of Participation (Certificate ID: L30-PTQXNX, verify at https://wecodecoders.in/verify/L30-PTQXNX).",
     suggestions: ["🏆 Achievements", "⚡ Projects", "💻 GitHub"],
   },
   {

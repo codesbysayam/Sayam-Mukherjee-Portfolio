@@ -146,7 +146,7 @@ export function SkillsPage({ onNavigateToProject }: SkillsPageProps) {
             <button
               type="button"
               onClick={() => navigateTo("projects")}
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer group"
+              className="min-h-[44px] sm:min-h-[36px] inline-flex items-center gap-1.5 text-xs font-mono font-bold uppercase tracking-wider text-[var(--accent)] hover:underline cursor-pointer group"
             >
               <span>See Projects</span>
               <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
@@ -154,7 +154,7 @@ export function SkillsPage({ onNavigateToProject }: SkillsPageProps) {
             <button
               type="button"
               onClick={() => navigateTo("ecosystem")}
-              className="inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--accent)] cursor-pointer"
+              className="min-h-[44px] sm:min-h-[36px] inline-flex items-center gap-1.5 text-xs font-mono font-semibold text-[var(--text-secondary)] hover:text-[var(--accent)] cursor-pointer"
             >
               <span>System Architecture Principles</span>
               <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -167,7 +167,7 @@ export function SkillsPage({ onNavigateToProject }: SkillsPageProps) {
             href={SOCIAL_LINKS.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)]"
+            className="min-h-[44px] sm:min-h-[36px] inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)]"
           >
             <span>GitHub</span>
             <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -176,7 +176,7 @@ export function SkillsPage({ onNavigateToProject }: SkillsPageProps) {
             href={SOCIAL_LINKS.leetcode}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)]"
+            className="min-h-[44px] sm:min-h-[36px] inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)]"
           >
             <span>LeetCode</span>
             <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -185,7 +185,7 @@ export function SkillsPage({ onNavigateToProject }: SkillsPageProps) {
             href={SOCIAL_LINKS.codolio}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)]"
+            className="min-h-[44px] sm:min-h-[36px] inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)]"
           >
             <span>Codolio</span>
             <ExternalLink className="w-3 h-3" aria-hidden="true" />

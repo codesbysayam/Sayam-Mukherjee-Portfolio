@@ -89,7 +89,7 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
         `२. **Deploy or Die** - GDG on Campus KIIT (OPERON मुख्य वेब इंटरफेस निर्माता)\n` +
         `३. **IGNITHON 2.0** - K-1000, KIIT व KSAC (12-घंटे का ऑफलाइन हैकाथॉन, टीम ALGNITE भागीदारी प्रमाणपत्र)\n` +
         `४. **WCC Launchpad 30** - We Code Coders व inkloom (36-घंटे का हैकाथॉन, टीम ALGNITE, AXIOM प्लेटफॉर्म, भागीदारी प्रमाणपत्र ID: \`L30-PTQXNX\`)\n` +
-        `५. **Toycathon 2021** - राष्ट्रीय फाइनलिस्ट, शिक्षा मंत्रालय व AICTE (आईडी: \`TC-2021-FIN\`)\n` +
+        `५. **Toycathon 2021** - भागीदारी प्रमाणपत्र (Team ABVB TECHIES), शिक्षा मंत्रालय व AICTE\n` +
         `६. **Technex'26** - बहु-स्पर्धा फाइनलिस्ट (5/6 इवेंट्स), IIT (BHU) वाराणसी (आईडी: \`TX-2026-IITBHU\`)\n` +
         `७. **KIIT ग्रेड रिपोर्ट** - प्रथम वर्ष CGPA: **9.06**\n` +
         `८. **टेबल टेनिस चैम्पियन** - 3× अंतर-विद्यालय प्रथम स्थान विजेता।`;
@@ -430,23 +430,6 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `*Note: The certificate establishes participation recognizing dedication, teamwork, creativity, and technical problem-solving.*`;
   }
 
-  // 12.54 SHINIBALI KUMAR - WCC LAUNCHPAD 30
-  if (
-    q.includes("shinibali") ||
-    q.includes("f3rfrc") ||
-    q.includes("l30-f3rfrc")
-  ) {
-    return `**Shinibali Kumar** was Sayam Mukherjee's teammate in **Team ALGNITE** during **WCC Launchpad 30** (36-Hour Hackathon on 4–5 October 2026, organized by We Code Coders with title sponsor inkloom).\n\n` +
-      `• **Recipient:** Shinibali Kumar\n` +
-      `• **Role:** Team Member (Team ALGNITE)\n` +
-      `• **Tracks:** Product / Research and Presentation / Demo\n` +
-      `• **Credential ID:** \`L30-F3RFRC\` (Issued 15 October 2026)\n` +
-      `• **Credential Type:** Certificate of Participation\n` +
-      `• **Contribution:** Contributed to the technical development and validation of AXIOM by working on the workflow and agent execution logic, supporting policy and evaluation design, validating system behaviour across scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.\n` +
-      `• **Associated Project:** [AXIOM](https://axiomwcc.vercel.app)\n` +
-      `• **Credential Verification:** [Verify at We Code Coders](https://wecodecoders.in/verify/L30-F3RFRC)`;
-  }
-
   // 12.55 WCC LAUNCHPAD 30 & AXIOM (TEAM ALGNITE)
   if (
     q.includes("launchpad") ||
@@ -516,6 +499,14 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
 
   // 13. COMPETITIONS & CERTIFICATES
   if (
+    q.includes("automatrix") ||
+    q.includes("uipath") ||
+    q.includes("manoj batra") ||
+    q.includes("hypershift") ||
+    q.includes("cbse") && q.includes("microsoft") ||
+    q.includes("mindquest") ||
+    q.includes("decode") && q.includes("dominate") ||
+    q.includes("pixels to purpose") ||
     q.includes("certificate") ||
     q.includes("certificates") ||
     q.includes("competition") ||
@@ -531,11 +522,15 @@ export function generatePortfolioAnswer(query: string, liveGitHubStats?: any): s
       `2. **Deploy or Die**: HowToAlgo × GDG on Campus KIIT (OPERON lead web interface builder, Track A)\n` +
       `3. **IGNITHON 2.0**: 12-Hour Offline Hackathon at KIIT Deemed to be University (Participation credential, Team ALGNITE, 26th September 2026)\n` +
       `4. **WCC Launchpad 30**: 36-Hour Hackathon by We Code Coders & inkloom (Participation credential, Team Leader of Team ALGNITE, AXIOM platform, 4–5 October 2026, ID: \`L30-PTQXNX\`)\n` +
-      `5. **Toycathon 2021**: National Grand Finalist, Ministry of Education & AICTE, Govt. of India (Credential ID: \`TC-2021-FIN\`)\n` +
-      `6. **Technex'26**: Multi-Event Finalist across 5 out of 6 challenges, IIT (BHU) Varanasi (Credential ID: \`TX-2026-IITBHU\`)\n` +
-      `7. **KIIT First-Year Grade Report**: 20 engineering coursework subjects completed at KIIT Bhubaneswar (CGPA: 9.06)\n` +
-      `8. **MATLAB Workshop**: Participation credential organized by IEEE KIIT Student Branch in association with IEEE PES KIIT Student Branch Chapter (25 September 2026 at KIIT)\n` +
-      `9. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
+      `5. **Decode & Dominate 2.0**: KIIT Fest 9.0 / KIIT School of Computer Engineering (Certificate of Participation, 6–7 March 2026, ID: \`U2D | KF-D02-2026-EU8R\`)\n` +
+      `6. **Automatrix 2.0 — Agentic AI Workshop**: USC KIIT & Training & Placement Department, KIIT, led by Mr. Manoj Batra (Certificate of Participation, issued 19 August 2025)\n` +
+      `7. **MATLAB Workshop**: Participation credential organized by IEEE KIIT Student Branch in association with IEEE PES KIIT Student Branch Chapter (25 September 2026 at KIIT)\n` +
+      `8. **Industry Engagement and Technology Exposure Program**: CBSE with Microsoft, facilitated by Hypershift (Certificate of Completion, 19–30 October 2022)\n` +
+      `9. **MindQuest Quiz**: H & P Projects, Next Gen Care Foundation & Unstop (Certificate of Achievement; date/ID not printed on credential)\n` +
+      `10. **Toycathon 2021**: Ministry of Education's Innovation Cell & AICTE — Certificate of Participation for Team ABVB TECHIES\n` +
+      `11. **Technex'26**: Multi-Event Finalist across 5 out of 6 challenges, IIT (BHU) Varanasi (Credential ID: \`TX-2026-IITBHU\`)\n` +
+      `12. **KIIT First-Year Grade Report**: 20 engineering coursework subjects completed at KIIT Bhubaneswar (CGPA: 9.06)\n` +
+      `13. **Table Tennis Championship**: 3× Inter-School 1st Position Champion (2023)\n\n` +
       `*School board examinations (Class 10 & 12) are academic records and classified under Academics, not as competition certificates.*`;
   }
 

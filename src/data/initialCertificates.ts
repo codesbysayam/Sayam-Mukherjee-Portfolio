@@ -25,7 +25,23 @@ import { Certificate } from "../types/certificates";
  *   - updatedAt: string         (ISO timestamp)
  * ============================================================================
  */
-export const INITIAL_CERTIFICATES: Certificate[] = [
+export function mergeCertificateRecords<T extends { id: string }>(
+  existing: T[],
+  additions: T[]
+): T[] {
+  const byId = new Map<string, T>();
+  for (const item of existing) {
+    byId.set(item.id, item);
+  }
+  for (const item of additions) {
+    if (!byId.has(item.id)) {
+      byId.set(item.id, item);
+    }
+  }
+  return Array.from(byId.values());
+}
+
+export const EXISTING_CERTIFICATES: Certificate[] = [
   {
     id: "dataforge-2026-memory-in-motion",
     title: "DATAFORGE 2026",
@@ -266,70 +282,6 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2026-10-15T00:00:00.000Z"
   },
   {
-    id: "wcc-launchpad-30-shinibali-kumar",
-    title: "WCC Launchpad 30",
-    issuer: "We Code Coders / inkloom",
-    event: "WCC Launchpad 30",
-    format: "36-Hour Hackathon",
-    role: "Team Member",
-    participant: "Shinibali Kumar",
-    recipient: "Shinibali Kumar",
-    organizer: "We Code Coders",
-    associatedOrganizer: "inkloom",
-    coOrganizer: "inkloom",
-    credentialType: "Certificate of Participation",
-    category: "COMPETITIONS",
-    issueDate: "2026",
-    date: "4–5 October 2026",
-    year: 2026,
-    team: "ALGNITE",
-    teamMembers: [
-      "Shinibali Kumar (Team Member)",
-      "Sayam Mukherjee (Team Leader)"
-    ],
-    track: "Product / Research and Presentation / Demo",
-    associatedProjects: [
-      {
-        name: "AXIOM",
-        url: "https://axiomwcc.vercel.app",
-        description: "Agentic AI platform built by Team ALGNITE during the 36-hour hackathon, contributing to workflow, agent execution logic, and policy validation."
-      }
-    ],
-    description:
-      "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
-    fullDescription:
-      "Certificate of Participation awarded to Shinibali Kumar for actively participating in WCC Launchpad 30, a 36-Hour National Online Hackathon organized by We Code Coders with title sponsor inkloom on 4–5 October 2026. Recognised as a participant in team ALGNITE as a team member on Product / Research and Presentation / Demo tracks. Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validating system behaviour across different execution scenarios, testing multi-agent workflows, and preparing the project for demonstration and evaluation.",
-    contribution:
-      "Contributed to the technical development and validation of AXIOM by working on the work flow and agent execution logic, supporting policy and evaluation design, validity system behaviour across different execution scenarios and helping structure the project requirements and research. Contributed to testing the multi agent work flow, identifying execution and UI issues, validating human approval and policy control flows and preparing the project for demonstration and evaluation.",
-    skills: [
-      "36-Hour Hackathon",
-      "Product / Research",
-      "Presentation / Demo",
-      "Agent Execution Logic",
-      "Workflow Validation",
-      "Multi-Agent AI",
-      "Policy Control"
-    ],
-    tags: [
-      "36-Hour Hackathon",
-      "We Code Coders",
-      "inkloom",
-      "Team ALGNITE",
-      "Shinibali Kumar",
-      "Team Member",
-      "AXIOM",
-      "Product / Research",
-      "Presentation / Demo"
-    ],
-    credentialId: "L30-F3RFRC",
-    credentialUrl: "https://wecodecoders.in/verify/L30-F3RFRC",
-    imageAlt: "WCC Launchpad 30 certificate issued to Shinibali Kumar, team ALGNITE, certificate ID L30-F3RFRC.",
-    verificationStatus: "LINK AVAILABLE",
-    featured: true,
-    createdAt: "2026-10-15T00:00:00.000Z",
-    updatedAt: "2026-10-15T00:00:00.000Z"
-  },
-  {
     id: "matlab-workshop-ieee-kiit-2026",
     title: "MATLAB Workshop",
     issuer: "IEEE KIIT Student Branch / IEEE PES KIIT Student Branch Chapter",
@@ -368,20 +320,6 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     featured: true,
     createdAt: "2026-09-25T00:00:00.000Z",
     updatedAt: "2026-09-25T00:00:00.000Z"
-  },
-  {
-    id: "comp-toycathon-2021",
-    title: "National Finalist | Toycathon",
-    issuer: "Ministry of Education & AICTE, Govt. of India",
-    category: "COMPETITIONS",
-    description: "Reached the National Grand Finale among thousands of competing collegiate teams in the national Toycathon innovation challenge.",
-    issueDate: "2021",
-    credentialId: "TC-2021-FIN",
-    skills: ["Rapid Prototyping", "Hardware/Software Integration", "Problem Solving"],
-    verificationStatus: "VERIFIED",
-    featured: true,
-    createdAt: "2024-01-01T00:00:00.000Z",
-    updatedAt: "2024-01-01T00:00:00.000Z"
   },
   {
     id: "comp-technex-iit-bhu",
@@ -460,3 +398,314 @@ export const INITIAL_CERTIFICATES: Certificate[] = [
     updatedAt: "2024-01-01T00:00:00.000Z"
   }
 ];
+
+export const ADDITIONAL_CERTIFICATES: Certificate[] = [
+  {
+    id: "automatrix-2-2025",
+    title: "Automatrix 2.0 — Agentic AI Workshop",
+    issuer: "USC KIIT",
+    event: "Automatrix 2.0",
+    format: "Agentic AI Workshop",
+    category: "WORKSHOPS",
+    credentialType: "Certificate of Participation",
+    issueDate: "2025-08-19",
+    date: "16 August 2025",
+    eventDateDisplay: "16 August 2025",
+    year: 2025,
+    venue: "KIIT",
+    organizer: "USC KIIT",
+    coOrganizer: "Training & Placement Department, KIIT",
+    associatedOrganizer: "Training & Placement Department, KIIT",
+    recipient: "Sayam Mukherjee",
+    participant: "Sayam Mukherjee",
+    role: "Participant",
+    sessionLeader: "Mr. Manoj Batra",
+    signatories: [
+      {
+        name: "Dr. Abhishek Roy",
+        designation: "Dean, Industry Engagement, KIIT-DU"
+      },
+      {
+        name: "J. Sivasubramanian",
+        designation: "Global Community Advocacy Manager, UiPath"
+      }
+    ],
+    overview:
+      "Participated in Automatrix 2.0, a workshop on Agentic AI conducted by USC KIIT under the Training & Placement Department of KIIT. The session was led by Mr. Manoj Batra and featured discussions along with a hands-on segment.",
+    description:
+      "Participated in Automatrix 2.0, a workshop on Agentic AI conducted by USC KIIT under the Training & Placement Department of KIIT, led by Mr. Manoj Batra.",
+    skills: [
+      "Agentic AI",
+      "Automation",
+      "UiPath",
+      "Workflow Innovation",
+      "Hands-on Learning"
+    ],
+    tags: [
+      "Agentic AI",
+      "Automation",
+      "UiPath",
+      "Workflow Innovation",
+      "Hands-on Learning"
+    ],
+    imageUrl: "/images/certificates/automatrix-2-2025.png",
+    imageAlt:
+      "Automatrix 2.0 Certificate of Participation awarded to Sayam Mukherjee for the Agentic AI workshop conducted by USC KIIT and Training & Placement Department, KIIT, dated 19.08.2025.",
+    certificateUrl: "https://excellent-ivory-4q97cwpu.edgeone.dev",
+    verificationStatus: "NO VERIFICATION LINK",
+    featured: false,
+    createdAt: "2025-08-19T00:00:00.000Z",
+    updatedAt: "2025-08-19T00:00:00.000Z"
+  },
+  {
+    id: "toycathon-2021",
+    title: "Toycathon 2021",
+    issuer: "Ministry of Education's Innovation Cell / AICTE",
+    event: "Toycathon 2021",
+    format: "National Innovation Competition",
+    category: "COMPETITIONS",
+    credentialType: "Certificate of Participation",
+    issueDate: "2021",
+    date: "2021",
+    year: 2021,
+    organizer: "Ministry of Education's Innovation Cell",
+    coOrganizer: "AICTE",
+    associatedOrganizer: "AICTE",
+    recipient: "SAYAM MUKHERJEE",
+    participant: "Sayam Mukherjee",
+    team: "ABVB TECHIES",
+    role: "Team Member",
+    achievementClaim:
+      "National-level finalist; the LinkedIn record describes Team ABVB TECHIES as the only finalist team from a school background in West Bengal.",
+    sourceNote:
+      "The official certificate states Participation. Finalist status comes from the recipient's LinkedIn account rather than the credential wording itself. Digimyth is cited only as the historical team concept and not as an active portfolio project.",
+    signatories: [
+      {
+        name: "Prof. Anil Sahasrabudhe",
+        designation: "Chairman, AICTE"
+      },
+      {
+        name: "Dr. Abhay Jere",
+        designation: "Chief Innovation Officer, Ministry of Education Innovation Cell"
+      },
+      {
+        name: "Dr. Mohit Gambhir",
+        designation: "Innovation Director, Ministry of Education Innovation Cell"
+      }
+    ],
+    overview:
+      "Participated in Toycathon 2021 as a member of Team ABVB TECHIES from Aditya Birla Vani Bharati. The team developed a concept-based game titled Digimyth, designed to represent Indian culture through a digital gaming experience.",
+    description:
+      "Certificate of Participation for Toycathon 2021 as Team ABVB TECHIES (Aditya Birla Vani Bharati). Historical team concept: Digimyth.",
+    skills: [
+      "Innovation",
+      "Game Development",
+      "Indian Culture",
+      "Creative Problem Solving",
+      "Teamwork",
+      "C#",
+      "Maya",
+      "JavaScript",
+      "Kotlin",
+      "Python",
+      "Node.js",
+      "PHP"
+    ],
+    tags: [
+      "Innovation",
+      "Game Development",
+      "Indian Culture",
+      "Creative Problem Solving",
+      "Teamwork",
+      "C#",
+      "Maya",
+      "JavaScript",
+      "Kotlin",
+      "Python",
+      "Node.js",
+      "PHP"
+    ],
+    imageUrl: "/images/certificates/toycathon-2021.png",
+    imageAlt:
+      "Toycathon 2021 Certificate of Participation awarded to Sayam Mukherjee of Team ABVB TECHIES, issued by Ministry of Education's Innovation Cell and AICTE.",
+    certificateUrl: "https://ridiculous-chocolate-nwjqaaa8.edgeone.dev",
+    verificationStatus: "NO VERIFICATION LINK",
+    featured: false,
+    createdAt: "2021-06-01T00:00:00.000Z",
+    updatedAt: "2021-06-01T00:00:00.000Z"
+  },
+  {
+    id: "microsoft-cbse-exposure-2022",
+    title: "Industry Engagement and Technology Exposure Program",
+    issuer: "Central Board of Secondary Education (CBSE)",
+    event: "Industry Engagement and Technology Exposure Program",
+    format: "Industry Engagement Program",
+    category: "CERTIFICATIONS",
+    credentialType: "Certificate of Completion",
+    issueDate: "2022-10-30",
+    date: "19–30 October 2022",
+    eventDateDisplay: "19–30 October 2022",
+    year: 2022,
+    organizer: "Central Board of Secondary Education",
+    coOrganizer: "Microsoft",
+    associatedOrganizer: "Microsoft",
+    facilitator: "Hypershift",
+    recipient: "SAYAM MUKHERJEE",
+    participant: "Sayam Mukherjee",
+    role: "Participant",
+    sourceNote:
+      "The document heading reads Certificate of Completion, while the certificate body states that the recipient participated in the program for CBSE students in collaboration with Microsoft, facilitated by Hypershift.",
+    signatories: [
+      {
+        name: "Anand Swamy",
+        designation: "Country Head, Education, Microsoft India"
+      },
+      {
+        name: "Dr. Biswajit Saha",
+        designation: "Director (Skill Education & Training), CBSE"
+      }
+    ],
+    overview:
+      "Participated in the Industry Engagement and Technology Exposure Program for CBSE students, conducted in collaboration with Microsoft and facilitated by Hypershift during 19–30 October 2022. Covered real-world technology workflows, productivity tools, and digital problem-solving.",
+    description:
+      "Certificate of Completion for participating in the CBSE Industry Engagement and Technology Exposure Program with Microsoft, facilitated by Hypershift (19–30 October 2022).",
+    skills: [
+      "Technology Exposure",
+      "Industry Engagement",
+      "Microsoft",
+      "Digital Skills",
+      "Productivity Tools",
+      "Problem Solving"
+    ],
+    tags: [
+      "Technology Exposure",
+      "Industry Engagement",
+      "Microsoft",
+      "Digital Skills",
+      "Productivity Tools",
+      "Problem Solving"
+    ],
+    imageUrl: "/images/certificates/microsoft-cbse-exposure-2022.png",
+    imageAlt:
+      "CBSE and Microsoft Certificate of Completion awarded to Sayam Mukherjee for the Industry Engagement and Technology Exposure Program facilitated by Hypershift (19–30 October 2022).",
+    certificateUrl: "https://creepy-aqua-zim8h2zi.edgeone.dev",
+    verificationStatus: "NO VERIFICATION LINK",
+    featured: false,
+    createdAt: "2022-10-30T00:00:00.000Z",
+    updatedAt: "2022-10-30T00:00:00.000Z"
+  },
+  {
+    id: "mindquest-quiz-achievement",
+    title: "MindQuest Quiz",
+    issuer: "H & P Projects / Next Gen Care Foundation / Unstop",
+    event: "MindQuest Quiz",
+    platform: "Unstop",
+    format: "Quiz Competition",
+    category: "ACHIEVEMENTS",
+    credentialType: "Certificate of Achievement",
+    issueDate: "",
+    organizer: "H & P Projects",
+    coOrganizer: "Next Gen Care Foundation & Unstop",
+    associatedOrganizer: "Next Gen Care Foundation & Unstop",
+    recipient: "SAYAM MUKHERJEE",
+    participant: "Sayam Mukherjee",
+    role: "Participant",
+    sourceNote:
+      "No event date or credential ID appears on the original certificate image and the date is unrecorded.",
+    signatories: [
+      {
+        name: "Koushik Paul",
+        designation: "Co-Founder, H & P Projects"
+      },
+      {
+        name: "Abhradeep Hazra",
+        designation: "Co-Founder, H & P Projects"
+      }
+    ],
+    overview:
+      "Awarded a Certificate of Achievement for performance in the MindQuest Quiz organized by H & P Projects, Next Gen Care Foundation, and Unstop, recognizing analytical thinking, problem-solving, and decision-making.",
+    description:
+      "Certificate of Achievement for outstanding performance in MindQuest Quiz organized by H & P Projects, Next Gen Care Foundation, and Unstop.",
+    skills: [
+      "Quiz Competition",
+      "Analytical Thinking",
+      "Problem Solving",
+      "Decision Making",
+      "Knowledge Application"
+    ],
+    tags: [
+      "Quiz Competition",
+      "Analytical Thinking",
+      "Problem Solving",
+      "Decision Making",
+      "Knowledge Application"
+    ],
+    imageUrl: "/images/certificates/mindquest-quiz-achievement.png",
+    imageAlt:
+      "MindQuest Quiz Certificate of Achievement awarded to Sayam Mukherjee, organized by H & P Projects, Next Gen Care Foundation, and Unstop.",
+    certificateUrl: "https://musical-peach-anlpglvx.edgeone.dev",
+    verificationStatus: "NO VERIFICATION LINK",
+    featured: false,
+    createdAt: "2024-01-02T00:00:00.000Z",
+    updatedAt: "2024-01-02T00:00:00.000Z"
+  },
+  {
+    id: "decode-dominate-2-2026",
+    title: "Decode & Dominate 2.0",
+    issuer: "KIIT Fest 9.0 / KIIT School of Computer Engineering",
+    event: "Decode & Dominate 2.0",
+    format: "Flagship Technical Event",
+    theme: "Pixels to Purpose",
+    category: "COMPETITIONS",
+    credentialType: "Certificate of Participation",
+    issueDate: "2026-03-07",
+    date: "6–7 March 2026",
+    eventDateDisplay: "6–7 March 2026",
+    year: 2026,
+    venue: "KIIT School of Computer Engineering",
+    organizer: "KIIT Fest 9.0",
+    coOrganizer: "KIIT School of Computer Engineering",
+    associatedOrganizer: "KIIT School of Computer Engineering",
+    recipient: "Sayam Mukherjee",
+    participant: "Sayam Mukherjee",
+    role: "Participant",
+    credentialId: "U2D | KF-D02-2026-EU8R",
+    signatories: [
+      {
+        name: "Dr. Roshni Mohanty",
+        designation: "Chairperson, KIIT Fest 9.0"
+      }
+    ],
+    overview:
+      "Participated in Decode & Dominate 2.0, the flagship technical event of KIIT Fest 9.0, organized under the theme Pixels to Purpose on 6–7 March 2026 with challenges in technical proficiency and innovative problem-solving.",
+    description:
+      "Certificate of Participation for Decode & Dominate 2.0 at KIIT Fest 9.0 (KIIT School of Computer Engineering), conducted 6–7 March 2026.",
+    skills: [
+      "Technical Problem Solving",
+      "Analytical Thinking",
+      "Innovation",
+      "Computer Science",
+      "Collaborative Learning"
+    ],
+    tags: [
+      "Technical Problem Solving",
+      "Analytical Thinking",
+      "Innovation",
+      "Computer Science",
+      "Collaborative Learning"
+    ],
+    imageUrl: "/images/certificates/decode-dominate-2-2026.png",
+    imageAlt:
+      "Decode & Dominate 2.0 Certificate of Participation awarded to Sayam Mukherjee at KIIT Fest 9.0 (6–7 March 2026), code U2D | KF-D02-2026-EU8R.",
+    certificateUrl: "https://secure-black-gupqskus.edgeone.dev",
+    verificationStatus: "NO VERIFICATION LINK",
+    featured: false,
+    createdAt: "2026-03-07T00:00:00.000Z",
+    updatedAt: "2026-03-07T00:00:00.000Z"
+  }
+];
+
+export const INITIAL_CERTIFICATES: Certificate[] = mergeCertificateRecords(
+  EXISTING_CERTIFICATES,
+  ADDITIONAL_CERTIFICATES
+);

@@ -129,10 +129,10 @@ export const GitHubRepositories = memo(function GitHubRepositories({
                 role="tab"
                 aria-selected={isSelected}
                 onClick={() => setActiveFilter(tab.id)}
-                className="min-h-[40px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] text-xs font-mono transition-colors shrink-0 cursor-pointer tabular-nums"
+                className="min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] text-xs font-mono transition-colors shrink-0 cursor-pointer tabular-nums"
                 style={{
-                  backgroundColor: isSelected ? "#C7E34A" : "transparent",
-                  color: isSelected ? "#20231D" : "var(--text-muted)",
+                  backgroundColor: isSelected ? "var(--accent-fill)" : "transparent",
+                  color: isSelected ? "var(--accent-contrast)" : "var(--text-muted)",
                   fontWeight: isSelected ? 700 : 500,
                 }}
               >
@@ -152,7 +152,7 @@ export const GitHubRepositories = memo(function GitHubRepositories({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Search repositories..."
               aria-label="Search repositories"
-              className="w-full min-h-[40px] pl-9 pr-3 py-2 rounded-[6px] border text-base sm:text-xs focus:outline-none transition-colors"
+              className="w-full min-h-[44px] sm:min-h-[40px] pl-9 pr-3 py-2 rounded-[6px] border text-base sm:text-xs focus:outline-none transition-colors"
               style={{
                 backgroundColor: "var(--surface-2)",
                 borderColor: "var(--border)",
@@ -167,7 +167,7 @@ export const GitHubRepositories = memo(function GitHubRepositories({
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               aria-label="Sort repositories by"
-              className="w-full sm:w-auto min-h-[40px] px-3 py-2 rounded-[6px] border text-base sm:text-xs font-mono focus:outline-none transition-colors cursor-pointer"
+              className="w-full sm:w-auto min-h-[44px] sm:min-h-[40px] px-3 py-2 rounded-[6px] border text-base sm:text-xs font-mono focus:outline-none transition-colors cursor-pointer"
               style={{
                 backgroundColor: "var(--surface-2)",
                 borderColor: "var(--border)",

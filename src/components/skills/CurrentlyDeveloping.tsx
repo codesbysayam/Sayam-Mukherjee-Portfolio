@@ -83,7 +83,7 @@ export function CurrentlyDeveloping() {
                     {item.area}
                   </h3>
                 </div>
-                <span className="text-[10px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-[4px] border border-[var(--border)] bg-[var(--surface)] text-[var(--accent)]">
+                <span className="text-[11px] font-mono font-bold tracking-wider px-2 py-0.5 rounded-[4px] border border-[var(--border)] bg-[var(--surface)] text-[var(--accent)]">
                   {item.status}
                 </span>
               </div>

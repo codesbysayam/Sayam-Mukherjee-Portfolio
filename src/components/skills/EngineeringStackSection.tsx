@@ -153,7 +153,7 @@ export function EngineeringStackSection({
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Filter technologies (e.g., FastAPI, ByteTrack, PostgreSQL)…"
               aria-label="Filter technologies"
-              className="w-full min-h-[40px] pl-9 pr-3 py-2 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-xs font-mono text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)]"
+              className="w-full min-h-[44px] sm:min-h-[40px] pl-9 pr-3 py-2 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-base sm:text-xs font-mono text-[var(--text)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)]"
             />
           </div>
 
@@ -165,7 +165,7 @@ export function EngineeringStackSection({
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--accent)] cursor-pointer transition-colors"
+                className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] border border-[var(--border-strong)] bg-[var(--surface)] text-[var(--text)] hover:border-[var(--accent)] cursor-pointer transition-colors"
               >
                 <RotateCcw className="w-3 h-3" aria-hidden="true" />
                 <span>Clear</span>
@@ -183,7 +183,7 @@ export function EngineeringStackSection({
             type="button"
             aria-pressed={activeCategory === "all"}
             onClick={() => setActiveCategory("all")}
-            className={`px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer ${
+            className={`min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer ${
               activeCategory === "all"
                 ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                 : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
@@ -200,7 +200,7 @@ export function EngineeringStackSection({
                 type="button"
                 aria-pressed={isActive}
                 onClick={() => setActiveCategory(isActive ? "all" : grp.id)}
-                className={`px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer ${
+                className={`min-h-[44px] sm:min-h-[36px] px-3 py-1.5 rounded-[6px] text-xs font-mono border transition-colors cursor-pointer ${
                   isActive
                     ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                     : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:text-[var(--text)] hover:border-[var(--border-strong)]"
@@ -249,7 +249,7 @@ export function EngineeringStackSection({
               type="button"
               onClick={() => onSelectTech?.(null)}
               aria-label={`Close ${selectedDetail.item.name} evidence panel`}
-              className="p-2 rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
+              className="min-w-[44px] min-h-[44px] flex items-center justify-center rounded-[6px] border border-[var(--border)] bg-[var(--surface)] text-[var(--text-muted)] hover:text-[var(--text)] cursor-pointer"
             >
               <X className="w-4 h-4" aria-hidden="true" />
             </button>
@@ -282,7 +282,7 @@ export function EngineeringStackSection({
                         href={proj.githubUrl}
                         target="_blank"
                         rel="noreferrer"
-                        className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)] underline"
+                        className="inline-flex items-center gap-1 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] text-[var(--text-secondary)] hover:text-[var(--accent)] underline"
                       >
                         <FolderGit2 className="w-3.5 h-3.5" aria-hidden="true" />
                         <span>{proj.githubRepoName || proj.repository}</span>
@@ -292,7 +292,7 @@ export function EngineeringStackSection({
                           href={proj.liveUrl}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 text-[var(--text-secondary)] hover:text-[var(--accent)] underline"
+                          className="inline-flex items-center gap-1 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] text-[var(--text-secondary)] hover:text-[var(--accent)] underline"
                         >
                           <span>Live</span>
                           <ExternalLink className="w-3 h-3" aria-hidden="true" />
@@ -304,7 +304,7 @@ export function EngineeringStackSection({
                       <button
                         type="button"
                         onClick={() => onNavigateToProject(proj.id)}
-                        className="inline-flex items-center gap-1 text-[var(--accent)] font-semibold hover:underline cursor-pointer"
+                        className="inline-flex items-center gap-1 min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] text-[var(--accent)] font-semibold hover:underline cursor-pointer"
                       >
                         <span>Inspect Project</span>
                         <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />

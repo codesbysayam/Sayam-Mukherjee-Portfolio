@@ -26,6 +26,7 @@ export interface Certificate {
   expiryDate?: string;
   credentialId?: string;
   credentialUrl?: string;
+  certificateUrl?: string;
   skills: string[];
   tags?: string[];
   imageUrl?: string;
@@ -42,6 +43,11 @@ export interface Certificate {
   team?: string;
   teamMembers?: string[];
   contribution?: string;
+  achievementClaim?: string;
+  sourceNote?: string;
+  facilitator?: string;
+  sessionLeader?: string;
+  eventDateDisplay?: string;
   venue?: string;
   format?: string;
   role?: string;
@@ -118,6 +124,7 @@ export interface AchievementRecord extends Partial<Certificate> {
   credentialId?: string;
   verificationUrl?: string;
   credentialUrl?: string;
+  certificateUrl?: string;
   downloadUrl?: string;
   pdfUrl?: string;
   imageUrl?: string;
@@ -127,6 +134,11 @@ export interface AchievementRecord extends Partial<Certificate> {
   recipient?: string;
   participant?: string;
   contribution?: string;
+  achievementClaim?: string;
+  sourceNote?: string;
+  facilitator?: string;
+  sessionLeader?: string;
+  eventDateDisplay?: string;
   teamMembers?: string[];
   associatedProjects?: {
     name: string;

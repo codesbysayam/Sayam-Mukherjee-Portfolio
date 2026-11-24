@@ -111,7 +111,7 @@ function FeaturedProjectComponent({
           </span>
           <span
             title={lifecycle.title}
-            className={`px-2 py-0.5 rounded-[4px] font-bold uppercase tracking-wider text-[10px] ${lifecycle.badgeClass}`}
+            className={`px-2 py-0.5 rounded-[4px] font-bold uppercase tracking-wider text-[11px] ${lifecycle.badgeClass}`}
           >
             {lifecycle.label}
           </span>
@@ -137,7 +137,7 @@ function FeaturedProjectComponent({
           <button
             type="button"
             onClick={onToggleCandidate}
-            className="inline-flex items-center gap-1.5 min-h-[40px] px-3 py-1.5 rounded-[6px] border border-[#41443A] hover:border-[#C7E34A] active:scale-[0.97] active:bg-[#151713] text-xs font-mono text-[#F4F4ED] transition-all cursor-pointer"
+            className="inline-flex items-center gap-1.5 min-h-[44px] px-3 py-1.5 rounded-[6px] border border-[#41443A] hover:border-[#C7E34A] active:scale-[0.97] active:bg-[#151713] text-xs font-mono text-[#F4F4ED] transition-all cursor-pointer"
           >
             <ArrowLeftRight className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
             <span>Next Spotlight: {candidateTitle}</span>
@@ -199,7 +199,7 @@ function FeaturedProjectComponent({
                     type="button"
                     onClick={() => onSelectTech && onSelectTech(isActive ? "ALL" : tech)}
                     title={onSelectTech ? `Filter projects by ${tech}` : tech}
-                    className={`min-h-[36px] sm:min-h-0 text-xs px-2.5 py-1 rounded-[4px] font-mono transition-all cursor-pointer border active:scale-[0.96] ${
+                    className={`min-h-[40px] [@media(pointer:coarse)]:min-h-[44px] sm:min-h-[34px] text-xs px-2.5 py-1 rounded-[4px] font-mono transition-all cursor-pointer border active:scale-[0.96] ${
                       isActive
                         ? "bg-[#C7E34A] text-[#20231D] border-[#C7E34A] font-bold"
                         : "bg-[#151713] hover:border-[#C7E34A]/60 active:bg-[#20231D] text-[#EAEAE1] border-[#41443A]"
@@ -355,7 +355,7 @@ function FeaturedProjectComponent({
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 tabular-nums">
               <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
-                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Primary Stack</span>
+                <span className="text-[11px] font-mono text-[#B5B8AA] uppercase block">Primary Stack</span>
                 <div className="flex items-center gap-1.5 pt-1">
                   <span
                     className="w-2.5 h-2.5 rounded-full shrink-0 inline-block"
@@ -366,7 +366,7 @@ function FeaturedProjectComponent({
               </div>
 
               <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
-                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Last Push</span>
+                <span className="text-[11px] font-mono text-[#B5B8AA] uppercase block">Last Push</span>
                 <div className="flex items-center gap-1.5 pt-1 text-xs font-mono text-[#EAEAE1]">
                   <Calendar className="w-3 h-3 text-[#C7E34A] shrink-0" aria-hidden="true" />
                   <span className="truncate">{lastUpdated}</span>
@@ -374,7 +374,7 @@ function FeaturedProjectComponent({
               </div>
 
               <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
-                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Stars</span>
+                <span className="text-[11px] font-mono text-[#B5B8AA] uppercase block">Stars</span>
                 <div className="flex items-center gap-1.5 pt-1">
                   <Star className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
                   <span className="text-xs font-mono font-bold text-[#F4F4ED]">{starsCount}</span>
@@ -382,7 +382,7 @@ function FeaturedProjectComponent({
               </div>
 
               <div className="p-3 rounded-[6px] bg-[#20231D] border border-[#41443A]">
-                <span className="text-[10px] font-mono text-[#B5B8AA] uppercase block">Forks</span>
+                <span className="text-[11px] font-mono text-[#B5B8AA] uppercase block">Forks</span>
                 <div className="flex items-center gap-1.5 pt-1">
                   <GitFork className="w-3.5 h-3.5 text-[#C7E34A]" aria-hidden="true" />
                   <span className="text-xs font-mono font-bold text-[#F4F4ED]">{forksCount}</span>

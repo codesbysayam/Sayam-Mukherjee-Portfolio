@@ -95,7 +95,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
                 <h3 className="text-xl font-bold text-[var(--text)] font-display tracking-tight leading-none">
                   CodesBySayam Media
                 </h3>
-                <span className="text-[10px] text-[var(--text-muted)] font-mono tracking-wider mt-1 block">
+                <span className="text-[11px] text-[var(--text-muted)] font-mono tracking-wider mt-1 block">
                   TECHNICAL EDUCATION &amp; CREATIVE MEDIA PRODUCTION
                 </span>
               </div>
@@ -129,7 +129,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
                     borderColor: "var(--border)",
                   }}
                 >
-                  <p className="text-[10px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
+                  <p className="text-[11px] font-mono uppercase tracking-wider text-[var(--text-muted)]">
                     {metric.label}
                   </p>
                   <p className="mt-2 break-words text-2xl font-extrabold text-[var(--text)] font-display tabular-nums">
@@ -205,7 +205,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase tracking-wider block">
+            <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase tracking-wider block">
               OFFICIAL CREATOR CHANNELS
             </span>
             <h3 className="font-display text-lg font-bold tracking-tight text-[var(--text)]">
@@ -261,7 +261,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-[#151713]/85 via-transparent to-transparent" />
 
               <span
-                className="absolute bottom-2.5 right-2.5 border text-[10px] font-mono px-1.5 py-0.5 rounded-[4px]"
+                className="absolute bottom-2.5 right-2.5 border text-[11px] font-mono px-1.5 py-0.5 rounded-[4px]"
                 style={{
                   backgroundColor: "#151713",
                   borderColor: "#41443A",
@@ -290,7 +290,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               </h4>
 
               <div
-                className="flex items-center justify-between pt-2 border-t text-[10px] font-mono text-[var(--text-muted)]"
+                className="flex items-center justify-between pt-2 border-t text-[11px] font-mono text-[var(--text-muted)]"
                 style={{ borderColor: "var(--border)" }}
               >
                 <span className="flex items-center gap-1">
@@ -302,7 +302,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
                   href={video.watchUrl || LINKS.youtube}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[var(--accent)] hover:underline active:opacity-75 font-bold cursor-pointer py-1"
+                  className="text-[var(--accent)] hover:underline active:opacity-75 font-bold cursor-pointer inline-flex items-center min-h-[36px] [@media(pointer:coarse)]:min-h-[44px] px-1"
                 >
                   Watch Now ↗
                 </a>
@@ -330,7 +330,7 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
                 className="w-2 h-2 rounded-full"
                 style={{ backgroundColor: "var(--accent)" }}
               />
-              <span className="text-[10px] text-[var(--text-muted)] font-mono tracking-widest uppercase">
+              <span className="text-[11px] text-[var(--text-muted)] font-mono tracking-widest uppercase">
                 HISTORICAL STUDIO AUDIT
               </span>
             </div>
@@ -349,13 +349,13 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               className="p-3.5 rounded-[8px] border h-full"
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+              <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase block">
                 Lifetime Views
               </span>
               <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
                 153,049
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+              <span className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5 block">
                 Overview Header
               </span>
             </div>
@@ -366,13 +366,13 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               className="p-3.5 rounded-[8px] border h-full"
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+              <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase block">
                 Subscribers
               </span>
               <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
                 1,305
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+              <span className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5 block">
                 Realtime Panel
               </span>
             </div>
@@ -383,13 +383,13 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               className="p-3.5 rounded-[8px] border h-full"
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+              <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase block">
                 Watch Time
               </span>
               <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
                 3.5K hrs
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+              <span className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5 block">
                 13 Jan – 21 Oct
               </span>
             </div>
@@ -400,13 +400,13 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               className="p-3.5 rounded-[8px] border h-full"
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+              <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase block">
                 Subs Gained
               </span>
               <span className="text-base sm:text-lg font-bold text-[var(--accent)] font-display tabular-nums block mt-1">
                 +1.1K
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+              <span className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5 block">
                 Selected Period
               </span>
             </div>
@@ -417,13 +417,13 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               className="p-3.5 rounded-[8px] border h-full"
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+              <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase block">
                 Views (48h)
               </span>
               <span className="text-base sm:text-lg font-bold text-[var(--text)] font-display tabular-nums block mt-1">
                 1,967
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+              <span className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5 block">
                 Realtime Metric
               </span>
             </div>
@@ -434,13 +434,13 @@ function ContentCreatorSection({ onBack }: ContentCreatorSectionProps) {
               className="p-3.5 rounded-[8px] border h-full"
               style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
             >
-              <span className="text-[10px] font-mono text-[var(--text-muted)] uppercase block">
+              <span className="text-[11px] font-mono text-[var(--text-muted)] uppercase block">
                 Engaged Views
               </span>
               <span className="text-base sm:text-lg font-bold text-[var(--accent)] font-display tabular-nums block mt-1">
                 1,200
               </span>
-              <span className="text-[10px] font-mono text-[var(--text-faint)] mt-0.5 block">
+              <span className="text-[11px] font-mono text-[var(--text-faint)] mt-0.5 block">
                 Realtime Panel
               </span>
             </div>

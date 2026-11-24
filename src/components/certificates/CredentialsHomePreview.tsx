@@ -15,6 +15,7 @@ export default function CredentialsHomePreview({
 }: CredentialsHomePreviewProps) {
   const [featuredCerts, setFeaturedCerts] = useState<Certificate[]>([]);
   const [viewingCert, setViewingCert] = useState<Certificate | null>(null);
+  const [modalMode, setModalMode] = useState<"details" | "inspect">("details");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -80,13 +81,23 @@ export default function CredentialsHomePreview({
       ) : (
         <AchievementGrid
           records={featuredCerts}
-          onView={setViewingCert}
+          onViewDetails={(record) => {
+            setModalMode("details");
+            setViewingCert(record as Certificate);
+          }}
+          onInspect={(record) => {
+            setModalMode("inspect");
+            setViewingCert(record as Certificate);
+          }}
           columns={3}
         />
       )}
 
       <CertificateViewerModal
         certificate={viewingCert}
+        certificates={featuredCerts}
+        initialMode={modalMode}
+        onSelectCertificate={setViewingCert}
         onClose={() => setViewingCert(null)}
       />
     </section>

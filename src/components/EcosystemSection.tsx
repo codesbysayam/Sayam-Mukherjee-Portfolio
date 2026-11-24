@@ -5,7 +5,7 @@ import EcosystemPage from "./ecosystem/EcosystemPage";
 function EcosystemSectionComponent() {
   return (
     <ErrorBoundary fallbackTitle="Ecosystem Architecture Unavailable">
-      <div id="ecosystem" className="w-full max-w-5xl mx-auto px-4 sm:px-6">
+      <div id="ecosystem" className="w-full max-w-[var(--container-standard)] mx-auto px-4 sm:px-6">
         <EcosystemPage />
       </div>
     </ErrorBoundary>

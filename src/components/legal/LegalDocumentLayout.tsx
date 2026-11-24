@@ -214,7 +214,7 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
                         e.preventDefault();
                         handleSelectSection(section.id);
                       }}
-                      className={`group flex items-baseline gap-2.5 py-1.5 px-2.5 -mx-2 rounded-[6px] text-xs sm:text-[13px] transition-colors cursor-pointer min-h-[40px] ${
+                      className={`group flex items-baseline gap-2.5 py-2 px-2.5 -mx-2 rounded-[6px] text-xs sm:text-[13px] transition-colors cursor-pointer min-h-[44px] sm:min-h-[40px] ${
                         isActive
                           ? "bg-[var(--surface)] text-[var(--text)] font-bold"
                           : "text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)]/70"
@@ -256,7 +256,7 @@ export const LegalDocumentLayout: React.FC<LegalDocumentLayoutProps> = ({
         <button
           type="button"
           onClick={scrollToTop}
-          className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))] right-[max(1rem,env(safe-area-inset-right,1rem))] z-40 p-3 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-[6px] bg-[var(--surface-2)] border border-[var(--border-strong)] text-[var(--text)] shadow-md hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C7E34A]"
+          className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))] right-[max(1rem,env(safe-area-inset-right,1rem))] z-40 p-3 min-w-[44px] min-h-[44px] flex items-center justify-center rounded-[6px] bg-[var(--surface-2)] border border-[var(--border-strong)] text-[var(--text)] shadow-md hover:bg-[var(--text)] hover:text-[var(--bg)] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
           title="Scroll back to top"
           aria-label="Scroll back to top"
         >

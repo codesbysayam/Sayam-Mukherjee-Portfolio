@@ -123,11 +123,11 @@ export default function CertificationsSection({ onNavigateToCertificates }: Cert
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
               <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center min-w-0">
-                <span className="text-[10px] text-[var(--text-muted)] block uppercase font-mono">First-Year</span>
+                <span className="text-[11px] text-[var(--text-muted)] block uppercase font-mono">First-Year</span>
                 <span className="text-xs font-bold text-[var(--text)] block mt-1 font-display tabular-nums">9.06 CGPA</span>
               </div>
               <div className="bg-[var(--surface)] p-3 rounded-[8px] border border-[var(--border)] text-center min-w-0">
-                <span className="text-[10px] text-[var(--text-muted)] block uppercase font-mono">Institution</span>
+                <span className="text-[11px] text-[var(--text-muted)] block uppercase font-mono">Institution</span>
                 <span className="text-xs font-bold text-[var(--accent)] block mt-1 font-display">KIIT, Bhubaneswar</span>
               </div>
             </div>

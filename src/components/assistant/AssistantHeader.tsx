@@ -38,18 +38,18 @@ export const AssistantHeader = memo(function AssistantHeader({
           type="button"
           onClick={onClear}
           disabled={isGenerating}
-          className="inline-flex items-center gap-1 px-2 py-1.5 rounded-[6px] text-[11px] font-mono text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
+          className="inline-flex items-center gap-1 min-h-[44px] sm:min-h-[36px] px-2.5 py-1.5 rounded-[6px] text-[11px] font-mono text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] disabled:opacity-40 disabled:pointer-events-none transition-colors cursor-pointer"
           title="Clear conversation"
           aria-label="Clear conversation"
         >
           <RotateCcw className="w-3 h-3" />
-          <span className="hidden xs:inline">Clear</span>
+          <span className="hidden min-[380px]:inline">Clear</span>
         </button>
 
         <button
           type="button"
           onClick={onClose}
-          className="w-7 h-7 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer flex items-center justify-center"
+          className="w-11 h-11 sm:w-9 sm:h-9 rounded-[6px] text-[var(--text-muted)] hover:text-[var(--text)] hover:bg-[var(--surface)] transition-colors cursor-pointer flex items-center justify-center"
           title="Close assistant (Esc)"
           aria-label="Close assistant"
         >

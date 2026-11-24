@@ -172,7 +172,7 @@ export function SkillProjectEvidence({
               <button
                 type="button"
                 onClick={() => setSelectedSkillFilter(null)}
-                className={`btn !min-h-[34px] !py-1 !px-2.5 !text-xs active:scale-[0.97] ${
+                className={`btn !min-h-[44px] sm:!min-h-[36px] !py-1 !px-2.5 !text-xs active:scale-[0.97] ${
                   selectedSkillFilter === null ? "btn-primary" : "btn-secondary"
                 }`}
               >
@@ -184,7 +184,7 @@ export function SkillProjectEvidence({
                   key={skill}
                   type="button"
                   onClick={() => setSelectedSkillFilter(selectedSkillFilter === skill ? null : skill)}
-                  className={`btn !min-h-[34px] !py-1 !px-2.5 !text-xs whitespace-nowrap active:scale-[0.97] ${
+                  className={`btn !min-h-[44px] sm:!min-h-[36px] !py-1 !px-2.5 !text-xs whitespace-nowrap active:scale-[0.97] ${
                     selectedSkillFilter === skill ? "btn-primary" : "btn-secondary"
                   }`}
                 >
@@ -207,7 +207,7 @@ export function SkillProjectEvidence({
           <button
             type="button"
             onClick={() => setSelectedSkillFilter(null)}
-            className="btn btn-secondary !min-h-[36px] !py-1.5 !px-3 !text-xs font-mono"
+            className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs font-mono"
           >
             Show All Verified Projects
           </button>
@@ -240,7 +240,7 @@ export function SkillProjectEvidence({
                     href={row.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary !min-h-[36px] !py-1.5 !px-3 !text-xs"
+                    className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs"
                     title="View GitHub Repository"
                   >
                     <Github className="w-3.5 h-3.5" aria-hidden="true" />
@@ -252,7 +252,7 @@ export function SkillProjectEvidence({
                     href={row.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary !min-h-[36px] !py-1.5 !px-3 !text-xs"
+                    className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs"
                     title="Open Live Deployment"
                   >
                     <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -263,7 +263,7 @@ export function SkillProjectEvidence({
                   <button
                     type="button"
                     onClick={() => onSelectProject(row.id)}
-                    className="btn btn-primary !min-h-[36px] !py-1.5 !px-3 !text-xs"
+                    className="btn btn-primary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs"
                   >
                     <span>Inspect</span>
                     <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
@@ -282,7 +282,7 @@ export function SkillProjectEvidence({
                   key={s}
                   type="button"
                   onClick={() => setSelectedSkillFilter(selectedSkillFilter === s ? null : s)}
-                  className={`px-2 py-0.5 rounded-[4px] text-[11px] font-mono border cursor-pointer transition-colors ${
+                  className={`min-h-[34px] [@media(pointer:coarse)]:min-h-[44px] px-2.5 py-1 rounded-[4px] text-[11px] font-mono border cursor-pointer transition-colors ${
                     selectedSkillFilter?.toLowerCase() === s.toLowerCase()
                       ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                       : "bg-[var(--surface)] text-[var(--text-secondary)] border-[var(--border)] hover:border-[var(--border-strong)]"

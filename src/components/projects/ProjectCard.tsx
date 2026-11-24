@@ -149,12 +149,18 @@ function ProjectCardComponent({
                 {isFeaturedCandidate ? " · LEAD" : ""}
                 {(repo?.fork ?? project.isFork) ? ` · FORK (${branchName})` : ""}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <span title={lifecycle.title} className="uppercase text-[11px] font-semibold">
                   {lifecycle.label}
                 </span>
                 <span aria-hidden="true">·</span>
                 <span>{project.status}</span>
+                {project.difficulty && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>{project.difficulty}</span>
+                  </>
+                )}
                 <span aria-hidden="true">·</span>
                 <span
                   className="inline-flex items-center gap-1"
@@ -207,7 +213,7 @@ function ProjectCardComponent({
                       if (onSelectTech) onSelectTech(isActive ? "ALL" : tech);
                     }}
                     title={onSelectTech ? `Filter projects by ${tech}` : tech}
-                    className={`text-xs font-mono px-2 py-0.5 rounded-[4px] transition-all cursor-pointer border active:scale-[0.96] ${
+                    className={`min-h-[34px] [@media(pointer:coarse)]:min-h-[44px] sm:min-h-[30px] text-xs font-mono px-2.5 py-0.5 rounded-[4px] transition-all cursor-pointer border active:scale-[0.96] ${
                       isActive
                         ? "bg-[var(--accent-fill)] text-[var(--accent-contrast)] border-[var(--accent-fill)] font-semibold"
                         : "bg-[var(--surface)] hover:border-[var(--border-strong)] active:bg-[var(--surface-2)] text-[var(--text-secondary)] border-[var(--border)]"
@@ -261,7 +267,7 @@ function ProjectCardComponent({
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs active:scale-[0.98]"
+                  className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs active:scale-[0.98]"
                   title="Open GitHub Repository"
                 >
                   <Github className="w-3.5 h-3.5" aria-hidden="true" />
@@ -273,7 +279,7 @@ function ProjectCardComponent({
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="btn btn-secondary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs active:scale-[0.98]"
+                    className="btn btn-secondary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3 !text-xs active:scale-[0.98]"
                     title="Launch Live Deployment"
                   >
                     <ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />
@@ -284,7 +290,7 @@ function ProjectCardComponent({
                 <button
                   type="button"
                   onClick={handleShare}
-                  className="btn btn-ghost !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-2.5 !text-xs active:scale-[0.98]"
+                  className="btn btn-ghost !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-2.5 !text-xs active:scale-[0.98]"
                   title="Share Project"
                   aria-label={`Share ${project.title}`}
                 >
@@ -300,7 +306,7 @@ function ProjectCardComponent({
               <button
                 type="button"
                 onClick={() => onSelectCaseStudy(project)}
-                className="btn btn-primary !min-h-[42px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs group/cs active:scale-[0.98]"
+                className="btn btn-primary !min-h-[44px] sm:!min-h-[38px] !py-1.5 !px-3.5 !text-xs group/cs active:scale-[0.98]"
               >
                 <span>Case Study</span>
                 <ArrowRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/cs:translate-x-1" aria-hidden="true" />

@@ -33,7 +33,7 @@ export const LegalTableOfContents: React.FC<LegalTableOfContentsProps> = ({
                 e.preventDefault();
                 onSelectSection(section.id);
               }}
-              className="group flex items-baseline gap-2.5 py-1 text-xs sm:text-[13px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
+              className="group flex items-center gap-2.5 min-h-[44px] sm:min-h-[36px] py-1.5 text-xs sm:text-[13px] text-[var(--text-muted)] hover:text-[var(--text)] transition-colors cursor-pointer"
             >
               {section.number && (
                 <span className="font-mono text-[11px] text-[var(--text-faint)] shrink-0 select-none tabular-nums group-hover:text-[var(--accent)] transition-colors">

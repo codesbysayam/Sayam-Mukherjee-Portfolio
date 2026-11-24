@@ -122,3 +122,10 @@
     padding: 4px 8px;
   }
 }
+
+@media (max-height: 440px) {
+  .assistant-suggestions-bar,
+  .assistant-composer-hint {
+    display: none;
+  }
+}

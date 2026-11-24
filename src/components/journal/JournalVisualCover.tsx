@@ -50,7 +50,7 @@ export function JournalVisualCover({
 
   const innerFrame = failed || !imgSrc ? (
     <div className="w-full h-full flex flex-col justify-between p-5 bg-[#171B16] text-[#F2F1E9]">
-      <div className="flex items-center justify-between text-[10px] font-mono uppercase tracking-[0.14em] text-[#C7E34A]">
+      <div className="flex items-center justify-between text-[11px] font-mono uppercase tracking-[0.14em] text-[#C7E34A]">
         <span>{issueNumber}</span>
         <span>{category}</span>
       </div>
@@ -94,7 +94,7 @@ export function JournalVisualCover({
         )}
 
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#151713]/80 via-[#151713]/20 to-transparent" />
-        <div className="pointer-events-none absolute bottom-2.5 left-3 right-3 flex items-center justify-between gap-2 text-[10px] font-mono uppercase tracking-[0.12em] text-[#F4F4ED]">
+        <div className="pointer-events-none absolute bottom-2.5 left-3 right-3 flex items-center justify-between gap-2 text-[11px] font-mono uppercase tracking-[0.12em] text-[#F4F4ED]">
           <span className="text-[#C7E34A] font-bold">{issueNumber}</span>
           <span className="truncate opacity-85">{category}</span>
         </div>
@@ -164,7 +164,7 @@ export function JournalDiagramBlock({ diagramId }: JournalDiagramBlockProps) {
                   x={box.x + 14}
                   y={45}
                   fill="var(--accent)"
-                  fontSize="10"
+                  fontSize="11"
                   fontWeight="700"
                   fontFamily="var(--font-mono)"
                 >
@@ -396,7 +396,7 @@ export function JournalDiagramBlock({ diagramId }: JournalDiagramBlockProps) {
                     x={x + 14}
                     y={46}
                     fill="var(--accent)"
-                    fontSize="10"
+                    fontSize="11"
                     fontWeight="700"
                     fontFamily="var(--font-mono)"
                   >

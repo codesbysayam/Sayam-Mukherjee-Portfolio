@@ -187,7 +187,7 @@ export const SAYAM_DATA = {
     'WCC Launchpad 30 – Team Leader of ALGNITE in a 36-hour hackathon (Oct 2026)',
     'DataForge 2026, IIT Kharagpur – Led Memory in Motion submission to the Pathway Track (Sep 2026)',
     'Technex\'26, IIT (BHU) Varanasi – Advanced to the finals in 5 of 6 competitions (Mar 2026)',
-    'Toycathon 2021 – Placed among top 15 national finalists (Jan 2021)',
+    'Toycathon 2021 – Certificate of Participation with Team ABVB TECHIES (Ministry of Education Innovation Cell & AICTE, 2021)',
     'MATLAB Workshop – Institute of Electrical and Electronics Engineers (IEEE) KIIT (Sep 2026)'
   ],
   blogs: [] as Blog[],

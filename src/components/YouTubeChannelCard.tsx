@@ -89,7 +89,7 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
                   </span>
                 )}
                 {activityPeriod && (
-                  <span className="font-mono text-[10px] text-[var(--text-faint)] flex items-center gap-1">
+                  <span className="font-mono text-[11px] text-[var(--text-faint)] flex items-center gap-1">
                     <History className="h-2.5 w-2.5" />
                     <span>{activityPeriod}</span>
                   </span>
@@ -101,7 +101,7 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
           <div className="flex flex-col items-end gap-1 shrink-0">
             {channel.status === "historical" ? (
               <span
-                className="rounded-[4px] border px-2 py-0.5 font-mono text-[9px] uppercase font-semibold"
+                className="rounded-[4px] border px-2 py-0.5 font-mono text-[11px] uppercase font-semibold"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border-strong)",
@@ -112,7 +112,7 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
               </span>
             ) : channel.category ? (
               <span
-                className="rounded-[4px] border px-2 py-0.5 font-mono text-[9px] text-[var(--text-muted)] max-w-[130px] truncate"
+                className="rounded-[4px] border px-2 py-0.5 font-mono text-[11px] text-[var(--text-muted)] max-w-[130px] truncate"
                 style={{
                   backgroundColor: "var(--surface)",
                   borderColor: "var(--border)",
@@ -140,7 +140,7 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
         >
           <div className="space-y-0.5 text-center sm:text-left min-w-0">
             <span
-              className="block font-mono text-[9px] uppercase tracking-wider truncate"
+              className="block font-mono text-[11px] uppercase tracking-wider truncate"
               style={{
                 color: subInfo.isHistorical ? "var(--warning)" : "var(--text-faint)",
               }}
@@ -153,7 +153,7 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
           </div>
 
           <div className="space-y-0.5 text-center sm:text-left min-w-0">
-            <span className="block font-mono text-[9px] uppercase tracking-wider text-[var(--text-faint)] truncate">
+            <span className="block font-mono text-[11px] uppercase tracking-wider text-[var(--text-faint)] truncate">
               Total Views
             </span>
             <span className="block font-display text-xs sm:text-sm font-bold text-[var(--text)] tabular-nums truncate">
@@ -162,7 +162,7 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
           </div>
 
           <div className="space-y-0.5 text-center sm:text-left min-w-0">
-            <span className="block font-mono text-[9px] uppercase tracking-wider text-[var(--text-faint)] truncate">
+            <span className="block font-mono text-[11px] uppercase tracking-wider text-[var(--text-faint)] truncate">
               Videos
             </span>
             <span className="block font-display text-xs sm:text-sm font-bold text-[var(--text)] tabular-nums truncate">
@@ -179,7 +179,7 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
         }`}
         style={{ borderColor: "var(--border)" }}
       >
-        <div className="flex items-center gap-1.5 text-[10px] font-mono">
+        <div className="flex items-center gap-1.5 text-[11px] font-mono">
           {subInfo.isHistorical ? (
             <span className="text-[var(--text-faint)]">Archived milestone</span>
           ) : isVerified ? (
@@ -207,13 +207,13 @@ export const YouTubeChannelCard: React.FC<YouTubeChannelCardProps> = ({
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Visit ${channel.name} on YouTube`}
-            className="btn btn-secondary min-h-[34px] px-3 py-1.5 font-mono text-xs"
+            className="btn btn-secondary min-h-[44px] sm:min-h-[36px] px-3 py-1.5 font-mono text-xs"
           >
             <span>Visit Channel</span>
             <ExternalLink className="h-3 w-3" />
           </a>
         ) : (
-          <span className="text-[10px] font-mono text-[var(--text-faint)]">
+          <span className="text-[11px] font-mono text-[var(--text-faint)]">
             Link unavailable
           </span>
         )}
