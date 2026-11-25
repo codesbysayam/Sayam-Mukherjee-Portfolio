@@ -413,8 +413,8 @@
       "createdAt": "2026-09-03T06:02:37Z",
       "updated_at": "2026-11-17T08:00:59Z",
       "updatedAt": "2026-11-17T08:00:59Z",
-      "pushed_at": "2026-11-24T05:51:42Z",
-      "pushedAt": "2026-11-24T05:51:42Z",
+      "pushed_at": "2026-11-24T18:32:27Z",
+      "pushedAt": "2026-11-24T18:32:27Z",
       "topics": [
         "ai",
         "ai-agent",
@@ -439,6 +439,62 @@
     }
   ],
   "events": [
+    {
+      "id": "28183579852",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-11-23T20:25:30Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 51562454850,
+        "ref": "refs/heads/main",
+        "head": "11f793d60a135ada34dfe6af94af0b30d2f84d03",
+        "before": "e0a2113e3f8038208f3d8183f79dda53c71d9f4e"
+      }
+    },
+    {
+      "id": "28180633704",
+      "type": "PushEvent",
+      "repo": "codesbysayam/mausam_sih-26",
+      "created_at": "2026-11-24T13:30:39Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1461749225,
+        "push_id": 51667283683,
+        "ref": "refs/heads/main",
+        "head": "aadc0c33844c2b5441d2c8504c4816367bc46697",
+        "before": "0c77d87dabaa408f632f91d6c6c79cf181c6f2ef"
+      }
+    },
+    {
+      "id": "28175635252",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-11-23T19:13:52Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 51554024336,
+        "ref": "refs/heads/main",
+        "head": "0df9eb52ee0c323a8d1a048993f7441b567b41b6",
+        "before": "f729e54b3554761919d76dcabba03980d6f23e87"
+      }
+    },
+    {
+      "id": "28165197255",
+      "type": "PushEvent",
+      "repo": "codesbysayam/Sayam-Mukherjee-Portfolio",
+      "created_at": "2026-11-23T17:51:31Z",
+      "public": true,
+      "payload": {
+        "repository_id": 1355576736,
+        "push_id": 51544058345,
+        "ref": "refs/heads/main",
+        "head": "f729e54b3554761919d76dcabba03980d6f23e87",
+        "before": "f51c90fb22d664f832839432acbe6d458627b5f3"
+      }
+    },
     {
       "id": "28083453495",
       "type": "PushEvent",
@@ -762,65 +818,65 @@
         "head": "ab5aab73b269595dcbe28d6056b48128ebe3b1ce",
         "before": "3efcadde6a38de61013aa59657b2b8a66fb5eac1"
       }
-    },
-    {
-      "id": "28038950366",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam_sih-26",
-      "created_at": "2026-11-21T03:01:25Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1461749225,
-        "push_id": 51229457354,
-        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
-        "head": "f3ecc8e3c4145b28d449fb365f0b216db4432277",
-        "before": "d497fbed21f22393e4cddb96d3c00c3bd82c4e57"
-      }
-    },
-    {
-      "id": "28038893040",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam_sih-26",
-      "created_at": "2026-11-21T03:00:38Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1461749225,
-        "push_id": 51229392749,
-        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
-        "head": "59c096dbfd2a2567bc0afff45ea7ca407af6fd3d",
-        "before": "42e71d6d3a08af5688cdb6eff184ec3f60244fb0"
-      }
-    },
-    {
-      "id": "28038798077",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam_sih-26",
-      "created_at": "2026-11-21T02:59:15Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1461749225,
-        "push_id": 51229288784,
-        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
-        "head": "567b332edb30c181449dc8281c5ce3da65278daf",
-        "before": "abf8ad598472af6d76f94f4fd32003d2ab19f4e0"
-      }
-    },
-    {
-      "id": "28038793716",
-      "type": "PushEvent",
-      "repo": "codesbysayam/mausam_sih-26",
-      "created_at": "2026-11-21T02:59:11Z",
-      "public": true,
-      "payload": {
-        "repository_id": 1461749225,
-        "push_id": 51229283832,
-        "ref": "refs/heads/fix/mausam-responsive-all-viewports",
-        "head": "c5c8d45356c8d71b9b28fecad889151343220b4f",
-        "before": "41c3798d3967075d89937b96a0b5f2fca4ee84e4"
-      }
     }
   ],
   "recentActivity": [
+    {
+      "id": "28183579852",
+      "type": "PushEvent",
+      "createdAt": "2026-11-23T20:25:30Z",
+      "created_at": "2026-11-23T20:25:30Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "28180633704",
+      "type": "PushEvent",
+      "createdAt": "2026-11-24T13:30:39Z",
+      "created_at": "2026-11-24T13:30:39Z",
+      "repoName": "mausam_sih-26",
+      "repo": {
+        "id": 1461749225,
+        "name": "codesbysayam/mausam_sih-26",
+        "url": "https://github.com/codesbysayam/mausam_sih-26"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "28175635252",
+      "type": "PushEvent",
+      "createdAt": "2026-11-23T19:13:52Z",
+      "created_at": "2026-11-23T19:13:52Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
+    {
+      "id": "28165197255",
+      "type": "PushEvent",
+      "createdAt": "2026-11-23T17:51:31Z",
+      "created_at": "2026-11-23T17:51:31Z",
+      "repoName": "Sayam-Mukherjee-Portfolio",
+      "repo": {
+        "id": 1355576736,
+        "name": "codesbysayam/Sayam-Mukherjee-Portfolio",
+        "url": "https://github.com/codesbysayam/Sayam-Mukherjee-Portfolio"
+      },
+      "public": true,
+      "actionLabel": "Pushed 1 commit"
+    },
     {
       "id": "28083453495",
       "type": "PushEvent",
@@ -1184,62 +1240,6 @@
       },
       "public": true,
       "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "28038950366",
-      "type": "PushEvent",
-      "createdAt": "2026-11-21T03:01:25Z",
-      "created_at": "2026-11-21T03:01:25Z",
-      "repoName": "mausam_sih-26",
-      "repo": {
-        "id": 1461749225,
-        "name": "codesbysayam/mausam_sih-26",
-        "url": "https://github.com/codesbysayam/mausam_sih-26"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "28038893040",
-      "type": "PushEvent",
-      "createdAt": "2026-11-21T03:00:38Z",
-      "created_at": "2026-11-21T03:00:38Z",
-      "repoName": "mausam_sih-26",
-      "repo": {
-        "id": 1461749225,
-        "name": "codesbysayam/mausam_sih-26",
-        "url": "https://github.com/codesbysayam/mausam_sih-26"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "28038798077",
-      "type": "PushEvent",
-      "createdAt": "2026-11-21T02:59:15Z",
-      "created_at": "2026-11-21T02:59:15Z",
-      "repoName": "mausam_sih-26",
-      "repo": {
-        "id": 1461749225,
-        "name": "codesbysayam/mausam_sih-26",
-        "url": "https://github.com/codesbysayam/mausam_sih-26"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
-    },
-    {
-      "id": "28038793716",
-      "type": "PushEvent",
-      "createdAt": "2026-11-21T02:59:11Z",
-      "created_at": "2026-11-21T02:59:11Z",
-      "repoName": "mausam_sih-26",
-      "repo": {
-        "id": 1461749225,
-        "name": "codesbysayam/mausam_sih-26",
-        "url": "https://github.com/codesbysayam/mausam_sih-26"
-      },
-      "public": true,
-      "actionLabel": "Pushed 1 commit"
     }
   ],
   "languages": {
@@ -1300,8 +1300,8 @@
       "Makefile": 1358
     },
     "codesbysayam/Sayam-Mukherjee-Portfolio": {
-      "TypeScript": 2171810,
-      "CSS": 48233,
+      "TypeScript": 2219895,
+      "CSS": 48177,
       "JavaScript": 38874,
       "Python": 8166,
       "C": 7035,
@@ -1315,8 +1315,8 @@
   },
   "languageBytes": {
     "C++": 2037,
-    "TypeScript": 17629405,
-    "CSS": 387276,
+    "TypeScript": 17677490,
+    "CSS": 387220,
     "HTML": 86935,
     "JavaScript": 173077,
     "Python": 407336,
@@ -1326,17 +1326,12 @@
     "Makefile": 5200,
     "Shell": 569
   },
-  "latestPush": "2026-11-24T13:38:01Z",
+  "latestPush": "2026-11-24T18:32:27Z",
   "contributionCalendar": {
-    "totalContributions": 297,
+    "totalContributions": 298,
     "weeks": [
       {
         "contributionDays": [
-          {
-            "date": "2025-11-24",
-            "count": 0,
-            "color": "#ebedf0"
-          },
           {
             "date": "2025-11-25",
             "count": 0,
@@ -3369,12 +3364,17 @@
             "date": "2026-11-24",
             "count": 4,
             "color": "#9be9a8"
+          },
+          {
+            "date": "2026-11-25",
+            "count": 1,
+            "color": "#9be9a8"
           }
         ]
       }
     ]
   },
-  "fetchedAt": "2026-11-24T17:25:36.967Z",
-  "syncedAt": "2026-11-24T17:25:36.967Z",
+  "fetchedAt": "2026-11-25T02:10:53.357Z",
+  "syncedAt": "2026-11-25T02:10:53.357Z",
   "status": "ok"
 }
